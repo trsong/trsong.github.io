@@ -1,0 +1,13 @@
+# Site settings
+title: Tangrui Song's Fantasy World
+email: "tangrsong@gmail.com"
+description: Talk is cheap; Shall we start coding?
+baseurl: "" # the subpath of your site, e.g. /blog
+url: "http://trsong.github.io" # the base hostname & protocol for your site
+twitter_username: tangrsong
+github_username:  trsong
+
+# Build settings
+markdown: kramdown
+
+
