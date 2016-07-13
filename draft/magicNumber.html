@@ -1,6 +1,7 @@
 <html>
-    <body>
-        <script>
+
+<body>
+    <script>
             function randomSeq(n, lowerBound, upperBound){
                 var result = [];
                 while(result.length < n){
@@ -12,17 +13,83 @@
                 return result;
             }
 
-            var numOfRandoms = 5;
-            var lowerBound = 1;
-            var upperBound = 52;
-            var result = randomSeq(numOfRandoms, lowerBound, upperBound);
-            console.log(result);
+var source = 
+["Item of your choice", 
+"Product in a palette", 
+"Deluxe sized item", 
+"Item in a color you don\'t normally wear", 
+"Drugstore item", 
+"Highend Item", 
+"Cream product", 
+"Neutral lip product", 
+"Perfume", 
+"One of your most expensive items", 
+"Something hyped up on Youtube", 
+"Glossy lip product", 
+"Loose powder product", 
+"Something your have already hit pan on", 
+"Something in a previous project pan", 
+"New item in your collection", 
+"Something fun", 
+"Something purple", 
+"Matte lip product", 
+"Something you are loving now", 
+"Something you regret purchasing", 
+"Something you have never used before", 
+"Item that was a gift", 
+"Product with beautiful packaging", 
+"Something in a stick/tube", 
+"Something from an \"indie\" brand", 
+"Matte Product", 
+"Blush", 
+"Full sized item", 
+"Nail Polish", 
+"Single Eyeshadow", 
+"Nail strips", 
+"Chapstick/Lip Balm", 
+"Something shimmery", 
+"Non-black eyeliner", 
+"Item in your favourite colour", 
+"Maybelline item", 
+"Tarte item", 
+"Urban Decay item", 
+"Sample product", 
+"Something you haven\'t used in over 1 year", 
+"Everyday staple item", 
+"A neutral colored item", 
+"Something pink", 
+"Skincare item", 
+"Highlighter", 
+"Lip gloss", 
+"Something you want to buy a full size of/repurchase", 
+"Cream or white shadow", 
+"MAC product", 
+"Something orange", 
+"Setting powder" ];
+            
 
             function showResult(){
-                document.write(result);
-            }
+                var numOfRandoms = 13;
+                var lowerBound = 1;
+                var upperBound = 52;
+                var indices = randomSeq(numOfRandoms, lowerBound, upperBound);
+                indices.sort(function(a,b){return a-b;});
+                var result = indices.map(function(index){
+                    return source[index];
+                });
 
+                var tableTop = "<table><tbody>";
+                var tableContent = "";
+                var tableBottom = "</tbody></table>";
+
+                for(var i=0; i < result.length; i++){
+                    tableContent += "<tr><th>"+ indices[i] +"</th><th> "+ result[i] +"</th></tr>";
+                }
+
+                document.write(tableTop + tableContent + tableBottom);
+            }
         </script>
-        <input type="button" value="Click Me!" onclick="showResult()" />
-    </body>
+    <input type="button" value="Click Me!" onclick="showResult()" />
+</body>
+
 </html>
