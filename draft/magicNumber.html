@@ -17,8 +17,12 @@
             var upperBound = 52;
             var result = randomSeq(numOfRandoms, lowerBound, upperBound);
             console.log(result);
-            document.write(result);
+
+            function showResult(){
+                document.write(result);
+            }
 
         </script>
+        <input type="button" value="Click Me!" onclick="showResult()" />
     </body>
 </html>
