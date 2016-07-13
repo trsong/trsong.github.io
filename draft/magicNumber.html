@@ -1,0 +1,24 @@
+<html>
+    <body>
+        <script>
+            function randomSeq(n, lowerBound, upperBound){
+                var result = [];
+                while(result.length < n){
+                    var nextNum = Math.floor(Math.random() * (upperBound - lowerBound + 1) + lowerBound);
+                    if(result.indexOf(nextNum) < 0){
+                        result.push(nextNum);
+                    }
+                }
+                return result;
+            }
+
+            var numOfRandoms = 5;
+            var lowerBound = 1;
+            var upperBound = 52;
+            var result = randomSeq(numOfRandoms, lowerBound, upperBound);
+            console.log(result);
+            document.write(result);
+
+        </script>
+    </body>
+</html>
