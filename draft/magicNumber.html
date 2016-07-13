@@ -74,8 +74,8 @@ var source =
 
             function showResult(){
                 var numOfRandoms = 13;
-                var lowerBound = 1;
-                var upperBound = 52;
+                var lowerBound = 0;
+                var upperBound = 51;
                 var indices = randomSeq(numOfRandoms, lowerBound, upperBound);
                 indices.sort(function(a,b){return a-b;});
                 var result = indices.map(function(index){
