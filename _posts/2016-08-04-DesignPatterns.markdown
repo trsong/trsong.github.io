@@ -1,3 +1,12 @@
+---
+layout: post
+title:  "Design Patterns"
+date:   2016-08-04 22:23:32 -0700
+categories: Design-Patterns
+---
+* This will become a table of contents (this text will be scraped).
+{:toc}
+
 ### Design Patterns - Structural Patterns
 <hr/>
 Structural design patterns are design patterns that ease the design by identifying a simple way to realize **relationships between entities**.
@@ -212,12 +221,243 @@ object DecoratorSample {
   def main(args: Array[String]) {
     var c: Coffee = new Coffee with Sprinkles
     printf("Cost: %f Ingredients %s\n", c.cost, c.ingredients)
+     
     c = new Coffee with Sprinkles with Milk
     printf("Cost: %f Ingredients %s\n", c.cost, c.ingredients)
+    
     c = new Coffee with Sprinkles with Milk with Whip
     printf("Cost: %f Ingredients %s\n", c.cost, c.ingredients)
   }
 }
 
 ```
+<br/>
+
+
+### Design Patterns - Behavioral Patterns
+<hr/>
+Behavioral Design Patterns are design patterns that **identify common communication patterns between objects and realize these patterns**. By doing so, these patterns increase flexibility in carrying out this communication.
+
+Examples of Behavioral Patterns includes:
+
+* **Chain-of-responsibility Pattern**: Command objects are *handled or passed on* to other objects by logic-containing processing objects
+* **Command Pattern**: Command objects encapsulate an action and its parameters
+* **Interpreter Pattern**: Implement a specialized computer language to rapidly solve a specific set of problems
+
+<br/>
+
+#### Chain-of-responsibility Pattern
+<hr/>
+Chain-of-responsibility Pattern consists of **a source of command objects** and **a series of processing objects**. Each processing object contains logic that defines the types of command objects that it can handle; the rest are passed to the next processing object in the chain.
+
+Example would be the mechanism of exception handling. A source of command objects is the exception object and a series of processing objects are exception handlers at each level.
+
+Note: the source don't know who should handle until the runtime.
+
+In scala, the pattern matching use Chain-of-responsibility Pattern.
+
+```scala
+parentClassInstance match{
+   case instance: SubClass1 =>
+   case instance: SubClass2 => 
+}
+
+```
+
+More examples for Chain-of-responsibility pattern in scala:
+
+```scala
+case class Event(level: Int, title: String)
+
+//Base handler class
+abstract class Handler {
+  val successor: Option[Handler]
+  def handleEvent(event: Event): Unit
+}
+
+//Customer service agent
+class Agent(val successor: Option[Handler]) extends Handler {
+  override def handleEvent(event: Event): Unit = {
+    event match {
+      case e if e.level < 2 => println("CS Agent Handled event: " + e.title)
+      case e if e.level > 1 => {
+        successor match {
+          case Some(h: Handler) => h.handleEvent(e)
+          case None => println("Agent: This event cannot be handled.")
+        }
+      }
+    }
+  }
+}
+
+class Supervisor(val successor: Option[Handler]) extends Handler {
+  override def handleEvent(event: Event): Unit = {
+    event match {
+      case e if e.level < 3 => println("Supervisor handled event: " + e.title)
+      case e if e.level > 2 => {
+        successor match {
+          case Some(h: Handler) => h.handleEvent(e)
+          case None => println("Supervisor: This event cannot be handled")
+        }
+      }
+    }
+  }
+}
+
+class Boss(val successor: Option[Handler]) extends Handler {
+  override def handleEvent(event: Event): Unit = {
+    event match {
+      case e if e.level < 4 => println("Boss handled event: " + e.title)
+      case e if e.level > 3 => successor match {
+        case Some(h: Handler) => h.handleEvent(e)
+        case None => println("Boss: This event cannot be handled")
+      }
+    }
+  }
+}
+
+object Main {
+  def main(args: Array[String]) {
+    val boss = new Boss(None)
+    val supervisor = new Supervisor(Some(boss))
+    val agent = new Agent(Some(supervisor))
+    
+    println("Passing events")
+    val events = Array(
+      Event(1, "Technical support"), 
+      Event(2, "Billing query"),
+      Event(1, "Product information query"), 
+      Event(3, "Bug report"), 
+      Event(5, "Police subpoena"), 
+      Event(2, "Enterprise client request")
+    )
+    events foreach { e: Event =>
+      agent.handleEvent(e)
+    }
+  }
+}
+```
+
+In our code base: `getScope` will chain a sequence of scope, but who should be responsiblity to handle, we do not know in advance.
+
+Chain-of-responsibility is widely used in front-end. Ex. UI components form a chain. We will iterate through the chain to discover who should be responsible to it.
+
+<br/>
+
+
+#### Command Pattern
+<hr/>
+Command Pattern encapsulates all information needed to perform an action or trigger an event at a later time. This information includes the method name, the object that owns the method and values for the method parameters.
+
+In Scala, we can rely on by-name parameter to defer evaluation of any expression:
+
+```scala
+object Invoker {
+  private var history: Seq[() => Unit] = Seq.empty
+
+  def invoke(command: => Unit) { // by-name parameter
+    command
+    history :+= command _
+  }
+}
+
+Invoker.invoke(println("foo"))
+
+Invoker.invoke {
+  println("bar 1")
+  println("bar 2")
+}
+```
+
+The idea is to store function and parameters as an object and to execute it later. 
+
+```scala
+abstract class CommandBase{
+   def undo: Unit
+   def redo: Unit
+}
+
+class MoveCommand extends CommandBase{
+   override def undo: Unit = ???
+   override def redo: Unit = ???
+}
+
+class DeleteCommand extends CommandBase{
+   override def undo: Unit = ???
+   override def redo: Unit = ???
+}
+
+val undoStack: List[CommandBase] = ???
+val redoStack: List[CommandBase] = ???
+```
+
+<br/>
+
+#### Interpreter Pattern
+<hr/>
+Interpreter Pattern is a design pattern that specifies how to evaluate sentences in a language. The basic idea is to have a class for each symbol (terminal or nonterminal) in a specialized computer language. The syntax tree of a sentence in the language is an instance of the composite pattern and is used to evaluate (interpret) the sentence for a client.
+
+```scala
+case class Context
+
+abstract class AbstractExpression{
+   def interpret(Context context): Unit
+}
+
+class TerminalExpression extends AbstractExpression{
+   override def interpret(Context context): Unit =  ???
+}
+
+class NonTerminalExpression(expressions: AbstractExpression*) extends AbstractExpression{
+   override def interpret(Context context): Unit =  ???
+}
+
+def main(): Unit = {
+   val context = Context
+   
+   val expressionTree = List(
+      new TerminalExpression, 
+      new NonTerminalExpression(
+          new NonTerminalExpression(new TerminalExpression),
+          new TerminalExpression))
+          
+   expressionTree.foreach{ expression =>
+      expression.interpret(context)
+   }
+}
+
+```
+
+Example in our code base: The whole Internal DSL uses Composite Pattern and Interpreter Pattern, like ModelingSyntax.scala
+
+```scala
+def doubleMetricOf(const: Double): Exp[Metric[Double]]
+
+def floor[T <: ModelTypes](metric: Exp[Metric[T]])
+
+class ModelingArithmeticOps[T <: ModelTypes : TypeTag](metric: Exp[Metric[T]]) {
+   def +[F <: ModelTypes](addend: Exp[Metric[F]]): Exp[Metric[T]]
+}
+
+// floor(doubleMetricOf(1.5D)) + doubleMetricOf(2.0D) is of type Exp[Metric[Double]]
+
+
+
+  /**
+   * Prepare the data structures required to evaluate the model.
+   *
+   * @return PerThreadInitialization case class (see above)
+   */
+  def interpretExpTree: ExpTreeInterpretation = {
+
+    val ExpTreeInitialization(expTree, substitutions) = initializeExpTree
+
+    // invoke the interpreter to get the 'prepared calculation' using the input calculations we just made
+    val prepared = Interpreter.interpretPlan(expTree, substitutions, PrepareModel.evaluator, new ContextVars {}, Seq.empty)
+ ...
+ 
+  }
+
+```
+
 <br/>
