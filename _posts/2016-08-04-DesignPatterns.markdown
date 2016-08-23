@@ -7,8 +7,9 @@ categories: Design-Patterns
 * This will become a table of contents (this text will be scraped).
 {:toc}
 
+<a name="structuralPatterns"></a>
 ### Design Patterns - Structural Patterns
-<hr/>
+***
 Structural design patterns are design patterns that ease the design by identifying a simple way to realize **relationships between entities**.
 
 Examples of Structural Patterns includes:
@@ -20,7 +21,7 @@ Examples of Structural Patterns includes:
 <br/>
 
 #### Adapter/Wrapper/Translator
-<hr/>
+***
 The adapter pattern allows the interface of an existing class to be used as another interface. Note that: *The interface may be incompatible but the inner function must suit the need.*
 
 ```scala
@@ -60,7 +61,7 @@ class EhcacheAdapter[K, V](manager: EhcacheManagerAdapter, val underlyingCache: 
 <br/>
 
 #### Bridge
-<hr/>
+***
 The bridge pattern decouples an abstraction from its implementation so that the two can vary independently. Note that: 
 
 The Bridge Pattern
@@ -134,7 +135,7 @@ class HeadcountForecastBridge @Inject() (planLoader: PlanLoader, scenarioLoader:
 <br/>
 
 #### Composite
-<hr/>
+***
 The Composite Pattern is a **partitioning** design pattern which can be a tree structure of objects where every object has the same interface. A composite is an object designed as a composition of one-or-more similar objects, all exhibiting similar functionality. This is known as a "has-a" relationship between objects.
 
 Motivation: When dealing with Tree-structured data, programmers often have to discriminate between a leaf-node and a branch. This makes code more complex, and therefore, error prone. The solution is an interface that allows treating complex and primitive objects uniformly. 
@@ -190,7 +191,7 @@ class ModelingArithmeticOps[T <: ModelTypes : TypeTag](metric: Exp[Metric[T]]) {
 ```
 
 #### Decorator
-<hr/>
+***
 The Decorator Pattern allows behavior to be added to an individual object, either statically or dynamically, without affecting the behavior of other objects from the same class.
 
 Motivation: As an example, consider a window in a windowing system. Assume the window class has no functionality for adding scrollbars. One could create a subclass ScrollingWindow that provides them, or create a ScrollingWindowDecorator that adds this functionality to existing Window objects. At this point, either solution would be fine. This problem gets worse with every new feature or window subtype to be added.
@@ -235,7 +236,7 @@ object DecoratorSample {
 
 
 ### Design Patterns - Behavioral Patterns
-<hr/>
+***
 Behavioral Design Patterns are design patterns that **identify common communication patterns between objects and realize these patterns**. By doing so, these patterns increase flexibility in carrying out this communication.
 
 Examples of Behavioral Patterns includes:
@@ -247,7 +248,7 @@ Examples of Behavioral Patterns includes:
 <br/>
 
 #### Chain-of-responsibility Pattern
-<hr/>
+***
 Chain-of-responsibility Pattern consists of **a source of command objects** and **a series of processing objects**. Each processing object contains logic that defines the types of command objects that it can handle; the rest are passed to the next processing object in the chain.
 
 Example would be the mechanism of exception handling. A source of command objects is the exception object and a series of processing objects are exception handlers at each level.
@@ -346,7 +347,7 @@ Chain-of-responsibility is widely used in front-end. Ex. UI components form a ch
 
 
 #### Command Pattern
-<hr/>
+***
 Command Pattern encapsulates all information needed to perform an action or trigger an event at a later time. This information includes the method name, the object that owns the method and values for the method parameters.
 
 In Scala, we can rely on by-name parameter to defer evaluation of any expression:
@@ -394,7 +395,7 @@ val redoStack: List[CommandBase] = ???
 <br/>
 
 #### Interpreter Pattern
-<hr/>
+***
 Interpreter Pattern is a design pattern that specifies how to evaluate sentences in a language. The basic idea is to have a class for each symbol (terminal or nonterminal) in a specialized computer language. The syntax tree of a sentence in the language is an instance of the composite pattern and is used to evaluate (interpret) the sentence for a client.
 
 ```scala
@@ -461,3 +462,247 @@ class ModelingArithmeticOps[T <: ModelTypes : TypeTag](metric: Exp[Metric[T]]) {
 ```
 
 <br/>
+
+### Design Patterns - Workshop Aug 23
+***
+Today we will cover three design patterns.
+
+**Creational patterns** are design patterns that deal with object creation mechanisms, trying to create objects in a manner suitable to the situation. Examples: 
+
+* **Lazy initialization**: Tactic of delaying the creation of an object, the calculation of a value, or some other expensive process until the first time it is needed. 
+* **Singleton**: Ensure a class has only one instance, and provide a global point of access to it.
+
+**Structural patterns**: (definition already covered [here](#structuralPatterns))
+
+* **Proxy**: Provide a placeholder for another object to control access to it.
+
+<br />
+
+#### Lazy initialization
+***
+**Lazy initialization** is the tactic of delaying the creation of an object, the calculation of a value, or some other expensive process until the first time it is needed.
+
+
+In a software design pattern view, lazy initialization is often used together with a factory method pattern, so called the "lazy factory". This combines three ideas:
+
+* Using a factory method to get instances of a class (**factory method pattern**)
+* Store the instances in a map, so you get the same instance the next time you ask for an instance with same parameter (**multiton pattern**)
+* Using lazy initialization to instantiate the object the first time it is requested (**lazy initialization pattern**)
+
+In scala, the support for lazy value is built-in: 
+
+```scala
+class Example {
+  lazy val x = "Value";
+}
+```
+
+Above code is compiled to the code equivalent to the following java code:
+
+```java
+public class Example {
+
+  private String x;
+  private volatile boolean bitmap$0;
+
+  public String x() {
+    if(this.bitmap$0 == true) {
+      return this.x;
+    } else {
+      return x$lzycompute();
+    }
+  }
+
+  private String x$lzycompute() {
+    synchronized(this) {
+      if(this.bitmap$0 != true) {
+        this.x = "Value";
+        this.bitmap$0 = true;
+      }
+      return this.x;
+    }
+  }
+}
+```
+
+However, using lazy val could be troublesome. 
+
+##### Scenario1: Potential dead lock when accessing lazy vals
+
+```scala
+import scala.concurrent.ExecutionContext.Implicits.global
+import scala.concurrent._
+import scala.concurrent.duration._
+
+object A {
+  lazy val base = 42
+  lazy val start = B.step
+}
+
+object B {
+  lazy val step = A.base
+}
+
+object Scenario1 {
+  def run = {
+    val result = Future.sequence(Seq(
+      Future { A.start },                        // (1)
+      Future { B.step }                          // (2)
+    ))
+    Await.result(result, 1.minute)
+  }
+}
+```
+
+As the following figure illustrates:
+
+![Lazy val dead lock](lazy-val-dead-lock.png)
+
+
+The `A.start` val depends on `B.step` which in turn depends again on `A.base`. Although there is no cyclic relation here, running this code can lead to a **deadlock**:
+
+```bash
+scala> :paste
+...
+scala> Scenario1.run
+java.util.concurrent.TimeoutException: Futures timed out after [1 minute]
+  at scala.concurrent.impl.Promise$DefaultPromise.ready(Promise.scala:219)
+  at scala.concurrent.impl.Promise$DefaultPromise.result(Promise.scala:223)
+  at scala.concurrent.Await$$anonfun$result$1.apply(package.scala:190)
+  at scala.concurrent.BlockContext$DefaultBlockContext$.blockOn(BlockContext.scala:53)
+  at scala.concurrent.Await$.result(package.scala:190)
+  at Scenario2$.run(<console>:30)
+  ... 32 elided
+```
+
+Reason: when scala `lazy val` is compiled to java code, **synchronized** block is used, which will lock the current object.
+
+- Thread 1 is holding A at `(1)` while try to access B; 
+- Thread 2 is holding B at `(2)` while try to access A.
+
+Thus deadlock occurs. 
+
+##### Scenario 2: Deadlock in combination with synchronization
+
+``` scala
+import scala.concurrent.ExecutionContext.Implicits.global
+import scala.concurrent._
+import scala.concurrent.duration._
+
+trait Compute {
+  def compute: Future[Int] =
+    Future(this.synchronized { 21 + 21 })        // (1)
+}
+
+object Scenario2 extends Compute {
+  def run: Unit = {
+    lazy val someVal: Int =
+      Await.result(compute, 1.minute)            // (2)
+    println(someVal)
+  }
+}
+```
+
+After execute above code in scala, we will get the following error
+
+``` bash
+scala> :paste
+...
+scala> Scenario2.run
+java.util.concurrent.TimeoutException: Futures timed out after [1 minute]
+  at scala.concurrent.impl.Promise$DefaultPromise.ready(Promise.scala:219)
+  at scala.concurrent.impl.Promise$DefaultPromise.result(Promise.scala:223)
+  at scala.concurrent.Await$$anonfun$result$1.apply(package.scala:190)
+  at scala.concurrent.BlockContext$DefaultBlockContext$.blockOn(BlockContext.scala:53)
+  at scala.concurrent.Await$.result(package.scala:190)
+  at Scenario2$.someVal$lzycompute$1(<console>:30)
+  at Scenario2$.someVal$1(<console>:29)
+  at Scenario2$.run(<console>:31)
+  ... 32 elided
+
+```
+
+Reason: Same as in scenario 1, when **synchronized** block is used, current object will be locked to prevent other thread from access it.
+
+When call `println`, lazy initialization of someVal is triggered, and lock the current object; However, in order to calculate the result of `compute`, the current object also needs to be locked. Thus deadlock occurs.
+
+<br />
+
+#### Singleton
+***
+
+The singleton pattern is a design pattern that restricts the instantiation of a class to one object.
+
+In java, initialization of singleton use eager initialization:
+
+```java
+/* Singleton implementation without lazy initialisation */
+public class Singleton {
+    // Eager initialization 
+    private static final Singleton INSTANCE = new Singleton();
+    private Singleton() { /* Initialisation code */ }
+    
+    public static Singleton getInstance() {
+        return INSTANCE;
+    }
+}
+```
+
+In scala, it's as easy as create an object
+
+```scala
+trait Service
+
+object Singleton extend Service{
+ ...
+}
+
+functionTakesInAService(service = Singleton)
+
+```
+
+How to extend the functionality of a singleton object in scala:
+
+```scala
+object X{
+  def x = 5
+}
+
+object Y{
+  import X._
+  val y = x
+}
+```
+
+But most of the time, it's better to composite an object instead of extend an object. 
+<br />
+
+#### Proxy
+***
+
+A **proxy** is a wrapper or agent object that is being called by the client to access the real serving object behind the scenes. Use of the proxy can simply be forwarding to the real object, or can provide additional logic. 
+Use it for lazy initialization, performance improvement by caching the object and controlling access to the client/caller
+
+```scala
+
+trait Proxy 
+
+trait Service
+
+trait ImageProvider {
+  val fileUrl: URL
+  def image: ImageIcon
+}
+
+private class RealImageService(val fileUrl: URL) extends Service with ImageProvider {
+  private val imageIcon = new ImageIcon(fileUrl)
+  def image: ImageIcon = imageIcon
+}
+
+class ImageServiceProxy(imageFileUrl: URL) extends Proxy with ImageProvider {
+  val fileUrl = imageFileUrl
+  private lazy val imageService = new RealImageService(imageFileUrl)
+  def image: ImageIcon = imageService.image
+  override def toString = "ImageServiceProxy for: " + imageFileUrl.toString()
+}
+```
