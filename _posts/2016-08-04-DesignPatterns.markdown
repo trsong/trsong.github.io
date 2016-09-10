@@ -132,6 +132,27 @@ class HeadcountForecastBridge @Inject() (planLoader: PlanLoader, scenarioLoader:
   }
 ```
 
+More examples
+
+When:
+
+```
+
+                   ----Shape---
+                  /            \
+         Rectangle              Circle
+        /         \            /      \
+BlueRectangle  RedRectangle BlueCircle RedCircle
+```
+Refactor to:
+
+```
+
+          ----Shape---                        Color
+         /            \                       /   \
+Rectangle(Color)   Circle(Color)           Blue   Red
+```
+
 <br/>
 
 #### Composite
@@ -234,7 +255,7 @@ object DecoratorSample {
 ```
 <br/>
 
-
+<a name="behavioralPatterns"></a>
 ### Design Patterns - Behavioral Patterns
 ***
 Behavioral Design Patterns are design patterns that **identify common communication patterns between objects and realize these patterns**. By doing so, these patterns increase flexibility in carrying out this communication.
@@ -628,6 +649,57 @@ When call `println`, lazy initialization of someVal is triggered, and lock the c
 
 <br />
 
+Example 3: Order of initilization
+
+Below code will get Null Pointer Exception. 
+Because the Dervied, Base and Sub is initilized in order. 
+
+```scala
+trait Base{
+   val value: String
+}
+
+trait Sub{ self: Base =>
+   val value2 = value.length    
+}
+
+class Derived extends Base with Sub{
+   override val value = "abc"
+}
+```
+
+Below improved code still not work.
+
+```scala
+trait Base{
+   val value: String
+}
+
+trait Sub extends Base {
+   override val value2 = value.length    
+}
+
+class Derived extends Sub{
+   override val value = "abc"
+}
+```
+
+The way we can fix it is to use the following:
+
+```scala
+trait Base{
+   val value: String
+}
+
+trait Sub{ self: Base =>
+  lazy val value2 = value.length    
+}
+
+class Derived extends Base with Sub{
+   override val value = "abc"
+}
+```
+
 #### Singleton
 ***
 
@@ -704,5 +776,470 @@ class ImageServiceProxy(imageFileUrl: URL) extends Proxy with ImageProvider {
   private lazy val imageService = new RealImageService(imageFileUrl)
   def image: ImageIcon = imageService.image
   override def toString = "ImageServiceProxy for: " + imageFileUrl.toString()
+}
+```
+
+
+### Design Patterns - Workshop Sep 8
+***
+Today we will cover three design patterns.
+
+**Behavioral pattern** : (definition already covered [here](#behavioralPatterns))
+
+* **Mediator pattern**: Define an object that encapsulates how a set of objects interact. Mediator promotes loose coupling by keeping objects from referring to each other explicitly, and it allows their interaction to vary independently.
+* **Observer**: Define a one-to-many dependency between objects where a state change in one object results in all its dependents being notified and updated automatically.
+
+**Creational patterns**: (definition already covered [here](#structuralPatterns))
+
+* **Factory**: Define an interface for creating a single object, but let subclasses decide which class to instantiate. Factory Method lets a class defer instantiation to subclasses.
+* **Abstract factory**: Provides a way to encapsulate a group of individual factories that have a common theme without specifying their concrete classes.
+
+
+### Mediator
+***
+Usually a program is made up of a large number of classes. So the logic and computation is distributed among these classes. The problem of communication between these classes may become more complex .
+
+With the **mediator pattern**, communication between objects is encapsulated with a mediator object. Objects no longer communicate directly with each other, but instead communicate through the mediator. 
+
+The following example use `ChatRoom` as a mediator to help each `User`'s communicate with each other. 
+
+```java
+public class ChatRoom {
+   public static void showMessage(User user, String message){
+      System.out.println(new Date().toString() + " [" + user.getName() + "] : " + message);
+   }
+}
+
+public class User {
+   private String name;
+
+   public String getName() {
+      return name;
+   }
+
+   public void setName(String name) {
+      this.name = name;
+   }
+
+   public User(String name){
+      this.name  = name;
+   }
+
+   public void sendMessage(String message){
+      ChatRoom.showMessage(this,message);
+   }
+}
+   
+public class MediatorPatternDemo {
+   public static void main(String[] args) {
+      User robert = new User("Robert");
+      User john = new User("John");
+
+      robert.sendMessage("Hi! John!");
+      john.sendMessage("Hello! Robert!");
+   }
+}   
+   
+```
+
+### Observer
+***
+
+**Observer pattern** is used when there is *one-to-many* relationship between objects such as if one object is modified, its depenedent objects are to be notified automatically.
+
+In the following example, `Subject` class has a list of `Observer`'s acted as **subscribers**; once the `Observer`'s state has changed, all of its subscribers will be notified.
+
+```java
+public abstract class Observer {
+   protected Subject subject;
+   public abstract void update();
+}
+
+public class BinaryObserver extends Observer{
+
+   public BinaryObserver(Subject subject){
+      this.subject = subject;
+      this.subject.attach(this);
+   }
+
+   @Override
+   public void update() {
+      System.out.println( "Binary String: " + Integer.toBinaryString( subject.getState() ) ); 
+   }
+}
+
+public class OctalObserver extends Observer{
+
+   public OctalObserver(Subject subject){
+      this.subject = subject;
+      this.subject.attach(this);
+   }
+
+   @Override
+   public void update() {
+     System.out.println( "Octal String: " + Integer.toOctalString( subject.getState() ) ); 
+   }
+}
+
+public class HexaObserver extends Observer{
+
+   public HexaObserver(Subject subject){
+      this.subject = subject;
+      this.subject.attach(this);
+   }
+
+   @Override
+   public void update() {
+      System.out.println( "Hex String: " + Integer.toHexString( subject.getState() ).toUpperCase() ); 
+   }
+}
+
+
+public class Subject {
+	
+   private List<Observer> observers = new ArrayList<Observer>();
+   private int state;
+
+   public int getState() {
+      return state;
+   }
+
+   public void setState(int state) {
+      this.state = state;
+      notifyAllObservers();
+   }
+
+   public void attach(Observer observer){
+      observers.add(observer);		
+   }
+
+   public void notifyAllObservers(){
+      for (Observer observer : observers) {
+         observer.update();
+      }
+   } 	
+}
+
+public class ObserverPatternDemo {
+   public static void main(String[] args) {
+      Subject subject = new Subject();
+
+      new HexaObserver(subject);
+      new OctalObserver(subject);
+      new BinaryObserver(subject);
+
+      System.out.println("First state change: 15");	
+      subject.setState(15);
+      System.out.println("Second state change: 10");	
+      subject.setState(10);
+   }
+}
+```
+
+
+
+### Factory
+***
+
+
+> "Define an interface for creating an object, but let subclasses decide which class to instantiate. The Factory method lets a class defer instantiation it uses to subclasses." (Gang Of Four)
+
+1) Create a common interface at compilation time, and determine which which implementation at runtime
+2) Create a common base class at compilation time, and determine which derived class to use (based on which method be override) at runtime
+
+
+Problems:
+
+* Determine at runtime. 
+
+* Weak base class problems.
+
+Example:
+
+```java
+public interface Shape {
+   void draw();
+}
+
+public class Rectangle implements Shape {
+
+   @Override
+   public void draw() {
+      System.out.println("Inside Rectangle::draw() method.");
+   }
+}
+
+public class Square implements Shape {
+
+   @Override
+   public void draw() {
+      System.out.println("Inside Square::draw() method.");
+   }
+}
+
+public class Circle implements Shape {
+
+   @Override
+   public void draw() {
+      System.out.println("Inside Circle::draw() method.");
+   }
+}
+
+public class ShapeFactory {
+	
+   //use getShape method to get object of type shape 
+   public Shape getShape(String shapeType){
+      if(shapeType == null){
+         return null;
+      }		
+      if(shapeType.equalsIgnoreCase("CIRCLE")){
+         return new Circle();
+         
+      } else if(shapeType.equalsIgnoreCase("RECTANGLE")){
+         return new Rectangle();
+         
+      } else if(shapeType.equalsIgnoreCase("SQUARE")){
+         return new Square();
+      }
+      
+      return null;
+   }
+}
+
+public class FactoryPatternDemo {
+
+   public static void main(String[] args) {
+      ShapeFactory shapeFactory = new ShapeFactory();
+
+      //get an object of Circle and call its draw method.
+      Shape shape1 = shapeFactory.getShape("CIRCLE");
+
+      //call draw method of Circle
+      shape1.draw();
+
+      //get an object of Rectangle and call its draw method.
+      Shape shape2 = shapeFactory.getShape("RECTANGLE");
+
+      //call draw method of Rectangle
+      shape2.draw();
+
+      //get an object of Square and call its draw method.
+      Shape shape3 = shapeFactory.getShape("SQUARE");
+
+      //call draw method of circle
+      shape3.draw();
+   }
+}
+```
+
+### Abstract Factory
+***
+Abstract Factory patterns work around a super-factory which creates other factories. This factory is also called as factory of factories. 
+
+`Shape` Interface:
+
+```java
+public interface Shape {
+   void draw();
+}
+
+public class Rectangle implements Shape {
+
+   @Override
+   public void draw() {
+      System.out.println("Inside Rectangle::draw() method.");
+   }
+}
+
+public class Square implements Shape {
+
+   @Override
+   public void draw() {
+      System.out.println("Inside Square::draw() method.");
+   }
+}
+
+public class Circle implements Shape {
+
+   @Override
+   public void draw() {
+      System.out.println("Inside Circle::draw() method.");
+   }
+}
+
+```
+
+`Color` Interface:
+
+```java
+public interface Color {
+   void fill();
+}
+
+public class Red implements Color {
+
+   @Override
+   public void fill() {
+      System.out.println("Inside Red::fill() method.");
+   }
+}
+
+public class Green implements Color {
+
+   @Override
+   public void fill() {
+      System.out.println("Inside Green::fill() method.");
+   }
+}
+
+public class Blue implements Color {
+
+   @Override
+   public void fill() {
+      System.out.println("Inside Blue::fill() method.");
+   }
+}
+```
+
+The Abstract Factory Interface:
+
+```java
+public abstract class AbstractFactory {
+   abstract Color getColor(String color);
+   abstract Shape getShape(String shape) ;
+}
+```
+
+
+The `Shape` Factory:
+
+```java
+public class ShapeFactory extends AbstractFactory {
+	
+   @Override
+   public Shape getShape(String shapeType){
+   
+      if(shapeType == null){
+         return null;
+      }		
+      
+      if(shapeType.equalsIgnoreCase("CIRCLE")){
+         return new Circle();
+         
+      }else if(shapeType.equalsIgnoreCase("RECTANGLE")){
+         return new Rectangle();
+         
+      }else if(shapeType.equalsIgnoreCase("SQUARE")){
+         return new Square();
+      }
+      
+      return null;
+   }
+   
+   @Override
+   Color getColor(String color) {
+      return null;
+   }
+}
+```
+
+The `color` Factory
+
+```java
+public class ColorFactory extends AbstractFactory {
+	
+   @Override
+   public Shape getShape(String shapeType){
+      return null;
+   }
+   
+   @Override
+   Color getColor(String color) {
+   
+      if(color == null){
+         return null;
+      }		
+      
+      if(color.equalsIgnoreCase("RED")){
+         return new Red();
+         
+      }else if(color.equalsIgnoreCase("GREEN")){
+         return new Green();
+         
+      }else if(color.equalsIgnoreCase("BLUE")){
+         return new Blue();
+      }
+      
+      return null;
+   }
+}
+```
+
+Factory Producer
+
+```java
+public class FactoryProducer {
+   public static AbstractFactory getFactory(String choice){
+   
+      if(choice.equalsIgnoreCase("SHAPE")){
+         return new ShapeFactory();
+         
+      }else if(choice.equalsIgnoreCase("COLOR")){
+         return new ColorFactory();
+      }
+      
+      return null;
+   }
+}
+```
+
+Abstract Factory Demo
+
+```java
+public class AbstractFactoryPatternDemo {
+   public static void main(String[] args) {
+
+      //get shape factory
+      AbstractFactory shapeFactory = FactoryProducer.getFactory("SHAPE");
+
+      //get an object of Shape Circle
+      Shape shape1 = shapeFactory.getShape("CIRCLE");
+
+      //call draw method of Shape Circle
+      shape1.draw();
+
+      //get an object of Shape Rectangle
+      Shape shape2 = shapeFactory.getShape("RECTANGLE");
+
+      //call draw method of Shape Rectangle
+      shape2.draw();
+      
+      //get an object of Shape Square 
+      Shape shape3 = shapeFactory.getShape("SQUARE");
+
+      //call draw method of Shape Square
+      shape3.draw();
+
+      //get color factory
+      AbstractFactory colorFactory = FactoryProducer.getFactory("COLOR");
+
+      //get an object of Color Red
+      Color color1 = colorFactory.getColor("RED");
+
+      //call fill method of Red
+      color1.fill();
+
+      //get an object of Color Green
+      Color color2 = colorFactory.getColor("Green");
+
+      //call fill method of Green
+      color2.fill();
+
+      //get an object of Color Blue
+      Color color3 = colorFactory.getColor("BLUE");
+
+      //call fill method of Color Blue
+      color3.fill();
+   }
 }
 ```
