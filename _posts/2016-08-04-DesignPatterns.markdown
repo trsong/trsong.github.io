@@ -795,7 +795,7 @@ Today we will cover three design patterns.
 * **Abstract factory**: Provides a way to encapsulate a group of individual factories that have a common theme without specifying their concrete classes.
 
 
-### Mediator
+#### Mediator
 ***
 Usually a program is made up of a large number of classes. So the logic and computation is distributed among these classes. The problem of communication between these classes may become more complex .
 
@@ -842,7 +842,7 @@ public class MediatorPatternDemo {
    
 ```
 
-### Observer
+#### Observer
 ***
 
 **Observer pattern** is used when there is *one-to-many* relationship between objects such as if one object is modified, its depenedent objects are to be notified automatically.
@@ -938,7 +938,7 @@ public class ObserverPatternDemo {
 
 
 
-### Factory
+#### Factory
 ***
 
 
@@ -1032,7 +1032,7 @@ public class FactoryPatternDemo {
 }
 ```
 
-### Abstract Factory
+#### Abstract Factory
 ***
 Abstract Factory patterns work around a super-factory which creates other factories. This factory is also called as factory of factories. 
 
