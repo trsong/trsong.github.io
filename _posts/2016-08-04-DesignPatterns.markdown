@@ -21,6 +21,7 @@ Examples of Structural Patterns includes:
 * **Bridge pattern**: decouple an abstraction from its implementation so that the two can vary independently
 * **Composite pattern**: a tree structure of objects where every object has the same interface
 * **Decorator pattern**: add additional functionality to a class at runtime where subclassing would result in an exponential rise of new classes
+* **Proxy**: Provide a placeholder for another object to control access to it.
 <br/>
 
 #### Adapter/Wrapper/Translator
@@ -261,6 +262,37 @@ object DecoratorSample {
 ```
 <br/>
 
+
+#### Proxy
+***
+
+A **proxy** is a wrapper or agent object that is being called by the client to access the real serving object behind the scenes. Use of the proxy can simply be forwarding to the real object, or can provide additional logic. 
+Use it for lazy initialization, performance improvement by caching the object and controlling access to the client/caller
+
+```scala
+
+trait Proxy 
+
+trait Service
+
+trait ImageProvider {
+  val fileUrl: URL
+  def image: ImageIcon
+}
+
+private class RealImageService(val fileUrl: URL) extends Service with ImageProvider {
+  private val imageIcon = new ImageIcon(fileUrl)
+  def image: ImageIcon = imageIcon
+}
+
+class ImageServiceProxy(imageFileUrl: URL) extends Proxy with ImageProvider {
+  val fileUrl = imageFileUrl
+  private lazy val imageService = new RealImageService(imageFileUrl)
+  def image: ImageIcon = imageService.image
+  override def toString = "ImageServiceProxy for: " + imageFileUrl.toString()
+}
+```
+
 <a name="behavioralPatterns"></a>
 
 ### Design Patterns - Behavioral Patterns
@@ -273,6 +305,8 @@ Examples of Behavioral Patterns includes:
 * **Chain-of-responsibility Pattern**: Command objects are *handled or passed on* to other objects by logic-containing processing objects
 * **Command Pattern**: Command objects encapsulate an action and its parameters
 * **Interpreter Pattern**: Implement a specialized computer language to rapidly solve a specific set of problems
+* **Mediator pattern**: Define an object that encapsulates how a set of objects interact. Mediator promotes loose coupling by keeping objects from referring to each other explicitly, and it allows their interaction to vary independently.
+* **Observer**: Define a one-to-many dependency between objects where a state change in one object results in all its dependents being notified and updated automatically.
 
 <br/>
 
@@ -493,21 +527,159 @@ class ModelingArithmeticOps[T <: ModelTypes : TypeTag](metric: Exp[Metric[T]]) {
 
 ```
 
-<br/>
-
-### Design Patterns - Workshop Aug 23
+#### Mediator
 ***
 
-Today we will cover three design patterns.
+Usually a program is made up of a large number of classes. So the logic and computation is distributed among these classes. The problem of communication between these classes may become more complex .
+
+With the **mediator pattern**, communication between objects is encapsulated with a mediator object. Objects no longer communicate directly with each other, but instead communicate through the mediator. 
+
+The following example use `ChatRoom` as a mediator to help each `User`'s communicate with each other. 
+
+```java
+public class ChatRoom {
+   public static void showMessage(User user, String message){
+      System.out.println(new Date().toString() + " [" + user.getName() + "] : " + message);
+   }
+}
+
+public class User {
+   private String name;
+
+   public String getName() {
+      return name;
+   }
+
+   public void setName(String name) {
+      this.name = name;
+   }
+
+   public User(String name){
+      this.name  = name;
+   }
+
+   public void sendMessage(String message){
+      ChatRoom.showMessage(this,message);
+   }
+}
+   
+public class MediatorPatternDemo {
+   public static void main(String[] args) {
+      User robert = new User("Robert");
+      User john = new User("John");
+
+      robert.sendMessage("Hi! John!");
+      john.sendMessage("Hello! Robert!");
+   }
+}   
+   
+```
+
+#### Observer
+***
+
+**Observer pattern** is used when there is *one-to-many* relationship between objects such as if one object is modified, its depenedent objects are to be notified automatically.
+
+In the following example, `Subject` class has a list of `Observer`'s acted as **subscribers**; once the `Observer`'s state has changed, all of its subscribers will be notified.
+
+```java
+public abstract class Observer {
+   protected Subject subject;
+   public abstract void update();
+}
+
+public class BinaryObserver extends Observer{
+
+   public BinaryObserver(Subject subject){
+      this.subject = subject;
+      this.subject.attach(this);
+   }
+
+   @Override
+   public void update() {
+      System.out.println( "Binary String: " + Integer.toBinaryString( subject.getState() ) ); 
+   }
+}
+
+public class OctalObserver extends Observer{
+
+   public OctalObserver(Subject subject){
+      this.subject = subject;
+      this.subject.attach(this);
+   }
+
+   @Override
+   public void update() {
+     System.out.println( "Octal String: " + Integer.toOctalString( subject.getState() ) ); 
+   }
+}
+
+public class HexaObserver extends Observer{
+
+   public HexaObserver(Subject subject){
+      this.subject = subject;
+      this.subject.attach(this);
+   }
+
+   @Override
+   public void update() {
+      System.out.println( "Hex String: " + Integer.toHexString( subject.getState() ).toUpperCase() ); 
+   }
+}
+
+
+public class Subject {
+	
+   private List<Observer> observers = new ArrayList<Observer>();
+   private int state;
+
+   public int getState() {
+      return state;
+   }
+
+   public void setState(int state) {
+      this.state = state;
+      notifyAllObservers();
+   }
+
+   public void attach(Observer observer){
+      observers.add(observer);		
+   }
+
+   public void notifyAllObservers(){
+      for (Observer observer : observers) {
+         observer.update();
+      }
+   } 	
+}
+
+public class ObserverPatternDemo {
+   public static void main(String[] args) {
+      Subject subject = new Subject();
+
+      new HexaObserver(subject);
+      new OctalObserver(subject);
+      new BinaryObserver(subject);
+
+      System.out.println("First state change: 15");	
+      subject.setState(15);
+      System.out.println("Second state change: 10");	
+      subject.setState(10);
+   }
+}
+```
+
+<br/>
+
+### Design Patterns - Creational patterns
+***
 
 **Creational patterns** are design patterns that deal with object creation mechanisms, trying to create objects in a manner suitable to the situation. Examples: 
 
 * **Lazy initialization**: Tactic of delaying the creation of an object, the calculation of a value, or some other expensive process until the first time it is needed. 
 * **Singleton**: Ensure a class has only one instance, and provide a global point of access to it.
-
-**Structural patterns**: (definition already covered [here](#structuralPatterns))
-
-* **Proxy**: Provide a placeholder for another object to control access to it.
+* **Factory**: Define an interface for creating a single object, but let subclasses decide which class to instantiate. Factory Method lets a class defer instantiation to subclasses.
+* **Abstract factory**: Provides a way to encapsulate a group of individual factories that have a common theme without specifying their concrete classes.
 
 <br />
 
@@ -762,204 +934,16 @@ object Y{
 But most of the time, it's better to composite an object instead of extend an object. 
 <br />
 
-#### Proxy
-***
-
-A **proxy** is a wrapper or agent object that is being called by the client to access the real serving object behind the scenes. Use of the proxy can simply be forwarding to the real object, or can provide additional logic. 
-Use it for lazy initialization, performance improvement by caching the object and controlling access to the client/caller
-
-```scala
-
-trait Proxy 
-
-trait Service
-
-trait ImageProvider {
-  val fileUrl: URL
-  def image: ImageIcon
-}
-
-private class RealImageService(val fileUrl: URL) extends Service with ImageProvider {
-  private val imageIcon = new ImageIcon(fileUrl)
-  def image: ImageIcon = imageIcon
-}
-
-class ImageServiceProxy(imageFileUrl: URL) extends Proxy with ImageProvider {
-  val fileUrl = imageFileUrl
-  private lazy val imageService = new RealImageService(imageFileUrl)
-  def image: ImageIcon = imageService.image
-  override def toString = "ImageServiceProxy for: " + imageFileUrl.toString()
-}
-```
-
-
-### Design Patterns - Workshop Sep 8
-***
-
-Today we will cover three design patterns.
-
-**Behavioral pattern** : (definition already covered [here](#behavioralPatterns))
-
-* **Mediator pattern**: Define an object that encapsulates how a set of objects interact. Mediator promotes loose coupling by keeping objects from referring to each other explicitly, and it allows their interaction to vary independently.
-* **Observer**: Define a one-to-many dependency between objects where a state change in one object results in all its dependents being notified and updated automatically.
-
-**Creational patterns**: (definition already covered [here](#structuralPatterns))
-
-* **Factory**: Define an interface for creating a single object, but let subclasses decide which class to instantiate. Factory Method lets a class defer instantiation to subclasses.
-* **Abstract factory**: Provides a way to encapsulate a group of individual factories that have a common theme without specifying their concrete classes.
-
-
-#### Mediator
-***
-
-Usually a program is made up of a large number of classes. So the logic and computation is distributed among these classes. The problem of communication between these classes may become more complex .
-
-With the **mediator pattern**, communication between objects is encapsulated with a mediator object. Objects no longer communicate directly with each other, but instead communicate through the mediator. 
-
-The following example use `ChatRoom` as a mediator to help each `User`'s communicate with each other. 
-
-```java
-public class ChatRoom {
-   public static void showMessage(User user, String message){
-      System.out.println(new Date().toString() + " [" + user.getName() + "] : " + message);
-   }
-}
-
-public class User {
-   private String name;
-
-   public String getName() {
-      return name;
-   }
-
-   public void setName(String name) {
-      this.name = name;
-   }
-
-   public User(String name){
-      this.name  = name;
-   }
-
-   public void sendMessage(String message){
-      ChatRoom.showMessage(this,message);
-   }
-}
-   
-public class MediatorPatternDemo {
-   public static void main(String[] args) {
-      User robert = new User("Robert");
-      User john = new User("John");
-
-      robert.sendMessage("Hi! John!");
-      john.sendMessage("Hello! Robert!");
-   }
-}   
-   
-```
-
-#### Observer
-***
-
-**Observer pattern** is used when there is *one-to-many* relationship between objects such as if one object is modified, its depenedent objects are to be notified automatically.
-
-In the following example, `Subject` class has a list of `Observer`'s acted as **subscribers**; once the `Observer`'s state has changed, all of its subscribers will be notified.
-
-```java
-public abstract class Observer {
-   protected Subject subject;
-   public abstract void update();
-}
-
-public class BinaryObserver extends Observer{
-
-   public BinaryObserver(Subject subject){
-      this.subject = subject;
-      this.subject.attach(this);
-   }
-
-   @Override
-   public void update() {
-      System.out.println( "Binary String: " + Integer.toBinaryString( subject.getState() ) ); 
-   }
-}
-
-public class OctalObserver extends Observer{
-
-   public OctalObserver(Subject subject){
-      this.subject = subject;
-      this.subject.attach(this);
-   }
-
-   @Override
-   public void update() {
-     System.out.println( "Octal String: " + Integer.toOctalString( subject.getState() ) ); 
-   }
-}
-
-public class HexaObserver extends Observer{
-
-   public HexaObserver(Subject subject){
-      this.subject = subject;
-      this.subject.attach(this);
-   }
-
-   @Override
-   public void update() {
-      System.out.println( "Hex String: " + Integer.toHexString( subject.getState() ).toUpperCase() ); 
-   }
-}
-
-
-public class Subject {
-	
-   private List<Observer> observers = new ArrayList<Observer>();
-   private int state;
-
-   public int getState() {
-      return state;
-   }
-
-   public void setState(int state) {
-      this.state = state;
-      notifyAllObservers();
-   }
-
-   public void attach(Observer observer){
-      observers.add(observer);		
-   }
-
-   public void notifyAllObservers(){
-      for (Observer observer : observers) {
-         observer.update();
-      }
-   } 	
-}
-
-public class ObserverPatternDemo {
-   public static void main(String[] args) {
-      Subject subject = new Subject();
-
-      new HexaObserver(subject);
-      new OctalObserver(subject);
-      new BinaryObserver(subject);
-
-      System.out.println("First state change: 15");	
-      subject.setState(15);
-      System.out.println("Second state change: 10");	
-      subject.setState(10);
-   }
-}
-```
-
-
-
 #### Factory
 ***
 
 > "Define an interface for creating an object, but let subclasses decide which class to instantiate. The Factory method lets a class defer instantiation it uses to subclasses." (Gang Of Four)
 
-1) Create a common interface at compilation time, and determine which which implementation at runtime
-2) Create a common base class at compilation time, and determine which derived class to use (based on which method be override) at runtime
+The following two scenarios can both be treated as **Facotry Pattern**
+
+1. Create a common interface at compilation time, and determine which which implementation at runtime
+
+2. Create a common base class at compilation time, and determine which derived class to use (based on which method be override) at runtime
 
 
 Problems:
@@ -1258,3 +1242,10 @@ public class AbstractFactoryPatternDemo {
    }
 }
 ```
+
+
+
+
+
+
+
