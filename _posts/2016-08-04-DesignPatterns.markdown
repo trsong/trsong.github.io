@@ -10,6 +10,7 @@ categories: Design-Patterns
 <a name="structuralPatterns"></a>
 ### Design Patterns - Structural Patterns
 ***
+
 Structural design patterns are design patterns that ease the design by identifying a simple way to realize **relationships between entities**.
 
 Examples of Structural Patterns includes:
@@ -62,6 +63,7 @@ class EhcacheAdapter[K, V](manager: EhcacheManagerAdapter, val underlyingCache: 
 
 #### Bridge
 ***
+
 The bridge pattern decouples an abstraction from its implementation so that the two can vary independently. Note that: 
 
 The Bridge Pattern
@@ -157,6 +159,7 @@ Rectangle(Color)   Circle(Color)           Blue   Red
 
 #### Composite
 ***
+
 The Composite Pattern is a **partitioning** design pattern which can be a tree structure of objects where every object has the same interface. A composite is an object designed as a composition of one-or-more similar objects, all exhibiting similar functionality. This is known as a "has-a" relationship between objects.
 
 Motivation: When dealing with Tree-structured data, programmers often have to discriminate between a leaf-node and a branch. This makes code more complex, and therefore, error prone. The solution is an interface that allows treating complex and primitive objects uniformly. 
@@ -213,6 +216,7 @@ class ModelingArithmeticOps[T <: ModelTypes : TypeTag](metric: Exp[Metric[T]]) {
 
 #### Decorator
 ***
+
 The Decorator Pattern allows behavior to be added to an individual object, either statically or dynamically, without affecting the behavior of other objects from the same class.
 
 Motivation: As an example, consider a window in a windowing system. Assume the window class has no functionality for adding scrollbars. One could create a subclass ScrollingWindow that provides them, or create a ScrollingWindowDecorator that adds this functionality to existing Window objects. At this point, either solution would be fine. This problem gets worse with every new feature or window subtype to be added.
@@ -258,6 +262,7 @@ object DecoratorSample {
 <a name="behavioralPatterns"></a>
 ### Design Patterns - Behavioral Patterns
 ***
+
 Behavioral Design Patterns are design patterns that **identify common communication patterns between objects and realize these patterns**. By doing so, these patterns increase flexibility in carrying out this communication.
 
 Examples of Behavioral Patterns includes:
@@ -270,6 +275,7 @@ Examples of Behavioral Patterns includes:
 
 #### Chain-of-responsibility Pattern
 ***
+
 Chain-of-responsibility Pattern consists of **a source of command objects** and **a series of processing objects**. Each processing object contains logic that defines the types of command objects that it can handle; the rest are passed to the next processing object in the chain.
 
 Example would be the mechanism of exception handling. A source of command objects is the exception object and a series of processing objects are exception handlers at each level.
@@ -369,6 +375,7 @@ Chain-of-responsibility is widely used in front-end. Ex. UI components form a ch
 
 #### Command Pattern
 ***
+
 Command Pattern encapsulates all information needed to perform an action or trigger an event at a later time. This information includes the method name, the object that owns the method and values for the method parameters.
 
 In Scala, we can rely on by-name parameter to defer evaluation of any expression:
@@ -417,6 +424,7 @@ val redoStack: List[CommandBase] = ???
 
 #### Interpreter Pattern
 ***
+
 Interpreter Pattern is a design pattern that specifies how to evaluate sentences in a language. The basic idea is to have a class for each symbol (terminal or nonterminal) in a specialized computer language. The syntax tree of a sentence in the language is an instance of the composite pattern and is used to evaluate (interpret) the sentence for a client.
 
 ```scala
@@ -486,6 +494,7 @@ class ModelingArithmeticOps[T <: ModelTypes : TypeTag](metric: Exp[Metric[T]]) {
 
 ### Design Patterns - Workshop Aug 23
 ***
+
 Today we will cover three design patterns.
 
 **Creational patterns** are design patterns that deal with object creation mechanisms, trying to create objects in a manner suitable to the situation. Examples: 
@@ -501,6 +510,7 @@ Today we will cover three design patterns.
 
 #### Lazy initialization
 ***
+
 **Lazy initialization** is the tactic of delaying the creation of an object, the calculation of a value, or some other expensive process until the first time it is needed.
 
 
@@ -782,6 +792,7 @@ class ImageServiceProxy(imageFileUrl: URL) extends Proxy with ImageProvider {
 
 ### Design Patterns - Workshop Sep 8
 ***
+
 Today we will cover three design patterns.
 
 **Behavioral pattern** : (definition already covered [here](#behavioralPatterns))
@@ -797,6 +808,7 @@ Today we will cover three design patterns.
 
 #### Mediator
 ***
+
 Usually a program is made up of a large number of classes. So the logic and computation is distributed among these classes. The problem of communication between these classes may become more complex .
 
 With the **mediator pattern**, communication between objects is encapsulated with a mediator object. Objects no longer communicate directly with each other, but instead communicate through the mediator. 
@@ -941,7 +953,6 @@ public class ObserverPatternDemo {
 #### Factory
 ***
 
-
 > "Define an interface for creating an object, but let subclasses decide which class to instantiate. The Factory method lets a class defer instantiation it uses to subclasses." (Gang Of Four)
 
 1) Create a common interface at compilation time, and determine which which implementation at runtime
@@ -1034,6 +1045,7 @@ public class FactoryPatternDemo {
 
 #### Abstract Factory
 ***
+
 Abstract Factory patterns work around a super-factory which creates other factories. This factory is also called as factory of factories. 
 
 `Shape` Interface:
