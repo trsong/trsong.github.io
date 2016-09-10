@@ -262,6 +262,7 @@ object DecoratorSample {
 <br/>
 
 <a name="behavioralPatterns"></a>
+
 ### Design Patterns - Behavioral Patterns
 <hr>
 
