@@ -1,7 +1,7 @@
 ---
 layout: post
 title:  " Typescript with Examples"
-date:   2016-10-01 22:23:32 -0700
+date:   2016-10-01 22:10:32 -0700
 categories: Platform
 ---
 * This will become a table of contents (this text will be scraped).

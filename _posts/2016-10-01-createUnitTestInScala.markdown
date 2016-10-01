@@ -1,10 +1,12 @@
+---
 layout: post
 title:  "Create Unit Tests in Scala"
-date:   2016-10-01 10:00:00 -0700
-categories: Tool
+date:   2016-10-01 10:00:32 -0700
+categories: Platform
 ---
 * This will become a table of contents (this text will be scraped).
 {:toc}
+
 
 ### Create Unit Tests in Scala
 ***
