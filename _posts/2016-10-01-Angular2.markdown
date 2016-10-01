@@ -14,6 +14,7 @@ categories: Platform
 
 #### Modules 
 ***
+
 An Angular module, whether a root or feature, is a class with an `@NgModule` decorator.
 
 ```typescript
@@ -76,6 +77,7 @@ export class HeroListComponent implements OnInit {
 <a name="Templates"></a>
 #### Templates
 ***
+
 A **template** is a form of HTML that tells Angular how to render the component.
 
 ``` html
@@ -94,6 +96,7 @@ A **template** is a form of HTML that tells Angular how to render the component.
 
 #### Metadata
 ***
+
 **Metadata** tells Angular how to process a class.
 
 For below example, in fact, it really is just a class. It's not a component until we tell Angular about it.
@@ -123,7 +126,8 @@ Here are a few of the possible `@Component` configuration options:
 
 #### Data binding
 ***
-![data binding](databinding.png)
+
+![data binding]({{ site.url }}/assets/pic/databinding.png "databinding")
 
 #### A simple template
 
@@ -254,7 +258,8 @@ export class HeroService {
 
 ### Dependency injection
 ***
-![Figure: Image of a Component Tree, and a DI Tree](DI.png)
+
+![Figure: Image of a Component Tree, and a DI Tree]({{ site.url }}/DI.png "DI example")
 
 #### `@Injectable()`
 
