@@ -1,0 +1,189 @@
+---
+layout: post
+title:  "CURL command Tut in Linux with Example Usage"
+date:   2016-10-01 09:42:00 -0700
+categories: Tool
+---
+* This will become a table of contents (this text will be scraped).
+{:toc}
+
+<!-- Copyright: This is a revised version of an article was originally published on http://www.slashroot.in by Sarath Pillai on 03/16/2014 - 13:45. I owe nothing other than re-organize the layout of the page -->
+
+## CURL command Tut in Linux with Example Usage
+<hr />
+
+Note: This is a revised version of an article was originally published on http://www.slashroot.in by Sarath Pillai on 03/16/2014 - 13:45. I owe nothing other than re-organize the layout of the page. This page is only for reference usage. [Oringal Link](http://www.slashroot.in/curl-command-tutorial-linux-example-usage)
+
+- CURL is an easy to use command line tool to send and receive files, and it supports almost all major protocols(DICT, FILE, FTP, FTPS, GOPHER, HTTP, HTTPS,  IMAP, IMAPS,  LDAP,  LDAPS,  POP3, POP3S, RTMP, RTSP, SCP, SFTP, SMTP, SMTPS, TELNET and TFTP) in use.
+- Can be used inside your shell scripts with ease
+- Supports features like pause and resume of downloads
+- It has around 120 command line options for various tasks
+<br />
+
+### Show enitre HTTP content:
+<hr />
+
+```bash
+curl google.com 
+curl google.com > output.html
+curl -o output.html google.com
+```
+<br />
+
+### Follow HTTP redirection 
+<hr />
+If response code is 302 (Temprary redirection) or 301 (Permanently moved), curl the target website will just return the result response, like web browser redict for you.
+
+Add `-L` to return the final result after redirect: 
+
+```bash
+curl -L google.com
+```
+<br />
+
+### Pause/Resume Downloads 
+<hr />
+
+Start a resumable downloads:
+
+```bash
+curl -O http://ftp.gnu.org/pub/gnu/libiconv/libiconv-1.14.tar.gz
+```
+
+Once start, you can Ctrl-C to kill it. Then you can use the following to resume:
+
+```bash
+curl -C - -O http://ftp.gnu.org/pub/gnu/libiconv/libiconv-1.14.tar.gz
+``` 
+<br />
+
+### See complete Request and Response Header
+<hr />
+See all headers, both request and response. Use Verbose:
+
+```bash
+curl -v google.com
+```
+<br />
+
+
+### Use Proxy
+<hr />
+Connect to `http://example.com` by using `proxyserver` at port `proxyport` with `user` and `password`
+
+```bash
+curl -x http://proxyserver:proxyport --proxy-user user:password -L http://example.com
+```
+<br />
+
+
+### Ignore SSL Certificate Error
+<hr />
+SSL certificates needs to be signed by an authorized certificate authority. Otherwise user agents like browser's will warn you and requires a user action like pressing a continue button. 
+
+Use `-k` to force continue:
+
+```bash
+curl -k https://10.1.136.101:4848
+```
+<br />
+
+### Modify User-Agent
+<hr />
+
+The HTTP request header that includes this information is called as User-Agent. Basically server's can be configured to respond with different page layout for different user agent's. The user agent information send by the client will be visible in server logs.
+
+A normal HTTP request send by a Firefox web browser will have a user agent that looks something like "Mozilla/5.0 (Windows; U; Windows NT 5.1; de; rv:1.9.2.3)"
+
+Using curl you can modify user agent value to your required string, as shown below.
+
+```bash
+curl -A "YOUR USER AGENT STRING GOES HEERE" http://example.com
+```
+<br />
+
+### FTP Download, View File Structure, Upload, Delete
+<hr />
+
+Download:
+
+```bash
+curl ftp://example.com/mydirectory/myfile.zip --user username:password -o myfile.zip
+```
+
+View File Structure:
+
+```bash
+curl ftp://example.com --user username:password
+```
+
+Upload:
+```bash
+ curl -T myfile.zip ftp://example.com/mydirectory/ --user username:password
+```
+
+Delete:
+```bash
+curl ftp://example.com/ -X 'DELE myfile.zip' --user username:password
+```
+<br />
+
+### Send EMAIL
+<hr />
+
+```bash
+ curl --url "smtps://smtp.example.com:465" --ssl-reqd   --mail-from "user@example.com" --mail-rcpt "friend@example.com"   --upload-file mailcontent.txt --user "user@example.com:password" --insecure 
+```
+
+In the above command, replace smtps://smpt.example.com:465 with your SMTP server and port.
+
+--mail-from: This field contains the from address that the receiver should see.
+
+--mail-rcpt: This field contains TO address
+
+--upload-file: The file provided here should contain your message as a content
+
+--user: SMTP user@domain:password
+
+--insecure option used is exactly same as using -k option we saw earlier, to ignore unknown SSL certificates.
+
+<br />
+
+
+### Send POST request
+<hr />
+```bash
+curl -X POST -u  admin:admin http://example.com/myconfigs/status -Hcontent-type:application/xml -d @/home/user/file.xml
+```
+
+In the above example, POST is the request method, -u is used to mention credentials to access that specific resource on the server, -H content-type is the type of content format that we will be sending to the server (can be xml, normal text etc). -d with @/home/user/file.xml indicates to send the content of file.xml to the server. This file will contain the configuration options with correct syntax that the URL http://example.com/myconfigs/status will accept.
+
+Send PUT/DELETE is as simple as replacing POST with PUT/DELETE
+<br />
+
+### Send Cookie
+<hr />
+CURL can be used to send requests to the server using a previously got cookie. You can either use VALUE=DATA format or give a file name as parameter:
+
+Send cookie using existing file:
+
+```bash
+curl -b mycookies.txt http://example.com
+```
+
+Send cookie inline:
+
+```bash
+curl -b "name=value" http://example.com
+```
+<br />
+
+### Download a file depending upon file modification time
+<hr />
+At times, you only want to download a document from a URL if it is modified after your specified time. This is very handy option in curl. Its done by -z option in curl as shown below.
+
+```bash
+curl -z 3-Jan-14 http://example.com/myfile.gz
+```
+<br />
+
