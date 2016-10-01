@@ -259,7 +259,7 @@ export class HeroService {
 ### Dependency injection
 ***
 
-![Figure: Image of a Component Tree, and a DI Tree]({{ site.url }}/DI.png "DI example")
+![Figure: Image of a Component Tree, and a DI Tree]({{ site.url }}/assets/pic/DI.png "DI example")
 
 #### `@Injectable()`
 

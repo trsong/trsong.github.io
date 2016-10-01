@@ -762,7 +762,7 @@ object Scenario1 {
 
 As the following figure illustrates:
 
-![Lazy val dead lock]({{ site.url }}/lazy-val-dead-lock.png "Lazy val dead lock example")
+![Lazy val dead lock]({{ site.url }}/assets/pic/lazy-val-dead-lock.png "Lazy val dead lock example")
 
 
 The `A.start` val depends on `B.step` which in turn depends again on `A.base`. Although there is no cyclic relation here, running this code can lead to a **deadlock**:
