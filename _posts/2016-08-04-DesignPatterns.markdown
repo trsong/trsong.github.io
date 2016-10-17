@@ -22,6 +22,7 @@ Examples of Structural Patterns includes:
 * **Composite pattern**: a tree structure of objects where every object has the same interface
 * **Decorator pattern**: add additional functionality to a class at runtime where subclassing would result in an exponential rise of new classes
 * **Proxy**: Provide a placeholder for another object to control access to it.
+* **Front controller**: The pattern relates to the design of Web applications. It provides a *centralized* entry point for handling requests.
 <br/>
 
 #### Adapter/Wrapper/Translator
@@ -293,6 +294,116 @@ class ImageServiceProxy(imageFileUrl: URL) extends Proxy with ImageProvider {
 }
 ```
 
+#### Front controller
+***
+
+The **front controller** design pattern means that all requests that come for a resource in an application will be handled by a single handler and then dispatched to the appropriate handler for that type of request. 
+
+```java
+public class HomeView {
+   public void show(){
+      System.out.println("Displaying Home Page");
+   }
+}
+
+public class StudentView {
+   public void show(){
+      System.out.println("Displaying Student Page");
+   }
+}
+
+public class Dispatcher {
+   private StudentView studentView;
+   private HomeView homeView;
+   
+   public Dispatcher(){
+      studentView = new StudentView();
+      homeView = new HomeView();
+   }
+
+   public void dispatch(String request){
+      if(request.equalsIgnoreCase("STUDENT")){
+         studentView.show();
+      }
+      else{
+         homeView.show();
+      }	
+   }
+}
+
+public class FrontController {
+	
+   private Dispatcher dispatcher;
+
+   public FrontController(){
+      dispatcher = new Dispatcher();
+   }
+
+   private boolean isAuthenticUser(){
+      System.out.println("User is authenticated successfully.");
+      return true;
+   }
+
+   private void trackRequest(String request){
+      System.out.println("Page requested: " + request);
+   }
+
+   public void dispatchRequest(String request){
+      //log each request
+      trackRequest(request);
+      
+      //authenticate the user
+      if(isAuthenticUser()){
+         dispatcher.dispatch(request);
+      }	
+   }
+}
+
+public class FrontControllerPatternDemo {
+   public static void main(String[] args) {
+   
+      FrontController frontController = new FrontController();
+      frontController.dispatchRequest("HOME");
+      frontController.dispatchRequest("STUDENT");
+   }
+}
+```
+
+
+
+##### Difference between Frontend-Controller and Router: 
+
+>A **Frontend-Controller** should collaborate with a **Router** and a **Dispatcher** to decide based on the (HTTP) request against the application which concrete **Action** has to be executed and then dispatches it.
+
+So the **routing** takes care of or helps with identifying which action method to execute and the controller then is responsible to provide this action but both handle the request.
+
+In our code base, the Frontend Controller Pattern is handled by play framework. But the following code has similar idea:
+
+```scala
+class AnalysisController @Inject() (environmentManager: EnvironmentManager,
+                                    serviceLocatorFactory: BaseServiceLocatorFactory,
+                                    actionProvider: ActionProvider)
+  extends Controller(environmentManager, serviceLocatorFactory) {
+  
+  
+  // ... Some common logic all requests handler share
+ 
+  
+  def performAnalysisChartAction(analysisId: String, chartId: String, command: String): AnyAction = dispatcher(command) {
+    case ANALYSIS_CHART_RENDER => ... RenderChart.create(analysisId, chartId) ...
+    case ANALYSIS_CHART_RESIZE => ...
+    case ANALYSIS_CAPTURE_CHART => ...  
+    ...
+ }
+}
+
+```
+Above code provides a centralized controller to handle chart rendering request of different commands. By doing such, avoid the duplicated code of some common logic that all requests handler share.
+
+<br />
+
+
+
 <a name="behavioralPatterns"></a>
 
 ### Design Patterns - Behavioral Patterns
@@ -307,7 +418,7 @@ Examples of Behavioral Patterns includes:
 * **Interpreter Pattern**: Implement a specialized computer language to rapidly solve a specific set of problems
 * **Mediator pattern**: Define an object that encapsulates how a set of objects interact. Mediator promotes loose coupling by keeping objects from referring to each other explicitly, and it allows their interaction to vary independently.
 * **Observer**: Define a one-to-many dependency between objects where a state change in one object results in all its dependents being notified and updated automatically.
-
+* **Visitor**: Represent an operation to be performed on the elements of an object structure. Visitor lets a new operation be defined without changing the classes of the elements on which it operates.
 <br/>
 
 #### Chain-of-responsibility Pattern
@@ -670,6 +781,188 @@ public class ObserverPatternDemo {
 ```
 
 <br/>
+
+
+#### Visitor
+***
+
+The **visitor design pattern** is a way of separating an algorithm from an object structure on which it operates.
+
+```java
+/*
+  ComputerParts
+*/
+public interface ComputerPart {
+   public void accept(ComputerPartVisitor computerPartVisitor);
+}
+
+public class Keyboard implements ComputerPart {
+
+   @Override
+   public void accept(ComputerPartVisitor computerPartVisitor) {
+      computerPartVisitor.visit(this);
+   }
+}
+
+public class Monitor implements ComputerPart {
+
+   @Override
+   public void accept(ComputerPartVisitor computerPartVisitor) {
+      computerPartVisitor.visit(this);
+   }
+}
+
+public class Mouse implements ComputerPart {
+
+   @Override
+   public void accept(ComputerPartVisitor computerPartVisitor) {
+      computerPartVisitor.visit(this);
+   }
+}
+
+public class Computer implements ComputerPart {
+	
+   ComputerPart[] parts;
+
+   public Computer(){
+      parts = new ComputerPart[] {new Mouse(), new Keyboard(), new Monitor()};		
+   } 
+
+   @Override
+   public void accept(ComputerPartVisitor computerPartVisitor) {
+      for (int i = 0; i < parts.length; i++) {
+         parts[i].accept(computerPartVisitor);
+      }
+      computerPartVisitor.visit(this);
+   }
+}
+
+/*
+  ComputerPartVisitor
+*/
+
+public interface ComputerPartVisitor {
+	public void visit(Computer computer);
+	public void visit(Mouse mouse);
+	public void visit(Keyboard keyboard);
+	public void visit(Monitor monitor);
+}
+
+public class ComputerPartDisplayVisitor implements ComputerPartVisitor {
+
+   @Override
+   public void visit(Computer computer) {
+      System.out.println("Displaying Computer.");
+   }
+
+   @Override
+   public void visit(Mouse mouse) {
+      System.out.println("Displaying Mouse.");
+   }
+
+   @Override
+   public void visit(Keyboard keyboard) {
+      System.out.println("Displaying Keyboard.");
+   }
+
+   @Override
+   public void visit(Monitor monitor) {
+      System.out.println("Displaying Monitor.");
+   }
+}
+
+public class VisitorPatternDemo {
+   public static void main(String[] args) {
+
+      ComputerPart computer = new Computer();
+      computer.accept(new ComputerPartDisplayVisitor());
+   }
+}
+
+```
+
+Advantage of above code: 
+
+* add a new ComputerPart will not affect existing one
+* implement a new visitor will not affect the behaviour of existing visitors 
+
+Disadvantage: 
+
+* add a new ComputerPart is esay. However, need to implement visit(ComputerPart) for each existing visitors.
+
+Code Example from code base:
+
+```scala
+trait MemberSetVisitor[T] {
+  def visit(set: MemberSet): T = throw new EngineException(RCIE000033, VEE_UNSUPPORTED)
+  def visit(set: EmptySet): T
+  def visit(set: DefaultMembers): T
+  def visit(set: RootMembers): T
+  def visit(set: ChildMembers): T
+  def visit(set: SpecificMembers): T
+  def visit(set: DescendantsByLevel): T
+  def visit(set: Crossjoin): T
+}
+
+case class Crossjoin(
+    val sets: Seq[MemberSet],
+    val typeId: String = MemberSetTypes.FUNCTION,
+    val functionId: String = FunctionNames.CROSSJOIN)
+  extends FunctionMemberSet {
+  
+   // ??????, should all underlying sets accept the visitor, then visit itself? 
+  def accept[T](visitor: MemberSetVisitor[T]): T = visitor.visit(this)  
+}
+
+class AsSimpleQueryBuilderVisitor(queryMetric: Metric,
+                                  context: MemberSetContext,
+                                  interpreter: DataDslInterpreter)
+                                 (implicit model: DataDslModel)
+  extends MemberSetVisitor[SimpleQueryBuilder]{
+
+  override def visit(set: EmptySet): SimpleQueryBuilder = model.newQueryBuilder(queryMetric)
+
+  override def visit(set: Crossjoin): SimpleQueryBuilder = {
+    set.sets.foldLeft(model.newQueryBuilder(queryMetric)) { (result, set) =>
+    
+      // ??????, why accept inside visit methods? Should the element knows how its children are constructed?
+      // Maybe we want to visit things differently among visitors? 
+      val builder = set.accept(this)
+      ...
+    }
+    
+    ...
+  }
+```
+
+The above code is actually a bad example. Because, web request may have different types: **GET**, **PUT**, **POST**, **DELETE**. Centrallized the control logic will cause the trouble of narrow our request type to one single type. For example, render chart, save chart, resize chart all use the **POST** type.
+
+##### Visitor Pattern VS Pattern Matching
+[interview with Martin Odersky (creator of Scala Language)](http://www.artima.com/scalazine/articles/pattern_matching.html)
+>So the right tool for the job really depends on which direction you want to extend. If you want to extend with new data, you pick the classical object-oriented approach with virtual methods. If you want to keep the data fixed and extend with new operations, then patterns are a much better fit. There's actually a design pattern—not to be confused with pattern matching—in object-oriented programming called the visitor pattern, which can represent some of the things we do with pattern matching in an object-oriented way, based on virtual method dispatch. **But in practical use the visitor pattern is very bulky. You can't do many of the things that are very easy with pattern matching. You end up with very heavy visitors. And it also turns out that with modern VM technology it's way more innefficient than pattern matching. For both of these reasons, I think there's a definite role for pattern matching.**
+
+Example: consider how complicated just to implement the following use Visitor Pattern; Basically, you need to create an abstract class for visitor, and create concrete class for each operation and its getters and setters as well.
+
+```scala
+sealed abstract class Expr
+case class Num(n: Int) extends Expr
+case class Sum(l: Expr, r: Expr) extends Expr
+case class Prod(l: Expr, r: Expr) extends Expr
+
+def evalExpr(e: Expr): Int = e match {
+  case Num(n) => n
+  case Sum(l, r) => evalExpr(l) + evalExpr(r)
+  case Prod(l, r) => evalExpr(l) * evalExpr(r)
+}
+
+def printExpr(e: Expr) = e match {
+  case Num(n) => print(" " + n + " ")
+  case Sum(l, r) => printExpr(l); print("+"); printExpr(r)
+  case Prod(l, r) => printExpr(l); print("x"); printExpr(r)
+}
+```
+
+<br />
 
 ### Design Patterns - Creational patterns
 ***
@@ -1245,3 +1538,40 @@ public class AbstractFactoryPatternDemo {
 
 
 
+
+### Concurrent Pattern
+***
+
+**Concurrency patterns** are those types of design patterns that deal with the multi-threaded programming paradigm. Examples of this class of patterns include:
+
+* **Binding Properties Pattern**: Combining multiple observers to force properties in different objects to be synchronized or coordinated in some way.
+
+<br />
+
+
+#### Binding Properties Pattern
+***
+
+The **Binding properties pattern** is combining multiple observers to force properties in different objects to be synchronized or coordinated in some way. 
+
+There is a digest cycle, where the scope examines all of the $watch expressions and compares them with the previous value. It looks at the object models for changes, if the old value isn't the same as the new value, AngularJS will update the appropriate places, a.k.a dirty checking.
+
+In order for the digest cycle to be execute $apply(fn) has to be run, this is how you enter the Angular world from JavaScript. How does $apply(fn) get called (taken from AngularJs integration with browser):
+
+The browser's event-loop waits for an event to arrive. An event is a user interaction, timer event, or network event (response from a server).
+The event's callback gets executed. This enters the JavaScript context. The callback can modify the DOM structure.
+Once the callback executes, the browser leaves the JavaScript context and re-renders the view based on DOM changes.
+Data Binding
+
+In order to achieve two-way binding, directives register watchers. For a page to be fast and efficient we need to try and reduce all these watchers that we create. So you should be careful when using two-way binding - i.e. only use it when you really needed. Otherwise use one-way:
+
+```
+<h1> {{ ::vm.title }} </h1>
+```
+
+Here it is quite obvious that the title of the page probably won't be changed while the user is on the page - or needs to see the new one if it is changed. So we can use :: to register a one-way binding during the template linking phase.
+
+The main issues I've seen with explosions of watchers are grids with hundreds of rows. If these rows have quite a few columns and in each cell there is two-way data binding, then you're in for a treat. You can sit back and wait like in modem times for the page to load!
+
+
+<br />
