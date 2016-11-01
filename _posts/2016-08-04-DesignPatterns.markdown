@@ -23,6 +23,8 @@ Examples of Structural Patterns includes:
 * **Decorator pattern**: add additional functionality to a class at runtime where subclassing would result in an exponential rise of new classes
 * **Proxy**: Provide a placeholder for another object to control access to it.
 * **Front controller**: The pattern relates to the design of Web applications. It provides a *centralized* entry point for handling requests.
+* **Facade pattern**: Provide a unified interface to a set of interfaces in a subsystem. Facade defines a higher-level interface that makes the subsystem easier to use.
+
 <br/>
 
 #### Adapter/Wrapper/Translator
@@ -403,6 +405,87 @@ Above code provides a centralized controller to handle chart rendering request o
 <br />
 
 
+#### Facade pattern
+---
+A **Facade** is used when an easier or simpler interface to an underlying object is desired. Alternatively, an **adapter** can be used when the wrapper must respect a particular interface and must support polymorphic behavior. A **decorator** makes it possible to add or alter behavior of an interface at run-time.
+
+
+| Pattern | Intent |
+|:--------|:-------|
+| Adapter | Converts one interface to another so that it matches what the client is expecting |
+|Decorator |	Dynamically adds responsibility to the interface by wrapping the original code |
+| Facade	| Provides a simplified interface|
+
+The facade pattern is typically used when:
+
+* a simple interface is required to access a complex system;
+* the abstractions and implementations of a subsystem are tightly coupled;
+* need an entry point to each level of layered software; or
+* a system is very complex or difficult to understand.
+
+Code Example:
+
+```scala
+trait SubSystemA {
+ def methodA1()
+ def methodA2()
+}
+
+trait SubSystemB {
+ def methodB()
+}
+
+class ConcreteSubSystemA extends SubSystemA {
+ override def methodA1() {
+  println("System A: method1")
+ }
+
+ override def methodA2() {
+  println("System A: method2")
+ }
+}
+
+class ConcreteSubSystemB extends SubSystemB {
+ override def methodB() {
+  println("System B: method")
+ }
+}
+
+class Facade extends SubSystemA with SubSystemB {
+ val subsystemA = new ConcreteSubSystemA()
+ val subsystemB = new ConcreteSubSystemB()
+ override def methodA1() {
+  subsystemA.methodA1()
+ }
+ override def methodA2() {
+  subsystemA.methodA2()
+ }
+ override def methodB() {
+  subsystemB.methodB()
+ }
+}
+
+// Client
+object FacadeClient extends Application {
+ var facade = new Facade()
+ facade.methodA1()
+ facade.methodA2()
+ facade.methodB()
+}
+```
+
+##### Note: how to force the order of function call when implement a facade method:
+
+```scala
+trait facadeTrait {
+   def functionA(): ResultA
+   def functionB(result: ResultA): ResultB
+   def functionC(result: ResultB): ResultC
+}
+```
+
+<br>
+
 
 <a name="behavioralPatterns"></a>
 
@@ -419,6 +502,8 @@ Examples of Behavioral Patterns includes:
 * **Mediator pattern**: Define an object that encapsulates how a set of objects interact. Mediator promotes loose coupling by keeping objects from referring to each other explicitly, and it allows their interaction to vary independently.
 * **Observer**: Define a one-to-many dependency between objects where a state change in one object results in all its dependents being notified and updated automatically.
 * **Visitor**: Represent an operation to be performed on the elements of an object structure. Visitor lets a new operation be defined without changing the classes of the elements on which it operates.
+* **Strategy pattern**: Define a family of algorithms, encapsulate each one, and make them interchangeable. Strategy lets the algorithm vary independently from clients that use it.
+
 <br/>
 
 #### Chain-of-responsibility Pattern
@@ -963,6 +1048,74 @@ def printExpr(e: Expr) = e match {
 ```
 
 <br />
+
+
+#### Strategy pattern
+---
+**Strategy pattern**  (also known as the **policy pattern**) is a software design pattern that enables an algorithm's behavior to be selected at **runtime**.
+
+For instance, a class that performs validation on incoming data may use a strategy pattern to select a validation algorithm based on the type of data, the source of the data, user choice, or other discriminating factors. These factors are not known for each case until run-time, and may require radically different validation to be performed.
+
+Think twice before implementing this pattern. You have to be sure your need is to **frequently** change an algorithm. You have to clearly anticipate the future, otherwise, this pattern will be more **expensive** than a basic implementation.
+This pattern is expensive to **create**.
+This pattern can be expensive to **maintain**. If the representation of a class often changes, you will have lots of refactoring.
+This pattern is hard to **remove** too.
+
+
+| Pattern | Intent |
+|:--------|:-------|
+| State | can activate several states, whereas a strategy can only activate one of the algorithms. |
+| Flyweight | provides a shared object that can be used in multiple contexts simultaneously, whereas a strategy focuses on one context |
+| Decorator | changes the skin of an object, whereas a strategy changes the guts of an object |
+| Composite | is used in combination with a strategy to improve efficiency |
+
+Code Example:
+
+```scala
+class SomeParam
+class SomeReturnValue
+
+object Strategies {
+ def strategyA(param:SomeParam) : SomeReturnValue = {
+  println("strategy A")
+  return new SomeReturnValue()
+ }
+
+ def strategyB(param:SomeParam) : SomeReturnValue = {
+  println("strategy B")
+  return new SomeReturnValue()
+ }
+
+ def strategyC(param:SomeParam) : SomeReturnValue = {
+  println("strategy C")
+  return new SomeReturnValue()
+ }
+}
+
+class MyApplication(var strategy: (SomeParam => SomeReturnValue)) {
+ def doSomething(param:SomeParam) : SomeReturnValue = {
+  return strategy(param)
+ }
+}
+
+// Client
+object StrategyClient extends Application {
+ var arg = "a"
+ var strategy:(SomeParam => SomeReturnValue) = _
+ arg match {
+  case "a" => strategy = Strategies.strategyA
+  case "b" => strategy = Strategies.strategyB
+  case _ => strategy = Strategies.strategyC
+ }
+ var myapp = new MyApplication(strategy)
+ myapp.doSomething(new SomeParam())
+ myapp.strategy = Strategies.strategyC
+ myapp.doSomething(new SomeParam())
+}
+```
+
+
+<br>
 
 ### Design Patterns - Creational patterns
 ***
@@ -1545,6 +1698,7 @@ public class AbstractFactoryPatternDemo {
 **Concurrency patterns** are those types of design patterns that deal with the multi-threaded programming paradigm. Examples of this class of patterns include:
 
 * **Binding Properties Pattern**: Combining multiple observers to force properties in different objects to be synchronized or coordinated in some way.
+* **Asynchronous method invocation**: Asynchronous pattern is a client-side support that doesn't block the calling thread while waiting for a reply. Instead, the calling thread is notified when the reply arrives.
 
 <br />
 
@@ -1575,3 +1729,70 @@ The main issues I've seen with explosions of watchers are grids with hundreds of
 
 
 <br />
+
+#### Asynchronous method invocation
+---
+**Asynchronous Method Invocation** (AMI), also known as asynchronous method calls or asynchronous pattern is a client-side support that doesn't block the calling thread while waiting for a reply. Instead, the calling thread is notified when the reply arrives. **Polling** for a reply is an undesired option.
+
+Alternatives are synchronous method invocation and **future objects**.
+
+##### Scala Future and C# async/await
+
+C# Example: async/await
+> The following Windows Forms example illustrates the use of await in an async method, `WaitAsynchronouslyAsync`. Contrast the behavior of that method with the behavior of `WaitSynchronously`. Without an await operator applied to a task, WaitSynchronously runs synchronously despite the use of the async modifier in its definition and a call to Thread.Sleep in its body.
+
+```csharp
+private async void button1_Click(object sender, EventArgs e)
+{
+    // Call the method that runs asynchronously.
+    string result = await WaitAsynchronouslyAsync();
+
+    // Call the method that runs synchronously.
+    //string result = await WaitSynchronously ();
+
+    // Display the result.
+    textBox1.Text += result;
+}
+
+// The following method runs asynchronously. The UI thread is not
+// blocked during the delay. You can move or resize the Form1 window 
+// while Task.Delay is running.
+public async Task<string> WaitAsynchronouslyAsync()
+{
+    await Task.Delay(10000);
+    return "Finished";
+}
+
+// The following method runs synchronously, despite the use of async.
+// You cannot move or resize the Form1 window while Thread.Sleep
+// is running because the UI thread is blocked.
+public async Task<string> WaitSynchronously()
+{
+    // Add a using directive for System.Threading.
+    Thread.Sleep(10000);
+    return "Finished";
+}
+```
+
+Scala Future
+
+```scala
+import scala.util.{Success, Failure}
+val f: Future[List[String]] = Future {
+  session.getRecentPosts
+}
+f.onComplete {
+  case Success(posts) => for (post <- posts) println(post)
+  case Failure(t) => println("An error has occured: " + t.getMessage)
+}
+```
+
+Scala Future VS C#: async/await
+
+> C# aync/await: the asynchronous method is NOT running in another thread, so you don't have to worry about shared resources.  You lose the benefit of this asynchronous task being run, for instance, on another CPU core, but, you still gain the benefit of not having to wait for network/disk I/O. 
+
+> Scala Future: A Future is the placeholder for the returned value of a method that will be executed asynchronously.  You can treat it like a return value, passing it around to things that will need the return value.  If you want to add two Future[Integer] objects together, you can compose them into another future that will have the combined result. 
+
+
+
+<br>
