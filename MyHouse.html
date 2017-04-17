@@ -19,8 +19,8 @@
     }
     
     .pic-container {
-      height: 350px;
-      width: 350px;
+      height: 450px;
+      width: 650px;
       overflow-y: auto
     }
   </style>
@@ -38,7 +38,7 @@
 
     function offsetSameLocation(data) {
       var LatOffSet = 49.2805906 - 49.2806598;
-      var LngOffSet = -123.121834 + -123.12194;
+      var LngOffSet = -123.121834 + 123.12194;
 
       function isTooClose(index) {
         var loc = data[index].LatAndLng.split('@');
@@ -51,7 +51,6 @@
           if (Math.abs(+newLoc[0] - currentLat) < Math.abs(LatOffSet) && Math.abs(+newLoc[1] - currentLng) < Math.abs(LngOffSet)) {
             // console.log(data[index].Address + " is too close to "+ data[i].Address);
             return true;
-
           }
           i++;
         }
@@ -72,7 +71,7 @@
     }
 
     function unitPrice(priceStr, sizeStr) {
-      return ((+priceStr.replace("$", '')) / (+(sizeStr.replace('sqft', '')))).toFixed(2);
+      return (+((+priceStr.replace("$", '') * 1000) / (+(sizeStr.replace('sqft', '')))).toFixed(2));
     }
 
     function initMap() {
@@ -86,11 +85,11 @@
         center: stringToLocation(data[0].LatAndLng)
       });
 
-      data.map(function (entry) {
+      data.map(function (entry, index) {
         var marker = new google.maps.Marker({
           position: stringToLocation(entry.LatAndLng),
           map: map,
-          label: entry.Index
+          label: index.toString()
         });
 
         var contentString = `<div>
@@ -98,7 +97,7 @@
            <h3><span>Price:</span>${entry.Price}K</h3>
            <h3><span>Address:</span>${entry.Address}</h3>
            <h3><span>Size:</span>${entry.SqrtFt}</h3>
-           <h4><span>PricePerSqft</span>$${unitPrice(entry.Price, entry.SqrtFt) * 1000}</h4>
+           <h4><span>PricePerSqft</span>$${unitPrice(entry.Price, entry.SqrtFt)}</h4>
            <h4><span>MaintainFee:</span> ${entry.MaintainFee} * 12 = $${((+entry.MaintainFee.replace('$', '')) * 12).toFixed(2)}</h4>
            <h4><span>Year:</span>${entry.Year}</h2>
         </div>`;
@@ -111,7 +110,7 @@
         var picContainer = "<div class='pic-container'>" + pictureString + "</div>";
 
         var infowindow = new google.maps.InfoWindow({
-          content: contentString + pictureString
+          content: contentString + picContainer
         });
 
         marker.addListener('click', function () {
