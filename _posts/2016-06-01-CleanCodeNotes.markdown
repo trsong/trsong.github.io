@@ -26,6 +26,7 @@ And the following is also important:
 
 
 ### CH2 Meaningful names
+
 #### Use Intention-Revealing Names 
 - Avoid Disinformation 
 - Make Meaningful Distinctions 
@@ -50,6 +51,7 @@ And the following is also important:
 
 
 ### CH3 Function
+
 #### Small! 
 function should be small and meaningful
 
@@ -75,7 +77,9 @@ scenario….
 plan…
 
 #### Function Arguments 
+
 #### Have No Side Effects
+
 A function that has a side effect will create coupling to other objects. Which is hard to detect and maintain, and it’s usually buggy
 And it’s against “DO ONE THING”
 
@@ -99,6 +103,7 @@ use try catch block is much clear than nested if statement to detect the err
 duplicated code make is hard to maintain. if have N copy, then 1 place with bug will result in N-fold effort for fixing bug in duplicated place
 
 ### CH4 Comments
+
 #### Comments Do Not Make Up for Bad Code 
 fixing it! don’t leave comments.
 But guess sometimes we have to leave a comment. e.g.. Partial refactoring
@@ -150,6 +155,7 @@ null is dangerous. We should avoid passing null in code whenever possible to pre
 Last time: catch exception and re-throw example planLoader.scala:65 
 
 ### CH8 Boundaries
+
 #### Using Third-Party Code
 **Code Provider:** strive for broad applicability
 **Code User:** want an interface focused on their particular needs
@@ -165,6 +171,7 @@ The default implementation of the play cache API uses EHCache
 EhcacheAdapterSpec.scala is our boundary tests for Ehcache
 
 ### CH9 Unit Tests
+
 #### Three Laws of Test-Driven Development(TDD)
 
 - First Law You may not write production code until you have written a failing unit test. 
