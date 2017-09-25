@@ -104,6 +104,81 @@ Error handling techniques
 - Shutdown: in some case where we’d rather reboot than deliver wrong output
 - be consistent for level of error handling
 
+#### Generic Class for Defensive Programming
+Ex. Generic Programming for Handling Exceptions
+
+```java
+public class Test {
+   class Animal {}
+   
+   class Cat extends Animal {}
+   class Dog extends Animal {}
+   
+   private List<Cat> catList = new ArrayList<>();
+   private List<Animal> animals = catList;  // Type cast err
+   
+   public void test() {
+      Cat[] cats = {};
+      Animal[] animals = cats;
+      animal[0] = new Dog();
+      Cat cat = cats[0]; // Try to fool the compiler, it works
+   }
+   
+   public void test2(Function<Cat, Animal> handler) {
+      hanlder.apply(new Cat());
+   }
+   
+   public void test3(Function<? super Cat, Animal> handler) {
+      hanlder.apply(new Cat());
+   }
+   
+   public void test3() {
+      Function<Animal, Animal> bla = null
+      test2(bla); // Test cast err
+      test3(bla); // Works
+      // However, we cannot have not way Animal subclass ? work
+      // Because Java always implement Generic class as Invariance
+      // there's no way to implement Co-variance
+   }
+   
+}
+```
+
+Now let's see how Scala handls co-variance
+
+```scala
+class ScalaTest {
+   class Animal()
+   class Cat() extends Animal
+   
+   class Handler[-T, +K] {
+      def handle(input: T): K
+   }
+   
+   trait Container[+K] {
+      def output(): K
+   }
+   
+   trait Function[-K] {
+      def call(input: K): Unit
+   }
+   
+   trait MyList[K] {        // cannot put -K or +K either one blow will break
+      def add(item: K): Unit
+      def get(index: Int): K
+   }
+   
+   def test(hanlder: Handler[Cat, Animal]): Unit = {
+      handler.handle(new Cat)
+   }
+   
+   def anotherTest(): Unit {
+      val myHandler: Handler[Animal, Cat] = null
+      test(myHandler)
+   }
+}
+
+```
 
 ### Robustness vs. Correctness
 Correctness = never return incorrect result
