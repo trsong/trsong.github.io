@@ -341,3 +341,57 @@ for(elem <- a)
 	for(elem <- a if elem % 2 == 0) yield 2 * elem
 	a.filter(_ % 2 == 0).map(2 * _)
 ```
+
+Example: Given an array of Int, remove all but the first negative numbers
+
+```scala
+val indices = for(i <- 0 until a.length if a(i) <  1) yield i
+for(j <- (1 until indices.length).reverse) a.remove(indices(j))
+```
+
+* Common Algorithms
+
+```scala
+Array(1, 7, 2, 9).sum // 19
+ArrayBuffer("Mary", "had", "a", "little", "lamb") // "little"
+
+val b = ArrayBuffer(1, 7, 2, 9)
+val bSorted = b.sorted
+val bSortedReverse = b.sorted(Ordering.Int.reverse)
+	// b unchanged, bSorted is ArrayBuffer(1, 2, 7, 9)
+	
+val a = Array(1, 7, 2, 9)
+scala.util.Sorting.quickSort(a)
+	// a is now Array(1, 2, 7, 9)
+
+a.mkString(" and ")
+	// "1 and 2 and 7 and 9"
+a.mkString("<", ",", ">")
+	// "<1, 2, 7, 9>"
+
+a.toString
+	// "[I@73e5"
+	// The useless toString from Java
+b.toString
+	// "ArrayBuffer(1, 7, 2, 9)"
+	
+Array(1, 7, 2, 9).count(_ % 2 == 0) // 1
+
+// Behind screen Scala convert Array Class to ArrayOps before any operations is applied
+```
+
+* Multidimensional Arrays
+
+```scala
+val matrix = Array.ofDim[Double](3, 4) // matrix is 3 by 4 matrix filled w/ 0
+matrix(0)(1) = 42
+
+// Now build ragged arrays, with varying row lengths
+val triangle = new Array[Array[Int]](10)
+for(1 <- 0 until triangle.length)
+	triangle(i) = new Array[Int](i + 1)
+```
+
+
+
+
