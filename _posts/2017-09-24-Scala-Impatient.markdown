@@ -392,6 +392,273 @@ for(1 <- 0 until triangle.length)
 	triangle(i) = new Array[Int](i + 1)
 ```
 
+### CH4: Maps and Tuples
 
+* Construct a map 
 
+```scala
+val scores = Map("Alice" -> 10, "Bob" -> 3, "Cindy" -> 8)
+```
 
+* Construct a mutable map
+
+```scala
+val scores = scala.collection.mutable.Map("Alice" -> 10, "Bob" -> 3, "Cindy" -> 8)
+
+// Start out w/ a blank map
+val scores = new scala.collection.mutable.HashMap[String, Int]
+```
+
+* `key -> value` will make a pair
+
+```scala
+"Alice" -> 10 // returns ("Alice", 10)
+```
+
+* `map.getOrElse(key, defaultVal)`
+
+```scala
+val bobsScore = if(scores.contains("Bob")) scores("Bob") else 0
+
+// is equivalent to 
+
+val bobsScore = scores.getOrElse("Bob", 0)
+```
+
+* Update map values
+
+```scala
+scores("Bob") = 10  // If scores is mutable
+scores += ("Bob" -> 10, "Fred" -> 7) // Add multiple value to map
+scores -= "Alice"
+val newScores = scores + ("Bob" -> 10, "Fred" -> 7) // new map w/ update
+val newScores2 = scores - "Alice"
+```
+
+* Iterating over Maps
+
+```
+for((k, v) <- map) yield (v, k) // Reverse a map will override v, since v might not be unique
+
+scores.keySet
+	// Set("Bob", "Cindy", "Fred", "Alice")
+
+for(v <- scores.values) println(v)
+```
+
+* Sorted Map
+
+```scala
+val scores = scala.collection.immutable.SortedMap("Alice" -> 10, "Fred" -> 7, "Bob" -> 3, "Cindy" -> 8)
+
+val months = scala.collection.mutable.LinkedHashMap("January" -> 1, "Feburary" -> 2, "March" -> 3, "April" -> 4, "May" -> 5, ...)
+```
+
+* Tuples
+
+```scala
+val t = (1, 3.14, "Fred")
+	// has type (Int, Double, java.lang.String)
+val second = t._2
+val (first, second, third) = t
+val (first, second, _) = t
+
+"New York".partition(_.isUpper)
+	// yields ("NY", "new ork")
+```
+
+* Zipping
+
+```scala
+val symbols = Array("<", "-", ">")
+val counts = Array(2, 10, 2)
+val pairs = symbols.zip(counts)
+	// yields Array(("<", 2), ("-", 10), (">", 2))
+for((s, n) <- pairs) print(s * n)
+	// displays <<---------->>
+
+// zip and toMap
+keys.zip(values).toMap
+```
+
+### CH5: Classes
+
+* Getter and Setter
+
+```scala
+class Person {
+	private var privateAge = 0
+	def age = privateAge
+	def age_=(newValue: Int): Unit = {
+		if(newValue > privateAge) privateAge = newValue
+	}
+}
+
+val fred = new Person
+fred.age = 30
+fred.age = 21
+println(fred.age) // 30
+
+// Note: 
+//		1) if field is private, then getter and setter is private
+//		2) if field is a value, only getter is generated
+//		3) declear as 'private[this]' and no getter and setter is generated
+
+class Message {
+	val timeStamp = new java.util.Date // read-only property w/ only getter
+	...
+}
+```
+
+* Object-private fields
+
+```scala
+class Counter {
+	private var value = 0
+	def increment(): Unit = {
+		value += 1
+	}
+	
+	def isLess(other: Counter): Boolean = {
+	 value < other.value
+		// Can access the private field of other object
+	}
+}
+
+// declear value as object-private
+private[this] var value = 0
+	// Accessing someObject.value is not allowed
+```
+
+* Auxiliary Constructors
+
+```scala
+// Class can only have 1 primary constructor, but can have as many auxiliary constructors
+class Person {
+	private var name = ""
+	private var age = 0
+	
+	def this(name: String) { // An auxiliary constructor
+		this() // call primary constructor
+		this.name = name
+	}
+	
+	def this(name: String, age: Int) { // Another auxiliary constructor
+		this(name) // Calls previous constructor
+		this.age = age
+	}
+}
+
+val p1 = new Person	// Calls primary Constructor
+val p2 = new Person("Fred") // Calls first auxiliary constructor 
+val p3 = new Person("Fred", 42) // Calls second auxiliary constructor
+```
+
+* The Primary Constructor
+
+```scala
+class Person(val name: String, val age: Int) {
+	...
+}
+
+class PersonWithDefault(val name: String = "", val age: Int = 0) {
+	...
+}
+
+class Person(val name: String, private var age: Int)
+
+// name: String    generates object-private field, or no field if no method uses name
+// private val/var name: String  private field, private getter/setter
+// val/var name: String  generates private field, public getter/setter
+
+class Person private(val id: Int) { ... } 
+	// will make the primary constructor private
+```
+
+* Nested Classes
+
+```scala
+class Network {
+	class Member(val name: String) {
+		val contacts = new ArrayBuffer[Member]
+	}
+	
+	private val members = new ArrayBuffer[Member]
+	
+	def join(name: String): Member = {
+		val m = new Member(name)
+		members += m
+		m
+	}
+}
+
+val chatter = new Network
+val myFace = new Network
+
+// Different from Java, inner class belongs to outer class
+// new chatter.Member to init inner class
+
+val fred = chatter.join("Fred")
+val wilma = chatter.join("Wilma")
+fred.contacts += wilma // OK
+
+val barney = myFace.join("Barney")
+fred.contacts += barney
+	// No, cannot add myFace.Member to a buffer of chatter.Member elements
+	
+// If we want Member to be shared between two networks, there are two ways to achieve that
+
+// Method 1: Companion Object 
+object Network {
+	class Member(val name: String) {
+		val contacts = new ArrayBuffer[Member]
+	}
+}
+
+class Network {
+	private val members = new ArrayBuffer[Network.Member]
+	...
+}
+
+// Method 2: Type Projection
+class Network {
+	class Member(val name: String) {
+		val contacts = new ArrayBuffer[Network#Member]
+			// means a Member of any Network
+	}
+	...
+}
+```
+
+* Access outer class's field 
+
+```scala
+class Network(val name: String) { outer => 
+	class Member(val name: String) {
+		...
+		def description = name + " inside " + outer.name
+			// outer refer to Network.this
+	}
+}
+```
+
+### CH6: Objects
+
+* Singletons
+
+```scala
+object Accounts {
+	private var lastNumber = 0
+	def newUniqueNumber(): Int = {
+		lastNumber += 1
+		lastNumber
+	}
+}
+// The constructor of an object is executed when the object is first used
+Accounts.newUniqueNumber()
+
+// object can be used:
+//		* as a home for utility function or constants
+//		* as a single immutable instance being shared
+// 		* the singleton design pattern
+```
