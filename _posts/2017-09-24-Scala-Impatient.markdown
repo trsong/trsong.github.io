@@ -662,3 +662,361 @@ Accounts.newUniqueNumber()
 //		* as a single immutable instance being shared
 // 		* the singleton design pattern
 ```
+
+* Companion Objects
+
+```scala
+class Account {
+	val id = Account.newUniqueNumber()
+	private var balance = 0.0
+	def deposit(amount: Double): Unit = {
+		balance += amount
+	}
+}
+
+object Account {  // The companion object
+	private var lastNumber = 0
+	private def newUniqueNumber(): Int = {
+		lastNumber += 1
+		lastNumber
+	}
+}
+
+// Note class and its companion object:
+//		1. must share the same name
+//		2. can access each others' private features
+//		3. must be located in the same source file
+```
+
+* Objects extending a class or trait
+
+```
+abstract class UndoableAction(val description: String) {
+	def undo(): Unit
+	def redo(): Unit
+}
+
+object DoNothingAction extends UndoableAction("Do nothing") {
+	override undo(): Unit = {}
+	override redo(): Unit = {}
+}
+
+val actions = Map("open" -> DoNothingAction, "save" -> DoNothingAction, ... )
+	// Open and save action not yet implemented
+```
+
+* The `apply` method
+
+```scala
+class Account private(val id: Int, initialBalance Double) {
+	private var balance = initialBalance
+	...
+}
+
+object Account {
+	def apply(initialBalance: Double): Account = {
+		new Account(newUniqueNumber(), initialBalance)
+	}
+	...
+}
+
+val acc = Account(1000.0)
+```
+
+* Application Objects
+
+```
+object Hello {
+	def main(args: Array[String]): Unit = {
+		println("Hello World!")
+	}
+}
+```
+
+* Enumerations
+
+```scala
+object TrafficLightColor extends Enumeration {
+	val Red, Yellow, Green = Value
+}
+
+// is equivalent to
+object TrafficLightColor extends Enumeration {
+	val Red = Value
+	val Yellow = Value
+	val Green = Value
+}
+
+// Alternatively
+object TrafficLightColor extends Enumeration {
+	val Red = Value(0, "Stop")
+	val Yellow = Value(10) // Name "Yellow"
+	val Green = Value // ID 11
+}
+
+// Access the enum
+val red = TrafficeLightColor.Red 
+
+// If we want to use Red, Yellow, Green directly
+import TrafficeLightColor._
+
+// Note the return type of Enum is 
+val red: TrafficLightColor.Value = TrafficeLightColor.Red
+
+// Some people recommend to add a type alias
+object TrafficLightColor extends Enumeration {
+	type TrafficLightColor = Value
+	val Red, Yellow, Green = Value
+}
+
+import TrafficLightColor._
+def doWhat(color: TrafficLightColor): string {
+	if(color == Red) {
+		"stop"
+	} else if(color == Yellow) {
+		"hurry up"
+	} else {
+		"go"
+	}
+}
+
+for(c <- TrafficLightColor.values) println(c.id + ": " + c)
+
+TrafficLightColor(0) // Calls Enumeration.apply
+TrafficLightColor.withname("Red")
+```
+
+### CH7: Packages
+
+* `java.lang`, `scala`, `Predef` are always imported implicitly
+
+```
+// Every Scala program implicitly starts with
+import java.lang._
+import scala._
+import Predef._
+```
+
+* Packages 
+
+```scala
+package com {
+	package horstmann {
+		package impatient {
+			class Employee
+			...
+		}
+	}
+}
+
+// class name Employee can be accessed as com.horstmann.impatient.Employee
+```
+
+* Contribute to more than one package in a single file
+
+```scala
+package com {
+	package horstmann {
+		package impatient {
+			class Employee
+			...
+		}
+	}
+}
+
+package org {
+	package bigjava {
+		class Counter
+		...
+	}
+}
+```
+
+* Scope rules - Everything in the parent package is in scope
+
+```scala
+package com {
+	package horstmann {
+		object Utils {
+			def percentOf(value: Double, rate: Double): Double = {
+				value * rate / 100
+			}
+			...
+		}
+		
+		package impatient {
+			class Employee {
+				...
+				def giveRaise(rate: scala.Double): Unit = {
+					salary += Utils.percentOf(salary, rate)
+						// You could also use com.horstmann.Utils.percenOf, since com is also in scope
+				}
+			}
+		}
+	}
+}
+
+// however, consider the following 
+package com {
+	package horstmann {
+		package impatient {
+			class Manager {
+				val subordinates = new collection.mutable.ArrayBuffer[Employee] // Note, scala is always imported
+			}
+		}
+	}
+}
+
+// and in a different file
+package com {
+	package hortmann {
+		package collection {
+			...
+		}
+	}
+}
+
+// one solution
+val subordinates = new _root_.scala.collection.mutable.ArrayBuffer[Employee]
+
+// the other solution: chained package clauses
+```
+
+* Chained Package Clauses
+
+```scala
+package com.horstmann.impatient {
+	// Members of com and com.horstmann are NOT visible here
+	package people {
+		class Person
+		...
+	}
+	
+	// Now com.horstmann.collection will not be accessed as collection
+}
+```
+
+* Top-of-file notation
+
+```scala
+// START-OF-FILE
+package com.horstmann.impatient
+package people
+
+class Person
+...
+// End-OF-FILE
+
+// is equivalent to 
+package com.horstmann.impatient {
+	package people {
+		class Person
+		...
+		
+		// Until the end of the file
+	}
+}
+
+// Notice the whole file belong to package com.horstmann.impatient.people 
+// however, package com.horstmann.impatient is open up to allow refer to its content
+```
+
+* Package Objects
+
+```scala
+// A package can contain classes, objects, and traits, but not functions or varaibles, that's limitation of JVM
+// However, it make sense to add utility functions or constants to package than to some Utils Object
+// That's how package object come into play
+
+// Note every package has one package object. 
+
+package com.horstmann.impatient
+
+package object people {
+	val defaultName = "John Q. Public"
+}
+
+package people {
+	class Person {
+		var name = defaultName // A constant from the package
+			// defaultName is in scope
+			// outside the package, it is com.horstmann.impatient.people.defaultName
+	}
+}
+```
+
+* Package Visibility
+
+```scala
+package com.horstmann.impatient.people
+
+class Person {
+	private[people] def description = "A person with name" + name
+}
+
+// You can also exend the visibility to an enclosing package
+class Person {
+	private[impatient] def description = "A person with name" + name
+}
+```
+
+* Imports
+
+```scala
+import java.awt.Color	// Now you can write Color instead of java.awt.Color
+
+import java.awt._ 
+
+def handler(evt: event.ActionEvent): Unit { // java.awt.event.ActionEvent
+	...	
+}
+```
+
+* Imports can be anywhere
+
+```scala
+class Manager {
+	import scala.collection.mutable._
+	val subordinates = new ArrayBuffer[Employee]
+	...
+}
+```
+
+* Renaming and hiding members
+
+```scala
+import java.awt.{Color, Font}
+import java.util.{HashMap => JavaHashMap}
+import scala.collection.mutable._
+
+// JavaHashMap is java.util.HashMap, plain HashMap is scala.collection.mutable.HashMap
+
+import java.util.{HashMap => _, _}
+import scala.collection.mutable._
+	// now HashMap unambiguously refer to scala.collection.mutable.HashMap 
+	// since we import everything in java.util while hiding java.util.HashMap
+```
+
+### CH8: Inheritance
+
+* Overriding methods
+
+```scala
+public class Person {
+	...
+	override def toString = getClass.getName + "[name=" + name + "]"
+}
+
+public class Employee extends Person {
+	...
+	override def toString = super.toString + "[salary=" + salary + "]"
+}
+```
+
+* Type checks and casts
+
+```scala
+if(p.isInstanceOf[Employee]) {
+	val s = p.asInstanceOf[Employee] // s has type Employee
+}
+```
