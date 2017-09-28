@@ -1019,4 +1019,134 @@ public class Employee extends Person {
 if(p.isInstanceOf[Employee]) {
 	val s = p.asInstanceOf[Employee] // s has type Employee
 }
+
+p match {
+	case s: Employee => ... // Process s as Employee
+	case _ => ... // p wasn't an Employee
+}
 ```
+
+* Superclass Construction
+
+```scala
+class Employee(name: String, age: Int, val salary: Double) extends Person(name, age)
+```
+
+* Overriding fields
+
+```scala
+class Person(val name: String) {
+	override def toString: String = getClass.getName + "[name=" + name + "]"
+}
+
+class SecretAgent(codename: String) extends Person(codename) {
+	override val name = "Secret"
+	override val toString = "Secret"
+}
+
+// Note:
+//		1. A `def` can only override `def`
+//		2. A `val` can only override `val` or a parameterless `def`
+//		3. A `var` can only override abstract var
+//		4. according to 3. if super class use a `var` then all subclass are stuck with it. So avoid using `var`
+```
+
+* Anonymous subclasses
+
+```scala
+val alien = new Person("Fred") {
+	def greeting = "Greetings, Earthling! My name is Fred."
+}
+
+def meet(p: Person{ def greeting: String }): Unit = {
+	println(p.name + " says: " + p.greeting)
+}
+```
+
+* Abstract class
+
+```scala
+abstract class Person(val name: String) {
+	def id: Int // No method body - this is an abstract method
+}
+
+class Employee(name: String) extends Person(name) {
+	def id = name.hashCode // override an abstract method do not require override keyword
+}
+```
+
+* Abstract Fields
+
+```scala
+abstract class Person {
+	val id: Int	// an abstract field w/ an abstract getter method
+	var name: String // an abstract field w/ an abstract getter and setter method
+}
+
+class Employee(val id: Int) extends Person { // subclass has concert id property
+var name = "" // and concrete name property
+}
+
+// Note: no override is required to override an abstract field
+
+val fred = new Person {
+	val id = 1792
+	var name = "Fred"
+}
+```
+
+* Construction order and early definitions
+
+```scala
+class Creature {
+	val range: Int = 10
+	val env: Array[Int] = new Array[Int](range)
+}
+
+class Ant extends Creature {
+	override val range = 2
+}
+
+val a = new Ant
+a.range 	// 2
+a.env 		// Array()
+
+// why a.env is empty array?
+// 1. in order to init Ant, init Creature first
+// 2. Creature set range to 10
+// 3. in order to set env, we call range() getter
+// 4. at compile time, range() getter is override to be the one defined in Ant (range is yet uninitalized)
+// 5. range() returns 0, as its default val for all uninitialized Int field
+// 6. env is set to array of lenth 0
+// 7. Ant constuctor begins, set range to 2
+
+// 4 ways to solve above issue:
+// 		1) declare the val as final
+//		2) declare the val as lazy val
+// 		3) declare the val as def
+//		4) use early definition syntax
+
+// Early definiton syntax
+
+class Bug extends {
+	override val range = 3
+} with Creature
+```
+
+* Object equality
+
+```scala
+	// eq method in AnyRef checks tow references refer to same obejct
+	// equals in AnyRef should be used to check its content
+	
+class Item(val description: String, val price: Double) {
+	final override def equals(other: Any): boolean = {
+		val that = other.asInstanceOf[Item]
+		if(that == null) false
+		else description == that.description && price == that.price
+	}
+}	
+```
+
+### CH9: Files and Regular Expressions
+
