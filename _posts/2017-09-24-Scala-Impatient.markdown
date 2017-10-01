@@ -1275,7 +1275,7 @@ for (numitemPattern(num, item) <- numitemPattern.findAll("99 bottles, 98 bottles
 	println(num + item)
 ```
 
-### CH 10: Trait
+### CH10: Trait
 
 * Trait use as an interface
 
