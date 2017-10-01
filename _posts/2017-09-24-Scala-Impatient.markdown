@@ -94,7 +94,7 @@ val withElse = if (x > 0) 1 else () // () has type Unit
 * Semicolon ending is optional in Scala
 
 ```scala
-if(n > 0) { r = r * n; n -= 1}
+if (n > 0) { r = r * n; n -= 1}
 ```
 
 * Block expression use the last stement value as return value
@@ -134,7 +134,7 @@ printf("Hello, %s! Next year, you will be %d.\n", name, age + 1)
 * Loops
 
 ```scala 
-while(n > 0) {
+while (n > 0) {
 	r = r * n
 	n -= 1
 }
@@ -142,15 +142,15 @@ while(n > 0) {
 for (i <- 1 to n)  // Note: there's no var/val before 'i', and the type of 'i' is the element type of the collection
 	r = r * n
 	
-// for(i <- expr)
+// for (i <- expr)
 val s = "Hello"
 var sum = 0
-for(i <- 0 until s.length)
+for (i <- 0 until s.length)
 	sum += s(i)
 	
 // No need to use index
 var sum = 0 
-for(ch <- "Hello") sum += ch
+for (ch <- "Hello") sum += ch
 ```
 
 * There is no 'break' in a loop
@@ -158,8 +158,8 @@ for(ch <- "Hello") sum += ch
 ```scala
 import scala.util.control.Breaks._
 breakable {
-	for(...) {
-		if(...) break; // Exit the breakable block
+	for (...) {
+		if (...) break; // Exit the breakable block
 		...
 	}
 }
@@ -172,15 +172,15 @@ breakable {
 
 ```scala
 // Multiple generators separated by semicolons
-for(i <- 1 to 3; j <- 1 to 3) print((10 * i + j) + " ")
+for (i <- 1 to 3; j <- 1 to 3) print((10 * i + j) + " ")
 	// Prints 11 12 13 21 22 23 31 32 33
 
 // Each generators can have a guard
-for(i <- 1 to 3; j <- 1 to 3 if i != j) print((10 * i + j) + " ")
+for (i <- 1 to 3; j <- 1 to 3 if i != j) print((10 * i + j) + " ")
 	// Prints 12 13 21 23 31 32
 	
 // Introduce a new var that can be used inside loop
-for(i <- 1 to 3; from = 4 - i; j <- from to 3) print((10 * i + j) + " ")
+for (i <- 1 to 3; from = 4 - i; j <- from to 3) print((10 * i + j) + " ")
 	//                 ^ careful here, it's not <- 
 	// Prints 13 22 23 31 32 33
 
@@ -190,20 +190,20 @@ for { i <- 1 to 3
 	j <- from to 3 }
 
 // for comprehension
-for(i <- 1 to 10) yield i % 3
+for (i <- 1 to 10) yield i % 3
 	// yields Vector(1, 2, 0, 1, 2, 0, 1, 2, 0)
 
 // The generated collection is compactiable w/ the first generator
-for(c <- "Hello"; i <- 0 to 1) yield (c + i).toChar
+for (c <- "Hello"; i <- 0 to 1) yield (c + i).toChar
 	// yields "HIeflmlmop"
-for(i <- 0 to 1; c <- "Hello") yields (c + i).toChar
+for (i <- 0 to 1; c <- "Hello") yields (c + i).toChar
 	// yields Vector('H', 'e', 'l', 'l', 'o', 'I', 'f', 'm', 'm', 'p')
 ```
 
 * Create a function without return types will make compiler complains
 
 ```scala
-def fac(n: Int): Int = if(n <= 0) 1 else n * fac(n - 1)
+def fac(n: Int): Int = if (n <= 0) 1 else n * fac(n - 1)
 ```
 
 * Create a function with default and named arguments
@@ -213,7 +213,7 @@ def decorate(str: String, left: String = "[", right = "]"): String = left + str 
 decorate("Hello") // gets "[Hello]"
 decorate("Hello", "<<<") // gets "<<<Hello]"
 decorate(left = "<<<", str = "Hello", right = ">>>") // gets "<<<Hello>>>"
-decorate(str = "Hello", right = ">>>") // gets "[Hello>>>"
+decorate(str = "Hif (ello", right = ">>>") // gets "[Hello>>>"
 ```
 
 * Create a function with Variable Arguments
@@ -221,7 +221,7 @@ decorate(str = "Hello", right = ">>>") // gets "[Hello>>>"
 ```scala
 def sum(args: Int*): Int = {
 	var result = 0
-	for(arg <- args) result += arg
+	for (arg <- args) result += arg
 	result
 }
 
@@ -230,7 +230,7 @@ sum(1, 4, 9, 16, 25)
 sum(1 to 5: _*) // Use : _* to convert a Seq to an argument sequence
 
 def recurSum(args: Int*): Int = {
-	if(args.length == 0) 0 
+	if (args.length == 0) 0 
 	else args.head + recurSum(args.tail: _*)
 }
 ```
@@ -246,7 +246,7 @@ lazy val words = scala.io.Source.fromFile("/usr/share/dict/words").mkString
 
 ```scala
 // Exception has type Nothing, so the final type will be the same as the other branch
-if(x > 0) {
+if (x > 0) {
 	sqrt(x)
 } else throw new IllegalArgumentException("x should not be negative")
 
@@ -318,16 +318,16 @@ Array(1, 1, 2).toBuffer
 * Array and ArrayBuffer Traversing
 
 ```scala
-for(i <- 0 until a.length)
+for (i <- 0 until a.length)
 	println(i + ": " + a(i))
 
-for(i <- 0 until (a.length, 2))
+for (i <- 0 until (a.length, 2))
 	// Range(0, 2, 4, ...)
 	
-for(i <- (0 until a.length).reverse)
+for (i <- (0 until a.length).reverse)
 	// Range(..., 2, 1, 0)
 	
-for(elem <- a)
+for (elem <- a)
 	println(elem)
 ```
 
@@ -335,18 +335,18 @@ for(elem <- a)
 
 ```scala
 	val a = Array(2, 3, 5, 7, 11)
-	val result = for(elem <- a) yield 2 * elem
+	val result = for (elem <- a) yield 2 * elem
 		// result is Array(4, 6, 10, 14, 22)
 	
-	for(elem <- a if elem % 2 == 0) yield 2 * elem
+	for (elem <- a if elem % 2 == 0) yield 2 * elem
 	a.filter(_ % 2 == 0).map(2 * _)
 ```
 
 Example: Given an array of Int, remove all but the first negative numbers
 
 ```scala
-val indices = for(i <- 0 until a.length if a(i) <  1) yield i
-for(j <- (1 until indices.length).reverse) a.remove(indices(j))
+val indices = for (i <- 0 until a.length if a(i) <  1) yield i
+for (j <- (1 until indices.length).reverse) a.remove(indices(j))
 ```
 
 * Common Algorithms
@@ -388,7 +388,7 @@ matrix(0)(1) = 42
 
 // Now build ragged arrays, with varying row lengths
 val triangle = new Array[Array[Int]](10)
-for(1 <- 0 until triangle.length)
+for (1 <- 0 until triangle.length)
 	triangle(i) = new Array[Int](i + 1)
 ```
 
@@ -418,7 +418,7 @@ val scores = new scala.collection.mutable.HashMap[String, Int]
 * `map.getOrElse(key, defaultVal)`
 
 ```scala
-val bobsScore = if(scores.contains("Bob")) scores("Bob") else 0
+val bobsScore = if (scores.contains("Bob")) scores("Bob") else 0
 
 // is equivalent to 
 
@@ -438,12 +438,12 @@ val newScores2 = scores - "Alice"
 * Iterating over Maps
 
 ```
-for((k, v) <- map) yield (v, k) // Reverse a map will override v, since v might not be unique
+for ((k, v) <- map) yield (v, k) // Reverse a map will override v, since v might not be unique
 
 scores.keySet
 	// Set("Bob", "Cindy", "Fred", "Alice")
 
-for(v <- scores.values) println(v)
+for (v <- scores.values) println(v)
 ```
 
 * Sorted Map
@@ -474,7 +474,7 @@ val symbols = Array("<", "-", ">")
 val counts = Array(2, 10, 2)
 val pairs = symbols.zip(counts)
 	// yields Array(("<", 2), ("-", 10), (">", 2))
-for((s, n) <- pairs) print(s * n)
+for ((s, n) <- pairs) print(s * n)
 	// displays <<---------->>
 
 // zip and toMap
@@ -490,7 +490,7 @@ class Person {
 	private var privateAge = 0
 	def age = privateAge
 	def age_=(newValue: Int): Unit = {
-		if(newValue > privateAge) privateAge = newValue
+		if (newValue > privateAge) privateAge = newValue
 	}
 }
 
@@ -690,7 +690,7 @@ object Account {  // The companion object
 
 * Objects extending a class or trait
 
-```
+```scala
 abstract class UndoableAction(val description: String) {
 	def undo(): Unit
 	def redo(): Unit
@@ -771,16 +771,16 @@ object TrafficLightColor extends Enumeration {
 
 import TrafficLightColor._
 def doWhat(color: TrafficLightColor): string {
-	if(color == Red) {
+	if (color == Red) {
 		"stop"
-	} else if(color == Yellow) {
+	} else if (color == Yellow) {
 		"hurry up"
 	} else {
 		"go"
 	}
 }
 
-for(c <- TrafficLightColor.values) println(c.id + ": " + c)
+for (c <- TrafficLightColor.values) println(c.id + ": " + c)
 
 TrafficLightColor(0) // Calls Enumeration.apply
 TrafficLightColor.withname("Red")
@@ -1016,7 +1016,7 @@ public class Employee extends Person {
 * Type checks and casts
 
 ```scala
-if(p.isInstanceOf[Employee]) {
+if (p.isInstanceOf[Employee]) {
 	val s = p.asInstanceOf[Employee] // s has type Employee
 }
 
@@ -1142,7 +1142,7 @@ class Bug extends {
 class Item(val description: String, val price: Double) {
 	final override def equals(other: Any): boolean = {
 		val that = other.asInstanceOf[Item]
-		if(that == null) false
+		if (that == null) false
 		else description == that.description && price == that.price
 	}
 }	
@@ -1150,3 +1150,526 @@ class Item(val description: String, val price: Double) {
 
 ### CH9: Files and Regular Expressions
 
+* Read lines
+
+```scala
+import scala.io.Source
+val source = Source.fromFile("myfile.txt", "UTF-8")
+val lineIterator = source.getLines
+for (l <- lineIterator) println(l)
+
+val lines = source.getLines.toArray
+val contents = source.mkString
+```
+
+* Read tokens 
+
+```scala
+val tokens = source.mkString.split("\\s+")
+	// split the string by white space
+``` 
+
+* Read source from URL or other source
+
+```scala
+val source1 = Source.fromURL("http://horstmann.com", "UTF-8")
+val source2 = Source.fromString("Hello, world!")
+val source3 = Source.stdin
+```
+
+* Read binary files
+
+```scala
+// scala lack of native way to read binary, need to rely on Java class
+val file = new File(filename)
+val in = new FileInputStream(file)
+val bytes = new Array[Byte](file.length.toInt)
+in.read(bypes)
+in.close()
+```
+
+* Write into files
+
+```scala
+// Same as above, scala lack of support to write to a file
+val out = new PrintWrite("numbers.txt")
+for (i <- 1 to 100) out.println(i)
+out.close()
+```
+
+* Object serialization
+
+```
+class Person extends Serializable
+
+val fred = new Person(...)
+import java.io._
+val out = new ObjectOutputStream(new FileOutputStream("tmp/test.obj"))
+out.writeObject(fred)
+out.close()
+
+val in = new ObjectInputStream(new FileInputSteam("tmp/test.obj"))
+val savedFred = in.readObject().asInstanceOf[Person]
+```
+
+* Process control
+
+```scala
+import sys.process._
+// ! will implicitly convert a string into a processBuilder
+val retCode: Int = "ls -al" !
+	// will execute the command in bash and print out the result
+	// retCode is 0 if succeed otherwise display a non-zero value
+	
+val result: String = "ls -al" !!
+	// will not display anything, but return the display string
+
+"ls -al" #| "grep sec" !
+	// use #| as a pipe
+
+"ls -al" #> new File("output.txt") !
+	// create and replace output file
+"ls -al" #>> new File("output.txt") !
+	// append or create output file 
+	
+"grep sec" #< new File("output.txt") !
+"grep google" #< new URL("google.ca") !
+
+val (p, q) = ("pwd", "whoami")
+p #&& q !
+	//	if p succeed then execute q
+p #|| q !
+	//  if p not succeed then execute q
+```
+
+* Regular Expression
+
+```scala
+val numPattern = "[0-9]+".r
+val wsnumwsPattern = """\s+[0-9]+\s+""".r
+	// If expression contains too many "\"'s
+	
+for (matchString <- numPattern.findAllIn("99 bottles, 98 bottles"))
+val maches = numPattern.findAllIn("99 bottles, 98 bottles").toArray
+	// Array(99, 98)
+val m1 = wsnumwsPattern.findFirstIn("99 bottles, 98 bottles")	// Some(" 98 ")
+
+numPattern.findPrefixOf("99 bottles, 98 bottles")
+	// Some(99)
+wsnumwsPattern.findPrefixOf("99 bottles, 98 bottles")
+	// None
+	
+numPattern.replaceFirstIn("99 bottles, 98 bottles", "XX")
+	// "XX bottles, 98 bottles"
+"numPattern.replaceAllIn("99 bottles, 98 bottles", "XX")
+	// "XX bottles, XX bottles"
+```
+
+* Regular Expression Group
+
+```scala
+val numitemPattern = "([0-9]+) ([a-z]+)".r
+val numitemPattern(num, item) = "99 bottles"
+	// num is 99 and item is bottles
+for (numitemPattern(num, item) <- numitemPattern.findAll("99 bottles, 98 bottles"))
+	println(num + item)
+```
+
+### CH 10: Trait
+
+* Trait use as an interface
+
+```scala
+trait Logger {
+	def log(msg: String): Unit // abstract method
+}
+
+// unlike java interface, scala trait is more like a class
+class ConsoleLogger extends Logger { // use extends instead of implements
+	def log(msg: String): Unit = {	// without override
+		println(msg)
+	}
+}
+
+// extends more traits
+class ConsoleLogger extends Logger with Clonable with Serializable
+	// note all Java interface can be used as a trait in scala
+```
+
+* Trait with concrete implementations
+
+```scala
+trait ConsoleLogger {
+	def log(msg: String): Unit = {
+		println(msg)
+	}
+}
+
+// allow implementation details to be mix-in
+class SavingAccount extends Account with ConsoleLogger {
+	def withdraw(amount: Double): Unit = {
+		if (amount > balance) log("Insufficient funds")
+		else balance -= amount
+	}
+}
+```
+
+* Multiple traits mixed-in
+
+```scala
+trait TimestampLogger extends Logged {
+	override def log(msg: String): Unit = {
+		super.log(new java.util.Date() + " " + msg)
+	}
+}
+
+trait ShortLogger extends Logged {
+	val maxLength = 15
+	override def log(msg: String): Unit = {
+		super.log(
+			if (msg.length <= maxLength) msg 
+			else msg.substring(0, maxLength - 3) + "..." 
+		)
+	}
+}
+
+val acct1 = new SavingsAccount with ConsoleLogger with TimestampLogger with ShortLogger
+	// <- super direction
+val acct2 = new SavingsAccount with ConsoleLogger with ShortLogger with TimestampLogger
+	// <- super direction
+
+acct1.log() // Sun Feb 06 17:45:45 ...
+	// ShortLogger's super is TimeStampLogger
+	// as a result, it cuts "" string and add time stamp
+	
+acct2.log() // Sun Feb 06 1...
+	// TimeStampLogger's super is ShortLogger
+	// as a result, it prepends time stamp and then truncate it
+```
+
+* override methods
+
+```scala
+trait Logger {
+	def log(msg: String): Unit	 // abstract method
+}
+
+trait TimestampLogger extends Logger {
+	abstract override def log(msg: String): Unit = { // override abstract method
+		super.log(new java.util.Date() + " " + msg)
+		// ^ we have yet not determined which is the final implementation, thus have to make it abstract
+	}
+}
+``` 
+
+* trait fields
+
+```scala
+trait ShortLogger extends Logged {
+	val maxLength = 15
+}
+
+class Account {
+	var balance = 0.0
+}
+
+class SavingAccount extends Account with ConsoleLogger with ShortLogger {
+	var interest = 0.0
+	def withdraw(amount: Double): Unit = {
+		if (amount > balance) log("Insufficient funds")
+		else ...
+	}
+	
+	// Note maxLength is not inherited, it's added as SavingAccount's own field
+}
+```
+
+* abstract trait fields
+
+```scala
+trait ShortLogger extends Logged {
+	val maxLength: Int // abstract field
+	override def log(msg: String): Unit = {
+		super.log(
+			if (msg.length <= maxLength) msg
+			else msg.substring
+		)
+	}
+}
+
+class SavingAccount extends Account with ConsoleLogger with ShortLogger {
+	val maxLength = 20 // No need to override
+}
+```
+
+* trait constructor execution order
+
+```scala
+trait FileLogger extends Logger {
+	val out = new PrintWriter("app.log") // part of the constructor
+	out.println("# " + new Date().toString) // alos part of the constructor
+	def log(msg: String): Unit = { 
+		out.println(msg)
+		out.flush()
+	}
+}
+
+class SavingsAccount extends Account with FileLogger with ShortLogger
+
+// Constructor Execution Order:
+// 1. Account // Super class
+// 2. Logger // Super trait of first trait
+// 3. FileLogger // First trait
+// 4. ShortLogger // Second trait. Notice its super trait Logger is called already
+// 5. SavingsAccount
+```
+
+* trait cannot have constructor param 
+
+```scala
+trait FileLogger extends Logger {
+	val filename: String
+	val out = new PrintStream(filename)
+	def log(msg: String): Unit = {
+		out.println(msg)
+		out.flush()
+	}
+}
+
+// val acct = new Savings with FileLoger("myapp.log")  <= Wrong!
+
+val acct = new Savings with FileLogger {
+	val filename = "myapp.log" //not work because the construct order
+		// val out will be evaluated too early before filename
+}
+
+// One way to solve above problem
+val acct = new {
+	val filename = "myapp.log"
+} with SavingAccount with FileLogger
+
+// Another way to solve above problem
+trait FileLogger extends Logger {
+	val filename: String
+	lazy val out = new PrintStream(filename)
+	def log(msg: String): Unit = {
+		out.println(msg)
+	}
+}
+```
+
+* trait extends class
+
+```scala
+// This feature is not used so frequently in general
+
+trait LoggedException extends Exception with Logged {
+	def log(): Unit = {
+		log(getMessage())
+	}
+}
+
+// A class A extends a trait which extends a class B, then
+// class B will be the super class of class A automatically
+class UnhappyException extends LoggedException {
+	override def getMessage(): String = "arrgh!"
+}
+```
+
+* Self type
+
+```scala
+trait LoggedException extends Logged {
+	this: Exception =>
+		def log(): Unit = {
+			log(getMessge())
+		}
+}
+
+// Self type means, above trait can only be mixed-into Exception's derived class
+
+trait LoggedException extends Logged {
+	self: { def getMessage(): String } =>
+		def log(): Unit = {
+			log(getMessage())
+		}
+}
+
+// Note above example shows that self type can be apply to structural type
+// means any class that has the same getMessage signature can mix this trait
+```
+
+* How Scala trait get compiled into Java
+
+A trait w/ only abstract method:
+
+```scala
+trait Logger {
+	def log(msg: String): Unit
+}
+```
+
+becomes 
+
+```java
+public interface Logger {
+	void log(String msg);
+}
+```
+
+
+A trait has concrete methods, scala compiler will help us create an associated class:
+
+```scala
+trait ConsoleLogger extends Logger {
+	def log(msg: String): Unit = {
+		println(msg)
+	}
+}
+```
+
+becomes
+
+```java
+public interface ConsoleLogger extends Logger {
+	void log(String msg);
+}
+
+public class ConsoleLogger$class {
+	public static void log(ConsoleLogger self, String msg) {
+		println(msg);
+	}
+}
+```
+
+
+A trait with fields: 
+
+```scala
+trait ShortLogger extends Logger {
+	val maxLength = 15
+}
+```
+
+becomes 
+
+```java
+public interface ShortLogger extends Logger {
+	public abstract int maxLength();
+	public abstract void weird_prefix$maxLength_$eq(int int);
+}
+
+public class ShortLogger$class {
+	public void $init$(ShortLogger self) {
+		self.werid_prefix$maxLength_$eq(15);
+	}
+}
+```
+
+### CH11: Operators
+
+* Operators
+
+```scala
+a op b // a.op(b)
+a op	// a.op()
+op a   // a.unary_op()
+a op= b // a = a op b
+	// exception for <=, >=, !=, ==, ===, =/=
+```
+
+* Operator priority
+
+```scala
+a infix b postfix
+
+// is equal to 
+
+(a infix b) postfix
+```
+
+* Operator associativity
+
+```scala
+// most operator is left associativity
+1 + 2 + 3 // (1 + 2) + 3
+	
+// some operator is right associativity
+1 :: 2 :: Nil // 1 :: (2 :: Nil)
+	
+2 :: Nil // Nil.::(2) 
+```
+
+* `apply` and `unapply`
+
+```scala
+f(arg1, arg2, ...) // f.apply(arg1, arg2, ...)
+f(arg1, arg2, ...) = value // f.update(arg1, arg2, ..., value)
+
+// Above mechanism is used by array and map
+val scores = new scala.collection.mutable.HashMap[String, Int]
+scores("Bob") = 100 // scores.update("Bob", 100)
+val bobsScore = scores("Bob") // scores.apply("Bob")
+
+
+class Fraction(n: Int, d: Int) {
+	...
+}
+
+object Fraction {
+	def apply(n: Int, d: Int): Fraction = new Fraction(n, d)
+}
+
+val result = Fraction(3, 4) * Fraction(2, 5)
+
+// the unapply method can be defined as the inverse of apply method
+object Fraction {
+	def unapply(input: Fraction) = {
+		if (input.d == 0) None
+		else Some((input.n, input.d))
+	}
+}
+
+// the unapply method might not be the inverse of apply method
+class Name(first: String, last: String)
+
+object Name {
+	def unapply(input: String) = {
+		val pos = input.indexOf(" ")
+		if (pos == -1) None
+		else Some((input.substring(0, pos), input.substring(pos + 1)))
+	}
+}
+
+val author = "Cay Horstmann"
+val Name(first, last) = author
+
+// cas class comes with apply and unapply
+case class Currency(value: Double, unit: String)
+Currency(29.95, "EUR") // calls Currency.apply
+case Currency(amount, "USD") => println("$" + amount) // calls Currency.unapply
+
+object IsCompound {
+	def unapply(input: String) = input.contains(" ")
+}
+
+author match {
+	case Name(first, last @ IsCompound()) => ...
+	case Name(first, last) => ...
+}
+```
+
+* `unapplySeq`
+
+```scala
+object Name {
+	def unapplySeq(input: String): Option[Seq[String]] =
+		if (input.trim == "") None else Some(input.trim.split("\\s+"))
+}
+
+author match {
+	case Name(first, last) => ...
+	case Name(first, middle, last) => ...
+	case Name(first, "van", "der", last) => ...
+}
+```
