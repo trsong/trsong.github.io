@@ -1673,3 +1673,124 @@ author match {
 	case Name(first, "van", "der", last) => ...
 }
 ```
+
+### CH12: High-order Functions
+
+* Convert a method into a function
+
+```scala
+import scala.math._
+val num = 3.14
+val fun = ceil _ // use underscore to convert a method into a function
+
+def valueAtOneQuarter(f: (Double) => Double) = f(0.5)
+valueAtOneQuarter(ceil _) // 1.0
+valueAtOneQuarter(sqrt _) // 0.5
+```
+
+* Anonymous Function
+
+```scala
+val triple = (x: Double) => 3 * x	
+Array(3.14, 1.42, 2.0).map((x: Double) => 3 * x)
+// can also use curly bracket
+Array(3.14, 1.42, 2.0).map { x: Double =>
+	x * 3
+}
+```
+
+* Function produces another function
+
+```scala
+def mulBy(factor: Double) = (x: Double) => factor * x
+val quintuple = mulBy(5)
+quintuple(20) // 100
+```
+
+* Function type detection
+
+```scala
+valueAtOneQuarter((x: Double) => 3 * x) // 0.75
+
+// It seems valueAtOneQuarter is expecting a (Double) => Double function
+valueAtOneQuarter((x) => 3 * x)
+
+// If the pass-in function only has one param, parenthese can be ignored
+valueAtOneQuarter(x => 3 * x)
+
+// If the param pass-in function only use once
+valueAtOneQuarter(3 * _)
+
+// Note: _ can only be used if type can be detected previously
+val fun = 3 * _ // wrong, cannot detect _'s type
+val fun = 3 * (_: Double) // OK
+val fun: (Double) => Double = 3 * _ // Ok, because we give type
+``` 
+
+* Some useful high-order function
+
+```scala
+(1 to 9).map("*" * _).foreach(println _)
+(1 to 9).filter(_ % 2 == 0)
+(1 to 9).reduceLeft(_ * _)
+	// same as 1 * 2 * 3 * ... * 9
+"Mary has a little lamb".split(" ").sortWith(_.length < _.length)
+```
+
+* Closure
+
+```scala
+def mulBy(factor: Double) = (x: Double) => factor * x
+val triple = mulBy(3)
+val half = mulBy(0.5)
+println(triple(14) + " " + half(14)) // display 42 7
+
+// Note, each return function of mulBy has it's own factor
+// such function is called closure, it contains code and the factor used by code
+// Above is achieved by using class and apply function, scala compiler will handle that
+```
+
+* SAM(single abstract method) transform
+
+```scala
+var counter = 0
+val button = new JButton("Increment")
+button.addActionListener(new ActionListener {
+	override def actionPerformed(event: ActionEvent) {
+		counter += 1
+	}
+})
+
+// There's too many codes, if only we could have the following
+button.addActionListener((event: ActionEvent) => count += 1)
+
+// That can be achieved with implicit conversion
+implicit def makAction(action: (ActionEvent) => Unit): ActionListener = 
+	new ActionListener {
+		override def actionPerformed(event: ActionEvent): Unit = {
+			action(event)
+		}
+	}
+```
+
+* Currying
+
+```scala
+def mulOneAtATime(x: Int) = (y: Int) => x * y
+mulOneAtATime(6)(7) //42
+
+// scala support the following
+def mulOneAtATime(x: Int)(y: Int) = x * y
+
+// curring usage
+val a = Array("Hello", "World")
+val b = Array("hellow", "world")
+a.corresponds(b)(_.equalsIgnoreCase(_))
+
+// note
+def corresponds[B](that: Seq[B])(p: (A, B) => Boolean): Boolean
+```
+
+* Control Abstraction
+
+
