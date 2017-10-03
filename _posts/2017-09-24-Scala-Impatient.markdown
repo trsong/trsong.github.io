@@ -117,7 +117,7 @@ x = () // is the final result of x = y = 1
 
 ```scala
 print("Answer: ")
-println(42)  
+println(42)
 
 // yields the same result as 
 
@@ -1791,6 +1791,371 @@ a.corresponds(b)(_.equalsIgnoreCase(_))
 def corresponds[B](that: Seq[B])(p: (A, B) => Boolean): Boolean
 ```
 
-* Control Abstraction
+* Abstraction Control
+
+```scala
+def runInThread(block: () => Unit) {
+	new Thread {
+		override def run() {
+			block()
+		}
+	}.start()
+}
+
+runInThread {
+	() => println("Hi");
+	Thread.sleep(10000)
+	println("Bye")
+}
+
+// But () => does not looks good
+
+def runInThread(block: => Unit) {
+	new Thread {
+		override def run() {
+			block
+		}
+	}.start()
+}
+
+runInThread {
+	println("Hi")
+	Thread.sleep(10000)
+	println("Bye")
+}
+
+// We can create a abstract control
+def until(condition: => Boolean) (block: => Unit) {
+	if (!condition) {
+		block
+		until(condition) (block)
+	}
+}
+
+var x = 10
+until (x == 0) {
+	x -= 1
+	println(x)
+}
+```
+
+### CH 13: Collections
+
+* Main collections' trait
+
+```scala
+// main collection's trait
+trait Iterable
+
+trait Seq extends Iterable
+trait IndexedSeq extends Seq
+
+trait Set extends Iterable
+trait SortedSet extends Set
+
+trait Map extends Iterable
+trait SortedMap extends Map
+
+// Iterable 
+val coll = ... // some Iterable
+val iter = coll.iterator
+while (iter.hasNext) {
+	iter.next()
+}
+
+// All scala's collection trait/class has apply method
+Iterable(0xFF, 0xFF00, 0xFF0000)
+Set(Color.RED, Color.GREEN, Color.BLUE)
+Map(Color.RED -> 0xFF0000, Color.GREEN -> 0xFF00, Color.BLUE -> 0xFF)
+SortedSet("Hello", "World")
+```
+
+* mutable and immutable collections
+
+```scala
+// scala.collection.Map is the base type of 
+// scala.collection.mutable.Map and scala.collection.immutable.Map
+// Scala predefine collection use immutable implementations, ie. Predef.Map is scala.collection.immutable.Map
+
+def digits(n: Int): Set[Int] = {
+	if (n < 0) digits(-1)
+	else if (n < 10) Set(n)
+	else digits(n / 10) + (n % 10)
+}
+
+// immutable collections
+trait Seq
+class List extends Seq
+class Stream extends Seq
+class Stack extends Seq
+class Queue extends Seq
+trait IndexedSeq extends Seq
+class Vector extends IndexedSeq
+class Range extends IndexedSeq
+
+// mutable collections
+trait Seq
+class Stack extends Seq
+class Queue extends Seq
+class PriorityQueue extends Seq
+class LinkedList extends Seq
+class DoubleLinkedList extends Seq
+trait IndexedSeq extends Seq
+class ArrayBuffer extends IndexedSeq
+```
+
+* List
+
+```scala
+9 :: 4 :: 2 :: Nil
+
+def sum(lst: List[Int]): Int = {
+	if (lst == Nil) 0
+	else lst.head + sum(lst.tail)
+}
+
+def sum(lst: List[Int]): Int = lst match {
+	case Nil => 0
+	case h :: t => h + sum(t)
+}
+
+List(9, 4, 2).sum
+
+```
+
+* LinkedList
+
+```scala
+val lst = scala.collection.mutable.LinkedList(1, -2, 7, -9)
+var cur = lst
+while (cur != Nil) {
+	if (cur.elem < 0) cur.elem = 0
+	cur = cur.next
+}
+
+var cur = lst
+while (cur != Nil && cur.next != Nil) {
+	cur.next = cur.next.next
+	cur = cur.next
+}
+
+```
+
+* Set 
+
+```scala
+Set(2, 0, 1) + 1 // same as Set(2, 0 , 1)
+Set(1, 2, 3, 4, 5, 6)
+	// the iteration order might be 5, 1, 6 ,2, 3, 4 because underneath it's implemented use a hash table
+	
+val weekdays = scala.collection.mutable.LinkedHashSet("Mo", "Tu", "We", "Th", "Fr")
+	// use LinkedHashSet will use a underlying linked-list to keep track of insertion order
+	
+scala.colection.immutable.SortedSet(1, 2, 3, 4, 5, 6)
+	// is implemented use a Red-Black tree
+	
+val digits = Set(1, 7, 2, 9)
+digits contains 0	// false
+Set(1, 2) subsetOf digits	// true
+
+val primes = Set(2, 3, 5, 7)
+digits ++ primes // digits union primes
+digits | primes // digits union primes
+
+digits & primes // digits intersection primes
+
+digits &~ primes // digits diff primes
+digits -- primes // digits diff primes
+```
+
+* Operator for add/remove element on collection
+
+```scala
+collection :+ elem	// Seq
+elem +: collection	// Seq
+
+collection + elem	// Set, Map
+collection + (e1, e2, ...)	// Set, Map
+
+collection - elem	// Set, Map, ArrayBuffer
+collection - (e1, e2, ...)	// Set, Map, ArrayBuffer
+
+collection1 ++ collection2	// Iterable
+
+collection1 -- collection2	// Set, Map, ArrayBuffer
+
+elem :: lst // List
+lst2 ::: lst1 // List
+
+set1 | set2 // Set
+set1 & set2 // Set
+set1 &~ set2 // Set
+
+collection += elem	// mutable collection
+collection += (e1, e2, ...) // mutable collection
+collection1 ++= collection2  // mutable collection
+collection -= elem // mutable collection
+collection -= (e1, e2, ...) // mutable collection
+collection1 --= collection2  // mutable collection
+
+elem +=: coll // ArrayBuffer prepend 
+```
+
+* Methods in Iterable trait
+
+```scala
+head, last, headOption, lastOption // first or last elem or option
+tail, init // without head or last
+length, isEmpty
+map(f), foreach(f), flatMap(f), collect(pf)
+reduceLeft(op), reduceRight(op), foldLeft(init)(op), foldRight(init)(op) // apply binary op with specific order
+reduce(op), fold(init)(op), aggregate(init)(op, combineOp) // apply binary op without a specific order
+sum, product, max, min
+count(pred), forall(pred), exists(pred)
+filter(pred), filterNot(pred), partition(pred)
+takeWhile(pred), dropWhile(pred), span(pred)
+take(n), drop(n), splitAt(n)
+takeRight(n), dropRight(n)
+slice(from, to)
+zip(collection2), zipAll(collection2, fill, fill2), zipWithIndex
+grouped(n), sliding(n) // both produce an interator. 
+                                   // grouped(n) return a iterator with n elem and then shift n. 
+                                   // sliding(n) return an iterator with n elem, then sift 1
+mkString(before, between, after), addString(stringBuilder, before, between, after)
+toIterable, toSeq, toIndexedSeq, toArray, toList, toStream, toSet, toMap
+copyToArray(arr), copyToArray(arr, start, length), copyToBuffer(buf)
+```
+
+* Methods in Seq trait
+
+```scala
+contains(elem), containSlice(seq), startsWith(seq), endsWith(seq)
+indexOf(elem), lastIndexOf(elem), indexOfSlice(seq), lastIndexOfSlice(seq)
+indexWhere(pred)
+prefixLength(pred), segmentLength(pred, n)
+padTo(n, fill)
+intersect(seq), diff(seq)
+reverse
+sorted, sortWith(less), sortBy(f)
+permutations, combinations(n)
+```
+
+* Collection map
+
+```scala
+val names = List("Peter", "Paul", "Mary")
+names.map(_.toUpperCase)
+def ulcase(s: String) = Vector(s.toUpperCase(), s.toLowerCase())
+
+names.flatMap(ulcase)
+
+"-3+4".collect {
+	case '+' => 1
+	case '-' => -1
+}  // Vector(-1, 1)
+
+names.foreach(println)
+```
+
+* Reduce, Fold and Scan
+
+```scala
+List(1, 7, 2, 9).reduceLeft(_ - _)
+	// ((1 - 7) - 2) - 9 = -17 
+List(1, 7, 2, 9).reduceRight(_ - _)
+	// 1 - (7 - (2 - 9)) = -13
+
+List(1, 7, 2, 9).foldLeft(0)(_ - _)
+	// (((0 - 1) - 7) - 2) - 9 = 19
+
+(0 /: List(1, 7, 2, 9)) (_ - _)  // same as List(1, 7, 2, 9).foldLeft(0) (_ - _)
+(List(1, 7, 2, 9) :\ 0) (_ - _)  // same as List(1, 7, 2, 9).foldRight(0) (_ - _) 
+
+val freq = scala.collection.mutable.Map[Char, Int]()
+for (c <- "Mississippi") freq(c) = freq.getOrElse(c, 0) + 1	
+
+// Above loop can be replaced by foldLeft
+(Map[Char, Int]() /: "Mississippi") {
+	(m, c) => m + (c -> m.getOrElse(c, 0) + 1)
+} // result is an immutable map
+
+// Note: Any while loop can be replaced use foldLeft, foldRight
+
+(1 to 10).scanLeft(0) (_ + _)
+	// scan generate all intermedia result
+	// Vector(0, 1, 3, 6, 10, 15, 21, 28, 36, 45, 55)
+```
+
+* zip
+
+```scala
+val prices = List(5.0, 20.0)
+val quantities = List(10, 2, 1)
+(prices zip quantities) map { 
+	p => p._1 * p._2
+} // List(50.0, 40.0, 9.95)
+
+List(5.0, 20.0, 9.95).zipAll(List(10, 2), 0.0, 1)
+	// List((5.0, 10), (20.0, 2), (9.95, 1))
+	
+"scala".zipWithIndex
+	// Vector((s,0), (c,1), (a,2), (l,3), (a,4))
+
+```
+
+* iterator
+
+```scala
+while(iter.hasNext) {
+	iter.next()
+}
+
+while(elem <- iter) {
+	elem
+}
+```
+
+* Stream
+
+```scala
+def numsFrom(n: BigInt): Steam[BigInt] = n #:: numsFrom(n + 1)
+val tenOrMore = numsFrom(10)
+	// Stream(10, ?)
+tenOrMore.tail.tail.tail
+	// Stream(13, ?)
+val squares = numsFrom(1).map(x => x * x)
+	// Stream(1, ?)
+squares.take(5).force
+	// Steam(1, 4, 9, 16, 25)
+squares.force
+	// Don't do this, will get OutOfMemoryError
+
+val words = Source.fromFile("/usr/share/dict/words").getLines.toStream
+words // Stream(A, ?)
+words(5) // Aachen
+words // Stream(A, A's, AOL, AOL's, Aachen, ?)
+```
+
+* Lazy view
+
+```scala
+val powers = (0 until 1000).view.map(pow(10, _))
+	// will produce a view that is always being lazy calcuate and never cache any value
+powers(100)
+	// only pow(10, 100) is calculated 
+	// and will not be cached
+	// if call powers(100) again, pow(10, 100) will be calculated again
+	
+(0 to 1000).map(pow(10, _)).map(1 / _)
+	// calculate map of all element and then caculate the other map
+
+(0 to 1000).view.map(pow(10, _)).map(1 / _).force
+	// calculate two maps together for each element, there's no middle temp collection	
+```
+
+* Thread-safe collections
+
+
+
 
 
