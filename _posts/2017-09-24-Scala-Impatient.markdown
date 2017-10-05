@@ -2155,7 +2155,317 @@ powers(100)
 
 * Thread-safe collections
 
+```scala
+trait SynchronizedBuffer
+trait SynchronizedMap
+trait SynchronizedPriorityQueue
+trait SynchronizedQueue
+trait SynchronizedSet
+trait SynchronizedStack
 
+val scores = new scala.collection.mutable.HashMap[String, Int] with scala.collection.mutable.SynchronizedMap[String, Int]
+```
 
+* Parallel collections
 
+```scala
+collection.par.sum
+collection.par.count(_ % 2 == 0)
+for(i <- (0 until 100).par) print(i + " ")
+	// 1 26 51 27 ...
+for(i <- (0 until 100).par) yield i + " "
+	// ParVector(1 , 2 , 3 , 4 , 5 , ...)
+
+// par methods return trait ParSeq, ParSet, ParMap, which is the subtype of ParIterable
+
+var count = 0
+for (c <- collection.par) {
+	if (c % 2 == 0) {
+		count += 1 // Wrong
+	}
+}
+```
+
+### CH14: Pattern Matching and Case Class
+
+* Pattern matching as a better switch statement
+
+```scala
+sign = ch match {
+	case '+' => 1
+	case '-' => -1
+	case _ => 0
+}
+
+color match {
+	case Color.RED =>
+	case Color.BLACK =>
+	...
+}
+```
+
+* Guard
+
+```scala
+ch match {
+	case '+' => sign = 1
+	case '-' => sign = -1
+	case _ if Character.isDigit(ch) => digit = Character.digit(ch, 10)
+	case _ => sign = 0
+}
+```
+
+* Variables in pattern matching
+
+```scala
+str(i) match {
+	case ch if Character.isDigit(ch) => digit = Character.digit(ch, 10)
+	...
+}
+```
+
+* Type matching
+
+```scala
+obj match {
+	case x: Int => x
+	case s: String => Integer.parseInt(s)
+	case _: BigInt => Int.MaxValue
+	case _ => 0
+}
+```
+
+* Array, List and Tuple matching
+
+```scala
+arr match {
+	case Array(0) => "0"
+	case Array(x, y) => x + " " + y
+	case Array(0, _*) => "0 ..."
+	case _ => "something else"
+}
+
+lst match {
+	case 0 :: Nil => "0"
+	case x :: y :: Nil => x + " " + y
+	case 0 :: tail => "0 ..."
+	case _ => "something else"
+}
+
+pair match {
+	case (0, _) => "0 ..."
+	case (y, 0) => y + " 0"
+	case _ => "neither is 0"
+}
+```
+
+* Extractor
+
+```scala
+// Extractor use unapply or unapplySeq to extra value 
+arr match {
+	case Array(0, x) => ...
+	...
+}
+
+val pattern = "([0-9]+) ([a-z]+)".r
+"99 bottle" match {
+	case pattern(num, item) => ...
+		// set num to "99" and item to "bottles"
+}
+
+//	 pattern.unapplySeq("99 bottles") to assign to num and item
+```
+
+* Pattern matching in variable assignment
+
+```scala
+val (x, y) = (1, 2)
+val (q, r) = BigInt(10) /% 3
+val Array(first, second, _*) = arr
+```
+
+* Pattern matching in for loop
+
+```scala
+for ((k, v) <- myMap) {
+	println(k + " -> " + v)
+}
+
+for ((k, "") <- myMap) {
+	println(k)
+}
+
+for ((k, v) <- myMap if v == "") {
+	println(k)
+}
+```
+
+* case class
+
+```scala
+abstract class Amount 
+case class Dollar(value: Double) extends Amount 
+case class Currency(value: Double, unit: String) extends Amount
+case object Nothing extends Amount
+
+amt match {
+	case Dollar(v) => "$" + v
+	case Currency(_, u) => "Oh noes, I got " + u
+	case Nothing => ""
+}
+
+// case class/object is really good at pattern matching 
+// and it is different from normal class/object in the following way:
+// 1) all param in constructor is val by default
+// 2) come with the `apply` method, so `new` key-word is not a must
+// 3) come with the `unapply` method for pattern matching
+// 4) come with `toString`, `equals`, `hashCode` and `copy` method
+```
+
+* copy method 
+
+```scala
+val amt = Currency(29.95, "EUR")
+val price = amt.copy()
+val price = amt.copy(value = 19.95) // Currency(19.95, "EUR")
+val price = amt.copy(unit = "CHF") // Currency(29.95, "CHF")
+```
+
+* Match decomposition on infix operator
+
+```scala
+case class %%%(x: Int, y: Int)
+
+a match {
+  case x %%% y => x + y
+}
+
+amt match {
+	case a Currency u => ... // equivalent to case Currency(a, u)
+}
+
+// seems to be silly, but above example is super useful for the following
+
+case class ::[E](head: E, tail: List[E]) extends List[E]
+
+lst match {
+	case h :: t => ...
+		// case ::(h, t) and use ::.unapply(lst)
+}
+
+result match {
+	case p ~ q => ... // case ~(p, q)
+	case p ~ q ~ r => ...
+		// case ~(~(p, q), r)
+}
+
+// Note :: is right associative 
+
+case first :: second :: rest 
+	// case ::(first, ::(second, rest))
+	
+case object +: {
+	def unapply[T](input: List[T]) = {
+		if (input.isEmpty) None else Some((input.head, input.tail))
+	}
+}
+
+1 +: 7 +: 2 +: 9 +: Nil match {
+	case first +: second +: rest => first + second + rest.length
+}
+```
+
+* Matching recursive data structure
+
+```scala
+abstract class Item
+case class Article(description: String, price: Double) extends Item
+case class Bundle(description: String, discount: Double, items: Item*) extends Item
+
+val item = Buddle("Father's day special", 20.0, 
+				Article("Scala for the Impatient", 29.95),
+				Buddle("Anchor Distillery Sampler", 10.0, 
+					Article("Old Potrere Straight Rye Whisky", 79.95),
+					Article("Junipero Gin", 32.95)))
+item match {
+	case Buddle(_, _, Article(descr, _), _*) => ...
+	case Buddle(_, _, art @ Article(_, _), rest @ _*) => ...
+	case Buddle(_, _, art @ Article(_, _), last) => ...
+}
+
+def price(it: Item): Double = it match {
+	case Article(_, p) => p
+	case Buddle(_, disc, its @ _*) => its.map(price _).sum - disc
+}
+```
+
+* case class equals
+
+```scala
+Currency(10, "EUR") == Currency(10, "EUR") // true
+```
+
+* sealed case class
+
+```scala
+sealed abstract class Amount
+case class Dollar(value: Double) extends Amount
+case class Currency(value: Double, unit: String) extends Amount
+
+// sealed case class forced all derived case class to be defined in the same file
+
+sealed abstract class TrafficLightColor
+case object Red extends TrafficLightColor
+case object Yellow extends TrafficLightColor
+case object Green extends TrafficLightColor
+
+color match {
+	case Red => "Stop"
+	case Yellow => "hurry up"
+	case Green => "go"
+}
+```
+
+* Option type
+
+```scala
+// Option is either Some(x) or None
+scores.get("Alice") match {
+	case Some(score) => println(score)
+	case None => println("No score")
+}
+
+val alicesScore = score.get("Alice")
+if (alicesScore.isEmpty) println("No score")
+else println(alicesScore.get)
+
+println(alicesScore.getOrElse("No score"))
+
+println(score.getOrElse("Alice", "No score"))
+
+for (score <- scores.get("Alice")) println(score)
+
+scores.get("Alice").foreach(println _)
+```
+
+* Partial Function
+
+```scala
+val f: PartialFunction[Char, Int] = {
+	case '+' => 1
+	case '-' => -1
+}
+
+f('-') // calls f.apply('-') return -1
+f.isDefinedAt('0') // false
+f('0') // throws MatchError
+
+// Note collect function accepts partial function
+
+"-3+4".collect {
+	case '+' => 1
+	case '-' => -1
+} // Vector(-1, 1)
+```
 
