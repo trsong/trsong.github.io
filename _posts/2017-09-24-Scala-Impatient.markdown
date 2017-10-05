@@ -2383,20 +2383,20 @@ abstract class Item
 case class Article(description: String, price: Double) extends Item
 case class Bundle(description: String, discount: Double, items: Item*) extends Item
 
-val item = Buddle("Father's day special", 20.0, 
+val item = Bundle("Father's day special", 20.0, 
 				Article("Scala for the Impatient", 29.95),
-				Buddle("Anchor Distillery Sampler", 10.0, 
+				Bundle("Anchor Distillery Sampler", 10.0, 
 					Article("Old Potrere Straight Rye Whisky", 79.95),
 					Article("Junipero Gin", 32.95)))
 item match {
-	case Buddle(_, _, Article(descr, _), _*) => ...
-	case Buddle(_, _, art @ Article(_, _), rest @ _*) => ...
-	case Buddle(_, _, art @ Article(_, _), last) => ...
+	case Bundle(_, _, Article(descr, _), _*) => ...
+	case Bundle(_, _, art @ Article(_, _), rest @ _*) => ...
+	case Bundle(_, _, art @ Article(_, _), last) => ...
 }
 
 def price(it: Item): Double = it match {
 	case Article(_, p) => p
-	case Buddle(_, disc, its @ _*) => its.map(price _).sum - disc
+	case Bundle(_, disc, its @ _*) => its.map(price _).sum - disc
 }
 ```
 
