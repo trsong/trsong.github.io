@@ -1839,7 +1839,7 @@ until (x == 0) {
 }
 ```
 
-### CH 13: Collections
+### CH13: Collections
 
 * Main collections' trait
 
