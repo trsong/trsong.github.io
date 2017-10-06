@@ -2186,6 +2186,20 @@ for (c <- collection.par) {
 }
 ```
 
+* Builders 
+
+```scala
+package scala.collection.mutable 
+
+trait Builder[-Elem, +To] {
+	def +=(elem: Elem): this.type
+	def result(): To
+	def clear(): Unit
+	def mapResult[NewTo](f: To => NewTo): Builder[Elem, NewTo] = ...
+}
+```
+
+
 ### CH14: Pattern Matching and Case Class
 
 * Pattern matching as a better switch statement
@@ -2469,3 +2483,145 @@ f('0') // throws MatchError
 } // Vector(-1, 1)
 ```
 
+### CH15: Annotation
+
+* Annotation Syntax
+
+```scala
+@Annotation
+@Annotation(value)
+@Annotation(name1 = value1, ...)
+```
+
+* Tail recursion
+
+```scala
+@tailrec def sum2(xd: Seq[Int], partial: BitInt): BigInt = {
+	if (xd.isEmpty) partial else sum2(xs.tail, xs.head + partial)
+}
+```
+
+* swith and inline
+
+```scala
+(n: @switch) match {
+	case 0 => "Zero"
+	case 1 => "One"
+	case _ => "?"
+}
+
+@inline def method1 ...
+@noinline def method2 ...
+```
+
+* Primary type specialize
+
+```scala
+// primary type pack and unpack is not efficient
+def allDifferent[T](x: T, y: T, z: T) = x != y && x != z && y != z
+// if call allDifferent(3, 4, 5), before call this function all number will be pack into java.lang.Integer
+// well we can design an overloading version
+def allDifferent(x: Int, y: Int, z: Int) = ...
+
+// we can let compiler to generate all other primary type
+
+def allDifferent[@specialized T] (x: T, y: T, z: T) = ...
+	// all other primary type method will overloading
+	
+def allDifferent[@specialized(Long, Double) T](x: T, y: T, z: T) = ...
+	// we can put Unit, Boolean, Byte, Short, Char, Int, Long, Float, Double
+```
+
+* Deprecated 
+
+```scala
+@deprecated(message = "Use factorial(n: BigInt) instead")
+def factorial(n: Int): Int = ...
+
+def draw(@deprecated('sz) size: Int, style: Int = NORMAL)
+	// draw(sz = 12) will get warning
+```
+
+* unchecked
+
+```scala
+(lst: @unchecked) match {
+	case head :: tail => ...
+}
+```
+
+### CH16: XML Process
+
+### CH17: Type Parameter
+
+* Generic class
+
+```scala
+class Pair[T, S](val first: T, val second: S)
+val p = new Pair(42, "String")
+val p2 = new Pair[Any, Any](42, "String")
+```
+
+* Generic method
+
+```scala
+def getMiddle[T](a: Array[T]) = a(a.length / 2)
+getMiddle(Array("Mary", "had", "a", "little", "lamb"))
+val f = getMiddle[String] _ // This will return a specific method and save to f
+```
+
+
+* Bound
+
+```scala
+T <: UpperBound
+T >: LowerBound
+T <% ViewBound
+T : ContextBound
+```
+
+* UpperBound
+
+```scala
+class Pair[T <: Comparable[T]](val first: T, val second: T) {
+	def smaller = if (first.compareTo(second) < 0) first
+					else second
+}
+// Comparable must be an upperbound of T
+// Means T must be a sub-type of Comparable[T]
+
+val p = new Pair("Fred", "Brooks")
+println(p.smaller)
+
+class Pair[T](val first: T, val second: T) {
+	def replaceFirst[R >: T](newFirst: T) = new Pair[R](newFirst, second)
+}
+```
+
+* ViewBound
+
+```scala
+val numPair = new Pair(2, 4) 
+	// Incorrect, because Int is not a sub-type of Comparable[Int]
+	// Only RichInt implements Comparable[Int]
+	
+// Use ViewBound to implicitly convert type
+class Pair[T <% Comparable[T]]
+
+// However, use Orderer[T] is better than Comparable[T], it has all Comparable[T] and plus some relation operator
+
+class Pair[T <% Ordered[T]](val first: T, val second: T) {
+	def smaller = if (first < second) first else second 
+}
+```
+
+* ContextBound
+
+```scala
+// While ViewBound T <% V requires an implicit converstion from T to V, ContextBound T : M requires to have an implicit value of type M[T]
+
+class Pair[T : Ordering](val first: T, val second: T) {
+	def smaller(implicit ord: Ordering[T]) = 
+		if (ord.compare(first, second) < 0) first else second
+}
+```
