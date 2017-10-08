@@ -1148,6 +1148,44 @@ class Item(val description: String, val price: Double) {
 }	
 ```
 
+* Scala Inheritance
+
+```scala
+class Any {
+	def isInstanceOf
+	def asInstanceOf
+	def hashCode
+	def equals
+	def eq
+}
+
+trait AnyVal extends Any
+class AnyRef extedns Any {
+	def wait
+	def notify
+	def notifyAll
+	def synchronized
+}
+
+class Boolean extends AnyVal
+class Int extends AnyVal
+class Byte extends AnyVal
+class Long extends AnyVal
+class Char extends AnyVal
+class Short extends AnyVal
+class Double extends AnyVal
+class Unit extends AnyVal
+class Float extends AnyVal
+
+All_Scala_Classes extends AnyRef with ScalaObject
+All_Java_Classes extends AnyRef
+
+trait Nothing extends *   // * represents subclass of Any
+
+trait Null extends **     // ** represents subclass of AnyRef
+object null extends Null
+```
+
 ### CH9: Files and Regular Expressions
 
 * Read lines
@@ -1707,7 +1745,7 @@ val quintuple = mulBy(5)
 quintuple(20) // 100
 ```
 
-* Function type detection
+* Function type inference
 
 ```scala
 valueAtOneQuarter((x: Double) => 3 * x) // 0.75
@@ -2176,7 +2214,7 @@ for(i <- (0 until 100).par) print(i + " ")
 for(i <- (0 until 100).par) yield i + " "
 	// ParVector(1 , 2 , 3 , 4 , 5 , ...)
 
-// par methods return trait ParSeq, ParSet, ParMap, which is the subtype of ParIterable
+// par methods return trait ParSeq, ParSet, ParMap, which is the subclass of ParIterable
 
 var count = 0
 for (c <- collection.par) {
@@ -2624,4 +2662,206 @@ class Pair[T : Ordering](val first: T, val second: T) {
 	def smaller(implicit ord: Ordering[T]) = 
 		if (ord.compare(first, second) < 0) first else second
 }
+```
+
+* Multiple bounds
+
+```scala
+T >: Lower <: Upper
+
+// Note You cannot have mulitple UpperBound and LowerBound together, but it can ask for multiple traits
+T <: Comparable[T] with Serializable with Cloneable
+
+// Multiple ViewBounds
+T <% Comparable[T] <% String
+
+// Multiple ContextBounds
+T : Ordering : Manifest
+```
+
+* Type constraint
+
+```scala
+// Type constraint provider another way to constraint type
+T =:= U	// T has the same type as U
+T <:< U	// T is a subclass of U
+T <%< U	// T can be view(implicit) convert to U
+
+// Note type constraint must be declare implicitly
+class 
+class Pair[T](val first: T, val second: T)(implicit ev: T <:< Comparable[T])
+	// Same as the following
+class Pair[T <: Comparable[T]](val first: T, val second: T)
+
+//However, the following 2 cases can only achieve through type constraint
+
+// Case 1: You can still construct Pair[File]; however, when you call smaller method then will you get error
+
+class Pair[T](val first: T, val second: T) {
+	def smaller(implicit ex: T <:< Comparable[T]) = 
+		if (first < second) first else second
+}
+
+val friends = Map("Fred" -> "Barney", ...)
+val friendOpt = friends.get("Wilma")		// Option[String]
+val friendOrNull = friendOpt.orNull	// either String or null
+	// above code is useful when deal w/ Java code
+	// however, orNull cannot use on Int
+	// because it has type constraint Null <:< A
+	// however, you can use Option[Int] for not problem,
+	// but it's just you cannot use .orNull method
+
+// Case 2: improved type inference
+
+def firstLast[A, C <: Iterable[A]](it: C) = (it.head, it.last)
+firstLast(List(1, 2, 3)) 
+	// will detect type [Nothing, List[Int]]
+	//  error: inferred type arguments [Nothing,List[Int]] do not conform to method firstLast's type parameter bounds [A,C <: Iterable[A]]
+	// Because we process A first then C
+	// The way to solve problem is to match C first then A
+
+def firstLast[A, C](it: C)(implicit ev: C <:< Iterable[A]) = (it.head, it.last)
+	// firstLast(List(1, 2, 3, 4)) returns (1, 4)
+	
+// Similar idea can also be found in the following code
+def corresponds[B](that: Seq[B])(match: (A, B) => Boolean): Boolean
+
+Array("Hello", "Fred").corresponds(Array(5, 4))(_.length == _)
+	// Interpreter knows B is Int, and _.length == _ works
+``` 
+
+* Variance
+
+```scala
+// Suppose T' is a subclass of T
+// Invariance: C[T'] has nothing to do w/ C[T]
+// Covariance: C[T'] is a subclass of C[T]
+// Contravariance: C[T] is a subclass of C[T']
+```
+
+* Covariance
+
+```scala
+def makeFriends(p: Pair[Person])
+	// Suppose Student <:< Person
+	// But by default, Pair[Student] has nothing to do w/ Pair[Person]
+	// If we want Pair[Student] <:< Pair[Person]
+	// we have to do the following
+	
+class Pair[+T](val first: T, val second T)
+	// +T means the real type is covariant to T
+	// Mean it has the same type variance direction
+	// eg. A <:< B  implies Pair[A] <:< Pair[B]
+```
+
+* Contravariance
+
+```scala	
+trait Friend[-T] {
+	def befriend(someone: T)
+}
+
+def makeFriendWith(s: Student, f: Friend[Student]) {
+	f.befriend(s)
+}
+
+class Person extends Friend[Person]
+class Student extends Person
+val susan = new Student
+val fred = new Person
+
+// Question: do we allow Friend[Person] to befriend w/ a student?
+makeFriendWith(susan, fred)
+	// fred is Student <:< Person <:< Friend[Person]
+	// Friend[Person] <:< Friend[Student]
+
+```
+
+* Multiple Variance
+
+```scala
+// Function1[-A, +R]	
+def friends(students: Array[Student], find: Function1[Student, Person]) = 
+	// find is equivalent to find: Student => Person
+	for (s <- students) yield find(s)
+
+def findStudent(p: Person): Student
+
+// Question: can we call frinds w/ findStudent?
+friends(student: Array[Student], findStudent)
+	// findStudent: Function1[Person, Student]
+	// since Function1[-A, +R] and Student <:< Person
+	// Function1[Person, Student] <:< Function1[Student, Person]
+```
+
+* Covariant and contravariant positions
+
+```scala
+// In general, the consumption position is the contravariance position
+// the production position is the covariance position
+
+// In scala, Array does not support Variance
+val students = new Array[Student](length)
+val people: Array[Person] = students // Illegal, won't compile
+
+// We know the following works
+class Pair[+T](val first: T, val second T)
+// However
+class Pair[+T](var first: T, var second T)
+	//          ^ error
+	// first_=(value: T) such value is at contravariance position
+	
+// Notice, in function params, the param of that function is covariance
+trait Iterable[+A] {
+	foldLeft[B](z: B)(op: (B, A) => B): B
+	//             -       +  +     -   + 
+	// -, + are contravariance and covariance position separately
+	// Note, A is at covariance position
+}
+
+class Pair[+T](val first: T, val second: T) {
+	def replaceFirst(newFirst: T) = new Pair[T](newFirst, second)
+		//                 err  ^  this is contravariance position
+		
+	def replaceFirst[R >: T](newFirst: R) = new Pair[R](newFirst, second)
+}
+```
+
+* object doesn't have generic types
+
+```scala
+abstract class List[+T] {
+	def isEmpty: Boolean
+	def head: T
+	def tail: List[T]
+}
+
+class Node[T](val head: T, val tail: List[T]) extends List[T] {
+	def isEmpty = false
+}
+
+class Empty[T] extends List[T] {
+	def isEmpty = true
+	def head = ???
+	def tail = ???
+}
+
+// If you think Empty[T] is dumb
+object Empty extends List[Nothing]
+
+val lst = new Node(42, Empty)
+
+// Since Nothing <:< T and List[+T]
+// List[Nothing] <:< List[T]
+```
+
+* Type wildcard
+
+```scala
+def process(people: java.util.List[_ <: Person])
+
+def makeFriends(p: Pair[_ <: Person])
+
+import java.util.comparator
+def min[T](p: Pair[T])(comp: Comparator[_ >: T])
 ```
