@@ -2622,8 +2622,7 @@ T : ContextBound
 
 ```scala
 class Pair[T <: Comparable[T]](val first: T, val second: T) {
-	def smaller = if (first.compareTo(second) < 0) first
-					else second
+	def smaller = if (first.compareTo(second) < 0) first else second
 }
 // Comparable must be an upperbound of T
 // Means T must be a sub-type of Comparable[T]
@@ -2688,7 +2687,6 @@ T <:< U	// T is a subclass of U
 T <%< U	// T can be view(implicit) convert to U
 
 // Note type constraint must be declare implicitly
-class 
 class Pair[T](val first: T, val second: T)(implicit ev: T <:< Comparable[T])
 	// Same as the following
 class Pair[T <: Comparable[T]](val first: T, val second: T)
@@ -2716,7 +2714,8 @@ val friendOrNull = friendOpt.orNull	// either String or null
 def firstLast[A, C <: Iterable[A]](it: C) = (it.head, it.last)
 firstLast(List(1, 2, 3)) 
 	// will detect type [Nothing, List[Int]]
-	//  error: inferred type arguments [Nothing,List[Int]] do not conform to method firstLast's type parameter bounds [A,C <: Iterable[A]]
+	//  error: inferred type arguments [Nothing,List[Int]] do not conform to 
+	// method firstLast's type parameter bounds [A,C <: Iterable[A]]
 	// Because we process A first then C
 	// The way to solve problem is to match C first then A
 
@@ -2808,7 +2807,7 @@ val people: Array[Person] = students // Illegal, won't compile
 class Pair[+T](val first: T, val second T)
 // However
 class Pair[+T](var first: T, var second T)
-	//          ^ error
+	//              ^ error
 	// first_=(value: T) such value is at contravariance position
 	
 // Notice, in function params, the param of that function is covariance
@@ -2821,7 +2820,7 @@ trait Iterable[+A] {
 
 class Pair[+T](val first: T, val second: T) {
 	def replaceFirst(newFirst: T) = new Pair[T](newFirst, second)
-		//                 err  ^  this is contravariance position
+		//              err  ^  this is contravariance position
 		
 	def replaceFirst[R >: T](newFirst: R) = new Pair[R](newFirst, second)
 }
@@ -2865,3 +2864,375 @@ def makeFriends(p: Pair[_ <: Person])
 import java.util.comparator
 def min[T](p: Pair[T])(comp: Comparator[_ >: T])
 ```
+
+### CH18: Advance Type
+
+* Singleton Type
+
+```scala
+// For any reference v, v.type will return v or null
+
+class Document {
+	def setTitle(title: String) = { ...; this }
+	def setAuthor(author: String) = { ...; this }
+	...	
+}
+
+article.setTitle("Whatever Floats Your Boat").setAuthor("Cay Hortstmann")
+
+// However, subclass would be a problem
+class Book extends Document {
+	def addChapter(chapter: String) = { ...; this }
+	...
+}
+
+val book = new Book()
+book.setTitle("Scala for the Impatient").addChapter("chapter1")
+//                                      ^ incorrect
+// Document does not have addChapter method
+// The way to fix it is to use this.type
+
+def setTitle(title: String): this.type = { ...; this }
+
+// Someone might construct above api to be something as fluence as English
+book set Title to "Scala for the Impatient"
+book.set(Title).to("Scala for the Impatient")
+
+object Title
+
+class Document {
+	private var useNextArgAs: Any = null
+	def set(obj: Title.type): this.type = { useNextArgAs = obj; this }
+		// Title is singlton not type
+	def to(arg: String) = if (useNextArgAs == Title) title = arg; else ...
+	...
+}
+```
+
+* Type Projection
+
+```scala
+class Network {
+	class Member(val name: String) {
+		val contacts = new ArrayBuffer[Network#Member]
+			// this means for all Network's Member class
+	}
+	...
+}
+```
+
+* Type aliase 
+
+```scala
+class Book {
+	import scala.collection.mutable._
+	type Index = HashMap[String, (Int, Int)]
+}
+
+abstract class Reader {
+	type Contents
+	def read(fileName: String): Contents
+}
+```
+
+* Structure Type
+
+```scala
+def appendLines(target: { def append(str: String): Any }, lines: Iterable[String]) {
+	for (l <- lines) {
+		target.append(1)
+		target.append("\n")
+	}
+}
+```
+
+* Compound Type
+
+```scala
+// T1 with T2 with T3
+val image = new ArrayBuffer[java.awt.Shape with java.io.Serializable { def contains(p: Point): Boolean }]
+```
+
+* Infix Type
+
+```scala
+// For Math expression, infix expression is preferred
+// String Map Int
+// instead of Map[String, Int]
+
+type x[A, B] = (A, B)
+String x Int x Int
+```
+
+* Existance Type
+
+```scala
+Array[T] forSome { type T <: JComponent }
+// is equivalent to
+Array[_ <: JComponent]
+
+Array[_]
+// is equivalent to
+Array[T] for some { type T }
+
+Map[_, _]
+// is equivalent to
+Map[T, U] forSome { type T; type U }
+
+// we can even do this
+Map[T, U] forSome { type T; type U <: T }
+n.Member forSome { val n: Network }
+	// can use Network#Member to achieve that
+
+// However, there are things cannot achieve by type projection
+
+def process[M <: n.Member forSome { val n: Network }](m1: M, m2: M) = (m1, m2)
+
+// This will accept member from same Network but against people from different Network
+
+val chatter = new Network
+val myFace = new Network
+val fred = chatter.join("Fred")
+val wilma = chatter.join("Wilma")
+val barney = myFace.join("Barney")
+process(fred, wilma) // OK
+process(fred, barney) // Incorrect
+```
+
+* Scala's Type System
+
+| type               | syntax                                       |
+|:-------------------|:---------------------------------------------| 
+| class or trait     | `class C ...`, `trait C...`                  |
+| Tuple Type         | `(T1, T2, ..., Tn)`                          |
+| Function Type      | `(T1, T2, ..., Tn) => T`                     |
+| Annotation Type    | `T @ A`                                      |
+| Parameter Type     | `A[T1, T2, ... Tn]`                          |
+| Singleton Type     | `value.type`                                 |
+| Type Projection    | `O#I`                                        |
+| Compound Type      | `T1 with T2 with ... with Tn { statements }` |
+| Infix Type         | `T1 A T2`                                    |
+| Existance Type     | `T forSome { type or val declaration }`      |
+
+
+* Self-type 
+
+```scala
+// Self-type  is used to restrict trait/class to be mixed into
+trait Logged {
+	def log(msg: String)
+}
+
+trait LoggedException extends Logged { this: Exception =>
+	def log() {
+		log(getMessage())
+			// getMessage comes from Exception
+	}
+}
+
+// Self-type  is used to access to outer class
+trait Goup { outer: Network =>
+	class Member {
+		...
+		// outer refer to Group.this
+	}
+}
+
+// Self-type  will not be inherited, means have to re-define self-type
+trait ManagedException extends LoggedException {
+	this: Exception =>
+	 ...
+}
+```
+
+* Dependency Injection using trait and self-type
+
+```scala
+trait Logger {
+	def log(msg: String)
+}
+
+trait Auth { 
+	this: Logger =>
+	def login(id: String, password: String): Boolean
+}
+
+trait App {
+	this: Logger with Auth =>
+	...
+}
+
+// Now we can assumble our app
+object MyApp extends App with FileLogger("test.log") with MockedAuth("users.txt")
+
+// however this doesn't feel right
+// because an natrual way to init the app is through initializing 
+// we can use Cake Pattern
+
+trait LoggerComponent {
+	trait Logger { ... }
+	val logger: Logger
+	class FileLogger(file: String) extends Logger { ... }
+	...
+}
+
+trait AuthComponent {
+	this: LoggerComponent =>
+	
+	trait Auth { ... }
+	val auth: Auth
+	class MockAuth(file: String) extends Auth { ... }
+	...
+}
+
+object AppComponent extends LoggerComponent with AuthComponent {
+	val logger = new FileLogger("test.log")
+	val auth = new MockAuth("users.txt")
+}
+
+// The benefit of using above pattern is that
+// we can centralized the place where we assemble the compoent
+// and it's better than use XML config to assemble because compiler can check it at compile time
+```
+
+* Abstract Type
+
+```scala
+trait Reader {
+	type Contents
+	def read(fileName: String): Contents
+}
+
+class StringReader extends Reader {
+	type Contents = String
+	def read(fileName: String) = Source.fromFile(fileName, "UTF-8").mkString
+}
+
+class ImageReader extends Reader {
+	type Contents = BufferedImage
+	def read(fileName: String) = ImageIO.read(new File(fileName))
+}
+
+// Above can also achieve by using type param
+trait Reader[C] {
+	def read(fileName: String): C
+}
+
+
+// Which one is better?
+// Abstract type is flexible 
+// Type param give base class some control over type
+
+trait Reader {
+	type In
+	type Contents
+	def read(in: In): Contents
+}
+
+class ImageReader extends Reader {
+	type In = File
+	type Contents = BufferedImage
+	def read(file: In) = ImageIO.read(file)
+}
+```
+
+### CH21: Implicit Conversion and Parameter
+
+* Implicit conversion
+
+```scala
+implicit def int2Fraction(n: Int) = Fraction(n, 1)
+val result = 3 * Fraction(4, 5) // will call int2Fraction(3)
+	// implicit conversion function can have any name, 
+	// however, the name convention should be source2Target
+```
+
+* Use implicit conversion to enrich existance lib
+
+```scala
+class RichFile(val from: File) {
+	def read = Source.fromFile(from.getPath).mkString
+}
+
+implicit def file2RichFile(from: File) = new RichFile(from)
+
+val contents = new File("README").read
+	// implicitly convert File into RichFile
+```
+
+* Import implicit conversion
+
+```scala
+object Main extends App {
+	import com.horstmann.impatient.FractionConversions._
+	val result = 3 * Fraction(4, 5)
+	println(result)
+}
+
+// Or if we want a specific implicit conversion
+import com.horstmann.impatient.FractionConversions.fraction2Double
+
+// if some implicit conversion brings you trouble and you want to import everything but that one
+import com.horstmann.impatient.FractionConversions.{fraction2Double => _, _}
+```
+
+* implicit parameter
+
+```scala
+case class Delimiters(left: String, right: String)
+
+def quote(what: String)(implicit delims: Delimiters) = delims.left + what + delims.right
+
+// call explicitly with implicit param 
+quote("Bonjour ls monde")(Delimiters("<<", ">>"))
+
+object FrenchPunctuation {
+	implicit val quoteDelimiters = Delimiters("<<", ">>")
+}
+
+import FrenchPunctuation._
+quote("Bonjour ls monde")
+	// <<Bonjour ls monde>>
+```
+
+* Use implicit paramter to perform implcit conversion
+
+```scala
+def smaller[T](a: T, b: T)(implicit order: T => Ordered[T]) = if (a < b) a else b
+```
+
+* ContextBound
+
+```scala
+class Pair[T : Ordering](val first: T, val second: T) {
+	def smaller(implicit ord: Ordering[T]) = if (ord.compare(first, second) < 0) first else second
+	// we can also do this 
+	def smaller = {
+		import Ordered._;
+		if (first < second) first else second
+	}
+}
+```
+
+* Type proof
+
+```scala
+// In CH17, we have seen this following
+T =:= U
+T <:< U
+T <%< U
+
+def firstLast[A, C](it: C)(implicit ev: C <:< Iterable[A]) = (it.head, it.last)
+	// (ev(it).head, ev(it).last)
+	// ev is called type proof object
+
+// =:=, <:<, and <%< are defined in Predef use the following
+abstract class <:<[-From, +To] extends Function1[From, To]
+
+object <:< {
+	implicit def conforms[A] = new (A <:< A) {
+		def apply(x: A) = x
+	}
+}
+```
+
