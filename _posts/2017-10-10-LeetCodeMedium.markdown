@@ -7,6 +7,12 @@ categories: Scala TypeScript
 * This will become a table of contents (this text will be scraped).
 {:toc}
 
+### Environment Setup
+
+TypeScript Playground: [https://www.typescriptlang.org/play/](https://www.typescriptlang.org/play/)
+
+Scala Playground: [https://scastie.scala-lang.org/](https://scastie.scala-lang.org/)
+
 ### 534. Design TinyURL
 Source: [https://leetcode.com/problems/design-tinyurl/description/](https://leetcode.com/problems/design-tinyurl/description/)
 
