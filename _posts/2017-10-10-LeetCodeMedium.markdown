@@ -2,7 +2,7 @@
 layout: post
 title:  "LeetCode Questions - Medium"
 date:   2017-10-10 22:36:32 -0700
-categories: Scala, TypeScript
+categories: Scala TypeScript
 ---
 * This will become a table of contents (this text will be scraped).
 {:toc}
@@ -24,7 +24,7 @@ Each shortened URL must be unique; that is, no two different URLs can be shorten
 **TypeScript Solution:**
 
 ```typescript
-const DICTIONARY: String = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
+const DICTIONARY: string = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
 const URL_PREFIX: string = "http://tiny.url/";
 
