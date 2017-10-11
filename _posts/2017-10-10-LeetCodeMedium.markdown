@@ -85,7 +85,7 @@ class URLService {
 
     public static base10ToBase62(n: number): string {
         let s: string = "";
-        while (n != 0) {
+        while (n !== 0) {
             let r: number = n % 62;
             n = (n - r) / 62;
             s = DICTIONARY[r] + s;
@@ -107,7 +107,6 @@ function exec() {
 }
 
 exec();
-
 ```
 
 **Scala Soluction:**
@@ -166,5 +165,76 @@ object Main extends App {
 	val service = new URLService
 	println(service.shortToLong(service.longToShort("http://trsong.github.io/")))
 }
+```
 
+### 8. String to Integer (atoi)
+
+Source: [https://leetcode.com/problems/string-to-integer-atoi/description/](https://leetcode.com/problems/string-to-integer-atoi/description/)
+
+Implement atoi to convert a string to an integer.
+
+**Hint:** Carefully consider all possible input cases. If you want a challenge, please do not see below and ask yourself what are the possible input cases.
+
+**Requirements for atoi:**
+
+The function first discards as many whitespace characters as necessary until the first non-whitespace character is found. Then, starting from this character, takes an optional initial plus or minus sign followed by as many numerical digits as possible, and interprets them as a numerical value.
+
+The string can contain additional characters after those that form the integral number, which are ignored and have no effect on the behavior of this function.
+
+If the first sequence of non-whitespace characters in str is not a valid integral number, or if no such sequence exists because either str is empty or it contains only whitespace characters, no conversion is performed.
+
+If no valid conversion could be performed, a zero value is returned. If the correct value is out of the range of representable values, INT_MAX (2147483647) or INT_MIN (-2147483648) is returned.
+
+**TypeScript Solution:**
+
+```typescript
+const INT_MAX: number = 2147483647;
+const INT_MIN: number = -2147483648;
+
+function atoi(str: string): number {
+	let index: number = 0, sign: number = 1, total: number = 0;
+	
+	// 1. Empty string
+	if (!str || str.length === 0) return 0;
+	
+	// 2. Remove whitespace
+	while(str[index] === ' ' && index < str.length) index++;
+	
+	// 3. Handle signs
+	if (str[index] === '+' || str[index] === '-') {
+		sign = str[index] === '+' ? 1 : -1;
+		index++;
+	}
+	
+	// 4. Convert number and avoid overflow
+	while (index < str.length) {
+		let digit: number = str.charCodeAt(index) - "0".charCodeAt(0);
+		if (digit < 0 || digit > 9) break;
+		total = 10 * total + digit;
+		index++;
+		
+		if (total > INT_MAX && sign > 0) return INT_MAX;
+		else if (total > -INT_MIN && sign < 0) return INT_MIN;
+	}
+	return total * sign;
+}
+
+function exec() {
+    let result: number = atoi("   -42");
+
+    let div: HTMLElement = document.createElement("div");
+    div.innerText = result.toString();
+    document.body.appendChild(div);
+}
+
+exec();
+```
+
+**Scala Soluction:** 
+
+```scala
+def atoi(str: String): Int = {
+	if (str.isEmpty) 0
+	...
+}
 ```
