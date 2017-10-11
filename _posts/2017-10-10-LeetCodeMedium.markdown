@@ -99,7 +99,7 @@ class URLService {
 
 function exec() {
     const service: URLService = new URLService();
-    let result: string = service.shortToLong(service.longToShort("http://www.google.com"));
+    let result: string = service.shortToLong(service.longToShort("http://trsong.github.io/"));
 
     let div: HTMLElement = document.createElement("div");
     div.innerText = result;
@@ -164,7 +164,7 @@ object URLService {
 
 object Main extends App {
 	val service = new URLService
-	println(service.shortToLong(service.longToShort("http://www.google.com")))
+	println(service.shortToLong(service.longToShort("http://trsong.github.io/")))
 }
 
 ```
