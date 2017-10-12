@@ -198,18 +198,21 @@ function atoi(str: string): number {
 	if (!str || str.length === 0) return 0;
 	
 	// 2. Remove whitespace
-	while(str[index] === ' ' && index < str.length) index++;
+	while(index < str.length && str[index] === ' ') index++;
 	
 	// 3. Handle signs
-	if (str[index] === '+' || str[index] === '-') {
-		sign = str[index] === '+' ? 1 : -1;
+	while (index < str.length && (str[index] === '+' || str[index] === '-')) {
+		sign = str[index] === '+' ? sign : -sign;
 		index++;
 	}
 	
 	// 4. Convert number and avoid overflow
 	while (index < str.length) {
 		let digit: number = str.charCodeAt(index) - "0".charCodeAt(0);
-		if (digit < 0 || digit > 9) break;
+		if (digit < 0 || digit > 9) {
+			total = 0;
+			break;
+		} 
 		total = 10 * total + digit;
 		index++;
 		
@@ -220,7 +223,7 @@ function atoi(str: string): number {
 }
 
 function exec() {
-    let result: number = atoi("   -42");
+    let result: number = atoi("   -+-++-42");
 
     let div: HTMLElement = document.createElement("div");
     div.innerText = result.toString();
@@ -233,8 +236,202 @@ exec();
 **Scala Soluction:** 
 
 ```scala
-def atoi(str: String): Int = {
-	if (str.isEmpty) 0
-	...
+object Main extends App {
+	val INT_MAX: Int = 2147483647
+	val INT_MIN: Int = -2147483648
+
+	def atoi(str: String): Int = {
+		var index = 0
+		var sign = 1
+  		var total = 0
+  		var isValid = true
+  
+		// 1. Empty string
+	
+		// 2. Remove whitespaces
+		while (index < str.length && str(index) == ' ') {
+			index += 1
+		}
+	
+		// 3. Handle sign
+		while (index < str.length && (str(index) == '+' || str(index) == '-')) {
+			sign = if (str(index) == '+') sign else -sign
+			index += 1
+		}
+	
+		// 4. Convert number and avoid overflow
+		while (index < str.length) {
+			val digit = str(index) - '0'
+			if (!isValid || digit < 0 || digit > 9) {
+				isValid = false
+			} else if (sign > 0 && digit > (INT_MAX - digit) / 10) {
+				total = INT_MAX
+			} else if (sign < 0 && digit > (- digit - INT_MIN) / 10) {
+				total = INT_MIN
+			} else {
+				total = 10 * total + digit
+			}
+			index += 1
+		}
+	
+		if (isValid) total * sign else 0
+	}
+
+	println(atoi("2147483647"))
+	println(atoi("-2147483648"))
+	println(atoi("42"))
+	println(atoi("    -++----42"))
+	println(atoi(""))
+	println(atoi("  +  -  - + "))
+}
+```
+
+### 151. Reverse Words in a String
+
+Given an input string, reverse the string word by word.
+
+For example,
+Given s = "`the sky is blue`",
+return "`blue is sky the`".
+
+Try to solve it in-place in O(1) space.
+
+
+**Clarification:**
+
+* Q: What constitutes a word?
+ A: A sequence of non-space characters constitutes a word.
+
+* Q: Could the input string contain leading or trailing spaces?
+A: Yes. However, your reversed string should not contain leading or trailing spaces.
+
+* Q: How about multiple spaces between two words?
+A: Reduce them to a single space in the reversed string.
+
+
+**TypeScript Solution:**
+
+```typescript
+const CODE_WHITE_SPACE: number = " ".charCodeAt(0);
+
+class Solution {
+	public static reverseWords(s: string): string {
+		if (!s) return undefined;
+		let a: number[] = Array.from({length: s.length}, (_, index: number) => s.charCodeAt(index));
+		
+		// 1. Reverse the whole string
+		Solution.reverse(a, 0, a.length - 1);
+		
+		// 2. Reverse each word in place
+		Solution.reverseEachWordInPlace(a);
+		
+		// 3. Clean up spaces and return
+		return Solution.cleanSpaces(a);
+	}
+	
+	// reverse a[] from a[i] to a[j]
+	private static reverse(a: number[], i: number, j: number): void {
+		while (i < j) {
+			[a[i++], a[j--]] = [a[j], a[i]]
+		}
+	}
+	
+	// scan through and reverse each word in place
+	private static reverseEachWordInPlace(a: number[]): void {
+		let i: number = 0, j: number = 0;
+		
+		while (i < a.length) {
+			while (i < j || i < a.length && a[i] === CODE_WHITE_SPACE) i++; // Skip spaces
+			while (j < i || j < a.length && a[j] !== CODE_WHITE_SPACE) j++; // Skip non spaces
+			Solution.reverse(a, i, j - 1); // reverse the word
+		}
+	}
+	
+	// trim leading, trailling and multiple spaces
+	private static cleanSpaces(a: number[]): string {
+		let i: number = 0, j: number = 0;
+		
+		while (j < a.length) {
+			while (j < a.length && a[j] === CODE_WHITE_SPACE) j++; // skip spaces
+			while (j < a.length && a[j] !== CODE_WHITE_SPACE) a[i++] = a[j++]; // keep non spaces 
+			while (j < a.length && a[j] === CODE_WHITE_SPACE) j++; // skip spaces 
+			if (j < a.length) a[i++] = CODE_WHITE_SPACE; // keep only one space between consecutive word
+		}
+		
+		return a.slice(0, i).map((code: number) => String.fromCharCode(code)).join('');
+	}
+}
+
+function exec() {
+    let result: string = Solution.reverseWords("     Hello    World !");
+    let div: HTMLElement = document.createElement("div");
+    div.innerText = result;
+    document.body.appendChild(div);
+}
+
+exec();
+```
+
+**Scala Soluction:** 
+
+```scala
+import scala.collection.mutable.Buffer
+
+object Main extends App {
+	def reverseWords(s: String): String = {
+		val sb = s.toBuffer
+			
+		// 1. reverse the input string
+		reverse(sb, 0, sb.size - 1)
+			
+		// 2. reverse each word in place
+		reverseEachWordInPlace(sb)
+			
+		// 3. clean spaces and return
+		cleanSpaces(sb)
+	}
+	
+	// Reverse the sb from sb(start) to sb(end)
+	def reverse(sb: Buffer[Char], start: Int, end: Int): Unit = {
+		var (i, j) = (start, end)
+		while (i < j) {
+			val tmp = sb(i)
+			sb(i) = sb(j)
+			sb(j) = tmp
+			i += 1
+			j -= 1
+		}
+	}
+	
+	// Scan through each word and reverse them in place
+	def reverseEachWordInPlace(sb: Buffer[Char]): Unit = {
+		var (i, j) = (0, 0)
+		while (i < sb.size) {
+			while (i < j || i < sb.size && sb(i) == ' ') i += 1
+			while (j < i || j < sb.size && sb(j) != ' ') j += 1
+			reverse(sb, i, j - 1)
+		}
+	}
+	
+	// Remove the leading, tailing and multiple white spaces
+	def cleanSpaces(sb: Buffer[Char]): String = {
+		var (i, j) = (0, 0)
+		while (j < sb.size) {
+			while (j < sb.size && sb(j) == ' ') j += 1
+			while (j < sb.size && sb(j) != ' ') {
+				sb(i) = sb(j)
+				i += 1
+				j += 1
+			}
+			while (j < sb.size && sb(j) == ' ') j += 1
+			if (j < sb.size) {
+				sb(i) = ' '
+				i += 1
+			}
+		}
+		sb.take(i).mkString
+	}
+	
+	println(reverseWords("    Hello    World !"))
 }
 ```
