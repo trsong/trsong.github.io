@@ -112,8 +112,7 @@ exec();
 **Scala Soluction:**
 
 ```scala
-import scala.collection.mutable.StringBuilder
-import scala.collection.mutable.HashMap
+import scala.collection.mutable.{StringBuilder, HashMap}
 
 class URLService {
 	var counter: BigInt = BigInt(1)
@@ -433,5 +432,226 @@ object Main extends App {
 	}
 	
 	println(reverseWords("    Hello    World !"))
+}
+```
+
+### 29. Divide Two Integers
+
+Divide two integers without using multiplication, division and mod operator.
+
+If it is overflow, return MAX_INT.
+
+**Hint:** 
+
+```
+n = n0 + d * 2 ^ m0			where d <= n0 < 2d, n > d
+n0 = n1 + d * 2 ^ m1		where d <= n1 < 2d, n0 > d
+...
+n_{k-1} = nk + d * 2 ^ 0  where 0 <= nk < d, 
+
+ans = 2^m0 + 2^m1 + ... + 1 
+
+eg. 
+divide(16, 3)
+
+16 = 4 + 3 * 2^2  
+4 = 1 + 3 * 2^0
+
+ans = 2^2 + 2^0 = 5
+
+
+Note: 
+n = d * ans = d * (1 << m0 + 1 << m1 + ... + 1 << 0)
+
+worese case: n = 2^p - 1, d = 1
+
+Time Complexity: O((Log N) ^ 2)
+N in binary has Log(N) digits
+So we need to have Log(N) step with each step spend Log(N) to figure out m
+```
+
+**TypeScript Solution:**
+
+```typescript
+function divide(n: number, d: number): number {
+	// Edge case optimization
+	if (d == 1) return n;
+	
+	// Error/Overflow handling
+	if (d == 0 || (n == Number.MIN_SAFE_INTEGER && d == -1)) return Number.MAX_SAFE_INTEGER;
+
+	let result: number = 0;
+	let n0: number = Math.abs(n);
+	let d0: number = Math.abs(d);
+	while (n0 >= d0) {
+		let a: number = d0;
+		let m: number = 1;
+		while ((a << 1) < n0) {
+			a <<= 1;
+			m <<= 1;
+		}
+		result += m;
+		n0 -= a;
+	}
+	
+	if ((n > 0) !== (d > 0)) { // XOR
+		result = -result;
+	}
+	return result;
+}
+
+function exec() {
+    let result: number = divide(16, 3);
+
+    let div: HTMLElement = document.createElement("div");
+    div.innerText = result.toString();
+    document.body.appendChild(div);
+}
+
+exec();
+```
+
+**Scala Soluction:** 
+
+```scala
+object Main extends App {
+	def divide(n: Int, d: Int): Int = {
+		if (d == 1) n		// edge case optimization
+		else if (d == 0 || (n == Int.MinValue && d == -1)) Int.MaxValue // Handling overflow
+		else {
+			var result = 0
+			var n0 = Math.abs(n)
+			var d0 = Math.abs(d)
+			while (n0 > d0) {
+				var a = d0
+				var m = 1
+				while ((a << 1) < n0) {
+					a <<= 1
+					m <<= 1
+				}
+				result += m
+				n0 -= a
+			}
+			
+			if ((n > 0) ^ (d > 0)) result = -result
+			result
+		}
+	}
+	
+	println(divide(72, 1))
+	println(divide(16, 3))
+	println(divide(Int.MinValue, -1))
+	println(divide(Int.MaxValue, 1))
+}
+```
+
+### 166. Fraction to Recurring Decimal
+
+
+Given two integers representing the numerator and denominator of a fraction, return the fraction in string format.
+
+If the fractional part is repeating, enclose the repeating part in parentheses.
+
+For example,
+
+- Given numerator = 1, denominator = 2, return "0.5".
+- Given numerator = 2, denominator = 1, return "2".
+- Given numerator = 2, denominator = 3, return "0.(6)".
+- Given numerator = 61, denominator = 30, return "2.0(3)".
+
+
+
+**TypeScript Solution:**
+
+```typescript
+function fractionToDecimal(numerator: number, denominator: number): string {
+	let result: string = "";
+	let sign: string = (numerator < 0) !== (denominator < 0) ? "-" : "";
+	let n: number = Math.abs(numerator);
+	let d: number = Math.abs(denominator);
+	
+	result += sign;
+	
+	let remainder: number = n % d;
+	if (remainder === 0) {
+		result += n / d;
+		return result;
+	}
+	
+	result += (n - remainder) / d;
+	result += ".";
+	
+	let remainderPosMap: Map<number, number> = new Map<number, number>();
+	while (!remainderPosMap.has(remainder)) {
+		remainderPosMap.set(remainder, result.length);
+		let nextRemainder: number = remainder * 10 % d;
+		result += (remainder * 10 - nextRemainder) / d;
+		remainder = nextRemainder;
+	} 
+	let index: number = remainderPosMap.get(remainder);
+	let prifixTerm: string = result.slice(0, index);
+	let repeatedTerm: string = result.slice(index);
+	
+	if (repeatedTerm !== "0") {
+		result = `${prifixTerm}(${repeatedTerm})`;
+	} else {
+		result = prifixTerm;
+	}
+	
+	return result;
+}
+
+function exec() {
+    let result: string = fractionToDecimal(61, 30);
+
+    let div: HTMLElement = document.createElement("div");
+    div.innerText = result;
+    document.body.appendChild(div);
+}
+
+exec();
+```
+
+**Scala Soluction:** 
+
+```scala
+import scala.collection.mutable.{HashMap, StringBuilder}
+
+object Main extends App {
+	def fractionToDecimal(numerator: Int, denominator: Int): String = {
+		val sb = StringBuilder.newBuilder
+		if ((numerator < 0) ^ (denominator < 0)) sb += '-'
+		val n = Math.abs(numerator)
+		val d = Math.abs(denominator)
+		sb.append(n / d)
+		var remainder = n % d
+		
+		if (remainder == 0) sb.result
+		else {
+			sb += '.'
+			
+			val remainderPosMap = HashMap.empty[Int, Int]
+			while (!remainderPosMap.contains(remainder)) {
+				remainderPosMap(remainder) = sb.size
+				sb.append(10 * remainder / d)
+				remainder = 10 * remainder % d
+			}
+			
+			val index = remainderPosMap(remainder)
+			val repeatedTerm = sb.slice(index, sb.size)
+			if (repeatedTerm.size == 1 && repeatedTerm(0) == '0') {
+				sb.dropRight(1).result	// strip the tailing 0
+			} else {
+				sb.insert(index, '(')
+				sb += ')'
+				sb.result
+			}
+		}
+	}
+	
+	println(fractionToDecimal(61, 30))
+	println(fractionToDecimal(61, -30))
+	println(fractionToDecimal(60, 30))
+	println(fractionToDecimal(61, 10))
 }
 ```
