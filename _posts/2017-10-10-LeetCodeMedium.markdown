@@ -287,6 +287,8 @@ object Main extends App {
 
 ### 151. Reverse Words in a String
 
+Source: [https://leetcode.com/problems/reverse-words-in-a-string/description/](https://leetcode.com/problems/reverse-words-in-a-string/description/)
+
 Given an input string, reverse the string word by word.
 
 For example,
@@ -437,6 +439,8 @@ object Main extends App {
 
 ### 29. Divide Two Integers
 
+Source: [https://leetcode.com/problems/divide-two-integers/description/](https://leetcode.com/problems/divide-two-integers/description/)
+
 Divide two integers without using multiplication, division and mod operator.
 
 If it is overflow, return MAX_INT.
@@ -547,6 +551,8 @@ object Main extends App {
 
 ### 166. Fraction to Recurring Decimal
 
+Source: [https://leetcode.com/problems/fraction-to-recurring-decimal/description/](https://leetcode.com/problems/fraction-to-recurring-decimal/description/)
+
 
 Given two integers representing the numerator and denominator of a fraction, return the fraction in string format.
 
@@ -654,4 +660,149 @@ object Main extends App {
 	println(fractionToDecimal(60, 30))
 	println(fractionToDecimal(61, 10))
 }
+```
+
+### 220. Contains Duplicate III
+
+Source: [https://leetcode.com/problems/contains-duplicate-iii/description/](https://leetcode.com/problems/contains-duplicate-iii/description/)
+
+Given an array of integers, find out whether there are two distinct indices i and j in the array such that the **absolute** difference between **nums[i]** and **nums[j]** is at most t and the **absolute** difference between i and j is at most k.
+
+Eg. Exists different indices i, j such that abs(nums[i] - num[j]) <= t and abs(i - j) <= k 
+
+**Hint:**
+
+The idea is like the bucket sort algorithm. Suppose we have consecutive buckets covering the range of nums with each bucket a width of (t+1). If there are two item with difference <= t, one of the two will happen:
+
+```
+(1) the two in the same bucket
+(2) the two in neighbor buckets
+```
+- For case (1) return true directly, since they are within the same bucket of t + 1
+- For case (2) check if abs(nums[i] - num[j]) <= t
+- For other case, we move on
+
+Note, while we iterator through the list, we keep a index window of k, means any nums[j] with `j < i - k` will no longer take into consideration.
+
+**TypeScript Solution:**
+
+```typescript
+function getBucketIndex(value: number, windowSize: number): number {
+	return Math.floor(value < 0 ? value / windowSize - 1 : value / windowSize);
+}
+
+// Check if exists different indices i, j such that abs(nums[i] - num[j]) <= t and abs(i - j) <= k
+function containsNearbyAlmostDuplicate(nums: number[], k: number, t: number): boolean {
+	if (k < 1 || t < 0) return false;
+	let bucket: Map<number, number> = new Map<number, number>();
+	let w: number = t + 1;
+	for (let i: number = 0; i < nums.length; i++) {
+		let bucketIndex: number = getBucketIndex(nums[i], w);
+		if (bucket.has(bucketIndex) ||
+		(bucket.has(bucketIndex - 1) && Math.abs(bucket.get(bucketIndex - 1) - nums[i]) < w) ||
+		(bucket.has(bucketIndex + 1) && Math.abs(bucket.get(bucketIndex + 1) - nums[i]) < w)) {
+			return true;
+		}
+		
+		bucket.set(bucketIndex, nums[i]);
+		if (i >= k) bucket.delete(getBucketIndex(nums[i - k], w));
+	}
+	return false;
+}
+
+function exec() {
+    let result: boolean = containsNearbyAlmostDuplicate([-1, -5, 7, 3, 9, -3], 2, 2);
+    let result2: boolean = containsNearbyAlmostDuplicate([-1, -5, 7, 3, 9, -3], 1, 2);
+
+    let div: HTMLElement = document.createElement("div");
+    div.innerText = result.toString();
+    div.innerText += " \n " + result2.toString();
+    document.body.appendChild(div);
+}
+
+exec();
+```
+
+**Scala Soluction:** 
+
+```scala
+object Main extends App {
+	// Check if exists different indices i, j such that abs(nums[i] - num[j]) <= t and abs(i - j) <= k
+	def containsNearbyAlmostDuplicate(nums: IndexedSeq[Int], k: Int, t: Int): Boolean = {
+		val windowSize = t + 1
+		def getBucketIndex(value: Int) = if (value < 0) value / windowSize - 1 else value / windowSize
+	
+		if (k < 1 || t < 0) false
+		else nums.zipWithIndex.foldLeft((false, Map.empty[Int, Int])) { (memo, valueAndIndex) =>
+			val (result, bucket) = memo
+			val (value, i) = valueAndIndex
+			val bucketIndex = getBucketIndex(value)
+			if (result || bucket.contains(bucketIndex) ||
+				(bucket.contains(bucketIndex - 1) && Math.abs(bucket(bucketIndex - 1) - value) < windowSize) || 
+				(bucket.contains(bucketIndex + 1) && Math.abs(bucket(bucketIndex + 1) - value) < windowSize)) {
+				(true, bucket)
+			} else {
+				val updatedBucket = bucket + (bucketIndex -> value) 
+				(false, if (i >= k) updatedBucket - getBucketIndex(nums(i - k)) else updatedBucket)
+			}
+		}._1
+	}
+	
+	println(containsNearbyAlmostDuplicate(Array(-1, -5, 7, 3, 9, -3), 2, 2))
+	println(containsNearbyAlmostDuplicate(Array(-1, -5, 7, 3, 9, -3), 1, 2))
+}
+```
+
+### 127. Word Ladder
+
+Source: [https://leetcode.com/problems/word-ladder/description/](https://leetcode.com/problems/word-ladder/description/)
+
+Given two words (*beginWord* and *endWord*), and a dictionary's word list, find the length of shortest transformation sequence from beginWord to endWord, such that:
+
+1. Only one letter can be changed at a time.
+2. Each transformed word must exist in the word list. Note that beginWord is not a transformed word.
+
+For example,
+
+```
+Given:    
+beginWord = "hit"
+endWord = "cog"
+wordList = ["hot","dot","dog","lot","log","cog"]
+
+As one shortest transformation is "hit" -> "hot" -> "dot" -> "dog" -> "cog",
+return its length 5.
+```
+
+**Note:**
+
+- Return 0 if there is no such transformation sequence.
+- All words have the same length.
+- All words contain only lowercase alphabetic characters.
+- You may assume no duplicates in the word list.
+- You may assume beginWord and endWord are non-empty and are not the same.
+
+**Hint:**
+
+Well, this problem has a nice BFS structure.
+
+Let's see the example in the problem statement.
+
+`start = "hit"`
+
+`end = "cog"`
+
+`dict = ["hot", "dot", "dog", "lot", "log"]`
+
+Since only one letter can be changed at a time, if we start from `"hit"`, we can only change to those words which have only one different letter from it, like `"hot"`. Putting in graph-theoretic terms, we can say that `"hot"` is a neighbor of `"hit"`.
+
+The idea is simpy to begin from `start`, then visit its neighbors, then the non-visited neighbors of its neighbors... Well, this is just the typical BFS structure.
+
+To simplify the problem, we insert `end` into `dict`. Once we meet `end` during the BFS, we know we have found the answer. We maintain a variable `dist` for the current distance of the transformation and update it by `dist++` after we finish a round of BFS search (note that it should fit the definition of the distance in the problem statement). Also, to avoid visiting a word for more than once, we erase it from `dict` once it is visited.
+
+
+**TypeScript Solution:**
+
+```scala
+function ladderLength
 ```
