@@ -803,6 +803,52 @@ To simplify the problem, we insert `end` into `dict`. Once we meet `end` during 
 
 **TypeScript Solution:**
 
-```scala
-function ladderLength
+```typescript
+const CODE_LOWER_A: number = "a".charCodeAt(0);
+
+function addNextWords(word: string, wordDict: Set<string>, toVisitQueue: string[]): void {
+	wordDict.delete(word);
+	let w: number[] = Array.from({ length: word.length }, (_, index: number) => word.charCodeAt(index));
+	for (let p: number = 0; p < word.length; p++) {
+		let letter: number = word.charCodeAt(p);
+		for (let k: number = 0; k < 26; k++) {
+			w[p] = CODE_LOWER_A + k;
+			let searchString: string = w.map(c => String.fromCharCode(c)).join("");
+			if (wordDict.has(searchString)) {
+				toVisitQueue.push(searchString);
+				wordDict.delete(searchString);
+			}
+		}
+		w[p] = letter;
+	}
+}
+
+function ladderLength(beginWord: string, endWord: string, wordList: string[]): number {
+	let dist: number = 2;
+	let toVisitQueue: string[] = [];
+	let wordDict: Set<string> = new Set<string>(wordList);
+	
+	wordDict.add(endWord);
+	addNextWords(beginWord, wordDict, toVisitQueue);
+	
+	while (toVisitQueue.length !== 0) {
+		let num: number = toVisitQueue.length;
+		for (let i: number = 0; i < num; i++) {
+			let word: string = toVisitQueue.shift();
+			if (word === endWord) return dist;
+			addNextWords(word, wordDict, toVisitQueue);
+		}
+		dist++;
+	}
+}
+
+function exec() {
+    let result: number = ladderLength("hit", "cog", ["hot", "dot", "dog", "lot", "log"]);
+
+    let div: HTMLElement = document.createElement("div");
+    div.innerText = result.toString();
+    document.body.appendChild(div);
+}
+
+exec();
 ```
