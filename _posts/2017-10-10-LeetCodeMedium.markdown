@@ -801,7 +801,7 @@ The idea is simpy to begin from `start`, then visit its neighbors, then the non-
 To simplify the problem, we insert `end` into `dict`. Once we meet `end` during the BFS, we know we have found the answer. We maintain a variable `dist` for the current distance of the transformation and update it by `dist++` after we finish a round of BFS search (note that it should fit the definition of the distance in the problem statement). Also, to avoid visiting a word for more than once, we erase it from `dict` once it is visited.
 
 
-**TypeScript Solution:**
+**TypeScript Solution: (One-way BFS)**
 
 ```typescript
 const CODE_LOWER_A: number = "a".charCodeAt(0);
@@ -851,4 +851,162 @@ function exec() {
 }
 
 exec();
+```
+
+**Scala Solution: (One-way BFS)**
+
+```scala
+import scala.collection.mutable.{Queue, Set, StringBuilder}
+
+object Main extends App {
+	def addNewWords(word: String, wordDict: Set[String], toVisitQueue: Queue[String]): Unit = {
+		wordDict -= word
+		val sb = new StringBuilder(word)
+		
+		(word.zipWithIndex) foreach { case (c0: Char, i: Int) =>
+			('a' to 'z') foreach { c1 =>
+				sb(i) = c1
+				val neighbourWord = sb.toString
+				if (wordDict.contains(neighbourWord)) {
+					toVisitQueue.enqueue(neighbourWord);
+					wordDict -= neighbourWord
+				}
+			}
+			sb(i) = c0
+		}
+	}
+
+	def ladderLength(beginWord: String, endWord: String, wordList: Seq[String]): Int = {
+		val wordDict = scala.collection.mutable.Set() ++ (endWord +: wordList)
+		val toVisitQueue = Queue.empty[String]
+		var dist = 2
+		
+		addNewWords(beginWord, wordDict, toVisitQueue)
+		while (!toVisitQueue.isEmpty) {
+			(0 until toVisitQueue.length).foreach { _ =>
+				val word = toVisitQueue.dequeue
+				if (word == endWord) return dist
+				addNewWords(word, wordDict, toVisitQueue)
+			}
+			dist += 1
+		}
+		dist
+	}
+	
+	println(ladderLength("hit", "cog", List("hot", "dot", "dog", "lot", "log")))
+}
+```
+
+**Typescript Solution: (Two-way BFS)**
+
+```typescript
+const CODE_LOWER_A: number = "a".charCodeAt(0);
+
+function ladderLength(beginWord: string, endWord: string, wordList: string[]): number { 
+	let wordDict: Set<string> = new Set<string>(wordList);
+	let beginSet: Set<string> = new Set<string>();
+	let endSet: Set<string> = new Set<string>();
+	let visited: Set<string> = new Set<string>();
+	
+	let len: number = 1;
+	beginSet.add(beginWord);
+	endSet.add(endWord);
+	
+	while(beginSet.size !== 0 && endSet.size !== 0) {
+		if (beginSet.size > endSet.size) {
+			let tmp: Set<string> = beginSet;
+			beginSet = endSet;
+			endSet = tmp;
+		}
+		
+		let neighbours: Set<string> = new Set<string>();
+		for (let word of Array.from(beginSet)) {
+			let chs: number[] = Array.from({ length: word.length }, (_, i: number) => word.charCodeAt(i));
+			for (let i: number = 0; i < chs.length; i++) {
+				for (let c: number = 0; c < 26; c++) {
+					let oldChar: number = chs[i];
+					chs[i] = CODE_LOWER_A + c;
+					let target: string = chs.map((s: number) => String.fromCharCode(s)).join("");
+
+					if (endSet.has(target)) {
+						return len + 1;
+					}
+					
+					if (!visited.has(target) && wordDict.has(target)) {
+						neighbours.add(target);
+						visited.add(target);
+					}
+					
+					chs[i] = oldChar;
+				}
+			}
+		}
+
+		beginSet = neighbours;
+		len++;
+	}
+	
+	return 0;
+}
+
+function exec() {
+    let result: number = ladderLength("hit", "cog", ["hot", "dot", "dog", "lot", "log"]);
+
+    let div: HTMLElement = document.createElement("div");
+    div.innerText = result.toString();
+    document.body.appendChild(div);
+}
+
+exec();
+```
+
+**Scala Solution: (Two-way BFS)**
+
+```scala
+import scala.collection.mutable.{Set, StringBuilder}
+
+object Main extends App {
+	def ladderLength(beginWord: String, endWord: String, wordList: Seq[String]): Int = {
+		var wordDict = wordList.toSet
+		var beginSet = Set(beginWord)
+		var endSet = Set(endWord)
+		var len = 1
+		val visited = Set.empty[String]
+		
+		while (!beginSet.isEmpty && !endSet.isEmpty) {
+			if (beginSet.size > endSet.size) {
+				var tmp = beginSet
+				beginSet = endSet
+				endSet = tmp
+			}
+			
+			val neighbour = Set.empty[String]
+			beginSet.foreach { word =>
+				val sb = new StringBuilder(word)
+				(sb.zipWithIndex) foreach { case (c0: Char, i: Int) =>
+					('a' to 'z') foreach { c1 =>
+						sb(i) = c1
+						val target = sb.toString
+						
+						if (endSet.contains(target)) {
+							return len + 1
+						}
+						
+						if (!visited.contains(target) && wordDict.contains(target)) {
+							visited += target
+							neighbour += target
+						}
+					}
+					sb(i) = c0
+				}
+			}
+			beginSet = neighbour
+			len += 1
+		}
+		
+		len
+	}
+	
+	println(ladderLength("hit", "cog", List("hot", "dot", "dog", "lot", "log")))
+}
 ```
