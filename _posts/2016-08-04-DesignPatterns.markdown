@@ -111,12 +111,12 @@ class CircleShape(x: Double, y: Double, var radius: Double, drawingAPI: DrawingA
 object BridgePattern {
   def main(args: Array[String]) {
     Seq (
-	new CircleShape(1, 3, 5, new DrawingAPI1),
-	new CircleShape(4, 5, 6, new DrawingAPI2)
+    new CircleShape(1, 3, 5, new DrawingAPI1),
+    new CircleShape(4, 5, 6, new DrawingAPI2)
     ) foreach { x => 
         x.resizePercentage(3)
-        x.draw()			
-      }	
+        x.draw()            
+      }    
   }
 }
 
@@ -329,12 +329,12 @@ public class Dispatcher {
       }
       else{
          homeView.show();
-      }	
+      }    
    }
 }
 
 public class FrontController {
-	
+    
    private Dispatcher dispatcher;
 
    public FrontController(){
@@ -357,7 +357,7 @@ public class FrontController {
       //authenticate the user
       if(isAuthenticUser()){
          dispatcher.dispatch(request);
-      }	
+      }    
    }
 }
 
@@ -413,8 +413,8 @@ A **Facade** is used when an easier or simpler interface to an underlying object
 | Pattern | Intent |
 |:--------|:-------|
 | Adapter | Converts one interface to another so that it matches what the client is expecting |
-|Decorator |	Dynamically adds responsibility to the interface by wrapping the original code |
-| Facade	| Provides a simplified interface|
+|Decorator |    Dynamically adds responsibility to the interface by wrapping the original code |
+| Facade    | Provides a simplified interface|
 
 The facade pattern is typically used when:
 
@@ -825,7 +825,7 @@ public class HexaObserver extends Observer{
 
 
 public class Subject {
-	
+    
    private List<Observer> observers = new ArrayList<Observer>();
    private int state;
 
@@ -839,14 +839,14 @@ public class Subject {
    }
 
    public void attach(Observer observer){
-      observers.add(observer);		
+      observers.add(observer);        
    }
 
    public void notifyAllObservers(){
       for (Observer observer : observers) {
          observer.update();
       }
-   } 	
+   }     
 }
 
 public class ObserverPatternDemo {
@@ -857,9 +857,9 @@ public class ObserverPatternDemo {
       new OctalObserver(subject);
       new BinaryObserver(subject);
 
-      System.out.println("First state change: 15");	
+      System.out.println("First state change: 15");    
       subject.setState(15);
-      System.out.println("Second state change: 10");	
+      System.out.println("Second state change: 10");    
       subject.setState(10);
    }
 }
@@ -906,11 +906,11 @@ public class Mouse implements ComputerPart {
 }
 
 public class Computer implements ComputerPart {
-	
+    
    ComputerPart[] parts;
 
    public Computer(){
-      parts = new ComputerPart[] {new Mouse(), new Keyboard(), new Monitor()};		
+      parts = new ComputerPart[] {new Mouse(), new Keyboard(), new Monitor()};        
    } 
 
    @Override
@@ -927,10 +927,10 @@ public class Computer implements ComputerPart {
 */
 
 public interface ComputerPartVisitor {
-	public void visit(Computer computer);
-	public void visit(Mouse mouse);
-	public void visit(Keyboard keyboard);
-	public void visit(Monitor monitor);
+    public void visit(Computer computer);
+    public void visit(Mouse mouse);
+    public void visit(Keyboard keyboard);
+    public void visit(Monitor monitor);
 }
 
 public class ComputerPartDisplayVisitor implements ComputerPartVisitor {
@@ -1430,12 +1430,12 @@ public class Circle implements Shape {
 }
 
 public class ShapeFactory {
-	
+    
    //use getShape method to get object of type shape 
    public Shape getShape(String shapeType){
       if(shapeType == null){
          return null;
-      }		
+      }        
       if(shapeType.equalsIgnoreCase("CIRCLE")){
          return new Circle();
          
@@ -1560,13 +1560,13 @@ The `Shape` Factory:
 
 ```java
 public class ShapeFactory extends AbstractFactory {
-	
+    
    @Override
    public Shape getShape(String shapeType){
    
       if(shapeType == null){
          return null;
-      }		
+      }        
       
       if(shapeType.equalsIgnoreCase("CIRCLE")){
          return new Circle();
@@ -1592,7 +1592,7 @@ The `color` Factory
 
 ```java
 public class ColorFactory extends AbstractFactory {
-	
+    
    @Override
    public Shape getShape(String shapeType){
       return null;
@@ -1603,7 +1603,7 @@ public class ColorFactory extends AbstractFactory {
    
       if(color == null){
          return null;
-      }		
+      }        
       
       if(color.equalsIgnoreCase("RED")){
          return new Red();

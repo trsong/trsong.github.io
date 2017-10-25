@@ -195,11 +195,11 @@ Automation:
 ### CH10 Classes
 ```js
 class MyClass {
-	public static constants
-	private static variables
-	private instance variables
-	public functions
-	private utilities
+    public static constants
+    private static variables
+    private instance variables
+    public functions
+    private utilities
 }
 ```
 
@@ -248,15 +248,15 @@ Systems Need Domain-Specific Languages
 ```typescript
    if (shouldBeDeleted(timer)){
 
-	}
+    }
 ```
 
 is preferable to
-	
-	
+    
+    
 ```typescript
-	if (timer.hasExpired() && !timer.isRecurrent()){
-	
+    if (timer.hasExpired() && !timer.isRecurrent()){
+    
    }
 ```
 

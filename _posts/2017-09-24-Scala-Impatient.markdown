@@ -135,19 +135,19 @@ printf("Hello, %s! Next year, you will be %d.\n", name, age + 1)
 
 ```scala 
 while (n > 0) {
-	r = r * n
-	n -= 1
+    r = r * n
+    n -= 1
 }
 
 for (i <- 1 to n)  // Note: there's no var/val before 'i', and the type of 'i' is the element type of the collection
-	r = r * n
-	
+    r = r * n
+    
 // for (i <- expr)
 val s = "Hello"
 var sum = 0
 for (i <- 0 until s.length)
-	sum += s(i)
-	
+    sum += s(i)
+    
 // No need to use index
 var sum = 0 
 for (ch <- "Hello") sum += ch
@@ -158,10 +158,10 @@ for (ch <- "Hello") sum += ch
 ```scala
 import scala.util.control.Breaks._
 breakable {
-	for (...) {
-		if (...) break; // Exit the breakable block
-		...
-	}
+    for (...) {
+        if (...) break; // Exit the breakable block
+        ...
+    }
 }
 
 // Note above break is done by throwing and catching exception
@@ -173,31 +173,31 @@ breakable {
 ```scala
 // Multiple generators separated by semicolons
 for (i <- 1 to 3; j <- 1 to 3) print((10 * i + j) + " ")
-	// Prints 11 12 13 21 22 23 31 32 33
+    // Prints 11 12 13 21 22 23 31 32 33
 
 // Each generators can have a guard
 for (i <- 1 to 3; j <- 1 to 3 if i != j) print((10 * i + j) + " ")
-	// Prints 12 13 21 23 31 32
-	
+    // Prints 12 13 21 23 31 32
+    
 // Introduce a new var that can be used inside loop
 for (i <- 1 to 3; from = 4 - i; j <- from to 3) print((10 * i + j) + " ")
-	//                 ^ careful here, it's not <- 
-	// Prints 13 22 23 31 32 33
+    //                 ^ careful here, it's not <- 
+    // Prints 13 22 23 31 32 33
 
 // Note above can also be
 for { i <- 1 to 3
-	from = 4 - i
-	j <- from to 3 }
+    from = 4 - i
+    j <- from to 3 }
 
 // for comprehension
 for (i <- 1 to 10) yield i % 3
-	// yields Vector(1, 2, 0, 1, 2, 0, 1, 2, 0)
+    // yields Vector(1, 2, 0, 1, 2, 0, 1, 2, 0)
 
 // The generated collection is compactiable w/ the first generator
 for (c <- "Hello"; i <- 0 to 1) yield (c + i).toChar
-	// yields "HIeflmlmop"
+    // yields "HIeflmlmop"
 for (i <- 0 to 1; c <- "Hello") yields (c + i).toChar
-	// yields Vector('H', 'e', 'l', 'l', 'o', 'I', 'f', 'm', 'm', 'p')
+    // yields Vector('H', 'e', 'l', 'l', 'o', 'I', 'f', 'm', 'm', 'p')
 ```
 
 * Create a function without return types will make compiler complains
@@ -220,9 +220,9 @@ decorate(str = "Hif (ello", right = ">>>") // gets "[Hello>>>"
 
 ```scala
 def sum(args: Int*): Int = {
-	var result = 0
-	for (arg <- args) result += arg
-	result
+    var result = 0
+    for (arg <- args) result += arg
+    result
 }
 
 sum(1, 4, 9, 16, 25)
@@ -230,8 +230,8 @@ sum(1, 4, 9, 16, 25)
 sum(1 to 5: _*) // Use : _* to convert a Seq to an argument sequence
 
 def recurSum(args: Int*): Int = {
-	if (args.length == 0) 0 
-	else args.head + recurSum(args.tail: _*)
+    if (args.length == 0) 0 
+    else args.head + recurSum(args.tail: _*)
 }
 ```
 
@@ -247,23 +247,23 @@ lazy val words = scala.io.Source.fromFile("/usr/share/dict/words").mkString
 ```scala
 // Exception has type Nothing, so the final type will be the same as the other branch
 if (x > 0) {
-	sqrt(x)
+    sqrt(x)
 } else throw new IllegalArgumentException("x should not be negative")
 
 // Catching excetpion is modled after pattern-matching syntax
 try {
-	process(new URL("http://notExists.com/whatever.gif"))
+    process(new URL("http://notExists.com/whatever.gif"))
 } catch {
-	case _: MalformedURLException => println("Bad URL: " + url)
-	case ex: IOException => ex.printStackTrace()
+    case _: MalformedURLException => println("Bad URL: " + url)
+    case ex: IOException => ex.printStackTrace()
 }
 
 // try/finally allow clean up
 var in = new URL("http://notExists.com/whatever.gif").openStream()
 try {
-	process(in)
+    process(in)
 } finally {
-	in.close()
+    in.close()
 }
 
 // Nested try/catch/finally
@@ -286,60 +286,60 @@ s(0) = "Goodbye"
 import scala.collection.mutable.ArrayBuffer
 val b = new ArrayBuffer[Int]()
 b += 1
-	// ArrayBuffer(1)
+    // ArrayBuffer(1)
 b += (1, 2, 3, 5)
-	// Use += to add element(s)
-	// ArrayBuffer(1, 1, 2, 3, 5)
+    // Use += to add element(s)
+    // ArrayBuffer(1, 1, 2, 3, 5)
 b ++= Array(8, 13, 21)
-	// Use ++= to add other collections
-	// ArrayBuffer(1, 1, 2, 3, 5, 8, 13, 21)
+    // Use ++= to add other collections
+    // ArrayBuffer(1, 1, 2, 3, 5, 8, 13, 21)
 b.trimEnd(5)
-	// Remove the last 5 elements
-	// ArrayBuffer(1, 1, 2)
-	
+    // Remove the last 5 elements
+    // ArrayBuffer(1, 1, 2)
+    
 // Note: Adding or removing element has "amortized constant time". However, insert/remove is not efficient, both of them require the rest member to be shifted
 
 b.insert(2, 6)
-	// ArrayBuffer(1, 1, 6, 2)
+    // ArrayBuffer(1, 1, 6, 2)
 b.insert(2, 7, 8, 9)
-	// ArrayBuffer(1, 1, 7, 8, 9, 6, 2)
+    // ArrayBuffer(1, 1, 7, 8, 9, 6, 2)
 b.remove(2)
-	// ArrayBuffer(1, 1, 8, 9, 6, 2)
+    // ArrayBuffer(1, 1, 8, 9, 6, 2)
 b.remove(2, 3)
-	// ArrayBuffer(1, 1, 2)
-	
-// Use toArray an toBuffer to convert between Array and ArrayBuffer	
+    // ArrayBuffer(1, 1, 2)
+    
+// Use toArray an toBuffer to convert between Array and ArrayBuffer    
 b.toArray()
-	// Array(1, 1, 2)
+    // Array(1, 1, 2)
 Array(1, 1, 2).toBuffer
-	// ArrayBuffer(1, 1, 2)
+    // ArrayBuffer(1, 1, 2)
 ```
 
 * Array and ArrayBuffer Traversing
 
 ```scala
 for (i <- 0 until a.length)
-	println(i + ": " + a(i))
+    println(i + ": " + a(i))
 
 for (i <- 0 until (a.length, 2))
-	// Range(0, 2, 4, ...)
-	
+    // Range(0, 2, 4, ...)
+    
 for (i <- (0 until a.length).reverse)
-	// Range(..., 2, 1, 0)
-	
+    // Range(..., 2, 1, 0)
+    
 for (elem <- a)
-	println(elem)
+    println(elem)
 ```
 
 * Transforming Arrays
 
 ```scala
-	val a = Array(2, 3, 5, 7, 11)
-	val result = for (elem <- a) yield 2 * elem
-		// result is Array(4, 6, 10, 14, 22)
-	
-	for (elem <- a if elem % 2 == 0) yield 2 * elem
-	a.filter(_ % 2 == 0).map(2 * _)
+    val a = Array(2, 3, 5, 7, 11)
+    val result = for (elem <- a) yield 2 * elem
+        // result is Array(4, 6, 10, 14, 22)
+    
+    for (elem <- a if elem % 2 == 0) yield 2 * elem
+    a.filter(_ % 2 == 0).map(2 * _)
 ```
 
 Example: Given an array of Int, remove all but the first negative numbers
@@ -358,23 +358,23 @@ ArrayBuffer("Mary", "had", "a", "little", "lamb") // "little"
 val b = ArrayBuffer(1, 7, 2, 9)
 val bSorted = b.sorted
 val bSortedReverse = b.sorted(Ordering.Int.reverse)
-	// b unchanged, bSorted is ArrayBuffer(1, 2, 7, 9)
-	
+    // b unchanged, bSorted is ArrayBuffer(1, 2, 7, 9)
+    
 val a = Array(1, 7, 2, 9)
 scala.util.Sorting.quickSort(a)
-	// a is now Array(1, 2, 7, 9)
+    // a is now Array(1, 2, 7, 9)
 
 a.mkString(" and ")
-	// "1 and 2 and 7 and 9"
+    // "1 and 2 and 7 and 9"
 a.mkString("<", ",", ">")
-	// "<1, 2, 7, 9>"
+    // "<1, 2, 7, 9>"
 
 a.toString
-	// "[I@73e5"
-	// The useless toString from Java
+    // "[I@73e5"
+    // The useless toString from Java
 b.toString
-	// "ArrayBuffer(1, 7, 2, 9)"
-	
+    // "ArrayBuffer(1, 7, 2, 9)"
+    
 Array(1, 7, 2, 9).count(_ % 2 == 0) // 1
 
 // Behind screen Scala convert Array Class to ArrayOps before any operations is applied
@@ -389,7 +389,7 @@ matrix(0)(1) = 42
 // Now build ragged arrays, with varying row lengths
 val triangle = new Array[Array[Int]](10)
 for (1 <- 0 until triangle.length)
-	triangle(i) = new Array[Int](i + 1)
+    triangle(i) = new Array[Int](i + 1)
 ```
 
 ### CH4: Maps and Tuples
@@ -441,7 +441,7 @@ val newScores2 = scores - "Alice"
 for ((k, v) <- map) yield (v, k) // Reverse a map will override v, since v might not be unique
 
 scores.keySet
-	// Set("Bob", "Cindy", "Fred", "Alice")
+    // Set("Bob", "Cindy", "Fred", "Alice")
 
 for (v <- scores.values) println(v)
 ```
@@ -458,13 +458,13 @@ val months = scala.collection.mutable.LinkedHashMap("January" -> 1, "Feburary" -
 
 ```scala
 val t = (1, 3.14, "Fred")
-	// has type (Int, Double, java.lang.String)
+    // has type (Int, Double, java.lang.String)
 val second = t._2
 val (first, second, third) = t
 val (first, second, _) = t
 
 "New York".partition(_.isUpper)
-	// yields ("NY", "new ork")
+    // yields ("NY", "new ork")
 ```
 
 * Zipping
@@ -473,9 +473,9 @@ val (first, second, _) = t
 val symbols = Array("<", "-", ">")
 val counts = Array(2, 10, 2)
 val pairs = symbols.zip(counts)
-	// yields Array(("<", 2), ("-", 10), (">", 2))
+    // yields Array(("<", 2), ("-", 10), (">", 2))
 for ((s, n) <- pairs) print(s * n)
-	// displays <<---------->>
+    // displays <<---------->>
 
 // zip and toMap
 keys.zip(values).toMap
@@ -487,11 +487,11 @@ keys.zip(values).toMap
 
 ```scala
 class Person {
-	private var privateAge = 0
-	def age = privateAge
-	def age_=(newValue: Int): Unit = {
-		if (newValue > privateAge) privateAge = newValue
-	}
+    private var privateAge = 0
+    def age = privateAge
+    def age_=(newValue: Int): Unit = {
+        if (newValue > privateAge) privateAge = newValue
+    }
 }
 
 val fred = new Person
@@ -500,13 +500,13 @@ fred.age = 21
 println(fred.age) // 30
 
 // Note: 
-//		1) if field is private, then getter and setter is private
-//		2) if field is a value, only getter is generated
-//		3) declear as 'private[this]' and no getter and setter is generated
+//        1) if field is private, then getter and setter is private
+//        2) if field is a value, only getter is generated
+//        3) declear as 'private[this]' and no getter and setter is generated
 
 class Message {
-	val timeStamp = new java.util.Date // read-only property w/ only getter
-	...
+    val timeStamp = new java.util.Date // read-only property w/ only getter
+    ...
 }
 ```
 
@@ -514,20 +514,20 @@ class Message {
 
 ```scala
 class Counter {
-	private var value = 0
-	def increment(): Unit = {
-		value += 1
-	}
-	
-	def isLess(other: Counter): Boolean = {
-	 value < other.value
-		// Can access the private field of other object
-	}
+    private var value = 0
+    def increment(): Unit = {
+        value += 1
+    }
+    
+    def isLess(other: Counter): Boolean = {
+     value < other.value
+        // Can access the private field of other object
+    }
 }
 
 // declear value as object-private
 private[this] var value = 0
-	// Accessing someObject.value is not allowed
+    // Accessing someObject.value is not allowed
 ```
 
 * Auxiliary Constructors
@@ -535,21 +535,21 @@ private[this] var value = 0
 ```scala
 // Class can only have 1 primary constructor, but can have as many auxiliary constructors
 class Person {
-	private var name = ""
-	private var age = 0
-	
-	def this(name: String) { // An auxiliary constructor
-		this() // call primary constructor
-		this.name = name
-	}
-	
-	def this(name: String, age: Int) { // Another auxiliary constructor
-		this(name) // Calls previous constructor
-		this.age = age
-	}
+    private var name = ""
+    private var age = 0
+    
+    def this(name: String) { // An auxiliary constructor
+        this() // call primary constructor
+        this.name = name
+    }
+    
+    def this(name: String, age: Int) { // Another auxiliary constructor
+        this(name) // Calls previous constructor
+        this.age = age
+    }
 }
 
-val p1 = new Person	// Calls primary Constructor
+val p1 = new Person    // Calls primary Constructor
 val p2 = new Person("Fred") // Calls first auxiliary constructor 
 val p3 = new Person("Fred", 42) // Calls second auxiliary constructor
 ```
@@ -558,11 +558,11 @@ val p3 = new Person("Fred", 42) // Calls second auxiliary constructor
 
 ```scala
 class Person(val name: String, val age: Int) {
-	...
+    ...
 }
 
 class PersonWithDefault(val name: String = "", val age: Int = 0) {
-	...
+    ...
 }
 
 class Person(val name: String, private var age: Int)
@@ -572,24 +572,24 @@ class Person(val name: String, private var age: Int)
 // val/var name: String  generates private field, public getter/setter
 
 class Person private(val id: Int) { ... } 
-	// will make the primary constructor private
+    // will make the primary constructor private
 ```
 
 * Nested Classes
 
 ```scala
 class Network {
-	class Member(val name: String) {
-		val contacts = new ArrayBuffer[Member]
-	}
-	
-	private val members = new ArrayBuffer[Member]
-	
-	def join(name: String): Member = {
-		val m = new Member(name)
-		members += m
-		m
-	}
+    class Member(val name: String) {
+        val contacts = new ArrayBuffer[Member]
+    }
+    
+    private val members = new ArrayBuffer[Member]
+    
+    def join(name: String): Member = {
+        val m = new Member(name)
+        members += m
+        m
+    }
 }
 
 val chatter = new Network
@@ -604,29 +604,29 @@ fred.contacts += wilma // OK
 
 val barney = myFace.join("Barney")
 fred.contacts += barney
-	// No, cannot add myFace.Member to a buffer of chatter.Member elements
-	
+    // No, cannot add myFace.Member to a buffer of chatter.Member elements
+    
 // If we want Member to be shared between two networks, there are two ways to achieve that
 
 // Method 1: Companion Object 
 object Network {
-	class Member(val name: String) {
-		val contacts = new ArrayBuffer[Member]
-	}
+    class Member(val name: String) {
+        val contacts = new ArrayBuffer[Member]
+    }
 }
 
 class Network {
-	private val members = new ArrayBuffer[Network.Member]
-	...
+    private val members = new ArrayBuffer[Network.Member]
+    ...
 }
 
 // Method 2: Type Projection
 class Network {
-	class Member(val name: String) {
-		val contacts = new ArrayBuffer[Network#Member]
-			// means a Member of any Network
-	}
-	...
+    class Member(val name: String) {
+        val contacts = new ArrayBuffer[Network#Member]
+            // means a Member of any Network
+    }
+    ...
 }
 ```
 
@@ -634,11 +634,11 @@ class Network {
 
 ```scala
 class Network(val name: String) { outer => 
-	class Member(val name: String) {
-		...
-		def description = name + " inside " + outer.name
-			// outer refer to Network.this
-	}
+    class Member(val name: String) {
+        ...
+        def description = name + " inside " + outer.name
+            // outer refer to Network.this
+    }
 }
 ```
 
@@ -648,76 +648,76 @@ class Network(val name: String) { outer =>
 
 ```scala
 object Accounts {
-	private var lastNumber = 0
-	def newUniqueNumber(): Int = {
-		lastNumber += 1
-		lastNumber
-	}
+    private var lastNumber = 0
+    def newUniqueNumber(): Int = {
+        lastNumber += 1
+        lastNumber
+    }
 }
 // The constructor of an object is executed when the object is first used
 Accounts.newUniqueNumber()
 
 // object can be used:
-//		* as a home for utility function or constants
-//		* as a single immutable instance being shared
-// 		* the singleton design pattern
+//        * as a home for utility function or constants
+//        * as a single immutable instance being shared
+//         * the singleton design pattern
 ```
 
 * Companion Objects
 
 ```scala
 class Account {
-	val id = Account.newUniqueNumber()
-	private var balance = 0.0
-	def deposit(amount: Double): Unit = {
-		balance += amount
-	}
+    val id = Account.newUniqueNumber()
+    private var balance = 0.0
+    def deposit(amount: Double): Unit = {
+        balance += amount
+    }
 }
 
 object Account {  // The companion object
-	private var lastNumber = 0
-	private def newUniqueNumber(): Int = {
-		lastNumber += 1
-		lastNumber
-	}
+    private var lastNumber = 0
+    private def newUniqueNumber(): Int = {
+        lastNumber += 1
+        lastNumber
+    }
 }
 
 // Note class and its companion object:
-//		1. must share the same name
-//		2. can access each others' private features
-//		3. must be located in the same source file
+//        1. must share the same name
+//        2. can access each others' private features
+//        3. must be located in the same source file
 ```
 
 * Objects extending a class or trait
 
 ```scala
 abstract class UndoableAction(val description: String) {
-	def undo(): Unit
-	def redo(): Unit
+    def undo(): Unit
+    def redo(): Unit
 }
 
 object DoNothingAction extends UndoableAction("Do nothing") {
-	override undo(): Unit = {}
-	override redo(): Unit = {}
+    override undo(): Unit = {}
+    override redo(): Unit = {}
 }
 
 val actions = Map("open" -> DoNothingAction, "save" -> DoNothingAction, ... )
-	// Open and save action not yet implemented
+    // Open and save action not yet implemented
 ```
 
 * The `apply` method
 
 ```scala
 class Account private(val id: Int, initialBalance Double) {
-	private var balance = initialBalance
-	...
+    private var balance = initialBalance
+    ...
 }
 
 object Account {
-	def apply(initialBalance: Double): Account = {
-		new Account(newUniqueNumber(), initialBalance)
-	}
-	...
+    def apply(initialBalance: Double): Account = {
+        new Account(newUniqueNumber(), initialBalance)
+    }
+    ...
 }
 
 val acc = Account(1000.0)
@@ -727,9 +727,9 @@ val acc = Account(1000.0)
 
 ```
 object Hello {
-	def main(args: Array[String]): Unit = {
-		println("Hello World!")
-	}
+    def main(args: Array[String]): Unit = {
+        println("Hello World!")
+    }
 }
 ```
 
@@ -737,21 +737,21 @@ object Hello {
 
 ```scala
 object TrafficLightColor extends Enumeration {
-	val Red, Yellow, Green = Value
+    val Red, Yellow, Green = Value
 }
 
 // is equivalent to
 object TrafficLightColor extends Enumeration {
-	val Red = Value
-	val Yellow = Value
-	val Green = Value
+    val Red = Value
+    val Yellow = Value
+    val Green = Value
 }
 
 // Alternatively
 object TrafficLightColor extends Enumeration {
-	val Red = Value(0, "Stop")
-	val Yellow = Value(10) // Name "Yellow"
-	val Green = Value // ID 11
+    val Red = Value(0, "Stop")
+    val Yellow = Value(10) // Name "Yellow"
+    val Green = Value // ID 11
 }
 
 // Access the enum
@@ -765,19 +765,19 @@ val red: TrafficLightColor.Value = TrafficeLightColor.Red
 
 // Some people recommend to add a type alias
 object TrafficLightColor extends Enumeration {
-	type TrafficLightColor = Value
-	val Red, Yellow, Green = Value
+    type TrafficLightColor = Value
+    val Red, Yellow, Green = Value
 }
 
 import TrafficLightColor._
 def doWhat(color: TrafficLightColor): string {
-	if (color == Red) {
-		"stop"
-	} else if (color == Yellow) {
-		"hurry up"
-	} else {
-		"go"
-	}
+    if (color == Red) {
+        "stop"
+    } else if (color == Yellow) {
+        "hurry up"
+    } else {
+        "go"
+    }
 }
 
 for (c <- TrafficLightColor.values) println(c.id + ": " + c)
@@ -801,12 +801,12 @@ import Predef._
 
 ```scala
 package com {
-	package horstmann {
-		package impatient {
-			class Employee
-			...
-		}
-	}
+    package horstmann {
+        package impatient {
+            class Employee
+            ...
+        }
+    }
 }
 
 // class name Employee can be accessed as com.horstmann.impatient.Employee
@@ -816,19 +816,19 @@ package com {
 
 ```scala
 package com {
-	package horstmann {
-		package impatient {
-			class Employee
-			...
-		}
-	}
+    package horstmann {
+        package impatient {
+            class Employee
+            ...
+        }
+    }
 }
 
 package org {
-	package bigjava {
-		class Counter
-		...
-	}
+    package bigjava {
+        class Counter
+        ...
+    }
 }
 ```
 
@@ -836,44 +836,44 @@ package org {
 
 ```scala
 package com {
-	package horstmann {
-		object Utils {
-			def percentOf(value: Double, rate: Double): Double = {
-				value * rate / 100
-			}
-			...
-		}
-		
-		package impatient {
-			class Employee {
-				...
-				def giveRaise(rate: scala.Double): Unit = {
-					salary += Utils.percentOf(salary, rate)
-						// You could also use com.horstmann.Utils.percenOf, since com is also in scope
-				}
-			}
-		}
-	}
+    package horstmann {
+        object Utils {
+            def percentOf(value: Double, rate: Double): Double = {
+                value * rate / 100
+            }
+            ...
+        }
+        
+        package impatient {
+            class Employee {
+                ...
+                def giveRaise(rate: scala.Double): Unit = {
+                    salary += Utils.percentOf(salary, rate)
+                        // You could also use com.horstmann.Utils.percenOf, since com is also in scope
+                }
+            }
+        }
+    }
 }
 
 // however, consider the following 
 package com {
-	package horstmann {
-		package impatient {
-			class Manager {
-				val subordinates = new collection.mutable.ArrayBuffer[Employee] // Note, scala is always imported
-			}
-		}
-	}
+    package horstmann {
+        package impatient {
+            class Manager {
+                val subordinates = new collection.mutable.ArrayBuffer[Employee] // Note, scala is always imported
+            }
+        }
+    }
 }
 
 // and in a different file
 package com {
-	package hortmann {
-		package collection {
-			...
-		}
-	}
+    package hortmann {
+        package collection {
+            ...
+        }
+    }
 }
 
 // one solution
@@ -886,13 +886,13 @@ val subordinates = new _root_.scala.collection.mutable.ArrayBuffer[Employee]
 
 ```scala
 package com.horstmann.impatient {
-	// Members of com and com.horstmann are NOT visible here
-	package people {
-		class Person
-		...
-	}
-	
-	// Now com.horstmann.collection will not be accessed as collection
+    // Members of com and com.horstmann are NOT visible here
+    package people {
+        class Person
+        ...
+    }
+    
+    // Now com.horstmann.collection will not be accessed as collection
 }
 ```
 
@@ -909,12 +909,12 @@ class Person
 
 // is equivalent to 
 package com.horstmann.impatient {
-	package people {
-		class Person
-		...
-		
-		// Until the end of the file
-	}
+    package people {
+        class Person
+        ...
+        
+        // Until the end of the file
+    }
 }
 
 // Notice the whole file belong to package com.horstmann.impatient.people 
@@ -933,15 +933,15 @@ package com.horstmann.impatient {
 package com.horstmann.impatient
 
 package object people {
-	val defaultName = "John Q. Public"
+    val defaultName = "John Q. Public"
 }
 
 package people {
-	class Person {
-		var name = defaultName // A constant from the package
-			// defaultName is in scope
-			// outside the package, it is com.horstmann.impatient.people.defaultName
-	}
+    class Person {
+        var name = defaultName // A constant from the package
+            // defaultName is in scope
+            // outside the package, it is com.horstmann.impatient.people.defaultName
+    }
 }
 ```
 
@@ -951,24 +951,24 @@ package people {
 package com.horstmann.impatient.people
 
 class Person {
-	private[people] def description = "A person with name" + name
+    private[people] def description = "A person with name" + name
 }
 
 // You can also exend the visibility to an enclosing package
 class Person {
-	private[impatient] def description = "A person with name" + name
+    private[impatient] def description = "A person with name" + name
 }
 ```
 
 * Imports
 
 ```scala
-import java.awt.Color	// Now you can write Color instead of java.awt.Color
+import java.awt.Color    // Now you can write Color instead of java.awt.Color
 
 import java.awt._ 
 
 def handler(evt: event.ActionEvent): Unit { // java.awt.event.ActionEvent
-	...	
+    ...    
 }
 ```
 
@@ -976,9 +976,9 @@ def handler(evt: event.ActionEvent): Unit { // java.awt.event.ActionEvent
 
 ```scala
 class Manager {
-	import scala.collection.mutable._
-	val subordinates = new ArrayBuffer[Employee]
-	...
+    import scala.collection.mutable._
+    val subordinates = new ArrayBuffer[Employee]
+    ...
 }
 ```
 
@@ -993,8 +993,8 @@ import scala.collection.mutable._
 
 import java.util.{HashMap => _, _}
 import scala.collection.mutable._
-	// now HashMap unambiguously refer to scala.collection.mutable.HashMap 
-	// since we import everything in java.util while hiding java.util.HashMap
+    // now HashMap unambiguously refer to scala.collection.mutable.HashMap 
+    // since we import everything in java.util while hiding java.util.HashMap
 ```
 
 ### CH8: Inheritance
@@ -1003,13 +1003,13 @@ import scala.collection.mutable._
 
 ```scala
 public class Person {
-	...
-	override def toString = getClass.getName + "[name=" + name + "]"
+    ...
+    override def toString = getClass.getName + "[name=" + name + "]"
 }
 
 public class Employee extends Person {
-	...
-	override def toString = super.toString + "[salary=" + salary + "]"
+    ...
+    override def toString = super.toString + "[salary=" + salary + "]"
 }
 ```
 
@@ -1017,12 +1017,12 @@ public class Employee extends Person {
 
 ```scala
 if (p.isInstanceOf[Employee]) {
-	val s = p.asInstanceOf[Employee] // s has type Employee
+    val s = p.asInstanceOf[Employee] // s has type Employee
 }
 
 p match {
-	case s: Employee => ... // Process s as Employee
-	case _ => ... // p wasn't an Employee
+    case s: Employee => ... // Process s as Employee
+    case _ => ... // p wasn't an Employee
 }
 ```
 
@@ -1036,30 +1036,30 @@ class Employee(name: String, age: Int, val salary: Double) extends Person(name, 
 
 ```scala
 class Person(val name: String) {
-	override def toString: String = getClass.getName + "[name=" + name + "]"
+    override def toString: String = getClass.getName + "[name=" + name + "]"
 }
 
 class SecretAgent(codename: String) extends Person(codename) {
-	override val name = "Secret"
-	override val toString = "Secret"
+    override val name = "Secret"
+    override val toString = "Secret"
 }
 
 // Note:
-//		1. A `def` can only override `def`
-//		2. A `val` can only override `val` or a parameterless `def`
-//		3. A `var` can only override abstract var
-//		4. according to 3. if super class use a `var` then all subclass are stuck with it. So avoid using `var`
+//        1. A `def` can only override `def`
+//        2. A `val` can only override `val` or a parameterless `def`
+//        3. A `var` can only override abstract var
+//        4. according to 3. if super class use a `var` then all subclass are stuck with it. So avoid using `var`
 ```
 
 * Anonymous subclasses
 
 ```scala
 val alien = new Person("Fred") {
-	def greeting = "Greetings, Earthling! My name is Fred."
+    def greeting = "Greetings, Earthling! My name is Fred."
 }
 
 def meet(p: Person{ def greeting: String }): Unit = {
-	println(p.name + " says: " + p.greeting)
+    println(p.name + " says: " + p.greeting)
 }
 ```
 
@@ -1067,11 +1067,11 @@ def meet(p: Person{ def greeting: String }): Unit = {
 
 ```scala
 abstract class Person(val name: String) {
-	def id: Int // No method body - this is an abstract method
+    def id: Int // No method body - this is an abstract method
 }
 
 class Employee(name: String) extends Person(name) {
-	def id = name.hashCode // override an abstract method do not require override keyword
+    def id = name.hashCode // override an abstract method do not require override keyword
 }
 ```
 
@@ -1079,8 +1079,8 @@ class Employee(name: String) extends Person(name) {
 
 ```scala
 abstract class Person {
-	val id: Int	// an abstract field w/ an abstract getter method
-	var name: String // an abstract field w/ an abstract getter and setter method
+    val id: Int    // an abstract field w/ an abstract getter method
+    var name: String // an abstract field w/ an abstract getter and setter method
 }
 
 class Employee(val id: Int) extends Person { // subclass has concert id property
@@ -1090,8 +1090,8 @@ var name = "" // and concrete name property
 // Note: no override is required to override an abstract field
 
 val fred = new Person {
-	val id = 1792
-	var name = "Fred"
+    val id = 1792
+    var name = "Fred"
 }
 ```
 
@@ -1099,17 +1099,17 @@ val fred = new Person {
 
 ```scala
 class Creature {
-	val range: Int = 10
-	val env: Array[Int] = new Array[Int](range)
+    val range: Int = 10
+    val env: Array[Int] = new Array[Int](range)
 }
 
 class Ant extends Creature {
-	override val range = 2
+    override val range = 2
 }
 
 val a = new Ant
-a.range 	// 2
-a.env 		// Array()
+a.range     // 2
+a.env         // Array()
 
 // why a.env is empty array?
 // 1. in order to init Ant, init Creature first
@@ -1121,50 +1121,50 @@ a.env 		// Array()
 // 7. Ant constuctor begins, set range to 2
 
 // 4 ways to solve above issue:
-// 		1) declare the val as final
-//		2) declare the val as lazy val
-// 		3) declare the val as def
-//		4) use early definition syntax
+//         1) declare the val as final
+//        2) declare the val as lazy val
+//         3) declare the val as def
+//        4) use early definition syntax
 
 // Early definiton syntax
 
 class Bug extends {
-	override val range = 3
+    override val range = 3
 } with Creature
 ```
 
 * Object equality
 
 ```scala
-	// eq method in AnyRef checks tow references refer to same obejct
-	// equals in AnyRef should be used to check its content
-	
+    // eq method in AnyRef checks tow references refer to same obejct
+    // equals in AnyRef should be used to check its content
+    
 class Item(val description: String, val price: Double) {
-	final override def equals(other: Any): boolean = {
-		val that = other.asInstanceOf[Item]
-		if (that == null) false
-		else description == that.description && price == that.price
-	}
-}	
+    final override def equals(other: Any): boolean = {
+        val that = other.asInstanceOf[Item]
+        if (that == null) false
+        else description == that.description && price == that.price
+    }
+}    
 ```
 
 * Scala Inheritance
 
 ```scala
 class Any {
-	def isInstanceOf
-	def asInstanceOf
-	def hashCode
-	def equals
-	def eq
+    def isInstanceOf
+    def asInstanceOf
+    def hashCode
+    def equals
+    def eq
 }
 
 trait AnyVal extends Any
 class AnyRef extedns Any {
-	def wait
-	def notify
-	def notifyAll
-	def synchronized
+    def wait
+    def notify
+    def notifyAll
+    def synchronized
 }
 
 class Boolean extends AnyVal
@@ -1204,7 +1204,7 @@ val contents = source.mkString
 
 ```scala
 val tokens = source.mkString.split("\\s+")
-	// split the string by white space
+    // split the string by white space
 ``` 
 
 * Read source from URL or other source
@@ -1256,28 +1256,28 @@ val savedFred = in.readObject().asInstanceOf[Person]
 import sys.process._
 // ! will implicitly convert a string into a processBuilder
 val retCode: Int = "ls -al" !
-	// will execute the command in bash and print out the result
-	// retCode is 0 if succeed otherwise display a non-zero value
-	
+    // will execute the command in bash and print out the result
+    // retCode is 0 if succeed otherwise display a non-zero value
+    
 val result: String = "ls -al" !!
-	// will not display anything, but return the display string
+    // will not display anything, but return the display string
 
 "ls -al" #| "grep sec" !
-	// use #| as a pipe
+    // use #| as a pipe
 
 "ls -al" #> new File("output.txt") !
-	// create and replace output file
+    // create and replace output file
 "ls -al" #>> new File("output.txt") !
-	// append or create output file 
-	
+    // append or create output file 
+    
 "grep sec" #< new File("output.txt") !
 "grep google" #< new URL("google.ca") !
 
 val (p, q) = ("pwd", "whoami")
 p #&& q !
-	//	if p succeed then execute q
+    //    if p succeed then execute q
 p #|| q !
-	//  if p not succeed then execute q
+    //  if p not succeed then execute q
 ```
 
 * Regular Expression
@@ -1285,22 +1285,22 @@ p #|| q !
 ```scala
 val numPattern = "[0-9]+".r
 val wsnumwsPattern = """\s+[0-9]+\s+""".r
-	// If expression contains too many "\"'s
-	
+    // If expression contains too many "\"'s
+    
 for (matchString <- numPattern.findAllIn("99 bottles, 98 bottles"))
 val maches = numPattern.findAllIn("99 bottles, 98 bottles").toArray
-	// Array(99, 98)
-val m1 = wsnumwsPattern.findFirstIn("99 bottles, 98 bottles")	// Some(" 98 ")
+    // Array(99, 98)
+val m1 = wsnumwsPattern.findFirstIn("99 bottles, 98 bottles")    // Some(" 98 ")
 
 numPattern.findPrefixOf("99 bottles, 98 bottles")
-	// Some(99)
+    // Some(99)
 wsnumwsPattern.findPrefixOf("99 bottles, 98 bottles")
-	// None
-	
+    // None
+    
 numPattern.replaceFirstIn("99 bottles, 98 bottles", "XX")
-	// "XX bottles, 98 bottles"
+    // "XX bottles, 98 bottles"
 "numPattern.replaceAllIn("99 bottles, 98 bottles", "XX")
-	// "XX bottles, XX bottles"
+    // "XX bottles, XX bottles"
 ```
 
 * Regular Expression Group
@@ -1308,9 +1308,9 @@ numPattern.replaceFirstIn("99 bottles, 98 bottles", "XX")
 ```scala
 val numitemPattern = "([0-9]+) ([a-z]+)".r
 val numitemPattern(num, item) = "99 bottles"
-	// num is 99 and item is bottles
+    // num is 99 and item is bottles
 for (numitemPattern(num, item) <- numitemPattern.findAll("99 bottles, 98 bottles"))
-	println(num + item)
+    println(num + item)
 ```
 
 ### CH10: Trait
@@ -1319,36 +1319,36 @@ for (numitemPattern(num, item) <- numitemPattern.findAll("99 bottles, 98 bottles
 
 ```scala
 trait Logger {
-	def log(msg: String): Unit // abstract method
+    def log(msg: String): Unit // abstract method
 }
 
 // unlike java interface, scala trait is more like a class
 class ConsoleLogger extends Logger { // use extends instead of implements
-	def log(msg: String): Unit = {	// without override
-		println(msg)
-	}
+    def log(msg: String): Unit = {    // without override
+        println(msg)
+    }
 }
 
 // extends more traits
 class ConsoleLogger extends Logger with Clonable with Serializable
-	// note all Java interface can be used as a trait in scala
+    // note all Java interface can be used as a trait in scala
 ```
 
 * Trait with concrete implementations
 
 ```scala
 trait ConsoleLogger {
-	def log(msg: String): Unit = {
-		println(msg)
-	}
+    def log(msg: String): Unit = {
+        println(msg)
+    }
 }
 
 // allow implementation details to be mix-in
 class SavingAccount extends Account with ConsoleLogger {
-	def withdraw(amount: Double): Unit = {
-		if (amount > balance) log("Insufficient funds")
-		else balance -= amount
-	}
+    def withdraw(amount: Double): Unit = {
+        if (amount > balance) log("Insufficient funds")
+        else balance -= amount
+    }
 }
 ```
 
@@ -1356,47 +1356,47 @@ class SavingAccount extends Account with ConsoleLogger {
 
 ```scala
 trait TimestampLogger extends Logged {
-	override def log(msg: String): Unit = {
-		super.log(new java.util.Date() + " " + msg)
-	}
+    override def log(msg: String): Unit = {
+        super.log(new java.util.Date() + " " + msg)
+    }
 }
 
 trait ShortLogger extends Logged {
-	val maxLength = 15
-	override def log(msg: String): Unit = {
-		super.log(
-			if (msg.length <= maxLength) msg 
-			else msg.substring(0, maxLength - 3) + "..." 
-		)
-	}
+    val maxLength = 15
+    override def log(msg: String): Unit = {
+        super.log(
+            if (msg.length <= maxLength) msg 
+            else msg.substring(0, maxLength - 3) + "..." 
+        )
+    }
 }
 
 val acct1 = new SavingsAccount with ConsoleLogger with TimestampLogger with ShortLogger
-	// <- super direction
+    // <- super direction
 val acct2 = new SavingsAccount with ConsoleLogger with ShortLogger with TimestampLogger
-	// <- super direction
+    // <- super direction
 
 acct1.log() // Sun Feb 06 17:45:45 ...
-	// ShortLogger's super is TimeStampLogger
-	// as a result, it cuts "" string and add time stamp
-	
+    // ShortLogger's super is TimeStampLogger
+    // as a result, it cuts "" string and add time stamp
+    
 acct2.log() // Sun Feb 06 1...
-	// TimeStampLogger's super is ShortLogger
-	// as a result, it prepends time stamp and then truncate it
+    // TimeStampLogger's super is ShortLogger
+    // as a result, it prepends time stamp and then truncate it
 ```
 
 * override methods
 
 ```scala
 trait Logger {
-	def log(msg: String): Unit	 // abstract method
+    def log(msg: String): Unit     // abstract method
 }
 
 trait TimestampLogger extends Logger {
-	abstract override def log(msg: String): Unit = { // override abstract method
-		super.log(new java.util.Date() + " " + msg)
-		// ^ we have yet not determined which is the final implementation, thus have to make it abstract
-	}
+    abstract override def log(msg: String): Unit = { // override abstract method
+        super.log(new java.util.Date() + " " + msg)
+        // ^ we have yet not determined which is the final implementation, thus have to make it abstract
+    }
 }
 ``` 
 
@@ -1404,21 +1404,21 @@ trait TimestampLogger extends Logger {
 
 ```scala
 trait ShortLogger extends Logged {
-	val maxLength = 15
+    val maxLength = 15
 }
 
 class Account {
-	var balance = 0.0
+    var balance = 0.0
 }
 
 class SavingAccount extends Account with ConsoleLogger with ShortLogger {
-	var interest = 0.0
-	def withdraw(amount: Double): Unit = {
-		if (amount > balance) log("Insufficient funds")
-		else ...
-	}
-	
-	// Note maxLength is not inherited, it's added as SavingAccount's own field
+    var interest = 0.0
+    def withdraw(amount: Double): Unit = {
+        if (amount > balance) log("Insufficient funds")
+        else ...
+    }
+    
+    // Note maxLength is not inherited, it's added as SavingAccount's own field
 }
 ```
 
@@ -1426,17 +1426,17 @@ class SavingAccount extends Account with ConsoleLogger with ShortLogger {
 
 ```scala
 trait ShortLogger extends Logged {
-	val maxLength: Int // abstract field
-	override def log(msg: String): Unit = {
-		super.log(
-			if (msg.length <= maxLength) msg
-			else msg.substring
-		)
-	}
+    val maxLength: Int // abstract field
+    override def log(msg: String): Unit = {
+        super.log(
+            if (msg.length <= maxLength) msg
+            else msg.substring
+        )
+    }
 }
 
 class SavingAccount extends Account with ConsoleLogger with ShortLogger {
-	val maxLength = 20 // No need to override
+    val maxLength = 20 // No need to override
 }
 ```
 
@@ -1444,12 +1444,12 @@ class SavingAccount extends Account with ConsoleLogger with ShortLogger {
 
 ```scala
 trait FileLogger extends Logger {
-	val out = new PrintWriter("app.log") // part of the constructor
-	out.println("# " + new Date().toString) // alos part of the constructor
-	def log(msg: String): Unit = { 
-		out.println(msg)
-		out.flush()
-	}
+    val out = new PrintWriter("app.log") // part of the constructor
+    out.println("# " + new Date().toString) // alos part of the constructor
+    def log(msg: String): Unit = { 
+        out.println(msg)
+        out.flush()
+    }
 }
 
 class SavingsAccount extends Account with FileLogger with ShortLogger
@@ -1466,33 +1466,33 @@ class SavingsAccount extends Account with FileLogger with ShortLogger
 
 ```scala
 trait FileLogger extends Logger {
-	val filename: String
-	val out = new PrintStream(filename)
-	def log(msg: String): Unit = {
-		out.println(msg)
-		out.flush()
-	}
+    val filename: String
+    val out = new PrintStream(filename)
+    def log(msg: String): Unit = {
+        out.println(msg)
+        out.flush()
+    }
 }
 
 // val acct = new Savings with FileLoger("myapp.log")  <= Wrong!
 
 val acct = new Savings with FileLogger {
-	val filename = "myapp.log" //not work because the construct order
-		// val out will be evaluated too early before filename
+    val filename = "myapp.log" //not work because the construct order
+        // val out will be evaluated too early before filename
 }
 
 // One way to solve above problem
 val acct = new {
-	val filename = "myapp.log"
+    val filename = "myapp.log"
 } with SavingAccount with FileLogger
 
 // Another way to solve above problem
 trait FileLogger extends Logger {
-	val filename: String
-	lazy val out = new PrintStream(filename)
-	def log(msg: String): Unit = {
-		out.println(msg)
-	}
+    val filename: String
+    lazy val out = new PrintStream(filename)
+    def log(msg: String): Unit = {
+        out.println(msg)
+    }
 }
 ```
 
@@ -1502,15 +1502,15 @@ trait FileLogger extends Logger {
 // This feature is not used so frequently in general
 
 trait LoggedException extends Exception with Logged {
-	def log(): Unit = {
-		log(getMessage())
-	}
+    def log(): Unit = {
+        log(getMessage())
+    }
 }
 
 // A class A extends a trait which extends a class B, then
 // class B will be the super class of class A automatically
 class UnhappyException extends LoggedException {
-	override def getMessage(): String = "arrgh!"
+    override def getMessage(): String = "arrgh!"
 }
 ```
 
@@ -1518,19 +1518,19 @@ class UnhappyException extends LoggedException {
 
 ```scala
 trait LoggedException extends Logged {
-	this: Exception =>
-		def log(): Unit = {
-			log(getMessge())
-		}
+    this: Exception =>
+        def log(): Unit = {
+            log(getMessge())
+        }
 }
 
 // Self type means, above trait can only be mixed-into Exception's derived class
 
 trait LoggedException extends Logged {
-	self: { def getMessage(): String } =>
-		def log(): Unit = {
-			log(getMessage())
-		}
+    self: { def getMessage(): String } =>
+        def log(): Unit = {
+            log(getMessage())
+        }
 }
 
 // Note above example shows that self type can be apply to structural type
@@ -1543,7 +1543,7 @@ A trait w/ only abstract method:
 
 ```scala
 trait Logger {
-	def log(msg: String): Unit
+    def log(msg: String): Unit
 }
 ```
 
@@ -1551,7 +1551,7 @@ becomes
 
 ```java
 public interface Logger {
-	void log(String msg);
+    void log(String msg);
 }
 ```
 
@@ -1560,9 +1560,9 @@ A trait has concrete methods, scala compiler will help us create an associated c
 
 ```scala
 trait ConsoleLogger extends Logger {
-	def log(msg: String): Unit = {
-		println(msg)
-	}
+    def log(msg: String): Unit = {
+        println(msg)
+    }
 }
 ```
 
@@ -1570,13 +1570,13 @@ becomes
 
 ```java
 public interface ConsoleLogger extends Logger {
-	void log(String msg);
+    void log(String msg);
 }
 
 public class ConsoleLogger$class {
-	public static void log(ConsoleLogger self, String msg) {
-		println(msg);
-	}
+    public static void log(ConsoleLogger self, String msg) {
+        println(msg);
+    }
 }
 ```
 
@@ -1585,7 +1585,7 @@ A trait with fields:
 
 ```scala
 trait ShortLogger extends Logger {
-	val maxLength = 15
+    val maxLength = 15
 }
 ```
 
@@ -1593,14 +1593,14 @@ becomes
 
 ```java
 public interface ShortLogger extends Logger {
-	public abstract int maxLength();
-	public abstract void weird_prefix$maxLength_$eq(int int);
+    public abstract int maxLength();
+    public abstract void weird_prefix$maxLength_$eq(int int);
 }
 
 public class ShortLogger$class {
-	public void $init$(ShortLogger self) {
-		self.werid_prefix$maxLength_$eq(15);
-	}
+    public void $init$(ShortLogger self) {
+        self.werid_prefix$maxLength_$eq(15);
+    }
 }
 ```
 
@@ -1610,10 +1610,10 @@ public class ShortLogger$class {
 
 ```scala
 a op b // a.op(b)
-a op	// a.op()
+a op    // a.op()
 op a   // a.unary_op()
 a op= b // a = a op b
-	// exception for <=, >=, !=, ==, ===, =/=
+    // exception for <=, >=, !=, ==, ===, =/=
 ```
 
 * Operator priority
@@ -1631,10 +1631,10 @@ a infix b postfix
 ```scala
 // most operator is left associativity
 1 + 2 + 3 // (1 + 2) + 3
-	
+    
 // some operator is right associativity
 1 :: 2 :: Nil // 1 :: (2 :: Nil)
-	
+    
 2 :: Nil // Nil.::(2) 
 ```
 
@@ -1651,32 +1651,32 @@ val bobsScore = scores("Bob") // scores.apply("Bob")
 
 
 class Fraction(n: Int, d: Int) {
-	...
+    ...
 }
 
 object Fraction {
-	def apply(n: Int, d: Int): Fraction = new Fraction(n, d)
+    def apply(n: Int, d: Int): Fraction = new Fraction(n, d)
 }
 
 val result = Fraction(3, 4) * Fraction(2, 5)
 
 // the unapply method can be defined as the inverse of apply method
 object Fraction {
-	def unapply(input: Fraction) = {
-		if (input.d == 0) None
-		else Some((input.n, input.d))
-	}
+    def unapply(input: Fraction) = {
+        if (input.d == 0) None
+        else Some((input.n, input.d))
+    }
 }
 
 // the unapply method might not be the inverse of apply method
 class Name(first: String, last: String)
 
 object Name {
-	def unapply(input: String) = {
-		val pos = input.indexOf(" ")
-		if (pos == -1) None
-		else Some((input.substring(0, pos), input.substring(pos + 1)))
-	}
+    def unapply(input: String) = {
+        val pos = input.indexOf(" ")
+        if (pos == -1) None
+        else Some((input.substring(0, pos), input.substring(pos + 1)))
+    }
 }
 
 val author = "Cay Horstmann"
@@ -1688,12 +1688,12 @@ Currency(29.95, "EUR") // calls Currency.apply
 case Currency(amount, "USD") => println("$" + amount) // calls Currency.unapply
 
 object IsCompound {
-	def unapply(input: String) = input.contains(" ")
+    def unapply(input: String) = input.contains(" ")
 }
 
 author match {
-	case Name(first, last @ IsCompound()) => ...
-	case Name(first, last) => ...
+    case Name(first, last @ IsCompound()) => ...
+    case Name(first, last) => ...
 }
 ```
 
@@ -1701,14 +1701,14 @@ author match {
 
 ```scala
 object Name {
-	def unapplySeq(input: String): Option[Seq[String]] =
-		if (input.trim == "") None else Some(input.trim.split("\\s+"))
+    def unapplySeq(input: String): Option[Seq[String]] =
+        if (input.trim == "") None else Some(input.trim.split("\\s+"))
 }
 
 author match {
-	case Name(first, last) => ...
-	case Name(first, middle, last) => ...
-	case Name(first, "van", "der", last) => ...
+    case Name(first, last) => ...
+    case Name(first, middle, last) => ...
+    case Name(first, "van", "der", last) => ...
 }
 ```
 
@@ -1729,11 +1729,11 @@ valueAtOneQuarter(sqrt _) // 0.5
 * Anonymous Function
 
 ```scala
-val triple = (x: Double) => 3 * x	
+val triple = (x: Double) => 3 * x    
 Array(3.14, 1.42, 2.0).map((x: Double) => 3 * x)
 // can also use curly bracket
 Array(3.14, 1.42, 2.0).map { x: Double =>
-	x * 3
+    x * 3
 }
 ```
 
@@ -1771,7 +1771,7 @@ val fun: (Double) => Double = 3 * _ // Ok, because we give type
 (1 to 9).map("*" * _).foreach(println _)
 (1 to 9).filter(_ % 2 == 0)
 (1 to 9).reduceLeft(_ * _)
-	// same as 1 * 2 * 3 * ... * 9
+    // same as 1 * 2 * 3 * ... * 9
 "Mary has a little lamb".split(" ").sortWith(_.length < _.length)
 ```
 
@@ -1794,9 +1794,9 @@ println(triple(14) + " " + half(14)) // display 42 7
 var counter = 0
 val button = new JButton("Increment")
 button.addActionListener(new ActionListener {
-	override def actionPerformed(event: ActionEvent) {
-		counter += 1
-	}
+    override def actionPerformed(event: ActionEvent) {
+        counter += 1
+    }
 })
 
 // There's too many codes, if only we could have the following
@@ -1804,11 +1804,11 @@ button.addActionListener((event: ActionEvent) => count += 1)
 
 // That can be achieved with implicit conversion
 implicit def makAction(action: (ActionEvent) => Unit): ActionListener = 
-	new ActionListener {
-		override def actionPerformed(event: ActionEvent): Unit = {
-			action(event)
-		}
-	}
+    new ActionListener {
+        override def actionPerformed(event: ActionEvent): Unit = {
+            action(event)
+        }
+    }
 ```
 
 * Currying
@@ -1833,47 +1833,47 @@ def corresponds[B](that: Seq[B])(p: (A, B) => Boolean): Boolean
 
 ```scala
 def runInThread(block: () => Unit) {
-	new Thread {
-		override def run() {
-			block()
-		}
-	}.start()
+    new Thread {
+        override def run() {
+            block()
+        }
+    }.start()
 }
 
 runInThread {
-	() => println("Hi");
-	Thread.sleep(10000)
-	println("Bye")
+    () => println("Hi");
+    Thread.sleep(10000)
+    println("Bye")
 }
 
 // But () => does not looks good
 
 def runInThread(block: => Unit) {
-	new Thread {
-		override def run() {
-			block
-		}
-	}.start()
+    new Thread {
+        override def run() {
+            block
+        }
+    }.start()
 }
 
 runInThread {
-	println("Hi")
-	Thread.sleep(10000)
-	println("Bye")
+    println("Hi")
+    Thread.sleep(10000)
+    println("Bye")
 }
 
 // We can create a abstract control
 def until(condition: => Boolean) (block: => Unit) {
-	if (!condition) {
-		block
-		until(condition) (block)
-	}
+    if (!condition) {
+        block
+        until(condition) (block)
+    }
 }
 
 var x = 10
 until (x == 0) {
-	x -= 1
-	println(x)
+    x -= 1
+    println(x)
 }
 ```
 
@@ -1898,7 +1898,7 @@ trait SortedMap extends Map
 val coll = ... // some Iterable
 val iter = coll.iterator
 while (iter.hasNext) {
-	iter.next()
+    iter.next()
 }
 
 // All scala's collection trait/class has apply method
@@ -1916,9 +1916,9 @@ SortedSet("Hello", "World")
 // Scala predefine collection use immutable implementations, ie. Predef.Map is scala.collection.immutable.Map
 
 def digits(n: Int): Set[Int] = {
-	if (n < 0) digits(-1)
-	else if (n < 10) Set(n)
-	else digits(n / 10) + (n % 10)
+    if (n < 0) digits(-1)
+    else if (n < 10) Set(n)
+    else digits(n / 10) + (n % 10)
 }
 
 // immutable collections
@@ -1948,13 +1948,13 @@ class ArrayBuffer extends IndexedSeq
 9 :: 4 :: 2 :: Nil
 
 def sum(lst: List[Int]): Int = {
-	if (lst == Nil) 0
-	else lst.head + sum(lst.tail)
+    if (lst == Nil) 0
+    else lst.head + sum(lst.tail)
 }
 
 def sum(lst: List[Int]): Int = lst match {
-	case Nil => 0
-	case h :: t => h + sum(t)
+    case Nil => 0
+    case h :: t => h + sum(t)
 }
 
 List(9, 4, 2).sum
@@ -1967,14 +1967,14 @@ List(9, 4, 2).sum
 val lst = scala.collection.mutable.LinkedList(1, -2, 7, -9)
 var cur = lst
 while (cur != Nil) {
-	if (cur.elem < 0) cur.elem = 0
-	cur = cur.next
+    if (cur.elem < 0) cur.elem = 0
+    cur = cur.next
 }
 
 var cur = lst
 while (cur != Nil && cur.next != Nil) {
-	cur.next = cur.next.next
-	cur = cur.next
+    cur.next = cur.next.next
+    cur = cur.next
 }
 
 ```
@@ -1984,17 +1984,17 @@ while (cur != Nil && cur.next != Nil) {
 ```scala
 Set(2, 0, 1) + 1 // same as Set(2, 0 , 1)
 Set(1, 2, 3, 4, 5, 6)
-	// the iteration order might be 5, 1, 6 ,2, 3, 4 because underneath it's implemented use a hash table
-	
+    // the iteration order might be 5, 1, 6 ,2, 3, 4 because underneath it's implemented use a hash table
+    
 val weekdays = scala.collection.mutable.LinkedHashSet("Mo", "Tu", "We", "Th", "Fr")
-	// use LinkedHashSet will use a underlying linked-list to keep track of insertion order
-	
+    // use LinkedHashSet will use a underlying linked-list to keep track of insertion order
+    
 scala.colection.immutable.SortedSet(1, 2, 3, 4, 5, 6)
-	// is implemented use a Red-Black tree
-	
+    // is implemented use a Red-Black tree
+    
 val digits = Set(1, 7, 2, 9)
-digits contains 0	// false
-Set(1, 2) subsetOf digits	// true
+digits contains 0    // false
+Set(1, 2) subsetOf digits    // true
 
 val primes = Set(2, 3, 5, 7)
 digits ++ primes // digits union primes
@@ -2009,18 +2009,18 @@ digits -- primes // digits diff primes
 * Operator for add/remove element on collection
 
 ```scala
-collection :+ elem	// Seq
-elem +: collection	// Seq
+collection :+ elem    // Seq
+elem +: collection    // Seq
 
-collection + elem	// Set, Map
-collection + (e1, e2, ...)	// Set, Map
+collection + elem    // Set, Map
+collection + (e1, e2, ...)    // Set, Map
 
-collection - elem	// Set, Map, ArrayBuffer
-collection - (e1, e2, ...)	// Set, Map, ArrayBuffer
+collection - elem    // Set, Map, ArrayBuffer
+collection - (e1, e2, ...)    // Set, Map, ArrayBuffer
 
-collection1 ++ collection2	// Iterable
+collection1 ++ collection2    // Iterable
 
-collection1 -- collection2	// Set, Map, ArrayBuffer
+collection1 -- collection2    // Set, Map, ArrayBuffer
 
 elem :: lst // List
 lst2 ::: lst1 // List
@@ -2029,7 +2029,7 @@ set1 | set2 // Set
 set1 & set2 // Set
 set1 &~ set2 // Set
 
-collection += elem	// mutable collection
+collection += elem    // mutable collection
 collection += (e1, e2, ...) // mutable collection
 collection1 ++= collection2  // mutable collection
 collection -= elem // mutable collection
@@ -2088,8 +2088,8 @@ def ulcase(s: String) = Vector(s.toUpperCase(), s.toLowerCase())
 names.flatMap(ulcase)
 
 "-3+4".collect {
-	case '+' => 1
-	case '-' => -1
+    case '+' => 1
+    case '-' => -1
 }  // Vector(-1, 1)
 
 names.foreach(println)
@@ -2099,29 +2099,29 @@ names.foreach(println)
 
 ```scala
 List(1, 7, 2, 9).reduceLeft(_ - _)
-	// ((1 - 7) - 2) - 9 = -17 
+    // ((1 - 7) - 2) - 9 = -17 
 List(1, 7, 2, 9).reduceRight(_ - _)
-	// 1 - (7 - (2 - 9)) = -13
+    // 1 - (7 - (2 - 9)) = -13
 
 List(1, 7, 2, 9).foldLeft(0)(_ - _)
-	// (((0 - 1) - 7) - 2) - 9 = 19
+    // (((0 - 1) - 7) - 2) - 9 = 19
 
 (0 /: List(1, 7, 2, 9)) (_ - _)  // same as List(1, 7, 2, 9).foldLeft(0) (_ - _)
 (List(1, 7, 2, 9) :\ 0) (_ - _)  // same as List(1, 7, 2, 9).foldRight(0) (_ - _) 
 
 val freq = scala.collection.mutable.Map[Char, Int]()
-for (c <- "Mississippi") freq(c) = freq.getOrElse(c, 0) + 1	
+for (c <- "Mississippi") freq(c) = freq.getOrElse(c, 0) + 1    
 
 // Above loop can be replaced by foldLeft
 (Map[Char, Int]() /: "Mississippi") {
-	(m, c) => m + (c -> m.getOrElse(c, 0) + 1)
+    (m, c) => m + (c -> m.getOrElse(c, 0) + 1)
 } // result is an immutable map
 
 // Note: Any while loop can be replaced use foldLeft, foldRight
 
 (1 to 10).scanLeft(0) (_ + _)
-	// scan generate all intermedia result
-	// Vector(0, 1, 3, 6, 10, 15, 21, 28, 36, 45, 55)
+    // scan generate all intermedia result
+    // Vector(0, 1, 3, 6, 10, 15, 21, 28, 36, 45, 55)
 ```
 
 * zip
@@ -2130,14 +2130,14 @@ for (c <- "Mississippi") freq(c) = freq.getOrElse(c, 0) + 1
 val prices = List(5.0, 20.0)
 val quantities = List(10, 2, 1)
 (prices zip quantities) map { 
-	p => p._1 * p._2
+    p => p._1 * p._2
 } // List(50.0, 40.0, 9.95)
 
 List(5.0, 20.0, 9.95).zipAll(List(10, 2), 0.0, 1)
-	// List((5.0, 10), (20.0, 2), (9.95, 1))
-	
+    // List((5.0, 10), (20.0, 2), (9.95, 1))
+    
 "scala".zipWithIndex
-	// Vector((s,0), (c,1), (a,2), (l,3), (a,4))
+    // Vector((s,0), (c,1), (a,2), (l,3), (a,4))
 
 ```
 
@@ -2145,11 +2145,11 @@ List(5.0, 20.0, 9.95).zipAll(List(10, 2), 0.0, 1)
 
 ```scala
 while(iter.hasNext) {
-	iter.next()
+    iter.next()
 }
 
 while(elem <- iter) {
-	elem
+    elem
 }
 ```
 
@@ -2158,15 +2158,15 @@ while(elem <- iter) {
 ```scala
 def numsFrom(n: BigInt): Steam[BigInt] = n #:: numsFrom(n + 1)
 val tenOrMore = numsFrom(10)
-	// Stream(10, ?)
+    // Stream(10, ?)
 tenOrMore.tail.tail.tail
-	// Stream(13, ?)
+    // Stream(13, ?)
 val squares = numsFrom(1).map(x => x * x)
-	// Stream(1, ?)
+    // Stream(1, ?)
 squares.take(5).force
-	// Steam(1, 4, 9, 16, 25)
+    // Steam(1, 4, 9, 16, 25)
 squares.force
-	// Don't do this, will get OutOfMemoryError
+    // Don't do this, will get OutOfMemoryError
 
 val words = Source.fromFile("/usr/share/dict/words").getLines.toStream
 words // Stream(A, ?)
@@ -2178,17 +2178,17 @@ words // Stream(A, A's, AOL, AOL's, Aachen, ?)
 
 ```scala
 val powers = (0 until 1000).view.map(pow(10, _))
-	// will produce a view that is always being lazy calcuate and never cache any value
+    // will produce a view that is always being lazy calcuate and never cache any value
 powers(100)
-	// only pow(10, 100) is calculated 
-	// and will not be cached
-	// if call powers(100) again, pow(10, 100) will be calculated again
-	
+    // only pow(10, 100) is calculated 
+    // and will not be cached
+    // if call powers(100) again, pow(10, 100) will be calculated again
+    
 (0 to 1000).map(pow(10, _)).map(1 / _)
-	// calculate map of all element and then caculate the other map
+    // calculate map of all element and then caculate the other map
 
 (0 to 1000).view.map(pow(10, _)).map(1 / _).force
-	// calculate two maps together for each element, there's no middle temp collection	
+    // calculate two maps together for each element, there's no middle temp collection    
 ```
 
 * Thread-safe collections
@@ -2210,17 +2210,17 @@ val scores = new scala.collection.mutable.HashMap[String, Int] with scala.collec
 collection.par.sum
 collection.par.count(_ % 2 == 0)
 for(i <- (0 until 100).par) print(i + " ")
-	// 1 26 51 27 ...
+    // 1 26 51 27 ...
 for(i <- (0 until 100).par) yield i + " "
-	// ParVector(1 , 2 , 3 , 4 , 5 , ...)
+    // ParVector(1 , 2 , 3 , 4 , 5 , ...)
 
 // par methods return trait ParSeq, ParSet, ParMap, which is the subclass of ParIterable
 
 var count = 0
 for (c <- collection.par) {
-	if (c % 2 == 0) {
-		count += 1 // Wrong
-	}
+    if (c % 2 == 0) {
+        count += 1 // Wrong
+    }
 }
 ```
 
@@ -2230,10 +2230,10 @@ for (c <- collection.par) {
 package scala.collection.mutable 
 
 trait Builder[-Elem, +To] {
-	def +=(elem: Elem): this.type
-	def result(): To
-	def clear(): Unit
-	def mapResult[NewTo](f: To => NewTo): Builder[Elem, NewTo] = ...
+    def +=(elem: Elem): this.type
+    def result(): To
+    def clear(): Unit
+    def mapResult[NewTo](f: To => NewTo): Builder[Elem, NewTo] = ...
 }
 ```
 
@@ -2244,15 +2244,15 @@ trait Builder[-Elem, +To] {
 
 ```scala
 sign = ch match {
-	case '+' => 1
-	case '-' => -1
-	case _ => 0
+    case '+' => 1
+    case '-' => -1
+    case _ => 0
 }
 
 color match {
-	case Color.RED =>
-	case Color.BLACK =>
-	...
+    case Color.RED =>
+    case Color.BLACK =>
+    ...
 }
 ```
 
@@ -2260,10 +2260,10 @@ color match {
 
 ```scala
 ch match {
-	case '+' => sign = 1
-	case '-' => sign = -1
-	case _ if Character.isDigit(ch) => digit = Character.digit(ch, 10)
-	case _ => sign = 0
+    case '+' => sign = 1
+    case '-' => sign = -1
+    case _ if Character.isDigit(ch) => digit = Character.digit(ch, 10)
+    case _ => sign = 0
 }
 ```
 
@@ -2271,8 +2271,8 @@ ch match {
 
 ```scala
 str(i) match {
-	case ch if Character.isDigit(ch) => digit = Character.digit(ch, 10)
-	...
+    case ch if Character.isDigit(ch) => digit = Character.digit(ch, 10)
+    ...
 }
 ```
 
@@ -2280,10 +2280,10 @@ str(i) match {
 
 ```scala
 obj match {
-	case x: Int => x
-	case s: String => Integer.parseInt(s)
-	case _: BigInt => Int.MaxValue
-	case _ => 0
+    case x: Int => x
+    case s: String => Integer.parseInt(s)
+    case _: BigInt => Int.MaxValue
+    case _ => 0
 }
 ```
 
@@ -2291,23 +2291,23 @@ obj match {
 
 ```scala
 arr match {
-	case Array(0) => "0"
-	case Array(x, y) => x + " " + y
-	case Array(0, _*) => "0 ..."
-	case _ => "something else"
+    case Array(0) => "0"
+    case Array(x, y) => x + " " + y
+    case Array(0, _*) => "0 ..."
+    case _ => "something else"
 }
 
 lst match {
-	case 0 :: Nil => "0"
-	case x :: y :: Nil => x + " " + y
-	case 0 :: tail => "0 ..."
-	case _ => "something else"
+    case 0 :: Nil => "0"
+    case x :: y :: Nil => x + " " + y
+    case 0 :: tail => "0 ..."
+    case _ => "something else"
 }
 
 pair match {
-	case (0, _) => "0 ..."
-	case (y, 0) => y + " 0"
-	case _ => "neither is 0"
+    case (0, _) => "0 ..."
+    case (y, 0) => y + " 0"
+    case _ => "neither is 0"
 }
 ```
 
@@ -2316,17 +2316,17 @@ pair match {
 ```scala
 // Extractor use unapply or unapplySeq to extra value 
 arr match {
-	case Array(0, x) => ...
-	...
+    case Array(0, x) => ...
+    ...
 }
 
 val pattern = "([0-9]+) ([a-z]+)".r
 "99 bottle" match {
-	case pattern(num, item) => ...
-		// set num to "99" and item to "bottles"
+    case pattern(num, item) => ...
+        // set num to "99" and item to "bottles"
 }
 
-//	 pattern.unapplySeq("99 bottles") to assign to num and item
+//     pattern.unapplySeq("99 bottles") to assign to num and item
 ```
 
 * Pattern matching in variable assignment
@@ -2341,15 +2341,15 @@ val Array(first, second, _*) = arr
 
 ```scala
 for ((k, v) <- myMap) {
-	println(k + " -> " + v)
+    println(k + " -> " + v)
 }
 
 for ((k, "") <- myMap) {
-	println(k)
+    println(k)
 }
 
 for ((k, v) <- myMap if v == "") {
-	println(k)
+    println(k)
 }
 ```
 
@@ -2362,9 +2362,9 @@ case class Currency(value: Double, unit: String) extends Amount
 case object Nothing extends Amount
 
 amt match {
-	case Dollar(v) => "$" + v
-	case Currency(_, u) => "Oh noes, I got " + u
-	case Nothing => ""
+    case Dollar(v) => "$" + v
+    case Currency(_, u) => "Oh noes, I got " + u
+    case Nothing => ""
 }
 
 // case class/object is really good at pattern matching 
@@ -2394,7 +2394,7 @@ a match {
 }
 
 amt match {
-	case a Currency u => ... // equivalent to case Currency(a, u)
+    case a Currency u => ... // equivalent to case Currency(a, u)
 }
 
 // seems to be silly, but above example is super useful for the following
@@ -2402,29 +2402,29 @@ amt match {
 case class ::[E](head: E, tail: List[E]) extends List[E]
 
 lst match {
-	case h :: t => ...
-		// case ::(h, t) and use ::.unapply(lst)
+    case h :: t => ...
+        // case ::(h, t) and use ::.unapply(lst)
 }
 
 result match {
-	case p ~ q => ... // case ~(p, q)
-	case p ~ q ~ r => ...
-		// case ~(~(p, q), r)
+    case p ~ q => ... // case ~(p, q)
+    case p ~ q ~ r => ...
+        // case ~(~(p, q), r)
 }
 
 // Note :: is right associative 
 
 case first :: second :: rest 
-	// case ::(first, ::(second, rest))
-	
+    // case ::(first, ::(second, rest))
+    
 case object +: {
-	def unapply[T](input: List[T]) = {
-		if (input.isEmpty) None else Some((input.head, input.tail))
-	}
+    def unapply[T](input: List[T]) = {
+        if (input.isEmpty) None else Some((input.head, input.tail))
+    }
 }
 
 1 +: 7 +: 2 +: 9 +: Nil match {
-	case first +: second +: rest => first + second + rest.length
+    case first +: second +: rest => first + second + rest.length
 }
 ```
 
@@ -2436,19 +2436,19 @@ case class Article(description: String, price: Double) extends Item
 case class Bundle(description: String, discount: Double, items: Item*) extends Item
 
 val item = Bundle("Father's day special", 20.0, 
-				Article("Scala for the Impatient", 29.95),
-				Bundle("Anchor Distillery Sampler", 10.0, 
-					Article("Old Potrere Straight Rye Whisky", 79.95),
-					Article("Junipero Gin", 32.95)))
+                Article("Scala for the Impatient", 29.95),
+                Bundle("Anchor Distillery Sampler", 10.0, 
+                    Article("Old Potrere Straight Rye Whisky", 79.95),
+                    Article("Junipero Gin", 32.95)))
 item match {
-	case Bundle(_, _, Article(descr, _), _*) => ...
-	case Bundle(_, _, art @ Article(_, _), rest @ _*) => ...
-	case Bundle(_, _, art @ Article(_, _), last) => ...
+    case Bundle(_, _, Article(descr, _), _*) => ...
+    case Bundle(_, _, art @ Article(_, _), rest @ _*) => ...
+    case Bundle(_, _, art @ Article(_, _), last) => ...
 }
 
 def price(it: Item): Double = it match {
-	case Article(_, p) => p
-	case Bundle(_, disc, its @ _*) => its.map(price _).sum - disc
+    case Article(_, p) => p
+    case Bundle(_, disc, its @ _*) => its.map(price _).sum - disc
 }
 ```
 
@@ -2473,9 +2473,9 @@ case object Yellow extends TrafficLightColor
 case object Green extends TrafficLightColor
 
 color match {
-	case Red => "Stop"
-	case Yellow => "hurry up"
-	case Green => "go"
+    case Red => "Stop"
+    case Yellow => "hurry up"
+    case Green => "go"
 }
 ```
 
@@ -2484,8 +2484,8 @@ color match {
 ```scala
 // Option is either Some(x) or None
 scores.get("Alice") match {
-	case Some(score) => println(score)
-	case None => println("No score")
+    case Some(score) => println(score)
+    case None => println("No score")
 }
 
 val alicesScore = score.get("Alice")
@@ -2505,8 +2505,8 @@ scores.get("Alice").foreach(println _)
 
 ```scala
 val f: PartialFunction[Char, Int] = {
-	case '+' => 1
-	case '-' => -1
+    case '+' => 1
+    case '-' => -1
 }
 
 f('-') // calls f.apply('-') return -1
@@ -2516,8 +2516,8 @@ f('0') // throws MatchError
 // Note collect function accepts partial function
 
 "-3+4".collect {
-	case '+' => 1
-	case '-' => -1
+    case '+' => 1
+    case '-' => -1
 } // Vector(-1, 1)
 ```
 
@@ -2535,7 +2535,7 @@ f('0') // throws MatchError
 
 ```scala
 @tailrec def sum2(xd: Seq[Int], partial: BitInt): BigInt = {
-	if (xd.isEmpty) partial else sum2(xs.tail, xs.head + partial)
+    if (xd.isEmpty) partial else sum2(xs.tail, xs.head + partial)
 }
 ```
 
@@ -2543,9 +2543,9 @@ f('0') // throws MatchError
 
 ```scala
 (n: @switch) match {
-	case 0 => "Zero"
-	case 1 => "One"
-	case _ => "?"
+    case 0 => "Zero"
+    case 1 => "One"
+    case _ => "?"
 }
 
 @inline def method1 ...
@@ -2564,10 +2564,10 @@ def allDifferent(x: Int, y: Int, z: Int) = ...
 // we can let compiler to generate all other primary type
 
 def allDifferent[@specialized T] (x: T, y: T, z: T) = ...
-	// all other primary type method will overloading
-	
+    // all other primary type method will overloading
+    
 def allDifferent[@specialized(Long, Double) T](x: T, y: T, z: T) = ...
-	// we can put Unit, Boolean, Byte, Short, Char, Int, Long, Float, Double
+    // we can put Unit, Boolean, Byte, Short, Char, Int, Long, Float, Double
 ```
 
 * Deprecated 
@@ -2577,14 +2577,14 @@ def allDifferent[@specialized(Long, Double) T](x: T, y: T, z: T) = ...
 def factorial(n: Int): Int = ...
 
 def draw(@deprecated('sz) size: Int, style: Int = NORMAL)
-	// draw(sz = 12) will get warning
+    // draw(sz = 12) will get warning
 ```
 
 * unchecked
 
 ```scala
 (lst: @unchecked) match {
-	case head :: tail => ...
+    case head :: tail => ...
 }
 ```
 
@@ -2622,7 +2622,7 @@ T : ContextBound
 
 ```scala
 class Pair[T <: Comparable[T]](val first: T, val second: T) {
-	def smaller = if (first.compareTo(second) < 0) first else second
+    def smaller = if (first.compareTo(second) < 0) first else second
 }
 // Comparable must be an upperbound of T
 // Means T must be a sub-type of Comparable[T]
@@ -2631,7 +2631,7 @@ val p = new Pair("Fred", "Brooks")
 println(p.smaller)
 
 class Pair[T](val first: T, val second: T) {
-	def replaceFirst[R >: T](newFirst: T) = new Pair[R](newFirst, second)
+    def replaceFirst[R >: T](newFirst: T) = new Pair[R](newFirst, second)
 }
 ```
 
@@ -2639,16 +2639,16 @@ class Pair[T](val first: T, val second: T) {
 
 ```scala
 val numPair = new Pair(2, 4) 
-	// Incorrect, because Int is not a sub-type of Comparable[Int]
-	// Only RichInt implements Comparable[Int]
-	
+    // Incorrect, because Int is not a sub-type of Comparable[Int]
+    // Only RichInt implements Comparable[Int]
+    
 // Use ViewBound to implicitly convert type
 class Pair[T <% Comparable[T]]
 
 // However, use Orderer[T] is better than Comparable[T], it has all Comparable[T] and plus some relation operator
 
 class Pair[T <% Ordered[T]](val first: T, val second: T) {
-	def smaller = if (first < second) first else second 
+    def smaller = if (first < second) first else second 
 }
 ```
 
@@ -2658,8 +2658,8 @@ class Pair[T <% Ordered[T]](val first: T, val second: T) {
 // While ViewBound T <% V requires an implicit converstion from T to V, ContextBound T : M requires to have an implicit value of type M[T]
 
 class Pair[T : Ordering](val first: T, val second: T) {
-	def smaller(implicit ord: Ordering[T]) = 
-		if (ord.compare(first, second) < 0) first else second
+    def smaller(implicit ord: Ordering[T]) = 
+        if (ord.compare(first, second) < 0) first else second
 }
 ```
 
@@ -2682,13 +2682,13 @@ T : Ordering : Manifest
 
 ```scala
 // Type constraint provider another way to constraint type
-T =:= U	// T has the same type as U
-T <:< U	// T is a subclass of U
-T <%< U	// T can be view(implicit) convert to U
+T =:= U    // T has the same type as U
+T <:< U    // T is a subclass of U
+T <%< U    // T can be view(implicit) convert to U
 
 // Note type constraint must be declare implicitly
 class Pair[T](val first: T, val second: T)(implicit ev: T <:< Comparable[T])
-	// Same as the following
+    // Same as the following
 class Pair[T <: Comparable[T]](val first: T, val second: T)
 
 //However, the following 2 cases can only achieve through type constraint
@@ -2696,37 +2696,37 @@ class Pair[T <: Comparable[T]](val first: T, val second: T)
 // Case 1: You can still construct Pair[File]; however, when you call smaller method then will you get error
 
 class Pair[T](val first: T, val second: T) {
-	def smaller(implicit ex: T <:< Comparable[T]) = 
-		if (first < second) first else second
+    def smaller(implicit ex: T <:< Comparable[T]) = 
+        if (first < second) first else second
 }
 
 val friends = Map("Fred" -> "Barney", ...)
-val friendOpt = friends.get("Wilma")		// Option[String]
-val friendOrNull = friendOpt.orNull	// either String or null
-	// above code is useful when deal w/ Java code
-	// however, orNull cannot use on Int
-	// because it has type constraint Null <:< A
-	// however, you can use Option[Int] for not problem,
-	// but it's just you cannot use .orNull method
+val friendOpt = friends.get("Wilma")        // Option[String]
+val friendOrNull = friendOpt.orNull    // either String or null
+    // above code is useful when deal w/ Java code
+    // however, orNull cannot use on Int
+    // because it has type constraint Null <:< A
+    // however, you can use Option[Int] for not problem,
+    // but it's just you cannot use .orNull method
 
 // Case 2: improved type inference
 
 def firstLast[A, C <: Iterable[A]](it: C) = (it.head, it.last)
 firstLast(List(1, 2, 3)) 
-	// will detect type [Nothing, List[Int]]
-	//  error: inferred type arguments [Nothing,List[Int]] do not conform to 
-	// method firstLast's type parameter bounds [A,C <: Iterable[A]]
-	// Because we process A first then C
-	// The way to solve problem is to match C first then A
+    // will detect type [Nothing, List[Int]]
+    //  error: inferred type arguments [Nothing,List[Int]] do not conform to 
+    // method firstLast's type parameter bounds [A,C <: Iterable[A]]
+    // Because we process A first then C
+    // The way to solve problem is to match C first then A
 
 def firstLast[A, C](it: C)(implicit ev: C <:< Iterable[A]) = (it.head, it.last)
-	// firstLast(List(1, 2, 3, 4)) returns (1, 4)
-	
+    // firstLast(List(1, 2, 3, 4)) returns (1, 4)
+    
 // Similar idea can also be found in the following code
 def corresponds[B](that: Seq[B])(match: (A, B) => Boolean): Boolean
 
 Array("Hello", "Fred").corresponds(Array(5, 4))(_.length == _)
-	// Interpreter knows B is Int, and _.length == _ works
+    // Interpreter knows B is Int, and _.length == _ works
 ``` 
 
 * Variance
@@ -2742,26 +2742,26 @@ Array("Hello", "Fred").corresponds(Array(5, 4))(_.length == _)
 
 ```scala
 def makeFriends(p: Pair[Person])
-	// Suppose Student <:< Person
-	// But by default, Pair[Student] has nothing to do w/ Pair[Person]
-	// If we want Pair[Student] <:< Pair[Person]
-	// we have to do the following
-	
+    // Suppose Student <:< Person
+    // But by default, Pair[Student] has nothing to do w/ Pair[Person]
+    // If we want Pair[Student] <:< Pair[Person]
+    // we have to do the following
+    
 class Pair[+T](val first: T, val second T)
-	// +T means the real type is covariant to T
-	// Mean it has the same type variance direction
-	// eg. A <:< B  implies Pair[A] <:< Pair[B]
+    // +T means the real type is covariant to T
+    // Mean it has the same type variance direction
+    // eg. A <:< B  implies Pair[A] <:< Pair[B]
 ```
 
 * Contravariance
 
-```scala	
+```scala    
 trait Friend[-T] {
-	def befriend(someone: T)
+    def befriend(someone: T)
 }
 
 def makeFriendWith(s: Student, f: Friend[Student]) {
-	f.befriend(s)
+    f.befriend(s)
 }
 
 class Person extends Friend[Person]
@@ -2771,26 +2771,26 @@ val fred = new Person
 
 // Question: do we allow Friend[Person] to befriend w/ a student?
 makeFriendWith(susan, fred)
-	// fred is Student <:< Person <:< Friend[Person]
-	// Friend[Person] <:< Friend[Student]
+    // fred is Student <:< Person <:< Friend[Person]
+    // Friend[Person] <:< Friend[Student]
 
 ```
 
 * Multiple Variance
 
 ```scala
-// Function1[-A, +R]	
+// Function1[-A, +R]    
 def friends(students: Array[Student], find: Function1[Student, Person]) = 
-	// find is equivalent to find: Student => Person
-	for (s <- students) yield find(s)
+    // find is equivalent to find: Student => Person
+    for (s <- students) yield find(s)
 
 def findStudent(p: Person): Student
 
 // Question: can we call frinds w/ findStudent?
 friends(student: Array[Student], findStudent)
-	// findStudent: Function1[Person, Student]
-	// since Function1[-A, +R] and Student <:< Person
-	// Function1[Person, Student] <:< Function1[Student, Person]
+    // findStudent: Function1[Person, Student]
+    // since Function1[-A, +R] and Student <:< Person
+    // Function1[Person, Student] <:< Function1[Student, Person]
 ```
 
 * Covariant and contravariant positions
@@ -2807,22 +2807,22 @@ val people: Array[Person] = students // Illegal, won't compile
 class Pair[+T](val first: T, val second T)
 // However
 class Pair[+T](var first: T, var second T)
-	//              ^ error
-	// first_=(value: T) such value is at contravariance position
-	
+    //              ^ error
+    // first_=(value: T) such value is at contravariance position
+    
 // Notice, in function params, the param of that function is covariance
 trait Iterable[+A] {
-	foldLeft[B](z: B)(op: (B, A) => B): B
-	//             -       +  +     -   + 
-	// -, + are contravariance and covariance position separately
-	// Note, A is at covariance position
+    foldLeft[B](z: B)(op: (B, A) => B): B
+    //             -       +  +     -   + 
+    // -, + are contravariance and covariance position separately
+    // Note, A is at covariance position
 }
 
 class Pair[+T](val first: T, val second: T) {
-	def replaceFirst(newFirst: T) = new Pair[T](newFirst, second)
-		//              err  ^  this is contravariance position
-		
-	def replaceFirst[R >: T](newFirst: R) = new Pair[R](newFirst, second)
+    def replaceFirst(newFirst: T) = new Pair[T](newFirst, second)
+        //              err  ^  this is contravariance position
+        
+    def replaceFirst[R >: T](newFirst: R) = new Pair[R](newFirst, second)
 }
 ```
 
@@ -2830,19 +2830,19 @@ class Pair[+T](val first: T, val second: T) {
 
 ```scala
 abstract class List[+T] {
-	def isEmpty: Boolean
-	def head: T
-	def tail: List[T]
+    def isEmpty: Boolean
+    def head: T
+    def tail: List[T]
 }
 
 class Node[T](val head: T, val tail: List[T]) extends List[T] {
-	def isEmpty = false
+    def isEmpty = false
 }
 
 class Empty[T] extends List[T] {
-	def isEmpty = true
-	def head = ???
-	def tail = ???
+    def isEmpty = true
+    def head = ???
+    def tail = ???
 }
 
 // If you think Empty[T] is dumb
@@ -2873,17 +2873,17 @@ def min[T](p: Pair[T])(comp: Comparator[_ >: T])
 // For any reference v, v.type will return v or null
 
 class Document {
-	def setTitle(title: String) = { ...; this }
-	def setAuthor(author: String) = { ...; this }
-	...	
+    def setTitle(title: String) = { ...; this }
+    def setAuthor(author: String) = { ...; this }
+    ...    
 }
 
 article.setTitle("Whatever Floats Your Boat").setAuthor("Cay Hortstmann")
 
 // However, subclass would be a problem
 class Book extends Document {
-	def addChapter(chapter: String) = { ...; this }
-	...
+    def addChapter(chapter: String) = { ...; this }
+    ...
 }
 
 val book = new Book()
@@ -2901,11 +2901,11 @@ book.set(Title).to("Scala for the Impatient")
 object Title
 
 class Document {
-	private var useNextArgAs: Any = null
-	def set(obj: Title.type): this.type = { useNextArgAs = obj; this }
-		// Title is singlton not type
-	def to(arg: String) = if (useNextArgAs == Title) title = arg; else ...
-	...
+    private var useNextArgAs: Any = null
+    def set(obj: Title.type): this.type = { useNextArgAs = obj; this }
+        // Title is singlton not type
+    def to(arg: String) = if (useNextArgAs == Title) title = arg; else ...
+    ...
 }
 ```
 
@@ -2913,11 +2913,11 @@ class Document {
 
 ```scala
 class Network {
-	class Member(val name: String) {
-		val contacts = new ArrayBuffer[Network#Member]
-			// this means for all Network's Member class
-	}
-	...
+    class Member(val name: String) {
+        val contacts = new ArrayBuffer[Network#Member]
+            // this means for all Network's Member class
+    }
+    ...
 }
 ```
 
@@ -2925,13 +2925,13 @@ class Network {
 
 ```scala
 class Book {
-	import scala.collection.mutable._
-	type Index = HashMap[String, (Int, Int)]
+    import scala.collection.mutable._
+    type Index = HashMap[String, (Int, Int)]
 }
 
 abstract class Reader {
-	type Contents
-	def read(fileName: String): Contents
+    type Contents
+    def read(fileName: String): Contents
 }
 ```
 
@@ -2939,10 +2939,10 @@ abstract class Reader {
 
 ```scala
 def appendLines(target: { def append(str: String): Any }, lines: Iterable[String]) {
-	for (l <- lines) {
-		target.append(1)
-		target.append("\n")
-	}
+    for (l <- lines) {
+        target.append(1)
+        target.append("\n")
+    }
 }
 ```
 
@@ -2982,7 +2982,7 @@ Map[T, U] forSome { type T; type U }
 // we can even do this
 Map[T, U] forSome { type T; type U <: T }
 n.Member forSome { val n: Network }
-	// can use Network#Member to achieve that
+    // can use Network#Member to achieve that
 
 // However, there are things cannot achieve by type projection
 
@@ -3020,28 +3020,28 @@ process(fred, barney) // Incorrect
 ```scala
 // Self-type  is used to restrict trait/class to be mixed into
 trait Logged {
-	def log(msg: String)
+    def log(msg: String)
 }
 
 trait LoggedException extends Logged { this: Exception =>
-	def log() {
-		log(getMessage())
-			// getMessage comes from Exception
-	}
+    def log() {
+        log(getMessage())
+            // getMessage comes from Exception
+    }
 }
 
 // Self-type  is used to access to outer class
 trait Goup { outer: Network =>
-	class Member {
-		...
-		// outer refer to Group.this
-	}
+    class Member {
+        ...
+        // outer refer to Group.this
+    }
 }
 
 // Self-type  will not be inherited, means have to re-define self-type
 trait ManagedException extends LoggedException {
-	this: Exception =>
-	 ...
+    this: Exception =>
+     ...
 }
 ```
 
@@ -3049,17 +3049,17 @@ trait ManagedException extends LoggedException {
 
 ```scala
 trait Logger {
-	def log(msg: String)
+    def log(msg: String)
 }
 
 trait Auth { 
-	this: Logger =>
-	def login(id: String, password: String): Boolean
+    this: Logger =>
+    def login(id: String, password: String): Boolean
 }
 
 trait App {
-	this: Logger with Auth =>
-	...
+    this: Logger with Auth =>
+    ...
 }
 
 // Now we can assumble our app
@@ -3070,24 +3070,24 @@ object MyApp extends App with FileLogger("test.log") with MockedAuth("users.txt"
 // we can use Cake Pattern
 
 trait LoggerComponent {
-	trait Logger { ... }
-	val logger: Logger
-	class FileLogger(file: String) extends Logger { ... }
-	...
+    trait Logger { ... }
+    val logger: Logger
+    class FileLogger(file: String) extends Logger { ... }
+    ...
 }
 
 trait AuthComponent {
-	this: LoggerComponent =>
-	
-	trait Auth { ... }
-	val auth: Auth
-	class MockAuth(file: String) extends Auth { ... }
-	...
+    this: LoggerComponent =>
+    
+    trait Auth { ... }
+    val auth: Auth
+    class MockAuth(file: String) extends Auth { ... }
+    ...
 }
 
 object AppComponent extends LoggerComponent with AuthComponent {
-	val logger = new FileLogger("test.log")
-	val auth = new MockAuth("users.txt")
+    val logger = new FileLogger("test.log")
+    val auth = new MockAuth("users.txt")
 }
 
 // The benefit of using above pattern is that
@@ -3099,23 +3099,23 @@ object AppComponent extends LoggerComponent with AuthComponent {
 
 ```scala
 trait Reader {
-	type Contents
-	def read(fileName: String): Contents
+    type Contents
+    def read(fileName: String): Contents
 }
 
 class StringReader extends Reader {
-	type Contents = String
-	def read(fileName: String) = Source.fromFile(fileName, "UTF-8").mkString
+    type Contents = String
+    def read(fileName: String) = Source.fromFile(fileName, "UTF-8").mkString
 }
 
 class ImageReader extends Reader {
-	type Contents = BufferedImage
-	def read(fileName: String) = ImageIO.read(new File(fileName))
+    type Contents = BufferedImage
+    def read(fileName: String) = ImageIO.read(new File(fileName))
 }
 
 // Above can also achieve by using type param
 trait Reader[C] {
-	def read(fileName: String): C
+    def read(fileName: String): C
 }
 
 
@@ -3124,15 +3124,15 @@ trait Reader[C] {
 // Type param give base class some control over type
 
 trait Reader {
-	type In
-	type Contents
-	def read(in: In): Contents
+    type In
+    type Contents
+    def read(in: In): Contents
 }
 
 class ImageReader extends Reader {
-	type In = File
-	type Contents = BufferedImage
-	def read(file: In) = ImageIO.read(file)
+    type In = File
+    type Contents = BufferedImage
+    def read(file: In) = ImageIO.read(file)
 }
 ```
 
@@ -3143,30 +3143,30 @@ class ImageReader extends Reader {
 ```scala
 implicit def int2Fraction(n: Int) = Fraction(n, 1)
 val result = 3 * Fraction(4, 5) // will call int2Fraction(3)
-	// implicit conversion function can have any name, 
-	// however, the name convention should be source2Target
+    // implicit conversion function can have any name, 
+    // however, the name convention should be source2Target
 ```
 
 * Use implicit conversion to enrich existance lib
 
 ```scala
 class RichFile(val from: File) {
-	def read = Source.fromFile(from.getPath).mkString
+    def read = Source.fromFile(from.getPath).mkString
 }
 
 implicit def file2RichFile(from: File) = new RichFile(from)
 
 val contents = new File("README").read
-	// implicitly convert File into RichFile
+    // implicitly convert File into RichFile
 ```
 
 * Import implicit conversion
 
 ```scala
 object Main extends App {
-	import com.horstmann.impatient.FractionConversions._
-	val result = 3 * Fraction(4, 5)
-	println(result)
+    import com.horstmann.impatient.FractionConversions._
+    val result = 3 * Fraction(4, 5)
+    println(result)
 }
 
 // Or if we want a specific implicit conversion
@@ -3187,12 +3187,12 @@ def quote(what: String)(implicit delims: Delimiters) = delims.left + what + deli
 quote("Bonjour ls monde")(Delimiters("<<", ">>"))
 
 object FrenchPunctuation {
-	implicit val quoteDelimiters = Delimiters("<<", ">>")
+    implicit val quoteDelimiters = Delimiters("<<", ">>")
 }
 
 import FrenchPunctuation._
 quote("Bonjour ls monde")
-	// <<Bonjour ls monde>>
+    // <<Bonjour ls monde>>
 ```
 
 * Use implicit paramter to perform implcit conversion
@@ -3205,12 +3205,12 @@ def smaller[T](a: T, b: T)(implicit order: T => Ordered[T]) = if (a < b) a else 
 
 ```scala
 class Pair[T : Ordering](val first: T, val second: T) {
-	def smaller(implicit ord: Ordering[T]) = if (ord.compare(first, second) < 0) first else second
-	// we can also do this 
-	def smaller = {
-		import Ordered._;
-		if (first < second) first else second
-	}
+    def smaller(implicit ord: Ordering[T]) = if (ord.compare(first, second) < 0) first else second
+    // we can also do this 
+    def smaller = {
+        import Ordered._;
+        if (first < second) first else second
+    }
 }
 ```
 
@@ -3223,16 +3223,16 @@ T <:< U
 T <%< U
 
 def firstLast[A, C](it: C)(implicit ev: C <:< Iterable[A]) = (it.head, it.last)
-	// (ev(it).head, ev(it).last)
-	// ev is called type proof object
+    // (ev(it).head, ev(it).last)
+    // ev is called type proof object
 
 // =:=, <:<, and <%< are defined in Predef use the following
 abstract class <:<[-From, +To] extends Function1[From, To]
 
 object <:< {
-	implicit def conforms[A] = new (A <:< A) {
-		def apply(x: A) = x
-	}
+    implicit def conforms[A] = new (A <:< A) {
+        def apply(x: A) = x
+    }
 }
 ```
 

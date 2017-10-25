@@ -35,16 +35,16 @@ print(implicitUnWrappedOptionInt + 5)
 #### Control Flow
 
 ```swift
-for  elem in stringList {
-	print(elem)
+for elem in stringList {
+    print(elem)
 }
 
 if let num = optionInt {
-	print(num)
+    print(num)
 }
 
 if let num = optionInt where num != 0, let num2 = convertionNumber {
-	print(“\(num) + \(num2) = \(num + num2)”)  
+    print(“\(num) + \(num2) = \(num + num2)”)  
 }
 
 let num2 = 3
@@ -79,7 +79,7 @@ func numberGenerator(seed: Int) -> Int {
 numberGenerator(123)
 
 func moreParamsFunc(first: Int, second: Int, third: Int) -> Int {
-	return first + second + third
+    return first + second + third
 }
 
 moreParamsFunc(1, second: 2, third: 3)
@@ -90,9 +90,9 @@ moreParamsFunc(1, second: 2, third: 3)
 
 ```swift
 class MyClass{
-	func printName() {
-		print(“Hello World”)
-	}
+    func printName() {
+        print(“Hello World”)
+    }
 }
 
 let myInstance = MyClass()
@@ -211,5 +211,3 @@ if let simpleImpl = simpleExample as? SimpleImpl{
 }
 print(simpleExample.displayValue)
 ```
-
-
