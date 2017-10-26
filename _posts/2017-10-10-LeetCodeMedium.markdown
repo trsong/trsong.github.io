@@ -13,6 +13,8 @@ TypeScript Playground: [https://www.typescriptlang.org/play/](https://www.typesc
 
 Scala Playground: [https://scastie.scala-lang.org/](https://scastie.scala-lang.org/)
 
+Scala/Js/CodeSnippet Playground2: [https://leetcode.com/playground/new](https://leetcode.com/playground/new)
+
 Covert Tabs to Spaces in Code Snippets: [http://tabstospaces.com/](http://tabstospaces.com/)
 
 ### 534. Design TinyURL
@@ -1202,7 +1204,7 @@ object Main extends App {
 
 Source: [https://leetcode.com/problems/circular-array-loop/description/](https://leetcode.com/problems/circular-array-loop/description/)
 
-You are given an array of positive and negative integers. If a number n at an index is positive, then move forward n steps. Conversely, if it's negative (-n), move backward n steps. Assume the first element of the array is forward next to the last element, and the last element is backward next to the first element. Determine if there is a loop in this array. A loop starts and ends at a particular index with more than 1 element along the loop. The loop must be ***"forward"*** or ***"backward"***.
+You are given an array of positive and negative integers. If a number n at an index is positive, then move forward n steps. Conversely, if it's negative (-n), move backward n steps. Assume the first element of the array is forward next to the last element, and the last element is backward next to the first element. Determine if there is a loop in this array. A loop starts and ends at a particular index with more than 1 element along the loop. The loop must be ***"forward"*** or ***"backward"*** .
 
 **Example 1:** Given the array [2, -1, 1, 2, 2], there is a loop, from index 0 -> 2 -> 3 -> 0.
 
@@ -1215,3 +1217,95 @@ Can you do it in **O(n)** time complexity and **O(1)** space complexity?
 **Hint:**
 
 Slow/Fast Pointer Solution: Just think it as finding a loop in Linked-list, except that loops with only 1 element do not count. Use a slow and fast pointer, slow pointer moves 1 step a time while fast pointer moves 2 steps a time. If there is a loop (fast == slow), we return true, else if we meet element with different directions, then the search fail, we set all elements along the way to 0. Because 0 is fail for sure so when later search meet 0 we know the search will fail.
+
+**Typescript Solution:**
+
+```typescript
+function circularArrayLoop(nums: number[]): boolean {
+    let n: number = nums.length;
+    let arr: number[] = nums.slice();  // Make a copy
+    const move = (i: number): number => {
+        return i + nums[i] >= 0 ? (i + nums[i]) % n : (i + nums[i]) % n + n; 
+    }
+        
+    for (let i: number = 0; i < n; i++) {
+        if (arr[i] === 0) continue; 
+        
+        // slow / faster pointer
+        let slow: number = i, fast: number = i;
+        
+        // Safe to move the slow pointer once and move the fast pointer twice
+        while (arr[slow] * arr[i] > 0 && arr[fast] * arr[i] > 0 && arr[move(fast)] * arr[i] > 0) {
+            // Make the move
+            slow = move(slow);
+            fast = move(move(fast));
+            
+            if (slow === fast) {  // Encounter each other!
+                if (slow === move(slow)) break;  // 1 element loop is not a valid loop
+                return true;
+            }
+        }
+        
+        // Optimization: Mark element along the path to be 0
+        let direction: number = arr[i]; // arr[i] will be set to 0 in first iteration in loop
+        slow = i;
+        while (direction * arr[slow] > 0) {
+            let nextPos: number = move(slow);
+            arr[slow] = 0;
+            slow = nextPos;
+        }
+    }
+    return false;
+}
+
+function exec() {
+    let result: boolean = circularArrayLoop([2, -1, 1, 2, 2]);
+
+    let div: HTMLElement = document.createElement("div");
+    div.innerText = result.toString();
+    document.body.appendChild(div);
+}
+
+exec();
+```
+
+**Scala Solution:**
+
+```scala
+object Main extends App {
+    def circularArrayLoop(nums: Array[Int]): Boolean = {
+        val arr = nums.clone()
+        val n = nums.size
+        def move(i: Int) = if (i + arr(i) >= 0) (i + arr(i)) % n else (i + arr(i)) % n + n
+        
+        def slowFastPointerSearch(i: Int, slow: Int, fast: Int): Boolean = {
+            if (!(arr(i) * arr(slow) > 0 && arr(i) * arr(fast) > 0 && arr(move(fast)) * arr(i) > 0)) false
+            else {
+                val nextSlow = move(slow)
+                val nextFast = move(move(fast))
+                if (nextSlow != nextFast) slowFastPointerSearch(i, nextSlow, nextFast) 
+                else if (nextSlow == move(nextSlow)) false
+                else true
+            }
+        }
+                
+        (0 until n) exists { i =>
+            if (arr(i) == 0) false
+            else if (slowFastPointerSearch(i, i, i)) true
+            else {
+                val direction = arr(i)
+                var j = i
+                while (direction * arr(i) > 0) {
+                    val nextPos = move(j)
+                    arr(j) = 0
+                    j = nextPos
+                }
+            
+                false
+            }
+        }
+    }
+    
+    println(circularArrayLoop(Array(2, -1, 1, 2, 2)))
+}
+```
