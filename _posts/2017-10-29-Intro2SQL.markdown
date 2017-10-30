@@ -1,0 +1,550 @@
+---
+layout: post
+title:  "An Introduction to Structured Query Language"
+date:   2017-10-29 22:36:32 -0700
+categories: SQL
+---
+* This will become a table of contents (this text will be scraped).
+{:toc}
+
+## An Introduction to Structured Query Language (SQL)
+
+Strutured Query Language (SQL) is made up of two sub-languages:
+- SQL Data Manipulation Language (DML)
+    * SELECT statements perform queries
+    * INSERT, UPDATE, DELETE statements modify the instane of a table
+
+- SQL Data Denition Language (DDL)    * CREATE, DROP statements modify the database shema    * GRANT, REVOKE statements enfore the seurity model
+
+**Three-Level Schema Architecture**
+
+- External Schema
+- Conceptual Schema
+- Physical Schema
+
+### SQL DML
+
+**Queries**
+
+Find the last name and hire dates of employee who make more than $100k.
+
+```sql
+SELECT LastName, HireDate
+FROM Employee
+WHERE Salary > 100000
+```
+
+**Eliminate duplicate results**
+
+```sql
+SELECT DISTINCT LastName, HireDate
+FROM Employee
+WHERE Salary > 100000
+```
+
+**Query Involving Several Relations**
+
+For each project for which department E21 is responsible, find the name of the employee in charge of that project.
+
+```sql
+SELECT P.ProjNo, E.LastName
+FROM Employee E, Project P
+WHERE P.RespEmp = E.EmpNo
+  AND P.DeptNo = 'E21'
+```
+
+**Basic Syntax**
+
+```sql
+SELECT attribute-expression-list
+FROM relation-list
+[WHERE condition]
+```
+
+**The SQL `"WHERE"` Clause**
+
+Conditions may include
+
+- arithmetic operators `+`, `-`, `*`, `/`
+- comparisons `=`, `<>`, `<`, `<=`, `>`, `>=`
+- logical connectives `AND`, `OR` and `NOT`
+
+List the last names of employees who make more than their manager.
+
+```sql
+SELECT E.lastName
+FROM Employee E,
+      Department D,
+      Employee Emgr
+WHERE E.WorkDept = D.DeptNo
+  AND D.MgrNo = Emgr.EmpNo
+  AND E.Salary > Emgr.Salary
+```
+
+**The SQL `"SELECT"` Clause**
+
+Return the difference between each employee's actual salary and a base salary of $40k.
+
+```sql
+SELECT E.EmpNo, E.Salary - 40000 AS SalaryDiff
+FROM Employee E
+```
+
+As above, but report zero if the actual salary is less than the base salary
+
+```sql
+SELECT E.EmpNo,
+       (CASE WHEN E.Salary < 40000 THEN 0
+        ELSE E.Salary - 40000 END) AS SalaryDiff
+FROM Employee E
+```
+
+**SQL DML: Insertion & Deletion**
+
+```sql
+# Insert a single tuple into the Employee relation
+INSERT INTO Employee
+VALUES ('000350', 'Sheldon', 'Q', 'Jetstream', 'A00', 01/10/2000, 25000.00); 
+
+# Delete all employees from the Employee table.
+DELETE FROM Employee;
+
+# Delete all employees in department A00 from the Employee table
+DELETE FROM Employee
+WHERE WorkDept = 'A00';
+
+# Increase the salary of every employee by 5 percent
+UPDATE Employee
+SET Salary = Salary * 1.05;
+
+# Move all employees in department E21 into department E01.
+UPDATE Employee
+SET WorkDept = 'E01'
+WHERE WorkDept = 'E21';
+```
+
+**Set Operations**
+
+SQL defines `UNION`, `INTERSECT` and `EXCEPT` operations(`EXCEPT` is set difference)
+
+```sql
+SELECT Empno
+FROM Employee
+EXCEPT
+SELECT Mgrno
+FROM Employee
+```
+SQL provides a multiset version of the set operations: `UNION ALL`, `INTERSECT ALL`, `EXCEPT ALL`
+
+Eg. Suppose `Q1` includes `n1` copies of some tuple `t`, and `Q2` includes `n2` copies of the smae tuple `t`.
+
+- `Q1 UNION ALL Q2` will includes `n1 + n2` copies of `t`
+- `Q1 INTERSECT ALL Q2` will include `min(n1, n2)` copies of `t`
+- `Q1 EXCEPT ALL Q2` will include `max(n1 - n2, 0)` copies of `t`
+
+**NULL values**
+
+- the value `NULL` can be assigned to an attribute to indiate unknown or missing data- `NULL`s are a neessary evil - lots of NULLs in a database instane suggests poor shema design 
+- `NULL`s can be prohibited for certain attributes by shemaonstraints, e.g., `NOT NULL`, `PRIMARY KEY` 
+- prediates and expressions that involve attributes that may be `NULL` may evaluate to `NULL`
+	- x + y evaluates to `NULL` if either x or y is `NULL`
+	- x > y evaluates to `NULL` if either x or y is `NULL`
+	- how to test for `NULL`? Use `IS NULL` or `IS NOT NULL`
+- Note SQL uses a three-value logic: `TRUE`, `FALSE`, `NULL`
+
+**`"NULL"` and the SQL `"WHERE"` Clause**
+
+The condition in a "WHERE" clause filters out any tuples for which the condition evaluates to **FALSE** or to **NULL**
+
+The following query will not return information about employees whose hire date is NULL.
+
+```sql
+SELECT *
+FROM Employee
+WHERE hiredate <> '05/05/1947'
+```
+
+**Subqueries**
+
+```sql
+SELECT deptno, deptname
+FROM Department
+WHERE mgrno IN
+   ( SELECT empno
+     FROM Employee
+     WHERE salary > 5000 )
+```
+
+is equivalent to 
+
+```sql
+SELECT deptno, deptname
+FROM Department D, Employee E
+WHERE D.mgrno = E.empno AND E.salary > 50000
+```
+
+**Subquery Constucts in SQL**
+
+SQL support the use of the following predicates in the "WHERE" clause.  Suppose A is an attribue, Q is a query, op is one of `>`, `<`, `<>`, `=`, `<=`, `>=`:
+
+- `A IN (Q)` *
+- `A NOT IN (Q)` *
+- `A op SOME(Q)` *
+- `A op ALL(Q)` *
+- `EXISTS (Q)`
+- `NOT EXISTS (Q)`
+
+NOTE: In all marked * above query, the result of Q must have 1 single attribute
+
+```sql
+SELECT empno, lastname
+FROM Employee
+WHERE salary >= ALL
+       ( SELECT salary
+         FROM Employee )
+```
+
+**Correlated Subqueries**
+
+The is query also returns the employee w/ the largest salary. Note that it contains a *correlated* subquery, the subquery refer E1.salary from the outer query
+
+```sql
+SELECT empno, lastname
+FROM Employee E1
+WHERE salary IS NOT NULL AND NOT EXISTS 
+        ( SELECT * 
+          FROM Employee E2
+          WHERE E2.salary > E1.salary )
+```
+
+**Scalar Subqueries**
+
+Subquery that returns an atomic value (1 row and 1 column)
+
+in the **"WHERE"** clause
+
+```sql
+SELECT empno, lastname
+FROM Employee
+WHERE salary > 
+        ( SELECT salary
+          FROM Employee E2
+          WHERE E2.empno = '000190' )
+```
+
+in the **"SELECT"** clause
+
+```sql
+SELECT projno,
+       ( SELECT deptname
+         FROM Department D
+         WHERE E.workdept = D.deptno )
+FROM Project P, Employee E
+WHERE P.respemp = E.empno
+```
+
+in the **"FROM"** clause
+
+```sql
+SELECT projno, projname
+FROM Project P,
+  ( SELECT mgrno
+    FROM Department, Employee
+    WHERE mgrno = empno AND salary > 100000 ) AS M
+WHERE respemp = mgrno
+```
+
+in the **"WITH"** clause
+
+```sql
+WITH Mgrs(empno) as
+  ( SELECT mgrno
+    FROM Department, Employee
+    WHERE mgrno = empno AND salary > 100000 )
+SELECT projno, projname
+FROM Project, Mgrs
+WHERE respemp = empno    
+```
+
+**Outer Joins**
+
+List the manager of each department. Include in the result departments that have no manager.
+
+```sql
+SELECT deptno, deptname, lastname
+FROM Department D LEFT OUTER JOIN Employee E
+       ON D.mgrno = E.empno
+WHERE deptno LIKE 'D%'
+```
+
+NOTE: SQL supports `LEFT`, `RIGHT` and `FULL` `OUTER JOINS`.
+
+**`"LIKE"` Operator**
+
+|LIKE Operator                  |Description                                                                  |
+|:------------------------------|:----------------------------------------------------------------------------|
+|WHERE CustomerName LIKE `'a%'`   |Finds any values that starts with "a"                                        |
+|WHERE CustomerName LIKE `'%a'`	  |Finds any values that ends with "a"                                          |
+|WHERE CustomerName LIKE `'%or%'` |Finds any values that have "or" in any position                              |
+|WHERE CustomerName LIKE `'_r%'`  |Finds any values that have "r" in the second position                        |
+|WHERE CustomerName LIKE `'a_%_%'`|Finds any values that starts with "a" and are at least 3 characters in length|
+|WHERE ContactName LIKE `'a%o'`   | Finds any values that starts with "a" and ends with "o"                     |
+
+
+**Ordering Results**
+
+```sql
+SELECT DISTINCT E.empno, emstdate, firstname, lastname
+FROM Employee E, Emp_act A
+WHERE E.empno = A.empno AND A.projno = 'PL2100'
+ORDER BY emstdate
+```
+
+**Grouping and Aggregation**
+
+For each department, list the number of employees it has and their combined salary
+
+```sql
+SELECT deptno, deptname, SUM(salary) as totalsalary, COUNT(*) as employees
+FROM Department D, Employee E
+WHERE E.workdept = D.deptno
+GROUP BY deptno, deptname
+```
+
+- The result of a query involving grouping and aggregationan be determined as follows:
+	1. form the cross product of the relations in the **"FROM"** clause	2. eliminate tuples that do not satisfy the condition in the**"WHERE"** clause	3. form the remaining tuples into groups, where all of the tuples in a group match on all of the grouping attributes	4. generate one tuple per group. Each tuple has one attribute per expression in the **"SELECT"** clause.- aggregation functions are evaluated separately for each group
+
+Apply **"WHERE"**, then **"GROUP BY"**
+
+```DEPTNO DEPTNAME                      SALARY------ ----------------------------- -----------A00    SPIFFY COMPUTER SERVICE DIV.  52750.00A00    SPIFFY COMPUTER SERVICE DIV.  46500.00
+B01    PLANNING                      41250.00
+C01    INFORMATION CENTER            38250.00
+D21    ADMINISTRATION SYSTEMS        36170.00D21    ADMINISTRATION SYSTEMS        22180.00D21    ADMINISTRATION SYSTEMS        19180.00D21    ADMINISTRATION SYSTEMS        17250.00D21    ADMINISTRATION SYSTEMS        27380.00
+E01    SUPPORT SERVICES              40175.00
+E11    OPERATIONS                    29750.00E11    OPERATIONS                    26250.00E11    OPERATIONS                    17750.00E11    OPERATIONS                    15900.00
+E21    SOFTWARE SUPPORT              26150.00
+```
+
+Finally project and aggregate
+
+```DEPTNO DEPTNAME                      TOTALSALARY EMPLOYEES------ ----------------------------- ----------- ---------A00    SPIFFY COMPUTER SERVICE DIV.  99250.00    2B01    PLANNING                      41250.00    1C01    INFORMATION CENTER            38250.00    1D21    ADMINISTRATION SYSTEMS        122160.00   5E01    SUPPORT SERVICES              40175.00    1E11    OPERATIONS                    89650.00    4E21    SOFTWARE SUPPORT              26150.00    1
+```
+
+**Aggregation Functions in SQL**
+
+- `COUNT(*)`: number of tuples in the group- `COUNT(E)`: number of tuples for which E (an expression that may involve non-grouping attributes) is non-NULL- `COUNT(DISTINCT E)`: number of distinct non-NULL E values- `SUM(E)`: sum of non-NULL E values- `SUM(DISTINCT E)`: sum of distinct non-NULL E values- `AVG(E)`: average of non-NULL E values- `AVG(DISTINCT E)`: average of distinct non-NULL E values- `MIN(E)`: minimum of non-NULL E values
+- `MAX(E)`: maximum of non-NULL E values
+
+**The `"Having"` Clause**
+
+List the average salary for each large department
+
+```sql
+SELECT deptno, deptname, AVG(salary) as MeanSalary
+FROM Department D, Employee E
+WHERE E.workdept = D.deptno
+GROUP BY deptno, deptname
+HAVING COUNT(*) >= 4
+```
+NOTE: `"WHERE"` clause filters tuples before they are `"GROUP BY"`, `"HAVING"` clause filters **Groups**
+
+**Selecting Non-Grouping Attributes**
+
+```sql
+SELECT deptno, deptname, SUM(salary)
+FROM Department D, Employee E
+WHERE E.workdept = D.deptno
+GROUP BY deptno
+```
+
+will generate the following error:
+
+An expression starting with "DEPTNAME" specified in a SELECT clause, HAVING clause, or ORDER BY clause is not specified in the GROUP BY clause or it is in a SELECT clause, HAVING clause, or ORDER BY clause with a column function and no GROUP BY clause is specified.
+
+NOTE: Non-grouping Attributes may appear in the `"SELECT"` clause **ONLY** in aggregate expressions.
+
+### SQL DDL
+
+**Tables**
+
+```sql
+CREATE TABLE Employee (
+    EmpNo CHAR(6),
+    FirstName VARCHAR(12),
+    MidInit CHAR(1),
+    LastName VARCHAR(15),
+    WorkDept CHAR(3),
+    HireDate DATE
+)
+
+ALTER TABLE Employee
+  ADD COLUMN Salary DECIMAL(9, 2)
+  
+DROP TABLE Employee
+```
+
+**Data Types**
+
+Some of the attribute domains defined in SQL:
+
+- `INTEGER`- `DECIMAL(p,q)`: p-digit numbers, with q digits right of decimal- `FLOAT(p)`: p-bit oating point numbers- `CHAR(n)`: fixed length charater string, length n- `VARCHAR(n)`: variable length charater string, max. length n- `DATE`: describes a year, month, day- `TIME`: describes an hour, minute, second- `TIMESTAMP`: describes and date and a time on that date- `YEAR/MONTH INTERVAL`: time interval- `DAY/TIME INTERVAL`: time interval
+
+**Integrity Constraints in SQL**
+
+Most commonly-used SQL schema constraints:
+
+- NOT NULL
+- PRIMAEY key
+- UNIQUE
+- FOREIGN KEY
+- COLUMN or TUPLE CHECK
+
+Example 1
+
+```sql
+CREATE TABLE Employee (
+    EmpNo CHAR(6) NOT NULL PRIMARY KEY,
+    FirstName VARCHAR(12) NOT NULL,
+    MidInit CHAR(1),
+    LastName VARCHAR(15) NOT NULL,
+    WorkDept CHAR(3) NOT NULL REFERENCES Department ON DELETE CASCADE,
+    HireDate DATE,
+    Salary DECIMAL(9, 2) CHECK (Salary >= 10000),
+    CONSTRAINT unique_name_dept
+        UNIQUE (FirstName, LastName, WorkDept)
+)
+
+ALTER TABLE Employee
+  ADD COLUMN StartDate DATE
+  ADD CONSTRAINT hire_before_start
+      CHECK (HireDate <= StartDate);
+```
+
+Example 2
+
+```sql
+CREATE TABLE registeredin (
+    coursenum CHAR(5) NOT NULL,
+    term CHAR(3) NOT NULL,
+    id CHAR(8) NOT NULL REFERENCES Student ON DELETE NO ACTION,
+    sectionnum CHAR(2) NOT NULL,
+    mark INTEGER,
+    CONSTRAINT mark_check CHECK (mark >= 0 AND mark <= 100),
+    PRIMARY KEY (coursenum, term, id),
+    FOREIGN KEY (coursenum, sectionnum, term)
+      REFERENCES section
+)
+```
+
+**More Powerful SQL Integrity Constraints**
+
+```sql
+CREATE ASSERTION balanced_budget CHECK (
+NOT EXISTS (
+    SELECT deptno
+    FROM Department D
+    WHERE budget < 
+       ( SELECT SUM(salary) 
+         FROM Employee
+         WHERE workdept = d.deptno ))) 
+```
+
+**Views**
+
+Recall the three-level schema architecture:
+
+1. External Schema
+2. Conceptual Schema
+3. Physical Schema
+
+> Definition (View)
+> A *view* is a relation in the external schema whose instance is determined by the instances of the relations in the conceptual schema.
+
+A view has many of the same propeties as a base relation in the conceptual schema:
+
+- its schema info appears in the database schema
+- access controls can be applied to it
+- other views can be defined in terms of it
+- modifications to a view's instance must be propagated back to instances of relations in conceptual schema
+- some views cannot be updated unambiguously
+
+Conceptual Schema Example
+
+```
+Persons
+=======
+
+NAME CITIZENSHIP
+---- -----------
+Ed   Canadian
+Dave Canadian
+Wes  American
+
+
+NationalPastimes
+================
+
+CITIZENSHIP PASTIME
+----------- -------
+Canadian    Hockey
+Canadian    Curling
+American    Hockey
+American    Baseball
+```
+
+External Schema
+
+```
+PersonalPastimes
+================
+
+NAME PASTIME
+---- -------
+Ed   Hockey
+Ed   Curling
+Dave Hockey
+Dave Curling
+Wes  Hockey
+Wes  Baseball
+```
+
+Customizing the schema for a particular user/application:
+
+```sql
+CREATE VIEW ManufacturingProjects AS
+   ( SELECT projno, projname, firstname, lastname
+     FROM Project, Employee
+     WHERE respemp = empno AND deptno = 'D21' )
+```
+
+Once defined SQL DML can be used to query a view like any other table:
+
+```sql
+SELECT * FROM ManufacturingProjects
+```
+
+**View Updates in SQL**
+
+According to SQL-92, a view is updatable only if its definition satisfies a variety of conditions:- The query referenes exatly one table- The query only outputs simple attributes (no expressions)- There is no grouping/aggregation/distinct- There are no nested queries- There are no set operations
+
+**Triggers**
+
+> Definition (Trigger)
+> A *trigger* is a procedure executed by the database in response to a change to hte database instance
+
+Basic components of a trigger description:
+
+- Event: Type of change that should cause trigger to fire
+- Condition: Test performed by trigger to determine whether further action is needed
+- Action: Procedure executed if condition is met
+
+```sql
+CREATE TRIGGER log_addr
+   AFTER UPDATE OF addr, phone ON person
+   REFERENCES OLD AS o, NEW AS n
+   FOR EACH ROW
+   mode DB2SQL /* DB2-specific syntax */
+   WHEN (o.status = 'VIP' OR n.status = 'VIP')
+      INSERT INTO VIPaddrhist(pid, oldaddr, oldphone, newaddr, newphone, user, modtime)
+      VALUES (o.pid, o.addr, o.phone, n.addr, n.phone, USER, CURRENT TIMESTAMP)
+```

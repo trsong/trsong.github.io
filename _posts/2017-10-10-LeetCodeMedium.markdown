@@ -7,6 +7,8 @@ categories: Scala TypeScript
 * This will become a table of contents (this text will be scraped).
 {:toc}
 
+## LeetCode Questions - Medium
+
 ### Environment Setup
 
 TypeScript Playground: [https://www.typescriptlang.org/play/](https://www.typescriptlang.org/play/)
@@ -119,8 +121,8 @@ exec();
 import scala.collection.mutable.{StringBuilder, HashMap}
 
 class URLService {
-    var counter: BigInt = BigInt(1)
-    val stol = HashMap.empty[BigInt, String]
+    private var counter: BigInt = BigInt(1)
+    private val stol = HashMap.empty[BigInt, String]
     
     def longToShort(url: String): String = {
         val shorturl = URLService.base10ToBase62(counter)
@@ -246,8 +248,8 @@ object Main extends App {
     def atoi(str: String): Int = {
         var index = 0
         var sign = 1
-          var total = 0
-          var isValid = true
+        var total = 0
+        var isValid = true
   
         // 1. Empty string
     
@@ -382,7 +384,7 @@ exec();
 ```scala
 import scala.collection.mutable.Buffer
 
-object Main extends App {
+object Solution {
     def reverseWords(s: String): String = {
         val sb = s.toBuffer
             
@@ -397,7 +399,7 @@ object Main extends App {
     }
     
     // Reverse the sb from sb(start) to sb(end)
-    def reverse(sb: Buffer[Char], start: Int, end: Int): Unit = {
+    private def reverse(sb: Buffer[Char], start: Int, end: Int): Unit = {
         var (i, j) = (start, end)
         while (i < j) {
             val tmp = sb(i)
@@ -409,7 +411,7 @@ object Main extends App {
     }
     
     // Scan through each word and reverse them in place
-    def reverseEachWordInPlace(sb: Buffer[Char]): Unit = {
+    private def reverseEachWordInPlace(sb: Buffer[Char]): Unit = {
         var (i, j) = (0, 0)
         while (i < sb.size) {
             while (i < j || i < sb.size && sb(i) == ' ') i += 1
@@ -419,7 +421,7 @@ object Main extends App {
     }
     
     // Remove the leading, tailing and multiple white spaces
-    def cleanSpaces(sb: Buffer[Char]): String = {
+    private def cleanSpaces(sb: Buffer[Char]): String = {
         var (i, j) = (0, 0)
         while (j < sb.size) {
             while (j < sb.size && sb(j) == ' ') j += 1
@@ -436,8 +438,10 @@ object Main extends App {
         }
         sb.take(i).mkString
     }
-    
-    println(reverseWords("    Hello    World !"))
+}
+
+object Main extends App {
+    println(Solution.reverseWords("    Hello    World !"))
 }
 ```
 
@@ -1293,6 +1297,7 @@ object Main extends App {
             if (arr(i) == 0) false
             else if (slowFastPointerSearch(i, i, i)) true
             else {
+                // Optimization: Mark element along the path to be 0
                 val direction = arr(i)
                 var j = i
                 while (direction * arr(i) > 0) {
@@ -1308,4 +1313,255 @@ object Main extends App {
     
     println(circularArrayLoop(Array(2, -1, 1, 2, 2)))
 }
+```
+
+### 468. Validate IP Address
+
+Source: [https://leetcode.com/problems/validate-ip-address/description/](https://leetcode.com/problems/validate-ip-address/description/)
+
+Write a function to check whether an input string is a valid IPv4 address or IPv6 address or neither.
+
+**IPv4** addresses are canonically represented in dot-decimal notation, which consists of four decimal numbers, each ranging from 0 to 255, separated by dots ("."), e.g.,`172.16.254.1`;
+
+Besides, leading zeros in the IPv4 is invalid. For example, the address `172.16.254.01` is invalid.
+
+**IPv6** addresses are represented as eight groups of four hexadecimal digits, each group representing 16 bits. The groups are separated by colons (":"). For example, the address `2001:0db8:85a3:0000:0000:8a2e:0370:7334` is a valid one. Also, we could omit some leading zeros among four hexadecimal digits and some low-case characters in the address to upper-case ones, so `2001:db8:85a3:0:0:8A2E:0370:7334` is also a valid IPv6 address(Omit leading zeros and using upper cases).
+
+However, we don't replace a consecutive group of zero value with a single empty group using two consecutive colons (::) to pursue simplicity. For example, `2001:0db8:85a3::8A2E:0370:7334` is an invalid IPv6 address.
+
+Besides, extra leading zeros in the IPv6 is also invalid. For example, the address `02001:0db8:85a3:0000:0000:8a2e:0370:7334` is invalid.
+
+**Note:** You may assume there is no extra space or special characters in the input string.
+
+**Example 1:**
+
+```
+Input: "172.16.254.1"
+
+Output: "IPv4"
+
+Explanation: This is a valid IPv4 address, return "IPv4".
+```
+
+**Example 2:**
+
+```
+Input: "2001:0db8:85a3:0:0:8A2E:0370:7334"
+
+Output: "IPv6"
+
+Explanation: This is a valid IPv6 address, return "IPv6".
+```
+
+**Example 3:**
+
+```
+Input: "256.256.256.256"
+
+Output: "Neither"
+
+Explanation: This is neither a IPv4 address nor a IPv6 address.
+```
+
+**Typescript Solution:**
+
+```typescript
+class IPAddressProcessor {
+	public static validIPAddress(ip: string): string {
+		if (IPAddressProcessor.isValidIPv4(ip)) return "IPv4";
+		else if (IPAddressProcessor.isValidIPv6(ip)) return "IPv6";
+		else return "Neither";
+	}
+	
+	public static isValidIPv4(ip: string): boolean {
+		if (ip.length < 7) return false; // edge case: 0.0.0.0
+		if (ip[0] === "." || ip[ip.length - 1] === ".") return false; // edge case: .0.10.0.
+		let tokens: string[] = ip.split('.');
+		if (tokens.length !== 4) return false;
+		return tokens.every(IPAddressProcessor.isValidIPv4Token);
+	}
+	
+	public static isValidIPv6(ip: string): boolean {
+		if (ip.length < 15) return false; // edge case: 0:0:0:0:0:0:0:0
+		if (ip[0] === ":" || ip[ip.length - 1] === ":") return false;
+		let tokens: string[] = ip.split(":");
+		if (tokens.length !== 8) return false;
+		return tokens.every(IPAddressProcessor.isValidIPv6Token);
+	}
+	
+	private static isValidIPv4Token(token: string): boolean {
+		if (token.length === 0) return false;
+		if (token[0] === "0" && token.length > 1) return false;
+		
+		try {
+			let tokenValue: number = +token;
+			if (tokenValue < 0 || tokenValue > 255) return false;
+			if (tokenValue === 0 && token[0] !== "0") return false;
+		} catch(e) {
+			return false;
+		}
+		return true;
+	}
+	
+	private static isValidIPv6Token(token: string): boolean {
+		if (token.length > 4 || token.length === 0) return false;
+		const isBase16 = (c: string) => {
+			return (c >= "0" && c <= "9") // is digit
+				|| (c >= "a" && c <= "f")  // is lower a to f
+				|| (c >= "A" && c <= "F");  // is uppper a to f
+		};
+		
+		return Array.from(token).every(isBase16);
+	}
+}
+
+function exec() {
+    let result: string = IPAddressProcessor.validIPAddress("2001:db8:85a3:0:0:8A2E:370:7334");
+
+    let div: HTMLElement = document.createElement("div");
+    div.innerText = result;
+    document.body.appendChild(div);
+}
+
+exec();
+```
+
+**Scala Solution:**
+
+```scala
+object IPAddressProcessor {
+	def validIPAddress(ip: String): String = {
+		if (isValidIPv4(ip)) "IPv4"
+		else if (isValidIPv6(ip)) "IPv6"
+		else "Neither"
+	}
+	
+	def isValidIPv4(ip: String): Boolean = {
+		if (ip.length < 7 || ip.head == '.' || ip.last == '.') false
+		else {
+			val tokens = ip.split('.')
+			if (tokens.size != 4) false
+			else tokens.forall(isValidIPv4Token)
+		}
+	}
+	
+	def isValidIPv6(ip: String): Boolean = {
+		if (ip.length < 15 || ip.head == ':' || ip.last == ':') false
+		else {
+			val tokens = ip.split(':')
+			if (tokens.size != 8) false
+			else tokens.forall(isValidIPv6Token)
+		}
+	}
+	
+	private def isValidIPv4Token(token: String): Boolean = {
+		if (token.isEmpty || token.head == '0' && !token.isEmpty) false
+		else {
+			try {
+				val tokenValue: Int = token.toInt
+				if (tokenValue < 0 || tokenValue > 255 || tokenValue == 0 && token.length != 1) false
+				else true
+			} catch {
+				case _ => false
+			}
+		}
+	}
+
+	private def isValidIPv6Token(token: String): Boolean = {
+		def isBase16(c: Char) = c >= '0' && c <= '9' || c >= 'a' && c <= 'z' || c >= 'A' && c <= 'Z'
+	
+		if (token.length > 4 || token.isEmpty) false
+		else token.forall(isBase16)
+	}
+}
+
+object Main extends App {
+	println(IPAddressProcessor.validIPAddress("172.16.254.1"))
+	println(IPAddressProcessor.validIPAddress("2001:db8:85a3:0:0:8A2E:0370:7334"))
+	println(IPAddressProcessor.validIPAddress("255.255.256.255"))
+	println(IPAddressProcessor.validIPAddress("255.0.01.255"))
+	println(IPAddressProcessor.validIPAddress("255. 0 .01.255"))
+	println(IPAddressProcessor.validIPAddress("2001:db8:85a3:::8A2E:0370:7334"))
+}
+```
+
+### 184. Department Highest Salary
+
+Source: [https://leetcode.com/problems/department-highest-salary/discuss/](https://leetcode.com/problems/department-highest-salary/discuss/)
+
+The Employee table holds all employees. Every employee has an Id, a salary, and there is also a column for the department Id.
+
+```
++----+-------+--------+--------------+
+| Id | Name  | Salary | DepartmentId |
++----+-------+--------+--------------+
+| 1  | Joe   | 70000  | 1            |
+| 2  | Henry | 80000  | 2            |
+| 3  | Sam   | 60000  | 2            |
+| 4  | Max   | 90000  | 1            |
++----+-------+--------+--------------+
+```
+
+The Department table holds all departments of the company.
+
+```
++----+----------+
+| Id | Name     |
++----+----------+
+| 1  | IT       |
+| 2  | Sales    |
++----+----------+
+```
+
+Write a SQL query to find employees who have the highest salary in each of the departments. For the above tables, Max has the highest salary in the IT department and Henry has the highest salary in the Sales department.
+
+```
++------------+----------+--------+
+| Department | Employee | Salary |
++------------+----------+--------+
+| IT         | Max      | 90000  |
+| Sales      | Henry    | 80000  |
++------------+----------+--------+
+```
+
+SQL Schema
+
+```sql
+Create table If Not Exists Employee (Id int, Name varchar(255), Salary int, DepartmentId int);
+Create table If Not Exists Department (Id int, Name varchar(255));
+Truncate table Employee;
+insert into Employee (Id, Name, Salary, DepartmentId) values ('1', 'Joe', '70000', '1');
+insert into Employee (Id, Name, Salary, DepartmentId) values ('2', 'Henry', '80000', '2');
+insert into Employee (Id, Name, Salary, DepartmentId) values ('3', 'Sam', '60000', '2');
+insert into Employee (Id, Name, Salary, DepartmentId) values ('4', 'Max', '90000', '1');
+Truncate table Department;
+insert into Department (Id, Name) values ('1', 'IT');
+insert into Department (Id, Name) values ('2', 'Sales');
+```
+
+**Solution:**
+
+```sql
+SELECT dep.Name as Department, emp.Name as Employee, emp.Salary 
+from Department dep, Employee emp 
+where emp.DepartmentId=dep.Id 
+and emp.Salary=(Select max(Salary) from Employee e2 where e2.DepartmentId=dep.Id)
+```
+
+### 3Sum
+
+Source: [https://leetcode.com/problems/3sum/description/](https://leetcode.com/problems/3sum/description/)
+
+Given an array S of n integers, are there elements a, b, c in S such that a + b + c = 0? Find all unique triplets in the array which gives the sum of zero.
+
+**Note:** The solution set must not contain duplicate triplets.
+
+```
+For example, given array S = [-1, 0, 1, 2, -1, -4],
+
+A solution set is:
+[
+  [-1, 0, 1],
+  [-1, -1, 2]
+]
 ```
