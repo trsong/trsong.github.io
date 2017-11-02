@@ -19,6 +19,25 @@ Scala/Js/CodeSnippet Playground2: [https://leetcode.com/playground/new](https://
 
 Covert Tabs to Spaces in Code Snippets: [http://tabstospaces.com/](http://tabstospaces.com/)
 
+### All Permutations and Combinations(PowerSet)
+
+```scala
+object Permutations {
+  def permutations(s: String): List[String] = {
+    def merge(ins: String, c: Char): Seq[String] =
+      for (i <- 0 to ins.length) yield
+        ins.substring(0, i) + c + ins.substring(i, ins.length)
+
+    if (s.length() == 1)
+      List(s)
+    else
+      permutations(s.substring(0, s.length - 1)).flatMap { p =>
+        merge(p, s.charAt(s.length - 1))
+      }
+  }
+}
+```
+
 ### 534. Design TinyURL
 Source: [https://leetcode.com/problems/design-tinyurl/description/](https://leetcode.com/problems/design-tinyurl/description/)
 
@@ -1548,6 +1567,50 @@ where emp.DepartmentId=dep.Id
 and emp.Salary=(Select max(Salary) from Employee e2 where e2.DepartmentId=dep.Id)
 ```
 
+### 177. Nth Highest Salary
+
+Write a SQL query to get the nth highest salary from the **Employee** table.
+
+```
++----+--------+
+| Id | Salary |
++----+--------+
+| 1  | 100    |
+| 2  | 200    |
+| 3  | 300    |
++----+--------+
+```
+
+For example, given the above Employee table, the nth highest salary where n = 2 is **200**. If there is no nth highest salary, then the query should return **null**.
+
+```
++------------------------+
+| getNthHighestSalary(2) |
++------------------------+
+| 200                    |
++------------------------+
+```
+
+
+**Solution:**
+
+```sql
+WITH Unique_Salary AS (SELECT DISTINCT Salary FROM Employee)
+SELECT e1.Salary
+FROM Unique_Salary e1
+WHERE N - 1 = 
+    (SELECT COUNT(*) 
+     FROM Unique_Salary e2 
+     WHERE e2.Salary > e1.Salary)      
+LIMIT 1
+```
+
+Or use `Order By` with `Limit N - 1`
+
+```sql
+SELECT IFNULL((SELECT DISTINCT Salary FROM Employee ORDER BY Salary DESC LIMIT N - 1 ,1), NULL)
+```
+
 ### 3Sum
 
 Source: [https://leetcode.com/problems/3sum/description/](https://leetcode.com/problems/3sum/description/)
@@ -1564,4 +1627,318 @@ A solution set is:
   [-1, 0, 1],
   [-1, -1, 2]
 ]
+```
+
+**Hint:**
+
+The idea is to sort an input array and then run through all indices of a possible first element of a triplet. For each possible first element we make a standard bi-directional 2Sum sweep of the remaining part of the array. Also we want to skip equal elements to avoid duplicates in the answer without making a set or smth like that.
+
+
+
+**Typescript Solution:**
+
+```typescript
+class ThreeSumSolution {
+    public static threeSum(nums: number[]): [number, number, number][] {
+        let sorted: number[] = nums.sort();
+        let result: [number, number, number][] = [];
+        for (let i: number = 0; i < sorted.length - 2; i++) {
+            if (i === 0 || i > 0 && sorted[i] !== sorted[i-1]) { // skip the term that has same value
+                ThreeSumSolution.twoSum(sorted, i, result);
+            }
+        }
+        return result;
+    }
+    
+    private static twoSum(sorted: number[], i: number, output: [number, number, number][]): void {
+        let lo: number = i + 1, hi: number = sorted.length - 1, sum: number = 0 - sorted[i];
+        while (lo < hi) {
+            if (sorted[lo] + sorted[hi] === sum) {
+                output.push([sorted[i], sorted[lo], sorted[hi]]);
+                while (lo < hi && sorted[lo] === sorted[lo + 1]) lo++;
+                while (lo < hi && sorted[hi] === sorted[hi - 1]) hi--;
+                lo++; hi--;
+            } else if (sorted[lo] + sorted[hi] < sum) lo++;
+            else hi--;
+        }
+    }
+}
+
+function exec() {
+    let result: [number, number, number][] = ThreeSumSolution.threeSum([-1, 0, 1, 2, -1, -4]);
+
+    let div: HTMLElement = document.createElement("div");
+    div.innerText = result.toString();
+    document.body.appendChild(div);
+}
+
+exec();
+```
+
+**Scala Solution:**
+
+```scala
+object ThreeSumSolution {
+  def threeSum(nums: IndexedSeq[Int]): Seq[(Int, Int, Int)] = {
+    val sorted = nums.sorted
+    var result = List.empty[(Int, Int, Int)]
+    for (i <- 0 until sorted.size - 2) {
+      if (i == 0 || i > 0 && sorted(i) != sorted(i - 1)) {
+        var lo = i + 1
+        var hi = sorted.size - 1
+        var sum = 0 - sorted(i)
+        while (lo < hi) {
+          if (sorted(lo) + sorted(hi) == sum) {
+            result = (sorted(i), sorted(lo), sorted(hi)) :: result
+            while (lo < hi && sorted(lo) == sorted(lo + 1)) lo += 1
+            while (lo < hi && sorted(hi) == sorted(hi - 1)) hi -= 1
+            lo += 1
+            hi -= 1
+          } else if (sorted(lo) + sorted(hi) < sum) {
+            lo += 1
+          } else {
+            hi -= 1
+          }
+        }
+      }
+    }
+    result
+  }
+}
+
+object Main extends App {
+  println(ThreeSumSolution.threeSum(Array(-1, 0, 1, 2, -1, -4)))
+}
+```
+
+### 307. Range Sum Query - Mutable
+
+Sourece: [https://leetcode.com/problems/range-sum-query-mutable/description/](https://leetcode.com/problems/range-sum-query-mutable/description/)
+
+Given an integer array nums, find the sum of the elements between indices *i* and *j (i ≤ j)*, inclusive.
+
+The *update(i, val)* function modifies *nums* by updating the element at index *i* to *val*.
+
+**Example:**
+
+```
+Given nums = [1, 3, 5]
+
+sumRange(0, 2) -> 9
+update(1, 2)
+sumRange(0, 2) -> 8
+```
+
+**Note:**
+
+1. The array is only modifiable by the update function.
+2. You may assume the number of calls to update and sumRange function is distributed evenly.
+
+**Approach #1 Sqrt decomposition**
+
+```scala
+class NumArray(private val nums: Array[Int]) {
+    val (block, blockSize) = initBlock()
+    
+    def update(i: Int, value: Int): Unit = {
+        val blockIndex = i / blockSize
+        block(blockIndex) += value - nums(i)
+        nums(i) = value
+    }
+    
+    def sumRange(i: Int, j: Int): Int = {
+        var sum = 0
+        var startBlock = i / blockSize
+        var endBlock = j / blockSize
+        if (startBlock == endBlock) { // within the same block
+            for (k <- i to j) sum += nums(k)
+        } else {
+            for (k <- i to (startBlock + 1) * blockSize - 1) sum += nums(k)
+            for (k <- (startBlock + 1) to (endBlock - 1)) sum += block(k)
+            for (k <- (endBlock * blockSize) to j) sum += nums(k)
+        }
+        sum
+    }
+    
+    private def initBlock(): (Array[Int], Int) = {
+        val blockSize = Math.ceil(Math.sqrt(nums.size)).toInt
+        val block = new Array[Int](blockSize)
+        for (i <- 0 until nums.size) {
+            block(i / blockSize) += nums(i)
+        }
+        (block, blockSize)
+    }
+}
+
+object Main extends App {
+    val obj = new NumArray(Array(1, 3, 5))
+    println(obj.sumRange(0, 2)) // 9
+    obj.update(1, 2)
+    println(obj.sumRange(0, 2)) // 8
+}
+```
+
+**Approach #2: Segment tree**
+
+```scala
+class NumArray(private val nums: Array[Int]) {
+    private val tree = buildTree()
+
+    def update(i: Int, value: Int): Unit = {
+        var pos = i + nums.size
+        tree(pos) = value
+        while (pos > 0) {
+            var left = pos
+            var right = pos
+            
+            if (pos % 2 == 0) right = pos + 1
+            else left = pos - 1
+            
+            // parent is updated after child is updated
+            tree(pos / 2) = tree(left) + tree(right)
+            pos /= 2
+        }
+    }
+    
+    def sumRange(i: Int, j: Int): Int = {
+        val n = nums.size
+        var l = i + n
+        var r = j + n
+        var sum = 0
+        while (l <= r) {
+            if (l % 2 == 1) {
+                sum += tree(l)
+                l += 1
+            }
+            
+            if ((r % 2) == 0) {
+                sum += tree(r)
+                r -= 1
+            }
+            
+            l /= 2
+            r /= 2
+        }
+        sum
+    }
+    
+    private def buildTree(): Array[Int] = {
+        if (nums.isEmpty) Array.empty[Int]
+        else {
+            val n = nums.size
+            val tree = new Array[Int](2 * n)
+            
+            for (i <- 0 until n) {
+                tree(n + i) = nums(i)
+            }
+            
+            for (i <- n - 1 until 0 by -1) {
+                tree(i) = tree(i * 2) + tree(i * 2 + 1)
+            }
+            
+            tree
+        }
+    }
+}
+
+object Main extends App {
+    val obj = new NumArray(Array(1, 3, 5))
+    println(obj.sumRange(0, 2)) // 9
+    obj.update(1, 2)
+    println(obj.sumRange(0, 2)) // 8
+}
+```
+
+**Apparoach #3 BIT or Fenwick tree**
+
+```java
+public class NumArray {
+	/**
+	 * Binary Indexed Trees (BIT or Fenwick tree):
+	 * https://www.topcoder.com/community/data-science/data-science-
+	 * tutorials/binary-indexed-trees/
+	 * 
+	 * Example: given an array a[0]...a[7], we use a array BIT[9] to
+	 * represent a tree, where index [2] is the parent of [1] and [3], [6]
+	 * is the parent of [5] and [7], [4] is the parent of [2] and [6], and
+	 * [8] is the parent of [4]. I.e.,
+	 * 
+	 * BIT[] as a binary tree:
+	 *            ______________*
+	 *            ______*
+	 *            __*     __*
+	 *            *   *   *   *
+	 * indices: 0 1 2 3 4 5 6 7 8
+	 * 
+	 * BIT[i] = ([i] is a left child) ? the partial sum from its left most
+	 * descendant to itself : the partial sum from its parent (exclusive) to
+	 * itself. (check the range of "__").
+	 * 
+	 * Eg. BIT[1]=a[0], BIT[2]=a[1]+BIT[1]=a[1]+a[0], BIT[3]=a[2],
+	 * BIT[4]=a[3]+BIT[3]+BIT[2]=a[3]+a[2]+a[1]+a[0],
+	 * BIT[6]=a[5]+BIT[5]=a[5]+a[4],
+	 * BIT[8]=a[7]+BIT[7]+BIT[6]+BIT[4]=a[7]+a[6]+...+a[0], ...
+	 * 
+	 * Thus, to update a[1]=BIT[2], we shall update BIT[2], BIT[4], BIT[8],
+	 * i.e., for current [i], the next update [j] is j=i+(i&-i) //double the
+	 * last 1-bit from [i].
+	 * 
+	 * Similarly, to get the partial sum up to a[6]=BIT[7], we shall get the
+	 * sum of BIT[7], BIT[6], BIT[4], i.e., for current [i], the next
+	 * summand [j] is j=i-(i&-i) // delete the last 1-bit from [i].
+	 * 
+	 * To obtain the original value of a[7] (corresponding to index [8] of
+	 * BIT), we have to subtract BIT[7], BIT[6], BIT[4] from BIT[8], i.e.,
+	 * starting from [idx-1], for current [i], the next subtrahend [j] is
+	 * j=i-(i&-i), up to j==idx-(idx&-idx) exclusive. (However, a quicker
+	 * way but using extra space is to store the original array.)
+	 */
+
+	int[] nums;
+	int[] BIT;
+	int n;
+
+	public NumArray(int[] nums) {
+		this.nums = nums;
+
+		n = nums.length;
+		BIT = new int[n + 1];
+		for (int i = 0; i < n; i++)
+			init(i, nums[i]);
+	}
+
+	public void init(int i, int val) {
+		i++;
+		while (i <= n) {
+			BIT[i] += val;
+			i += (i & -i);
+		}
+	}
+
+	void update(int i, int val) {
+		int diff = val - nums[i];
+		nums[i] = val;
+		init(i, diff);
+	}
+
+	public int getSum(int i) {
+		int sum = 0;
+		i++;
+		while (i > 0) {
+			sum += BIT[i];
+			i -= (i & -i);
+		}
+		return sum;
+	}
+
+	public int sumRange(int i, int j) {
+		return getSum(j) - getSum(i - 1);
+	}
+}
+
+// Your NumArray object will be instantiated and called as such:
+// NumArray numArray = new NumArray(nums);
+// numArray.sumRange(0, 1);
+// numArray.update(1, 10);
+// numArray.sumRange(1, 2);
 ```

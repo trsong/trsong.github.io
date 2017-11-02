@@ -437,7 +437,7 @@ val newScores2 = scores - "Alice"
 
 * Iterating over Maps
 
-```
+```scala
 for ((k, v) <- map) yield (v, k) // Reverse a map will override v, since v might not be unique
 
 scores.keySet
@@ -1237,7 +1237,7 @@ out.close()
 
 * Object serialization
 
-```
+```scala
 class Person extends Serializable
 
 val fred = new Person(...)
