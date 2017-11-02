@@ -1611,7 +1611,7 @@ Or use `Order By` with `Limit N - 1`
 SELECT IFNULL((SELECT DISTINCT Salary FROM Employee ORDER BY Salary DESC LIMIT N - 1 ,1), NULL)
 ```
 
-### 3Sum
+### 15. 3Sum
 
 Source: [https://leetcode.com/problems/3sum/description/](https://leetcode.com/problems/3sum/description/)
 
