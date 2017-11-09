@@ -1785,14 +1785,15 @@ class NumArray(private val nums: Array[Int]) {
     private val tree = buildTree()
 
     def update(i: Int, value: Int): Unit = {
+        // update the leaf node and roll value all the way up to root
         var pos = i + nums.size
         tree(pos) = value
         while (pos > 0) {
             var left = pos
             var right = pos
             
-            if (pos % 2 == 0) right = pos + 1
-            else left = pos - 1
+            if (pos % 2 == 0) right = pos + 1 // pos is left child
+            else left = pos - 1 // pos is right child
             
             // parent is updated after child is updated
             tree(pos / 2) = tree(left) + tree(right)
@@ -1805,17 +1806,32 @@ class NumArray(private val nums: Array[Int]) {
         var l = i + n
         var r = j + n
         var sum = 0
+        
         while (l <= r) {
-            if (l % 2 == 1) {
+            //              1~7
+            //           /       \  
+            //          /         \
+            //         1~3        4~7
+            //        /   \      /   \
+            //       1    2~3  4~5   6~7
+            //           /  |  | |  /   \
+            //          2   3  4 5 6     7
+             
+            // case1: suppose l is right child that represents 2~3, we sum value(2~3) then move l right to 4~5
+            // case2: suppose l is left child do nothing
+            if (l % 2 == 1) { // l bound is right child
                 sum += tree(l)
                 l += 1
             }
             
-            if ((r % 2) == 0) {
+            // case3: suppose r is right child that represents 6~7, do nothing
+            // case4: suppose r is left child that represents 4~5, we sum value(4~5) then move r left to 2~3
+            if ((r % 2) == 0) { // r bound is left child
                 sum += tree(r)
                 r -= 1
             }
             
+            // Mov l and r to parent and continue
             l /= 2
             r /= 2
         }
@@ -1941,4 +1957,253 @@ public class NumArray {
 // numArray.sumRange(0, 1);
 // numArray.update(1, 10);
 // numArray.sumRange(1, 2);
+```
+
+**Q & A:**
+
+What are differences between *segment trees*, *interval trees*, *binary indexed trees* and *range trees* in terms of:
+
+- Key idea/definition
+- Applications
+- Performance/order in higher dimensions/space consumption
+
+**Answer:**
+
+All these data structures are used for solving different problems:
+
+- **Segment tree** stores intervals, and optimized for "*which of these intervals contains a given point*" queries. (It is a static structure; that is, it's a structure that cannot be modified once it's built, same as **interval tree**.)
+- **Interval tree** stores intervals as well, but optimized for "w*hich of these intervals overlap with a given interval*" queries. It can also be used for point queries - similar to segment tree.
+- **Range tree** stores points, and optimized for "*which points fall within a given interval*" queries.
+- **Binary indexed tree** stores items-count per index, and optimized for "*how many items are there between index m and n*" queries.
+
+
+**One Dimension**
+
+`k` is the number of reported results
+
+              | Segment       | Interval   | Range          | Indexed   |
+--------------|--------------:|-----------:|---------------:|----------:|
+Preprocessing |        n logn |     n logn |         n logn |    n logn |
+Query         |        k+logn |     k+logn |         k+logn |      logn |
+Space         |             n |          n |              n |         n |
+Insert/Delete |          logn |       logn |           logn |      logn |
+
+**Higher Dimensions**
+
+`d > 1`
+
+              | Segment       | Interval   | Range          | Indexed   |
+--------------|--------------:|-----------:|---------------:|----------:|
+Preprocessing |     n(logn)^d |     n logn |      n(logn)^d | n(logn)^d |
+Query         |    k+(logn)^d | k+(logn)^d |     k+(logn)^d |  (logn)^d |
+Space         | n(logn)^(d-1) |     n logn | n(logn)^(d-1)) | n(logn)^d |
+
+
+### 54. Spiral Matrix
+
+Source: [https://leetcode.com/problems/spiral-matrix/description/](https://leetcode.com/problems/spiral-matrix/description/)
+
+Given a matrix of *m x n* elements (*m* rows, *n* columns), return all elements of the matrix in spiral order.
+
+For example,
+Given the following matrix:
+
+```
+[
+ [ 1, 2, 3 ],
+ [ 4, 5, 6 ],
+ [ 7, 8, 9 ]
+]
+```
+
+You should return `[1,2,3,6,9,8,7,4,5]`.
+
+**Hint:**
+
+This is a very simple and easy to understand solution. I traverse right and increment rowBegin, then traverse down and decrement colEnd, then I traverse left and decrement rowEnd, and finally I traverse up and increment colBegin.
+
+The only tricky part is that when I traverse left or up I have to check whether the row or col still exists to prevent duplicates. 
+
+**Solution**
+
+```java
+public class Solution {
+    public List<Integer> spiralOrder(int[][] matrix) {
+        
+        List<Integer> res = new ArrayList<Integer>();
+        
+        if (matrix.length == 0) {
+            return res;
+        }
+        
+        int rowBegin = 0;
+        int rowEnd = matrix.length-1;
+        int colBegin = 0;
+        int colEnd = matrix[0].length - 1;
+        
+        while (rowBegin <= rowEnd && colBegin <= colEnd) {
+            // Traverse Right
+            for (int j = colBegin; j <= colEnd; j ++) {
+                res.add(matrix[rowBegin][j]);
+            }
+            rowBegin++;
+            
+            // Traverse Down
+            for (int j = rowBegin; j <= rowEnd; j ++) {
+                res.add(matrix[j][colEnd]);
+            }
+            colEnd--;
+            
+            if (rowBegin <= rowEnd) {
+                // Traverse Left
+                for (int j = colEnd; j >= colBegin; j --) {
+                    res.add(matrix[rowEnd][j]);
+                }
+            }
+            rowEnd--;
+            
+            if (colBegin <= colEnd) {
+                // Traver Up
+                for (int j = rowEnd; j >= rowBegin; j --) {
+                    res.add(matrix[j][colBegin]);
+                }
+            }
+            colBegin ++;
+        }
+        
+        return res;
+    }
+}
+```
+
+### 40. Combination Sum II
+
+Source: [https://leetcode.com/problems/combination-sum-ii/description/](https://leetcode.com/problems/combination-sum-ii/description/)
+
+Given a collection of candidate numbers (**C**) and a target number (**T**), find all unique combinations in **C** where the candidate numbers sums to **T**.
+
+Each number in **C** may only be used **once** in the combination.
+
+**Note:**
+
+* All numbers (including target) will be positive integers.
+* The solution set must not contain duplicate combinations.
+* 
+For example, given candidate set `[10, 1, 2, 7, 6, 1, 5]` and target `8`, 
+A solution set is: 
+
+```
+[
+  [1, 7],
+  [1, 2, 5],
+  [2, 6],
+  [1, 1, 6]
+]
+```
+
+**Solution**
+
+```java
+ public List<List<Integer>> combinationSum2(int[] cand, int target) {
+    Arrays.sort(cand);
+    List<List<Integer>> res = new ArrayList<List<Integer>>();
+    List<Integer> path = new ArrayList<Integer>();
+    dfs_com(cand, 0, target, path, res);
+    return res;
+}
+void dfs_com(int[] cand, int cur, int target, List<Integer> path, List<List<Integer>> res) {
+    if (target == 0) {
+        res.add(new ArrayList(path));
+        return ;
+    }
+    if (target < 0) return;
+    for (int i = cur; i < cand.length; i++){
+        if (i > cur && cand[i] == cand[i-1]) continue;
+        path.add(path.size(), cand[i]);
+        dfs_com(cand, i+1, target - cand[i], path, res);
+        path.remove(path.size()-1);
+    }
+}
+```
+
+### 114. Flatten Binary Tree to Linked List
+
+Source: [https://leetcode.com/problems/flatten-binary-tree-to-linked-list/description/](https://leetcode.com/problems/flatten-binary-tree-to-linked-list/description/)
+
+Given a binary tree, flatten it to a linked list in-place.
+
+For example,
+Given
+
+```
+         1
+        / \
+       2   5
+      / \   \
+     3   4   6
+```
+
+The flattened tree should look like:
+
+```
+   1
+    \
+     2
+      \
+       3
+        \
+         4
+          \
+           5
+            \
+             6
+```
+
+**Hints:**
+
+If you notice carefully in the flattened tree, each node's right child points to the next node of a pre-order traversal.
+
+**Solution1:**
+
+```java
+private TreeNode prev = null;
+
+public void flatten(TreeNode root) {
+    if (root == null)
+        return;
+    flatten(root.right);
+    flatten(root.left);
+    root.right = prev;
+    root.left = null;
+    prev = root;
+}
+```
+
+**Solution2:**
+
+```java
+public class Solution {
+    public void flatten(TreeNode root) {
+        if (root == null) {
+            return;
+        }
+        if (root.left == null && root.right == null) {
+            return;
+        }
+        while (root != null) {
+            if (root.left == null) {
+                root = root.right;
+                continue;
+            }
+            TreeNode left = root.left;
+            while (left.right != null) {
+                left = left.right;
+            }
+            left.right = root.right;
+            root.right = root.left;
+            root.left = null;
+            root = root.right;
+        }
+    }
+}
 ```
