@@ -1,0 +1,126 @@
+---
+layout: post
+title:  "Daily Coding Problems"
+date:   2019-04-30 22:22:32 -0700
+categories: Python/Java
+---
+* This will become a table of contents (this text will be scraped).
+{:toc}
+
+## Daily Coding Problems
+
+### Enviroment Setup
+---
+
+**Python 2.7:** [https://repl.it/languages/python](https://repl.it/languages/python)
+
+**Java 1.8:**  TBD
+
+<!--
+### May 2, 2019 \[Medium\] 
+---
+> **Question:** Given a singly linked list and an integer k, remove the kth last element from the list. k > is guaranteed to be smaller than the length of the list.
+> The list is very long, so making more than one pass is prohibitively expensive.
+> Do this in constant space and in one pass.
+
+-->
+
+### May 1, 2019 \[Easy\] Balanced Brackets
+---
+> **Question:** Given a string of round, curly, and square open and closing brackets, return whether the brackets are balanced (well-formed).
+> For example, given the string "([])[]({})", you should return true.
+> Given the string "([)]" or "((()", you should return false.
+
+
+
+### Apr 30, 2019 \[Medium\] Second Largest in BST
+---
+
+> **Question：**  Given the root to a binary search tree, find the second largest node in the tree.
+
+**My thoughts:**
+Recall the way we figure out the largest element in BST: we go all the way to the right until not possible. So the second largest element must be on the left of largest element. 
+We have two possibilities here:
+- Either it's the parent of rightmost element, if there is no child underneath
+- Or it's the rightmost element in left subtree of the rightmost element. 
+
+```
+case 1: parent
+1
+ \ 
+ [2]
+   \
+    3
+
+case 2: rightmost of left subtree of rightmost
+1
+ \
+  4
+ /
+2
+ \ 
+ [3] 
+``` 
+
+
+**Python solution:** 
+Link: [https://repl.it/@trsong/secondLargestInBST](https://repl.it/@trsong/secondLargestInBST)
+```py
+class TreeNode(object):
+  def __init__(self, x, left=None, right=None):
+    self.val = x
+    self.left = left
+    self.right = right
+
+def secondLargestInBST(node):
+    if node is None:
+      return None
+
+    # Go all the way to the right until not possible
+    # Store the second largest on the way
+    secondLargest = None
+    current = node
+    while current.right:
+      secondLargest = current
+      current = current.right
+
+    # At the rightmost element now and there exists no element between secondLargest and rightmost element
+    # We have second largest already
+    if current.left is None:
+      return secondLargest
+
+    # Go left and all the way to the right and the rightmost element shall be the second largest
+    secondLargest = current.left
+    current = current.left
+    while current:
+      secondLargest = current
+      current = current.right
+    return secondLargest
+
+def main():
+  emptyTree = None
+  oneElementTree = TreeNode(1)
+  leftHeavyTree1 = TreeNode(2, TreeNode(1))
+  leftHeavyTree2 = TreeNode(3, TreeNode(1, right=TreeNode(2)))
+  rightHeavyTree1 = TreeNode(1, right=TreeNode(2))
+  rightHeavyTree2 = TreeNode(1, right=TreeNode(3, TreeNode(2)))
+  balanceTree1 = TreeNode(2, TreeNode(1), TreeNode(3))
+  balanceTree2 = TreeNode(6, TreeNode(5), TreeNode(7))
+  balanceTree3 = TreeNode(4, balanceTree1, balanceTree2)
+  sampleCase1 = TreeNode(1, right=TreeNode(2, right=TreeNode(3)))
+  sampleCase2 = TreeNode(1, right=TreeNode(4, left=TreeNode(2, right=TreeNode(3))))
+  assert secondLargestInBST(emptyTree) is None
+  assert secondLargestInBST(oneElementTree) is None
+  assert secondLargestInBST(leftHeavyTree1).val == 1
+  assert secondLargestInBST(leftHeavyTree2).val == 2
+  assert secondLargestInBST(rightHeavyTree1).val == 1
+  assert secondLargestInBST(rightHeavyTree2).val == 2
+  assert secondLargestInBST(balanceTree1).val == 2
+  assert secondLargestInBST(balanceTree3).val == 6
+  assert secondLargestInBST(sampleCase1).val == 2
+  assert secondLargestInBST(sampleCase2).val == 3
+
+if __name__ == '__main__':
+    main()
+```
+ 
