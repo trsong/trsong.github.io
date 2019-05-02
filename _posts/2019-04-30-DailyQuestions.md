@@ -16,14 +16,14 @@ categories: Python/Java
 
 **Java 1.8:**  TBD
 
-<!--
 ### May 2, 2019 \[Medium\] 
 ---
-> **Question:** Given a singly linked list and an integer k, remove the kth last element from the list. k > is guaranteed to be smaller than the length of the list.
-> The list is very long, so making more than one pass is prohibitively expensive.
-> Do this in constant space and in one pass.
+> **Question:** Given a singly linked list and an integer k, remove the kth last element from the list. k is guaranteed to be smaller than the length of the list.
+> 
+> Note:
+> * The list is very long, so making more than one pass is prohibitively expensive.
+> * Do this in constant space and in one pass.
 
--->
 
 ### May 1, 2019 \[Easy\] Balanced Brackets
 ---
@@ -31,6 +31,49 @@ categories: Python/Java
 > For example, given the string "([])[]({})", you should return true.
 > Given the string "([)]" or "((()", you should return false.
 
+**My thoughts:** Whenever there is an open bracket, there should be a corresponding close bracket. Likewise, whenver we encounter a close bracket that does not match corresponding open braket, such string is not valid.
+
+So the idea is to iterate through the string, store all the open bracket, and whenever we see a close bracket we check and see if it matches the most rent open breaket we stored early. The data structure, **Stack**, staisfies all of our requirements.
+
+**Python Solution:** Link: [https://repl.it/@trsong/isBalancedBrackets](https://repl.it/@trsong/isBalancedBrackets)
+```py
+def isBalancedBrackets(input):
+  if not input:
+    return True
+  stack = []
+  lookup = {'(':')', '[':']', '{':'}'}
+  for char in input:
+    # Push open bracket to stack
+    if char in lookup:
+      stack.append(char)
+
+    # Pop open bracket and check if it matches corresponding close bracket  
+    elif stack and char == lookup[stack[-1]]:
+      stack.pop()
+
+    # Short-circuit if open bracket not matches the counterpart
+    else:
+      return False
+
+  # All char should be processed and nothing should remain in the stack    
+  return not stack
+
+def main():
+  assert isBalancedBrackets("")
+  assert not isBalancedBrackets(")")
+  assert not isBalancedBrackets("(")
+  assert not isBalancedBrackets("(]")
+  assert not isBalancedBrackets("[}")
+  assert not isBalancedBrackets("((]]")
+  assert not isBalancedBrackets("(][)")
+  assert isBalancedBrackets("(([]))")
+  assert isBalancedBrackets("[]{}()")
+  assert not isBalancedBrackets("())))")
+  assert isBalancedBrackets("[](())")
+
+if __name__ == '__main__':
+  main()
+```
 
 
 ### Apr 30, 2019 \[Medium\] Second Largest in BST
