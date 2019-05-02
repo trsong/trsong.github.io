@@ -16,7 +16,73 @@ categories: Python/Java
 
 **Java 1.8:**  TBD
 
-### May 2, 2019 \[Medium\] 
+<!--
+### May 7, 2019 \[Hard\] Largest Sum of Non-adjacent Numbers
+---
+
+> **Question:** Given a list of integers, write a function that returns the largest sum of non-adjacent numbers. Numbers can be 0 or negative.
+>
+> For example, `[2, 4, 6, 2, 5]` should return 13, since we pick 2, 6, and 5. `[5, 1, 1, 5]` should return 10, since we pick 5 and 5.
+>
+> Follow-up: Can you do this in O(N) time and constant space?
+
+### May 6, 2019 \[Hard\] Climb Staircase (Continued)
+---
+
+> **Question:** There exists a staircase with N steps, and you can climb up either 1 or 2 steps at a time. Given N, write a function that returns the number of unique ways you can climb the staircase. The **ORDER** of the steps matters.
+>
+> For example, if N is 4, then there are 5 unique ways:
+
+```py
+1, 1, 1, 1
+2, 1, 1
+1, 2, 1
+1, 1, 2
+2, 2
+```
+
+> What if, instead of being able to climb 1 or 2 steps at a time, you could climb any number from a set of positive integers X? For example, if X = {1, 3, 5}, you could climb 1, 3, or 5 steps at a time.
+
+### May 5, 2019 \[Medium\] Climb Staircase
+---
+
+> **Question:** There exists a staircase with N steps, and you can climb up either 1 or 2 steps at a time. Given N, write a function that returns a number represents the total number of unique ways you can climb the staircase.
+>
+> For example, if N is 4, then there are 5 unique ways:
+* 1, 1, 1, 1
+* 2, 1, 1
+* 1, 2, 1
+* 1, 1, 2
+* 2, 2
+
+### May 4, 2019 \[Easy\] Power Set
+---
+> **Question:** The power set of a set is the set of all its subsets. Write a function that, given a set, generates its power set.
+>
+> For example, given the set `{1, 2, 3}`, it should return `{{}, {1}, {2}, {3}, {1, 2}, {1, 3}, {2, 3}, {1, 2, 3}}`.
+>
+> You may also use a list or array to represent a set.
+
+### May 3, 2019 \[Easy\] Running median of a number stream
+---
+> **Question:** Compute the running median of a sequence of numbers. That is, given a stream of numbers, print out the median of the list so far on each new element.
+> 
+> Recall that the median of an even-numbered list is the average of the two middle numbers.
+> 
+> For example, given the sequence `[2, 1, 5, 7, 2, 0, 5]`, your algorithm should print out:
+
+```py
+2
+1.5
+2
+3.5
+2
+2
+2
+```
+-->
+
+### May 2, 2019 \[Medium\] Remove K-th Last Element from Singly Linked-list
 ---
 > **Question:** Given a singly linked list and an integer k, remove the kth last element from the list. k is guaranteed to be smaller than the length of the list.
 > 
