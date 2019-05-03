@@ -59,9 +59,9 @@ categories: Python/Java
 ---
 > **Question:** The power set of a set is the set of all its subsets. Write a function that, given a set, generates its power set.
 >
-> For example, given the set `{1, 2, 3}`, it should return `{{}, {1}, {2}, {3}, {1, 2}, {1, 3}, {2, 3}, {1, 2, 3}}`.
->
-> You may also use a list or array to represent a set.
+> For example, given the set given as a list [1, 2, 3], it should return [[], [1], [2], [3], [1, 2], [1, 3], [2, 3], [1, 2, 3]] representing the power set.
+
+-->
 
 ### May 3, 2019 \[Easy\] Running median of a number stream
 ---
@@ -80,7 +80,6 @@ categories: Python/Java
 2
 2
 ```
--->
 
 ### May 2, 2019 \[Medium\] Remove K-th Last Element from Singly Linked-list
 ---
@@ -90,6 +89,65 @@ categories: Python/Java
 > * The list is very long, so making more than one pass is prohibitively expensive.
 > * Do this in constant space and in one pass.
 
+**My thoughts:** Use two pointers, faster one are k position ahead of slower one. Once faster reaches last elem, the 1st from the right. Then slow one should be (k + 1) th to the right. i.e. k + 1 - 1 = k. (fast is k position ahead of slow). 
+
+```
+k + 1 (from the right) -> k (from the right) -> k - 1 (from the right) -> .... -> 1 (from the right)
+^^^^^ slow is here                                                                ^ Fast is here
+```
+
+So in order to remove the k-th last element from the list, we just need to point `slow.next` to the next of that node: `slow.next = slow.next.next`
+
+
+**Python Solution:** Link: [https://repl.it/@trsong/removeKthFromEnd](https://repl.it/@trsong/removeKthFromEnd)
+```py
+
+class ListNode(object):
+    def __init__(self, x, next=None):
+        self.val = x
+        self.next = next
+    def __eq__(self, other):
+      return not self and not other or self and other and self.next == other.next
+
+def List(*vals):
+  dummy = ListNode(-1)
+  p = dummy
+  for elem in vals:
+    p.next = ListNode(elem)
+    p = p.next
+  return dummy.next  
+
+def removeKthFromEnd(head, k):
+  fast = head
+  slow = head
+  # Having two pointers, faster one are k posisition ahead of slower one
+  for i in xrange(k):
+    fast = fast.next
+  # Faster pointer initially starts at position 0, and after k shift, it's null, that means, k is the length of the list.
+  # So we should remove the first element from the list  
+  if not fast:
+    return head.next
+  # Now move fast all the way until the last element in the list
+  # If fast == last elem, then slow should be last k + 1 element.
+  # Becasue fast is always k position ahead of slow. (k+1 - 1 == k)
+  while fast and fast.next:
+    fast = fast.next
+    slow = slow.next
+
+  # Remove the k-th last elem from the list
+  slow.next = slow.next.next
+  return head
+
+def main():
+  assert removeKthFromEnd(List(1), 1) == List()
+  assert removeKthFromEnd(List(1, 2), 1) == List(1)
+  assert removeKthFromEnd(List(1, 2, 3), 1) == List(1, 2)
+  assert removeKthFromEnd(List(1, 2, 3), 2) == List(1, 3)
+  assert removeKthFromEnd(List(1, 2, 3), 3) == List(2, 3)
+
+if __name__ == '__main__':
+  main()
+```
 
 ### May 1, 2019 \[Easy\] Balanced Brackets
 ---
