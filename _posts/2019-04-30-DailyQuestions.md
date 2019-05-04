@@ -54,14 +54,14 @@ categories: Python/Java
 * 1, 2, 1
 * 1, 1, 2
 * 2, 2
+-->
 
 ### May 4, 2019 \[Easy\] Power Set
 ---
 > **Question:** The power set of a set is the set of all its subsets. Write a function that, given a set, generates its power set.
 >
-> For example, given the set given as a list [1, 2, 3], it should return [[], [1], [2], [3], [1, 2], [1, 3], [2, 3], [1, 2, 3]] representing the power set.
+> For example, given a set represented by a list `[1, 2, 3]`, it should return `[[], [1], [2], [3], [1, 2], [1, 3], [2, 3], [1, 2, 3]]` representing the power set.
 
--->
 
 ### May 3, 2019 \[Easy\] Running median of a number stream
 ---
@@ -79,6 +79,102 @@ categories: Python/Java
 2
 2
 2
+```
+
+**My thoughts:** Given a sorted list, the median of a list is either the element in the middle of the list or average of left-max and right-min if we break the original list into left and right part:
+
+```
+* 1, [2], 3
+* 1, [2], [3], 4
+```
+
+Notice that, as we get elem from stream 1-by-1, we don't need to keep the list sorted. If only we could partition the list into two equally large list and mantain the max of the left part and min of right part. We should be good to go.
+
+i,e,
+
+```
+[5, 1, 7]            [8 , 20, 10]
+       ^ left-max     ^ right-min
+```
+
+A max-heap plus a min-heap will make it a lot easier to mantain the value we are looking for: A max-heap on the left mantaining the largest on left half and a min-heap on the right holding the smallest on right half. And most importantly, we mantain the size of max-heap and min-heap while reading data. (Left and right can at most off by 1).
+
+**Python Solution:** Link: [https://repl.it/@trsong/runningMedianOfStream](https://repl.it/@trsong/runningMedianOfStream)
+
+```py
+from queue import PriorityQueue
+
+# Python doesn't have Max Heap, so we just implement one ourselves
+class MaxPriorityQueue(PriorityQueue):
+  def __init__(self):
+    PriorityQueue.__init__(self)
+
+  def get(self):
+    return -PriorityQueue.get(self)
+  
+  def put(self, val):
+    PriorityQueue.put(self, -val)
+
+def head(queue):
+  if isinstance(queue, MaxPriorityQueue):
+    return -queue.queue[0]
+  else:
+    return queue.queue[0]
+
+def runningMedianOfStream(stream):
+  leftMaxHeap = MaxPriorityQueue()
+  rightMinHeap = PriorityQueue()
+  result = []
+
+  for elem in stream:
+    # Add elem to the left, when given a smaller-than-left-max number
+    if leftMaxHeap.empty() or elem < head(leftMaxHeap):
+      leftMaxHeap.put(elem)
+    # Add elem to the right, when given a larger-than-right-min number   
+    elif rightMinHeap.empty() or elem > head(rightMinHeap):
+      rightMinHeap.put(elem)
+    # Add elem to the left, when given a between-left-max-and-right-min number,  
+    else:
+      leftMaxHeap.put(elem)
+
+    # Re-balance both heaps by transfer elem from larger heap to smaller heap
+    if len(leftMaxHeap.queue) > len(rightMinHeap.queue) + 1:
+      rightMinHeap.put(leftMaxHeap.get())
+    elif len(leftMaxHeap.queue) < len(rightMinHeap.queue) - 1:
+      leftMaxHeap.put(rightMinHeap.get())
+
+    # Calcualte the median base on different situations
+    leftMaxHeapSize = len(leftMaxHeap.queue) 
+    rightMinHeapSize = len(rightMinHeap.queue)
+    medium = 0
+    # Median eqauls (left-max + right-min) / 2  
+    # Be careful for value overflow!
+    if leftMaxHeapSize == rightMinHeapSize:
+      midLeft = head(leftMaxHeap)
+      midRight = head(rightMinHeap)
+      diff = midRight - midLeft
+      if diff % 2 == 0:
+        medium = midLeft + diff / 2
+      else:
+        medium = midLeft + diff / 2.0
+    # Median is left-max   
+    elif leftMaxHeapSize > rightMinHeapSize:
+      medium = head(leftMaxHeap)
+    # Median is right-min
+    else:
+      medium = head(rightMinHeap)
+    result.append(medium)
+  return result
+
+def main():
+  assert runningMedianOfStream([2, 1, 5, 7, 2, 0, 5]) == [2, 1.5, 2, 3.5, 2, 2, 2]
+  assert runningMedianOfStream([1, 1, 1, 1, 1, 1]) == [1, 1, 1, 1, 1, 1]
+  assert runningMedianOfStream([0, 1, 1, 0, 0]) == [0, 0.5, 1, 0.5, 0]
+  assert runningMedianOfStream([2, 0, 1]) == [2, 1, 1]
+  assert runningMedianOfStream([3, 0, 1, 2]) == [3, 1.5, 1, 1.5]
+
+if __name__ == '__main__':
+  main()
 ```
 
 ### May 2, 2019 \[Medium\] Remove K-th Last Element from Singly Linked-list
