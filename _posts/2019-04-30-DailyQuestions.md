@@ -43,6 +43,8 @@ categories: Python/Java
 
 > What if, instead of being able to climb 1 or 2 steps at a time, you could climb any number from a set of positive integers X? For example, if X = {1, 3, 5}, you could climb 1, 3, or 5 steps at a time.
 
+-->
+
 ### May 5, 2019 \[Medium\] Climb Staircase
 ---
 
@@ -54,7 +56,7 @@ categories: Python/Java
 * 1, 2, 1
 * 1, 1, 2
 * 2, 2
--->
+
 
 ### May 4, 2019 \[Easy\] Power Set
 ---
@@ -62,6 +64,60 @@ categories: Python/Java
 >
 > For example, given a set represented by a list `[1, 2, 3]`, it should return `[[], [1], [2], [3], [1, 2], [1, 3], [2, 3], [1, 2, 3]]` representing the power set.
 
+**My thoughts:** There are multiple ways to solve this problem. Solution 1 & 2 use recursion that build subsets incrementally. While solution 3, only cherry pick elem based on binary representation.
+
+**Solution 1 & 2:** Let's calculate the first few terms and try to figure out the pattern
+```
+powerSet([]) => [[]]
+powerSet([1]) => [[], [1]]
+powerSet([1, 2]) => [[], [1], [2], [1, 2]]
+powerSet([1, 2, 3]) => [[], [1], [2], [1, 2], [3], [1, 3], [2, 3], [1, 2, 3]] which is powerSet([1, 2]) + append powerSet([1, 2]) with new elem 3
+...
+powerSet([1, 2, ..., n]) =>  powerSet([1, 2, ..., n - 1]) + append powerSet([1, 2, ..., n - 1]) with new elem n
+```
+
+**Solution 3:** the total number of subsets eqauls $2^n$. Notice that we can use binary representation to represent which elem to cherry pick. e.g. `powerSet([1, 2, 3])`.  000 represent `[]`, 010 represents `[2]` and 101 represents `[1, 3]`.
+
+Binary representation of selection has $|\{1, 2, 3\}| = 2^3 = 8$ outcomes
+```
+000 => []
+001 => [3]
+010 => [2]
+011 => [2, 3]
+100 => [1]
+101 => [1, 3]
+110 => [1, 2]
+111 => [1, 2, 3]
+```
+
+**Python Solution:** Link: [https://repl.it/@trsong/powerSet](https://repl.it/@trsong/powerSet)
+```py
+def powerSet(inputSet):
+  if not inputSet:
+    return [[]]
+  else:
+    subsetRes = powerSet(inputSet[1:])
+    return subsetRes + map(lambda lst: [inputSet[0]] + lst, subsetRes)
+
+def powerSet2(inputSet):
+  return reduce(lambda subRes, num: subRes + [[num] + subset for subset in subRes],
+  inputSet,
+  [[]])
+
+def powerSet3(inputSet):
+  size = len(inputSet)
+  return [[inputSet[i] for i in xrange(size) if (0x1 << i) & num] for num in xrange(2 ** size)]
+
+def main():
+  assert powerSet([]) == [[]]
+  assert sorted(powerSet([1])) == [[], [1]]
+  assert sorted(powerSet([1, 2])) == [[], [1], [1, 2], [2]]
+  assert sorted(powerSet([1, 2, 3])) == [[], [1], [1, 2], [1, 2, 3], [1, 3], [2], [2, 3], [3]]
+
+if __name__ == '__main__':
+  main()
+
+```
 
 ### May 3, 2019 \[Easy\] Running median of a number stream
 ---
