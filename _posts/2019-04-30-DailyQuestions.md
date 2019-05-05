@@ -26,6 +26,8 @@ categories: Python/Java
 >
 > Follow-up: Can you do this in O(N) time and constant space?
 
+
+
 ### May 6, 2019 \[Hard\] Climb Staircase (Continued)
 ---
 
@@ -57,6 +59,38 @@ categories: Python/Java
 * 1, 1, 2
 * 2, 2
 
+**My thoughts:** Imagine when you step on the nth staircase, what could be the previous move you made to get to the nth staircase. You only have two ways:
+* Either, you were on (n-1)th staircase and you climbed 1 staircase next
+* Or, you were on (n-2)th staircase and you climbed 2 staircase next
+So the total number of way to climb n staircase depends on how many ways to climb n-1 staircases + how many ways to climb n-2 staircases.
+
+**Note:** Did you notice the solution forms a ***Fibonacci Sequence***? Well same optimization tricks also work for this question.
+
+**Python Solutions:** [https://repl.it/@trsong/climbStairs](https://repl.it/@trsong/climbStairs)
+```py
+def climbStairs(n):
+  # Let dp[n] represent the number of ways to climb n stairs, then we will have
+  # dp[n] = dp[n-1] + dp[n-2]
+  # Because in order to get to n-th stair case, you can only reach from the (n-1)th or (n-2)th.
+  # Which have dp[n-1] and dp[n-2] of ways separately.
+  dp = [0] * max(n + 1, 3)
+  dp[1] = 1 # climb 1
+  dp[2] = 2 # climb 1, 1 or 2
+  for i in xrange(3, n+1):
+    dp[i] = dp[i-1] + dp[i-2]
+  return dp[n]
+
+def main():
+  assert climbStairs(1) == 1
+  assert climbStairs(2) == 2
+  assert climbStairs(3) == 3
+  assert climbStairs(4) == 5
+  assert climbStairs(5) == 8
+  assert climbStairs(6) == 13
+
+if __name__ == '__main__':
+  main()
+```
 
 ### May 4, 2019 \[Easy\] Power Set
 ---
