@@ -1,2 +1,2 @@
 #!/bin/bash
-jekyll serve --incremental
+jekyll serve --incremental --port ${1:-4000}

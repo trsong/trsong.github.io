@@ -26,7 +26,7 @@ categories: Python/Java
 >
 > Follow-up: Can you do this in O(N) time and constant space?
 
-
+-->
 
 ### May 6, 2019 \[Hard\] Climb Staircase (Continued)
 ---
@@ -45,7 +45,95 @@ categories: Python/Java
 
 > What if, instead of being able to climb 1 or 2 steps at a time, you could climb any number from a set of positive integers X? For example, if X = {1, 3, 5}, you could climb 1, 3, or 5 steps at a time.
 
--->
+**My thoughts:** The only way to figure out each path is to manually test all outcomes. However, certain cases are invalid (like exceed the target value while climbing) so we try to modify certain step until its valid. Such technique is called ***Backtracking***.
+
+We may use recursion to implement backtracking, each recursive step will create a separate branch which also represent different recursive call stacks. Once the branch is invalid, the call stack will bring us to a different branch, i.e. backtracking to a different solution space.
+
+For example, if N is 4, and feasible steps are `[1, 2]`, then there are 5 different solution space/path. Each node represents a choice we made and each branch represents a recursive call.
+
+Note we also keep track of the remaining steps while doing recursion. 
+```
+├ 1 
+│ ├ 1
+│ │ ├ 1
+│ │ │ └ 1 SUCCEED
+│ │ └ 2 SUCCEED
+│ └ 2 
+│   └ 1 SUCCEED
+└ 2 
+  ├ 1
+  │ └ 1 SUCCEED
+  └ 2 SUCCEED
+```
+
+If N is 6 and fesible step is `[5, 2]`:
+```
+├ 5 FAILURE
+└ 2 
+  └ 2
+    └ 2 SUCCEED
+```
+
+
+
+**Python Solution:** [https://repl.it/@trsong/climbStairs2](https://repl.it/@trsong/climbStairs2)
+
+```py
+SEPARATOR = ", "
+
+def climbStairsRecur(feasible, remain, path, res):
+  global SEPARATOR
+  # Once climbed all staircases, include this path
+  if remain == 0:
+    res.append(SEPARATOR.join(map(str, path)))
+    return res
+  else:
+    # Test all feasible steps and if it works then proceed
+    for step in feasible:
+      if remain - step >= 0:
+        newPath = path + [step]
+        # What if we choose this path, do recursion on remaining staircases
+        climbStairsRecur(feasible, remain - step, newPath, res)
+
+def climbStairs2(n, feasibleStairs):
+  res = []
+  climbStairsRecur(feasibleStairs, n, [], res)
+  return res
+
+def testResult(res, expected):
+  return sorted(res) == sorted(expected)
+
+def main():
+  assert testResult(climbStairs2(5, [1, 3, 5]), [
+    "1, 1, 1, 1, 1",
+    "3, 1, 1",
+    "1, 3, 1",
+    "1, 1, 3",
+    "5"])
+  assert testResult(climbStairs2(4, [1, 2]), [
+    "1, 1, 1, 1", 
+    "2, 1, 1",
+    "1, 2, 1",
+    "1, 1, 2",
+    "2, 2"
+  ])
+  assert testResult(climbStairs2(9, []), [])
+  assert testResult(climbStairs2(42, [42]), ["42"])
+  assert testResult(climbStairs2(4, [1, 2, 3, 4]), [
+    "1, 1, 1, 1",
+    "1, 1, 2",
+    "1, 2, 1",
+    "1, 3",
+    "2, 1, 1",
+    "2, 2",
+    "3, 1",
+    "4"
+    ])
+  assert testResult(climbStairs2(99, [7]), [])
+
+if __name__ == '__main__':
+  main()
+```
 
 ### May 5, 2019 \[Medium\] Climb Staircase
 ---
