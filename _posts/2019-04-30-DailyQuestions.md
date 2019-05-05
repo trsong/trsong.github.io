@@ -16,7 +16,7 @@ categories: Python/Java
 
 **Java 1.8:**  TBD
 
-<!--
+
 ### May 7, 2019 \[Hard\] Largest Sum of Non-adjacent Numbers
 ---
 
@@ -26,7 +26,7 @@ categories: Python/Java
 >
 > Follow-up: Can you do this in O(N) time and constant space?
 
--->
+
 
 ### May 6, 2019 \[Hard\] Climb Staircase (Continued)
 ---
