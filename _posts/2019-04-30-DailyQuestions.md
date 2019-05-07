@@ -16,6 +16,82 @@ categories: Python/Java
 
 **Java 1.8:**  TBD
 
+<!--
+### May 12, 2019 \[Medium\] Craft Palindrome
+---
+> **Question:** Given a string, find the palindrome that can be made by inserting the fewest number of characters as possible anywhere in the word. If there is more than one palindrome of minimum length that can be made, return the lexicographically earliest one (the first one alphabetically).
+>
+> For example, given the string "race", you should return "ecarace", since we can add three letters to it (which is the smallest amount to make a palindrome). There are seven other palindromes that can be made from "race" by adding three letters, but "ecarace" comes first alphabetically.
+>
+> As another example, given the string "google", you should return "elgoogle".
+
+### May 11, 2019 LC 42 \[Hard\] Trapping Rain Water
+---
+> Given n non-negative integers representing an elevation map where the width of each bar is 1, compute how much water it is able to trap after raining.
+ 
+![rainwatertrap](https://assets.leetcode.com/uploads/2018/10/22/rainwatertrap.png)
+
+> The above elevation map is represented by array [0,1,0,2,1,0,1,3,2,1,2,1]. In this case, 6 units of rain water (blue section) are being trapped.
+> 
+> Example:
+> 
+> Input: [0,1,0,2,1,0,1,3,2,1,2,1]
+> 
+> Output: 6
+
+### May 10, 2019 \[Hard\] Execlusive Product
+---
+> **Question:**  Given an array of integers, return a new array such that each element at index i of the new array is the product of all the numbers in the original array except the one at i.
+>
+> For example, if our input was [1, 2, 3, 4, 5], the expected output would be [120, 60, 40, 30, 24]. If our input was [3, 2, 1], the expected output would be [2, 3, 6].
+>
+> Follow-up: what if you can't use division?
+
+### May 9, 2019 \[Easy\] Grid Path
+---
+> **Question:**  You are given an M by N matrix consisting of booleans that represents a board. Each True boolean represents a wall. Each False boolean represents a tile you can walk on.
+>
+> Given this matrix, a start coordinate, and an end coordinate, return the minimum number of steps required to reach the end coordinate from the start. If there is no possible path, then return null. You can move up, left, down, and right. You cannot move through walls. You cannot wrap around the edges of the board.
+>
+> For example, given the following board:
+
+```
+[
+  [F, F, F, F],
+  [T, T, F, T],
+  [F, F, F, F],
+  [F, F, F, F]
+]
+```
+> and start = (3, 0) (bottom left) and end = (0, 0) (top left), the minimum number of steps required to reach the end is 7, since we would need to go through (1, 2) because there is a wall everywhere else on the second row.
+
+
+### May 8, 2019 LC 130 \[Medium\] Surrounded Regions
+---
+
+> **Question:**  Given a 2D board containing 'X' and 'O' (the letter O), capture all regions surrounded by 'X'.
+> A region is captured by flipping all 'O's into 'X's in that surrounded region.
+> 
+> Example:
+
+```
+X X X X
+X O O X
+X X O X
+X O X X
+```
+> After running your function, the board should be:
+
+```
+X X X X
+X X X X
+X X X X
+X O X X
+```
+> Explanation:
+>
+> Surrounded regions shouldn’t be on the border, which means that any 'O' on the border of the board are not flipped to 'X'. Any 'O' that is not on the border and it is not connected to an 'O' on the border will be flipped to 'X'. Two cells are connected if they are adjacent cells connected horizontally or vertically.
+-->
 
 ### May 7, 2019 \[Hard\] Largest Sum of Non-adjacent Numbers
 ---
