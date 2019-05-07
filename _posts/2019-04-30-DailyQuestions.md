@@ -27,13 +27,12 @@ categories: Python/Java
 > Follow-up: Can you do this in O(N) time and constant space?
 
 
-
 ### May 6, 2019 \[Hard\] Climb Staircase (Continued)
 ---
 
-> **Question:** There exists a staircase with N steps, and you can climb up either 1 or 2 steps at a time. Given N, write a function that returns the number of unique ways you can climb the staircase. The **ORDER** of the steps matters.
+> **Question:** There exists a staircase with N steps, and you can climb up either 1 or 2 steps at a time. Given N, write a function that **PRINT** out all possible unique ways you can climb the staircase. The **ORDER** of the steps matters. 
 >
-> For example, if N is 4, then there are 5 unique ways:
+> For example, if N is 4, then there are 5 unique ways (accoding to May 5's question). This time we print them out as the following:
 
 ```py
 1, 1, 1, 1
@@ -43,7 +42,13 @@ categories: Python/Java
 2, 2
 ```
 
-> What if, instead of being able to climb 1 or 2 steps at a time, you could climb any number from a set of positive integers X? For example, if X = {1, 3, 5}, you could climb 1, 3, or 5 steps at a time.
+> What if, instead of being able to climb 1 or 2 steps at a time, you could climb any number from a set of positive integers X? 
+>
+> For example, if N is 6, and X = {2, 5}. You could climb 2 or 5 steps at a time. Then there is only 1 unique way, so we print the following:
+
+```py
+2, 2, 2
+```
 
 **My thoughts:** The only way to figure out each path is to manually test all outcomes. However, certain cases are invalid (like exceed the target value while climbing) so we try to modify certain step until its valid. Such technique is called ***Backtracking***.
 
@@ -133,7 +138,7 @@ def main():
 
 if __name__ == '__main__':
   main()
-```
+```  
 
 ### May 5, 2019 \[Medium\] Climb Staircase
 ---
