@@ -15,7 +15,9 @@ categories: Python/Java
 **Python 2.7:** [https://repl.it/languages/python](https://repl.it/languages/python)
 
 **Java 1.8:**  TBD
+
 <!--
+
 ### May 12, 2019 \[Medium\] Craft Palindrome
 ---
 > **Question:** Given a string, find the palindrome that can be made by inserting the fewest number of characters as possible anywhere in the word. If there is more than one palindrome of minimum length that can be made, return the lexicographically earliest one (the first one alphabetically).
