@@ -48,6 +48,8 @@ categories: Python/Java
 >
 > Follow-up: what if you can't use division?
 
+-->
+
 ### May 9, 2019 \[Easy\] Grid Path
 ---
 > **Question:**  You are given an M by N matrix consisting of booleans that represents a board. Each True boolean represents a wall. Each False boolean represents a tile you can walk on.
@@ -65,8 +67,6 @@ categories: Python/Java
 ]
 ```
 > and start = (3, 0) (bottom left) and end = (0, 0) (top left), the minimum number of steps required to reach the end is 7, since we would need to go through (1, 2) because there is a wall everywhere else on the second row.
-
--->
 
 ### May 8, 2019 LC 130 \[Medium\] Surrounded Regions
 ---
@@ -93,6 +93,343 @@ X O X X
 > Explanation:
 >
 > Surrounded regions shouldn’t be on the border, which means that any 'O' on the border of the board are not flipped to 'X'. Any 'O' that is not on the border and it is not connected to an 'O' on the border will be flipped to 'X'. Two cells are connected if they are adjacent cells connected horizontally or vertically.
+
+**My thoughts:** There are mutiple ways to solve this question. Solution 1 use DFS and Solution 2 use Union-Find. 
+
+**Solution 1:** for all 'O' cells connect to boundary of the grid, temporarily mark them as '-'. And then scan through entire grid, replace 'O' with 'X' and '-' with 'O'
+
+1. Orginal Grid:
+  ```py
+  [
+      ['X', 'O', 'X', 'X', 'O'],
+      ['X', 'X', 'O', 'O', 'X'],
+      ['X', 'O', 'X', 'X', 'O'],
+      ['O', 'O', 'O', 'X', 'O']
+  ]
+  ```
+2. Replace all 'O' connect to bounary as '-'
+  ```py
+  [
+      ['X', '-', 'X', 'X', '-'],
+      ['X', 'X', 'O', 'O', 'X'],
+      ['X', '-', 'X', 'X', '-'],
+      ['-', '-', '-', 'X', '-']
+  ]
+  ```
+3. Replace 'O' with 'X' and '-' with 'O'
+  ```py
+  [
+      ['X', 'O', 'X', 'X', 'O'],
+      ['X', 'X', 'X', 'X', 'X'],
+      ['X', 'O', 'X', 'X', 'O'],
+      ['O', 'O', 'O', 'X', 'O']
+  ]
+  ```
+
+**Python Solution 1:** [https://repl.it/@trsong/surroundedregionsdfs](https://repl.it/@trsong/surroundedregionsdfs)
+
+```py
+class SurroundedReigonSolver(object):
+    def __init__(self, grid):
+        self._grid = grid
+        self._num_row = len(grid)
+        self._num_col = len(grid[0])
+
+    def _indexToPosition(self, row, col):
+        return row * self._num_col + col
+
+    def _positionToIndex(self, pos):
+        return (pos / self._num_col, pos % self._num_col)
+
+    def _dfs_search_replace(self, visited, source_pos, target):
+        r, c = self._positionToIndex(source_pos)
+        source = self._grid[r][c]
+        stack = [source_pos]
+        while stack:
+            current = stack.pop()
+            r, c = self._positionToIndex(current)
+            # process current cell
+            if current not in visited and self._grid[r][c] == source:
+                self._grid[r][c] = target
+                visited.add(current)
+                # Check and add bottom to stack
+                if r < self._num_row - 1:
+                    stack.append(self._indexToPosition(r + 1, c))
+                # Check and add right to stack
+                if c < self._num_col - 1:
+                    stack.append(self._indexToPosition(r, c + 1))
+                # Check and add top to stack  
+                if r > 0:
+                    stack.append(self._indexToPosition(r - 1, c))
+                # Check and add top left to stack     
+                if c > 0:
+                    stack.append(self._indexToPosition(r, c - 1))
+
+    def solve(self):
+        # Mark all edge-connected 'O' cells as '-'
+        visited = set()
+        for i in xrange(self._num_col):
+            if self._grid[0][i] == 'O':
+                self._dfs_search_replace(visited, self._indexToPosition(0, i), '-')
+            if self._grid[self._num_row - 1][i] == 'O':
+                self._dfs_search_replace(visited, self._indexToPosition(self._num_row - 1, i), '-')
+
+        for j in xrange(self._num_row):
+            if self._grid[j][0] == 'O':
+                self._dfs_search_replace(visited, self._indexToPosition(j, 0), '-')
+            if self._grid[j][self._num_col - 1] == 'O':
+                self._dfs_search_replace(visited, self._indexToPosition(j, self._num_col - 1), '-')
+
+        # Replace all 'O' with 'X' and '-' with 'O'
+        for r in xrange(self._num_row):
+            for c in xrange(self._num_col):
+                if self._grid[r][c] == 'O':
+                    self._grid[r][c] = 'X'
+                elif self._grid[r][c] == '-':
+                    self._grid[r][c] = 'O'
+        
+        return self._grid      
+
+def main():
+    grid1 = [
+        ['X', 'X', 'X', 'X'],
+        ['X', 'O', 'O', 'X'],
+        ['X', 'X', 'O', 'X'],
+        ['X', 'O', 'X', 'X']
+    ]
+    solved_grid1 = [
+        ['X', 'X', 'X', 'X'],
+        ['X', 'X', 'X', 'X'],
+        ['X', 'X', 'X', 'X'],
+        ['X', 'O', 'X', 'X']
+    ]
+    solver = SurroundedReigonSolver(grid1)
+    assert solver.solve() == solved_grid1
+
+    grid2 = [
+        ['O', 'O', 'O', 'O', 'O'],
+        ['O', 'O', 'O', 'O', 'O'],
+        ['O', 'O', 'O', 'O', 'O'],
+        ['O', 'O', 'O', 'O', 'O']
+    ]
+    solved_grid2 = [
+        ['O', 'O', 'O', 'O', 'O'],
+        ['O', 'O', 'O', 'O', 'O'],
+        ['O', 'O', 'O', 'O', 'O'],
+        ['O', 'O', 'O', 'O', 'O']
+    ]
+    solver2 = SurroundedReigonSolver(grid2)
+    assert solver2.solve() == solved_grid2
+
+    grid3 = [
+        ['X', 'O', 'X', 'X', 'O'],
+        ['X', 'X', 'O', 'O', 'X'],
+        ['X', 'O', 'X', 'X', 'O'],
+        ['O', 'O', 'O', 'X', 'O']
+    ]
+    solved_grid3 = [
+        ['X', 'O', 'X', 'X', 'O'],
+        ['X', 'X', 'X', 'X', 'X'],
+        ['X', 'O', 'X', 'X', 'O'],
+        ['O', 'O', 'O', 'X', 'O']
+    ]
+    solver3 = SurroundedReigonSolver(grid3)
+    assert solver3.solve() == solved_grid3
+
+if __name__ == '__main__':
+    main()
+```
+
+**Solution 2:** There is a special data-structure called ***Union-Find*** that allow us to quickly determine if two cells are **CONNECTED** or not. 
+
+The idea of ***Union-Find*** is as the following:
+
+1. Suppose we have an array: `[0, 1, 2, 3, 4, 5]` represents 5 different cells. 
+
+2. And we create a parent array which initialized to be `[-1, -1, -1, -1, -1, -1]`. That means all cell's parent is null and none of the cells are connected - they have no shared parent.
+
+3. Now if we want to **connect** cell 0 and cell 5 by <u>marking cell 0's parent as 5</u> (we call this action **"Union"**).
+Parent array will become `[5, -1, -1, -1, -1, -1]`. 
+
+4. And if we also connect 3 and 0 so that all of 0,3,5 are connected.
+we will have parent array looks like `[5, -1, -1, 0, -1, -1]`.
+
+5. Now we defined `is_connected(index1, index2)` if they all share the same **root**. 
+In our example 0,3,5 are connected and everything else is connected to itself separately.
+
+6. <u>Since `parent[0] == 5` and `parent[3] == parent[0] == 5` and 5 has not parent indicates it is the root.</u> (We call the action of retrieving parent recursively: **"Find"**)
+
+7. By keeping calling **union** and **find** on different cells will allow us to **connect** those cells. And quickly tell if two cells are **connected**.
+
+
+The way we use Union-Find to conquer this question looks like the following:
+
+1. Orginal Grid:
+  ```py
+  [
+      ['X', 'O', 'X', 'X', 'O'],
+      ['X', 'X', 'O', 'O', 'X'],
+      ['X', 'O', 'X', 'X', 'O'],
+      ['O', 'O', 'O', 'X', 'O']
+  ]
+  ```
+
+  parent array
+  ```py
+  [
+      [-1, -1, -1, -1, -1],
+      [-1, -1, -1, -1, -1],
+      [-1, -1, -1, -1, -1],
+      [-1, -1, -1, -1, -1]
+      [-1]  <----------------- we also create a secret cell for future use
+  ]
+  ```
+2. Now connect all connected 'O' use Union-Find
+  
+  parent array: instead of using parent index, I use letter to represent different connected region
+  ```py
+  [
+      [-1,  A, -1, -1,  B],
+      [-1, -1,  C,  C, -1],
+      [-1,  E, -1, -1,  D],
+      [ E,  E,  E, -1,  D]
+      [-1]  <----------------- In the next step we will take advantage of this cell
+  ]
+  ```
+
+ 3. Let's connect the secret cell to all edge-connected 'O' cells 
+
+ parent array: instead of using parent index, I use letter to represent different connected region
+  ```py
+  [
+      [-1,  O, -1, -1,  O],
+      [-1, -1,  C,  C, -1],
+      [-1,  O, -1, -1,  O],
+      [ O,  O,  O, -1,  O]
+      [ O]  <----------------- this cell is used to connect to all 'O' on the edge of the grid
+  ]
+  ```
+
+4. Replace all 'O' with 'X', except for connected-to-secret-spot ones
+
+  ```py
+  [
+      ['X', 'O', 'X', 'X', 'O'],
+      ['X', 'X', 'X', 'X', 'X'],
+      ['X', 'O', 'X', 'X', 'O'],
+      ['O', 'O', 'O', 'X', 'O']
+  ]
+  ``` 
+  
+  Note for my implementation of union-find, I flatten the parent 2D array into 1D array.
+
+**Python Solution 2:** [https://repl.it/@trsong/surroundedregionsunionfind](https://repl.it/@trsong/surroundedregionsunionfind)
+
+```py
+class SurroundedReigonSolver(object):
+    def __init__(self, grid):
+        self._grid = grid
+        self._num_row = len(grid)
+        self._num_col = len(grid[0])
+        self._parent = [-1] * (self._num_row * self._num_col + 1)
+
+    def _indexToPosition(self, row, col):
+        return row * self._num_col + col
+
+    def _find(self, pos):
+        if self._parent[pos] < 0:
+            return pos
+        else:
+            return self._find(self._parent[pos])
+
+    def _union(self, pos1, pos2):
+        parent1 = self._find(pos1)
+        parent2 = self._find(pos2)
+        if parent1 != parent2:
+            self._parent[pos2] = pos1
+
+    def _is_connected(self, pos1, pos2):
+        return self._find(pos1) == self._find(pos2)
+
+    def solve(self):
+        # Scan through the grid to connect all 'O'
+        for r in xrange(self._num_row):
+            for c in xrange(self._num_col):
+                current_pos = self._indexToPosition(r, c)
+                # Note, as we are moving right and down, we only need to check top and left
+                if self._grid[r][c] == 'O':
+                    if r > 0 and self._grid[r-1][c] == 'O':
+                        self._union(current_pos, self._indexToPosition(r-1, c))
+                    if c > 0 and self._grid[r][c-1] == 'O':
+                        self._union(current_pos, self._indexToPosition(r, c-1))
+
+        # Connect all edge-connnected 'O' cell to this secret_pos
+        secret_pos = self._num_row * self._num_col
+        for i in xrange(self._num_col):
+            if self._grid[0][i] == 'O':
+                self._union(secret_pos, self._indexToPosition(0, i))
+            if self._grid[self._num_row-1][i] == 'O':
+                self._union(secret_pos, self._indexToPosition(self._num_row-1, i))
+        for j in xrange(self._num_row):
+            if self._grid[j][0] == 'O':
+                self._union(secret_pos, self._indexToPosition(j, 0))
+            if self._grid[j][self._num_col-1] == 'O':
+                self._union(secret_pos, self._indexToPosition(j, self._num_col-1))
+    
+        for r in xrange(self._num_row):
+            for c in xrange(self._num_col):
+                # Only replace 'O' with 'X' unless it's connected to secret_pos
+                if self._grid[r][c] == 'O' and not self._is_connected(secret_pos, self._indexToPosition(r, c)):
+                    self._grid[r][c] = 'X'
+
+        return self._grid
+```
+
+**Optimization for Solution 2:** Union-find can be optimized w/ : 
+1) Find Optimization: Flatten the parent array on the fly
+2) Union Optimization: Balance number of children for the same root
+
+By doing the following optimization will allow us to have a faster `is_connected(pos1, pos2)` check.
+
+```py
+class SurroundedReigonSolver2(object):
+    def __init__(self, grid):
+        self._grid = grid
+        self._num_row = len(grid)
+        self._num_col = len(grid[0])
+        self._parent = range(self._num_row * self._num_col + 1)
+        self._parent_weight = [0] * len(self._parent)
+
+    def _find(self, pos):
+        if self._parent[pos] == pos:
+            return pos
+        else:
+            # we flatten the path from current node to root
+            root = self._find(self._parent[pos])
+            self._parent[pos] = root
+            return root
+
+    def _union(self, pos1, pos2):
+        parent1 = self._find(pos1)
+        parent2 = self._find(pos2)
+        if parent1 != parent2:
+            # Note we always connect light branch to heavy branch
+            # eg. 1 <- 2 <- 3 <- 5  and 6 <- 7
+            # we will have 1 <- 2 <- 3 <- 5 and 1 <- 6 <- 7
+            if self._parent_weight[parent1] == self._parent_weight[parent2]:
+                self._parent[parent1] = pos2
+                self._parent_weight[parent2] += 1
+            elif self._parent_weight[parent1] < self._parent_weight[parent2]:
+                # parent2 has more nodes recognize it as root
+                self._parent[parent1] = pos2
+            else:
+                # parent1 has more nodes recognize it as root
+                self._parent[parent2] = pos1
+
+    def _is_connected(self, pos1, pos2):
+        return self._find(pos1) == self._find(pos2)
+```
+
 
 ### May 7, 2019 \[Hard\] Largest Sum of Non-adjacent Numbers
 ---
