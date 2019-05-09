@@ -386,8 +386,9 @@ class SurroundedReigonSolver(object):
 ```
 
 **Optimization for Solution 2:** Union-find can be optimized w/ : 
-1) Find Optimization: Flatten the parent array on the fly
-2) Union Optimization: Balance number of children for the same root
+
+1. Find Optimization: Flatten the parent array on the fly
+2. Union Optimization: Balance number of children for the same root
 
 By doing the following optimization will allow us to have a faster `is_connected(pos1, pos2)` check.
 
