@@ -264,7 +264,8 @@ In our example 0,3,5 are connected and everything else is connected to itself se
 
 The way we use Union-Find to conquer this question looks like the following:
 
-1. Orginal Grid:
+* Step 1: Init the parent arry:
+Orginal Grid:
   ```py
   [
       ['X', 'O', 'X', 'X', 'O'],
@@ -284,7 +285,7 @@ The way we use Union-Find to conquer this question looks like the following:
       [-1]  <----------------- we also create a secret cell for future use
   ]
   ```
-2. Now connect all connected 'O' use Union-Find
+* Step 2: Now connect all connected 'O' use Union-Find
   
   parent array: instead of using parent index, I use letter to represent different connected region
   ```py
@@ -297,7 +298,7 @@ The way we use Union-Find to conquer this question looks like the following:
   ]
   ```
 
- 3. Let's connect the secret cell to all edge-connected 'O' cells 
+* Step 3: Let's connect the secret cell to all edge-connected 'O' cells 
 
  parent array: instead of using parent index, I use letter to represent different connected region
   ```py
@@ -310,7 +311,7 @@ The way we use Union-Find to conquer this question looks like the following:
   ]
   ```
 
-4. Replace all 'O' with 'X', except for connected-to-secret-spot ones
+* Step 4: Replace all 'O' with 'X', except for connected-to-secret-spot ones
 
   ```py
   [
