@@ -40,6 +40,8 @@ categories: Python/Java
 > 
 > Output: 6
 
+-->
+
 ### May 10, 2019 \[Hard\] Execlusive Product
 ---
 > **Question:**  Given an array of integers, return a new array such that each element at index i of the new array is the product of all the numbers in the original array except the one at i.
@@ -47,8 +49,6 @@ categories: Python/Java
 > For example, if our input was [1, 2, 3, 4, 5], the expected output would be [120, 60, 40, 30, 24]. If our input was [3, 2, 1], the expected output would be [2, 3, 6].
 >
 > Follow-up: what if you can't use division?
-
--->
 
 ### May 9, 2019 \[Easy\] Grid Path
 ---
@@ -67,6 +67,146 @@ categories: Python/Java
 ]
 ```
 > and start = (3, 0) (bottom left) and end = (0, 0) (top left), the minimum number of steps required to reach the end is 7, since we would need to go through (1, 2) because there is a wall everywhere else on the second row.
+
+**My thoughts:** Use BFS from start to end. Each layer we proceed will contribute to distance by 1. e.g. If end is one of start's level-7 descendant then the distance will be 7. 
+
+**Python Solution1:** [https://repl.it/@trsong/gridpath](https://repl.it/@trsong/gridpath)
+```py
+class Position(object):
+    def __init__(self, row, col):
+        self.row = row
+        self.col = col
+    def __repr__(self):
+        return "(%d, %d)" % (self.row, self.col)
+
+    def __hash__(self):
+        return hash((self.row, self.col))
+
+    def __eq__(self, other):
+        return self.row == other.row and self.col == other.col
+
+def grid_path(grid_wall, start, end):
+    num_row = len(grid_wall)
+    num_col = len(grid_wall[0])
+    distance = 0
+    queue = [start]
+    visited = set()
+    while queue:
+        level_size = len(queue)
+        for i in xrange(level_size):
+            current = queue.pop(0)
+            if current in visited: continue
+            if current == end:
+                return distance
+            visited.add(current)
+
+            top = Position(current.row - 1, current.col) if current.row > 0 else None
+            if top and not grid_wall[top.row][top.col] and top not in visited:
+                queue.append(top)
+
+            left = Position(current.row, current.col - 1) if current.col > 0 else None
+            if left and not grid_wall[left.row][left.col] and left not in visited:
+                queue.append(left)
+            
+            bottom = Position(current.row + 1, current.col) if current.row < num_row - 1 else None
+            if bottom and not grid_wall[bottom.row][bottom.col] and bottom not in visited:
+                queue.append(bottom)
+            
+            right = Position(current.row, current.col + 1) if current.col < num_col - 1 else None
+            if right and not grid_wall[right.row][right.col] and right not in visited:
+                queue.append(right)
+        distance += 1
+    
+    return None
+    
+def main():
+    F = False
+    T = True
+    wall_map1 = [
+        [F, F, F, F],
+        [T, T, F, T],
+        [F, F, F, F],
+        [F, F, F, F]
+    ]
+    assert grid_path(wall_map1, Position(0, 0), Position(3, 0)) == 7
+
+    wall_map2 = [
+        [F, F, F, F],
+        [T, T, T, T],
+        [F, F, F, F],
+        [F, F, F, F]
+    ]
+    assert grid_path(wall_map2, Position(0, 0), Position(3, 0)) is None
+
+    wall_map3 = [
+        [F, F, F, F, T, F, F, F],
+        [T, T, T, F, T, F, T, T],
+        [F, F, F, F, T, F, F, F],
+        [F, T, T, T, T, T, T, F] ,
+        [F, F, F, F, F, F, F, F]
+    ]
+    assert grid_path(wall_map3, Position(0, 0), Position(0, 7)) == 25
+
+    wall_map4 = [[F, F]]
+    assert grid_path(wall_map4, Position(0, 0), Position(0, 1)) == 1
+
+if __name__ == '__main__':
+    main()
+```
+
+**Note:** This question can also be solved use ***Bidirectional BFS*** (2-way BFS). 
+
+**Python Solution2:** [https://repl.it/@trsong/gridpath2](https://repl.it/@trsong/gridpath2)
+
+```py
+def search(grid_wall, queue, visited, other_visited):
+    """Search all elem in queue to find exist elem in other_visited. Add all neighbors to queue after."""
+    num_row = len(grid_wall)
+    num_col = len(grid_wall[0])
+    level_size = len(queue)
+    for i in xrange(level_size):
+        current = queue.pop(0)
+        if current in visited: continue
+        if current in other_visited:
+            return current
+        visited.add(current)
+        
+        top = Position(current.row - 1, current.col) if current.row > 0 else None
+        if top and not grid_wall[top.row][top.col] and top not in visited:
+            queue.append(top)
+
+        left = Position(current.row, current.col - 1) if current.col > 0 else None
+        if left and not grid_wall[left.row][left.col] and left not in visited:
+            queue.append(left)
+
+        bottom = Position(current.row + 1, current.col) if current.row < num_row - 1 else None
+        if bottom and not grid_wall[bottom.row][bottom.col] and bottom not in visited:
+            queue.append(bottom)
+            
+        right = Position(current.row, current.col + 1) if current.col < num_col - 1 else None
+        if right and not grid_wall[right.row][right.col] and right not in visited:
+            queue.append(right)
+
+    return None
+
+def grid_path2(grid_wall, start, end):
+    iteration = 0
+    start_visited = set()
+    end_visited = set()
+    start_queue = [start]
+    end_queue = [end]
+    while start_queue and end_queue:
+        # Forward search and add neighbors
+        if search(grid_wall, start_queue, start_visited, end_visited):
+            return 2 * iteration - 1
+
+        # Backward search and add neighbors
+        if search(grid_wall, end_queue, end_visited, start_visited):
+            return 2 * iteration
+
+        iteration += 1
+    return None
+```
 
 ### May 8, 2019 LC 130 \[Medium\] Surrounded Regions
 ---
