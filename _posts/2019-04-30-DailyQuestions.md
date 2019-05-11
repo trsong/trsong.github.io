@@ -26,6 +26,8 @@ categories: Python/Java
 >
 > As another example, given the string "google", you should return "elgoogle".
 
+ -->
+
 ### May 11, 2019 LC 42 \[Hard\] Trapping Rain Water
 ---
 > Given n non-negative integers representing an elevation map where the width of each bar is 1, compute how much water it is able to trap after raining.
@@ -40,8 +42,6 @@ categories: Python/Java
 > 
 > Output: 6
 
--->
-
 ### May 10, 2019 \[Hard\] Execlusive Product
 ---
 > **Question:**  Given an array of integers, return a new array such that each element at index i of the new array is the product of all the numbers in the original array except the one at i.
@@ -49,6 +49,61 @@ categories: Python/Java
 > For example, if our input was [1, 2, 3, 4, 5], the expected output would be [120, 60, 40, 30, 24]. If our input was [3, 2, 1], the expected output would be [2, 3, 6].
 >
 > Follow-up: what if you can't use division?
+
+**My thoughts:** For an input array `[a[0], a[1], a[2], a[3], a[4]]`, what will be the value for output at index i?
+
+It should be `res[i] = a[0] * a[1] * ... a[i-1] * a[i+1] * ... * a[n-1]`, which basically equals `res[i] = (a[0] * a[1] * ... * a[i-1]) * (a[i+1] * ... * a[n-1])`. We can use one array to store all left products and another array for right products. 
+
+eg. `left_execlusive_product[i] = a[0] * a[1] * ... * a[i-1]` and `right_execlusive_product[i] = a[i+1] * ... * a[n-1]`. Thus `res[i] = left_execlusive_product[i] * right_execlusive_product[i]`
+
+Note that `left_execlusive_product[i] = left_execlusive_product[i-1] * a[i-1]` so that we can calculate left_execlusive_product quite easily. Which take `O(N)` time. Similarly, `right_execlusive_product` can also calculate within `O(N)` time.
+
+**Python Solution:** [https://repl.it/@trsong/execlusiveproduct](https://repl.it/@trsong/execlusiveproduct)
+```py
+def execlusive_product(nums):
+    if not nums: return []
+    n = len(nums)
+    left_execlusive_product = [0] * n
+    right_execlusive_product = [0] * n
+    
+    left = 1
+    for i in xrange(n):
+        left_execlusive_product[i] = left
+        left *= nums[i]
+
+    right = 1
+    for j in xrange(n - 1, -1, -1):
+        right_execlusive_product[j] = right
+        right *= nums[j]
+
+    return [left_execlusive_product[i] * right_execlusive_product[i] for i in xrange(n)]
+
+def main():
+    assert execlusive_product([1, 2, 3, 4, 5]) == [120, 60, 40, 30, 24]
+    assert execlusive_product([]) == []
+    assert execlusive_product([2]) == [1]
+    assert execlusive_product([3, 2]) == [2, 3]
+
+if __name__ == '__main__':
+    main()
+```
+**Note:** We can further optimize the code by combining two loops into one.
+```py
+def execlusive_product2(nums):
+    # one pass optimization
+    if not nums: return []
+    n = len(nums)
+    left = 1
+    right = 1
+    res = [1] * n
+    for i in xrange(n):
+        res[i] *= left
+        res[n-1-i] *= right
+        left *= nums[i]
+        right *= nums[n-1-i]
+    return res
+```
+
 
 ### May 9, 2019 \[Easy\] Grid Path
 ---
