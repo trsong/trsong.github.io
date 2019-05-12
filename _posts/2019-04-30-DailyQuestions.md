@@ -18,7 +18,7 @@ categories: Python/Java
 
 <!--
 
-### May 12, 2019 \[Medium\] Craft Palindrome
+### May 13, 2019 \[Medium\] Craft Palindrome
 ---
 > **Question:** Given a string, find the palindrome that can be made by inserting the fewest number of characters as possible anywhere in the word. If there is more than one palindrome of minimum length that can be made, return the lexicographically earliest one (the first one alphabetically).
 >
@@ -27,6 +27,13 @@ categories: Python/Java
 > As another example, given the string "google", you should return "elgoogle".
 
  -->
+
+### May 12, 2019 \[Medium\] Inversion Pairs
+
+> **Question:**  We can determine how "out of order" an array A is by counting the number of inversions it has. Two elements `A[i]` and `A[j]` form an inversion if `A[i] > A[j]` but `i < j`. That is, a smaller element appears after a larger element. Given an array, count the number of inversions it has. Do this faster than `O(N^2)` time. You may assume each element in the array is distinct.
+>
+> For example, a sorted list has zero inversions. The array `[2, 4, 1, 3, 5]` has three inversions: `(2, 1)`, `(4, 1)`, and `(4, 3)`. The array `[5, 4, 3, 2, 1]` has ten inversions: every distinct pair forms an inversion.
+
 
 ### May 11, 2019 LC 42 \[Hard\] Trapping Rain Water
 ---
@@ -41,6 +48,101 @@ categories: Python/Java
 > Input: [0,1,0,2,1,0,1,3,2,1,2,1]
 > 
 > Output: 6
+
+**My thoughts:** This question can be solved w/ pre-record left & right boundary as well as with 2 pointers. Both solution take `O(n)` time. However, first solution requires more memory than second one.
+
+**Solution 1:** Pre-record Left & Right Boundary
+
+Total water accumulation equals sum of each position's accumulation. For any position at index `i`, the reason why current position has water accumulation is due to the fact that there exist `l < i` such that `water_height[l] > water_height[i]` as well as `i < r` such that `water_height[r] > water_height[i]`. 
+
+We probably don't care about what l, r are. However, we do care about how much each position can accumulate at maximum. `min(left_boundary[i], right_boundary[i]) - water_height[i]`. Where left_boundary represents max height on the left of i and right_boundary represents max height on the right of i.
+
+Use the following as example: 
+
+![rainwatertrap](https://assets.leetcode.com/uploads/2018/10/22/rainwatertrap.png)
+
+| index                     | 0   | 1   | 2   | 3   | 4   | 5   | 6   | 7   | 8   | 9   | 10  | 11  |
+| :------------------------ | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: |
+| water_height              | 0   | 1   | 0   | 2   | 1   | 0   | 1   | 3   | 2   | 1   | 2   | 1   |
+| left_boundary             | 0   | 0   | 1   | 2   | 2   | 2   | 2   | 2   | 3   | 3   | 3   | 3   |
+| right_boundary            | 3   | 3   | 3   | 3   | 3   | 3   | 3   | 2   | 2   | 2   | 1   | 0   |
+| accumulation(blue reigon) | 0   | 0   | 1   | 0   | 1   | 2   | 1   | 0   | 0   | 1   | 0   | 0   |
+
+**Python Solution:** [https://repl.it/@trsong/trappingRainWater](https://repl.it/@trsong/trappingRainWater)
+```py
+def trapping_rain_water_solver(water_height):
+    n = len(water_height)
+    left_boundary = [0] * n
+    right_boundary = [0] * n
+    left = 0
+    right = 0
+    for i in xrange(n):
+        left_boundary[i] = left
+        right_boundary[n-1-i] = right
+        left = max(left, water_height[i])
+        right = max(right, water_height[n-i-1])
+    sum = 0
+    for i in xrange(n):
+        # How much water can be accumulated at index i is depend on max boundary height on the left and max boundary on the right.
+        sum += max(0, min(left_boundary[i], right_boundary[i]) - water_height[i])
+    return sum
+
+def main():
+    assert trapping_rain_water_solver([0,1,0,2,1,0,1,3,2,1,2,1]) == 6
+    assert trapping_rain_water_solver([1, 1, 1, 2]) == 0
+    assert trapping_rain_water_solver([1, 1, 1, 1]) == 0
+    assert trapping_rain_water_solver([2, 1, 1, 1]) == 0
+    assert trapping_rain_water_solver([]) == 0
+    assert trapping_rain_water_solver([1, 1, 2, 3, 2, 1, 2, 3, 4, 5, 4, 3, 2, 1, 2, 3, 2, 1]) == 8
+    assert trapping_rain_water_solver([3, 2, 1, 2, 3]) == 4
+
+if __name__ == '__main__':
+    main()
+```
+
+**Solution 2:** 2 pointers
+
+Maintain two pointers and always move pointer w/ smaller height to the other one. How this works is because if left pointer is smaller: `water_height[left] < water_height[right]`, then there must be an index k between left and right represents local right boundary such that its value `water_height[left] < water_height[k] <= water_height[right]`. Note that heights between left and k is either increasing or decresing. We can calculate water accumulation between left and k. And vice versa when right pointer is smaller.
+
+Use the following as example: 
+
+![rainwatertrap](https://assets.leetcode.com/uploads/2018/10/22/rainwatertrap.png)
+
+| Iteration |     |     |     |     |     |     |     |     |     |     |     |     | Direction | Accumulation  |
+| :-------- | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-------: | :------------ |
+| 1         | 0   |     |     |     |     |     |     |     |     |     |     | 1   | start     | 0             |
+| 2         | 0   | 1   |     |     |     |     |     |     |     |     |     | 1   | ->        | 0             |
+| 3         | 0   | 1   | 0   | 2   |     |     |     |     |     |     |     | 1   | ->        | 1             |
+| 4         | 0   | 1   | 0   | 2   |     |     |     |     |     |     | 2   | 1   | ->        | 0             |
+| 5         | 0   | 1   | 0   | 2   | 1   | 0   | 1   | 3   |     |     | 2   | 1   | ->        | 1 + 2 + 1 = 4 |
+| 6         | 0   | 1   | 0   | 2   | 1   | 0   | 1   | 3   | 2   | 1   | 2   | 1   | <-        | 1             |
+
+total: 1 + 4 + 1 = 6
+
+```py
+def trapping_rain_water_solver2(water_height):
+    lo = 0
+    hi = len(water_height) - 1
+    sum = 0
+    while lo < hi:
+        left_boundary = water_height[lo]
+        right_boundary = water_height[hi]
+        if left_boundary < right_boundary:
+            # If left_boundary < right_boundary, there exists a local_right_bounary while we are moving from left to right
+            # such that left_boundary < local_right_bounary <= right_boundary
+            while lo < hi and left_boundary >= water_height[lo]:
+                # Accumulate water between left_boundary and local_right_bounary
+                sum += left_boundary - water_height[lo]
+                lo += 1
+        else:
+            # If left_boundary >= right_boundary, there exists a local_left_boundary while moveing from right to left
+            # such that left_boundary <= local_left_bounary < right_boundary
+            while lo < hi and right_boundary >= water_height[hi]:
+                # Accumulate water between right_boundary and local_left_bounary
+                sum += right_boundary - water_height[hi]
+                hi -= 1
+    return sum
+```
 
 ### May 10, 2019 \[Hard\] Execlusive Product
 ---
