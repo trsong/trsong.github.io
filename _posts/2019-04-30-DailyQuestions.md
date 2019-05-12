@@ -18,6 +18,87 @@ categories: Python/Java
 
 <!--
 
+### May 21, 2019 \[Hard\] Random Elements from Infinite Stream
+---
+> **Question:** Randomly choosing a sample of k items from a list S containing n items, where n is either a very large or unknown number. Typically, n is too large to fit the whole list into main memory.
+
+
+### May 20, 2019 \[Hard\] Edit Distance
+---
+> The edit distance between two strings refers to the minimum number of character insertions, deletions, and substitutions required to change one string to the other. For example, the edit distance between “kitten” and “sitting” is three: substitute the “k” for “s”, substitute the “e” for “i”, and append a “g”.
+> 
+> Given two strings, compute the edit distance between them.
+
+### May 19, 2019 \[Hard\] Regular Expression: Period and Asterisk
+---
+> **Question:** Implement regular expression matching with the following special characters:
+>
+> - `.` (period) which matches any single character
+> 
+> - `*` (asterisk) which matches zero or more of the preceding element
+That is, implement a function that takes in a string and a valid regular expression and returns whether or not the string matches the regular expression.
+>
+> For example, given the regular expression "ra." and the string "ray", your function should return true. The same regular expression on the string "raymond" should return false.
+>
+> Given the regular expression ".*at" and the string "chat", your function should return true. The same regular expression on the string "chats" should return false.
+
+### May 18, 2019 \[Easy\]
+---
+> **Question:** Given two singly linked lists that intersect at some point, find the intersecting node. The lists are non-cyclical.
+>
+> For example, given A = 3 -> 7 -> 8 -> 10 and B = 99 -> 1 -> 8 -> 10, return the node with value 8.
+>
+> In this example, assume nodes with the same value are the exact same node objects.
+>
+> Do this in O(M + N) time (where M and N are the lengths of the lists) and constant space.
+
+### May 17, 2019 LC 332 \[Medium\] Reconstruct Itinerary
+---
+> **Questions:** Given a list of airline tickets represented by pairs of departure and arrival airports [from, to], reconstruct the itinerary in order. All of the tickets belong to a man who departs from JFK. Thus, the itinerary must begin with JFK.
+
+Note:
+
+> 1. If there are multiple valid itineraries, you should return the itinerary that has the smallest lexical order when read as a single string. For example, the itinerary ["JFK", "LGA"] has a smaller lexical order than ["JFK", "LGB"].
+> 2. All airports are represented by three capital letters (IATA code).
+> 3. You may assume all tickets form at least one valid itinerary.
+   
+Example 1:
+
+```java
+Input: [["MUC", "LHR"], ["JFK", "MUC"], ["SFO", "SJC"], ["LHR", "SFO"]]
+Output: ["JFK", "MUC", "LHR", "SFO", "SJC"]
+```
+Example 2:
+
+```java
+Input: [["JFK","SFO"],["JFK","ATL"],["SFO","ATL"],["ATL","JFK"],["ATL","SFO"]]
+Output: ["JFK","ATL","JFK","SFO","ATL","SFO"]
+Explanation: Another possible reconstruction is ["JFK","SFO","ATL","JFK","ATL","SFO"].
+             But it is larger in lexical order.
+```
+### May 16, 2019 \[Easy\] Mimimum Lecture Rooms
+---
+> **Questions:** Given an array of time intervals (start, end) for classroom lectures (possibly overlapping), find the minimum number of rooms required.
+>
+> For example, given [(30, 75), (0, 50), (60, 150)], you should return 2.
+
+### May 15, 2019  \[Medium\] Implementation of Tic-Tac-Toe game
+---
+> **Questions:** Implementation of Tic-Tac-Toe game
+> 
+> Rules of the Game:
+>
+> - The game is to be played between two people.
+One of the player chooses ‘O’ and the other ‘X’ to mark their respective cells.
+> - The game starts with one of the players and the game ends when one of the players has one whole row/ column/ diagonal filled with his/her respective character (‘O’ or ‘X’).
+> - If no one wins, then the game is said to be draw.
+
+### May 14, 2019 \[Medium\]  Overlapping Rectangles
+---
+> **Questions:** You're given 2 over-lapping rectangles on a plane. For each rectangle, you're given its bottom-left and top-right points. How would you find the area of their overlap?
+
+-->
+
 ### May 13, 2019 \[Medium\] Craft Palindrome
 ---
 > **Question:** Given a string, find the palindrome that can be made by inserting the fewest number of characters as possible anywhere in the word. If there is more than one palindrome of minimum length that can be made, return the lexicographically earliest one (the first one alphabetically).
@@ -26,10 +107,10 @@ categories: Python/Java
 >
 > As another example, given the string "google", you should return "elgoogle".
 
- -->
+
 
 ### May 12, 2019 \[Medium\] Inversion Pairs
-
+---
 > **Question:**  We can determine how "out of order" an array A is by counting the number of inversions it has. Two elements `A[i]` and `A[j]` form an inversion if `A[i] > A[j]` but `i < j`. That is, a smaller element appears after a larger element. Given an array, count the number of inversions it has. Do this faster than `O(N^2)` time. You may assume each element in the array is distinct.
 >
 > For example, a sorted list has zero inversions. The array `[2, 4, 1, 3, 5]` has three inversions: `(2, 1)`, `(4, 1)`, and `(4, 3)`. The array `[5, 4, 3, 2, 1]` has ten inversions: every distinct pair forms an inversion.
@@ -37,7 +118,7 @@ categories: Python/Java
 
 ### May 11, 2019 LC 42 \[Hard\] Trapping Rain Water
 ---
-> Given n non-negative integers representing an elevation map where the width of each bar is 1, compute how much water it is able to trap after raining.
+> **Question:** Given n non-negative integers representing an elevation map where the width of each bar is 1, compute how much water it is able to trap after raining.
  
 ![rainwatertrap](https://assets.leetcode.com/uploads/2018/10/22/rainwatertrap.png)
 
