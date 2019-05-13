@@ -107,14 +107,167 @@ One of the player chooses ‘O’ and the other ‘X’ to mark their respective
 >
 > As another example, given the string "google", you should return "elgoogle".
 
-
-
 ### May 12, 2019 \[Medium\] Inversion Pairs
 ---
 > **Question:**  We can determine how "out of order" an array A is by counting the number of inversions it has. Two elements `A[i]` and `A[j]` form an inversion if `A[i] > A[j]` but `i < j`. That is, a smaller element appears after a larger element. Given an array, count the number of inversions it has. Do this faster than `O(N^2)` time. You may assume each element in the array is distinct.
 >
 > For example, a sorted list has zero inversions. The array `[2, 4, 1, 3, 5]` has three inversions: `(2, 1)`, `(4, 1)`, and `(4, 3)`. The array `[5, 4, 3, 2, 1]` has ten inversions: every distinct pair forms an inversion.
 
+**Python Trivial Solution:** 
+
+```py
+def count_inversion_pairs_naive(nums):
+    inversions = 0
+    n = len(nums)
+    for i in xrange(n):
+        for j in xrange(i+1, n):
+            inversions += 1 if nums[i] > nums[j] else 0
+    return inversions
+```
+
+**My thoughts:** We can start from trivial solution and perform optimization after. In trivial solution basically, we try to count the total number of larger number on the left of smaller number. However, while solving this question, you need to ask yourself, is it necessary to iterate through all combination of different pairs and calculate result?
+
+e.g. For input `[5, 4, 3, 2, 1]` each pair is an inversion pair, once I know `(5, 4)` will be a pair, then do I need to go over the remain `(5, 3)`, `(5, 2)`, `(5, 1)` as 3,2,1 are all less than 4? 
+
+So there probably exits some tricks to allow us save some effort to not go over all possible combinations. 
+
+**Solution 1**: Divide and Conquer
+
+Did you notice the following properties? 
+
+1. `count_inversion_pairs([5, 4, 3, 2, 1]) = count_inversion_pairs([5, 4]) + count_inversion_pairs([3, 2, 1]) + inversion_pairs_between([5, 4], [3, 2, 1])`
+2. `inversion_pairs_between([5, 4], [3, 2, 1]) = inversion_pairs_between(sorted([5, 4]), sorted([3, 2, 1])) = inversion_pairs_between([4, 5], [1, 2, 3])`
+
+This is bascially modified version of merge sort. Consider we break `[5, 4, 3, 2, 1]` into two almost equal parts: `[5, 4]` and `[3, 2, 1]`. Notice such break won't affect inversion pairs, as whatever on the left remains on the left. However, inversion pairs between `[5, 4]` and `[3, 2, 1]` can be hard to count without doing it one-by-one. 
+
+If only we could sort them separately as sort won't affect the inversion order between two lists. i.e. `[4, 5]` and `[1, 2, 3]`. Now let's see if we can find the pattern, if `4 < 1`, then `5 should < 1`. And we also have `4 < 2` and `4 < 3`. We can simply skip all `elem > than 4` on each iteration, i.e. we just need to calculate how many elem > 4 on each iteration. This gives us **property 2**.
+
+And we can futher break `[5, 4]` into `[5]` and `[4]` recursively. This gives us **property 1**.
+
+Combine property 1 and 2 gives us the modified version of ***Merge-Sort***.
+
+
+**Python Solution1:** [https://repl.it/@trsong/Inversion-Pairs](https://repl.it/@trsong/Inversion-Pairs)
+
+```py
+def merge(arr, begin, middle, end):
+    p1 = begin
+    p2 = middle + 1
+    mid = middle
+    inversions = 0
+    if p2 <= end and arr[mid] <= arr[p2]: return 0
+    while p1 <= mid and p2 <= end:
+        if arr[p1] <= arr[p2]:
+            p1 += 1
+        else:
+            inversions += mid - p1 + 1
+                
+            # shift value by 1 to make room to merge p2 value
+            value = arr[p2]
+            for i in xrange(p2, p1, -1):
+                arr[i] = arr[i-1]
+            arr[p1] = value
+
+            p1 += 1
+            p2 += 1
+            mid += 1
+    return inversions
+
+def merge_sort(arr, begin, end):
+    if begin >= end: return 0
+    mid = begin + (end - begin) / 2
+    left_sub_inversions = merge_sort(arr, begin, mid)
+    right_sub_inversions = merge_sort(arr, mid + 1, end)
+    current_inversions = merge(arr, begin, mid, end)
+    return left_sub_inversions + right_sub_inversions + current_inversions
+
+def count_inversion_pairs(nums):
+    return merge_sort(nums, 0, len(nums) - 1)
+
+def main():
+    # For list in descending order, each pair forms an inversion pair, so we have n(n-1)/2 = 5 * 4 / 2 = 10 
+    assert count_inversion_pairs([5, 4, 3, 2, 1]) == 10
+    assert count_inversion_pairs([2, 4, 1, 3, 5]) == 3
+    assert count_inversion_pairs([1, 2, 3]) == 0
+    assert count_inversion_pairs([1, 1, 1, 1]) == 0
+    assert count_inversion_pairs([1]) == 0
+    assert count_inversion_pairs([]) == 0
+
+if __name__ == '__main__':
+    main()
+```
+
+**Solution 2**: Counting number of smaller elements efficiently
+
+In the trivial solution above, we scan through all different combination of elements. However, is there any way we can sort of **cache** the previous counting result. i.e. Going backwards from the list and keep track of number of smaller element on the left. 
+
+e.g. Process from right to left of `[1, 2, 3, 4, 5]` 
+1. Process 5, no smaller elem found
+2. Process 4, no smaller elem found
+3. Process 3, no smaller elem found
+4. Process 2, no smaller elem found
+5. Process 1, no smaller elem found
+Total Number of inversions: 0
+
+e.g. Process from right to left of `[5, 4, 3, 2, 1]`
+1. Process 1, no smaller elem found
+2. Process 2, found 1 candidate which is 1, possible inversion (2, 1)
+3. Process 3, found 2 candidates: 1 and 2. possible inversion (3, 2), (3, 1)
+4. Process 4, found 3 candidates: 1, 2 and 3. possible inversion (4, 3), (4, 2), (4, 1)
+5. Process 5, found 4 candidates: 1, 2, 3, 4. possible inversion (5, 4), (5, 3), (5, 2), (5,1)
+Total Number of inversions: 0 + 1 + 2 + 3 + 4 = 10
+ 
+Notice that we don't need to keep track of exact smaller number, just storing those numbers are sufficient. And we happen to have a powerful data structure that by giving a value, it can quickly returns number of smaller elements. Such data structure is called ***Binary Indexed Tree (BIT)*** and it can do well in range queries. i.e. calculate range sum.
+
+How? 
+
+Think about an array A where `A[i]` represents number of elem smaller than `i`. Then counting the number of smaller-than-target elem is sum of `A[0]`, `A[1]`, ...,  `A[target-1]`. And BIT can do well in range queries. 
+
+**Python Solution2:** [https://repl.it/@trsong/Inversion-Pairs2](https://repl.it/@trsong/Inversion-Pairs2)
+
+```py
+class PrefixSum(object):
+    """PrefixSum provide an efficient way to update and calculate range sum on the fly"""
+
+    @staticmethod
+    def last_bit(num):
+        return num & -num
+
+    def __init__(self, size):
+        self._BITree = [0] * (size + 1)
+
+    def get_sum(self, i):
+        """Get sum of value from index 0 to i """
+        # BITree starts from index 1
+        index = i + 1
+        res = 0
+        while index > 0:
+            res += self._BITree[index]
+            index -= PrefixSum.last_bit(index)
+        return res
+
+    def update(self, i, delta):
+        """Update the sum by add delta on top of result"""
+        # BITree starts from index 1
+        index = i + 1
+        while index < len(self._BITree):
+            self._BITree[index] += delta
+            index += PrefixSum.last_bit(index)
+
+def count_inversion_pairs2(nums):
+    if not nums: return 0
+    max_value = max(nums)
+    # Store number of elem less than current value in prefix_sum
+    prefix_sum = PrefixSum(max_value)
+    inversions = 0
+
+    for i in xrange(len(nums) - 1, -1, -1):
+        # We count inversions backwards. For each elem, we use prefix sum to calculate number of elem less than current value
+        current_value = nums[i]
+        inversions += prefix_sum.get_sum(current_value - 1)
+        prefix_sum.update(current_value, 1)
+    return inversions
+```
 
 ### May 11, 2019 LC 42 \[Hard\] Trapping Rain Water
 ---
