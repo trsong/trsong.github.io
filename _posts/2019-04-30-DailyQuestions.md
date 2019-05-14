@@ -93,11 +93,12 @@ One of the player chooses ‘O’ and the other ‘X’ to mark their respective
 > - The game starts with one of the players and the game ends when one of the players has one whole row/ column/ diagonal filled with his/her respective character (‘O’ or ‘X’).
 > - If no one wins, then the game is said to be draw.
 
-### May 14, 2019 \[Medium\]  Overlapping Rectangles
+--> 
+
+### May 14, 2019 \[Medium\] Overlapping Rectangles
 ---
 > **Questions:** You're given 2 over-lapping rectangles on a plane. For each rectangle, you're given its bottom-left and top-right points. How would you find the area of their overlap?
 
--->
 
 ### May 13, 2019 \[Medium\] Craft Palindrome
 ---
@@ -106,6 +107,216 @@ One of the player chooses ‘O’ and the other ‘X’ to mark their respective
 > For example, given the string "race", you should return "ecarace", since we can add three letters to it (which is the smallest amount to make a palindrome). There are seven other palindromes that can be made from "race" by adding three letters, but "ecarace" comes first alphabetically.
 >
 > As another example, given the string "google", you should return "elgoogle".
+
+**My thoughts:** There are two ways to solving this problem. Brute force way VS Dynamic Programming + Tracking Backwards. I was too lazy to post the brute force solution but the idea is to think about each possible piovt positions: there are `2n - 1` of them. And find the smallest   among all posible incertions.
+
+e.g. For input = "abcde", all position of pivot are marked:
+```py
+| a | b | c | d | e
+0 1 2 3 4 5 6 7 8 9
+```
+Suppose we choose 1 as pivot, we will need to insert all char in parentheses like the following:
+```py
+(edcb)abcde
+```
+
+Suppose we choose 2 as pivot, we will need to insert all char in parentheses like the following:
+```py
+a(cde)bcde(a)
+```
+
+But the brute force solution is NOT efficient in terms of both space and time. As the seach space is huge and a lot of cases are duplicated.
+
+**Dynamic Programming + Tracking Backwards Solution**
+
+Before think about how to insert character, let's do that step by step. First consider what's the minimum number of solutions needed to form a palindrome. 
+
+> **STEP 1:** Find Minimum Number of Insertion
+
+Let `word[l:r]` represents substring of word from index `l` to index `r` inclusive. We can break the `find_min_insertion(word[l:r])` into:
+- `find_min_insertion(word[l:r-1])`
+- `find_min_insertion(word[l-1:r])`
+- `find_min_insertion(word[l-1:r-1])` 
+
+And we will have the following recursive formula:
+
+If `word[l] = word[r]` which means the first and last character matches, then we solve the sub-problem: 
+
+`find_min_insertion(word[l:r]) = find_min_insertion(word[l-1:r-1])`
+
+else,  we will need to insert 1 charater either to front or back, depends on which sub-problem is smaller
+
+`find_min_insertion(word[l:r]) = 1 + min(find_min_insertion(word[l-1:r]), find_min_insertion(word[l:r-1]))`
+
+The following code snippet illustrates above recursion
+
+```py
+def find_min_insertion(word, left, right):
+    if left == right:
+        return 0
+    elif left == right - 1:
+        return 0 if word[left] == word[right] else 1
+    elif word[left] == word[right]:
+        return find_min_insertion(word, left + 1, right - 1)
+    else:
+        drop_left_res = find_min_insertion(word, left + 1, right)
+        drop_right_res = find_min_insertion(word, left, right - 1)
+        return 1 + min(drop_left_res, drop_right_res)
+```
+
+> **STEP 2:** Optimize Solution and Store Each Design We Made
+
+In the recusive solution mentioned above, our solution is not efficient in both time and space. Plus there is no way for us to know what decision we made to get the final value. 
+
+So what about using DP to solve this problem?
+
+Well it seems to be a good idea. We define `dp[l][r]` to be the solution for `find_min_insertion(word[l:r])`. Then we can use the following formula:
+
+```py
+if word[left] == word[right]:
+    dp[left][right] = dp[left+1][right-1]
+else:
+    dp[left][right] = 1 + min(dp[left+1][right], dp[left][right-1])
+```
+
+But another problem pops up: how do we interate through the 2D array? As `dp[left][right] = dp[left+1][right-1]`. We cannot do lefe to right as index `l` depend on `l+1`.
+
+A good idea to tackle this problem is the think about how does the recursion tree looks like for previous recursive solution. 
+
+e.g. What does recursion looks like for `word[0,3]`
+```        
+                  f(0, 3)
+            /        |       \
+           /         |        \
+       f(0, 2) f    (1, 2)   f(1, 3)
+   /      |      \         /      |      \            
+f(0, 1) f(1, 1) f(1, 2)  f(1, 2) f(2, 2) f(2, 3)             
+```
+
+Note that the base case (leaf positon) is either  `l = r` or `l = r - 1`. We define `gap = r - l`
+
+Then we find that `gap = 2` depends on `gap = 1`. And `gap = 3` depends on `gap = 2`. So that means we have to solve `gap=1 gap=2 gap=3 ... gap=n-2` one-by-one.
+
+Ok, now let's go back to the issue regarding how we iterate through the dp array. 
+
+When `gap = 1`, we have
+```py
+dp[0][1], dp[1][2], dp[2][3], dp[3][4]
+```
+
+When `gap = 2`, we have
+```py
+dp[0][2], dp[1][3], dp[2][4]
+```
+
+When `gap = 3`, we have
+```py
+dp[0][3], dp[1][4]
+```
+
+When `gap = 4`, we have
+```py
+dp[0][4]
+```
+
+So you find that `r` ranges from `gap` to `n-1` and `l = r - gap`. And here is the DP way to solve this problem:
+
+```py
+def find_min_insertion_DP(word):
+    n = len(word)
+    dp = [[0 for r in xrange(n)] for c in xrange(n)]
+
+    for gap in xrange(1, n):
+        for right in xrange(gap, n):
+            left = right - gap
+            if word[left] == word[right]:
+                dp[left][right] = dp[left+1][right-1]
+            else:
+                dp[left][right] = 1 + min(dp[left+1][right], dp[left][right-1])
+    
+    return dp[0][n-1]
+```
+
+> **STEP 3:** Tracking Backwards Using the DP Decision Array
+
+Right now we know what is the minimum insertion we have to take. Now we can go backwards and backtracking the decision we made to get such result. 
+
+So first of all, let's take a look at the recursive relation:
+
+```py
+if word[left] == word[right]:
+    dp[left][right] = dp[left+1][right-1]
+else:
+    dp[left][right] = 1 + min(dp[left+1][right], dp[left][right-1])
+```
+
+So if it's the first case, the we down and left. And if it's the second case, base on which one is smaller we can determine if we insert `word[right]` or insert `word[left]`. And remember the question ask to return the **lexicographically earliest** one, thus if there is a tie between
+`dp[left+1][right]` and `dp[left][right-1]`. We will use the lexicographical order of `word[left]` and `word[right]` to determine who wins. 
+
+You might ask what if we have a tie again between `word[left]` and `word[right]`. Then the answer is, we will fall into the first case, `dp[left][right] = dp[left+1][right-1]`.
+
+**Python Solution:** [https://repl.it/@trsong/Craft-Palindrome](https://repl.it/@trsong/Craft-Palindrome)
+```py
+def find_min_insertion_DP_helper(word):
+    n = len(word)
+    dp = [[0 for r in xrange(n)] for c in xrange(n)]
+
+    for gap in xrange(1, n):
+        for right in xrange(gap, n):
+            left = right - gap
+            if word[left] == word[right]:
+                dp[left][right] = dp[left+1][right-1]
+            else:
+                dp[left][right] = 1 + min(dp[left+1][right], dp[left][right-1])
+    return dp
+
+def craft_palindrome(word):
+    if not word: return ""
+    n = len(word)
+    dp = find_min_insertion_DP_helper(word)
+    min_insertion = dp[0][n-1]
+    res = [None] * (n + min_insertion)
+    left, right = 0, n - 1
+    updated_left, updated_right = 0, len(res) - 1
+    
+    while left <= right:
+        chosen = None
+        if word[left] == word[right]:
+            chosen = word[left]
+            left += 1
+            right -= 1
+        else: 
+            drop_left_res = dp[left+1][right]
+            drop_right_res = dp[left][right-1]
+            if drop_left_res < drop_right_res or drop_left_res == drop_right_res and word[left] < word[right]:
+                chosen = word[left]
+                left += 1
+            else:
+                # Either drop_left_res > drop_right_res; Or drop_left_res == drop_right_res and word[left] > word[right]
+                chosen = word[right]
+                right -= 1
+
+        res[updated_left] = chosen
+        res[updated_right] = chosen
+        updated_left += 1
+        updated_right -= 1
+    
+    return ''.join(res)
+
+def main():
+    assert craft_palindrome("") == ""
+    assert craft_palindrome("a") == "a"
+    assert craft_palindrome("aa") == "aa"
+    assert craft_palindrome("race") == "ecarace"
+    assert craft_palindrome("abcd") == "abcdcba"
+    assert craft_palindrome("abcda") == "abcdcba"
+    assert craft_palindrome("abcde") == "abcdedcba"
+    assert craft_palindrome("google") == "elgoogle"
+
+if __name__ == "__main__":
+    main()
+```
+
 
 ### May 12, 2019 \[Medium\] Inversion Pairs
 ---
