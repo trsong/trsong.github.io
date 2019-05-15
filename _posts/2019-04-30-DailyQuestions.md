@@ -110,6 +110,15 @@ Explanation: Another possible reconstruction is ["JFK","SFO","ATL","JFK","ATL","
 **My thoughts:** If you haven't seen this question before, don't worry. You probably should have seen the 1D version of this question. i.e. Find the overlapping length for two intervals.
 Now think about 2D version of that question, in order to solve the overlapping region, we can project the shape of the graph onto x-axis and y-axis to get x-intersection and y-intersection. The overlapping ara is just product of those two intersections.
 
+```
+ Test strategy: use the following graph to cover all different edge cases
+ ┌───┬───┐ 2,2
+ │ ┌─┼─┐ │
+ ├─┼─┼─┼─┤
+ │ └─┼─┘ │
+ └───┴───┘
+ -2,-2
+```
 **Python Solution:** [https://repl.it/@trsong/Overlapping-Rectangles](https://repl.it/@trsong/Overlapping-Rectangles)
 ```py
  # -*- coding: utf-8 -*
@@ -165,13 +174,7 @@ class Rectangle(object):
     def __eq__(self, other):
         return self.bottom_left == other.bottom_left and self.top_right == other.top_right
 
-# Test strategy: use the following graph to cover all different edge cases
-# ┌───┬───┐ 2,2
-# │ ┌─┼─┐ │
-# ├─┼─┼─┼─┤
-# │ └─┼─┘ │
-# └───┴───┘
-# -2,-2
+
 def main():
     tl = Rectangle(Point(-2,0), Point(0,2))
     tr = Rectangle(Point(0,0), Point(2,2))
