@@ -176,7 +176,7 @@ class Rectangle(object):
  -2,-2
 ```
 
-```
+```py
 def main():
     tl = Rectangle(Point(-2,0), Point(0,2))
     tr = Rectangle(Point(0,0), Point(2,2))
