@@ -18,6 +18,17 @@ categories: Python/Java
 
 <!--
 
+### \[Medium\] Implementation of Tic-Tac-Toe game
+---
+> **Questions:** Implementation of Tic-Tac-Toe game
+> 
+> Rules of the Game:
+>
+> - The game is to be played between two people.
+One of the player chooses ‘O’ and the other ‘X’ to mark their respective cells.
+> - The game starts with one of the players and the game ends when one of the players has one whole row/ column/ diagonal filled with his/her respective character (‘O’ or ‘X’).
+> - If no one wins, then the game is said to be draw.
+
 ### May 21, 2019 \[Hard\] Random Elements from Infinite Stream
 ---
 > **Question:** Randomly choosing a sample of k items from a list S containing n items, where n is either a very large or unknown number. Typically, n is too large to fit the whole list into main memory.
@@ -82,23 +93,125 @@ Explanation: Another possible reconstruction is ["JFK","SFO","ATL","JFK","ATL","
 >
 > For example, given [(30, 75), (0, 50), (60, 150)], you should return 2.
 
-### May 15, 2019  \[Medium\] Implementation of Tic-Tac-Toe game
----
-> **Questions:** Implementation of Tic-Tac-Toe game
-> 
-> Rules of the Game:
->
-> - The game is to be played between two people.
-One of the player chooses ‘O’ and the other ‘X’ to mark their respective cells.
-> - The game starts with one of the players and the game ends when one of the players has one whole row/ column/ diagonal filled with his/her respective character (‘O’ or ‘X’).
-> - If no one wins, then the game is said to be draw.
-
 --> 
+
+### May 15, 2019 \[Medium\] Tokenization
+---
+> **Questions:** Given a dictionary of words and a string made up of those words (no spaces), return the original sentence in a list. If there is more than one possible reconstruction, return any of them. If there is no possible reconstruction, then return null.
+>
+> For example, given the set of words 'quick', 'brown', 'the', 'fox', and the string "thequickbrownfox", you should return ['the', 'quick', 'brown', 'fox'].
+>
+> Given the set of words 'bed', 'bath', 'bedbath', 'and', 'beyond', and the string "bedbathandbeyond", return either ['bed', 'bath', 'and', 'beyond] or ['bedbath', 'and', 'beyond'].
 
 ### May 14, 2019 \[Medium\] Overlapping Rectangles
 ---
 > **Questions:** You're given 2 over-lapping rectangles on a plane. For each rectangle, you're given its bottom-left and top-right points. How would you find the area of their overlap?
 
+**My thoughts:** If you haven't seen this question before, don't worry. You probably should have seen the 1D version of this question. i.e. Find the overlapping length for two intervals.
+Now think about 2D version of that question, in order to solve the overlapping region, we can project the shape of the graph onto x-axis and y-axis to get x-intersection and y-intersection. The overlapping ara is just product of those two intersections.
+
+**Python Solution:** [https://repl.it/@trsong/Overlapping-Rectangles](https://repl.it/@trsong/Overlapping-Rectangles)
+```py
+ # -*- coding: utf-8 -*
+class Point(object):
+    @staticmethod
+    def x_projection(p1, p2):
+        return Interval(p1.x, p2.x)
+    
+    @staticmethod
+    def y_projection(p1, p2):
+        return Interval(p1.y, p2.y)
+
+    def __init__(self, x, y):
+        self.x = x
+        self.y = y
+    def __eq__(self, other):
+        return self.x == other.x and self.y == other.y
+
+class Interval(object):
+    @staticmethod
+    def intersection(interval1, interval2):
+        if interval1.end <= interval2.begin or interval2.end <= interval1.begin:
+            return 0
+        else:
+            return min(interval1.end, interval2.end) - max(interval1.begin, interval2.begin)
+
+    def __init__(self, begin, end):
+        self.begin = min(begin, end)
+        self.end = max(begin, end)
+
+class Rectangle(object):
+    @staticmethod
+    def overlapping(r1, r2):
+        x_projection1 = r1.get_x_projection()
+        x_projection2 = r2.get_x_projection()
+        y_projection1 = r1.get_y_projection()
+        y_projection2 = r2.get_y_projection()
+
+        x_intersection = Interval.intersection(x_projection1, x_projection2)
+        y_intersection = Interval.intersection(y_projection1, y_projection2)
+        return x_intersection * y_intersection
+
+    def __init__(self, bottom_left, top_right):
+        self.bottom_left = bottom_left
+        self.top_right = top_right
+
+    def get_x_projection(self):
+        return Point.x_projection(self.bottom_left, self.top_right)
+
+    def get_y_projection(self):
+        return Point.y_projection(self.bottom_left, self.top_right)
+
+    def __eq__(self, other):
+        return self.bottom_left == other.bottom_left and self.top_right == other.top_right
+
+# Test strategy: use the following graph to cover all different edge cases
+# ┌───┬───┐ 2,2
+# │ ┌─┼─┐ │
+# ├─┼─┼─┼─┤
+# │ └─┼─┘ │
+# └───┴───┘
+# -2,-2
+def main():
+    tl = Rectangle(Point(-2,0), Point(0,2))
+    tr = Rectangle(Point(0,0), Point(2,2))
+    bl = Rectangle(Point(-2,-2), Point(0,0))
+    br = Rectangle(Point(0,-2), Point(2,0))
+    inner = Rectangle(Point(-1,-1), Point(1,1))
+    outer = Rectangle(Point(-2,-2), Point(2,2))
+    lst = [tl, tr, bl, br]
+    origin = Rectangle(Point(0, 0), Point(0, 0))
+
+    # Verify all combinations with no overlapping
+    assert Rectangle.overlapping(origin, origin) == 0
+    for r in lst + [inner, outer]:
+        assert Rectangle.overlapping(origin, r) == 0
+        assert Rectangle.overlapping(r, origin) == 0
+    for r1 in lst:
+        for r2 in lst:
+            if r1 != r2:
+                assert Rectangle.overlapping(r1, r2) == 0
+    
+    # Verify all combinations with overlapping = 1
+    for r in lst:
+        assert Rectangle.overlapping(r, inner) == 1
+        assert Rectangle.overlapping(inner, r) == 1
+
+    # Verify all combinations with overlapping = 4
+    assert Rectangle.overlapping(inner, outer) == 4
+    assert Rectangle.overlapping(outer, inner) == 4
+    for r in lst:
+        assert Rectangle.overlapping(r, outer) == 4
+        assert Rectangle.overlapping(outer, r) == 4
+    for e in lst + [inner]:
+        assert Rectangle.overlapping(e, e) == 4
+    
+    # Verify all combinations with overlapping = 16
+    assert Rectangle.overlapping(outer, outer) == 16
+
+if __name__ == '__main__':
+    main()
+```
 
 ### May 13, 2019 \[Medium\] Craft Palindrome
 ---
@@ -164,7 +277,7 @@ def find_min_insertion(word, left, right):
         return 1 + min(drop_left_res, drop_right_res)
 ```
 
-> **STEP 2:** Optimize Solution and Store Each Design We Made
+> **STEP 2:** Optimize Solution and Store Each Decision We Made
 
 In the recusive solution mentioned above, our solution is not efficient in both time and space. Plus there is no way for us to know what decision we made to get the final value. 
 
@@ -179,7 +292,7 @@ else:
     dp[left][right] = 1 + min(dp[left+1][right], dp[left][right-1])
 ```
 
-But another problem pops up: how do we interate through the 2D array? As `dp[left][right] = dp[left+1][right-1]`. We cannot do lefe to right as index `l` depend on `l+1`.
+But another problem pops up: how do we interate through the 2D array? As `dp[left][right] = dp[left+1][right-1]`. We cannot do left to right as index `l` depend on `l+1`.
 
 A good idea to tackle this problem is the think about how does the recursion tree looks like for previous recursive solution. 
 
