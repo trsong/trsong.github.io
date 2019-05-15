@@ -113,9 +113,9 @@ Now think about 2D version of that question, in order to solve the overlapping r
 ```
  Test strategy: use the following graph to cover all different edge cases
  ┌───┬───┐ 2,2
- │ ┌─┼─┐ │
+ │  ┌─┼─┐  │
  ├─┼─┼─┼─┤
- │ └─┼─┘ │
+ │  └─┼─┘  │
  └───┴───┘
  -2,-2
 ```
