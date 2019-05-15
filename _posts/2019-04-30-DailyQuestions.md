@@ -165,13 +165,13 @@ class Rectangle(object):
     def __eq__(self, other):
         return self.bottom_left == other.bottom_left and self.top_right == other.top_right
 ```
-<!-- TODO: Don't fix below style -->
+
 ```
  Test strategy: use the following graph to cover all different edge cases
  ┌───┬───┐ 2,2
- │  ┌─┼─┐  │
+ │ ┌─┼─┐ │
  ├─┼─┼─┼─┤
- │  └─┼─┘  │
+ │ └─┼─┘ │
  └───┴───┘
  -2,-2
 ```
