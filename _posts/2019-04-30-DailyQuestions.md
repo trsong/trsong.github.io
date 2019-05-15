@@ -110,6 +110,7 @@ Explanation: Another possible reconstruction is ["JFK","SFO","ATL","JFK","ATL","
 **My thoughts:** If you haven't seen this question before, don't worry. You probably should have seen the 1D version of this question. i.e. Find the overlapping length for two intervals.
 Now think about 2D version of that question, in order to solve the overlapping region, we can project the shape of the graph onto x-axis and y-axis to get x-intersection and y-intersection. The overlapping ara is just product of those two intersections.
 
+<!-- TODO: Don't fix below style -->
 ```
  Test strategy: use the following graph to cover all different edge cases
  ┌───┬───┐ 2,2
