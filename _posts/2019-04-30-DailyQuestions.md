@@ -87,13 +87,15 @@ Output: ["JFK","ATL","JFK","SFO","ATL","SFO"]
 Explanation: Another possible reconstruction is ["JFK","SFO","ATL","JFK","ATL","SFO"].
              But it is larger in lexical order.
 ```
+
+-->
+
 ### May 16, 2019 \[Easy\] Mimimum Lecture Rooms
 ---
 > **Questions:** Given an array of time intervals (start, end) for classroom lectures (possibly overlapping), find the minimum number of rooms required.
 >
 > For example, given [(30, 75), (0, 50), (60, 150)], you should return 2.
 
---> 
 
 ### May 15, 2019 \[Medium\] Tokenization
 ---
@@ -101,7 +103,99 @@ Explanation: Another possible reconstruction is ["JFK","SFO","ATL","JFK","ATL","
 >
 > For example, given the set of words 'quick', 'brown', 'the', 'fox', and the string "thequickbrownfox", you should return ['the', 'quick', 'brown', 'fox'].
 >
-> Given the set of words 'bed', 'bath', 'bedbath', 'and', 'beyond', and the string "bedbathandbeyond", return either ['bed', 'bath', 'and', 'beyond] or ['bedbath', 'and', 'beyond'].
+> Given the set of words ['bed', 'bath', 'bedbath', 'and', 'beyond'], and the string "bedbathandbeyond", return either ['bed', 'bath', 'and', 'beyond] or ['bedbath', 'and', 'beyond'].
+
+**My thoughts:** Divide and Conquer 
+Break the word into smaller chunks: prefix and suffix. Process either of them and doing recursion on the other one.
+
+Suppose `process(word) = [word] if word in dictionary`
+
+Then `tokenization("thequickbrownfox") =` Any of the following result
+```py
+tokenization("thequickbrownfox") + process("") => None
+tokenization("thequickbrownfo") + process("x") => None
+tokenization("thequickbrownf") + process("ox") => None
+tokenization("thequickbrown") + process("fox") => tokenization("thequickbrown") + ["fox"]
+tokenization("thequickbrow") + process("nfox") => None
+tokenization("thequickbro") + process("wnfox") => None
+tokenization("thequickbr") + process("ownfox") => None
+tokenization("thequickb") + process("rownfox") => None
+tokenization("thequick") + process("brownfox") => None
+tokenization("thequic") + process("kbrownfox") => None
+tokenization("thequ") + process("ickbrownfox") => None
+tokenization("theq") + process("uickbrownfox") => None
+tokenization("the") + process("quickbrownfox") => None
+tokenization("th") + process("equickbrownfox") => None
+tokenization("t") + process("hequickbrownfox") => None
+tokenization("") + process("thequickbrownfox") => None
+```
+
+**Python Solution:** [https://repl.it/@trsong/Tokenization](https://repl.it/@trsong/Tokenization)
+
+```py
+def tokenization_recur(word, dictionary):
+    if not word:
+        return []
+    for i in xrange(len(word)):
+        suffix = word[i:]
+        processed_suffix = [suffix] if not suffix or suffix in dictionary else None
+        if not processed_suffix: continue
+
+        processed_prefix = tokenization_recur(word[:i], dictionary)
+        if processed_prefix is not None:
+            return processed_prefix + processed_suffix
+    return None
+
+def tokenization(word, dictionary):
+    if not word or not dictionary:
+        return None
+    else:
+        res = tokenization_recur(word, set(dictionary))
+        return ' '.join(res) if res else None
+
+def main():
+    assert tokenization("thequickbrownfox", ['the', 'quick', 'brown', 'fox']) == "the quick brown fox"
+    assert tokenization("bedbathandbeyond", ['bed', 'bath', 'bedbath', 'and', 'beyond']) == 'bedbath and beyond'
+    assert tokenization("thequickbrownfox", ['thequickbrownfox']) == "thequickbrownfox"
+    assert tokenization("thefox", ['thequickbrownfox']) is None
+    d1 = ['i', 'and', 'like', 'sam', 'sung', 'samsung', 'mobile', 'ice', 'cream', 'icecream', 'man', 'go', 'mango']
+    assert tokenization("ilikesamsungmobile", d1) == "i like samsung mobile"
+    assert tokenization("ilikeicecreamandmango", d1) == "i like icecream and mango"
+
+if __name__ == '__main__':
+    main()
+```
+
+> Note that in `tokenization("fox")` will end up w/ `tokenization("o")` and `tokenization("brown")` will also end up w/ `tokenization("o")`. Can we do some optimization there?
+
+**Python Solution:** [https://repl.it/@trsong/Tokenization-Optimziation](https://repl.it/@trsong/Tokenization-Optimziation)
+
+```py
+def tokenization_recur_with_cache(word, dictionary, cache):
+    if word not in cache:
+        cache[word] = tokenization_recur(word, dictionary, cache)
+    return cache[word]
+
+def tokenization_recur(word, dictionary, cache):
+    if not word:
+        return []
+    for i in xrange(len(word)):
+        suffix = word[i:]
+        processed_suffix = [suffix] if not suffix or suffix in dictionary else None
+        if not processed_suffix: continue
+
+        processed_prefix = tokenization_recur_with_cache(word[:i], dictionary, cache)
+        if processed_prefix is not None:
+            return processed_prefix + processed_suffix
+    return None
+
+def tokenization(word, dictionary):
+    if not word or not dictionary:
+        return None
+    else:
+        res = tokenization_recur_with_cache(word, set(dictionary), {})
+        return ' '.join(res) if res else None
+```
 
 ### May 14, 2019 \[Medium\] Overlapping Rectangles
 ---
