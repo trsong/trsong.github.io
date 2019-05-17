@@ -113,7 +113,7 @@ Normal Case
 For `(1, 10), (5, 15) and (6, 15)` we can use the folling time table to find the pattern
 
 |t|                0| 1| 2| 3| 4| 5| 6| 7| 8| 9| 10| 11| 12| 13| 14| 15 | 16 |
-|-|                -| -| -| -| -| -| -| -| -| -|  -|  -|  -|  -|  -|   -|   -|
+|:-|               -:|-:|-:|-:|-:|-:|-:|-:|-:|-:| -:| -:| -:| -:| -:|  -:|  -:|
 |total room at t | 0| 1| 1| 1| 1| 2| 3| 3| 3| 3|  2|  2|  2|  2|  2|   0|   0|
 |difference      | 0|+1| 0| 0| 0|+1|+1| 0| 0| 0| -1|  0|  0|  0|  0|  -2|   0|
 
@@ -162,9 +162,9 @@ if __name__ == '__main__':
 For `(1, 10), (5, 15) and (6, 15)`, in order to save space, we just consider end point
 
 |t|                1| 5| 6| 10| 15|
-|-|                -| -| -|  -|  -|
+|:-|              -:|-:|-:| -:| -:|
 |total room at t | 1| 2| 3|  2|  0|
-|difference      | +1|+1|+1| -1| -2|
+|difference      |+1|+1|+1| -1| -2|
 
 **Python Solution:** [https://repl.it/@trsong/Minimum-Lecture-Rooms2](https://repl.it/@trsong/Minimum-Lecture-Rooms2)
 ```py
