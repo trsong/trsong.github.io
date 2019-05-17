@@ -63,6 +63,8 @@ That is, implement a function that takes in a string and a valid regular express
 >
 > Do this in O(M + N) time (where M and N are the lengths of the lists) and constant space.
 
+--> 
+
 ### May 17, 2019 LC 332 \[Medium\] Reconstruct Itinerary
 ---
 > **Questions:** Given a list of airline tickets represented by pairs of departure and arrival airports [from, to], reconstruct the itinerary in order. All of the tickets belong to a man who departs from JFK. Thus, the itinerary must begin with JFK.
@@ -88,15 +90,13 @@ Explanation: Another possible reconstruction is ["JFK","SFO","ATL","JFK","ATL","
              But it is larger in lexical order.
 ```
 
--->
-
 ### May 16, 2019 \[Easy\] Minimum Lecture Rooms
 ---
 > **Questions:** Given an array of time intervals (start, end) for classroom lectures (possibly overlapping), find the minimum number of rooms required.
 >
 > For example, given [(30, 75), (0, 50), (60, 150)], you should return 2.
 
-**My thoughts:** In order to solve this problem, do NOT worry about **minimum** at first. Think about how many rooms we might need by give different examples:
+**My thoughts:** In order to solve this problem, do NOT worry about **minimum** at first. Think about how many rooms we might need by testing different examples:
 
 Exreme Case
 1. If there are 10 intervals that all of them are overlapping w/ each other, then we need 10 rooms
