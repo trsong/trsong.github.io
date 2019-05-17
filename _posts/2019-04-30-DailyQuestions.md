@@ -90,11 +90,119 @@ Explanation: Another possible reconstruction is ["JFK","SFO","ATL","JFK","ATL","
 
 -->
 
-### May 16, 2019 \[Easy\] Mimimum Lecture Rooms
+### May 16, 2019 \[Easy\] Minimum Lecture Rooms
 ---
 > **Questions:** Given an array of time intervals (start, end) for classroom lectures (possibly overlapping), find the minimum number of rooms required.
 >
 > For example, given [(30, 75), (0, 50), (60, 150)], you should return 2.
+
+**My thoughts:** In order to solve this problem, do NOT worry about **minimum** at first. Think about how many rooms we might need by give different examples:
+
+Exreme Case
+1. If there are 10 intervals that all of them are overlapping w/ each other, then we need 10 rooms
+   at peak hours
+2. If there are 10 intervals that none of them are overlapping w/ each other, then 1 room is sufficient to hold all 10 intervals one by one
+
+Normal Case
+1. If we just have 1 interval, if we need 1 room
+   - If we have 2 intervals that might overlapping at some point, then we need to add 1 more room, which gives 2 in total. eg. (1, 10) and (5, 15)
+   - If we have 3 intervals that 
+     - all of them overlapping at some point, then we need to add 2 more rooms, which gives 3 in total eg. (1, 10), (5, 15) and (6, 15)
+     - 2 of them overlapping at some point, then we only ned to add 1 more rooms, which gives 2 in total eg. (1, 10), (5, 15) and (10, 15)
+
+For `(1, 10), (5, 15) and (6, 15)` we can use the folling time table to find the pattern
+
+|t|                0| 1| 2| 3| 4| 5| 6| 7| 8| 9| 10| 11| 12| 13| 14| 15 | 16 |
+|-|                -| -| -| -| -| -| -| -| -| -|  -|  -|  -|  -|  -|   -|   -|
+|total room at t | 0| 1| 1| 1| 1| 2| 3| 3| 3| 3|  2|  2|  2|  2|  2|   0|   0|
+|difference      | 0|+1| 0| 0| 0|+1|+1| 0| 0| 0| -1|  0|  0|  0|  0|  -2|   0|
+
+> Note: Did you notice whenever we enter an interval at time t, the total number of room at time t `+1` and whenever we leave an interval the total number `-1`? e.g. `+1` at `t = 1, 5, 6` and `-1` at `t=10, 15, 15`. And at peak hour, the total room equals 3. 
+
+**Counting Sort Python Solution:** [https://repl.it/@trsong/Minimum-Lecture-Rooms](https://repl.it/@trsong/Minimum-Lecture-Rooms)
+```py
+def min_lec_room(intervals):
+    min_start = 0
+    max_end = 0
+    for elem in intervals:
+        min_start = min(min_start, elem[0])
+        max_end = max(max_end, elem[1])
+    
+    # To save space, we only start time at min_start instead of time = 0
+    room_at = [0] * (max_end - min_start + 1)
+    for elem in intervals:
+        room_at[elem[0] - min_start] += 1
+        room_at[elem[1] - min_start] -= 1
+
+    max_accumulated_room = 0
+    accumulated_room = 0
+    for t in range(max_end - min_start + 1):
+        accumulated_room += room_at[t]
+        max_accumulated_room = max(max_accumulated_room, accumulated_room)
+    return max_accumulated_room
+
+def main():
+    t1 = (-10, 0)
+    t2 = (-5, 5)
+    t3 = (0, 10)
+    t4 = (5, 15)
+    assert min_lec_room([t1, t1, t1]) == 3
+    assert min_lec_room([(30, 75), (0, 50), (60, 150)]) == 2
+    assert min_lec_room([t3, t1]) == 1
+    assert min_lec_room([t1, t3, t2, t4]) == 2
+    assert min_lec_room([t4, t3, t2, t1, t1, t2, t3, t4]) == 4
+
+if __name__ == '__main__':
+    main()
+```
+
+
+> Note: in order to save space, can we just calculate at either start time or end time?
+
+For `(1, 10), (5, 15) and (6, 15)`, in order to save space, we just consider end point
+
+|t|                1| 5| 6| 10| 15|
+|-|                -| -| -|  -|  -|
+|total room at t | 1| 2| 3|  2|  0|
+|difference      | +1|+1|+1| -1| -2|
+
+**Python Solution:** [https://repl.it/@trsong/Minimum-Lecture-Rooms2](https://repl.it/@trsong/Minimum-Lecture-Rooms2)
+```py
+def min_lec_room(intervals):
+    begins = [(e[0], 1) for e in intervals]
+    ends = [(e[1], -1) for e in intervals]
+    all_points = begins + ends
+    sorted_all_points = sorted(all_points, key=lambda x: x[0])
+
+    max_accumulated_room = 0
+    accumulated_room = 0
+    i = 0
+    while i < len(sorted_all_points):
+        accu = sorted_all_points[i][1]
+        # Combine all the rooms for the same time
+        while i + 1 < len(sorted_all_points) and sorted_all_points[i+1][0] == sorted_all_points[i][0]:
+            accu += sorted_all_points[i+1][1]
+            i += 1
+        accumulated_room += accu
+        max_accumulated_room = max(max_accumulated_room, accumulated_room)
+        i += 1
+    return max_accumulated_room
+
+def main():
+    t1 = (-10, 0)
+    t2 = (-5, 5)
+    t3 = (0, 10)
+    t4 = (5, 15)
+    assert min_lec_room([t1, t1, t1]) == 3
+    assert min_lec_room([(30, 75), (0, 50), (60, 150)]) == 2
+    assert min_lec_room([t3, t1]) == 1
+    assert min_lec_room([t1, t3, t2, t4]) == 2
+    assert min_lec_room([t4, t3, t2, t1, t1, t2, t3, t4]) == 4
+
+if __name__ == '__main__':
+    main()
+```
+
 
 
 ### May 15, 2019 \[Medium\] Tokenization
