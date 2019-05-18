@@ -103,7 +103,7 @@ def search_itinerary_DFS(src, itinerary_lookup, route_res):
     # Once find a route, build the routes in reverse order so that source will go before destination 
     route_res.insert(0, src)
     
-def reconstruct_Itinerary(tickets):
+def reconstruct_itinerary(tickets):
     itinerary_lookup = {}
     # Build up neighbor lookup table
     for it in tickets:
