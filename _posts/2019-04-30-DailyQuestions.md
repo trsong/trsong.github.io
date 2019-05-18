@@ -53,7 +53,9 @@ That is, implement a function that takes in a string and a valid regular express
 >
 > Given the regular expression ".*at" and the string "chat", your function should return true. The same regular expression on the string "chats" should return false.
 
-### May 18, 2019 \[Easy\]
+--> 
+
+### May 18, 2019 \[Easy\] Intersecting Node
 ---
 > **Question:** Given two singly linked lists that intersect at some point, find the intersecting node. The lists are non-cyclical.
 >
@@ -62,8 +64,6 @@ That is, implement a function that takes in a string and a valid regular express
 > In this example, assume nodes with the same value are the exact same node objects.
 >
 > Do this in O(M + N) time (where M and N are the lengths of the lists) and constant space.
-
---> 
 
 ### May 17, 2019 LC 332 \[Medium\] Reconstruct Itinerary
 ---
@@ -88,6 +88,46 @@ Input: [["JFK","SFO"],["JFK","ATL"],["SFO","ATL"],["ATL","JFK"],["ATL","SFO"]]
 Output: ["JFK","ATL","JFK","SFO","ATL","SFO"]
 Explanation: Another possible reconstruction is ["JFK","SFO","ATL","JFK","ATL","SFO"].
              But it is larger in lexical order.
+```
+
+**My thoughts:** Forget about lexical requirement for now, consider all airports as vertices and each itinerary as an edge. Then all we need to do is to find a path from "JFK" that consumes all edges. By using DFS to iterate all potential solution space, once we find a solution we will return immediately.
+
+Now let's consider the lexical requirement, when we search from one node to its neighbor, we can go from smaller lexical order first and by keep doing that will lead us to the result. 
+
+**Python Solution:** [https://repl.it/@trsong/Reconstruct-Itinerary](https://repl.it/@trsong/Reconstruct-Itinerary)
+```py
+def search_itinerary_DFS(src, itinerary_lookup, route_res):
+    # Using DFS to find a solution that can consume all edges
+    while src in itinerary_lookup and itinerary_lookup[src]:
+        search_itinerary_DFS(itinerary_lookup[src].pop(0), itinerary_lookup, route_res)
+    # Once find a route, build the routes in reverse order so that source will go before destination 
+    route_res.insert(0, src)
+    
+def reconstruct_Itinerary(tickets):
+    itinerary_lookup = {}
+    # Build up neighbor lookup table
+    for it in tickets:
+        src, dst = it
+        if src not in itinerary_lookup:
+            itinerary_lookup[src] = [dst]
+        else:
+            itinerary_lookup[src].append(dst)
+        
+    # Sort all destinations in alphabet order so that smaller lexical order comes first
+    for key in itinerary_lookup.keys():
+        itinerary_lookup[key] = sorted(itinerary_lookup[key])
+            
+    res = []
+    search_itinerary_DFS("JFK", itinerary_lookup, res)
+    return res
+
+def main():
+    assert reconstruct_Itinerary([["MUC", "LHR"], ["JFK", "MUC"], ["SFO", "SJC"], ["LHR", "SFO"]]) == ["JFK", "MUC", "LHR", "SFO", "SJC"]
+    assert reconstruct_Itinerary([["JFK","SFO"],["JFK","ATL"],["SFO","ATL"],["ATL","JFK"],["ATL","SFO"]]) == ["JFK","ATL","JFK","SFO","ATL","SFO"]
+    assert reconstruct_Itinerary([["JFK", "YVR"], ["LAX", "LAX"], ["YVR", "YVR"], ["YVR", "YVR"], ["YVR", "LAX"], ["LAX", "LAX"], ["LAX", "YVR"], ["YVR", "JFK"]]) == ['JFK', 'YVR', 'LAX', 'LAX', 'LAX', 'YVR', 'YVR', 'YVR', 'JFK']
+
+if __name__ == '__main__':
+    main()
 ```
 
 ### May 16, 2019 \[Easy\] Minimum Lecture Rooms
