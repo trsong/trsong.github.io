@@ -40,6 +40,8 @@ One of the player chooses ‘O’ and the other ‘X’ to mark their respective
 > 
 > Given two strings, compute the edit distance between them.
 
+-->
+
 ### May 19, 2019 \[Hard\] Regular Expression: Period and Asterisk
 ---
 > **Question:** Implement regular expression matching with the following special characters:
@@ -53,7 +55,6 @@ That is, implement a function that takes in a string and a valid regular express
 >
 > Given the regular expression ".*at" and the string "chat", your function should return true. The same regular expression on the string "chats" should return false.
 
---> 
 
 ### May 18, 2019 \[Easy\] Intersecting Node
 ---
@@ -64,6 +65,60 @@ That is, implement a function that takes in a string and a valid regular express
 > In this example, assume nodes with the same value are the exact same node objects.
 >
 > Do this in O(M + N) time (where M and N are the lengths of the lists) and constant space.
+
+**My thoughts:** For two lists w/ same length, say `[1, 2, 3]` and `[4, 2, 3]`, the intersecting node is the first element shared by two list when iterate through both lists at the same time. In above example, 2 is the elem we are looking for. 
+
+For tow lists w/ different length, say `[1, 1, 1, 2 3]` and `[4, 2, 3]`. We can convert this case into above case by first calculating the length difference between those two lists and let larger list proceed that difference number of nodes ahead of time. Then we will have 2 list w/ same length.
+
+eg. The difference between `[1, 1, 1, 2 3]` and `[4, 2, 3]` is 2. We proceed the pointer of larger list by 2, gives `[1, 2, 3]`. Thus we have 2 lists w/ same length.
+
+**Python Soluion:** [https://repl.it/@trsong/Intersecting-Node](https://repl.it/@trsong/Intersecting-Node)
+```py
+class ListNode(object):
+    def __init__(self, val, next=None):
+        self.val = val
+        self.next = next
+
+def get_intersecting_node(lst1, lst2):
+    l1, l2 = lst1, lst2
+    len1, len2 = 0, 0
+    while l1:
+        l1 = l1.next
+        len1 += 1
+    while l2:
+        l2 = l2.next
+        len2 += 1
+        
+    long_list, short_list = lst1, lst2
+    diff = len1 - len2
+    if diff < 0:
+        long_list, short_list = lst2, lst1
+        diff = -diff
+    for _ in xrange(diff):
+        long_list = long_list.next
+    while long_list != short_list:
+        long_list = long_list.next
+        short_list = short_list.next
+    return long_list
+
+def main():
+    shared = ListNode(8, ListNode(0))
+    l1 = ListNode(3, ListNode(7, shared))
+    l2 = ListNode(99, ListNode(1, shared))
+    assert get_intersecting_node(l1, l2).val == 8
+    assert get_intersecting_node(l2, l1).val == 8
+
+    l3 = ListNode(10, ListNode(11, l1))
+    assert get_intersecting_node(l3, l2).val == 8
+    assert get_intersecting_node(l2, l3).val == 8
+
+    assert get_intersecting_node(None, None) is None
+    assert get_intersecting_node(l1, None) is None
+    assert get_intersecting_node(None, l1) is None
+
+if __name__ == '__main__':
+    main()
+```
 
 ### May 17, 2019 LC 332 \[Medium\] Reconstruct Itinerary
 ---
