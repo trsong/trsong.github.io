@@ -68,9 +68,9 @@ That is, implement a function that takes in a string and a valid regular express
 
 **My thoughts:** For two lists w/ same length, say `[1, 2, 3]` and `[4, 2, 3]`, the intersecting node is the first element shared by two list when iterate through both lists at the same time. In above example, 2 is the elem we are looking for. 
 
-For tow lists w/ different length, say `[1, 1, 1, 2 3]` and `[4, 2, 3]`. We can convert this case into above case by first calculating the length difference between those two lists and let larger list proceed that difference number of nodes ahead of time. Then we will have 2 list w/ same length.
+For two lists w/ different length, say `[1, 1, 1, 2 3]` and `[4, 2, 3]`. We can convert this case into above case by first calculating the length difference between those two lists and let larger list proceed that difference number of nodes ahead of time. Then we will end up w/ 2 lists of the same length.
 
-eg. The difference between `[1, 1, 1, 2 3]` and `[4, 2, 3]` is 2. We proceed the pointer of larger list by 2, gives `[1, 2, 3]`. Thus we have 2 lists w/ same length.
+eg. The difference between `[1, 1, 1, 2 3]` and `[4, 2, 3]` is 2. We proceed the pointer of larger list by 2, gives `[1, 2, 3]`. Thus we have 2 lists of the same length.
 
 **Python Soluion:** [https://repl.it/@trsong/Intersecting-Node](https://repl.it/@trsong/Intersecting-Node)
 ```py
