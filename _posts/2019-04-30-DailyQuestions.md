@@ -33,14 +33,13 @@ One of the player chooses ‘O’ and the other ‘X’ to mark their respective
 ---
 > **Question:** Randomly choosing a sample of k items from a list S containing n items, where n is either a very large or unknown number. Typically, n is too large to fit the whole list into main memory.
 
+-->
 
 ### May 20, 2019 \[Hard\] Edit Distance
 ---
 > The edit distance between two strings refers to the minimum number of character insertions, deletions, and substitutions required to change one string to the other. For example, the edit distance between “kitten” and “sitting” is three: substitute the “k” for “s”, substitute the “e” for “i”, and append a “g”.
 > 
 > Given two strings, compute the edit distance between them.
-
--->
 
 ### May 19, 2019 \[Hard\] Regular Expression: Period and Asterisk
 ---
@@ -49,12 +48,75 @@ One of the player chooses ‘O’ and the other ‘X’ to mark their respective
 > - `.` (period) which matches any single character
 > 
 > - `*` (asterisk) which matches zero or more of the preceding element
-That is, implement a function that takes in a string and a valid regular expression and returns whether or not the string matches the regular expression.
+> 
+> That is, implement a function that takes in a string and a valid regular expression and returns whether or not the string matches the regular expression.
 >
 > For example, given the regular expression "ra." and the string "ray", your function should return true. The same regular expression on the string "raymond" should return false.
 >
 > Given the regular expression ".*at" and the string "chat", your function should return true. The same regular expression on the string "chats" should return false.
 
+**My thoughts:** First consider the solution without `*` (asterisk), then we just need to match letters one by one while doing some special handling for `.` (period) so that it can match all letters. 
+
+Then we consider the solution with `*`, we will need to perform ONE look-ahead, so `*` can represent 0 or more matching. And we consider those two situations separately:
+- If we have 1 matching, we just need to check if the rest of text match the current pattern.
+- Or if we do not have matching, then we need to advance both text and pattern.
+
+**Python Solution:** [https://repl.it/@trsong/Pattern-Match](https://repl.it/@trsong/Pattern-Match)
+```py
+def pattern_match(text, pattern):
+    if not pattern: return not text
+    match_first = text and (text[0] == pattern[0] or pattern[0] == '.')
+    if len(pattern) > 1 and pattern[1] == '*':
+        # Either match first letter and continue check on rest; Or not match at all
+        return match_first and pattern_match(text[1:], pattern) or pattern_match(text, pattern[2:])
+    else:
+        # Without "*", we will proceed both text and pattern
+        return match_first and pattern_match(text[1:], pattern[1:])
+
+def main():
+    assert not pattern_match("a", "")
+    assert not pattern_match("", "a")
+    assert pattern_match("", "")
+    assert pattern_match("aa", "a*")
+    assert pattern_match("aaa", "ab*ac*a")
+    assert pattern_match("aab", "c*a*b")
+    assert pattern_match("ray", "ra.")
+    assert not pattern_match("raymond", "ra.")
+    assert pattern_match("chat", ".*at")
+    assert not pattern_match("chats", ".*at")
+
+if __name__ == '__main__':
+    main()
+```
+
+> Notice that as we keep calling `text[1:]`, `pattern[1:]` and `pattern[2:]` in recursive calls, there are certain results that can be cached so that none of the same input will be executed twice.
+> Also, keep generating substring is expensive, we should replace it w/ in-place checking by passing index.
+
+**Python Solution with Cache:** [https://repl.it/@trsong/Pattern-Match2](https://repl.it/@trsong/Pattern-Match2)
+```py
+def pattern_match_helper(text, pattern, i, j, cache):
+    n, m = len(text), len(pattern)
+    match_first = i < n and (text[i] == pattern[j] or pattern[j] == '.')
+    if j < m - 1 and pattern[j+1] == '*':
+        # Either match first letter and continue check on rest; Or not match at all
+        return match_first and pattern_match_helper_with_cache(text, pattern, i+1, j, cache) or pattern_match_helper_with_cache(text, pattern, i, j+2, cache)
+    else:
+        # Without "*", we will proceed both text and pattern
+        return match_first and pattern_match_helper_with_cache(text, pattern, i+1, j+1, cache)
+
+def pattern_match_helper_with_cache(text, pattern, i, j, cache):
+    n, m = len(text), len(pattern)
+    if j >= m: return i >= n
+
+    if cache[i][j] is None:
+        cache[i][j] = pattern_match_helper(text, pattern, i, j, cache)
+    return cache[i][j]
+
+def pattern_match(text, pattern):
+    if not pattern: return not text
+    cache = [[None for _ in xrange(len(pattern)+1)] for _ in xrange(len(text)+1)]
+    return pattern_match_helper(text, pattern, 0, 0, cache)
+```
 
 ### May 18, 2019 \[Easy\] Intersecting Node
 ---
