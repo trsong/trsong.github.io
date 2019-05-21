@@ -159,7 +159,7 @@ Then let's think about how we can shrink the size of source and target. In above
 
 2. Shrink target size:
    
-    I came up w/ some example like `edit_distance("a", "ab")` and `edit_distance("a", "a")`. It turns out the mimum edit is to append "b" to input that gives "ab". So `edit_distance("a", "ab") == 1 + edit_distance("a", "a")`.
+    I came up w/ some example like `edit_distance("a", "ab")` and `edit_distance("a", "a")`. It turns out the mimum edit is to append "b" to the source "a" that gives "ab". So `edit_distance("a", "ab") == 1 + edit_distance("a", "a")`.
 
 3. Shrink both source and target size: 
 
