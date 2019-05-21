@@ -28,18 +28,225 @@ categories: Python/Java
 One of the player chooses ‘O’ and the other ‘X’ to mark their respective cells.
 > - The game starts with one of the players and the game ends when one of the players has one whole row/ column/ diagonal filled with his/her respective character (‘O’ or ‘X’).
 > - If no one wins, then the game is said to be draw.
+> 
+
+### May, 2019 \[Medium\] 
+---
+> **Question:** Write an algorithm to justify text. Given a sequence of words and an integer line length k, return a list of strings which represents each line, fully justified.
+> 
+>  More specifically, you should have as many words as possible in each line. There should be at least one space between each word. Pad extra spaces when necessary so that each line has exactly length k. Spaces should be distributed as equally as possible, with the extra spaces, if any, distributed starting from the left.
+> 
+> If you can only fit one word on a line, then you should pad the right-hand side with spaces.
+> 
+> Each word is guaranteed not to be longer than k.
+ 
+ For example, given the list of words ["the", "quick", "brown", "fox", "jumps", "over", "the", "lazy", "dog"] and k = 16, you should return the following:
+
+```py
+["the  quick brown", # 1 extra space on the left
+ "fox  jumps  over", # 2 extra spaces distributed evenly
+ "the   lazy   dog"] # 4 extra spaces distributed evenly
+```
+
+### May, 2019 \[Easy\] 
+---
+> **Question:** Run-length encoding is a fast and simple method of encoding strings. The basic idea is to represent repeated successive characters as a single count and character. For example, the string "AAAABBBCCDAA" would be encoded as "4A3B2C1D2A".
+>
+> Implement run-length encoding and decoding. You can assume the string to be encoded have no digits and consists solely of alphabetic characters. You can assume the string to be decoded is valid.
+
+
+### May, 2019 \[Hard\] 
+---
+> **Question:** Given an array of strictly the characters 'R', 'G', and 'B', segregate the values of the array so that all the Rs come first, the Gs come second, and the Bs come last. You can only swap elements of the array.
+>
+> Do this in linear time and in-place.
+>
+> For example, given the array ['G', 'B', 'R', 'R', 'B', 'R', 'G'], it should become ['R', 'R', 'R', 'G', 'G', 'B', 'B']
+
+### May, 2019 \[Hard\] 
+---
+> **Question:** Given a list of integers S and a target number k, write a function that returns a subset of S that adds up to k. If such a subset cannot be made, then return null.
+>
+> Integers can appear more than once in the list. You may assume all numbers in the list are positive.
+> 
+> For example, given S = [12, 1, 61, 5, 9, 2] and k = 24, return [12, 9, 2, 1] since it sums up to 24.
+
+
+### May, 2019 \[Medium\] 
+---
+> **Question:** Given an array of numbers, find the maximum sum of any contiguous subarray of the array.
+>
+> For example, given the array [34, -50, 42, 14, -5, 86], the maximum sum would be 137, since we would take elements 42, 14, -5, and 86.
+>
+> Given the array [-5, -1, -8, -9], the maximum sum would be 0, since we would not take any elements.
+>
+> Do this in O(N) time.
+
+### May, 2019 \[Hard\] 
+---
+> **Question:** Implement an LRU (Least Recently Used) cache. It should be able to be initialized with a cache size n, and contain the following methods:
+>
+> - `set(key, value)`: sets key to value. If there are already n items in the cache and we are adding a new item, then it should also remove the least recently used item.
+>
+> - `get(key)`: gets the value at key. If no such key exists, return null.
+>  
+> Each operation should run in O(1) time.
+
+### May, 2019 \[Easy\] 
+---
+> **Question:** Implement a stack that has the following methods:
+>
+> - `push(val)`, which pushes an element onto the stack
+> - `pop()`, which pops off and returns the topmost element of the stack. If there are no elements in the stack, then it should throw an error or return null.
+> - `max()`, which returns the maximum value in the stack currently. If there are no elements in the stack, then it should throw an error or return null.
+> 
+> Each method should run in constant time.
+
+-->
 
 ### May 21, 2019 \[Hard\] Random Elements from Infinite Stream
 ---
 > **Question:** Randomly choosing a sample of k items from a list S containing n items, where n is either a very large or unknown number. Typically, n is too large to fit the whole list into main memory.
 
--->
-
 ### May 20, 2019 \[Hard\] Edit Distance
 ---
-> The edit distance between two strings refers to the minimum number of character insertions, deletions, and substitutions required to change one string to the other. For example, the edit distance between “kitten” and “sitting” is three: substitute the “k” for “s”, substitute the “e” for “i”, and append a “g”.
+> **Question:**  The edit distance between two strings refers to the minimum number of character insertions, deletions, and substitutions required to change one string to the other. For example, the edit distance between “kitten” and “sitting” is three: substitute the “k” for “s”, substitute the “e” for “i”, and append a “g”.
 > 
 > Given two strings, compute the edit distance between them.
+
+ **A little bit background information:** I first learnt this question in my 3rd year algorithem class. At that moment, this question was introduced to illustrate how dynamic programming works. And even nowadays, I can still recall the formula to be something like `dp[i][j] = min(dp[i-1][j] + 1, dp[i][j-1] + 1, dp[i-1][j-1] + (0 if source[-1] == target[-1] else 1)`. However, when I ask my friends what dp represents in this question and how above formula works, few can give me convincing explanation. So the same thing could happen to readers like you: if you just know the formula without understanding which part represents insertion, removal or updating, then probably you just memorize the solution and pretend you understand the answer. And what could happen in the near future is that the next time when a similar question, like May 19 Regular expression, shows up during interview, you end up spending 20 min, got stuck trying to come up w/ dp formula.
+
+**My thoughts:** My suggestion is that let's forget about dp at first, and we should just focus on recursion. (The idea between those two is kinda the same.) Just use the following template you learnt in first year of university to figure out the solution:
+
+```py
+def recursion(input):
+    if ...base case...:
+        return ...base case solution...
+    else:
+        do something to first of input 
+        return recursion(rest of input)
+
+def recursion2(input1, input2):
+    if ...base case...:
+        return ...base case solution...
+    else:
+        do something to first of input1
+        do something to first of input2
+        res1 = recursion2(rest of input1, input2)
+        res2 = recursion2(input1, rest of input2)
+        res3 = recursion2(rest of input1, rest of input2)
+        return do something to res1, res2, res3
+
+def recursion3(input1, input2):
+    if ...base case...:
+        return ...base case solution...
+    else:
+        do something to last of input1
+        do something to last of input2
+        res1 = recursion2(drop last of input1, input2)
+        res2 = recursion2(input1, drop last of input2)
+        res3 = recursion2(drop last of input1, drop last of input2)
+        return do something to res1, res2, res3
+```
+
+Since we have two inputs for this question, we can either use recursion2 or recursion3 in above template, it doesn't really matter in this question. `def edit_distance(source, target)`. And now let's think about what is the base case. Base case is usually something trivial, like empty list. Then it's easy to know that if either source or target is empty, the edit distance is the other one's length. e.g. `edit_distance("", "kitten") == 6`
+
+Then let's think about how we can shrink the size of source and target. In above template, there are 3 different ways to shrink the input size. Check the line res1, res2 and res3. 
+
+1. Shrink source size: 
+
+    I came up w/ some example like `edit_distance("ab", "a")` and `edit_distance("a", "a")`. Now think about the relationship between them. It turns out `edit_distance("ab", "a") == 1 + edit_distance("a", "a")`. As the minimum edit we need is just remove "b" from "ab" in source: only 1 extra edit.
+
+2. Shrink target size:
+   
+    I came up w/ some example like `edit_distance("a", "ab")` and `edit_distance("a", "a")`. It turns out the mimum edit is to append "b" to input that gives "ab". So `edit_distance("a", "ab") == 1 + edit_distance("a", "a")`.
+
+3. Shrink both source and target size: 
+
+    I came up w/ some example like `edit_distance("aa", "ab")` and `edit_distance("a", "a")`. It seems we just need to replace "a" with "b" or "b" with "a". So only 1 more edit should be sufficient. However if we have `edit_distance("ab", "ab")` and `edit_distance("a", "a")`. Then that means we don't need to do anything when there is a match.
+    That gives `edit_distance("aa", "ab") = 1 + edit_distance("a", "a")` and `edit_distance("ab", "ab") == edit_distance("a", "a")`
+
+Note that any of res1, res2 and res3 might give the mimum edit. So we need to apply min to get the smallest among them.
+
+**Python Solution:** [https://repl.it/@trsong/Edit-Distance](https://repl.it/@trsong/Edit-Distance)
+```py
+def edit_distance(source, target):
+    if not source or not target:
+        return max(len(source), len(target))
+    # The edit_distance when insert/append an elem to source to match last elem in target
+    insert_res = edit_distance(source, target[:-1]) + 1
+
+    # The edit_distance when update last elem in source to match last elem in target
+    update_res = edit_distance(source[:-1], target[:-1]) + (0 if source[-1] == target[-1] else 1)
+
+    # The edit_distance when remove the last elem from source
+    remove_res = edit_distance(source[:-1], target) + 1
+
+    return min(insert_res, update_res, remove_res)
+
+
+# If we modify the algorithem to insert/update/remove upon the first elem, it also works
+def edit_distance2(source, target):
+    if not source or not target:
+        return max(len(source), len(target))
+    # The edit_distance when insert/prepend an elem to source to match the first elem in target
+    insert_res = edit_distance2(source, target[1:]) + 1
+
+    # The edit_distance when update the first elem in source to match the first elem in target
+    update_res = edit_distance2(source[1:], target[1:]) + (0 if source[0] == target[0] else 1)
+
+    # The edit_distance when remove the first elem from source
+    remove_res = edit_distance2(source[1:], target) + 1
+
+    return min(insert_res, update_res, remove_res)
+
+
+def main():
+    assert edit_distance("kitten", "sitting") == 3
+    assert edit_distance("sitting", "kitten") == 3
+    assert edit_distance("sitting", "") == 7
+    assert edit_distance("", "kitten") == 6
+    assert edit_distance("", "") == 0
+
+
+if __name__ == "__main__":
+    main()
+```
+
+> **Note:** Above solution can be optimized using a cache. Or based on recursive formula, generate DP array. However, I feel too lazy for DP solution, you can probably google ***Levenshtein Distance*** or "edit distance". Here, I just give the optimized solution w/ cache. You can see how similar the dp solution vs optimziation w/ cache. And the benefit of using cache is that, you don't need to figure out the order to fill dp array as well as the initial value for dp array which is quite helpful. If you are curious about what question can give a weird dp filling order, just check May 19 question: Regular Expression and try to solve that w/ dp. 
+
+**Python Solution w/ Cache:** [https://repl.it/@trsong/Edit-Distance-with-Cache](https://repl.it/@trsong/Edit-Distance-with-Cache)
+
+```py
+def edit_distance_helper(source, target, i, j, cache):
+    # The edit_distance when insert/prepend an elem to source to match the first elem in target
+    insert_res = edit_distance_helper_with_cache(source, target, i, j + 1, cache) + 1
+
+    # The edit_distance when update the first elem in source to match the first elem in target
+    update_res = edit_distance_helper_with_cache(source, target, i + 1, j + 1, cache) + (0 if source[i] == target[j] else 1)
+
+    # The edit_distance when remove the first elem from source
+    remove_res = edit_distance_helper_with_cache(source, target, i + 1, j, cache) + 1
+
+    return min(insert_res, update_res, remove_res)
+
+
+# edit_distance(source[i:], target[j:])
+def edit_distance_helper_with_cache(source, target, i, j, cache):
+    n, m = len(source), len(target)
+    if i > n - 1 or j > m - 1:
+        return max(n - i, m - j)
+
+    if cache[i][j] is None:
+        cache[i][j] = edit_distance_helper(source, target, i, j, cache)
+    return cache[i][j]
+
+
+def edit_distance(source, target):
+    n, m = len(source), len(target)
+    cache = [[None for _ in range(m)] for _ in range(n)]
+    return edit_distance_helper_with_cache(source, target, 0, 0, cache)
+```
 
 ### May 19, 2019 \[Hard\] Regular Expression: Period and Asterisk
 ---
