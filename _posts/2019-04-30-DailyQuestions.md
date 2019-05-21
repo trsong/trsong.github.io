@@ -143,9 +143,9 @@ def recursion3(input1, input2):
     else:
         do something to last of input1
         do something to last of input2
-        res1 = recursion2(drop last of input1, input2)
-        res2 = recursion2(input1, drop last of input2)
-        res3 = recursion2(drop last of input1, drop last of input2)
+        res1 = recursion3(drop last of input1, input2)
+        res2 = recursion3(input1, drop last of input2)
+        res3 = recursion3(drop last of input1, drop last of input2)
         return do something to res1, res2, res3
 ```
 
