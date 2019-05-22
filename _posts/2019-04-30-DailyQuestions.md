@@ -92,9 +92,11 @@ One of the player chooses ‘O’ and the other ‘X’ to mark their respective
 >  
 > Each operation should run in O(1) time.
 
-### May, 2019 \[Easy\] 
+-->
+
+### May 22, 2019 \[Easy\] Special Stack
 ---
-> **Question:** Implement a stack that has the following methods:
+> **Question:** Implement a special stack that has the following methods:
 >
 > - `push(val)`, which pushes an element onto the stack
 > - `pop()`, which pops off and returns the topmost element of the stack. If there are no elements in the stack, then it should throw an error or return null.
@@ -102,11 +104,106 @@ One of the player chooses ‘O’ and the other ‘X’ to mark their respective
 > 
 > Each method should run in constant time.
 
--->
 
 ### May 21, 2019 \[Hard\] Random Elements from Infinite Stream
 ---
 > **Question:** Randomly choosing a sample of k items from a list S containing n items, where n is either a very large or unknown number. Typically, n is too large to fit the whole list into main memory.
+
+**My thoughts:** Choose k elems randomly from an infitite stream can be tricky. We should simplify this question, find the pattern and then generalize the solution. So, let's first think about how to randomly get one element from the stream:
+
+As the input stream can be arbitrarily large, our solution must get calculate the chosen element on the fly. So here comes the strategy:
+
+```
+When consume the i-th element:
+- Either choose the i-th element with 1/(i+1) chance. 
+- Or, keep the last chosen element with 1 - 1/(i+1) chance.
+```
+
+**Proof by Induction:**
+- Base case: when there is 1 element, then the 0th element is chosen by `1/(0+1) = 100%` chance.
+- Inductive Hypothesis: Suppose for above strategy works for all elemements between 0th and i-1th, which means all elem has `1/i` chance to be chosen.
+- Inductive Step: when consume the i-th element:
+  - If the i-th element is selected with `1/(i+1)` chance, then it works for the i-th element 
+  - As for other element to be choosen, we will have `1-1/(i+1)` chance not to choose the i-th element. And also based on the Inductive Hypothesis: all elemements between 0th and i-1th has 1/i chance to be chosen. Thus, the chance of any elem between 0-th to i-th element to be chosen in this round eqauls `1/i * (1-(1/(i+1))) = 1/(i+1)`. Therefore it works for all previous elements.
+
+**Random One Element Solution:** [https://repl.it/@trsong/Random-One-Elem](https://repl.it/@trsong/Random-One-Elem)
+
+```py
+from random import randint
+
+def random_one_elem(stream):
+    pick = None
+    for i, elem in enumerate(stream):
+        if i == 0 or randint(0, i) == 0:
+            # Has 1/(i+1) chance to pick i-th elem
+            pick = elem
+    return pick
+
+
+def print_distribution(stream, repeat):
+    histogram = {}
+    for _ in xrange(repeat):
+        res = random_one_elem(stream)
+        if res not in histogram:
+            histogram[res] = 0
+        histogram[res] += 1
+    print histogram
+
+
+def main():
+    # Distribution looks like {0: 1003, 1: 1004, 2: 943, 3: 994, 4: 1023, 5: 1019, 6: 1013, 7: 1025, 8: 1005, 9: 971}
+    print_distribution(xrange(10), repeat=10000)
+
+
+if __name__ == '__main__':
+    main()
+```
+
+Ever since for randomly choose 1 element, we keep 1 chosen element during execution, k elements will be kept and we will use the following strategy to keep and kick out elements:
+
+```
+When consume the i-th element:
+- Either choose the i-th element with k/(i+1) chance. (And kick out any of the chosen k element)
+- Or, keep the last chosen elements with 1 - k/(i+1) chance.
+```
+
+Similar to previous proof to show that each element has `1/(i+1)` chance. It can be easily shown that each element has `k/(i+1)` to be chosen. And such strategy is called ***Reservoir Sampling***.
+
+**Random K Elements Solution:** [https://repl.it/@trsong/Random-K-Elem](https://repl.it/@trsong/Random-K-Elem)
+```py
+from random import randint
+
+def random_k_elem(stream, k):
+    pick = [None] * k 
+    for i, elem in enumerate(stream):
+        if i < k:
+            pick[i] = elem
+        elif randint(1, i+1) <= k:
+            # The i-th elem has k/(n+1) chance to be picked
+            pick[randint(0, k-1)] = elem
+    return pick
+
+
+def print_distribution(stream, k, repeat):
+    histogram = {}
+    for _ in xrange(repeat):
+        res = random_k_elem(stream, k)
+        for e in res:
+            if e not in histogram:
+                histogram[e] = 0
+            histogram[e] += 1
+    print histogram
+
+
+def main():
+    # Distribution looks like:
+    # {0: 2984, 1: 3008, 2: 3085, 3: 3045, 4: 3075, 5: 3001, 6: 2923, 7: 2913, 8: 2954, 9: 3012}
+    print_distribution(xrange(10), k=3, repeat=10000)
+
+
+if __name__ == '__main__':
+    main()
+```
 
 ### May 20, 2019 \[Hard\] Edit Distance
 ---
