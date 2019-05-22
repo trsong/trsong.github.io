@@ -167,7 +167,7 @@ When consume the i-th element:
 - Or, keep the last chosen elements with 1 - k/(i+1) chance.
 ```
 
-Similar to previous proof to show that each element has `1/(i+1)` chance. It can be easily shown that each element has `k/(i+1)` to be chosen. And such strategy is called ***Reservoir Sampling***.
+Similar to previous proof to show that each element has `1/(i+1)` chance. It can be easily shown that each element has `k/(i+1)` to be chosen. Just google ***Reservoir Sampling*** if you are curious about other strategies.
 
 **Random K Elements Solution:** [https://repl.it/@trsong/Random-K-Elem](https://repl.it/@trsong/Random-K-Elem)
 ```py
