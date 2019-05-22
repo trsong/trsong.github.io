@@ -111,7 +111,7 @@ One of the player chooses ‘O’ and the other ‘X’ to mark their respective
 
 **My thoughts:** Choose k elems randomly from an infitite stream can be tricky. We should simplify this question, find the pattern and then generalize the solution. So, let's first think about how to randomly get one element from the stream:
 
-As the input stream can be arbitrarily large, our solution must get calculate the chosen element on the fly. So here comes the strategy:
+As the input stream can be arbitrarily large, our solution must be able to calculate the chosen element on the fly. So here comes the strategy:
 
 ```
 When consume the i-th element:
@@ -124,7 +124,7 @@ When consume the i-th element:
 - Inductive Hypothesis: Suppose for above strategy works for all elemements between 0th and i-1th, which means all elem has `1/i` chance to be chosen.
 - Inductive Step: when consume the i-th element:
   - If the i-th element is selected with `1/(i+1)` chance, then it works for the i-th element 
-  - As for other element to be choosen, we will have `1-1/(i+1)` chance not to choose the i-th element. And also based on the Inductive Hypothesis: all elemements between 0th and i-1th has 1/i chance to be chosen. Thus, the chance of any elem between 0-th to i-th element to be chosen in this round eqauls `1/i * (1-(1/(i+1))) = 1/(i+1)`. Therefore it works for all previous elements.
+  - As for other elements to be choosen, we will have `1-1/(i+1)` chance not to choose the i-th element. And also based on the Inductive Hypothesis: all elemements between 0th and i-1th has 1/i chance to be chosen. Thus, the chance of any elem between 0-th to i-th element to be chosen in this round eqauls `1/i * (1-(1/(i+1))) = 1/(i+1)`, which means you cannot choose the i-th element and at the same time you choose any element between 0-th and i-th element. Therefore it works for all previous elements as each element has `1/(i+1)` chance to be chosen.
 
 **Random One Element Solution:** [https://repl.it/@trsong/Random-One-Elem](https://repl.it/@trsong/Random-One-Elem)
 
