@@ -82,7 +82,9 @@ One of the player chooses ‘O’ and the other ‘X’ to mark their respective
 >
 > Do this in O(N) time.
 
-### May, 2019 \[Hard\] 
+-->
+
+### May 23, 2019 \[Hard\] LRU Cache
 ---
 > **Question:** Implement an LRU (Least Recently Used) cache. It should be able to be initialized with a cache size n, and contain the following methods:
 >
@@ -92,7 +94,6 @@ One of the player chooses ‘O’ and the other ‘X’ to mark their respective
 >  
 > Each operation should run in O(1) time.
 
--->
 
 ### May 22, 2019 \[Easy\] Special Stack
 ---
@@ -103,6 +104,68 @@ One of the player chooses ‘O’ and the other ‘X’ to mark their respective
 > - `max()`, which returns the maximum value in the stack currently. If there are no elements in the stack, then it should throw an error or return null.
 > 
 > Each method should run in constant time.
+
+**Python Solution:** [https://repl.it/@trsong/Special-Stack](https://repl.it/@trsong/Special-Stack)
+```py
+class ListNode(object):
+    def __init__(self, val, next=None):
+        self.val = val
+        self.next = next
+
+
+class SpecialStack(object):
+    def __init__(self):
+        self._stack = None
+        self._max_stack = None
+        self._size = 0
+
+    def push(self, val):
+        max_val = max(val, self._max_stack.val) if self._size > 0 else val
+        self._max_stack = ListNode(max_val, self._max_stack)
+        self._stack = ListNode(val, self._stack)
+        self._size += 1
+
+    def pop(self):
+        if self._size <= 0:
+            return None
+        else:
+            val = self._stack.val
+            self._stack = self._stack.next
+            self._max_stack = self._max_stack.next
+            self._size -= 1
+            return val
+
+    def max(self):
+        if self._size <= 0:
+            return None
+        else:
+            return self._max_stack.val
+
+
+def main():
+    stack = SpecialStack()
+    assert stack.pop() is None
+    assert stack.max() is None
+    stack.push(1)
+    stack.push(2)
+    stack.push(3)
+    assert stack.max() == 3
+    assert stack.pop() == 3
+    assert stack.max() == 2
+    assert stack.pop() == 2
+    assert stack.pop() == 1
+    assert stack.pop() is None
+    stack.push(3)
+    stack.push(2)
+    stack.push(1)
+    assert stack.max() == 3
+    assert stack.pop() == 1
+    assert stack.pop() == 2
+
+
+if __name__ == '__main__':
+    main()
+```
 
 
 ### May 21, 2019 \[Hard\] Random Elements from Infinite Stream
