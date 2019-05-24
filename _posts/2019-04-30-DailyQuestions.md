@@ -126,15 +126,11 @@ class LRUCache(object):
     def _populate(self, key):
         node = self._lookup[key]
         # Duplicate node and append it to the end of list
-        self._end.key = node.key
-        self._end.val = node.val
-        self._end.next = ListNode()
+        self._end.key, self._end.val, self._end.next  = node.key, node.val, ListNode()
         self._lookup[node.key] = self._end
         self._end = self._end.next
         # Remove node
-        node.key = node.next.key
-        node.val = node.next.val
-        node.next = node.next.next
+        node.key, node.val, node.next = node.next.key, node.next.val, node.next.next
         self._lookup[node.key] = node
 
     def get(self, key):
@@ -151,10 +147,9 @@ class LRUCache(object):
                 del self._lookup[self._start.key]
                 self._start = self._start.next
                 self._size -= 1
-            node = ListNode(key, val, self._start)
-            self._start = node
-            self._lookup[key] = node
-            self._populate(node.key)
+            self._start = ListNode(key, val, self._start)
+            self._lookup[key] = self._start
+            self._populate(key)
             self._size += 1
 
 
