@@ -71,8 +71,9 @@ One of the player chooses ‘O’ and the other ‘X’ to mark their respective
 > 
 > For example, given S = [12, 1, 61, 5, 9, 2] and k = 24, return [12, 9, 2, 1] since it sums up to 24.
 
+-->
 
-### May, 2019 \[Medium\] 
+### May 24, 2019 \[Medium\] Maximum Subarray Sum
 ---
 > **Question:** Given an array of numbers, find the maximum sum of any contiguous subarray of the array.
 >
@@ -81,8 +82,6 @@ One of the player chooses ‘O’ and the other ‘X’ to mark their respective
 > Given the array [-5, -1, -8, -9], the maximum sum would be 0, since we would not take any elements.
 >
 > Do this in O(N) time.
-
--->
 
 ### May 23, 2019 \[Hard\] LRU Cache
 ---
@@ -94,6 +93,95 @@ One of the player chooses ‘O’ and the other ‘X’ to mark their respective
 >  
 > Each operation should run in O(1) time.
 
+**My thoughts:** The implementation of LRU cache can be similar to ***Linked Hash Map***: a map that also preserve the insertion order. It has a lookup table for fast value retrival and a doubly linked list to keep track of least recent used item that can be evicted when the cache is full. 
+
+However, during interview, usually the candidate will be asked to use a singly linked list to implement (once during SAP on-site). The trick is to figure out a way to remove an element in a singly linked list which can be achived use the following:
+
+```py
+node.val = node.next.val
+node.next = node.next.next
+```
+
+Note that above method not work if attempt to remove the very last element which will cause null pointer exception. A way to overcome this issue is to create a dummy node at the end of list.
+
+P.S: For doubly linked list solution check LC 146.
+
+**Singly Linked-List Solution:** [https://repl.it/@trsong/LRU-Cache](https://repl.it/@trsong/LRU-Cache)
+```py
+class ListNode(object):
+    def __init__(self, key=None, val=None, next=None):
+        self.key = key
+        self.val = val
+        self.next = next
+
+
+class LRUCache(object):
+    def __init__(self, capacity):
+        self._capacity = capacity
+        self._size = 0
+        self._start = ListNode()
+        self._end = self._start
+        self._lookup = {}
+
+    def _populate(self, key):
+        node = self._lookup[key]
+        # Duplicate node and append it to the end of list
+        self._end.key = node.key
+        self._end.val = node.val
+        self._end.next = ListNode()
+        self._lookup[node.key] = self._end
+        self._end = self._end.next
+        # Remove node
+        node.key = node.next.key
+        node.val = node.next.val
+        node.next = node.next.next
+        self._lookup[node.key] = node
+
+    def get(self, key):
+        if key not in self._lookup: return None
+        self._populate(key)
+        return self._lookup[key].val
+
+    def set(self, key, val):
+        if key in self._lookup:
+            self._lookup[key].val = val
+            self._populate(key)
+        else:
+            if self._size >= self._capacity:
+                del self._lookup[self._start.key]
+                self._start = self._start.next
+                self._size -= 1
+            node = ListNode(key, val, self._start)
+            self._start = node
+            self._lookup[key] = node
+            self._populate(node.key)
+            self._size += 1
+
+
+def main():
+    cache = LRUCache(3)
+    cache.set(0, 0)  # Least Recent -> 0 -> Most Recent
+    cache.set(1, 1)  # Least Recent -> 0, 1 -> Most Recent
+    cache.set(2, 2)  # Least Recent -> 0, 1, 2 -> Most Recent
+    cache.set(3, 3)  # Least Recent -> 1, 2, 3 -> Most Recent. Evict 0
+    assert cache.get(0) is None  
+    assert cache.get(2) == 2  # Least Recent -> 1, 3, 2 -> Most Recent
+    cache.set(4, 4)  # Least Recent -> 3, 2, 4 -> Most Recent. Evict 1 
+    assert cache.get(1) is None
+    assert cache.get(2) == 2  # Least Recent -> 3, 4, 2 -> Most Recent 
+    assert cache.get(3) == 3  # Least Recent -> 4, 2, 3 -> Most Recent
+    assert cache.get(2) == 2  # Least Recent -> 4, 3, 2 -> Most Recent
+    cache.set(5, 5)  # Least Recent -> 3, 2, 5 -> Most Recent. Evict 4
+    cache.set(6, 6)  # Least Recent -> 2, 5, 6 -> Most Recent. Evict 3
+    assert cache.get(4) is None
+    assert cache.get(3) is None
+    cache.set(7, 7)  # Least Recent -> 5, 6, 7 -> Most Recent. Evict 2
+    assert cache.get(2) is None
+
+
+if __name__ == '__main__':
+    main()
+```
 
 ### May 22, 2019 \[Easy\] Special Stack
 ---
