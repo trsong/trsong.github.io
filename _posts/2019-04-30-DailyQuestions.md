@@ -48,13 +48,6 @@ One of the player chooses ‘O’ and the other ‘X’ to mark their respective
  "the   lazy   dog"] # 4 extra spaces distributed evenly
 ```
 
-### May, 2019 \[Easy\] 
----
-> **Question:** Run-length encoding is a fast and simple method of encoding strings. The basic idea is to represent repeated successive characters as a single count and character. For example, the string "AAAABBBCCDAA" would be encoded as "4A3B2C1D2A".
->
-> Implement run-length encoding and decoding. You can assume the string to be encoded have no digits and consists solely of alphabetic characters. You can assume the string to be decoded is valid.
-
-
 ### May, 2019 \[Hard\] 
 ---
 > **Question:** Given an array of strictly the characters 'R', 'G', and 'B', segregate the values of the array so that all the Rs come first, the Gs come second, and the Bs come last. You can only swap elements of the array.
@@ -63,7 +56,7 @@ One of the player chooses ‘O’ and the other ‘X’ to mark their respective
 >
 > For example, given the array ['G', 'B', 'R', 'R', 'B', 'R', 'G'], it should become ['R', 'R', 'R', 'G', 'G', 'B', 'B']
 
-### May, 2019 \[Hard\] 
+### May 26, 2019 \[Hard\] Subset Sum
 ---
 > **Question:** Given a list of integers S and a target number k, write a function that returns a subset of S that adds up to k. If such a subset cannot be made, then return null.
 >
@@ -72,6 +65,12 @@ One of the player chooses ‘O’ and the other ‘X’ to mark their respective
 > For example, given S = [12, 1, 61, 5, 9, 2] and k = 24, return [12, 9, 2, 1] since it sums up to 24.
 
 -->
+
+### May 25, 2019 \[Easy\] Run-length Encoding
+---
+> **Question:** Run-length encoding is a fast and simple method of encoding strings. The basic idea is to represent repeated successive characters as a single count and character. For example, the string "AAAABBBCCDAA" would be encoded as "4A3B2C1D2A".
+>
+> Implement run-length encoding and decoding. You can assume the string to be encoded have no digits and consists solely of alphabetic characters. You can assume the string to be decoded is valid.
 
 ### May 24, 2019 \[Medium\] Maximum Subarray Sum
 ---
@@ -82,6 +81,51 @@ One of the player chooses ‘O’ and the other ‘X’ to mark their respective
 > Given the array [-5, -1, -8, -9], the maximum sum would be 0, since we would not take any elements.
 >
 > Do this in O(N) time.
+
+**My thoughts:** Start from trival examples and then generalize our solution. 
+
+Properties can be derived from trivial example:
+1. if all nums are positive, then the result equals sum of all of them
+2. if all nums are negative, then the result equals 0.
+
+Consider we have answer when the input size equals i - 1. Then when we encouter the ith element:
+- if it's positive, then we use property 1
+- if it's negative, but when include the current num, the result is still positive, then we still use property 1. 'coz the list is equivalent to some all positive list.
+- if it's negative, but even we include the current, the result is negative, then we use property 2. 'coz the list is equivalent to some all negative list.
+
+**Python Solution:** [https://repl.it/@trsong/Maximum-Subarray-Sum](https://repl.it/@trsong/Maximum-Subarray-Sum)
+```py
+def max_sub_array(nums):
+    if not nums: return 0
+    max_sum = 0
+    accu_sum = 0
+    for num in nums:
+        if num > 0:
+            accu_sum += num
+            max_sum = max(max_sum, accu_sum)
+        elif accu_sum + num > 0:
+            accu_sum += num
+        else:
+            # when accu_sum + num <= 0
+            accu_sum = 0
+    return max_sum
+
+
+def main():
+    assert max_sub_array([]) == 0
+    assert max_sub_array([1]) == 1
+    assert max_sub_array([-1]) == 0
+    assert max_sub_array([34, -50, 42, 14, -5, 86])  == 137
+    assert max_sub_array([-5, -1, -8, -9]) == 0
+    assert max_sub_array([-1, -1, -1, 5, -1 , -1]) == 5
+    assert max_sub_array([1, 1, -5, 1, 1]) == 2
+    assert max_sub_array([1, 1, -1, 1, 1]) == 3
+    assert max_sub_array([1, 1, -1, 1, 1, 1]) == 4
+
+
+if __name__ == '__main__':
+    main()
+```
 
 ### May 23, 2019 \[Hard\] LRU Cache
 ---
