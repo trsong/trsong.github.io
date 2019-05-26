@@ -18,17 +18,61 @@ categories: Python/Java
 
 <!--
 
-### \[Medium\] Implementation of Tic-Tac-Toe game
+### June, 2019 \[Medium\]
 ---
-> **Questions:** Implementation of Tic-Tac-Toe game
+> **Question:** Implement locking in a binary tree. A binary tree node can be locked or unlocked only if all of its descendants or ancestors are not locked.
 > 
-> Rules of the Game:
+> Design a binary tree node class with the following methods:
 >
-> - The game is to be played between two people.
-One of the player chooses ‘O’ and the other ‘X’ to mark their respective cells.
-> - The game starts with one of the players and the game ends when one of the players has one whole row/ column/ diagonal filled with his/her respective character (‘O’ or ‘X’).
-> - If no one wins, then the game is said to be draw.
+> - `is_locked`, which returns whether the node is locked
+lock, which attempts to lock the node. If it cannot be locked, then it should return false. Otherwise, it should lock it and return true.
+> - `unlock`, which unlocks the node. If it cannot be unlocked, then it should return false. Otherwise, it should unlock it and return true.
+>
+> You may augment the node to add parent pointers or any other property you would like. You may assume the class is used in a single-threaded program, so there is no need for actual locks or mutexes. Each method should run in O(h), where h is the height of the tree.
+
+
+### June, 2019 \[Easy\]
+---
+> **Question:** Given a array of numbers representing the stock prices of a company in chronological order, write a function that calculates the maximum profit you could have made from buying and selling that stock once. You must buy before you can sell it.
+>
+> For example, given [9, 11, 8, 5, 7, 10], you should return 5, since you could buy the stock at 5 dollars and sell it at 10 dollars.
+
+### June, 2019 \[Hard\] Array Shuffle
+---
+> **Question:** Given an array, write a program to generate a random permutation of array elements. This question is also asked as “shuffle a deck of cards” or “randomize a given array”. Here shuffle means that every permutation of array element should equally likely.
+
+```
+Input: [1, 2, 3, 4, 5, 6]
+Output: [3, 4, 1, 5, 6, 2]
+The output can be any random permutation of the input such that all permutation are equally likely.
+```
+> **Hint:** Given a function that generates perfectly random numbers between 1 and k (inclusive) where k is an input, write a function that shuffles the input array using only swaps.
+
+### June, 2019 \[Medium\]
+---
+> **Question:** An sorted array of integers was rotated an unknown number of times.
 > 
+> Given such an array, find the index of the element in the array in faster than linear time. If the element doesn't exist in the array, return null.
+> 
+> For example, given the array [13, 18, 25, 2, 8, 10] and the element 8, return 4 (the index of 8 in the array).
+> 
+> You can assume all the integers in the array are unique.
+
+
+
+### June, 20119 \[Easy\]
+---
+> **Question:** Given a function `rand5()`, use that function to implement a function `rand7()` where rand5() returns an integer from 1 to 5 (inclusive) with uniform probability and `rand7()` is from 1 to 7 (inclusive).
+
+### June, 20119 \[Hard\]
+---
+> **Question:** Given a string, find the longest palindromic contiguous substring. If there are more than one with the maximum length, return any one.
+>
+> For example, the longest palindromic substring of "aabcdcb" is "bcdcb". The longest palindromic substring of "bananas" is "anana".
+
+### June, 20119 \[Medium\]
+---
+> **Question:** Given an undirected graph represented as an adjacency matrix and an integer k, write a function to determine whether each vertex in the graph can be colored such that no two adjacent vertices share the same color using at most k colors.
 
 ### May, 2019 \[Medium\] 
 ---
@@ -43,10 +87,18 @@ One of the player chooses ‘O’ and the other ‘X’ to mark their respective
  For example, given the list of words ["the", "quick", "brown", "fox", "jumps", "over", "the", "lazy", "dog"] and k = 16, you should return the following:
 
 ```py
-["the  quick brown", # 1 extra space on the left
- "fox  jumps  over", # 2 extra spaces distributed evenly
- "the   lazy   dog"] # 4 extra spaces distributed evenly
+["the  quick brown",
+ "fox  jumps  over",
+ "the   lazy   dog"]
 ```
+
+### May, 2019 \[Medium\] 
+---
+> **Question:** Given a string s and an integer k, break up the string into multiple lines such that each line has a length of k or less. You must break it up so that words don't break across lines. Each line has to have the maximum possible amount of words. If there's no way to break the text up, then return null.
+>
+> You can assume that there are no spaces at the ends of the string and that there is exactly one space between each word.
+>
+> For example, given the string "the quick brown fox jumps over the lazy dog" and k = 10, you should return: ["the quick", "brown fox", "jumps over", "the lazy", "dog"]. No string in the list has a length of more than 10.
 
 ### May, 2019 \[Hard\] 
 ---
@@ -56,7 +108,33 @@ One of the player chooses ‘O’ and the other ‘X’ to mark their respective
 >
 > For example, given the array ['G', 'B', 'R', 'R', 'B', 'R', 'G'], it should become ['R', 'R', 'R', 'G', 'G', 'B', 'B']
 
-### May 26, 2019 \[Hard\] Subset Sum
+### 🎂 May 29, 2019 \[Medium\]
+---
+> **Question:** Given pre-order and in-order traversals of a binary tree, write a function to reconstruct the tree.
+>
+> For example, given the following preorder traversal:
+>
+```py
+[a, b, d, e, c, f, g]
+```
+
+> And the following inorder traversal:
+
+```py
+[d, b, e, a, f, c, g]
+```
+
+> You should return the following tree:
+
+```
+    a
+   / \
+  b   c
+ / \ / \
+d  e f  g
+```
+
+### May 28, 2019 \[Hard\] Subset Sum
 ---
 > **Question:** Given a list of integers S and a target number k, write a function that returns a subset of S that adds up to k. If such a subset cannot be made, then return null.
 >
@@ -64,7 +142,24 @@ One of the player chooses ‘O’ and the other ‘X’ to mark their respective
 > 
 > For example, given S = [12, 1, 61, 5, 9, 2] and k = 24, return [12, 9, 2, 1] since it sums up to 24.
 
+### May 27, 2019 \[Medium\]
+---
+> **Question:** Given a multiset of integers, return whether it can be partitioned into two subsets whose sums are the same.
+>
+> For example, given the multiset {15, 5, 20, 10, 35, 15, 10}, it would return true, since we can split it up into {15, 5, 10, 15, 10} and {20, 35}, which both add up to 55.
+>
+> Given the multiset {15, 5, 20, 10, 35}, it would return false, since we can't split it up into two subsets that add up to the same sum.
+
 -->
+
+### May 26, 2019 \[Medium\] Tic-Tac-Toe game
+---
+> **Questions:** Implementation of Tic-Tac-Toe game. Rules of the Game:
+> 
+> - The game is to be played between two people.
+One of the player chooses ‘O’ and the other ‘X’ to mark their respective cells.
+> - The game starts with one of the players and the game ends when one of the players has one whole row/ column/ diagonal filled with his/her respective character (‘O’ or ‘X’).
+> - If no one wins, then the game is said to be draw.
 
 ### May 25, 2019 \[Easy\] Run-length Encoding
 ---
