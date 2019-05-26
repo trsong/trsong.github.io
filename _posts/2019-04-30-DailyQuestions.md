@@ -170,6 +170,56 @@ One of the player chooses ‘O’ and the other ‘X’ to mark their respective
 >
 > Implement run-length encoding and decoding. You can assume the string to be encoded have no digits and consists solely of alphabetic characters. You can assume the string to be decoded is valid.
 
+**Python Solution:** [https://repl.it/@trsong/Run-length-Encoding](https://repl.it/@trsong/Run-length-Encoding)
+```py
+class Run_Length_Encoding(object):
+    @staticmethod
+    def decode(text):
+        if not text: return ""
+        i = 0
+        res = []
+        while i < len(text):
+            repeat = 0
+            while '0' <= text[i] <= '9':
+                repeat = 10 * repeat + int(text[i])
+                i += 1
+            res.append(text[i] * repeat)
+            i += 1
+        return ''.join(res)
+        
+    @staticmethod
+    def encode(text):
+        if not text: return ""
+        i = 0
+        res = []
+        while i < len(text):
+            cur = text[i]
+            repeat = 1
+            i += 1
+            while i < len(text) and text[i] == cur:
+                repeat += 1
+                i += 1
+            res.append("{}{}".format(repeat, cur))
+        return ''.join(res)
+
+
+def test_result(raw_text, encoded_text):
+    assert Run_Length_Encoding.encode(raw_text) == encoded_text
+    assert Run_Length_Encoding.decode(encoded_text) == raw_text
+
+
+def main():
+    test_result("", "")
+    test_result("ABC", "1A1B1C")
+    test_result("A"*10, "10A")
+    test_result("A" * 100 + "B" + "C" * 99, "100A1B99C")
+    test_result("ABBCCCDDDDCCCBBA", "1A2B3C4D3C2B1A")
+
+
+if __name__ == '__main__':
+    main()
+```
+
 ### May 24, 2019 \[Medium\] Maximum Subarray Sum
 ---
 > **Question:** Given an array of numbers, find the maximum sum of any contiguous subarray of the array.
