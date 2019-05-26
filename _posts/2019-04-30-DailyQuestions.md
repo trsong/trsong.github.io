@@ -18,7 +18,7 @@ categories: Python/Java
 
 <!--
 
-### June, 2019 \[Medium\]
+### June 9, 2019 \[Medium\]
 ---
 > **Question:** Implement locking in a binary tree. A binary tree node can be locked or unlocked only if all of its descendants or ancestors are not locked.
 > 
@@ -30,14 +30,13 @@ lock, which attempts to lock the node. If it cannot be locked, then it should re
 >
 > You may augment the node to add parent pointers or any other property you would like. You may assume the class is used in a single-threaded program, so there is no need for actual locks or mutexes. Each method should run in O(h), where h is the height of the tree.
 
-
-### June, 2019 \[Easy\]
+### June 8, 2019 \[Easy\]
 ---
 > **Question:** Given a array of numbers representing the stock prices of a company in chronological order, write a function that calculates the maximum profit you could have made from buying and selling that stock once. You must buy before you can sell it.
 >
 > For example, given [9, 11, 8, 5, 7, 10], you should return 5, since you could buy the stock at 5 dollars and sell it at 10 dollars.
 
-### June, 2019 \[Hard\] Array Shuffle
+### June 7, 2019 \[Hard\] Array Shuffle
 ---
 > **Question:** Given an array, write a program to generate a random permutation of array elements. This question is also asked as “shuffle a deck of cards” or “randomize a given array”. Here shuffle means that every permutation of array element should equally likely.
 
@@ -48,7 +47,7 @@ The output can be any random permutation of the input such that all permutation 
 ```
 > **Hint:** Given a function that generates perfectly random numbers between 1 and k (inclusive) where k is an input, write a function that shuffles the input array using only swaps.
 
-### June, 2019 \[Medium\]
+### June 6, 2019 \[Medium\]
 ---
 > **Question:** An sorted array of integers was rotated an unknown number of times.
 > 
@@ -59,22 +58,21 @@ The output can be any random permutation of the input such that all permutation 
 > You can assume all the integers in the array are unique.
 
 
-
-### June, 20119 \[Easy\]
+### June 5, 20119 \[Easy\]
 ---
-> **Question:** Given a function `rand5()`, use that function to implement a function `rand7()` where rand5() returns an integer from 1 to 5 (inclusive) with uniform probability and `rand7()` is from 1 to 7 (inclusive).
+> **Question:** Given a function `rand5()`, use that function to implement a function `rand7()` where rand5() returns an integer from 1 to 5 (inclusive) with uniform probability and `rand7()` is from 1 to 7 (inclusive). Also, use of any other library function and floating point arithmetic are not allowed.
 
-### June, 20119 \[Hard\]
+### June 4, 20119 \[Hard\]
 ---
 > **Question:** Given a string, find the longest palindromic contiguous substring. If there are more than one with the maximum length, return any one.
 >
 > For example, the longest palindromic substring of "aabcdcb" is "bcdcb". The longest palindromic substring of "bananas" is "anana".
 
-### June, 20119 \[Medium\]
+### June 3, 20119 \[Medium\]
 ---
 > **Question:** Given an undirected graph represented as an adjacency matrix and an integer k, write a function to determine whether each vertex in the graph can be colored such that no two adjacent vertices share the same color using at most k colors.
 
-### May, 2019 \[Medium\] 
+### June 2, 2019 \[Medium\] 
 ---
 > **Question:** Write an algorithm to justify text. Given a sequence of words and an integer line length k, return a list of strings which represents each line, fully justified.
 > 
@@ -92,7 +90,7 @@ The output can be any random permutation of the input such that all permutation 
  "the   lazy   dog"]
 ```
 
-### May, 2019 \[Medium\] 
+### June 1, 2019 \[Medium\] 
 ---
 > **Question:** Given a string s and an integer k, break up the string into multiple lines such that each line has a length of k or less. You must break it up so that words don't break across lines. Each line has to have the maximum possible amount of words. If there's no way to break the text up, then return null.
 >
@@ -100,7 +98,12 @@ The output can be any random permutation of the input such that all permutation 
 >
 > For example, given the string "the quick brown fox jumps over the lazy dog" and k = 10, you should return: ["the quick", "brown fox", "jumps over", "the lazy", "dog"]. No string in the list has a length of more than 10.
 
-### May, 2019 \[Hard\] 
+### May 31, 2019 \[Easy\] 
+---
+> **Question:** Generate 0 and 1 with 25% and 75% probability
+> Given a function rand50() that returns 0 or 1 with equal probability, write a function that returns 1 with 75% probability and 0 with 25% probability using rand50() only. Minimize the number of calls to rand50() method. Also, use of any other library function and floating point arithmetic are not allowed.
+
+### May 30, 2019 \[Hard\] 
 ---
 > **Question:** Given an array of strictly the characters 'R', 'G', and 'B', segregate the values of the array so that all the Rs come first, the Gs come second, and the Bs come last. You can only swap elements of the array.
 >
