@@ -163,6 +163,8 @@ d  e f  g
 One of the player chooses ‘O’ and the other ‘X’ to mark their respective cells.
 > - The game starts with one of the players and the game ends when one of the players has one whole row/ column/ diagonal filled with his/her respective character (‘O’ or ‘X’).
 > - If no one wins, then the game is said to be draw.
+>
+> Follow-up: create a method that makes the next optimal move such that the person should never lose if make that move.
 
 ### May 25, 2019 \[Easy\] Run-length Encoding
 ---
