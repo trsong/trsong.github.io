@@ -155,7 +155,7 @@ d  e f  g
 
 -->
 
-### May 26, 2019 \[Medium\] Tic-Tac-Toe game
+### May 26, 2019 \[Medium\] Tic-Tac-Toe Game
 ---
 > **Questions:** Implementation of Tic-Tac-Toe game. Rules of the Game:
 > 
@@ -165,6 +165,197 @@ One of the player chooses ‘O’ and the other ‘X’ to mark their respective
 > - If no one wins, then the game is said to be draw.
 >
 > Follow-up: create a method that makes the next optimal move such that the person should never lose if make that move.
+
+**My thoughts:** There are multiple ways to implement Tic-Tac-Toe. I choose to use Observer Pattern which can be used to solve all grid-like game. 
+
+> From Wiki, ***Observer Pattern*** is used when there is one-to-many relationship between objects such as if one object is modified, its depenedent objects are to be notified automatically.
+
+So basically, the way this pattern works is that each cell (the observable) has at most 4 observers: row obser, col observer, and two cross observers. Each observer is responsible for check if all cells underneth have the same value. 
+
+eg. If grid size is 3 and for cell at `(1,1)`,  row_observers contains all cells at row 1: `(1,0)`, `(1,1)` and `(1,2)`. col_observers has all cells at col 1: `(1, 0)`, `(1, 1)` and `(2, 1)`. Two cross observers check the diagonal cells `(0, 0)`, `(1, 1)` and `(2, 2)` as well as `(0, 2)`, `(1, 1)` and `(2, 0)`. When we make a move at cell `(1, 1)`, then all of 4 observers will be notified to check if all cell underneth have the same value, either 'o' or 'x'. If there exists 1 observer satisfies, then the game ends. Otherwise, it continues.
+
+**Implementation Using Observer Pattern:** [https://repl.it/@trsong/Tic-Tac-Toe-Game](https://repl.it/@trsong/Tic-Tac-Toe-Game)
+```py
+class CellObserver(object):
+    def __init__(self, cell, neighbors):
+        self._cell = cell
+        self._neighbors = neighbors
+    
+    def notify(self):
+        return all(neighbor.val == self._cell.val for neighbor in self._neighbors)
+
+
+class CellSubject(object):
+    def __init__(self, val='_'):
+        self.val = val
+        self._observers = []
+
+    def add_observer(self, cell_observer):
+        self._observers.append(cell_observer)
+
+    def notify_observers(self):
+        return any(observer.notify() for observer in self._observers)
+
+
+class Grid(object):
+    def __init__(self, size, first_player='x'):
+        self._next_move = first_player
+        self._size = size
+        self._reset()
+
+    def _reset(self):
+        n = self._size
+        self._turn = 0
+        self._game_finished = False
+        self._table = [[ CellSubject() for _ in xrange(n)] for _ in xrange(n)]
+
+        row_neighbors = [None] * n
+        col_neighbors = [None] * n
+        for i in xrange(n):
+            row_neighbors[i] = [self._table[i][col] for col in xrange(n)]
+            col_neighbors[i] = [self._table[row][i] for row in xrange(n)]
+
+        for i in xrange(n):
+            for j in xrange(n):
+                cell = self._table[i][j]
+                cell.add_observer(CellObserver(cell, row_neighbors[i]))
+                cell.add_observer(CellObserver(cell, col_neighbors[j]))
+
+        top_left_to_bottom_right = [self._table[i][i] for i in xrange(n)]
+        for i in xrange(n):
+            cell = self._table[i][i]
+            cell.add_observer(CellObserver(cell,  top_left_to_bottom_right))
+
+        top_right_to_bottom_left = [self._table[i][n-1-i] for i in xrange(n)]
+        for i in xrange(n):
+            cell = self._table[i][n-1-i]
+            cell.add_observer(CellObserver(cell, top_right_to_bottom_left))
+
+    def _switch_player(self):
+        self._next_move = 'o' if self._next_move == 'x' else 'x'
+
+    def get_next_move(self):
+        return self._next_move
+
+    def display(self):
+        for row in xrange(self._size):
+            print ','.join(cell.val for cell in self._table[row])
+
+    def move(self, row, col):
+        if not (0 <= row < self._size and 0 <= col < self._size):
+            print "row or col out of range."
+            return 
+        cell = self._table[row][col]
+        if cell.val != '_':
+            print "Cell has been occupied. Choose a different cell"
+        else:
+            self._turn += 1
+            cell.val = self._next_move
+            self._game_finished = cell.notify_observers()
+            self._switch_player()
+
+    def is_game_finished(self):
+        return self._game_finished or self._turn > self._size * self._size
+
+    def result(self):
+        if self._turn <= self._size * self._size and self._game_finished:
+            loser = self.get_next_move()
+            winner = 'o' if loser == 'x' else 'x'
+            return 'Game over. %s wins.' % winner
+        else:
+            return "No one wins. There is a tie"
+
+
+class Game(object):
+    def start(self): 
+        print '====== Welcome to Tic-Tac-Toe Game ======'
+        while not raw_input("Press Enter to start..."):
+            self.game_init()
+
+    def game_init(self):
+        size = int(input('Please choose grid size: '))
+        self._grid = Grid(size)
+        while not self._grid.is_game_finished():
+            r, c = [int(x) for x in raw_input("Next player place %s in row, col: " % self._grid.get_next_move()).split(',')]
+            self._grid.move(r, c)
+            self._grid.display()
+        print self._grid.result()
+
+    def test(self):
+        self._grid = Grid(3)
+        self._grid.move(0, 0)
+        self._grid.move(1, 1)
+        self._grid.move(2, 2)
+        self._grid.move(0, 1)
+        self._grid.move(2, 1)
+        self._grid.move(2, 0)
+        self._grid.move(0, 2)
+        self._grid.move(1, 2)
+        self._grid.move(1, 0)
+        assert self._grid.result() == "No one wins. There is a tie"
+        self._grid = Grid(1)
+        self._grid.move(0, 0)
+        assert self._grid.result() == "Game over. x wins."
+
+
+class main():
+    game = Game()
+    game.test()
+    game.start()
+
+
+if __name__ == '__main__':
+    main()
+```
+
+**Game demo**
+```
+====== Welcome to Tic-Tac-Toe Game ======
+Press Enter to start...
+Please choose grid size: 3
+Next player place x in row, col: 1,1
+_,_,_
+_,x,_
+_,_,_
+Next player place o in row, col: 0,1
+_,o,_
+_,x,_
+_,_,_
+Next player place x in row, col: 0,0
+x,o,_
+_,x,_
+_,_,_
+Next player place o in row, col: 2,2
+x,o,_
+_,x,_
+_,_,o
+Next player place x in row, col: 3,0
+row or col out of range.
+x,o,_
+_,x,_
+_,_,o
+Next player place x in row, col: 0,0
+Cell has been occupied. Choose a different cell
+x,o,_
+_,x,_
+_,_,o
+Next player place x in row, col: 2,0
+x,o,_
+_,x,_
+x,_,o
+Next player place o in row, col: 0,2
+x,o,o
+_,x,_
+x,_,o
+Next player place x in row, col: 1,0
+x,o,o
+x,x,_
+x,_,o
+Game over. x wins.
+Press Enter to start...
+```
+
+> Follow-up Question. TODO tsong: It's 3:30 am, and I'm just too tired. I was planning to implement that using Backtracking algorithem. However, my mind is kinda dizzy and it's time to get some rest. I will probably go back to this question once get a chance in the future.
 
 ### May 25, 2019 \[Easy\] Run-length Encoding
 ---
