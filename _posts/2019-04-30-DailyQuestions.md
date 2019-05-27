@@ -145,7 +145,9 @@ d  e f  g
 > 
 > For example, given S = [12, 1, 61, 5, 9, 2] and k = 24, return [12, 9, 2, 1] since it sums up to 24.
 
-### May 27, 2019 \[Medium\]
+-->
+
+### May 27, 2019 \[Medium\] Multiset Partition
 ---
 > **Question:** Given a multiset of integers, return whether it can be partitioned into two subsets whose sums are the same.
 >
@@ -153,7 +155,6 @@ d  e f  g
 >
 > Given the multiset {15, 5, 20, 10, 35}, it would return false, since we can't split it up into two subsets that add up to the same sum.
 
--->
 
 ### May 26, 2019 \[Medium\] Tic-Tac-Toe Game
 ---
