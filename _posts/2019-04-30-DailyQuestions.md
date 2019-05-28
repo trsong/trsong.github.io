@@ -147,6 +147,8 @@ d  e f  g
 > 
 > For example, given S = [12, 1, 61, 5, 9, 2] and k = 24, return [12, 9, 2, 1] since it sums up to 24.
 
+<!--
+
 **My thoughts:** It's too expensive to check every subsets one by one. What we can do is to divide and conquer this problem.
 
 For each element, we either include it to pursuing for target or not include it:
@@ -179,6 +181,8 @@ def subset_sum(numbers, target):
                 dp[s][i] = dp[s][i-1] or dp[s - numbers[i-1]][i-1]
     return dp[target][n] 
 ```
+
+-->
 
 ### May 27, 2019 \[Medium\] Multiset Partition
 ---
