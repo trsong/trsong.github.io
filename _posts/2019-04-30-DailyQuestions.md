@@ -147,7 +147,7 @@ d  e f  g
 > 
 > For example, given S = [12, 1, 61, 5, 9, 2] and k = 24, return [12, 9, 2, 1] since it sums up to 24.
 
-**My thoughts:** It's expensive to check every subsets one by one. That's too expensive. What we can do is to divide and conquer this problem.
+**My thoughts:** It's too expensive to check every subsets one by one. What we can do is to divide and conquer this problem.
 
 For each element, we either include it to pursuing for target or not include it:
 ```py
