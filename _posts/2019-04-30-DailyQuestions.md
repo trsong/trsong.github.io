@@ -137,6 +137,8 @@ The output can be any random permutation of the input such that all permutation 
 d  e f  g
 ```
 
+-->
+
 ### May 28, 2019 \[Hard\] Subset Sum
 ---
 > **Question:** Given a list of integers S and a target number k, write a function that returns a subset of S that adds up to k. If such a subset cannot be made, then return null.
@@ -145,7 +147,6 @@ d  e f  g
 > 
 > For example, given S = [12, 1, 61, 5, 9, 2] and k = 24, return [12, 9, 2, 1] since it sums up to 24.
 
--->
 
 ### May 27, 2019 \[Medium\] Multiset Partition
 ---
@@ -154,6 +155,71 @@ d  e f  g
 > For example, given the multiset {15, 5, 20, 10, 35, 15, 10}, it would return true, since we can split it up into {15, 5, 10, 15, 10} and {20, 35}, which both add up to 55.
 >
 > Given the multiset {15, 5, 20, 10, 35}, it would return false, since we can't split it up into two subsets that add up to the same sum.
+
+**Incorrect Solution:**
+```py
+def incorrect_solution(multiset):
+    # When input = [5, 1, 5, 1], expect result to be True but given False
+    if not multiset or len(multiset) <= 1: return False
+    sorted_multiset = sorted(multiset)
+    balance = 0
+    lo = 0
+    hi = len(multiset) - 1
+    while lo < hi:
+        if balance <= 0:
+            balance += sorted_multiset[lo]
+            lo += 1
+        else:
+            balance -= sorted_multiset[hi]
+            hi -= 1
+    return balance == 0
+```
+
+**My thoughts:** Initially I thought the problem is trivial as above, I simply sort the array and find a pivot position that can happen the break the array into two equal sum sub-arrays. However, I sooner realize that I cannot make assumption that one array will always have elements less than the other. eg. `[4, 2, 1, 1]` can break into `[1, 2, 2]` and `[4]`. But `[5, 1, 5, 1]` does not work if break into `[1, 1, 5]` and `[5]`.
+
+> Note: watch over for case `[5, 1, 5, 1]` and `[1, 2, 4, 3, 8]`
+
+After spending some time think more about this issue, I find that this problem is actually equivalent to find target sum in subset. eg. Find subset in `[5, 1, 5, 1]` such that the sum equals 6. 
+
+> Check out tomorrow's question for subset sum.
+
+
+**DP Solution:** [https://repl.it/@trsong/Multiset-Partition](https://repl.it/@trsong/Multiset-Partition)
+```py
+def has_equal_sum_partition(multiset):
+    if not multiset: return False
+    total = sum(multiset)
+    if total % 2 == 1: return False
+    target = total / 2
+    n = len(multiset)
+    # Let dp[sum][n] represent exiting subset of multiset[:n] with sum as sum:
+    # * dp[sum][n] = dp[sum][n-1] or dp[sum-a[n-1]][n-1]
+    # * dp[0][0..n] = True
+    # The final result = dp[target][n]
+    dp = [[False for _ in xrange(n+1)] for _ in xrange(target+1)]
+    for i in xrange(n+1):
+        dp[0][i] = True
+    for s in xrange(1, target+1):
+        for i in xrange(1, n+1):
+            if s - multiset[i-1] < 0:
+                dp[s][i] = dp[s][i-1]
+            else:
+                dp[s][i] = dp[s][i-1] or dp[s - multiset[i-1]][i-1]
+    return dp[target][n]
+
+
+def main():
+    assert has_equal_sum_partition([5, 1, 5, 1])
+    assert not has_equal_sum_partition([1, 2, 2])
+    assert not has_equal_sum_partition([])
+    assert has_equal_sum_partition([15, 5, 20, 10, 35, 15, 10])
+    assert not has_equal_sum_partition([15, 5, 20, 10, 35])
+    assert has_equal_sum_partition([1, 2, 4, 3, 8])
+
+
+if __name__ == '__main__':
+    main()
+```
 
 
 ### May 26, 2019 \[Medium\] Tic-Tac-Toe Game
