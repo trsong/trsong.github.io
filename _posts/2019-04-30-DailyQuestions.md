@@ -147,6 +147,38 @@ d  e f  g
 > 
 > For example, given S = [12, 1, 61, 5, 9, 2] and k = 24, return [12, 9, 2, 1] since it sums up to 24.
 
+**My thoughts:** It's expensive to check every subsets one by one. That's too expensive. What we can do is to divide and conquer this problem.
+
+For each element, we either include it to pursuing for target or not include it:
+```py
+subset_sum(numbers, target) = subset_sum(numbers[1:], target) or subset_sum(numbers[1:], target - numbers[0])
+```
+
+or derive dp formula from above recursive relation:
+
+```py
+dp[target][n] = dp[target][n-1] or dp[target-numbers[n-1]][n-1]
+```
+
+**DP Solution inspired by yesterday's problem:** [https://repl.it/@trsong/Multiset-Partition](https://repl.it/@trsong/Multiset-Partition)
+```py
+def subset_sum(numbers, target):
+    n = len(numbers)
+    # Let dp[sum][n] represent exiting subset of numbers[:n] with sum as sum:
+    # * dp[sum][n] = dp[sum][n-1] or dp[sum-a[n-1]][n-1]
+    # * dp[0][0..n] = True
+    # The final result = dp[target][n]
+    dp = [[False for _ in xrange(n+1)] for _ in xrange(target+1)]
+    for i in xrange(n+1):
+        dp[0][i] = True
+    for s in xrange(1, target+1):
+        for i in xrange(1, n+1):
+            if s - numbers[i-1] < 0:
+                dp[s][i] = dp[s][i-1]
+            else:
+                dp[s][i] = dp[s][i-1] or dp[s - numbers[i-1]][i-1]
+    return dp[target][n] 
+```
 
 ### May 27, 2019 \[Medium\] Multiset Partition
 ---
@@ -175,11 +207,11 @@ def incorrect_solution(multiset):
     return balance == 0
 ```
 
-**My thoughts:** Initially I thought the problem is trivial as above, I simply sort the array and find a pivot position that can happen the break the array into two equal sum sub-arrays. However, I sooner realize that I cannot make assumption that one array will always have elements less than the other. eg. `[4, 2, 1, 1]` can break into `[1, 2, 2]` and `[4]`. But `[5, 1, 5, 1]` does not work if break into `[1, 1, 5]` and `[5]`.
+**My thoughts:** Initially I thought the problem is trivial as above, I simply sort the array and find a pivot position that can happen to break the array into two equal sum sub-arrays. However, I sooner realize that I cannot make assumption that one array will always have elements less than the other. eg. `[4, 2, 1, 1]` can break into `[1, 2, 2]` and `[4]` where all of `1, 2, 2 < 4`. But `[5, 1, 5, 1]` does not work if break into `[1, 1, 5]` and `[5]`.
 
 > Note: watch over for case `[5, 1, 5, 1]` and `[1, 2, 4, 3, 8]`
 
-After spending some time think more about this issue, I find that this problem is actually equivalent to find target sum in subset. eg. Find subset in `[5, 1, 5, 1]` such that the sum equals 6. 
+After spend some time thinking more deeply about this issue, I find that this problem is actually equivalent to find target sum in subset. eg. Find subset in `[5, 1, 5, 1]` such that the sum equals 6. 
 
 > Check out tomorrow's question for subset sum.
 
@@ -191,8 +223,11 @@ def has_equal_sum_partition(multiset):
     total = sum(multiset)
     if total % 2 == 1: return False
     target = total / 2
-    n = len(multiset)
-    # Let dp[sum][n] represent exiting subset of multiset[:n] with sum as sum:
+    return subset_sum(multiset, target)
+
+def subset_sum(numbers, target):
+    n = len(numbers)
+    # Let dp[sum][n] represent exiting subset of numbers[:n] with sum as sum:
     # * dp[sum][n] = dp[sum][n-1] or dp[sum-a[n-1]][n-1]
     # * dp[0][0..n] = True
     # The final result = dp[target][n]
@@ -201,11 +236,11 @@ def has_equal_sum_partition(multiset):
         dp[0][i] = True
     for s in xrange(1, target+1):
         for i in xrange(1, n+1):
-            if s - multiset[i-1] < 0:
+            if s - numbers[i-1] < 0:
                 dp[s][i] = dp[s][i-1]
             else:
-                dp[s][i] = dp[s][i-1] or dp[s - multiset[i-1]][i-1]
-    return dp[target][n]
+                dp[s][i] = dp[s][i-1] or dp[s - numbers[i-1]][i-1]
+    return dp[target][n] 
 
 
 def main():
