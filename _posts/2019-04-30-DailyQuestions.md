@@ -17,6 +17,21 @@ categories: Python/Java
 **Java 1.8:**  TBD
 
 <!--
+
+### June 11, 2019 \[Medium\] Forward DNS Look Up Cache
+----
+> **Question:** Forward DNS look up is getting IP address for a given domain name typed in the web browser. e.g. Given "www.samsung.com" should return "107.108.11.123"
+> 
+> The cache should do the following operations:
+> 1. Add a mapping from URL to IP address
+> 2. Find IP address for a given URL.
+> 
+> Note: 
+> - You can assume all domain name contains only lowercase characters
+> 
+> Hint:
+> - The idea is to store URLs in Trie nodes and store the corresponding IP address in last or leaf node.
+
 ### June 10, 2019 \[Hard\] 
 ---
 > **Question:** Given an array of strictly the characters 'R', 'G', and 'B', segregate the values of the array so that all the Rs come first, the Gs come second, and the Bs come last. You can only swap elements of the array.
