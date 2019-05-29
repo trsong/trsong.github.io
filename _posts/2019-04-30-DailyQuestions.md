@@ -113,7 +113,7 @@ The output can be any random permutation of the input such that all permutation 
 
 -->
 
-### 🎂 May 29, 2019 \[Medium\]
+### 🎂 May 29, 2019 \[Medium\] Pre-order & In-order Binary Tree Traversal
 ---
 > **Question:** Given pre-order and in-order traversals of a binary tree, write a function to reconstruct the tree.
 >
