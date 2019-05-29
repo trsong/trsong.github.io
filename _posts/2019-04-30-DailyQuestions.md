@@ -17,6 +17,13 @@ categories: Python/Java
 **Java 1.8:**  TBD
 
 <!--
+### June 10, 2019 \[Hard\] 
+---
+> **Question:** Given an array of strictly the characters 'R', 'G', and 'B', segregate the values of the array so that all the Rs come first, the Gs come second, and the Bs come last. You can only swap elements of the array.
+>
+> Do this in linear time and in-place.
+>
+> For example, given the array ['G', 'B', 'R', 'R', 'B', 'R', 'G'], it should become ['R', 'R', 'R', 'G', 'G', 'B', 'B']
 
 ### June 9, 2019 \[Medium\]
 ---
@@ -103,13 +110,16 @@ The output can be any random permutation of the input such that all permutation 
 > **Question:** Generate 0 and 1 with 25% and 75% probability
 > Given a function rand50() that returns 0 or 1 with equal probability, write a function that returns 1 with 75% probability and 0 with 25% probability using rand50() only. Minimize the number of calls to rand50() method. Also, use of any other library function and floating point arithmetic are not allowed.
 
-### May 30, 2019 \[Hard\] 
+
+### May 30, 2019 \[Medium\] K-th Missing Number
 ---
-> **Question:** Given an array of strictly the characters 'R', 'G', and 'B', segregate the values of the array so that all the Rs come first, the Gs come second, and the Bs come last. You can only swap elements of the array.
->
-> Do this in linear time and in-place.
->
-> For example, given the array ['G', 'B', 'R', 'R', 'B', 'R', 'G'], it should become ['R', 'R', 'R', 'G', 'G', 'B', 'B']
+
+> **Question:** Given a sorted without any duplicate integer array, define the missing numbers to be the gap among numbers. Write a function to calculate K-th missing number. If such number does not exist, then return null.
+> 
+> For example, original array: `[2,4,7,8,9,15]`, within the range defined by original array, all missing numbers are: `[3,5,6,10,11,12,13,14]`
+> - the 1st missing number is 3,
+> - the 2nd missing number is 5,
+> - the 3rd missing number is 6
 
 -->
 
