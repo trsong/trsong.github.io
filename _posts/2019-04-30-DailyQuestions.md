@@ -215,7 +215,7 @@ def subset_sum(numbers, target):
     return res
 
 
-class subset_sum_spec(unittest.TestCase):
+class SubsetSumSpec(unittest.TestCase):
     def test_target_is_zero(self):
         self.assertEqual(subset_sum([], 0), [])
         self.assertEqual(subset_sum([1, 2], 0), [])
