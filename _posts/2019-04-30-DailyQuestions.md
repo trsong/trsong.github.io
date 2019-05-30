@@ -125,6 +125,7 @@ The output can be any random permutation of the input such that all permutation 
 > **Question:** Generate 0 and 1 with 25% and 75% probability
 > Given a function rand50() that returns 0 or 1 with equal probability, write a function that returns 1 with 75% probability and 0 with 25% probability using rand50() only. Minimize the number of calls to rand50() method. Also, use of any other library function and floating point arithmetic are not allowed.
 
+-->
 
 ### May 30, 2019 \[Medium\] K-th Missing Number
 ---
@@ -135,8 +136,6 @@ The output can be any random permutation of the input such that all permutation 
 > - the 1st missing number is 3,
 > - the 2nd missing number is 5,
 > - the 3rd missing number is 6
-
--->
 
 ### 🎂 May 29, 2019 \[Medium\] Pre-order & In-order Binary Tree Traversal
 ---
@@ -162,6 +161,147 @@ The output can be any random permutation of the input such that all permutation 
   b   c
  / \ / \
 d  e f  g
+```
+
+**My thoughts:** Inorder traversal follows the order: 
+```
+Inorder(Left), Current, Inorder(Right)
+```
+
+Whereas preorder (DFS searching order) traversal follows the order: 
+
+```
+Current, Preorder(Left), Preorder(Right)
+```
+
+If we further expand the inorder traversal, we will get
+
+```
+Inorder(Left), CURRENT, Inorder(Right)
+=>
+Inorder(Left2), CURRENT2, Inorder(Right2), CURRENT, Inorder(Right)
+```
+
+And if we further expand the preorder traversal
+```
+CURRENT, Preorder(Left), Preorder(Right)
+=>
+CURRENT, CURRENT2, Preorder(Left2), Preorder(Right2), Preorder(Right)
+```
+
+My takeaway is that let's fucus on the postion of CURRENT. We can use the preorder to keep going left, left, left, until at a point which is not possible and that point is determined by inorder recursive call.
+
+
+**Python Solution:** [https://repl.it/@trsong/Pre-order-and-In-order-Binary-Tree-Traversal](https://repl.it/@trsong/Pre-order-and-In-order-Binary-Tree-Traversal)
+```py
+import unittest
+
+class TreeNode(object):
+    def __init__(self, data, left=None, right=None):
+        self.data = data
+        self.left = left
+        self.right = right
+    
+    def __eq__(self, other):
+        if not other: return False
+        return self.data == other.data and self.left == other.left and self.right == other.right
+
+def build_tree(inorder, preorder):
+    class Context:
+        # Build a elem to index look up dict
+        inorder_lookup = dict(zip(inorder, xrange(len(inorder))))
+        preorder_index = 0
+
+    def build_inorder_tree_recur(left, right):
+        if left > right: return None
+        current = preorder[Context.preorder_index]
+        Context.preorder_index += 1
+        
+        node = TreeNode(current)
+        middle = Context.inorder_lookup[current]
+        node.left = build_inorder_tree_recur(left, middle - 1)  # keep going left until not possible
+        node.right = build_inorder_tree_recur(middle + 1, right)
+        return node
+
+    return build_inorder_tree_recur(0, len(preorder) - 1)
+     
+class BuildTreeSpec(unittest.TestCase):
+    def test_empty_tree(self):
+        self.assertIsNone(build_tree([], []))
+
+    def test_sample_tree(self):
+        """
+            a
+           / \
+          b   c
+         / \ / \
+        d  e f  g
+        """
+        preorder = ['a', 'b', 'd', 'e', 'c', 'f', 'g']
+        inorder = ['d', 'b', 'e', 'a', 'f', 'c', 'g']
+        b = TreeNode('b', TreeNode('d'), TreeNode('e'))
+        c = TreeNode('c', TreeNode('f'), TreeNode('g'))
+        a = TreeNode('a', b, c)
+        self.assertTrue(build_tree(inorder, preorder) == a)
+
+    def test_left_heavy_tree(self):
+        """
+            a
+           / \
+          b   c
+         /   
+        d     
+        """
+        preorder = ['a', 'b', 'd', 'c']
+        inorder = ['d', 'b', 'a', 'c']
+        b = TreeNode('b', TreeNode('d'))
+        c = TreeNode('c')
+        a = TreeNode('a', b, c)
+        self.assertTrue(build_tree(inorder, preorder) == a)
+
+    def test_right_heavy_tree(self):
+        """
+            a
+           / \
+          b   c
+             / \
+            f   g
+        """
+        preorder = ['a', 'b', 'c', 'f', 'g']
+        inorder = ['b', 'a', 'f', 'c', 'g']
+        b = TreeNode('b')
+        c = TreeNode('c', TreeNode('f'), TreeNode('g'))
+        a = TreeNode('a', b, c)
+        self.assertTrue(build_tree(inorder, preorder) == a)
+
+    def test_left_only_tree(self):
+        """
+            a
+           /
+          b   
+         /   
+        c     
+        """
+        preorder = ['a', 'b', 'c']
+        inorder = ['c', 'b', 'a']
+        self.assertTrue(build_tree(inorder, preorder) == TreeNode('a', TreeNode('b', TreeNode('c'))))
+
+    def test_right_only_tree(self):
+        """
+            a
+             \
+              b
+               \
+                c
+        """
+        preorder = ['a', 'b', 'c']
+        inorder = ['a', 'b', 'c']
+        expected = TreeNode('a', right=TreeNode('b', right=TreeNode('c')))
+        self.assertTrue(build_tree(inorder, preorder) == expected)
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
 ```
 
 
