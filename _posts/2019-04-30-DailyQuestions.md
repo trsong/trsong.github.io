@@ -135,7 +135,7 @@ The output can be any random permutation of the input such that all permutation 
 > **Hint:** Given a function that generates perfectly random numbers between 1 and k (inclusive) where k is an input, write a function that shuffles the input array using only swaps.
 --> 
 
-### June 1, 20119 \[Easy\] Rand7
+### June 1, 2019 \[Easy\] Rand7
 ---
 > **Question:** Given a function `rand5()`, use that function to implement a function `rand7()` where rand5() returns an integer from 1 to 5 (inclusive) with uniform probability and rand7() is from 1 to 7 (inclusive). Also, use of any other library function and floating point arithmetic are not allowed.
 
