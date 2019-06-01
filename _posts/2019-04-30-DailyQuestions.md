@@ -58,17 +58,6 @@ lock, which attempts to lock the node. If it cannot be locked, then it should re
 >
 > For example, given [9, 11, 8, 5, 7, 10], you should return 5, since you could buy the stock at 5 dollars and sell it at 10 dollars.
 
-### June 7, 2019 \[Hard\] Array Shuffle
----
-> **Question:** Given an array, write a program to generate a random permutation of array elements. This question is also asked as “shuffle a deck of cards” or “randomize a given array”. Here shuffle means that every permutation of array element should equally likely.
-
-```
-Input: [1, 2, 3, 4, 5, 6]
-Output: [3, 4, 1, 5, 6, 2]
-The output can be any random permutation of the input such that all permutation are equally likely.
-```
-> **Hint:** Given a function that generates perfectly random numbers between 1 and k (inclusive) where k is an input, write a function that shuffles the input array using only swaps.
-
 ### June 6, 2019 \[Medium\]
 ---
 > **Question:** An sorted array of integers was rotated an unknown number of times.
@@ -78,11 +67,6 @@ The output can be any random permutation of the input such that all permutation 
 > For example, given the array [13, 18, 25, 2, 8, 10] and the element 8, return 4 (the index of 8 in the array).
 > 
 > You can assume all the integers in the array are unique.
-
-
-### June 5, 20119 \[Easy\]
----
-> **Question:** Given a function `rand5()`, use that function to implement a function `rand7()` where rand5() returns an integer from 1 to 5 (inclusive) with uniform probability and `rand7()` is from 1 to 7 (inclusive). Also, use of any other library function and floating point arithmetic are not allowed.
 
 ### June 4, 20119 \[Hard\]
 ---
@@ -112,7 +96,7 @@ The output can be any random permutation of the input such that all permutation 
  "the   lazy   dog"]
 ```
 
-### June 1, 2019 \[Medium\] 
+### June 2, 2019 \[Medium\] 
 ---
 > **Question:** Given a string s and an integer k, break up the string into multiple lines such that each line has a length of k or less. You must break it up so that words don't break across lines. Each line has to have the maximum possible amount of words. If there's no way to break the text up, then return null.
 >
@@ -120,13 +104,74 @@ The output can be any random permutation of the input such that all permutation 
 >
 > For example, given the string "the quick brown fox jumps over the lazy dog" and k = 10, you should return: ["the quick", "brown fox", "jumps over", "the lazy", "dog"]. No string in the list has a length of more than 10.
 
+### June 1, 2019 LC 352 \[Hard\] Data Stream as Disjoint Intervals
+---
+> **Question:** Given a data stream input of non-negative integers a1, a2, ..., an, ..., summarize the numbers seen so far as a list of disjoint intervals.
+>
+> For example, suppose the integers from the data stream are 1, 3, 7, 2, 6, ..., then the summary will be:
+
+```py
+[1, 1]
+[1, 1], [3, 3]
+[1, 1], [3, 3], [7, 7]
+[1, 3], [7, 7]
+[1, 3], [6, 7]
+```
+
+> Follow up:
+>
+> What if there are lots of merges and the number of disjoint intervals are small compared to the data stream's size?
+
+
+### June 2, 2019 \[Hard\] Array Shuffle
+---
+> **Question:** Given an array, write a program to generate a random permutation of array elements. This question is also asked as “shuffle a deck of cards” or “randomize a given array”. Here shuffle means that every permutation of array element should equally likely.
+
+```
+Input: [1, 2, 3, 4, 5, 6]
+Output: [3, 4, 1, 5, 6, 2]
+The output can be any random permutation of the input such that all permutation are equally likely.
+```
+> **Hint:** Given a function that generates perfectly random numbers between 1 and k (inclusive) where k is an input, write a function that shuffles the input array using only swaps.
 --> 
+
+### June 1, 20119 \[Easy\] Rand7
+---
+> **Question:** Given a function `rand5()`, use that function to implement a function `rand7()` where rand5() returns an integer from 1 to 5 (inclusive) with uniform probability and rand7() is from 1 to 7 (inclusive). Also, use of any other library function and floating point arithmetic are not allowed.
 
 ### May 31, 2019 \[Easy\] Rand25, Rand75
 ---
 > **Question:** Generate 0 and 1 with 25% and 75% probability
 > Given a function rand50() that returns 0 or 1 with equal probability, write a function that returns 1 with 75% probability and 0 with 25% probability using rand50() only. Minimize the number of calls to rand50() method. Also, use of any other library function and floating point arithmetic are not allowed.
 
+**Python Solution:** [https://repl.it/@trsong/Rand25-Rand75](https://repl.it/@trsong/Rand25-Rand75)
+```py
+from random import randint
+
+def rand50():
+    return randint(0, 1)
+
+def rand25_rand75():
+    return rand50() | rand50()  # bitwise OR operation
+
+def print_distribution(func, repeat):
+    histogram = {}
+    for _ in xrange(repeat):
+        res = func()
+        if res not in histogram:
+            histogram[res] = 0
+        histogram[res] += 1
+    print histogram
+
+
+def main():
+    # Distribution looks like {0: 2520, 1: 7480}
+    print_distribution(rand25_rand75, repeat=10000)
+
+
+if __name__ == '__main__':
+    main()
+```
 
 ### May 30, 2019 \[Medium\] K-th Missing Number
 ---
