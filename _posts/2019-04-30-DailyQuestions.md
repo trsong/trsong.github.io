@@ -52,12 +52,6 @@ lock, which attempts to lock the node. If it cannot be locked, then it should re
 >
 > You may augment the node to add parent pointers or any other property you would like. You may assume the class is used in a single-threaded program, so there is no need for actual locks or mutexes. Each method should run in O(h), where h is the height of the tree.
 
-### June 8, 2019 \[Easy\]
----
-> **Question:** Given a array of numbers representing the stock prices of a company in chronological order, write a function that calculates the maximum profit you could have made from buying and selling that stock once. You must buy before you can sell it.
->
-> For example, given [9, 11, 8, 5, 7, 10], you should return 5, since you could buy the stock at 5 dollars and sell it at 10 dollars.
-
 ### June 6, 2019 \[Medium\]
 ---
 > **Question:** An sorted array of integers was rotated an unknown number of times.
@@ -104,7 +98,15 @@ lock, which attempts to lock the node. If it cannot be locked, then it should re
 >
 > For example, given the string "the quick brown fox jumps over the lazy dog" and k = 10, you should return: ["the quick", "brown fox", "jumps over", "the lazy", "dog"]. No string in the list has a length of more than 10.
 
-### June 1, 2019 LC 352 \[Hard\] Data Stream as Disjoint Intervals
+### June 8, 2019 \[Easy\]
+---
+> **Question:** Given a array of numbers representing the stock prices of a company in chronological order, write a function that calculates the maximum profit you could have made from buying and selling that stock once. You must buy before you can sell it.
+>
+> For example, given [9, 11, 8, 5, 7, 10], you should return 5, since you could buy the stock at 5 dollars and sell it at 10 dollars.
+
+-->
+
+### June 3, 2019 LC 352 \[Hard\] Data Stream as Disjoint Intervals
 ---
 > **Question:** Given a data stream input of non-negative integers a1, a2, ..., an, ..., summarize the numbers seen so far as a list of disjoint intervals.
 >
@@ -122,8 +124,6 @@ lock, which attempts to lock the node. If it cannot be locked, then it should re
 >
 > What if there are lots of merges and the number of disjoint intervals are small compared to the data stream's size?
 
--->
-
 ### June 2, 2019 \[Hard\] Array Shuffle
 ---
 > **Question:** Given an array, write a program to generate a random permutation of array elements. This question is also asked as “shuffle a deck of cards” or “randomize a given array”. Here shuffle means that every permutation of array element should equally likely.
@@ -134,6 +134,64 @@ Output: [3, 4, 1, 5, 6, 2]
 The output can be any random permutation of the input such that all permutation are equally likely.
 ```
 > **Hint:** Given a function that generates perfectly random numbers between 1 and k (inclusive) where k is an input, write a function that shuffles the input array using only swaps.
+
+**My thoughts:** It's quite tricky to figure out how to evenly shuffle an array unless you understand there is no difference between shuffle an array versus randomly generate a permutation of that array.
+
+So, how to randomly generate a permutation of an array? That's simple. Just imagine you hold a deck of cards on your hand, and each time you randomly draw a card until not more cards available.
+
+| Round | Remaining Cards | Chosen Cards |
+|:------|:----------------|:-------------| 
+| 0     | `[1, 2, 3, 4, 5]` | `[]`           |
+| 1     | `[1, 3, 4, 5]`    | `[2]`          |
+| 2     | `[1, 3, 5]`       | `[4, 2]`       |
+| 3     | `[3, 5]`          | `[1, 4, 2]`    |
+| 4     | `[3]`             | `[5, 1, 4, 2]` |
+| 1     | `[]`              | `[3, 5, 1, 4, 2]` |
+
+It seems we can do that in-place:
+
+| Round | Remaining Cards \| Chosen Cards |
+|:------|:-----------------------------| 
+| 0     | `[1, 2, 3, 4, 5|]`           |
+| 1     | `[1, 3, 4, 5 | 2]`          |
+| 2     | `[1, 3, 5 | 4, 2]`       |
+| 3     | `[3, 5 | 1, 4, 2]`    |
+| 4     | `[3 | 5, 1, 4, 2]` |
+| 1     | `[|3, 5, 1, 4, 2]` |
+
+
+
+**Python Solution:**[https://repl.it/@trsong/Array-Shuffle](https://repl.it/@trsong/Array-Shuffle)
+```py
+from random import randint
+
+def array_shuffle(nums):
+    for last in xrange(len(nums) - 1, 0, -1):
+        chosen = randint(0, last)
+        # move the chosen number to last and move on
+        nums[chosen], nums[last] = nums[last], nums[chosen]
+
+
+def print_shuffle_histogram(nums, repeat):
+    """Print the frequency of each position get swapped"""
+    n = len(nums)
+    original = nums[:]
+    swap_freq = [0] * n
+    for _ in xrange(repeat):
+        array_shuffle(nums)
+        for i in xrange(n):
+            if original[i] != nums[i]:
+                swap_freq[i] += 1
+    print swap_freq
+
+
+if __name__ == '__main__':
+    nums = range(10)
+    # The frequency map for position get swapped should look like:
+    # [9010, 9036, 9015, 9035, 9006, 8935, 8990, 8951, 8926, 8985]
+    # Indicates each postion has same probability to be shuffled
+    print_shuffle_histogram(nums, repeat=10000)
+```
 
 
 ### June 1, 2019 \[Easy\] Rand7
