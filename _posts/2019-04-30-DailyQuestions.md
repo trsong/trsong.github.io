@@ -98,13 +98,14 @@ lock, which attempts to lock the node. If it cannot be locked, then it should re
 >
 > For example, given the string "the quick brown fox jumps over the lazy dog" and k = 10, you should return: ["the quick", "brown fox", "jumps over", "the lazy", "dog"]. No string in the list has a length of more than 10.
 
-### June 8, 2019 \[Easy\]
+-->
+
+### June 4, 2019 \[Easy\] Sell Stock
 ---
-> **Question:** Given a array of numbers representing the stock prices of a company in chronological order, write a function that calculates the maximum profit you could have made from buying and selling that stock once. You must buy before you can sell it.
+> **Question:** Given an array of numbers representing the stock prices of a company in chronological order, write a function that calculates the maximum profit you could have made from buying and selling that stock once. You must buy before you can sell it.
 >
 > For example, given [9, 11, 8, 5, 7, 10], you should return 5, since you could buy the stock at 5 dollars and sell it at 10 dollars.
 
--->
 
 ### June 3, 2019 LC 352 \[Hard\] Data Stream as Disjoint Intervals
 ---
@@ -123,6 +124,109 @@ lock, which attempts to lock the node. If it cannot be locked, then it should re
 > Follow up:
 >
 > What if there are lots of merges and the number of disjoint intervals are small compared to the data stream's size?
+
+**My thoughts:** Using heap to store all intervals. When get intervals, pop element with smallest start time one by one, there are only 3 cases:
+- Element Overlapping w/ previous interval, then we do nothing
+- Element will update existing interval's start or end time, then we update the interval
+- Element will cause two intervals to merge.
+
+**Solution with Heap:** [https://repl.it/@trsong/Data-Stream-as-Disjoint-Intervals](https://repl.it/@trsong/Data-Stream-as-Disjoint-Intervals)
+```py
+from queue import PriorityQueue
+import unittest
+
+class SummaryRanges(object):
+    def __init__(self):
+        self._intervals = PriorityQueue()
+        self._exist = set()
+
+    def add_num(self, val):
+        if val not in self._exist:
+            self._intervals.put((val, [val, val]))
+            self._exist.add(val)
+
+    def get_intervals(self):
+        if self._intervals.empty(): return []
+        res = []
+        while not self._intervals.empty():
+            interval = self._intervals.get()[1]
+            if not res:
+                res.append(interval)
+            else:
+                prev = res[-1]
+                if interval[0] <= prev[1] + 1:
+                    prev[1] = max(prev[1], interval[1])
+                else:
+                    res.append(interval)
+        for elem in res:
+            self._intervals.put((elem[0], elem))
+        return res
+
+
+class SummaryRangesSpec(unittest.TestCase):
+    def setUp(self):
+        self.sr = SummaryRanges()
+
+    def test_sample(self):
+        self.sr.add_num(1)
+        self.assertEqual(self.sr.get_intervals(), [[1, 1]])
+        self.sr.add_num(3)
+        self.assertEqual(self.sr.get_intervals(), [[1, 1], [3, 3]])
+        self.sr.add_num(7)
+        self.assertEqual(self.sr.get_intervals(), [[1, 1], [3, 3], [7, 7]])
+        self.sr.add_num(2)
+        self.assertEqual(self.sr.get_intervals(), [[1, 3], [7, 7]])
+        self.sr.add_num(6)
+        self.assertEqual(self.sr.get_intervals(), [[1, 3], [6, 7]])
+
+    def test_none_overlapping(self):
+        self.sr.add_num(3)
+        self.sr.add_num(1)
+        self.sr.add_num(5)
+        self.assertEqual(self.sr.get_intervals(), [[1, 1], [3, 3], [5, 5]])
+
+    def test_val_in_existing_intervals(self):
+        self.sr.add_num(3)
+        self.sr.add_num(2)
+        self.sr.add_num(1)
+        self.sr.add_num(5)
+        self.sr.add_num(6)
+        self.sr.add_num(7)
+        self.assertEqual(self.sr.get_intervals(), [[1, 3], [5, 7]])
+        self.sr.add_num(6)
+        self.assertEqual(self.sr.get_intervals(), [[1, 3], [5, 7]])
+
+    def test_val_join_two_intervals(self):
+        self.sr.add_num(3)
+        self.sr.add_num(2)
+        self.sr.add_num(1)
+        self.sr.add_num(5)
+        self.sr.add_num(6)
+        self.assertEqual(self.sr.get_intervals(), [[1, 3], [5, 6]])
+        self.sr.add_num(4)
+        self.assertEqual(self.sr.get_intervals(), [[1, 6]])
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
+```
+
+> Above solution has complexity O(NlogN) `add_num` and O(NlogN) `get_intervals`. We can do better for `get_intervals` to make it O(N) by using ***Interval Search Tree*** which takes O(logN) to insert and query to overlapping intervals. 
+
+```py
+class Node:
+    def __init__(self, val, left=None, right=None)
+        self.interval = [val, val]
+        self.max_end = vale  # max end in subtree
+        self.left = left
+        self.right = right
+```
+
+For add_num, we can query for `[val, val]` first, if exists. We simply return. Otherwise, we query for `[val - 1, val - 1]` and `[val + 1, val + 1]` and determine if we append previous interval w/ val or prepend w/ next interval. If neither of them exists, we simply insert a new interval `[val, val]`. 
+
+The result of get_intervals is simply in-order traversal of Interval Search Tree.
+
+TODO tsong: tree rotation to mantain balance is way too complicated during code interview, so omit the detailed implementation.
 
 ### June 2, 2019 \[Hard\] Array Shuffle
 ---
