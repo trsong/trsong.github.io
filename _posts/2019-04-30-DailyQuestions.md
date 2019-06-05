@@ -90,22 +90,76 @@ lock, which attempts to lock the node. If it cannot be locked, then it should re
  "the   lazy   dog"]
 ```
 
-### June 2, 2019 \[Medium\] 
+-->
+
+### June 5, 2019 \[Medium\] Break Sentence
 ---
 > **Question:** Given a string s and an integer k, break up the string into multiple lines such that each line has a length of k or less. You must break it up so that words don't break across lines. Each line has to have the maximum possible amount of words. If there's no way to break the text up, then return null.
 >
 > You can assume that there are no spaces at the ends of the string and that there is exactly one space between each word.
 >
-> For example, given the string "the quick brown fox jumps over the lazy dog" and k = 10, you should return: ["the quick", "brown fox", "jumps over", "the lazy", "dog"]. No string in the list has a length of more than 10.
+> For example, given the string "the quick brown fox jumps over the lazy dog" and `k = 10`, you should return: `["the quick", "brown fox", "jumps over", "the lazy", "dog"]`. No string in the list has a length of more than 10.
 
--->
 
 ### June 4, 2019 \[Easy\] Sell Stock
 ---
 > **Question:** Given an array of numbers representing the stock prices of a company in chronological order, write a function that calculates the maximum profit you could have made from buying and selling that stock once. You must buy before you can sell it.
 >
-> For example, given [9, 11, 8, 5, 7, 10], you should return 5, since you could buy the stock at 5 dollars and sell it at 10 dollars.
+> For example, given `[9, 11, 8, 5, 7, 10]`, you should return 5, since you could buy the stock at 5 dollars and sell it at 10 dollars.
 
+
+**Python Solution:** [https://repl.it/@trsong/Sell-Stock](https://repl.it/@trsong/Sell-Stock)
+```py
+import unittest
+
+def max_profit(stock_data):
+    if not stock_data: return 0
+    min_so_far = stock_data[0]
+    max_profit = 0
+    for price in stock_data:
+        if price < min_so_far:
+            min_so_far = price
+        else:
+            max_profit = max(max_profit, price - min_so_far)
+    return max_profit
+
+
+class MaxProfitSpec(unittest.TestCase):
+    def test_blank_data(self):
+        self.assertEqual(max_profit([]), 0)
+    
+    def test_1_day_data(self):
+        self.assertEqual(max_profit([9]), 0)
+        self.assertEqual(max_profit([-1]), 0)
+
+    def test_monotonically_increase(self):
+        self.assertEqual(max_profit([1, 2, 3]), 2)
+        self.assertEqual(max_profit([1, 1, 1, 2, 2, 3, 3, 3]), 2)
+    
+    def test_monotonically_decrease(self):
+        self.assertEqual(max_profit([3, 2, 1]), 0)
+        self.assertEqual(max_profit([3, 3, 3, 2, 2, 1, 1, 1]), 0)
+
+    def test_raise_suddenly(self):
+        self.assertEqual(max_profit([3, 2, 1, 1, 2]), 1)
+        self.assertEqual(max_profit([3, 2, 1, 1, 9]), 8)
+
+    def test_drop_sharply(self):
+        self.assertEqual(max_profit([1, 3, 0]), 2)
+        self.assertEqual(max_profit([1, 3, -1]), 2)
+
+    def test_bear_market(self):
+        self.assertEqual(max_profit([10, 11, 5, 7, 1, 2]), 2)
+        self.assertEqual(max_profit([10, 11, 1, 4, 2, 7, 5]), 6)
+
+    def test_bull_market(self):
+        self.assertEqual(max_profit([1, 5, 3, 7, 2, 14, 10]), 13)
+        self.assertEqual(max_profit([5, 1, 11, 10, 12]), 11)
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
+```
 
 ### June 3, 2019 LC 352 \[Hard\] Data Stream as Disjoint Intervals
 ---
