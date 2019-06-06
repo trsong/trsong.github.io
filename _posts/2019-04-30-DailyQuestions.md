@@ -72,7 +72,9 @@ lock, which attempts to lock the node. If it cannot be locked, then it should re
 ---
 > **Question:** Given an undirected graph represented as an adjacency matrix and an integer k, write a function to determine whether each vertex in the graph can be colored such that no two adjacent vertices share the same color using at most k colors.
 
-### June 2, 2019 \[Medium\] 
+-->
+
+### June 6, 2019 \[Medium\] Craft Sentence
 ---
 > **Question:** Write an algorithm to justify text. Given a sequence of words and an integer line length k, return a list of strings which represents each line, fully justified.
 > 
@@ -90,8 +92,6 @@ lock, which attempts to lock the node. If it cannot be locked, then it should re
  "the   lazy   dog"]
 ```
 
--->
-
 ### June 5, 2019 \[Medium\] Break Sentence
 ---
 > **Question:** Given a string s and an integer k, break up the string into multiple lines such that each line has a length of k or less. You must break it up so that words don't break across lines. Each line has to have the maximum possible amount of words. If there's no way to break the text up, then return null.
@@ -100,6 +100,51 @@ lock, which attempts to lock the node. If it cannot be locked, then it should re
 >
 > For example, given the string "the quick brown fox jumps over the lazy dog" and `k = 10`, you should return: `["the quick", "brown fox", "jumps over", "the lazy", "dog"]`. No string in the list has a length of more than 10.
 
+**Python Solution:** [https://repl.it/@trsong/Break-Sentence](https://repl.it/@trsong/Break-Sentence)
+```py
+import unittest
+
+def break_sentence(sentence, k):
+    if not sentence or k <= 0: return None
+    res = []
+    i = 0 
+    n = len(sentence)
+    while i < n:
+        end = i + k
+        while i < end < n and sentence[end] != " ":
+            end -= 1
+        if end <= i:
+            return None
+        res.append(sentence[i: end])
+        i = end + 1
+    return res
+
+
+class BreakSentenceSpec(unittest.TestCase):
+    def test_empty_sentence(self):
+        self.assertEqual(break_sentence("", 0), None)
+        self.assertEqual(break_sentence("", 1), None)
+
+    def test_sentence_with_unbreakable_words(self):
+        self.assertEqual(break_sentence("How do you turn this on", 3), None)
+        self.assertEqual(break_sentence("Internationalization", 10), None)
+
+    def test_window_fit_one_word(self):
+        self.assertEqual(break_sentence("Banana Leaf", 7), ["Banana", "Leaf"])
+        self.assertEqual(break_sentence("Banana Leaf", 6), ["Banana", "Leaf"])
+        self.assertEqual(break_sentence("Ebi Ten", 5), ["Ebi", "Ten"])
+
+    def test_window_fit_more_than_two_words(self):
+        self.assertEqual(break_sentence("Cheese Steak Jimmy's", 12), ["Cheese Steak", "Jimmy's"])
+        self.assertEqual(break_sentence("I see dead people", 10), ["I see dead", "people"])
+        self.assertEqual(break_sentence("See no evil. Hear no evil. Speak no evil.", 14), ["See no evil.", "Hear no evil.", "Speak no evil."])
+        self.assertEqual(break_sentence("the quick brown fox jumps over the lazy dog", 10), ["the quick", "brown fox", "jumps over", "the lazy", "dog"])
+        self.assertEqual(break_sentence("To be or not to be", 1000), ["To be or not to be"])
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
+```
 
 ### June 4, 2019 \[Easy\] Sell Stock
 ---
