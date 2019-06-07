@@ -68,11 +68,11 @@ lock, which attempts to lock the node. If it cannot be locked, then it should re
 >
 > For example, the longest palindromic substring of "aabcdcb" is "bcdcb". The longest palindromic substring of "bananas" is "anana".
 
-### June 3, 20119 \[Medium\]
+-->
+
+### June 7, 20119 \[Medium\] K Color Problem
 ---
 > **Question:** Given an undirected graph represented as an adjacency matrix and an integer k, write a function to determine whether each vertex in the graph can be colored such that no two adjacent vertices share the same color using at most k colors.
-
--->
 
 ### June 6, 2019 \[Medium\] Craft Sentence
 ---
@@ -84,12 +84,65 @@ lock, which attempts to lock the node. If it cannot be locked, then it should re
 > 
 > Each word is guaranteed not to be longer than k.
  
- For example, given the list of words ["the", "quick", "brown", "fox", "jumps", "over", "the", "lazy", "dog"] and k = 16, you should return the following:
+ For example, given the list of words `["the", "quick", "brown", "fox", "jumps", "over", "the", "lazy", "dog"]` and `k = 16`, you should return the following:
 
 ```py
 ["the  quick brown",
  "fox  jumps  over",
  "the   lazy   dog"]
+```
+
+**My thoughts:** Try to fit as many words as possible in order to find the maximum number of word we can fit into each line. Then determine the base number of spaces each gap can fit as well as extra space each space might be able to fit.
+
+
+**Python Solution:** [https://repl.it/@trsong/Craft-Sentence](https://repl.it/@trsong/Craft-Sentence)
+```py
+import unittest
+
+def craft_sentence(words, k):
+    index = 0
+    n = len(words)
+    res = []
+    while index < n:
+        end = index + 1
+        # try to fit as many words as possible to find max word it can be fit
+        remain = k - len(words[index])
+        while end < n and remain > len(words[end]):
+            remain -= 1 + len(words[end])
+            end += 1
+        num_words = end - index
+        line = [words[index]]
+        if num_words == 1:
+            line.append(" " * remain)
+        else:
+            num_gap = num_words - 1
+            extra_space = remain / num_gap
+            pad_until = remain % num_gap
+            for j in xrange(1, num_words):
+                num_space = 1 + extra_space + (1 if j <= pad_until else 0)
+                line.append(" " * num_space)
+                line.append(words[index + j])
+        res.append("".join(line))
+        index = end
+    return res
+
+
+class CraftSentenceSpec(unittest.TestCase):
+    def test_fit_only_one_word(self):
+        self.assertEqual(craft_sentence(["test", "same", "length", "string"], 7), ["test   ", "same   ", "length ", "string "])
+        self.assertEqual(craft_sentence(["test", "same", "length", "string"], 6), ["test  ", "same  ", "length", "string"])
+        self.assertEqual(craft_sentence(["to", "be"], 2), ["to", "be"])
+
+    def test_fit_two_words(self):
+        self.assertEqual(craft_sentence(["To", "be", "or", "not", "to", "be"], 6), ["To  be", "or not", "to  be"])
+        self.assertEqual(craft_sentence(["Greed", "is", "not", "good"], 11), ["Greed    is", "not    good"])
+
+    def test_fit_more_words(self):
+        self.assertEqual(craft_sentence(["the", "quick", "brown", "fox", "jumps", "over", "the", "lazy", "dog"], 16), ["the  quick brown", "fox  jumps  over", "the   lazy   dog"])
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
 ```
 
 ### June 5, 2019 \[Medium\] Break Sentence
