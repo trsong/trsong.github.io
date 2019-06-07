@@ -62,7 +62,7 @@ lock, which attempts to lock the node. If it cannot be locked, then it should re
 > 
 > You can assume all the integers in the array are unique.
 
-### June 4, 20119 \[Hard\]
+### June 4, 2019 \[Hard\]
 ---
 > **Question:** Given a string, find the longest palindromic contiguous substring. If there are more than one with the maximum length, return any one.
 >
@@ -70,7 +70,7 @@ lock, which attempts to lock the node. If it cannot be locked, then it should re
 
 -->
 
-### June 7, 20119 \[Medium\] K Color Problem
+### June 7, 2019 \[Medium\] K Color Problem
 ---
 > **Question:** Given an undirected graph represented as an adjacency matrix and an integer k, write a function to determine whether each vertex in the graph can be colored such that no two adjacent vertices share the same color using at most k colors.
 
