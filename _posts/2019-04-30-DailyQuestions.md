@@ -86,7 +86,7 @@ def exist_k_color_solution_helper_recur(remaining, neighbors, k, colors):
     current = remaining[0]
     current_neighbors = [i for i in xrange(len(neighbors)) if neighbors[current][i]]
     for c in xrange(k):
-        # If any neighbor of current has same color as current 
+        # If any neighbor of current has same color as current, then we move onto next color
         if any(colors[node] == c for node in current_neighbors):
             continue
         colors[current] = c
