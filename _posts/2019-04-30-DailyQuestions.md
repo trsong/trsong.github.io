@@ -62,17 +62,100 @@ lock, which attempts to lock the node. If it cannot be locked, then it should re
 > 
 > You can assume all the integers in the array are unique.
 
-### June 4, 2019 \[Hard\]
+-->
+
+### June 8, 2019 \[Hard\] Longest Palindromic Substring
 ---
 > **Question:** Given a string, find the longest palindromic contiguous substring. If there are more than one with the maximum length, return any one.
 >
 > For example, the longest palindromic substring of "aabcdcb" is "bcdcb". The longest palindromic substring of "bananas" is "anana".
 
--->
 
 ### June 7, 2019 \[Medium\] K Color Problem
 ---
 > **Question:** Given an undirected graph represented as an adjacency matrix and an integer k, write a function to determine whether each vertex in the graph can be colored such that no two adjacent vertices share the same color using at most k colors.
+
+**My thoughts:** Solve this problem with backtracking. For each node, testing all colors one-by-one; if it turns out there is something wrong with current color, we will backtrack to test other colors.
+
+**Backtracking Solution:** [https://repl.it/@trsong/K-Color-Problem](https://repl.it/@trsong/K-Color-Problem)
+```py
+import unittest
+
+def exist_k_color_solution_helper_recur(remaining, neighbors, k, colors):
+    if not remaining: return True
+    current = remaining[0]
+    current_neighbors = [i for i in xrange(len(neighbors)) if neighbors[current][i]]
+    for c in xrange(k):
+        # If any neighbor of current has same color as current 
+        if any(colors[node] == c for node in current_neighbors):
+            continue
+        colors[current] = c
+        if exist_k_color_solution_helper_recur(remaining[1:], neighbors, k, colors):
+            return True
+        colors[current] = None
+    return False
+
+
+def exist_k_color_solution(neighbors, k):
+    colors = [None] * len(neighbors)
+    remaining = range(len(neighbors))
+    return exist_k_color_solution_helper_recur(remaining, neighbors, k, colors)
+
+
+class KColorProblemSpec(unittest.TestCase):
+    @staticmethod
+    def generateCompleteGraph(n):
+        return [[1 if i != j else 0 for i in xrange(n)] for j in xrange(n)] 
+
+    def test_k2_graph(self):
+        k2 = KColorProblemSpec.generateCompleteGraph(2)
+        self.assertFalse(exist_k_color_solution(k2, 1))
+        self.assertTrue(exist_k_color_solution(k2, 2))
+        self.assertTrue(exist_k_color_solution(k2, 3))
+
+    def test_k3_graph(self):
+        k3 = KColorProblemSpec.generateCompleteGraph(3)
+        self.assertFalse(exist_k_color_solution(k3, 2))
+        self.assertTrue(exist_k_color_solution(k3, 3))
+        self.assertTrue(exist_k_color_solution(k3, 4))
+
+    def test_k4_graph(self):
+        k4 = KColorProblemSpec.generateCompleteGraph(4)
+        self.assertFalse(exist_k_color_solution(k4, 3))
+        self.assertTrue(exist_k_color_solution(k4, 4))
+        self.assertTrue(exist_k_color_solution(k4, 5))
+
+    def test_square_graph(self):
+        square = [
+            [0, 1, 0, 1],
+            [1, 0, 1, 0],
+            [0, 1, 0, 1],
+            [1, 0, 1, 0]
+        ]
+        self.assertFalse(exist_k_color_solution(square, 1))
+        self.assertTrue(exist_k_color_solution(square, 2))
+        self.assertTrue(exist_k_color_solution(square, 3))
+
+    def test_star_graph(self):
+        star = [
+            [0, 0, 1, 1, 0],
+            [0, 0, 0, 1, 1],
+            [1, 0, 0, 0, 1],
+            [1, 1, 0, 0, 0],
+            [0, 1, 1, 0, 0]
+        ]
+        self.assertFalse(exist_k_color_solution(star, 2))
+        self.assertTrue(exist_k_color_solution(star, 3))
+        self.assertTrue(exist_k_color_solution(star, 4))
+
+    def test_disconnected_graph(self):
+        disconnected = [[0 for _ in xrange(10)] for _ in xrange(10)]
+        self.assertTrue(exist_k_color_solution(disconnected, 1))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
+```
 
 ### June 6, 2019 \[Medium\] Craft Sentence
 ---
