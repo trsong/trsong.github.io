@@ -52,17 +52,16 @@ lock, which attempts to lock the node. If it cannot be locked, then it should re
 >
 > You may augment the node to add parent pointers or any other property you would like. You may assume the class is used in a single-threaded program, so there is no need for actual locks or mutexes. Each method should run in O(h), where h is the height of the tree.
 
-### June 6, 2019 \[Medium\]
+-->
+
+### June 9, 2019 \[Medium\] Search in Rotated Array
 ---
-> **Question:** An sorted array of integers was rotated an unknown number of times.
+> **Question:** A sorted array of integers was rotated an unknown number of times. Given such an array, find the index of the element in the array in faster than linear time. If the element doesn't exist in the array, return null.
 > 
-> Given such an array, find the index of the element in the array in faster than linear time. If the element doesn't exist in the array, return null.
-> 
-> For example, given the array [13, 18, 25, 2, 8, 10] and the element 8, return 4 (the index of 8 in the array).
+> For example, given the array `[13, 18, 25, 2, 8, 10]` and the element 8, return 4 (the index of 8 in the array).
 > 
 > You can assume all the integers in the array are unique.
 
--->
 
 ### June 8, 2019 \[Hard\] Longest Palindromic Substring
 ---
@@ -70,6 +69,93 @@ lock, which attempts to lock the node. If it cannot be locked, then it should re
 >
 > For example, the longest palindromic substring of "aabcdcb" is "bcdcb". The longest palindromic substring of "bananas" is "anana".
 
+**My thoughts:** Pick all substrings one by one and validate if the substring w/ cache.
+
+**Solution with Cache:** [https://repl.it/@trsong/Longest-Palindromic-Substring](https://repl.it/@trsong/Longest-Palindromic-Substring)
+```py
+import unittest
+
+def find_palindrome(word):
+    n = len(word)
+    max_delta = 0
+    start = 0
+    cache = [[None for _ in xrange(n)] for _ in xrange(n)]
+    for delta in xrange(n):
+        for s in xrange(n - delta):
+            if is_palindrome(word, s, s + delta, cache):
+                start = s
+                max_delta = delta
+    return word[start: start + max_delta + 1]
+
+
+def is_palindrome(word, i, j, cache):
+    if i >= j:
+        return True
+    
+    if cache[i][j] is None:
+        if word[i] != word[j]:
+            cache[i][j] = False
+        else:
+            cache[i][j] = is_palindrome(word, i+1, j-1, cache)
+    return cache[i][j]
+        
+
+class FindPalindromeSpec(unittest.TestCase):
+    def test_one_letter_palindrome(self):
+        word = "abcdef"
+        result = find_palindrome(word)
+        self.assertTrue(result in word and len(result) == 1)
+    
+    def test_multiple_length_2_palindrome(self):
+        result = find_palindrome("zaaqrebbqreccqreddz")
+        self.assertTrue(result in ["aa", "bb", "cc", "dd"])
+
+    def test_multiple_length_3_palindrome(self):
+        result = find_palindrome("xxaza1xttv1xpqp1x")
+        self.assertTrue(result in ["aza", "ttt", "pqp"])
+
+    def test_sample_palindrome(self):
+        self.assertEqual(find_palindrome("aabcdcb"), "bcdcb")
+        self.assertEqual(find_palindrome("bananas"), "anana")
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
+```
+
+> Note, Longest Palindromic Substring can be efficiently solved using ***Manacher's Algorithm***. Example of how it works: [http://manacher-viz.s3-website-us-east-1.amazonaws.com/#/](http://manacher-viz.s3-website-us-east-1.amazonaws.com/#/)
+
+**Linear Solution with Manacher's Algorithm:** [https://repl.it/@trsong/Longest-Palindromic-Substring-with-Manachers-Algorithm](https://repl.it/@trsong/Longest-Palindromic-Substring-with-Manachers-Algorithm)
+
+```py
+def manacher(s0):
+    T = '$#' + '#'.join(s0) + '#@'
+    l = len(T)
+    P = [0] * l
+    R, C = 0, 0
+    for i in range(1,l-1):
+        if i < R:
+            P[i] = min(P[2 * C - i], R - i)
+        
+        while T[i+(P[i]+1)] == T[i-(P[i]+1)]:
+            P[i] += 1
+        
+        if P[i] + i > R:
+            R = P[i] + i
+            C = i
+    return P
+
+
+def find_palindrome(word):
+    P = manacher(word)
+    maxLen = 0;
+    centerIndex = 0;
+    for i in xrange(1, len(P)):
+        if P[i] > maxLen:
+            maxLen = P[i]
+            centerIndex = i
+    start = (centerIndex - maxLen) / 2
+    return word[start: start + maxLen]
+```
 
 ### June 7, 2019 \[Medium\] K Color Problem
 ---
