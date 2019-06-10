@@ -189,6 +189,66 @@ lock, which attempts to lock the node. If it cannot be locked, then it should re
 > 
 > You can assume all the integers in the array are unique.
 
+**My thoughts:** In order to solve this problem, we will need the following properties:
+
+1. Multiple rotation can at most break array into two sorted subarrays. 
+2. All numbers on left sorted subarray are always larger than numbers on the right sorted subarray.
+
+For property 1, we can use some example. Suppose input array is `[1, 2, 3, 4, 5, 6]` and rotating once gives `[4, 5, 6, 1, 2, 3]`. And rotate it again will give `[6, 1, 2, 3, 4, 5]`. And if we rotate it one more time can give `[3, 4, 5, 6, 1, 2]` - still two sorted subarrays.
+
+For property 2, think about breaking the input array into left and right part. i.e. `array = left + right`. After rotation it looks like `rotated_array = right + left`. Any number on right will be greater than number on left.
+
+> Which one will you choose? One Binary Search vs Two
+
+A lot of people think binary search is about checking if `arr[mid]` against target number. That's why people are thinking about split the array into two sorted parts and searching target separately on each of them. Yet doing such need to perform binary searching twice:
+
+1. Use binary search to find the cutoff index such that left part and right part both are sorted. 
+2. Either binary search on left part or right part. 
+
+However, ONE binary search should be sufficient for this question as the idea of binary search is about how to breaking the problem size into half instead of checking `arr[mid]` against target number. Two edge cases could happen while doing binary search:
+
+1. mid element is on the same part as the left-most element
+2. mid element is on different part
+
+**Binary Search Solution:** [https://repl.it/@trsong/Search-in-Rotated-Array](https://repl.it/@trsong/Search-in-Rotated-Array)
+
+```py
+import unittest
+
+def rotated_array_search(nums, target):
+    if not nums: return None
+    lo = 0
+    hi = len(nums) - 1
+    while lo <= hi:
+        mid = lo + (hi - lo) / 2
+        if nums[mid] == target:
+            return mid
+        elif nums[lo] < nums[mid] and nums[mid] < target or nums[lo] > target:
+            lo = mid + 1
+        else:
+            hi = mid - 1
+    return None
+
+
+class RotatedArraySearchSpec(unittest.TestCase):
+    def test_array_without_rotation(self):
+        self.assertIsNone(rotated_array_search([], 0))
+        self.assertEqual(rotated_array_search([1, 2, 3], 3), 2)
+        self.assertIsNone(rotated_array_search([1, 3], 2))
+
+    def test_array_with_one_rotation(self):
+        self.assertIsNone(rotated_array_search([4, 5, 6, 1, 2, 3], 0))
+        self.assertEqual(rotated_array_search([4, 5, 6, 1, 2, 3], 6), 2)
+        self.assertEqual(rotated_array_search([13, 18, 25, 2, 8, 10], 8), 4)
+
+    def test_array_with_two_rotations(self):
+        self.assertEqual(rotated_array_search([6, 1, 2, 3, 4, 5], 6), 0)
+        self.assertEqual(rotated_array_search([5, 6, 1, 2, 3, 4], 3), 4)
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
+```
 
 ### June 8, 2019 \[Hard\] Longest Palindromic Substring
 ---
