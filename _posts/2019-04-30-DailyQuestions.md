@@ -181,7 +181,7 @@ lock, which attempts to lock the node. If it cannot be locked, then it should re
 >
 > You may augment the node to add parent pointers or any other property you would like. You may assume the class is used in a single-threaded program, so there is no need for actual locks or mutexes. Each method should run in O(h), where h is the height of the tree.
 
-### June 9, 2019 \[Medium\] Search in Rotated Array
+### June 9, 2019 \[Medium\] Searching in Rotated Array
 ---
 > **Question:** A sorted array of integers was rotated an unknown number of times. Given such an array, find the index of the element in the array in faster than linear time. If the element doesn't exist in the array, return null.
 > 
