@@ -18,7 +18,120 @@ categories: Python/Java
 
 <!--
 
-### June 11, 2019 \[Medium\] Forward DNS Look Up Cache
+### June , 2019 \[Medium\] 
+---
+> **Question:** Implement integer exponentiation. That is, implement the pow(x, y) function, where x and y are integers and returns x^y.
+>
+> Do this faster than the naive method of repeated multiplication.
+>
+> For example, pow(2, 10) should return 1024.
+
+### June , 2019 \[Hard\] The N Queens Puzzle
+---
+> **Question:** You have an N by N board. Write a function that, given N, returns the number of possible arrangements of the board where N queens can be placed on the board without threatening each other, i.e. no two queens share the same row, column, or diagonal.
+
+
+### June , 2019 \[Medium\] 
+---
+> **Question:** Conway's Game of Life takes place on an infinite two-dimensional board of square cells. Each cell is either dead or alive, and at each tick, the following rules apply:
+>
+> - Any live cell with less than two live neighbours dies.
+> - Any live cell with two or three live neighbours remains living.
+> - Any live cell with more than three live neighbours dies.
+> - Any dead cell with exactly three live neighbours becomes a live cell.
+> - A cell neighbours another cell if it is horizontally, vertically, or diagonally adjacent.
+>
+> Implement Conway's Game of Life. It should be able to be initialized with a starting list of live cell coordinates and the number of steps it should run for. Once initialized, it should print out the board state at each step. Since it's an infinite board, print out only the relevant coordinates, i.e. from the top-leftmost live cell to bottom-rightmost live cell.
+>
+> You can represent a live cell with an asterisk (*) and a dead cell with a dot (.).
+
+### June , 2019 \[Medium\] 
+---
+> **Question:**  There is an N by M matrix of zeroes. Given N and M, write a function to count the number of ways of starting at the top-left corner and getting to the bottom-right corner. You can only move right or down.
+>
+> For example, given a 2 by 2 matrix, you should return 2, since there are two ways to get to the bottom-right:
+>
+> - Right, then down
+> - Down, then right
+>
+> Given a 5 by 5 matrix, there are 70 ways to get to the bottom-right.
+
+### June , 2019 \[Medium\] 
+---
+> **Question:**  Suppose you have a multiplication table that is N by N. That is, a 2D array where the value at the i-th row and j-th column is (i + 1) * (j + 1) (if 0-indexed) or i * j (if 1-indexed).
+>
+> Given integers N and X, write a function that returns the number of times X appears as a value in an N by N multiplication table.
+>
+> For example, given N = 6 and X = 12, you should return 4, since the multiplication table looks like this:
+
+```
+| 1 | 2 | 3 | 4 | 5 | 6 |
+
+| 2 | 4 | 6 | 8 | 10 | 12 |
+
+| 3 | 6 | 9 | 12 | 15 | 18 |
+
+| 4 | 8 | 12 | 16 | 20 | 24 |
+
+| 5 | 10 | 15 | 20 | 25 | 30 |
+
+| 6 | 12 | 18 | 24 | 30 | 36 |
+```
+> And there are 4 12's in the table.
+
+### June , 2019 \[Easy\] 
+---
+> **Question:**  A number is considered perfect if its digits sum up to exactly 10.
+> 
+> Given a positive integer n, return the n-th perfect number.
+> 
+> For example, given 1, you should return 19. Given 2, you should return 28.
+
+
+### June , 2019 \[Hard\] 
+---
+> **Question:** In a directed graph, each node is assigned an uppercase letter. We define a path's value as the number of most frequently-occurring letter along that path. For example, if a path in the graph goes through "ABACA", the value of the path is 3, since there are 3 occurrences of 'A' on the path.
+>
+> Given a graph with n nodes and m directed edges, return the largest value path of the graph. If the largest value is infinite, then return null.
+>
+> The graph is represented with a string and an edge list. The i-th character represents the uppercase letter of the i-th node. Each tuple in the edge list (i, j) means there is a directed edge from the i-th node to the j-th node. Self-edges are possible, as well as multi-edges.
+>
+> For example, the following input graph:
+```
+ABACA
+```
+
+```py
+[(0, 1),
+ (0, 2),
+ (2, 3),
+ (3, 4)]
+```
+
+> Would have maximum value 3 using the path of vertices [0, 2, 3, 4], (A, A, C, A).
+>
+> The following input graph:
+
+```
+A
+```
+
+```py
+[(0, 0)]
+```
+> Should return null, since we have an infinite loop.
+
+
+
+### June , 2019 \[Easy\] 
+---
+> **Question:** Given a list of integers, return the largest product that can be made by multiplying any three integers.
+>
+> For example, if the list is [-10, -10, 5, 2], we should return 500, since that's -10 * -10 * 5.
+>
+> You can assume the list has at least three integers.
+
+### June 13, 2019 \[Medium\] Forward DNS Look Up Cache
 ----
 > **Question:** Forward DNS look up is getting IP address for a given domain name typed in the web browser. e.g. Given "www.samsung.com" should return "107.108.11.123"
 > 
@@ -32,7 +145,7 @@ categories: Python/Java
 > Hint:
 > - The idea is to store URLs in Trie nodes and store the corresponding IP address in last or leaf node.
 
-### June 10, 2019 \[Hard\] 
+### June 12, 2019 \[Hard\] 
 ---
 > **Question:** Given an array of strictly the characters 'R', 'G', and 'B', segregate the values of the array so that all the Rs come first, the Gs come second, and the Bs come last. You can only swap elements of the array.
 >
@@ -40,7 +153,23 @@ categories: Python/Java
 >
 > For example, given the array ['G', 'B', 'R', 'R', 'B', 'R', 'G'], it should become ['R', 'R', 'R', 'G', 'G', 'B', 'B']
 
-### June 9, 2019 \[Medium\]
+### June 11, 2019 \[Easy\] 
+---
+> **Question:** Given a 2D matrix of characters and a target word, write a function that returns whether the word can be found in the matrix by going left-to-right, or up-to-down.
+> 
+> For example, given the following matrix:
+
+```py
+[['F', 'A', 'C', 'I'],
+ ['O', 'B', 'Q', 'P'],
+ ['A', 'N', 'O', 'B'],
+ ['M', 'A', 'S', 'S']]
+ ```
+> and the target word 'FOAM', you should return true, since it's the leftmost column. Similarly, given the target word 'MASS', you should return true, since it's the last row.
+
+-->
+
+### June 10, 2019 \[Medium\] Locking in Binary Tree
 ---
 > **Question:** Implement locking in a binary tree. A binary tree node can be locked or unlocked only if all of its descendants or ancestors are not locked.
 > 
@@ -51,8 +180,6 @@ lock, which attempts to lock the node. If it cannot be locked, then it should re
 > - `unlock`, which unlocks the node. If it cannot be unlocked, then it should return false. Otherwise, it should unlock it and return true.
 >
 > You may augment the node to add parent pointers or any other property you would like. You may assume the class is used in a single-threaded program, so there is no need for actual locks or mutexes. Each method should run in O(h), where h is the height of the tree.
-
--->
 
 ### June 9, 2019 \[Medium\] Search in Rotated Array
 ---
