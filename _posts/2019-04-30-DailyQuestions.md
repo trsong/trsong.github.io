@@ -145,15 +145,15 @@ A
 > Hint:
 > - The idea is to store URLs in Trie nodes and store the corresponding IP address in last or leaf node.
 
-### June 12, 2019 \[Hard\] 
+-->
+
+### June 12, 2019 \[Hard\] RGB Element Array Swap
 ---
 > **Question:** Given an array of strictly the characters 'R', 'G', and 'B', segregate the values of the array so that all the Rs come first, the Gs come second, and the Bs come last. You can only swap elements of the array.
 >
 > Do this in linear time and in-place.
 >
 > For example, given the array ['G', 'B', 'R', 'R', 'B', 'R', 'G'], it should become ['R', 'R', 'R', 'G', 'G', 'B', 'B']
-
--->
 
 ### June 11, 2019 \[Easy\] Word Search Puzzle 
 ---
@@ -169,6 +169,128 @@ A
  ```
 > and the target word 'FOAM', you should return true, since it's the leftmost column. Similarly, given the target word 'MASS', you should return true, since it's the last row.
 
+**My thoughts:** Naive solution is to identify, in the grid, the matching cell of first character of target word. The check the remaining character either left-to-right or up-to-down direction. Which is quite straightforward.
+
+However, I think this might be a good chance to practice [KMP Algorithm](https://www.geeksforgeeks.org/kmp-algorithm-for-pattern-searching/).
+
+**Solution with KMP Algorithm:** [https://repl.it/@trsong/Word-Search-Puzzle](https://repl.it/@trsong/Word-Search-Puzzle)
+```py
+import unittest
+
+class KMPSearch(object):
+    def __init__(self, pattern):
+        self._lps = KMPSearch.computeLPSArray(pattern)
+        self._pattern = pattern
+    
+    @staticmethod
+    def computeLPSArray(pattern):
+        m = len(pattern)
+        lps = [0] * m
+        prev_LPS = 0  # length of the longest prefix suffix
+        i = 1
+        while i < m:
+            if pattern[i] == pattern[prev_LPS]:
+                prev_LPS += 1
+                lps[i] = prev_LPS
+                i += 1
+            elif prev_LPS > 0:
+                prev_LPS = lps[prev_LPS - 1]
+            else:
+                lps[i] = 0
+                i += 1
+        return lps
+
+    def search(self, text):
+        m = len(self._pattern)
+        n = len(text)
+        i = j = 0
+        while i < n:
+            if self._pattern[j] == text[i]:
+                i += 1
+                j += 1
+            
+            if j == m:
+                return True
+            elif i < n and self._pattern[j] != text[i]:
+                if j > 0:
+                    j = self._lps[j-1]
+                else:
+                    i += 1
+        return False
+    
+
+class WordSearchPuzzle(object):
+    def __init__(self, grid):
+        self._grid = grid
+
+    def contains(self, target):
+        kmp = KMPSearch(target)
+        n, m = len(self._grid), len(self._grid[0])
+        for r in xrange(n):
+            if kmp.search(self._grid[r]):
+                return True
+        for c in xrange(m):
+            if kmp.search([self._grid[r][c] for r in xrange(n)]):
+                return True
+        return False
+
+
+class WordSearchPuzzleSpec(unittest.TestCase):
+    def test_target_word_overflow(self):
+        puzzle = WordSearchPuzzle([['A']])
+        self.assertFalse(puzzle.contains("BEE"))
+        self.assertFalse(puzzle.contains("AQUA"))
+        self.assertFalse(puzzle.contains("AA"))
+        self.assertTrue(puzzle.contains("A"))
+
+    def test_target_word_on_boundary(self):
+        puzzle = WordSearchPuzzle([
+            ['A', 'C', 'E', 'R'],
+            ['L', 'I', 'S', 'T'],
+            ['L', 'I', 'P', 'S']
+        ])
+        self.assertTrue(puzzle.contains("ALL"))
+        self.assertTrue(puzzle.contains("AL"))
+        self.assertTrue(puzzle.contains("ACE"))
+        self.assertTrue(puzzle.contains("ACER"))
+        self.assertTrue(puzzle.contains("RTS"))
+        self.assertTrue(puzzle.contains("LIPS"))
+        self.assertTrue(puzzle.contains("LIST"))
+        self.assertTrue(puzzle.contains("ST"))
+        self.assertFalse(puzzle.contains("LA"))
+        self.assertFalse(puzzle.contains("RE"))
+        self.assertFalse(puzzle.contains("PI"))
+        self.assertFalse(puzzle.contains("CSS"))
+        self.assertFalse(puzzle.contains("ET"))
+
+    def test_square_grid(self):
+        puzzle = WordSearchPuzzle([
+            ['F', 'A', 'C', 'I'],
+            ['O', 'B', 'Q', 'P'],
+            ['A', 'N', 'O', 'B'],
+            ['M', 'A', 'S', 'S']
+        ])
+        self.assertTrue(puzzle.contains("FOAM"))
+        self.assertTrue(puzzle.contains("MASS"))
+        self.assertTrue(puzzle.contains("NO"))
+        self.assertTrue(puzzle.contains("OS"))
+        self.assertTrue(puzzle.contains("IP"))
+
+    def test_grid_with_duplicates(self):
+        puzzle = WordSearchPuzzle([
+            ['A', 'B', 'A', 'B', 'A', 'B', 'A', 'B', 'C', 'A']
+        ])
+        self.assertTrue(puzzle.contains("ABABABCA"))
+        self.assertFalse(puzzle.contains("BABACA"))
+        self.assertFalse(puzzle.contains("BACA"))
+        self.assertTrue(puzzle.contains("BABC"))
+        self.assertTrue(puzzle.contains("BABA"))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
+```
+  
 ### June 10, 2019 \[Medium\] Locking in Binary Tree
 ---
 > **Question:** Implement locking in a binary tree. A binary tree node can be locked or unlocked only if all of its descendants or ancestors are not locked.
