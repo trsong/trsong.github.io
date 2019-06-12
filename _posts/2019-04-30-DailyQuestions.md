@@ -169,7 +169,7 @@ A
  ```
 > and the target word 'FOAM', you should return true, since it's the leftmost column. Similarly, given the target word 'MASS', you should return true, since it's the last row.
 
-**My thoughts:** Naive solution is to identify, in the grid, the matching cell of first character of target word. The check the remaining character either left-to-right or up-to-down direction. Which is quite straightforward.
+**My thoughts:** A naive solution is to identify, in the grid, the matching cell of first character of the target word. Then check the remaining character either in left-to-right or up-to-down direction. Which is quite straightforward.
 
 However, I think this might be a good chance to practice [KMP Algorithm](https://www.geeksforgeeks.org/kmp-algorithm-for-pattern-searching/).
 
