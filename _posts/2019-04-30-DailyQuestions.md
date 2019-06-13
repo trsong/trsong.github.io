@@ -131,6 +131,8 @@ A
 >
 > You can assume the list has at least three integers.
 
+-->
+
 ### June 13, 2019 \[Medium\] Forward DNS Look Up Cache
 ----
 > **Question:** Forward DNS look up is getting IP address for a given domain name typed in the web browser. e.g. Given "www.samsung.com" should return "107.108.11.123"
@@ -145,7 +147,6 @@ A
 > Hint:
 > - The idea is to store URLs in Trie nodes and store the corresponding IP address in last or leaf node.
 
--->
 
 ### June 12, 2019 \[Hard\] RGB Element Array Swap
 ---
@@ -153,7 +154,65 @@ A
 >
 > Do this in linear time and in-place.
 >
-> For example, given the array ['G', 'B', 'R', 'R', 'B', 'R', 'G'], it should become ['R', 'R', 'R', 'G', 'G', 'B', 'B']
+> For example, given the array `['G', 'B', 'R', 'R', 'B', 'R', 'G']`, it should become `['R', 'R', 'R', 'G', 'G', 'B', 'B']`.
+
+**My thoughts:** Treat 'R','G' and 'B' as numbers. The problem can be solved by sorting this array based on certain order. We can use Quick Sort to achieve that. And the idea is that we keep three pointers `lo <= mid <= hi` such that 'G' grows from lo, 'B' grows from hi and 'B' grows from mid and swap w/ lo to make some room. Such technique to partition the array into 3 parts is called ***3-Way Quick Select***. It feels like normal Quick Select except segregate array into 3 parts.
+
+**Solution with 3-Way Quick Select:** [https://repl.it/@trsong/RGB-Element-Array-Swap](https://repl.it/@trsong/RGB-Element-Array-Swap)
+
+```py
+import unittest
+
+def swap_rgb_array(arr):
+    def swap(i, j):
+        tmp = arr[i]
+        arr[i] = arr[j]
+        arr[j] = tmp
+    lo = mid = 0
+    hi = len(arr) - 1
+    while mid <= hi:
+        if arr[mid] == 'R':
+            swap(lo, mid)
+            lo += 1
+            mid += 1
+        elif arr[mid] == 'B':
+            swap(mid, hi)
+            hi -= 1
+        else:
+            # arr[mid] == 'G'
+            mid += 1
+
+
+class SwapRGBArraySpec(unittest.TestCase):
+    def assert_rbb_swap(self, arr, expected):
+        swap_rgb_array(arr)
+        self.assertEqual(arr, expected)
+
+    def test_empty_arr(self):
+        self.assert_rbb_swap([], [])
+
+    def test_array_with_two_colors(self):
+        self.assert_rbb_swap(['R', 'G', 'R', 'G'], ['R', 'R', 'G', 'G'])
+        self.assert_rbb_swap(['B', 'B', 'G', 'G'], ['G', 'G', 'B', 'B'])
+        self.assert_rbb_swap(['R', 'B', 'R'], ['R', 'R', 'B'])
+
+    def test_array_in_reverse_order(self):
+        self.assert_rbb_swap(['B', 'B', 'G', 'R', 'R', 'R'], ['R', 'R', 'R', 'G', 'B', 'B'])
+        self.assert_rbb_swap(['B', 'G', 'R', 'R', 'R', 'R'], ['R', 'R', 'R', 'R', 'G', 'B'])
+        self.assert_rbb_swap(['B', 'G', 'G', 'G', 'R'], ['R', 'G', 'G', 'G', 'B'])
+
+    def test_array_in_sorted_order(self):
+        arr = ['R', 'R', 'G', 'B', 'B', 'B', 'B']
+        self.assert_rbb_swap(arr, arr)
+
+    def test_array_in_random_order(self):
+        self.assert_rbb_swap(['B', 'R', 'G', 'G', 'R', 'B'], ['R', 'R', 'G', 'G', 'B', 'B'])
+        self.assert_rbb_swap(['G', 'B', 'R', 'R', 'B', 'R', 'G'], ['R', 'R', 'R', 'G', 'G', 'B', 'B'])
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
+```
 
 ### June 11, 2019 \[Easy\] Word Search Puzzle 
 ---
