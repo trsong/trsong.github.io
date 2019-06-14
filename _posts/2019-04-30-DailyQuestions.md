@@ -121,17 +121,16 @@ A
 ```
 > Should return null, since we have an infinite loop.
 
+-->
 
-
-### June , 2019 \[Easy\] 
+### June 14, 2019 \[Easy\] Largest Product of Three
 ---
 > **Question:** Given a list of integers, return the largest product that can be made by multiplying any three integers.
 >
-> For example, if the list is [-10, -10, 5, 2], we should return 500, since that's -10 * -10 * 5.
+> For example, if the list is `[-10, -10, 5, 2]`, we should return 500, since that's `-10 * -10 * 5`.
 >
 > You can assume the list has at least three integers.
 
--->
 
 ### June 13, 2019 \[Medium\] Forward DNS Look Up Cache
 ----
@@ -147,6 +146,88 @@ A
 > Hint:
 > - The idea is to store URLs in Trie nodes and store the corresponding IP address in last or leaf node.
 
+**My thoughts:** The cahce can also be implemented using hash map; however, trie still has best worse case running time `O(n)` where n is the length of url. The only drawback of Trie is that it is not so memory efficient.
+
+**Trie Solution:** [https://repl.it/@trsong/Forward-DNS-Look-Up-Cache](https://repl.it/@trsong/Forward-DNS-Look-Up-Cache)
+```py
+import unittest
+
+class TrieNode(object):
+    def __init__(self, ip=None, children=None):
+        self.ip = ip
+        self._children = children
+
+    def get_children(self, index):
+        if not self._children:
+            self._children = [None] * 27
+        if not self._children[index]:
+            self._children[index] = TrieNode()
+        return self._children[index]
+
+class ForwardDNSCache(object):
+    def __init__(self):
+        self._root = TrieNode()
+
+    @staticmethod
+    def char_encode(c):
+        return ord(c) - ord('a') if c != '.' else 26
+
+    def insert(self, url, ip):
+        cur = self._root
+        for c in url:
+            cur = cur.get_children(ForwardDNSCache.char_encode(c))
+        cur.ip = ip
+
+    def search(self, url):
+        cur = self._root
+        for c in url:
+            if not cur:
+                return None
+            else:
+                cur = cur.get_children(ForwardDNSCache.char_encode(c))
+        if cur:
+            return cur.ip
+        else:
+            return None
+
+class ForwardDNSCacheSpec(unittest.TestCase):
+    def setUp(self):
+        self.cache = ForwardDNSCache()
+    
+    def test_fail_to_get_out_of_bound_result(self):
+        self.assertIsNone(self.cache.search("www.google.ca"))
+        self.cache.insert("www.google.com", "1.1.1.1")
+        self.assertIsNone(self.cache.search("www.google.com.ca"))
+
+    def test_result_not_found(self):
+        self.cache.insert("www.cnn.com", "2.2.2.2")
+        self.assertIsNone(self.cache.search("www.amazon.ca"))
+        self.assertIsNone(self.cache.search("www.cnn.ca"))
+
+    def test_overwrite_url(self):
+        self.cache.insert("www.apple.com", "1.2.3.4")
+        self.assertEqual(self.cache.search("www.apple.com"), "1.2.3.4")
+        self.cache.insert("www.apple.com", "5.6.7.8")
+        self.assertEqual(self.cache.search("www.apple.com"), "5.6.7.8")
+    
+    def test_url_with_same_prefix(self):
+        self.cache.insert("www.apple.com", "1.2.3.4")
+        self.cache.insert("www.apple.com.ca", "5.6.7.8")
+        self.cache.insert("www.apple.com.hk", "9.10.11.12")
+        self.assertEqual(self.cache.search("www.apple.com"), "1.2.3.4")
+        self.assertEqual(self.cache.search("www.apple.com.ca"), "5.6.7.8")
+        self.assertEqual(self.cache.search("www.apple.com.hk"), "9.10.11.12")
+
+    def test_non_overlapping_url(self):
+        self.cache.insert("bilibili.tv", "11.22.33.44")
+        self.cache.insert("taobao.com", "55.66.77.88")
+        self.assertEqual(self.cache.search("bilibili.tv"), "11.22.33.44")
+        self.assertEqual(self.cache.search("taobao.com"), "55.66.77.88")
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
+```
 
 ### June 12, 2019 \[Hard\] RGB Element Array Swap
 ---
