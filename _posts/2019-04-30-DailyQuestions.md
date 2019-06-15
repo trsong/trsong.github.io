@@ -87,8 +87,9 @@ categories: Python/Java
 > 
 > For example, given 1, you should return 19. Given 2, you should return 28.
 
+-->
 
-### June , 2019 \[Hard\] 
+### June 15, 2019 \[Hard\] Largest String Value Path
 ---
 > **Question:** In a directed graph, each node is assigned an uppercase letter. We define a path's value as the number of most frequently-occurring letter along that path. For example, if a path in the graph goes through "ABACA", the value of the path is 3, since there are 3 occurrences of 'A' on the path.
 >
@@ -121,8 +122,6 @@ A
 ```
 > Should return null, since we have an infinite loop.
 
--->
-
 ### June 14, 2019 \[Easy\] Largest Product of Three
 ---
 > **Question:** Given a list of integers, return the largest product that can be made by multiplying any three integers.
@@ -131,6 +130,56 @@ A
 >
 > You can assume the list has at least three integers.
 
+**My thoughts:** The largest product of three comes from either `max1 * max2 * max3` or `min1 * min2 * max3` where min1 is 1st min, max1 is 1st max, vice versa for max2, max3 and min2.
+
+
+**Python Solution:** [https://repl.it/@trsong/Largest-Product-of-Three](https://repl.it/@trsong/Largest-Product-of-Three)
+```py
+import unittest
+from queue import PriorityQueue
+
+def max_3product(nums):
+    min_queue = PriorityQueue()  # stores 1st, 2nd and 3rd max
+    max_queue = PriorityQueue()  # stores 1st, 2nd and 3rd min
+    for i in xrange(3):
+        min_queue.put(nums[i])
+        max_queue.put(-nums[i])
+    for i in xrange(3, len(nums)):
+        num = nums[i]
+        if min_queue.queue[0] < num:
+            min_queue.put(num)
+            min_queue.get()
+        elif -max_queue.queue[0] > num:
+            max_queue.put(-num)
+            max_queue.get()
+    max3 = min_queue.get()
+    max2 = min_queue.get()
+    max1 = min_queue.get()
+    max_queue.get()
+    min2 = -max_queue.get()
+    min1 = -max_queue.get()
+    return max(max1 * max2 * max3, min1 * min2 * max1)
+
+
+class Max3ProductSpec(unittest.TestCase):
+    def test_all_positive(self):
+        self.assertEqual(max_3product([1, 2, 3, 4, 5]), 60)
+        self.assertEqual(max_3product([2, 3, 6, 1, 1, 6, 3, 2, 1, 6]), 216)
+
+    def test_all_negative(self):
+        self.assertEqual(max_3product([-5, -4, -3, -2, -1]), -6)
+        self.assertEqual(max_3product([-1, -5, -2, -4, -3]), -6)
+        self.assertEqual(max_3product([-10, -3, -5, -6, -20]), -90)
+
+    def test_mixed(self):
+        self.assertEqual(max_3product([-1, -1, -1, 0, 2, 3]), 3)
+        self.assertEqual(max_3product([0, -1, -2, -3, 0]), 0)
+        self.assertEqual(max_3product([1, -4, 3, -6, 7, 0]), 168)
+        
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
+```
 
 ### June 13, 2019 \[Medium\] Forward DNS Look Up Cache
 ----
