@@ -130,7 +130,7 @@ A
 >
 > You can assume the list has at least three integers.
 
-**My thoughts:** The largest product of three comes from either `max1 * max2 * max3` or `min1 * min2 * max3` where min1 is 1st min, max1 is 1st max, vice versa for max2, max3 and min2.
+**My thoughts:** The largest product of three comes from either `max1 * max2 * max3` or `min1 * min2 * max1` where min1 is 1st min, max1 is 1st max, vice versa for max2, max3 and min2.
 
 
 **Python Solution:** [https://repl.it/@trsong/Largest-Product-of-Three](https://repl.it/@trsong/Largest-Product-of-Three)
