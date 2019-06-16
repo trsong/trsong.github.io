@@ -183,7 +183,7 @@ The brute force solution is to iterate through all possible vertices and start f
 
 However, certain nodes will be calculated over and over again. e.g. "AAB", [(0, 1), (2, 1)] both share same neighbor second A.
 
-Thus, in order to speed up, we can cache the intermediate result. Let `path_value[v][letter]` represents the path value starts from v with the letter. Then  `path_value[v][letter] = max of all path_value[neighbor][letter]` And if letter happen to be the current letter, `path_value[v][letter] += 1`
+Thus, in order to speed up, we can use DP to cache the intermediate result. Let `path_value[v][letter]` represents the path value starts from v with the letter. Then  `path_value[v][letter] = max of all path_value[neighbor][letter]` And if letter happen to be the current letter, `path_value[v][letter] += 1`. With DP solution, the time complexity drop to `O(V + E)`.
 
 
 **Solution with DFS and DP:** [https://repl.it/@trsong/Max-Path-Value-in-Directed-Graph](https://repl.it/@trsong/Max-Path-Value-in-Directed-Graph)
