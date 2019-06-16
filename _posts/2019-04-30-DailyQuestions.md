@@ -17,6 +17,61 @@ categories: Python/Java
 **Java 1.8:**  TBD
 
 <!--
+### June, 2019 \[Medium\] Count Pairs of attacking bishop pairs
+---
+On our special chessboard, two bishops attack each other if they share the same diagonal. This includes bishops that have another bishop located between them, i.e. bishops can attack through pieces.
+
+You are given N bishops, represented as (row, column) tuples on a M by M chessboard. Write a function to count the number of pairs of bishops that attack each other. The ordering of the pair doesn't matter: (1, 2) is considered the same as (2, 1).
+
+For example, given M = 5 and the list of bishops:
+
+(0, 0)
+(1, 2)
+(2, 2)
+(4, 0)
+The board would look like this:
+
+[b 0 0 0 0]
+[0 0 b 0 0]
+[0 0 b 0 0]
+[0 0 0 0 0]
+[b 0 0 0 0]
+You should return 2, since bishops 1 and 3 attack each other, as well as bishops 3 and 4.
+
+### June, 2019 \[Medium\] Sliding Window Maximum
+---
+Given an array nums, there is a sliding window of size k which is moving from the very left of the array to the very right. You can only see the k numbers in the window. Each time the sliding window moves right by one position. Return the max sliding window.
+
+Example:
+
+Input: nums = [1,3,-1,-3,5,3,6,7], and k = 3
+Output: [3,3,5,5,6,7] 
+Explanation: 
+
+Window position                Max
+---------------               -----
+[1  3  -1] -3  5  3  6  7       3
+ 1 [3  -1  -3] 5  3  6  7       3
+ 1  3 [-1  -3  5] 3  6  7       5
+ 1  3  -1 [-3  5  3] 6  7       5
+ 1  3  -1  -3 [5  3  6] 7       6
+ 1  3  -1  -3  5 [3  6  7]      7
+Note: 
+You may assume k is always valid, 1 ≤ k ≤ input array's size for non-empty array.
+
+Follow up:
+Could you solve it in linear time?
+
+
+### June, 2019 \[Medium\]
+---
+You run an e-commerce website and want to record the last N order ids in a log. Implement a data structure to accomplish this, with the following API:
+
+- record(order_id): adds the order_id to the log
+- get_last(i): gets the ith last element from the log. i is guaranteed to be smaller than or equal to N.
+
+You should be as efficient with time and space as possible.
+
 
 ### June , 2019 \[Medium\] 
 ---
@@ -79,7 +134,9 @@ categories: Python/Java
 ```
 > And there are 4 12's in the table.
 
-### June , 2019 \[Easy\] 
+-->
+
+### June 16, 2019 \[Easy\] N-th Perfect Number
 ---
 > **Question:**  A number is considered perfect if its digits sum up to exactly 10.
 > 
@@ -87,9 +144,7 @@ categories: Python/Java
 > 
 > For example, given 1, you should return 19. Given 2, you should return 28.
 
--->
-
-### June 15, 2019 \[Hard\] Largest String Value Path
+### June 15, 2019 \[Hard\] Max Path Value in Directed Graph
 ---
 > **Question:** In a directed graph, each node is assigned an uppercase letter. We define a path's value as the number of most frequently-occurring letter along that path. For example, if a path in the graph goes through "ABACA", the value of the path is 3, since there are 3 occurrences of 'A' on the path.
 >
@@ -121,6 +176,100 @@ A
 [(0, 0)]
 ```
 > Should return null, since we have an infinite loop.
+
+**My thoughts:** This question is a perfect example illustrates how to apply different teachniques, such as DFS and DP, to solve a graph problem.
+
+The brute force solution is to iterate through all possible vertices and start from where we can search neighbors recursively and find the maximum path value. Which takes `O(V * (V + E))`.
+
+However, certain nodes will be calculated over and over again. e.g. "AAB", [(0, 1), (2, 1)] both share same neighbor second A.
+
+Thus, in order to speed up, we can cache the intermediate result. Let `path_value[v][letter]` represents the path value starts from v with the letter. Then  `path_value[v][letter] = max of all path_value[neighbor][letter]` And if letter happen to be the current letter, `path_value[v][letter] += 1`
+
+
+**Solution with DFS and DP:** [https://repl.it/@trsong/Max-Path-Value-in-Directed-Graph](https://repl.it/@trsong/Max-Path-Value-in-Directed-Graph)
+```py
+import unittest
+
+class LetterVertexDirectedGraph(object):
+    class VertexState(object):
+        UNVISITED = 0
+        VISITING = 1
+        VISITED = 2
+
+    def __init__(self, vertex_letters, paths):
+        self._vertex_letters = vertex_letters
+        n = len(vertex_letters)
+        self._neighbor =[[] for _ in xrange(n)]
+        for edge in paths:
+            self._neighbor[edge[0]].append(edge[1])
+        self._state = [self.VertexState.UNVISITED for _ in xrange(n)]
+        # Let path_value[v][letter] represents the path value starts from v with the letter
+        self._path_value = [[0 for _ in xrange(26)] for _ in xrange(n)]
+
+    def _DFS_found_cycle(self, current):
+        if self._state[current] == self.VertexState.VISITED:
+            return False
+        elif self._state[current] == self.VertexState.VISITING:
+            # Found a back edge which can be used to form a cycle
+            return True
+        
+        self._state[current] = self.VertexState.VISITING
+        for v in self._neighbor[current]:
+            if self._DFS_found_cycle(v):
+                return True
+            for letter in xrange(26):
+                # for current letter, path value inherits from max path value from neighbor
+                self._path_value[current][letter] = max(self._path_value[current][letter], self._path_value[v][letter])
+
+        current_letter = self._vertex_letters[current]
+        self._path_value[current][ord(current_letter) - ord('A')] += 1
+        self._state[current] = self.VertexState.VISITED
+
+    def max_path_value(self):
+        res = 0
+        for v in xrange(len(self._vertex_letters)):
+            if self._DFS_found_cycle(v):
+                return None
+            for letter in xrange(26):
+                res = max(res, self._path_value[v][letter])
+        return res
+    
+
+class LetterVertexDirectedGraphSpec(unittest.TestCase):
+    def test_graph_with_self_edge(self):
+        g = LetterVertexDirectedGraph('A', [(0, 0)])
+        self.assertIsNone(g.max_path_value())
+
+    def test_sample_graph(self):
+        g = LetterVertexDirectedGraph('ABACA', [
+            (0, 1), (0, 2), (2, 3), (3, 4)
+        ])
+        self.assertEqual(g.max_path_value(), 3)
+    
+    def test_graph_with_cycle(self):
+        g = LetterVertexDirectedGraph('XZYABC', [
+            (0, 1), (1, 2), (2, 0), (3, 2), (4, 3), (5, 3)
+        ])
+        self.assertIsNone(g.max_path_value())
+
+    def test_graph_with_disconnected_components(self):
+        g = LetterVertexDirectedGraph('AABBB', [
+            (0, 1), (2, 3), (3, 4)
+        ])
+        self.assertEqual(g.max_path_value(), 3)
+
+    def test_complicated_graph(self):
+        g = LetterVertexDirectedGraph('XZYZYZYZQX', [
+            (0, 1), (0, 9), (1, 9), (1, 3), (1, 5), (3, 5), (3, 4),
+            (5, 4), (5, 7), (1, 7), (2, 4), (2, 6), (2, 8), (9, 8)
+        ])
+        self.assertEqual(g.max_path_value(), 4)
+    
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
+```
+
 
 ### June 14, 2019 \[Easy\] Largest Product of Three
 ---
