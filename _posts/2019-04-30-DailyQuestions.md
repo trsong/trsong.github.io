@@ -111,7 +111,9 @@ You should be as efficient with time and space as possible.
 >
 > Given a 5 by 5 matrix, there are 70 ways to get to the bottom-right.
 
-### June , 2019 \[Medium\] 
+-->
+
+### June 17, 2019 \[Medium\] Multiplication Table
 ---
 > **Question:**  Suppose you have a multiplication table that is N by N. That is, a 2D array where the value at the i-th row and j-th column is (i + 1) * (j + 1) (if 0-indexed) or i * j (if 1-indexed).
 >
@@ -120,13 +122,13 @@ You should be as efficient with time and space as possible.
 > For example, given N = 6 and X = 12, you should return 4, since the multiplication table looks like this:
 
 ```
-| 1 | 2 | 3 | 4 | 5 | 6 |
+| 1 |  2 |  3 |  4 |  5 |  6 |
 
-| 2 | 4 | 6 | 8 | 10 | 12 |
+| 2 |  4 |  6 |  8 | 10 | 12 |
 
-| 3 | 6 | 9 | 12 | 15 | 18 |
+| 3 |  6 |  9 | 12 | 15 | 18 |
 
-| 4 | 8 | 12 | 16 | 20 | 24 |
+| 4 |  8 | 12 | 16 | 20 | 24 |
 
 | 5 | 10 | 15 | 20 | 25 | 30 |
 
@@ -134,15 +136,62 @@ You should be as efficient with time and space as possible.
 ```
 > And there are 4 12's in the table.
 
--->
 
 ### June 16, 2019 \[Easy\] N-th Perfect Number
 ---
-> **Question:**  A number is considered perfect if its digits sum up to exactly 10.
+> **Question:** A number is considered perfect if its digits sum up to exactly 10.
 > 
 > Given a positive integer n, return the n-th perfect number.
 > 
 > For example, given 1, you should return 19. Given 2, you should return 28.
+
+**Generate Perfect Number with Separators:** [https://repl.it/@trsong/N-th-Perfect-Number](https://repl.it/@trsong/N-th-Perfect-Number)
+```py
+def separator_to_number(sep):
+    # Imagine there are 10 1's and 9 gaps between consecutive 1's to allow us insert the separator. 
+    # The goal is to sum with each area and get the number:
+    # 1 | 1 | 1 | 1 | 1 | 1 | 1 | 1 | 1 | 1
+    #   1   2   3   4   5   6   7   8   9
+    # Suppose the separator is: 55679, we just sum with each blocks' number separated by separator:
+    # The number will be 501121.
+    prev = 10
+    base = 1
+    res = 0
+    while sep > 0:
+        cur = sep % 10
+        res += (prev - cur) * base
+        prev = cur
+        base *= 10
+        sep /= 10
+    res += prev * base
+    return res
+
+def separator_increment(sep):
+    # Suppose the separators are at 199, increase it to 200 and further move the separator to 222 so that no later separator can be smaller than 2. 
+    sep += 1
+    stack = []
+    while sep > 0:
+        stack.append(sep % 10)
+        sep /= 10
+    res = 0
+    prev = 0
+    while stack:
+        cur = stack.pop()
+        prev = max(cur, prev)
+        res = 10 * res + prev
+    return res
+
+def perfect_number_at(n):
+    separator = 0
+    for _ in xrange(n):
+        separator = separator_increment(separator)
+    return separator_to_number(separator)
+
+if __name__ == '__main__':
+    res = [perfect_number_at(x) for x in xrange(1, 51)]
+    expected = [19, 28, 37, 46, 55, 64, 73, 82, 91, 109, 118, 127, 136, 145, 154, 163, 172, 181, 208, 217, 226, 235, 244, 253, 262, 271, 307, 316, 325, 334, 343, 352, 361, 406, 415, 424, 433, 442, 451, 505, 514, 523, 532, 541, 604, 613, 622, 631, 703, 712]
+    assert res == expected
+```
 
 ### June 15, 2019 \[Hard\] Max Path Value in Directed Graph
 ---
