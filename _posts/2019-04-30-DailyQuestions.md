@@ -100,7 +100,9 @@ You should be as efficient with time and space as possible.
 >
 > You can represent a live cell with an asterisk (*) and a dead cell with a dot (.).
 
-### June , 2019 \[Medium\] 
+-->
+
+### June 18, 2019 \[Medium\] Number of Moves on a Grid
 ---
 > **Question:**  There is an N by M matrix of zeroes. Given N and M, write a function to count the number of ways of starting at the top-left corner and getting to the bottom-right corner. You can only move right or down.
 >
@@ -111,7 +113,6 @@ You should be as efficient with time and space as possible.
 >
 > Given a 5 by 5 matrix, there are 70 ways to get to the bottom-right.
 
--->
 
 ### June 17, 2019 \[Medium\] Multiplication Table
 ---
@@ -136,6 +137,52 @@ You should be as efficient with time and space as possible.
 ```
 > And there are 4 12's in the table.
 
+**My thoughts:** Sometimes, it is against intuitive to solve a grid searching question without using grid searching stategies. But it could happen. As today's question is just a math problem features integer factorization.
+
+**Counting Number Solution:** [https://repl.it/@trsong/Multiplication-Table](https://repl.it/@trsong/Multiplication-Table)
+```py
+import unittest
+import math
+
+def count_number_in_table(N, X):
+    if X <= 0: return 0
+    count = 0
+    sqrt_x = int(math.sqrt(X))
+    for candidate in xrange(1, sqrt_x + 1):
+        # Make sure candidate and its coefficient are within range of N
+        if candidate > N:
+            break
+        elif X % candidate == 0 and X / candidate <= N:
+            count += 2
+    if sqrt_x <= N and X == sqrt_x * sqrt_x:
+        # When candidate and its coefficient are the same, we double-count the result. Therefore take it off.
+        count -= 1
+    return count
+
+
+class CountNumberInTableSpec(unittest.TestCase):
+    def test_target_out_of_boundary(self):
+        self.assertEqual(count_number_in_table(1, 100), 0)
+        self.assertEqual(count_number_in_table(2, -100), 0)
+    
+    def test_target_range_from_N_to_N_Square(self):
+        self.assertEqual(count_number_in_table(3, 7), 0)
+        self.assertEqual(count_number_in_table(3, 4), 1)
+        self.assertEqual(count_number_in_table(3, 6), 2)
+
+    def test_target_range_from_Zero_to_N(self):
+        self.assertEqual(count_number_in_table(4, 0), 0)
+        self.assertEqual(count_number_in_table(4, 1), 1)
+        self.assertEqual(count_number_in_table(4, 2), 2)
+        self.assertEqual(count_number_in_table(4, 3), 2)
+        self.assertEqual(count_number_in_table(4, 4), 3)
+        self.assertEqual(count_number_in_table(12, 12), 6)
+        self.assertEqual(count_number_in_table(27, 25), 3)
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
+```
 
 ### June 16, 2019 \[Easy\] N-th Perfect Number
 ---
