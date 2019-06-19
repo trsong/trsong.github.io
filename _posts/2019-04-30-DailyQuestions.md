@@ -85,8 +85,9 @@ You should be as efficient with time and space as possible.
 ---
 > **Question:** You have an N by N board. Write a function that, given N, returns the number of possible arrangements of the board where N queens can be placed on the board without threatening each other, i.e. no two queens share the same row, column, or diagonal.
 
+-->
 
-### June , 2019 \[Medium\] 
+### June 19, 2019 \[Medium\] Conway's Game of Life
 ---
 > **Question:** Conway's Game of Life takes place on an infinite two-dimensional board of square cells. Each cell is either dead or alive, and at each tick, the following rules apply:
 >
@@ -100,7 +101,6 @@ You should be as efficient with time and space as possible.
 >
 > You can represent a live cell with an asterisk (*) and a dead cell with a dot (.).
 
--->
 
 ### June 18, 2019 \[Medium\] Number of Moves on a Grid
 ---
@@ -113,6 +113,50 @@ You should be as efficient with time and space as possible.
 >
 > Given a 5 by 5 matrix, there are 70 ways to get to the bottom-right.
 
+**DP Solution:** [https://repl.it/@trsong/Number-of-Moves-on-a-Grid](https://repl.it/@trsong/Number-of-Moves-on-a-Grid)
+```py
+import unittest
+
+def calc_num_moves(grid_height, grid_width):
+    if not grid_height or not grid_width: return 0
+    # Let dp[i][j] represents total number of moves from 0,0 to i,j
+    # dp[i][j] = dp[i-1][j] + dp[i][j-1]
+    dp = [[0 for _ in xrange(grid_width)] for _ in xrange(grid_height)]
+    for col in xrange(grid_width):
+        dp[0][col] = 1
+    for row in xrange(grid_height):
+        dp[row][0] = 1
+    for row in xrange(1, grid_height):
+        for col in xrange(1, grid_width):
+            dp[row][col] = dp[row-1][col]  + dp[row][col-1]
+    return dp[grid_height-1][grid_width-1]
+
+class CalcNumMoveSpec(unittest.TestCase):
+    def test_size_zero_grid(self):
+        self.assertEqual(calc_num_moves(0, 0), 0)
+        self.assertEqual(calc_num_moves(1, 0), 0)
+        self.assertEqual(calc_num_moves(0, 1), 0)
+
+    def test_square_grid(self):
+        self.assertEqual(calc_num_moves(1, 1), 1)
+        self.assertEqual(calc_num_moves(3, 3), 6)
+        self.assertEqual(calc_num_moves(5, 5), 70)
+
+    def test_rectangle_grid(self):
+        self.assertEqual(calc_num_moves(1, 5), 1)
+        self.assertEqual(calc_num_moves(5, 1), 1)
+        self.assertEqual(calc_num_moves(2, 3), 3)
+        self.assertEqual(calc_num_moves(3, 2), 3)
+
+    def test_large_grid(self):
+         self.assertEqual(calc_num_moves(10, 20), 6906900)
+         self.assertEqual(calc_num_moves(20, 10), 6906900)
+         self.assertEqual(calc_num_moves(20, 20), 35345263800)
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
+```
 
 ### June 17, 2019 \[Medium\] Multiplication Table
 ---
