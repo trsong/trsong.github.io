@@ -73,19 +73,21 @@ You run an e-commerce website and want to record the last N order ids in a log. 
 You should be as efficient with time and space as possible.
 
 
-### June , 2019 \[Medium\] 
----
-> **Question:** Implement integer exponentiation. That is, implement the pow(x, y) function, where x and y are integers and returns x^y.
->
-> Do this faster than the naive method of repeated multiplication.
->
-> For example, pow(2, 10) should return 1024.
+
 
 ### June , 2019 \[Hard\] The N Queens Puzzle
 ---
 > **Question:** You have an N by N board. Write a function that, given N, returns the number of possible arrangements of the board where N queens can be placed on the board without threatening each other, i.e. no two queens share the same row, column, or diagonal.
 
 -->
+
+### June 20, 2019 \[Medium\] Integer Exponentiation
+---
+> **Question:** Implement integer exponentiation. That is, implement the pow(x, y) function, where x and y are integers and returns x^y.
+>
+> Do this faster than the naive method of repeated multiplication.
+>
+> For example, pow(2, 10) should return 1024.
 
 ### June 19, 2019 \[Medium\] Conway's Game of Life
 ---
@@ -101,6 +103,196 @@ You should be as efficient with time and space as possible.
 >
 > You can represent a live cell with an asterisk (*) and a dead cell with a dot (.).
 
+**My thoughts:** The major difficulty comes from the grid being infinite. Usually, when a grid's size is fixed, we can always use a different grid as a buffer to temporarily hold the result. However, as the grid being infinite, we can only store existing alive cells, and we have to do that in-place so as not to affect the state of neighbor while we process the current cell. And the way to achieve that is that we can create a list to store the changeset. And once we finish generating the changeset, we can then apply the changeset on top of the grid.
+
+**Grid Solution with Hashmap and Set:** [https://repl.it/@trsong/Conways-Game-of-Life](https://repl.it/@trsong/Conways-Game-of-Life)
+```py
+import unittest
+
+class ConwaysGameOfLife(object):
+    def __init__(self, initial_life_coordinates):
+        self._grid = {}
+        self._reset_boundary()
+        for coord in initial_life_coordinates:
+            if coord[0] not in self._grid:
+                self._grid[coord[0]] = set()
+            self._grid[coord[0]].add(coord[1])
+            self._update_boundary(coord)
+
+    def _reset_boundary(self):
+        self._left_boundary = None
+        self._right_boundary = None
+        self._top_boundary = None
+        self._bottom_boundary = None
+
+    def _update_boundary(self, coord):
+        self._left_boundary = coord[1] if self._left_boundary is None else  min(self._left_boundary, coord[1])
+        self._right_boundary = coord[1] if self._right_boundary is None else max(self._right_boundary, coord[1])
+        self._top_boundary =  coord[0] if self._top_boundary is None else min(self._top_boundary, coord[0])
+        self._bottom_boundary = coord[0] if self._bottom_boundary is None else max(self._bottom_boundary, coord[0])
+
+    def _check_alive(self, coord):
+        r, c = coord[0], coord[1]
+        neighbors = [
+            [r-1, c-1], [r-1, c], [r-1, c+1],
+            [r, c-1], [r, c+1],
+            [r+1, c-1], [r+1, c], [r+1, c+1]
+        ]
+        num_neighbor = 0
+        for n in neighbors:
+            if n[0] in self._grid and n[1] in self._grid[n[0]]:
+                num_neighbor += 1
+        is_prev_alive = r in self._grid and c in self._grid[r]
+        return is_prev_alive and 2 <= num_neighbor <= 3 or not is_prev_alive and num_neighbor == 3
+
+    def _next_round(self):
+        added_changeset = []
+        removed_changeset = []
+        for r in xrange(self._top_boundary-1, self._bottom_boundary + 2):
+            for c in xrange(self._left_boundary-1, self._right_boundary + 2):
+                is_prev_alive = r in self._grid and c in self._grid[r]
+                is_now_alive = self._check_alive([r, c])
+                if not is_prev_alive and is_now_alive:
+                    added_changeset.append([r, c])
+                elif is_prev_alive and not is_now_alive:
+                    removed_changeset.append([r, c])
+
+        for coord in removed_changeset:
+            self._grid[coord[0]].remove(coord[1])
+            if not len(self._grid[coord[0]]):
+                del self._grid[coord[0]]
+
+        for coord in added_changeset:
+            if coord[0] not in self._grid:
+                self._grid[coord[0]] = set()
+            self._grid[coord[0]].add(coord[1])
+        
+        self._reset_boundary()
+        for r in self._grid:
+            for c in self._grid[r]:
+                self._update_boundary([r, c])
+
+    def proceed(self, n_round):
+        for _ in xrange(n_round):
+            self._next_round()
+
+    def display_grid(self):
+        if not self._grid: return []
+        res = []
+        for r in xrange(self._top_boundary, self._bottom_boundary + 1):
+            if r in self._grid:
+                line = []
+                for c in xrange(self._left_boundary, self._right_boundary + 1):
+                    if c in self._grid[r]:
+                        line.append("*")
+                    else:
+                        line.append(".")
+                res.append("".join(line))
+            else:
+                res.append("." * (self._right_boundary - self._left_boundary + 1))
+        return res
+
+class ConwaysGameOfLifeSpec(unittest.TestCase):
+    def test_still_lives_scenario(self):
+        game = ConwaysGameOfLife([[1, 1], [1, 2], [2, 1], [2, 2]])
+        self.assertEqual(game.display_grid(), [
+            "**",
+            "**"
+        ])
+        game.proceed(1)
+        self.assertEqual(game.display_grid(), [
+            "**",
+            "**"
+        ])
+
+        game2 = ConwaysGameOfLife([[0, 1], [0, 2], [1, 0], [1, 3], [2, 1], [2, 2]])
+        self.assertEqual(game2.display_grid(), [
+            ".**.",
+            "*..*",
+            ".**."
+        ])
+        game2.proceed(2)
+        self.assertEqual(game2.display_grid(), [
+            ".**.",
+            "*..*",
+            ".**."
+        ])
+
+    def test_oscillators_scenario(self):
+        game = ConwaysGameOfLife([[-100, 0], [-100, 1], [-100, 2]])
+        self.assertEqual(game.display_grid(), [
+            "***",
+        ])
+        game.proceed(1)
+        self.assertEqual(game.display_grid(), [
+            "*",
+            "*",
+            "*"
+        ])
+        game.proceed(3)
+        self.assertEqual(game.display_grid(), [
+           "***",
+        ])
+
+        game2 = ConwaysGameOfLife([[0, 0], [0, 1], [1, 0], [2, 3], [3, 2], [3, 3]])
+        self.assertEqual(game2.display_grid(), [
+            "**..",
+            "*...",
+            "...*",
+            "..**"
+        ])
+        game2.proceed(1)
+        self.assertEqual(game2.display_grid(), [
+            "**..",
+            "**..",
+            "..**",
+            "..**",
+        ])
+        game2.proceed(3)
+        self.assertEqual(game2.display_grid(), [
+            "**..",
+            "*...",
+            "...*",
+            "..**"
+        ])
+
+
+    def test_spaceships_scenario(self):
+        game = ConwaysGameOfLife([[0, 2], [1, 0], [1, 2], [2, 1], [2, 2]])
+        self.assertEqual(game.display_grid(), [
+            "..*",
+            "*.*",
+            ".**"
+        ])
+        game.proceed(1)
+        self.assertEqual(game.display_grid(), [
+           "*..",
+           ".**",
+           "**."
+        ])
+        game.proceed(1)
+        self.assertEqual(game.display_grid(), [
+            ".*.",
+            "..*",
+            "***"
+        ])
+        game.proceed(1)
+        self.assertEqual(game.display_grid(), [
+            "*.*",
+            ".**",
+            ".*."
+        ])
+        game.proceed(1)
+        self.assertEqual(game.display_grid(), [
+            "..*",
+            "*.*",
+            ".**"
+        ])
+        
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
+```
 
 ### June 18, 2019 \[Medium\] Number of Moves on a Grid
 ---
