@@ -73,6 +73,13 @@ You run an e-commerce website and want to record the last N order ids in a log. 
 You should be as efficient with time and space as possible.
 
 
+### June, 2019 \[Easy\]
+---
+Given a list of possibly overlapping intervals, return a new list of intervals where all overlapping intervals have been merged.
+
+The input list is not necessarily ordered in any way.
+
+For example, given [(1, 3), (5, 8), (4, 10), (20, 25)], you should return [(1, 3), (4, 10), (20, 25)].
 
 
 ### June , 2019 \[Hard\] The N Queens Puzzle
@@ -80,6 +87,12 @@ You should be as efficient with time and space as possible.
 > **Question:** You have an N by N board. Write a function that, given N, returns the number of possible arrangements of the board where N queens can be placed on the board without threatening each other, i.e. no two queens share the same row, column, or diagonal.
 
 -->
+
+### June 21, 2019 \[Medium\] Remove Invalid Parentheses
+---
+> **Question:** Given a string of parentheses, write a function to compute the minimum number of parentheses to be removed to make the string valid (i.e. each open parenthesis is eventually closed).
+>
+> For example, given the string "()())()", you should return 1. Given the string ")(", you should return 2, since we must remove all of them.
 
 ### June 20, 2019 \[Medium\] Integer Exponentiation
 ---
@@ -89,6 +102,43 @@ You should be as efficient with time and space as possible.
 >
 > For example, pow(2, 10) should return 1024.
 
+**Recursive Solution:** [https://repl.it/@trsong/Integer-Exponentiation](https://repl.it/@trsong/Integer-Exponentiation)
+```py
+import unittest
+
+def pow(x, y):
+    if y == 0: 
+        return 1
+    elif y < 0: 
+        return pow(1.0 / x, -y)
+    elif y % 2 == 0:
+        return pow(x * x, y/2)
+    else:
+        return x * pow(x, y-1)
+
+class PowSpec(unittest.TestCase):
+    def test_power_of_zero(self):
+        self.assertAlmostEqual(pow(-2, 0), 1)
+        self.assertAlmostEqual(pow(3, 0), 1)
+        self.assertAlmostEqual(pow(0, 0), 1)
+        self.assertAlmostEqual(pow(0.5, 0), 1)
+        self.assertAlmostEqual(pow(0.6, 0), 1)
+
+    def test_negative_power(self):
+        self.assertAlmostEqual(pow(-2, -2), 0.25)
+        self.assertAlmostEqual(pow(0.5, -2), 4)
+        self.assertAlmostEqual(pow(3, -3), 1.0/27)
+
+    def test_positive_power(self):
+        self.assertAlmostEqual(pow(-2, 2), 4)
+        self.assertAlmostEqual(pow(2, 10), 1024)
+        self.assertAlmostEqual(pow(-0.5, 2), 0.25)
+        self.assertAlmostEqual(pow(-2, -9), -1.0/512)
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
+```
 ### June 19, 2019 \[Medium\] Conway's Game of Life
 ---
 > **Question:** Conway's Game of Life takes place on an infinite two-dimensional board of square cells. Each cell is either dead or alive, and at each tick, the following rules apply:
