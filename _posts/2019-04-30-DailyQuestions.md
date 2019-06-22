@@ -81,18 +81,57 @@ The input list is not necessarily ordered in any way.
 
 For example, given [(1, 3), (5, 8), (4, 10), (20, 25)], you should return [(1, 3), (4, 10), (20, 25)].
 
-
-### June , 2019 \[Hard\] The N Queens Puzzle
----
-> **Question:** You have an N by N board. Write a function that, given N, returns the number of possible arrangements of the board where N queens can be placed on the board without threatening each other, i.e. no two queens share the same row, column, or diagonal.
-
 -->
 
-### June 21, 2019 \[Medium\] Remove Invalid Parentheses
+### June 22, 2019 \[Hard\] The N Queens Puzzle
+---
+> **Question:** You have an N by N board. Write a function that, given N, returns the number of possible arrangements of the board where N queens can be placed on the board without threatening each other, i.e. no two queens share the same row, column, or diagonal.
+>
+> Hint: Backtracking 
+
+### June 21, 2019 \[Medium\] Invalid Parentheses to Remove 
 ---
 > **Question:** Given a string of parentheses, write a function to compute the minimum number of parentheses to be removed to make the string valid (i.e. each open parenthesis is eventually closed).
 >
 > For example, given the string "()())()", you should return 1. Given the string ")(", you should return 2, since we must remove all of them.
+
+**My thoughts:** At any index i, the number of accumulated open-parentheses, '(', on the left should be greater than or equal to the number of accumulated close-parentheses. And eventually, the total number of open-parentheses should equal the total number of close-parentheses. We simply count all positions violate those two properties.
+
+**Python Solution:** [https://repl.it/@trsong/Invalid-Parentheses-to-Remove](https://repl.it/@trsong/Invalid-Parentheses-to-Remove)
+```py
+import unittest
+
+def count_invalid_parentheses(input_str):
+    balance = 0
+    overflow = 0
+    for char in input_str:
+        if char == '(':
+            balance += 1
+        elif balance > 0:
+            balance -= 1
+        else:
+            overflow += 1
+    return balance + overflow
+
+
+class CountInvalidParentheseSpec(unittest.TestCase):
+    def test_incomplete_parentheses(self):
+        self.assertEqual(count_invalid_parentheses("(()"), 1)
+        self.assertEqual(count_invalid_parentheses("(()("), 2)
+    
+    def test_overflown_close_parentheses(self):
+        self.assertEqual(count_invalid_parentheses("()))"), 2)
+        self.assertEqual(count_invalid_parentheses(")()("), 2)
+
+    def test_valid_parentheses(self):
+        self.assertEqual(count_invalid_parentheses("((()))"), 0)
+        self.assertEqual(count_invalid_parentheses("()()()"), 0)
+        self.assertEqual(count_invalid_parentheses("((())(()))"), 0)
+        self.assertEqual(count_invalid_parentheses(""), 0)
+
+if __name__ == '__main__':
+    unittest.main(exit=False)   
+```
 
 ### June 20, 2019 \[Medium\] Integer Exponentiation
 ---
