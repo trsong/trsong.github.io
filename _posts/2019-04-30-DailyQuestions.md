@@ -62,17 +62,16 @@ You may assume k is always valid, 1 ≤ k ≤ input array's size for non-empty a
 Follow up:
 Could you solve it in linear time?
 
-
-### June, 2019 \[Medium\]
----
-You run an e-commerce website and want to record the last N order ids in a log. Implement a data structure to accomplish this, with the following API:
-
-- record(order_id): adds the order_id to the log
-- get_last(i): gets the ith last element from the log. i is guaranteed to be smaller than or equal to N.
-
-You should be as efficient with time and space as possible.
-
 -->
+
+### June 24, 2019 \[Medium\] E-commerce Website
+---
+> **Question:** You run an e-commerce website and want to record the last N order ids in a log. Implement a data structure to accomplish this, with the following API:
+>
+> - `record(order_id)`: adds the order_id to the log
+> - `get_last(i)`: gets the ith last element from the log. i is guaranteed to be smaller than or equal to N.
+>
+> You should be as efficient with time and space as possible.
 
 ### June 23, 2019 \[Easy\] Merge Overlapping Intervals
 ---
@@ -81,6 +80,60 @@ You should be as efficient with time and space as possible.
 > The input list is not necessarily ordered in any way.
 >
 > For example, given `[(1, 3), (5, 8), (4, 10), (20, 25)]`, you should return `[(1, 3), (4, 10), (20, 25)]`.
+
+**My thoughts:** Sort intervals based on start time, then for each consecutive intervals s1, s2 the following could occur:
+- `s1.end < s2.start`, we append s2 to result
+- `s2.start <= s1.end < s2.end`, we merge s1 and s2
+- `s2.end <= s1.end`, s1 overlaps all of s2, we do nothing
+
+Note: as all intervals are sorted based on start time, `s1.start <= s2.start`
+
+**Python Solution:** [https://repl.it/@trsong/Merge-Overlapping-Intervals](https://repl.it/@trsong/Merge-Overlapping-Intervals)
+```py
+import unittest
+
+def merge_intervals(interval_seq):
+    if not interval_seq: return []
+    # sort intervals based on start time
+    interval_seq.sort(key=lambda interval: interval[0])
+    stack = [interval_seq[0]]
+    for interval in interval_seq:
+        top = stack[-1]
+        if interval[0] <= top[1] < interval[1]:
+            stack.pop()
+            stack.append((top[0], interval[1]))
+        elif interval[0] > top[1]:
+            stack.append(interval)
+    return stack
+    
+    
+class MergeIntervalSpec(unittest.TestCase):
+    def assert_intervals(self, input, expected):
+        input.sort()
+        expected.sort()
+        self.assertEqual(input, expected)
+        
+    def test_interval_with_zero_mergings(self):
+        self.assert_intervals(merge_intervals([]), [])
+        self.assert_intervals(merge_intervals([(1, 2), (3, 4), (5, 6)]), [(1, 2), (3, 4), (5, 6)])
+        self.assert_intervals(merge_intervals([(-3, -2), (5, 6), (1, 4)]), [(-3, -2), (1, 4), (5, 6)])
+        
+    def test_interval_with_one_merging(self):
+        self.assert_intervals(merge_intervals([(1, 3), (5, 7), (7, 11), (2, 4)]), [(1, 4), (5, 11)])
+        self.assert_intervals(merge_intervals([(1, 4), (0, 8)]), [(0, 8)])
+        
+    def test_interval_with_two_mergings(self):
+        self.assert_intervals(merge_intervals([(1, 3), (3, 5), (5, 8)]), [(1, 8)])
+        self.assert_intervals(merge_intervals([(5, 8), (1, 6), (0, 2)]), [(0, 8)])
+        
+    def test_interval_with_multiple_mergings(self):
+        self.assert_intervals(merge_intervals([(-5, 0), (1, 4), (1, 4), (1, 4), (5, 7), (6, 10), (0, 1)]), [(-5, 4), (5, 10)])
+        self.assert_intervals(merge_intervals([(1, 3), (5, 8), (4, 10), (20, 25)]), [(1, 3), (4, 10), (20, 25)])
+        
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
+```
 
 
 ### June 22, 2019 \[Hard\] The N Queens Puzzle
@@ -96,47 +149,47 @@ You should be as efficient with time and space as possible.
 import unittest
 
 def solve_n_queen(n):
-	"""Solve N Queen Problem with backtracking: place i-th queen on i-th column, count upon success, backtrack when fail """
-	class Context:
-		res = 0
+    """Solve N Queen Problem with backtracking: place i-th queen on i-th column, count upon success, backtrack when fail """
+    class Context:
+        res = 0
 
-	def helper(col, prev_rows, prev_row_plus_col, prev_row_minus_col):
-		if col >= n:
-			Context.res += 1
-			return 
-		for row in range(n):
-			# row_plus_col and row_minus_col are used to mark chosen diagnoal 
-			row_plus_col = row + col
-			row_minus_col = row - col
-			if row not in prev_rows and row_plus_col not in prev_row_plus_col and row_minus_col not in prev_row_minus_col:
-				prev_rows.add(row)
-				prev_row_plus_col.add(row_plus_col)
-				prev_row_minus_col.add(row_minus_col)
-				helper(col + 1, prev_rows, prev_row_plus_col, prev_row_minus_col)
-				prev_rows.remove(row)
-				prev_row_plus_col.remove(row_plus_col)
-				prev_row_minus_col.remove(row_minus_col)
-				
-	helper(0, set(), set(), set())
-	return Context.res
-				
-	
+    def helper(col, prev_rows, prev_row_plus_col, prev_row_minus_col):
+        if col >= n:
+            Context.res += 1
+            return 
+        for row in range(n):
+            # row_plus_col and row_minus_col are used to mark chosen diagnoal 
+            row_plus_col = row + col
+            row_minus_col = row - col
+            if row not in prev_rows and row_plus_col not in prev_row_plus_col and row_minus_col not in prev_row_minus_col:
+                prev_rows.add(row)
+                prev_row_plus_col.add(row_plus_col)
+                prev_row_minus_col.add(row_minus_col)
+                helper(col + 1, prev_rows, prev_row_plus_col, prev_row_minus_col)
+                prev_rows.remove(row)
+                prev_row_plus_col.remove(row_plus_col)
+                prev_row_minus_col.remove(row_minus_col)
+                
+    helper(0, set(), set(), set())
+    return Context.res
+                
+    
 class SolveNQueenSpec(unittest.TestCase):
-	def test_one_queen(self):
-		self.assertEqual(solve_n_queen(1), 1)
-		
-	def test_two_three_queen(self):
-		self.assertEqual(solve_n_queen(2), 0)
-		self.assertEqual(solve_n_queen(3), 0)
-		
-	def test_four_queen(self):
-		self.assertEqual(solve_n_queen(4), 2)
-		
-	def test_eight_queen(self):
-		self.assertEqual(solve_n_queen(8), 92)
-		
+    def test_one_queen(self):
+        self.assertEqual(solve_n_queen(1), 1)
+        
+    def test_two_three_queen(self):
+        self.assertEqual(solve_n_queen(2), 0)
+        self.assertEqual(solve_n_queen(3), 0)
+        
+    def test_four_queen(self):
+        self.assertEqual(solve_n_queen(4), 2)
+        
+    def test_eight_queen(self):
+        self.assertEqual(solve_n_queen(8), 92)
+        
 if __name__ == "__main__":
-	unittest.main(exit=False)
+    unittest.main(exit=False)
 ```
 
 ### June 21, 2019 \[Medium\] Invalid Parentheses to Remove 
