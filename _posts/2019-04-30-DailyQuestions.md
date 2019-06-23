@@ -72,8 +72,9 @@ You run an e-commerce website and want to record the last N order ids in a log. 
 
 You should be as efficient with time and space as possible.
 
+-->
 
-### June, 2019 \[Easy\]
+### June 23, 2019 \[Easy\] Merge Overlapping Intervals
 ---
 Given a list of possibly overlapping intervals, return a new list of intervals where all overlapping intervals have been merged.
 
@@ -81,13 +82,62 @@ The input list is not necessarily ordered in any way.
 
 For example, given [(1, 3), (5, 8), (4, 10), (20, 25)], you should return [(1, 3), (4, 10), (20, 25)].
 
--->
 
 ### June 22, 2019 \[Hard\] The N Queens Puzzle
 ---
 > **Question:** You have an N by N board. Write a function that, given N, returns the number of possible arrangements of the board where N queens can be placed on the board without threatening each other, i.e. no two queens share the same row, column, or diagonal.
 >
 > Hint: Backtracking 
+
+**My thoughts:** Solve the N Queen Problem with Backtracking: place each queen on different columns one by one and test different rows. Mark previous chosen rows and diagonals.
+
+**Solution with Backtracking:** [https://repl.it/@trsong/The-N-Queens-Puzzle](https://repl.it/@trsong/The-N-Queens-Puzzle)
+```py
+import unittest
+
+def solve_n_queen(n):
+	"""Solve N Queen Problem with backtracking: place i-th queen on i-th column, count upon success, backtrack when fail """
+	class Context:
+		res = 0
+
+	def helper(col, prev_rows, prev_row_plus_col, prev_row_minus_col):
+		if col >= n:
+			Context.res += 1
+			return 
+		for row in range(n):
+			# row_plus_col and row_minus_col are used to mark chosen diagnoal 
+			row_plus_col = row + col
+			row_minus_col = row - col
+			if row not in prev_rows and row_plus_col not in prev_row_plus_col and row_minus_col not in prev_row_minus_col:
+				prev_rows.add(row)
+				prev_row_plus_col.add(row_plus_col)
+				prev_row_minus_col.add(row_minus_col)
+				helper(col + 1, prev_rows, prev_row_plus_col, prev_row_minus_col)
+				prev_rows.remove(row)
+				prev_row_plus_col.remove(row_plus_col)
+				prev_row_minus_col.remove(row_minus_col)
+				
+	helper(0, set(), set(), set())
+	return Context.res
+				
+	
+class SolveNQueenSpec(unittest.TestCase):
+	def test_one_queen(self):
+		self.assertEqual(solve_n_queen(1), 1)
+		
+	def test_two_three_queen(self):
+		self.assertEqual(solve_n_queen(2), 0)
+		self.assertEqual(solve_n_queen(3), 0)
+		
+	def test_four_queen(self):
+		self.assertEqual(solve_n_queen(4), 2)
+		
+	def test_eight_queen(self):
+		self.assertEqual(solve_n_queen(8), 92)
+		
+if __name__ == "__main__":
+	unittest.main(exit=False)
+```
 
 ### June 21, 2019 \[Medium\] Invalid Parentheses to Remove 
 ---
