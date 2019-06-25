@@ -38,16 +38,23 @@ The board would look like this:
 [b 0 0 0 0]
 You should return 2, since bishops 1 and 3 attack each other, as well as bishops 3 and 4.
 
-### June, 2019 \[Medium\] Sliding Window Maximum
+-->
+
+### June 25, 2019 \[Medium\] Sliding Window Maximum
 ---
-Given an array nums, there is a sliding window of size k which is moving from the very left of the array to the very right. You can only see the k numbers in the window. Each time the sliding window moves right by one position. Return the max sliding window.
+> **Question:** Given an array nums, there is a sliding window of size k which is moving from the very left of the array to the very right. You can only see the k numbers in the window. Each time the sliding window moves right by one position. Return the max sliding window.
+> 
 
-Example:
+**Example:**
 
+```
 Input: nums = [1,3,-1,-3,5,3,6,7], and k = 3
 Output: [3,3,5,5,6,7] 
-Explanation: 
+```
 
+**Explanation:**
+
+```
 Window position                Max
 ---------------               -----
 [1  3  -1] -3  5  3  6  7       3
@@ -56,13 +63,13 @@ Window position                Max
  1  3  -1 [-3  5  3] 6  7       5
  1  3  -1  -3 [5  3  6] 7       6
  1  3  -1  -3  5 [3  6  7]      7
-Note: 
-You may assume k is always valid, 1 ≤ k ≤ input array's size for non-empty array.
+ ```
 
-Follow up:
-Could you solve it in linear time?
-
--->
+> Note: 
+> You may assume k is always valid, 1 ≤ k ≤ input array's size for non-empty array.
+>
+> Follow up:
+> Could you solve it in linear time?
 
 ### June 24, 2019 \[Medium\] E-commerce Website
 ---
@@ -73,6 +80,70 @@ Could you solve it in linear time?
 >
 > You should be as efficient with time and space as possible.
 
+**Solution with Circular Buffer:** [https://repl.it/@trsong/E-commerce-Website](https://repl.it/@trsong/E-commerce-Website)
+```py
+import unittest
+
+class ECommerceWebsiteOrderService(object):
+    def __init__(self, capacity):
+        self._capacity = capacity
+        self._end_index = 0
+        self._circular_buffer = [None] * capacity
+
+    def record(self, order_id):
+        self._circular_buffer[self._end_index] = order_id
+        self._end_index = (self._end_index + 1) % self._capacity
+
+    def get_last(self, i):
+        if 1 <= i <= self._capacity:
+            index = (self._end_index - i) % self._capacity
+            return self._circular_buffer[index]
+        else:
+            return None
+
+class ECommerceWebsiteSpec(unittest.TestCase):
+    def test_order_within_capacity(self):
+        service = ECommerceWebsiteOrderService(4)
+        self.assertIsNone(service.get_last(1))
+        service.record(1)
+        service.record(2)
+        service.record(3)
+        self.assertIsNone(service.get_last(-1))
+        self.assertIsNone(service.get_last(0))
+        self.assertEqual(service.get_last(1), 3)
+        self.assertEqual(service.get_last(2), 2)
+        self.assertEqual(service.get_last(3), 1)
+        self.assertIsNone(service.get_last(4))
+
+    def test_order_overflow_capacity(self):
+        service = ECommerceWebsiteOrderService(2)
+        service.record(1)
+        service.record(2)
+        self.assertEqual(service.get_last(1), 2)
+        self.assertEqual(service.get_last(2), 1)
+        service.record(3)
+        self.assertEqual(service.get_last(1), 3)
+        self.assertEqual(service.get_last(2), 2)
+        service.record(4)
+        service.record(5)
+        self.assertEqual(service.get_last(1), 5)
+        self.assertEqual(service.get_last(2), 4)
+        self.assertEqual(service.get_last(2), 4)
+        self.assertIsNone(service.get_last(3))
+
+    def test_buffer_has_capacity_one(self):
+        service = ECommerceWebsiteOrderService(1)
+        self.assertIsNone(service.get_last(1))
+        service.record(1)
+        service.record(2)
+        self.assertEqual(service.get_last(1), 2)
+        service.record(3)
+        self.assertEqual(service.get_last(1), 3)
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
+```
 ### June 23, 2019 \[Easy\] Merge Overlapping Intervals
 ---
 > **Question:** Given a list of possibly overlapping intervals, return a new list of intervals where all overlapping intervals have been merged.
