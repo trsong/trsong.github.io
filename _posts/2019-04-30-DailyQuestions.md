@@ -17,30 +17,36 @@ categories: Python/Java
 **Java 1.8:**  TBD
 
 <!--
-### June, 2019 \[Medium\] Count Pairs of attacking bishop pairs
+-->
+
+### June 26, 2019 \[Medium\] Count Pairs of attacking bishop pairs
 ---
-On our special chessboard, two bishops attack each other if they share the same diagonal. This includes bishops that have another bishop located between them, i.e. bishops can attack through pieces.
+> **Question:** On our special chessboard, two bishops attack each other if they share the same diagonal. This includes bishops that have another bishop located between them, i.e. bishops can attack through pieces.
+> 
+> You are given N bishops, represented as (row, column) tuples on a M by M chessboard. Write a function to count the number of pairs of bishops that attack each other. The ordering of the pair doesn't matter: (1, 2) is considered the same as (2, 1).
+>
+> For example, given M = 5 and the list of bishops:
 
-You are given N bishops, represented as (row, column) tuples on a M by M chessboard. Write a function to count the number of pairs of bishops that attack each other. The ordering of the pair doesn't matter: (1, 2) is considered the same as (2, 1).
-
-For example, given M = 5 and the list of bishops:
-
+```py
 (0, 0)
 (1, 2)
 (2, 2)
 (4, 0)
-The board would look like this:
+```
+> The board would look like this:
 
+```py
 [b 0 0 0 0]
 [0 0 b 0 0]
 [0 0 b 0 0]
 [0 0 0 0 0]
 [b 0 0 0 0]
-You should return 2, since bishops 1 and 3 attack each other, as well as bishops 3 and 4.
+```
 
--->
+> You should return 2, since bishops 1 and 3 attack each other, as well as bishops 3 and 4.
 
-### June 25, 2019 \[Medium\] Sliding Window Maximum
+
+### June 25, 2019 LC 239 \[Medium\] Sliding Window Maximum
 ---
 > **Question:** Given an array nums, there is a sliding window of size k which is moving from the very left of the array to the very right. You can only see the k numbers in the window. Each time the sliding window moves right by one position. Return the max sliding window.
 > 
@@ -70,6 +76,78 @@ Window position                Max
 >
 > Follow up:
 > Could you solve it in linear time?
+
+**My thoughts:** The idea is to efficiently keep track of **INDEX** of 1st max, 2nd max, 3rd max and potentially k-th max elem. The reason for storing index is for the sake of avoiding index out of window. We can achieve that by using ***Double-Ended Queue*** which allow us to efficiently push and pop from both ends of the queue. 
+
+The queue looks like `[index of 1st max, index of 2nd max, ...., index of k-th max]`
+
+We might run into the following case as we progress:
+- index of 1st max is out of bound of window: we pop left and index of 2nd max because 1st max within window
+- the next elem become j-th max: evict old j-th max all the way to index of k-th max on the right of dequeue, i.e. pop right: `[index of 1st max, index of 2nd max, ..., index of j-1-th max, index of new elem]`
+
+**Solution with Double-Ended Queue:** [https://repl.it/@trsong/Sliding-Window-Maximum](https://repl.it/@trsong/Sliding-Window-Maximum)
+
+```py
+from collections import deque as Deque
+import unittest
+
+def max_sliding_window(nums, k):
+    if not nums: return []
+    deque = Deque()
+    res = []
+    for i, elem in enumerate(nums):
+        if deque and deque[0] <= i - k:
+            # index out of range k
+            deque.popleft()
+
+        while deque and nums[deque[-1]] < elem:
+            # remove index of existing elem in the deque that are smaller than the new elem
+            deque.pop()
+
+        deque.append(i)
+        if i >= k-1:
+            # start printing result when deque is populated
+            res.append(nums[deque[0]])
+    return res
+    
+
+class MaxSlidingWindowSpec(unittest.TestCase):
+    def test_empty_array(self):
+        self.assertEqual(max_sliding_window([], 1), [])
+
+    def test_window_has_same_size_as_array(self):
+        self.assertEqual(max_sliding_window([3, 2, 1], 3), [3])
+        self.assertEqual(max_sliding_window([1, 2], 2), [2])
+        self.assertEqual(max_sliding_window([-1], 1), [-1])
+
+    def test_non_ascending_array(self):
+        self.assertEqual(max_sliding_window([4, 3, 3, 2, 2, 1], 2), [4, 3, 3, 2, 2])
+        self.assertEqual(max_sliding_window([1, 1, 1], 2), [1, 1])
+
+    def test_non_descending_array(self):
+        self.assertEqual(max_sliding_window([1, 1, 2, 2, 2, 3], 3), [2, 2, 2, 3])
+        self.assertEqual(max_sliding_window([1, 1, 2, 3], 1), [1, 1, 2 ,3])
+
+    def test_first_decreasing_then_increasing_array(self):
+        self.assertEqual(max_sliding_window([5, 4, 1, 1, 1, 2, 2, 2], 3), [5, 4, 1, 2, 2, 2])
+        self.assertEqual(max_sliding_window([3, 2, 1, 2, 3], 2), [3, 2, 2, 3])
+        self.assertEqual(max_sliding_window([3, 2, 1, 2, 3], 3), [3, 2, 3])
+    
+    def test_first_increasing_then_decreasing_array(self):
+        self.assertEqual(max_sliding_window([1, 2, 3, 2, 1], 2), [2, 3, 3, 2])
+        self.assertEqual(max_sliding_window([1, 2, 3, 2, 1], 3), [3, 3, 3])
+
+    def test_oscillation_array(self):
+        self.assertEqual(max_sliding_window([1, -1, 1, -1, -1, 1, 1], 2), [1, 1, 1, -1, 1, 1])
+        self.assertEqual(max_sliding_window([1, 3, 1, 2, 0, 5], 3), [3, 3, 2, 5])
+    
+    def test_example_array(self):
+        self.assertEqual(max_sliding_window([1, 3, -1, -3, 5, 3, 6, 7], 3), [3, 3, 5, 5, 6, 7])
+ 
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
+```
 
 ### June 24, 2019 \[Medium\] E-commerce Website
 ---
