@@ -53,7 +53,7 @@ categories: Python/Java
 
 **Example:**
 ```py
->>> [[c-r for r in xrange(5)] for c in xrange(5)]
+>>> [[r-c for c in xrange(5)] for r in xrange(5)]
 [
     [0, -1, -2, -3, -4],
     [1, 0, -1, -2, -3],
@@ -62,7 +62,7 @@ categories: Python/Java
     [4, 3, 2, 1, 0]
 ]
 
->>> [[c+r for r in xrange(5)] for c in xrange(5)]
+>>> [[r+c for c in xrange(5)] for r in xrange(5)]
 [
     [0, 1, 2, 3, 4],
     [1, 2, 3, 4, 5],
