@@ -45,6 +45,114 @@ categories: Python/Java
 
 > You should return 2, since bishops 1 and 3 attack each other, as well as bishops 3 and 4.
 
+**My thoughts:** Cell on same diagonal has the following properties:
+
+- Major diagonal: col - row = constant
+- Minor diagonal: col + row = constant
+  
+
+**Example:**
+```py
+>>> [[c-r for r in xrange(5)] for c in xrange(5)]
+[
+    [0, -1, -2, -3, -4],
+    [1, 0, -1, -2, -3],
+    [2, 1, 0, -1, -2],
+    [3, 2, 1, 0, -1],
+    [4, 3, 2, 1, 0]
+]
+
+>>> [[c+r for r in xrange(5)] for c in xrange(5)]
+[
+    [0, 1, 2, 3, 4],
+    [1, 2, 3, 4, 5],
+    [2, 3, 4, 5, 6],
+    [3, 4, 5, 6, 7],
+    [4, 5, 6, 7, 8]
+]
+```
+Thus, we can store the number of bishop on the same diagonal and use the formula to calculate n-choose-2: `n(n-1)/2`
+
+**Python Solution:** [https://repl.it/@trsong/Count-Attacking-Bishop-Pairs](https://repl.it/@trsong/Count-Attacking-Bishop-Pairs)
+```py
+import unittest
+
+def count_attacking_pairs(bishop_positions):
+    major_diagonal_lookup = {}
+    minor_diagonal_lookup = {}
+    for pos in bishop_positions:
+        major_diagonal = pos[1] - pos[0]
+        minor_diagonal = pos[1] + pos[0]
+
+        if major_diagonal in major_diagonal_lookup:
+            major_diagonal_lookup[major_diagonal] += 1
+        else:
+            major_diagonal_lookup[major_diagonal] = 1
+        
+        if minor_diagonal in minor_diagonal_lookup:
+            minor_diagonal_lookup[minor_diagonal] += 1
+        else:
+            minor_diagonal_lookup[minor_diagonal] = 1
+
+    count = 0
+    for val in major_diagonal_lookup.values():
+        count += val * (val - 1) /2 
+    
+    for val in minor_diagonal_lookup.values():
+        count += val * (val - 1) / 2
+    
+    return count
+
+
+class CountAttackingPairSpec(unittest.TestCase):
+    def test_zero_bishops(self):
+        self.assertEqual(count_attacking_pairs([]), 0)
+
+    def test_zero_attacking_pairs(self):
+        """
+        0 b 0 0
+        0 b 0 0
+        0 b 0 0
+        0 b 0 0
+        """
+        self.assertEqual(count_attacking_pairs([(0, 1), (1, 1), (2, 1), (3, 1)]), 0)
+        """
+        0 0 0 b
+        b 0 0 0
+        b 0 b 0
+        0 0 0 0
+        """
+        self.assertEqual(count_attacking_pairs([(0, 3), (1, 0), (2, 0), (2, 2)]), 0)
+
+    def test_no_bishop_between_attacking_pairs(self):
+        """
+        b 0 b
+        b 0 b
+        b 0 b
+        """
+        self.assertEqual(count_attacking_pairs([(0, 0), (1, 0), (2, 0), (0, 2), (1, 2), (2, 2)]), 2)
+        """
+        b 0 0 0 0
+        0 0 b 0 0
+        0 0 b 0 0
+        0 0 0 0 0
+        b 0 0 0 0
+        """
+        self.assertEqual(count_attacking_pairs([(0, 0), (1, 2), (2, 2), (4, 0)]), 2)
+
+    def test_has_bishop_between_attacking_pairs(self):
+        """
+        b 0 b
+        0 b 0
+        b 0 b
+        """
+        self.assertEqual(count_attacking_pairs([(0, 0), (0, 2), (1, 1), (2, 0), (2, 2)]), 6)
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
+```
+
 
 ### June 25, 2019 LC 239 \[Medium\] Sliding Window Maximum
 ---
