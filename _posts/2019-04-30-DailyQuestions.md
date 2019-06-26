@@ -19,7 +19,7 @@ categories: Python/Java
 <!--
 -->
 
-### June 26, 2019 \[Medium\] Count Pairs of attacking bishop pairs
+### June 26, 2019 \[Medium\] Count Attacking Bishop Pairs
 ---
 > **Question:** On our special chessboard, two bishops attack each other if they share the same diagonal. This includes bishops that have another bishop located between them, i.e. bishops can attack through pieces.
 > 
@@ -53,7 +53,7 @@ categories: Python/Java
 
 **Example:**
 
-```
+```py
 Input: nums = [1,3,-1,-3,5,3,6,7], and k = 3
 Output: [3,3,5,5,6,7] 
 ```
