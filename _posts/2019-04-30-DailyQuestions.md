@@ -17,7 +17,36 @@ categories: Python/Java
 **Java 1.8:**  TBD
 
 <!--
--->
+
+
+### June 29, 2019 \[Hard\] Largest Sub BST
+---
+> **Question:** Given a tree, find the largest tree/subtree that is a BST.
+
+### June 28, 2019 \[Hard\] 
+---
+> **Question:** Given an array of integers where every integer occurs three times except for one integer, which only occurs once, find and return the non-duplicated integer.
+> 
+> For example, given [6, 1, 3, 3, 3, 6, 6], return 1. Given [13, 19, 13, 13], return 19.
+>
+> Do this in O(N) time and O(1) space.
+
+--->
+
+### June 27, 2019 \[Medium\] Isolated Islands
+---
+> **Question:** Given a matrix of 1s and 0s, return the number of "islands" in the matrix. A 1 represents land and 0 represents water, so an island is a group of 1s that are neighboring whose perimeter is surrounded by water.
+>
+> For example, this matrix has 4 islands.
+
+```py
+1 0 0 0 0
+0 0 1 1 0
+0 1 1 0 0
+0 0 0 0 0
+1 1 0 0 1
+1 1 0 0 1
+```
 
 ### June 26, 2019 \[Medium\] Count Attacking Bishop Pairs
 ---
