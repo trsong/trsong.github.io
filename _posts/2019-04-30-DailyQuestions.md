@@ -18,6 +18,24 @@ categories: Python/Java
 
 <!--
 
+### Jul 2, 2019 \[Medium\]
+---
+> **Question:** Given an array of integers, write a function to determine whether the array could become non-decreasing by modifying at most 1 element.
+>
+> For example, given the array [10, 5, 7], you should return true, since we can modify the 10 into a 1 to make the array non-decreasing.
+>
+> Given the array [10, 5, 1], you should return false, since we can't modify any one element to get a non-decreasing array.
+
+### Jul 1, 2019 \[Medium\] Merge K Sorted Lists
+---
+> **Question:** Given k sorted singly linked lists, write a function to merge all the lists into one sorted singly linked list.
+
+### June 30, 2019 \[Hard\] The Longest Increasing Subsequence
+---
+> **Question:** Given an array of numbers, find the length of the longest increasing subsequence in the array. The subsequence does not necessarily have to be contiguous.
+>
+> For example, given the array `[0, 8, 4, 12, 2, 10, 6, 14, 1, 9, 5, 13, 3, 11, 7, 15]`, the longest increasing subsequence has length 6: it is 0, 2, 6, 9, 11, 15.
+
 
 ### June 29, 2019 \[Hard\] Largest Sub BST
 ---
@@ -33,6 +51,52 @@ categories: Python/Java
 
 --->
 
+### June 28, 2019 \[Special\] Stable Marriage Problem
+---
+> **Question:** The Stable Marriage Problem states that given N men and N women, where each person has ranked all members of the opposite sex in order of preference, marry the men and women together such that there are no two people of opposite sex who would both rather have each other than their current partners. If there are no such people, all the marriages are "stable" (Wiki Source: [https://en.wikipedia.org/wiki/Stable_marriage_problem](https://en.wikipedia.org/wiki/Stable_marriage_problem)).
+>
+> Consider the following example.
+
+```
+Let there be two men m1 and m2 and two women w1 and w2.
+Let m1's list of preferences be {w1, w2}
+Let m2's list of preferences be {w1, w2}
+Let w1's list of preferences be {m1, m2}
+Let w2's list of preferences be {m1, m2}
+```
+
+> The matching { {m1, w2}, {w1, m2} } is not stable because m1 and w1 would prefer each other over their assigned partners. The matching {m1, w1} and {m2, w2} is stable because there are no two people of opposite sex that would prefer each other over their assigned partners.
+> 
+> **Input**: Input is a 2D matrix of size (2 * N) * N where N is number of women or men. Rows from 0 to N-1 represent preference lists of men and rows from N to 2 * N – 1 represent preference lists of women. So men are numbered from 0 to N-1 and women are numbered from N to 2 * N – 1. 
+> 
+> **Output**: A list of married pairs (woman, man). 
+
+Example, suppose `Men = {0, 1, 2, 3}` and `Women = {4, 5, 6, 7}`: 
+
+```py
+[
+    # Woman Preference Lists
+    [0, 1, 2, 3], 
+    [0, 1, 2, 3],  
+    [0, 1, 2, 3],  
+    [0, 1, 2, 3],
+
+    # Man Preference Lists
+    [7, 5, 6, 4],
+    [5, 4, 6, 7], 
+    [4, 5, 6, 7],  
+    [4, 5, 6, 7]
+]
+```
+
+Should produce:
+
+```py
+[(4,2), (5,1), (6,3), (7, 0)]
+```
+
+Note: Solution might not be unique.
+
 ### June 27, 2019 \[Medium\] Isolated Islands
 ---
 > **Question:** Given a matrix of 1s and 0s, return the number of "islands" in the matrix. A 1 represents land and 0 represents water, so an island is a group of 1s that are neighboring whose perimeter is surrounded by water.
@@ -46,6 +110,94 @@ categories: Python/Java
 0 0 0 0 0
 1 1 0 0 1
 1 1 0 0 1
+```
+
+**My thoughts:** This is a pretty standard DFS/BFS question. The idea is to scan through and count all unvisited cells with value 1 and mark all neighbors "connected" (also have value 1) as visited. 
+
+**DFS Solution:** [https://repl.it/@trsong/Isolated-Islands](https://repl.it/@trsong/Isolated-Islands)
+```py
+import unittest
+
+def is_valid_pos(row, col, area_map):
+    n, m = len(area_map), len(area_map[0])
+    return 0 <= row < n and 0 <= col < m
+
+
+def get_neighbors(pos, area_map, visited):
+    r, c = pos
+    for row in [r-1, r, r+1]:
+        for col in [c-1, c, c+1]:
+            if is_valid_pos(row, col, area_map):
+                yield row, col
+
+
+def DFS_mark_neighbor_cells(pos, area_map, visited):
+    stack = [pos]
+    while stack:
+        r, c = stack.pop()
+        if area_map[r][c] and not visited[r][c]:
+            visited[r][c] = True
+            stack.extend(get_neighbors((r, c), area_map, visited))
+
+
+def calc_islands(area_map):
+    n, m = len(area_map), len(area_map[0])
+    visited = [[False for _ in xrange(m)] for _ in xrange(n)]
+    res = 0
+    for r in xrange(n):
+        for c in xrange(m):
+            if area_map[r][c] and not visited[r][c]:
+                res += 1
+                DFS_mark_neighbor_cells((r, c), area_map, visited)
+    return res
+
+
+class CalcIslandSpec(unittest.TestCase):
+    def test_sample_area_map(self):
+        self.assertEqual(calc_islands([
+            [1, 0, 0, 0, 0],
+            [0, 0, 1, 1, 0],
+            [0, 1, 1, 0, 0],
+            [0, 0, 0, 0, 0],
+            [1, 1, 0, 0, 1],
+            [1, 1, 0, 0, 1]
+        ]), 4)
+    
+    def test_some_random_area_map(self):
+        self.assertEqual(calc_islands([
+            [1, 1, 0, 0, 0],
+            [0, 1, 0, 0, 1],
+            [1, 0, 0, 1, 1],
+            [0, 0, 0, 0, 0],
+            [1, 0, 1, 0, 1] 
+        ]), 5)
+
+    def test_island_edge_of_map(self):
+        self.assertEqual(calc_islands([
+            [1, 0, 0, 1, 0],
+            [0, 1, 0, 1, 0],
+            [0, 0, 0, 0, 0],
+            [1, 0, 1, 0, 1],
+            [1, 0, 1, 0, 1] 
+        ]), 5)
+
+    def test_huge_water(self):
+        self.assertEqual(calc_islands([
+            [0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0]
+        ]), 0)
+
+    def test_huge_island(self):
+        self.assertEqual(calc_islands([
+            [1, 0, 1, 0, 1],
+            [1, 0, 0, 1, 0],
+            [1, 1, 1, 0, 1]
+        ]), 1)
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
 ```
 
 ### June 26, 2019 \[Medium\] Count Attacking Bishop Pairs
