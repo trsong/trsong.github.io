@@ -36,20 +36,11 @@ categories: Python/Java
 >
 > For example, given the array `[0, 8, 4, 12, 2, 10, 6, 14, 1, 9, 5, 13, 3, 11, 7, 15]`, the longest increasing subsequence has length 6: it is 0, 2, 6, 9, 11, 15.
 
+-->
 
-### June 29, 2019 \[Hard\] Largest Sub BST
+### June 29, 2019 \[Hard\] Largest Sub BST Size
 ---
-> **Question:** Given a tree, find the largest tree/subtree that is a BST.
-
-### June 28, 2019 \[Hard\] 
----
-> **Question:** Given an array of integers where every integer occurs three times except for one integer, which only occurs once, find and return the non-duplicated integer.
-> 
-> For example, given [6, 1, 3, 3, 3, 6, 6], return 1. Given [13, 19, 13, 13], return 19.
->
-> Do this in O(N) time and O(1) space.
-
---->
+> **Question:** Given a binary tree, find the size of the largest tree/subtree that is a Binary Search Tree (BST).
 
 ### June 28, 2019 \[Special\] Stable Marriage Problem
 ---
@@ -67,7 +58,7 @@ Let w2's list of preferences be {m1, m2}
 
 > The matching { {m1, w2}, {w1, m2} } is not stable because m1 and w1 would prefer each other over their assigned partners. The matching {m1, w1} and {m2, w2} is stable because there are no two people of opposite sex that would prefer each other over their assigned partners.
 > 
-> **Input**: Input is a 2D matrix of size (2 * N) * N where N is number of women or men. Rows from 0 to N-1 represent preference lists of men and rows from N to 2 * N – 1 represent preference lists of women. So men are numbered from 0 to N-1 and women are numbered from N to 2 * N – 1. 
+> **Input**: Input is a 2D matrix of size (2 * N) * N where N is number of women or men. Rows from 0 to N-1 represent preference lists of women and rows from N to 2 * N – 1 represent preference lists of men. So women are numbered from 0 to N-1 and men are numbered from N to 2 * N – 1. 
 > 
 > **Output**: A list of married pairs (woman, man). 
 
@@ -76,16 +67,16 @@ Example, suppose `Men = {0, 1, 2, 3}` and `Women = {4, 5, 6, 7}`:
 ```py
 [
     # Woman Preference Lists
+    [7, 5, 6, 4],
+    [5, 4, 6, 7], 
+    [4, 5, 6, 7],  
+    [4, 5, 6, 7],
+
+    # Man Preference Lists
     [0, 1, 2, 3], 
     [0, 1, 2, 3],  
     [0, 1, 2, 3],  
     [0, 1, 2, 3],
-
-    # Man Preference Lists
-    [7, 5, 6, 4],
-    [5, 4, 6, 7], 
-    [4, 5, 6, 7],  
-    [4, 5, 6, 7]
 ]
 ```
 
@@ -96,6 +87,131 @@ Should produce:
 ```
 
 Note: Solution might not be unique.
+
+**Pseudocode for Gale–Shapley Algorithm:**
+
+```
+function stableMatching {
+    Initialize all m ∈ M and w ∈ W to free
+    while ∃ free man m who still has a woman w to propose to {
+       w = first woman on m’s list to whom m has not yet proposed
+       if w is free
+         (m, w) become engaged
+       else some pair (m', w) already exists
+         if w prefers m to m'
+            m' becomes free
+           (m, w) become engaged 
+         else
+           (m', w) remain engaged
+    }
+}
+```
+
+**Solution with Gale–Shapley Algorithm:** [https://repl.it/@trsong/Stable-Marriage-Problem](https://repl.it/@trsong/Stable-Marriage-Problem)
+```py
+import unittest
+from collections import deque
+
+class StableMarriageProblem(object):
+    @staticmethod
+    def solve(preference_lists):
+        num_couple = len(preference_lists) / 2
+        woman_engagement = [None] * num_couple
+        woman_preference_ranking = [[0 for _ in xrange(2 * num_couple)] for _ in xrange(num_couple)]
+        unproposed_men = deque(range(num_couple, len(preference_lists)))
+        man_next_propose_index = [0] * num_couple
+        
+        # Pre-process woman preference_lists to generate ranking list for quick look-up 
+        for woman in xrange(num_couple):
+            for rank, candidate in enumerate(preference_lists[woman]):
+                woman_preference_ranking[woman][candidate] = rank
+        
+        while unproposed_men:
+            man = unproposed_men.pop()
+            target_woman_index = man_next_propose_index[man - num_couple]
+            target_woman = preference_lists[man][target_woman_index]
+            if not woman_engagement[target_woman]:
+                woman_engagement[target_woman] = man
+            elif woman_preference_ranking[target_woman][man] < woman_preference_ranking[target_woman][woman_engagement[target_woman]]:
+                # if current man is better candidate
+                evicted_man = woman_engagement[target_woman]
+                unproposed_men.append(evicted_man)
+                woman_engagement[target_woman] = man
+            else:
+                unproposed_men.appendleft(man)
+            man_next_propose_index[man - num_couple] += 1
+                    
+        married_couples = []
+        for woman, man in enumerate(woman_engagement):
+            married_couples.append((woman, man))
+        return married_couples
+
+
+    @staticmethod
+    def calc_instability_pairs(preference_lists, married_pairs):
+        # Calculate all instability pairs based on Preference_lists and Married_pairs
+        chosen = dict(married_pairs)
+        chosen.update((p[1], p[0]) for p in married_pairs)
+
+        def rank(person, target):
+            return preference_lists[person].index(target)
+        
+        def has_better_choice(person, target):
+            return rank(person, target) < rank(person, chosen[person])
+
+        instability_pairs = []
+        for person, preference_list in enumerate(preference_lists):
+            for candidate in preference_list:
+                if chosen[person] != candidate and has_better_choice(person, candidate) and has_better_choice(candidate, person):
+                    # check if exists (person, candidate) not in married_pairs such that
+                    # rank(person, candidate) < rank(person, chosen[person]) and 
+                    # rank(candidate, person) < rank(candidate, chosen[candidate])
+                    instability_pairs.append((person, candidate))
+        return instability_pairs
+
+
+class StableMarriageProblemSpec(unittest.TestCase):
+    def test_unstable_marriage_should_return_correct_instability_pairs(self):
+        # Test utility method calc_instability_pairs
+        preference_lists = [
+            # Woman Preference Lists
+            [2, 3],
+            [2, 3],
+
+            # Man Preference Lists
+            [0, 1],
+            [0, 1]
+        ]
+        married_pairs = [(0, 3), (1, 2)]
+        instability_pairs = [(0, 2), (2, 0)]
+        self.assertEqual(StableMarriageProblem.calc_instability_pairs(preference_lists, married_pairs), instability_pairs)
+    
+    def assert_perfect_stable_marriage(self, preference_lists):
+        # Check if all people are married as well as all married_pairs are stable
+        married_pairs = StableMarriageProblem.solve(preference_lists)
+        num_couple = len(preference_lists) / 2
+        self.assertEqual(len(married_pairs), num_couple)
+        self.assertFalse(StableMarriageProblem.calc_instability_pairs(preference_lists, married_pairs))
+
+    def test_sample_preference_lists(self):
+        self.assert_perfect_stable_marriage([
+            # Woman Preference Lists
+            [7, 5, 6, 4],
+            [5, 4, 6, 7], 
+            [4, 5, 6, 7],  
+            [4, 5, 6, 7],
+
+            # Man Preference Lists
+            [0, 1, 2, 3], 
+            [0, 1, 2, 3],  
+            [0, 1, 2, 3],  
+            [0, 1, 2, 3],
+        ])
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
+```
 
 ### June 27, 2019 \[Medium\] Isolated Islands
 ---
