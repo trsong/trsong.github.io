@@ -39,7 +39,8 @@ categories: Python/Java
 -->
 
 ### June 30, 2019 \[Special\] Implementing Priority Queue with Heap
-> **Question:** The heap data structure with the `Heapify-down` and `Heapify-up` operations can efficiently implement a priority queue that is constrained to hold at most N elements at any point in time. Implementing the following methods for priority queue with heap:
+---
+> **Question:** The heap data structure with the `heapify_down` and `heapify_up` operations can efficiently implement a priority queue that is constrained to hold at most N elements at any point in time. Implementing the following methods for priority queue with heap:
 >
 > - `insert(v)` inserts the item v into heap. 
 > - `find_min()` identifies the minimum element but does not remove it.
