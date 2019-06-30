@@ -52,6 +52,144 @@ categories: Python/Java
 ---
 > **Question:** Given a binary tree, find the size of the largest tree/subtree that is a Binary Search Tree (BST).
 
+**Examples:**
+
+```
+Input: 
+      5
+    /  \
+   2    4
+ /  \
+1    3
+
+Output: 3 
+The following subtree is the maximum size BST subtree 
+   2  
+ /  \
+1    3
+
+
+Input: 
+       50
+     /    \
+  30       60
+ /  \     /  \ 
+5   20   45    70
+              /  \
+            65    80
+Output: 5
+The following subtree is the maximum size BST subtree 
+      60
+     /  \ 
+   45    70
+        /  \
+      65    80
+```
+
+**My thoughts:** This problem is similar to finding height of binary tree where post-order traversal is used. The idea is to gather infomation from left and right tree to determine if current node forms a valid BST or not through checking if the value fit into the range. And the infomation from children should contain if children are valid BST, the min & max of subtree and accumulated largest sub BST size.   
+
+**Solution with Post-Order Tree Traversal:** [https://repl.it/@trsong/Largest-Sub-BST-Size](https://repl.it/@trsong/Largest-Sub-BST-Size)
+
+```py
+import unittest
+
+class Node(object):
+    def __init__(self, val, left=None, right=None):
+        self.val = val
+        self.left = left
+        self.right = right
+
+def largest_sub_BST_size_helper(tree):
+    # Consume a tree node, return boolean, range, number where
+    # - boolean is True if tree is valid BST,
+    # - range is a tuple represent min and max of tree,
+    # - number is underneath largest sub BST size
+    if not tree:
+        return True, None, 0
+    else:
+        is_left_BST, left_range, left_size = largest_sub_BST_size_helper(tree.left)
+        is_right_BST, right_range, right_size = largest_sub_BST_size_helper(tree.right)
+
+        # check if left subtree max <= current value <= right subtree min
+        is_current_BST = (not left_range or left_range[1] <= tree.val) and (not right_range or right_range[0] >= tree.val)
+        if is_left_BST and is_right_BST and is_current_BST:
+            left_min = left_range[0] if left_range else tree.val
+            right_max = right_range[1] if right_range else tree.val
+            return True, (left_min, right_max), 1 + left_size + right_size
+        else:
+            return False, None, max(left_size, right_size)
+
+def largest_sub_BST_size(tree):
+    return largest_sub_BST_size_helper(tree)[-1]
+
+
+class LargestSubBSTSizeSpec(unittest.TestCase):
+    def test_empty_tree(self):
+        self.assertEqual(largest_sub_BST_size(None), 0)
+    
+    def test_right_heavy_tree(self):
+        """
+           1
+            \
+             10
+            /  \
+           11  28
+        """
+        n11, n28 = Node(11), Node(28)
+        n10 = Node(10, n11, n28)
+        n1 = Node(1, right=n10)
+        self.assertEqual(largest_sub_BST_size(n1), 1)
+
+    def test_left_heavy_tree(self):
+        """  
+              0
+             / 
+            3
+           /
+          2
+         /
+        1
+        """
+        n1 = Node(1)
+        n2 = Node(2, n1)
+        n3 = Node(3, n2)
+        n0 = Node(0, n3)
+        self.assertEqual(largest_sub_BST_size(n0), 3)
+
+    def test_largest_BST_on_left_subtree(self):
+        """ 
+            0
+           / \
+          2   -2
+         / \   \
+        1   3   -1
+        """
+        n2 = Node(2, Node(1), Node(3))
+        n2m = Node(2, right=Node(-1))
+        n0 = Node(0, n2, n2m)
+        self.assertEqual(largest_sub_BST_size(n0), 3)
+
+    def test_largest_BST_on_right_subtree(self):
+        """
+               50
+             /    \
+           30      60
+          /  \    /  \ 
+         5   20  45   70
+                     /  \
+                    65   80
+        """
+        n30 = Node(30, Node(5), Node(20))
+        n70 = Node(70, Node(65), Node(80))
+        n60 = Node(60, Node(45), n70)
+        n50 = Node(50, n30, n60)
+        self.assertEqual(largest_sub_BST_size(n50), 5)
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
+```
+
 ### June 28, 2019 \[Special\] Stable Marriage Problem
 ---
 > **Question:** The Stable Marriage Problem states that given N men and N women, where each person has ranked all members of the opposite sex in order of preference, marry the men and women together such that there are no two people of opposite sex who would both rather have each other than their current partners. If there are no such people, all the marriages are "stable" (Wiki Source: [https://en.wikipedia.org/wiki/Stable_marriage_problem](https://en.wikipedia.org/wiki/Stable_marriage_problem)).
