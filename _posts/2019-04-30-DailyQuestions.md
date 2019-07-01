@@ -17,6 +17,142 @@ categories: Python/Java
 **Java 1.8:**  TBD
 
 <!--
+### Jul , 2019 \[Hard\]
+---
+> **Question:** A knight's tour is a sequence of moves by a knight on a chessboard such that all squares are visited once.
+
+Given N, write a function to return the number of knight's tours on an N by N chessboard.
+
+### Jul , 2019 \[Easy\]
+---
+> **Question:** Given a mapping of digits to letters (as in a phone number), and a digit string, return all possible letters the number could represent. You can assume each valid number in the mapping is a single digit.
+
+For example if {“2”: [“a”, “b”, “c”], 3: [“d”, “e”, “f”], …} then “23” should return [“ad”, “ae”, “af”, “bd”, “be”, “bf”, “cd”, “ce”, “cf"].
+
+### Jul , 2019 \[Medium\]
+---
+> **Question:**  Invert a binary tree.
+
+For example, given the following tree:
+
+    a
+   / \
+  b   c
+ / \  /
+d   e f
+should become:
+
+  a
+ / \
+ c  b
+ \  / \
+  f e  d
+
+### Jul , 2019 \[Easy\]
+---
+> **Question:** Given three 32-bit integers x, y, and b, return x if b is 1 and y if b is 0, using only mathematical or bit operations. You can assume b can only be 1 or 0.
+
+### Jul , 2019 \[Hard\]
+---
+> **Question:**
+Given a number represented by a list of digits, find the next greater permutation of a number, in terms of lexicographic ordering. If there is not greater permutation possible, return the permutation with the lowest value/ordering.
+
+For example, the list [1,2,3] should return [1,3,2]. The list [1,3,2] should return [2,1,3]. The list [3,2,1] should return [1,2,3].
+
+Can you perform the operation without allocating extra memory (disregarding the input memory)?
+
+### Jul , 2019 \[Easy\]
+---
+> **Question:** Given a number in the form of a list of digits, return all possible permutations.
+
+For example, given [1,2,3], return [[1,2,3],[1,3,2],[2,1,3],[2,3,1],[3,1,2],[3,2,1]].
+
+### Jul , 2019 \[Medium\]
+---
+> **Question:** Given a binary tree of integers, find the maximum path sum between two nodes. The path must go through at least one node, and does not need to go through the root.
+
+### Jul , 2019 \[Medium\]
+---
+> **Question:** Determine whether a tree is a valid binary search tree.
+
+A binary search tree is a tree with two children, left and right, and satisfies the constraint that the key in the left child must be less than or equal to the root and the key in the right child must be greater than or equal to the root.
+
+### Jul , 2019 \[Medium\]
+---
+> **Question:** A rule looks like this:
+
+A NE B
+
+This means this means point A is located northeast of point B.
+
+A SW C
+
+means that point A is southwest of C.
+
+Given a list of rules, check if the sum of the rules validate. For example:
+
+A N B
+B NE C
+C N A
+does not validate, since A cannot be both north and south of C.
+
+A NW B
+A N B
+is considered valid.
+
+### Jul , 2019 \[Medium\]
+---
+> **Question:** You are given an N by M 2D matrix of lowercase letters. Determine the minimum number of columns that can be removed to ensure that each row is ordered from top to bottom lexicographically. That is, the letter at each column is lexicographically later as you go down each row. It does not matter whether each row itself is ordered lexicographically.
+
+For example, given the following table:
+
+cba
+daf
+ghi
+This is not ordered because of the a in the center. We can remove the second column to make it ordered:
+
+ca
+df
+gi
+So your function should return 1, since we only needed to remove 1 column.
+
+As another example, given the following table:
+
+abcdef
+Your function should return 0, since the rows are already ordered (there's only one row).
+
+As another example, given the following table:
+
+zyx
+wvu
+tsr
+Your function should return 3, since we would need to remove all the columns to order it.
+
+
+
+### Jul , 2019 \[Medium\]
+---
+> **Question:** Implement division of two positive integers without using the division, multiplication, or modulus operators. Return the quotient as an integer, ignoring the remainder.
+
+
+
+### Jul , 2019 \[Medium\]
+---
+> **Question:** Assume you have access to a function toss_biased() which returns 0 or 1 with a probability that's not 50-50 (but also not 0-100 or 100-0). You do not know the bias of the coin.
+
+
+### Jul , 2019 \[Medium\]
+---
+Implement a queue using two stacks. Recall that a queue is a FIFO (first-in, first-out) data structure with the following methods: enqueue, which inserts an element into the queue, and dequeue, which removes it.
+
+
+### Jul , 2019 \[Hard\]
+---
+> **Question:** We're given a hashmap associating each courseId key with a list of courseIds values, which represents that the prerequisites of courseId are courseIds. Return a sorted ordering of courses such that we can finish all courses.
+
+Return null if there is no such ordering.
+
+For example, given {'CSC300': ['CSC100', 'CSC200'], 'CSC200': ['CSC100'], 'CSC100': []}, should return ['CSC100', 'CSC200', 'CSCS300'].
 
 ### Jul 2, 2019 \[Medium\]
 ---
@@ -26,10 +162,6 @@ categories: Python/Java
 >
 > Given the array [10, 5, 1], you should return false, since we can't modify any one element to get a non-decreasing array.
 
-### Jul 1, 2019 \[Medium\] Merge K Sorted Lists
----
-> **Question:** Given k sorted singly linked lists, write a function to merge all the lists into one sorted singly linked list.
-
 ### June 30, 2019 \[Hard\] The Longest Increasing Subsequence
 ---
 > **Question:** Given an array of numbers, find the length of the longest increasing subsequence in the array. The subsequence does not necessarily have to be contiguous.
@@ -37,6 +169,10 @@ categories: Python/Java
 > For example, given the array `[0, 8, 4, 12, 2, 10, 6, 14, 1, 9, 5, 13, 3, 11, 7, 15]`, the longest increasing subsequence has length 6: it is 0, 2, 6, 9, 11, 15.
 
 -->
+
+### Jul 1, 2019 \[Medium\] Merge K Sorted Lists
+---
+> **Question:** Given k sorted singly linked lists, write a function to merge all the lists into one sorted singly linked list.
 
 ### June 30, 2019 \[Special\] Implementing Priority Queue with Heap
 ---
