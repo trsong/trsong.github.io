@@ -182,7 +182,125 @@ For example, given {'CSC300': ['CSC100', 'CSC200'], 'CSC200': ['CSC100'], 'CSC10
 > - `find_min()` identifies the minimum element but does not remove it.
 > - `delete(i)` deletes the element in heap position i. 
 > - `extract_min()` identifies and deletes an element with minimum key value from a heap. 
-> 
+
+**My thoughts:** When insert an element to priority queue, append it to tail of heap and bubble-up that element. When remove an element, swap that element with last element and bubble-down that element.
+
+**Implementing Priority Queue with Heap:**  [https://repl.it/@trsong/Implementing-Priority-Queue-with-Heap](https://repl.it/@trsong/Implementing-Priority-Queue-with-Heap)
+```py
+import unittest
+
+class Heap(object):
+    @staticmethod
+    def heapify_down(arr, index=0):
+        # Bubble-down the head of arr until not possible
+        n = len(arr)
+        while True:
+            left_child = 2 * index + 1
+            right_child = left_child + 1
+            smaller_child = left_child
+            if right_child < n and arr[right_child] < arr[left_child]:
+                smaller_child = right_child
+             
+            if smaller_child < n and arr[index] > arr[smaller_child]:
+                arr[index], arr[smaller_child] = arr[smaller_child], arr[index]
+                index = smaller_child
+            else:
+                break
+
+    @staticmethod
+    def heapify_up(arr):
+        # Bubble-up the last of arr until not possible
+        index = len(arr) - 1
+        while index > 0:
+            parent = (index + 1) / 2 - 1
+            if arr[parent] <= arr[index]:
+                break
+            else:
+                arr[parent], arr[index] = arr[index], arr[parent]
+                index = parent
+
+
+class HeapSpec(unittest.TestCase):
+    def test_heapify_up(self):
+        """
+              0
+            /   \
+           2     5
+          / \   /
+         6   3 1
+        """
+        arr = [0, 2, 5, 6, 3, 1]
+        Heap.heapify_up(arr)
+        """
+              0
+            /   \
+           2     1
+          / \   /
+         6   3 5
+        """
+        self.assertEqual(arr, [0, 2, 1, 6, 3, 5])
+
+    def test_heapify_down(self):
+        """
+              4
+            /   \
+           2     5
+          / \   /
+         6   3 1
+        """
+        arr = [4, 2, 5, 6, 3, 1]
+        Heap.heapify_down(arr)
+        """
+              2
+            /   \
+           3     5
+          / \   /
+         6   4 1
+        """
+        self.assertEqual(arr, [2, 3, 5, 6, 4, 1])
+        
+
+class PriorityQueue(object):
+    def __init__(self):
+        self._heap = []
+
+    def insert(self, v):
+        self._heap.append(v)
+        Heap.heapify_up(self._heap)
+
+    def find_min(self):
+        return self._heap[0]
+
+    def delete(self, i):
+        last = self._heap.pop()
+        if self._heap:
+            self._heap[i] = last
+            Heap.heapify_down(self._heap, index=i)
+
+    def extract_min(self):
+        min_val = self.find_min()
+        self.delete(0)
+        return min_val
+
+
+class PriorityQueueSpec(unittest.TestCase):
+    def assert_priority_queue(self, numbers, expected):
+        pq = PriorityQueue()
+        for e in numbers:
+            pq.insert(e)
+        for r in expected:
+            self.assertEqual(pq.find_min(), r)
+            self.assertEqual(pq.extract_min(), r)
+
+    def test_decreasing_inputs(self):
+        self.assert_priority_queue([5, 4, 3, 2, 1], [1, 2, 3, 4, 5])
+
+    def test_random_inputs(self):
+        self.assert_priority_queue([1, 5, 2, 4, 3], [1, 2, 3, 4, 5])
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
+```
 
 ### June 29, 2019 \[Hard\] Largest Sub BST Size
 ---
