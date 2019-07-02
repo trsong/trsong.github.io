@@ -173,6 +173,16 @@ For example, given {'CSC300': ['CSC100', 'CSC200'], 'CSC200': ['CSC100'], 'CSC10
 > Definition of **Subsequence**:
 > A subsequence is a sequence that can be derived from another sequence by deleting some or no elements without changing the order of the remaining elements. For example, the sequence `[A, B, D]`  is a subsequence of  `[A, B, C, D, E, F]`  obtained after removal of elements C, E, and F.  
 
+### Additional Question: \[Special\] Strongly Connected Directed Graph
+--- 
+> **Question:** Given a directed graph, find out whether the graph is strongly connected or not. A directed graph is strongly connected if there is a path between any two pair of vertices.
+
+Example: 
+
+```py
+is_SCDG(vertices=5, edges=[(0, 1), (1, 2), (2, 3), (3, 0), (2, 4), (4, 2)])  # returns True
+is_SCDG(vertices=4, edges=[(0, 1), (1, 2), (2, 3)])  # returns False
+```
 
 ### Jul 1, 2019 \[Medium\] Merge K Sorted Lists
 ---
