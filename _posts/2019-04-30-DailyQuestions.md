@@ -162,18 +162,101 @@ For example, given {'CSC300': ['CSC100', 'CSC200'], 'CSC200': ['CSC100'], 'CSC10
 >
 > Given the array [10, 5, 1], you should return false, since we can't modify any one element to get a non-decreasing array.
 
-### June 30, 2019 \[Hard\] The Longest Increasing Subsequence
+--->
+
+### Jul 2, 2019 \[Hard\] The Longest Increasing Subsequence
 ---
-> **Question:** Given an array of numbers, find the length of the longest increasing subsequence in the array. The subsequence does not necessarily have to be contiguous.
+> **Question:** Given an array of numbers, find the length of the longest increasing **subsequence** in the array. The subsequence does not necessarily have to be contiguous.
 >
 > For example, given the array `[0, 8, 4, 12, 2, 10, 6, 14, 1, 9, 5, 13, 3, 11, 7, 15]`, the longest increasing subsequence has length 6: it is 0, 2, 6, 9, 11, 15.
+>
+> Definition of **Subsequence**:
+> A subsequence is a sequence that can be derived from another sequence by deleting some or no elements without changing the order of the remaining elements. For example, the sequence `[A, B, D]`  is a subsequence of  `[A, B, C, D, E, F]`  obtained after removal of elements C, E, and F.  
 
--->
 
 ### Jul 1, 2019 \[Medium\] Merge K Sorted Lists
 ---
 > **Question:** Given k sorted singly linked lists, write a function to merge all the lists into one sorted singly linked list.
 
+**My thoughts:** When merging two sorted lists, we always append to result the smaller element between those two lists until both of the lists are exhausted. The same idea applys to merging k sorted list. For each iteration, we always append to result the smallest elements (i.e global smallest) among all k lists. Each list from the k sorted list will have a pointer refer to the next available element to be processed. And in order to quickly identify the global smallest, we can use a priority queue to keep track of the pointer to the smallest element.
+
+**Solution with Priority Queue:** [https://repl.it/@trsong/Merge-K-Sorted-Lists](https://repl.it/@trsong/Merge-K-Sorted-Lists)
+```py
+import unittest
+from queue import PriorityQueue
+
+class ListNode(object):
+    def __init__(self, x, next=None):
+        self.val = x
+        self.next = next
+    def __eq__(self, other):
+        return other is not None and self.val == other.val and self.next == other.next
+
+def List(*vals):
+  dummy = ListNode(-1)
+  p = dummy
+  for elem in vals:
+    p.next = ListNode(elem)
+    p = p.next
+  return dummy.next  
+
+
+def merge_k_sorted_lists(lists):
+    if not lists: return List()
+    # priority queue contains smallest among all sub_list
+    pq = PriorityQueue()
+
+    # Iterate through the list and put local min value from each sub-list into priority queue
+    lst_ptr = lists
+    while lst_ptr:
+        sub_list_ptr = lst_ptr.val
+        if sub_list_ptr:
+            pq.put((sub_list_ptr.val, sub_list_ptr))
+        lst_ptr = lst_ptr.next
+    
+    res_dummy = ListNode(-1)
+    p = res_dummy
+    while not pq.empty():
+        # Pop the head of priority queue as it contains global min value
+        min_val, min_ptr = pq.get()
+        p.next = ListNode(min_val)
+        p = p.next
+        min_ptr = min_ptr.next
+        if min_ptr:
+            pq.put((min_ptr.val, min_ptr))
+    return res_dummy.next
+
+
+class MergeKSortedListSpec(unittest.TestCase):
+    def test_empty_list(self):
+        self.assertEqual(merge_k_sorted_lists(List()), List())
+
+    def test_list_contains_empty_sub_lists(self):
+        lists = List(List(), List(), List(1), List(), List(2), List(0, 4))
+        self.assertEqual(merge_k_sorted_lists(lists), List(0, 1, 2, 4))
+
+    def test_sub_lists_with_duplicated_values(self):
+        lists = List(List(1, 1, 3), List(1), List(3), List(1, 2), List(2, 3), List(2, 2), List(3))
+        self.assertEqual(merge_k_sorted_lists(lists), List(1, 1, 1, 1, 2, 2, 2, 2, 3, 3, 3, 3))
+
+    def test_general_lists(self):
+        lists = List(
+            List(),
+            List(1, 4, 7, 15),
+            List(),
+            List(2),
+            List(0, 3, 9, 10),
+            List(8, 13),
+            List(),
+            List(11, 12, 14),
+            List(5, 6)
+        )
+        self.assertEqual(merge_k_sorted_lists(lists), List(*range(16)))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
+```
 ### June 30, 2019 \[Special\] Implementing Priority Queue with Heap
 ---
 > **Question:** The heap data structure with the `heapify_down` and `heapify_up` operations can efficiently implement a priority queue that is constrained to hold at most N elements at any point in time. Implementing the following methods for priority queue with heap:
