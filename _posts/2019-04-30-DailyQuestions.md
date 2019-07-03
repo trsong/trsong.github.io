@@ -187,6 +187,67 @@ longest_path_in_DAG(vertices=6, edges=[(5, 2), (5, 0), (4, 0), (4, 1), (2, 3), (
 > Definition of **Subsequence**:
 > A subsequence is a sequence that can be derived from another sequence by deleting some or no elements without changing the order of the remaining elements. For example, the sequence `[A, B, D]`  is a subsequence of  `[A, B, C, D, E, F]`  obtained after removal of elements C, E, and F.  
 
+**My thoughts:** Try different examples until find a pattern to break problem into smaller subproblems. I tried `[1, 2, 3, 0, 2]`, `[1, 2, 3, 0, 6]`, `[4, 5, 6, 7, 1, 2, 3]` and notice the pattern that the longest increasing subsequence ends at index i equals 1 + max of all previous longest increasing subsequence ends before i if that elem is smaller than sequence[i].
+
+Example, suppose f represents the longest increasing subsequence ends at last element 
+
+```py
+f([1, 2, 3, 0, 2]) = 1 + max(f([1]), f([1, 2, 3, 0])) # as 2 > 1 and 2 > 0, gives [1, 2], [0, 2] and max len is 2
+f([1, 2, 3, 0, 6]) = 1 + max(f[1], f([1, 2]), f([1, 2, 3]), f([1, 2, 3, 0])) # as 6 > all. gives [1, 6], [1, 2, 6] or [1, 2, 3, 6] and max len is 4
+```
+
+And finally once we get an array of all the longest increasing subsequence ends at i. We can take the maximum to find the global longest increasing subsequence among all i.
+
+**Solution with DP:** [https://repl.it/@trsong/The-Longest-Increasing-Subsequence](https://repl.it/@trsong/The-Longest-Increasing-Subsequence)
+```py
+import unittest
+
+def longest_increasing_subsequence(sequence):
+    if not sequence: return 0
+    # let dp[i] represents longest increasing subsequence ends at i, that is,
+    # dp[i] = the max number of elem j such that sequence[i] > sequence[j] for all 0 <= j < i
+    # dp[i] = 1 + max(dp[j]) if sequence[i] > sequence[j]
+    # or, dp[i] = 1 if j not exists
+    n = len(sequence)
+    dp = [1] * n
+    for i in xrange(n):
+        max_dp_so_far = 0
+        for j in xrange(i):
+            if sequence[i] > sequence[j]:
+                max_dp_so_far = max(max_dp_so_far, dp[j])
+        dp[i] += max_dp_so_far
+    
+    return max(dp)
+
+
+class LongestIncreasingSubsequnceSpec(unittest.TestCase):
+    def test_empty_sequence(self):
+        self.assertEqual(longest_increasing_subsequence([]), 0)
+
+    def test_last_elem_is_local_max(self):
+        self.assertEqual(longest_increasing_subsequence([1, 2, 3, 0, 2]), 3)
+
+    def test_last_elem_is_global_max(self):
+        self.assertEqual(longest_increasing_subsequence([1, 2, 3, 0, 6]), 4)
+
+    def test_longest_increasing_subsequence_in_first_half_sequence(self):
+        self.assertEqual(longest_increasing_subsequence([4, 5, 6, 7, 1, 2, 3]), 4)
+
+    def test_longest_increasing_subsequence_in_second_half_sequence(self):
+        self.assertEqual(longest_increasing_subsequence([1, 2, 3, -2, -1, 0, 1]), 4)
+
+    def test_sequence_in_up_down_up_pattern(self):
+        self.assertEqual(longest_increasing_subsequence([1, 2, 3, 2, 4]), 4)
+        self.assertEqual(longest_increasing_subsequence([1, 2, 3, -1, 0]), 3)
+
+    def test_sequence_in_down_up_down_pattern(self):
+        self.assertEqual(longest_increasing_subsequence([4, 3, 5]), 2)
+        self.assertEqual(longest_increasing_subsequence([4, 0, 1]), 2) 
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
+```
+
 ### Additional Question: \[Special\] Strongly Connected Directed Graph
 --- 
 > **Question:** Given a directed graph, find out whether the graph is strongly connected or not. A directed graph is strongly connected if there is a path between any two pair of vertices.
