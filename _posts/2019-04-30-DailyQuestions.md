@@ -154,7 +154,10 @@ Return null if there is no such ordering.
 
 For example, given {'CSC300': ['CSC100', 'CSC200'], 'CSC200': ['CSC100'], 'CSC100': []}, should return ['CSC100', 'CSC200', 'CSCS300'].
 
-### Jul 2, 2019 \[Medium\]
+
+-->
+
+### Jul 3, 2019 \[Medium\] Off-by-One Non-Decreasing Array
 ---
 > **Question:** Given an array of integers, write a function to determine whether the array could become non-decreasing by modifying at most 1 element.
 >
@@ -162,7 +165,18 @@ For example, given {'CSC300': ['CSC100', 'CSC200'], 'CSC200': ['CSC100'], 'CSC10
 >
 > Given the array [10, 5, 1], you should return false, since we can't modify any one element to get a non-decreasing array.
 
---->
+### Additional Question: \[Special\] Longest Path in A Directed Acyclic Graph
+--- 
+> **Question:** Given a Directed Acyclic Graph (DAG), find the longest distances in the given graph.
+>
+> **Note:** The longest path problem for a general graph is not as easy as the shortest path problem because the longest path problem doesn’t have optimal substructure property. In fact, the Longest Path problem is NP-Hard for a general graph. However, the longest path problem has a linear time solution for directed acyclic graphs. The idea is similar to linear time solution for shortest path in a directed acyclic graph. We use Topological Sorting.
+
+Example: 
+
+```py
+# Following returns 3, as longest path is: 5, 2, 3, 1
+longest_path_in_DAG(vertices=6, edges=[(5, 2), (5, 0), (4, 0), (4, 1), (2, 3), (3, 1)])
+```
 
 ### Jul 2, 2019 \[Hard\] The Longest Increasing Subsequence
 ---
@@ -182,6 +196,60 @@ Example:
 ```py
 is_SCDG(vertices=5, edges=[(0, 1), (1, 2), (2, 3), (3, 0), (2, 4), (4, 2)])  # returns True
 is_SCDG(vertices=4, edges=[(0, 1), (1, 2), (2, 3)])  # returns False
+```
+
+**My thoughts:** A directed graph being strongly connected indicates that for any vertex v, there exists a path to all other vertices and for all other vertices there exists a path to v. Here we can just pick any vertex from which we run DFS and see if it covers all vertices. And once done that, we can show v can go to all other vertices (excellent departure). Then we reverse the edges and run DFS from v again to test if v can be reach by all other vertices (excellent destination). 
+
+Therefore, as v can be connected from any other vertices as well as can be reach by any other vertices. For any vertices u, w, we can simply connect them to v to reach each other. Thus, we can show such algorithm can test if a directed graph is strongly connected or not.
+
+**Solution with DFS:** [https://repl.it/@trsong/Strongly-Connected-Directed-Graph](https://repl.it/@trsong/Strongly-Connected-Directed-Graph)
+```py
+import unittest
+
+def can_reach_all_DFS(s, neighbors, num_vertices):
+    stack = [s]
+    visited = [False] * num_vertices
+    count = 0
+    while stack:
+        cur = stack.pop()
+        if not visited[cur]:
+            count += 1
+            visited[cur] = True
+            if cur in neighbors:
+                stack.extend(neighbors[cur])
+    return count == num_vertices
+
+def is_SCDG(vertices, edges):
+    forward_neighbors = {}
+    for pair in edges:
+        if pair[0] not in forward_neighbors:
+            forward_neighbors[pair[0]] = []
+        forward_neighbors[pair[0]].append(pair[1])
+    
+    if not can_reach_all_DFS(0, forward_neighbors, vertices): return False
+
+    backward_neighbors = {}
+    for pair in edges:
+        if pair[1] not in backward_neighbors:
+            backward_neighbors[pair[1]] = []
+        backward_neighbors[pair[1]].append(pair[0])
+    return can_reach_all_DFS(0, backward_neighbors, vertices)
+
+
+
+class IsSCDGSpec(unittest.TestCase):
+    def test_unconnected_graph(self):
+        self.assertFalse(is_SCDG(3, [(0, 1), (1, 0)]))
+    
+    def test_strongly_connected_graph(self):
+        self.assertTrue(is_SCDG(5, [(0, 1), (1, 2), (2, 3), (3, 0), (2, 4), (4, 2)]))
+
+    def test_not_strongly_connected_graph(self):
+        self.assertFalse(is_SCDG(4, [(0, 1), (1, 2), (2, 3)]))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
 ```
 
 ### Jul 1, 2019 \[Medium\] Merge K Sorted Lists
