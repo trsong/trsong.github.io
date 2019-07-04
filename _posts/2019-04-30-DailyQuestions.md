@@ -61,12 +61,6 @@ For example, the list [1,2,3] should return [1,3,2]. The list [1,3,2] should ret
 
 Can you perform the operation without allocating extra memory (disregarding the input memory)?
 
-### Jul , 2019 \[Easy\]
----
-> **Question:** Given a number in the form of a list of digits, return all possible permutations.
-
-For example, given [1,2,3], return [[1,2,3],[1,3,2],[2,1,3],[2,3,1],[3,1,2],[3,2,1]].
-
 ### Jul , 2019 \[Medium\]
 ---
 > **Question:** Given a binary tree of integers, find the maximum path sum between two nodes. The path must go through at least one node, and does not need to go through the root.
@@ -157,6 +151,12 @@ For example, given {'CSC300': ['CSC100', 'CSC200'], 'CSC200': ['CSC100'], 'CSC10
 
 -->
 
+### Jul 4, 2019 \[Easy\] Permutations
+---
+> **Question:** Given a number in the form of a list of digits, return all possible permutations.
+>
+> For example, given `[1,2,3]`, return `[[1,2,3],[1,3,2],[2,1,3],[2,3,1],[3,1,2],[3,2,1]]`.
+
 ### Jul 3, 2019 \[Medium\] Off-by-One Non-Decreasing Array
 ---
 > **Question:** Given an array of integers, write a function to determine whether the array could become non-decreasing by modifying at most 1 element.
@@ -164,6 +164,71 @@ For example, given {'CSC300': ['CSC100', 'CSC200'], 'CSC200': ['CSC100'], 'CSC10
 > For example, given the array [10, 5, 7], you should return true, since we can modify the 10 into a 1 to make the array non-decreasing.
 >
 > Given the array [10, 5, 1], you should return false, since we can't modify any one element to get a non-decreasing array.
+
+**Solution:** [https://repl.it/@trsong/Off-Most-by-One-Non-Decreasing-Array](https://repl.it/@trsong/Off-Most-by-One-Non-Decreasing-Array)
+```py
+import unittest
+
+def is_off_most_by_one_array(arr):
+    # array of length at most 2 are always qualified
+    if not arr or len(arr) <= 2: return True
+    
+    # set up a base for us to compare to and check every later numbers are smaller
+    base = arr[0]
+    num_violated = 0
+
+    # if the head is not a qualified one alreay, we choose next one as base
+    if arr[0] > arr[1] and arr[0] > arr[2]:
+        base = arr[1]
+        num_violated = 1
+        
+    for num in arr[1:]:
+        # any one after base should not be smaller than base
+        if num < base:
+            num_violated += 1
+
+            # we can tolerate at most one violation
+            if num_violated >= 2:
+                return False
+        else:
+            base = num
+    return True 
+
+
+class IsOffMostByOneArraySpec(unittest.TestCase):
+    def test_empty_array(self):
+        self.assertTrue(is_off_most_by_one_array([]))
+
+    def test_one_element_array(self):
+        self.assertTrue(is_off_most_by_one_array([1]))
+
+    def test_two_elements_array(self):
+        self.assertTrue(is_off_most_by_one_array([1, 1]))
+        self.assertTrue(is_off_most_by_one_array([1, 0]))
+        self.assertTrue(is_off_most_by_one_array([0, 1]))
+
+    def test_decreasing_array(self):
+        self.assertFalse(is_off_most_by_one_array([8, 2, 0]))
+
+    def test_non_decreasing_array(self):
+        self.assertTrue(is_off_most_by_one_array([0, 0, 1, 2, 2]))
+        self.assertTrue(is_off_most_by_one_array([0, 1, 2]))
+        self.assertTrue(is_off_most_by_one_array([0, 0, 0, 0]))
+
+    def test_off_by_one_array(self):
+        self.assertTrue(is_off_most_by_one_array([2, 10, 0]))
+        self.assertTrue(is_off_most_by_one_array([5, 2, 10]))
+        self.assertTrue(is_off_most_by_one_array([10, 5, 7]))
+    
+    def test_off_by_two_array(self):
+        self.assertFalse(is_off_most_by_one_array([5, 2, 10, 3, 4]))
+        self.assertFalse(is_off_most_by_one_array([0, 1, 0, 0, 0, 1]))
+        self.assertFalse(is_off_most_by_one_array([1, 1, 0, 0]))
+        
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
+```
 
 ### Additional Question: \[Special\] Longest Path in A Directed Acyclic Graph
 --- 
@@ -177,6 +242,102 @@ Example:
 # Following returns 3, as longest path is: 5, 2, 3, 1
 longest_path_in_DAG(vertices=6, edges=[(5, 2), (5, 0), (4, 0), (4, 1), (2, 3), (3, 1)])
 ```
+
+**Solution with DFS Sorting in Topological Order:** [https://repl.it/@trsong/Longest-Path-in-A-Directed-Acyclic-Graph](https://repl.it/@trsong/Longest-Path-in-A-Directed-Acyclic-Graph)
+```py
+import unittest
+
+class VertexState(object):
+    UNVISITED = 0
+    VISITING = 1
+    VISITED = 2
+
+def longest_chains(start, arr, cache):
+    if arr[start] == -1:
+        return 0
+    if cache[start] == -1:
+        res = 1 + longest_chains(arr[start], arr, cache)
+        cache[start] = res
+    return cache[start]
+
+def longest_path_in_DAG(vertices, edges):
+    stack = []
+    prev = [-1] * vertices
+    vertex_states = [VertexState.UNVISITED] * vertices
+    neibor = [None] * vertices
+    topological_order = []
+    for pair in edges:
+        if not neibor[pair[0]]:
+            neibor[pair[0]] = []
+        neibor[pair[0]].append(pair[1])
+
+    for v in xrange(vertices):
+        if vertex_states[v] != VertexState.VISITED:
+            stack.append(v)
+
+        while stack:
+            current = stack[-1]
+            if vertex_states[current] == VertexState.VISITING:
+                vertex_states[current] = VertexState.VISITED
+            elif vertex_states[current] == VertexState.UNVISITED:
+                vertex_states[current] = VertexState.VISITING
+                if neibor[current]:
+                    for n in neibor[current]:
+                        if vertex_states[n] == VertexState.VISITING:
+                            # if trying to access a visiting vertex, then it indicates that edge is a back edge
+                            return -1
+                        if vertex_states[n] == VertexState.UNVISITED:
+                            prev[n] = current
+                            stack.append(n)
+            else:
+                # if current state is VISITED
+                topological_order.append(stack.pop())
+
+    distance = [-1] * vertices
+    for v in xrange(vertices):
+        if prev[v] == -1:
+            distance[v] = 0
+
+    while topological_order:
+        current = topological_order.pop()
+        if distance[current] != -1:
+            if neibor[current]:
+                for n in neibor[current]:
+                    distance[n] = distance[current] + 1
+
+    return max(distance)
+
+
+
+class LongestPathInDAGSpec(unittest.TestCase):
+    def test_grap_with_cycle(self):
+        v = 3
+        e = [(0, 1), (2, 0), (1, 2)]
+        self.assertEqual(longest_path_in_DAG(v, e), -1)
+        v = 2
+        e = [(0, 1), (0, 0)]
+        self.assertEqual(longest_path_in_DAG(v, e), -1)
+
+    def test_disconnected_graph(self):
+        v = 5
+        e = [(0, 1), (2, 3), (3, 4)]
+        self.assertEqual(longest_path_in_DAG(v, e), 2)  # path: 2, 3, 4
+
+    def test_graph_with_two_paths(self):
+        v = 5
+        e = [(0, 1), (1, 4), (0, 2), (2, 3), (3, 4)]
+        self.assertEqual(longest_path_in_DAG(v, e), 3)  # path: 0, 2, 3, 4
+    
+    def test_connected_graph_with_paths_of_different_lenghths(self):
+        v = 7
+        e = [(0, 2), (0, 3), (1, 2), (1, 3), (2, 3), (2, 5), (3, 4), (3, 5), (3, 6), (2, 5), (5, 6)]
+        self.assertEqual(longest_path_in_DAG(v, e), 4)  # path: 0, 2, 3, 5, 6
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
+```
+
 
 ### Jul 2, 2019 \[Hard\] The Longest Increasing Subsequence
 ---
