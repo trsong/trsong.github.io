@@ -252,14 +252,6 @@ class VertexState(object):
     VISITING = 1
     VISITED = 2
 
-def longest_chains(start, arr, cache):
-    if arr[start] == -1:
-        return 0
-    if cache[start] == -1:
-        res = 1 + longest_chains(arr[start], arr, cache)
-        cache[start] = res
-    return cache[start]
-
 def longest_path_in_DAG(vertices, edges):
     stack = []
     prev = [-1] * vertices
