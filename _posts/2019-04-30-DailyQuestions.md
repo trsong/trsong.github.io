@@ -567,8 +567,14 @@ import unittest
 
 class Heap(object):
     @staticmethod
+    def heapify(arr):
+        # Heapify starts from last internal node. i.e. Last elem of (n - 1)'s parent
+        for i in xrange(len(arr) / 2 - 1, -1, -1):
+            Heap.heapify_down(arr, i)
+
+    @staticmethod
     def heapify_down(arr, index=0):
-        # Bubble-down the head of arr until not possible
+        # Bubble-down arr[index] until not possible
         n = len(arr)
         while True:
             left_child = 2 * index + 1
@@ -584,9 +590,10 @@ class Heap(object):
                 break
 
     @staticmethod
-    def heapify_up(arr):
-        # Bubble-up the last of arr until not possible
-        index = len(arr) - 1
+    def heapify_up(arr, index=None):
+        # Bubble-up arr[index] until not possible
+        if index is None:
+            index = len(arr) - 1
         while index > 0:
             parent = (index + 1) / 2 - 1
             if arr[parent] <= arr[index]:
@@ -637,8 +644,9 @@ class HeapSpec(unittest.TestCase):
         
 
 class PriorityQueue(object):
-    def __init__(self):
-        self._heap = []
+    def __init__(self, arr=None):
+        self._heap = arr[:] if arr else []
+        Heap.heapify(self._heap)
 
     def insert(self, v):
         self._heap.append(v)
@@ -651,7 +659,11 @@ class PriorityQueue(object):
         last = self._heap.pop()
         if self._heap:
             self._heap[i] = last
-            Heap.heapify_down(self._heap, index=i)
+            parent = (i + 1) / 2 - 1
+            if parent >= 0 and self._heap[i] < self._heap[parent]:
+                Heap.heapify_up(self._heap, index=i)
+            else:
+                Heap.heapify_down(self._heap, index=i)
 
     def extract_min(self):
         min_val = self.find_min()
@@ -673,6 +685,28 @@ class PriorityQueueSpec(unittest.TestCase):
 
     def test_random_inputs(self):
         self.assert_priority_queue([1, 5, 2, 4, 3], [1, 2, 3, 4, 5])
+
+    def test_delete(self):
+        pq = PriorityQueue()
+        for i in xrange(6, -1, -1):
+            pq.insert(i)
+        pq.delete(4)
+        self.assertEqual(pq.extract_min(), 0)
+        pq.insert(7)
+        self.assertEqual(pq.extract_min(), 1)
+        self.assertEqual(pq.extract_min(), 2)
+
+    def test_construct_heap(self):
+        pq = PriorityQueue([6, 5, 4, 3, 2, 1, 0])
+        for i in xrange(7):
+            self.assertEqual(pq.extract_min(), i)
+        pq = PriorityQueue([0, 1, 2, 3, 4, 5, 6])
+        for i in xrange(7):
+            self.assertEqual(pq.extract_min(), i)
+        pq = PriorityQueue([6, 1, 5, 2, 0, 4, 3])
+        for i in xrange(7):
+            self.assertEqual(pq.extract_min(), i)
+
 
 if __name__ == '__main__':
     unittest.main(exit=False)
