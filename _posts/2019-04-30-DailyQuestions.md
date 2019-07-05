@@ -139,23 +139,108 @@ Your function should return 3, since we would need to remove all the columns to 
 ---
 Implement a queue using two stacks. Recall that a queue is a FIFO (first-in, first-out) data structure with the following methods: enqueue, which inserts an element into the queue, and dequeue, which removes it.
 
+### Jul 6, 2019 \[Hard\] Power Supply to All Cities
+---
+> **Question:** Given a graph of possible electricity connections (each with their own cost) between cities in an area, find the cheapest way to supply power to all cities in the area. 
 
-### Jul , 2019 \[Hard\]
+--->
+### Jul 5, 2019 \[Hard\] Order of Course Perequisites
 ---
 > **Question:** We're given a hashmap associating each courseId key with a list of courseIds values, which represents that the prerequisites of courseId are courseIds. Return a sorted ordering of courses such that we can finish all courses.
+>
+> Return null if there is no such ordering.
+>
+> For example, given `{'CSC300': ['CSC100', 'CSC200'], 'CSC200': ['CSC100'], 'CSC100': []}`, should return `['CSC100', 'CSC200', 'CSCS300']`.
 
-Return null if there is no such ordering.
-
-For example, given {'CSC300': ['CSC100', 'CSC200'], 'CSC200': ['CSC100'], 'CSC100': []}, should return ['CSC100', 'CSC200', 'CSCS300'].
-
-
--->
+### Additional Question: \[Special\] Find Cycle in Undirected Graph using Disjoint Set (Union-Find)
+---
+> **Question:** Given an undirected graph, check if there is a cycle in the graph using **Disjoint Set (Union-Find)**. 
+> 
+> **Note:**  A disjoint-set data structure is a data structure that keeps track of a set of elements partitioned into a number of disjoint (non-overlapping) subsets. A union-find algorithm is an algorithm that peforms two useful operations on such a data structure:
+> 
+> - `Find(e)`: Determine which subset a particular element e is in. This can be used for determining if two elements are in the same subset.
+>
+> - `Union(e1, e2)`: Join two subsets(contains e1 and e2 separately) into a single subset.
+ 
+**Example:**  
+```py
+is_cyclic(vertices=3, edges=[(0, 1), (0, 2), (1, 2)])  # returns True, cycle: 0, 1, 2, 0 
+is_cyclic(vertices=3, edges=[(0, 1), (0, 2)])  # returns False 
+```
 
 ### Jul 4, 2019 \[Easy\] Permutations
 ---
 > **Question:** Given a number in the form of a list of digits, return all possible permutations.
 >
 > For example, given `[1,2,3]`, return `[[1,2,3],[1,3,2],[2,1,3],[2,3,1],[3,1,2],[3,2,1]]`.
+
+
+**My thoughts:** For problem with size k, we swap the n - k th element with the result from problem with size n - 1. 
+
+Example:
+
+```
+permutation(n) = swap a[0] with each elem of permutation(n-1).  
+permutation(k) = swap a[n - k] with each elem of permutation(k-1)
+```
+
+Suppose the input is [0, 1, 2]
+```
+├ swap(0, 0) 
+│ ├ swap(1, 1) 
+│ │ └ swap(2, 2)  gives [0, 1, 2]
+│ └ swap(1, 2)  
+│   └ swap(2, 2)  gives [0, 2, 1]
+├ swap(0, 1) 
+│ ├ swap(1, 1) 
+│ │ └ swap(2, 2)  gives [1, 0, 2]
+│ └ swap(1, 2)  
+│   └ swap(2, 2)  gives [1, 2, 0]
+└ swap(0, 2)  
+  ├ swap(1, 1)
+  │ └ swap(2, 2)  gives [2, 1, 0]
+  └ swap(1, 2)
+    └ swap(2, 2)  gives [2, 0, 1]
+```
+
+**Solution with Backtrack:** [https://repl.it/@trsong/Permutations](https://repl.it/@trsong/Permutations)
+```py
+import unittest
+
+def calculate_permutations(nums):
+    res = []
+    n = len(nums)
+    def swap_pos_recur(pos):
+        if pos == n - 1:
+            res.append(nums[:])
+        for i in xrange(pos, len(nums)):
+            nums[i], nums[pos] = nums[pos], nums[i]            
+            swap_pos_recur(pos + 1)
+            # reset position
+            nums[i], nums[pos] = nums[pos], nums[i]
+
+    swap_pos_recur(0)        
+    return res
+
+class CalculatePermutationSpec(unittest.TestCase):
+    def test_permuation_of_empty_array(self):
+        self.assertEqual(calculate_permutations([]), [])
+
+    def test_permuation_of_2(self):
+        self.assertEqual(
+            sorted(calculate_permutations([0, 1])),
+            sorted([[0, 1], [1, 0]]))
+
+    def test_permuation_of_3(self):
+        self.assertEqual(
+            sorted(calculate_permutations([1, 2, 3])),
+            sorted([[1, 2, 3], [1, 3, 2], [2, 1, 3], [2, 3, 1], [3, 1, 2], [3, 2, 1]]))
+    
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
+```
+
 
 ### Jul 3, 2019 \[Medium\] Off-by-One Non-Decreasing Array
 ---
