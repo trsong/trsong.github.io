@@ -295,10 +295,9 @@ def longest_path_in_DAG(vertices, edges):
         if distance[current] != -1:
             if neibor[current]:
                 for n in neibor[current]:
-                    distance[n] = distance[current] + 1
+                    distance[n] = max(distance[n], distance[current] + 1)
 
     return max(distance)
-
 
 
 class LongestPathInDAGSpec(unittest.TestCase):
@@ -318,6 +317,8 @@ class LongestPathInDAGSpec(unittest.TestCase):
     def test_graph_with_two_paths(self):
         v = 5
         e = [(0, 1), (1, 4), (0, 2), (2, 3), (3, 4)]
+        self.assertEqual(longest_path_in_DAG(v, e), 3)  # path: 0, 2, 3, 4
+        e = [(0, 2), (2, 3), (3, 4), (0, 1), (1, 4)]
         self.assertEqual(longest_path_in_DAG(v, e), 3)  # path: 0, 2, 3, 4
     
     def test_connected_graph_with_paths_of_different_lenghths(self):
