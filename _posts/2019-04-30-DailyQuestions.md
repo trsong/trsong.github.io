@@ -139,18 +139,128 @@ Your function should return 3, since we would need to remove all the columns to 
 ---
 Implement a queue using two stacks. Recall that a queue is a FIFO (first-in, first-out) data structure with the following methods: enqueue, which inserts an element into the queue, and dequeue, which removes it.
 
+--->
+
 ### Jul 6, 2019 \[Hard\] Power Supply to All Cities
 ---
 > **Question:** Given a graph of possible electricity connections (each with their own cost) between cities in an area, find the cheapest way to supply power to all cities in the area. 
 
---->
-### Jul 5, 2019 \[Hard\] Order of Course Perequisites
+### Jul 5, 2019 \[Hard\] Order of Course Prerequisites
 ---
 > **Question:** We're given a hashmap associating each courseId key with a list of courseIds values, which represents that the prerequisites of courseId are courseIds. Return a sorted ordering of courses such that we can finish all courses.
 >
 > Return null if there is no such ordering.
 >
-> For example, given `{'CSC300': ['CSC100', 'CSC200'], 'CSC200': ['CSC100'], 'CSC100': []}`, should return `['CSC100', 'CSC200', 'CSCS300']`.
+> For example, given `{'CSC300': ['CSC100', 'CSC200'], 'CSC200': ['CSC100'], 'CSC100': []}`, should return `['CSC100', 'CSC200', 'CSC300']`.
+
+**My thoughts:** This is a pretty standard application of Topological Sort. One thing you need to be careful is that the given prerequisites map is not the neighbor map, we need to first reverse all edge to generate a neighbor map. And another matter you might ignore is that the during interview you might be asked to test your result. In that case, stick with the definition of topological sort. For any edge (u, v), the index of u is always smaller than the index of v in topological order.  
+
+**Solution with Topological Sort:** [https://repl.it/@trsong/Order-of-Course-Prerequisites](https://repl.it/@trsong/Order-of-Course-Prerequisites)
+```py
+import unittest
+
+class CourseState:
+    FINISHED = 0
+    TAKING = 1
+    TO_TAKE = 2
+
+def sort_courses(prereq_map):
+    # Add all course to neighbor
+    neighbor = { course: [] for course in prereq_map }
+
+    # Add all prereq course to neighbor
+    for course, prereq_list in prereq_map.iteritems():
+        for prereq in prereq_list:
+            if prereq not in neighbor:
+                neighbor[prereq] = []
+            neighbor[prereq].append(course)
+    
+    course_states = { course: CourseState.TO_TAKE for course in neighbor }
+    stack = []
+    topological_order = []
+    for course in neighbor:
+        # For each unvisited course do a DFS search
+        if course_states[course] != CourseState.FINISHED:
+            stack.append(course)
+
+        while stack:
+            current_course = stack[-1]
+            if course_states[current_course] == CourseState.TAKING:
+                course_states[current_course] = CourseState.FINISHED
+            elif course_states[current_course] == CourseState.TO_TAKE:
+                course_states[current_course] = CourseState.TAKING
+                for next_course in neighbor[current_course]:
+                    if course_states[next_course] == CourseState.TAKING:
+                        return None
+                    elif course_states[next_course] == CourseState.TO_TAKE:
+                        stack.append(next_course)
+            else:
+                topological_order.append(stack.pop())
+
+    topological_order.reverse()
+    return topological_order
+
+
+class SortCourseSpec(unittest.TestCase):
+    def assert_course_order_with_prereq_map(self, prereq_map):
+        # Test utility for validation of the following properties for each course:
+        # 1. no courses can be taken before its prerequisites
+        # 2. order covers all courses
+        orders = sort_courses(prereq_map)
+        self.assertEqual(len(prereq_map), len(orders))
+
+        # build a quick courseId to index lookup 
+        course_priority_map = dict(zip(orders, xrange(len(orders))))
+        for course, prereq_list in prereq_map.iteritems():
+            for prereq in prereq_list:
+                # Any prereq course must be taken before the one that depends on it
+                self.assertTrue(course_priority_map[prereq] < course_priority_map[course])
+
+    def test_courses_with_mutual_dependencies(self):
+        prereq_map = {
+            'CS115': ['CS135'],
+            'CS135': ['CS115']
+        }
+        self.assertIsNone(sort_courses(prereq_map))
+
+    def test_courses_within_same_department(self):
+        prereq_map = {
+            'CS240': [],
+            'CS241': [],
+            'MATH239': [],
+            'CS350': ['CS240', 'CS241', 'MATH239'],
+            'CS341': ['CS240'],
+            'CS445': ['CS350', 'CS341']
+        }
+        self.assert_course_order_with_prereq_map(prereq_map)
+
+    def test_courses_in_different_departments(self):
+        prereq_map = {
+            'MATH137': [],
+            'CS116': ['MATH137', 'CS115'],
+            'JAPAN102': ['JAPAN101'],
+            'JAPAN101': [],
+            'MATH138': ['MATH137'],
+            'ENGL119': [],
+            'MATH237': ['MATH138'],
+            'CS246': ['MATH138', 'CS116'],
+            'CS115': []
+        }
+        self.assert_course_order_with_prereq_map(prereq_map)
+
+    def test_courses_without_dependencies(self):
+        prereq_map = {
+            'ENGL119': [],
+            'ECON101': [],
+            'JAPAN101': [],
+            'PHYS111': []
+        }
+        self.assert_course_order_with_prereq_map(prereq_map)
+   
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
+```
 
 ### Additional Question: \[Special\] Find Cycle in Undirected Graph using Disjoint Set (Union-Find)
 ---
