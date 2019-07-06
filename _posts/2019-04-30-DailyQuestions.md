@@ -278,6 +278,61 @@ is_cyclic(vertices=3, edges=[(0, 1), (0, 2), (1, 2)])  # returns True, cycle: 0,
 is_cyclic(vertices=3, edges=[(0, 1), (0, 2)])  # returns False 
 ```
 
+**Solution with Disjoint Set:** [https://repl.it/@trsong/Find-Cycle-in-Undirected-Graph](https://repl.it/@trsong/Find-Cycle-in-Undirected-Graph)
+```py
+import unittest
+
+class DisjointSet(object):
+    def __init__(self, n):
+        self._parent = [-1] * n
+
+    def find(self, p):
+        while self._parent[p] != -1:
+            p = self._parent[p]
+        return p
+
+    def union(self, p1, p2):
+        parent1 = self.find(p1)
+        parent2 = self.find(p2)
+        if parent1 != parent2:
+            self._parent[parent1] = parent2
+
+    def is_connected(self, p1, p2):
+        return self.find(p1) == self.find(p2)
+
+
+def is_cyclic(vertices, edges):
+    uf = DisjointSet(vertices) 
+    for edge in edges:
+        # For each edge, connect vertices of both ends
+        u, v = edge
+        if uf.is_connected(u, v):
+            # Before we connect both ends, it's already connected, then there must exist a cycle
+            return True
+        else:
+            uf.union(u, v)
+    return False
+
+
+class IsCyclicSpec(unittest.TestCase):
+    def test_graph_with_cycle(self):
+        self.assertTrue(is_cyclic(3, [(0, 1), (1, 2), (0, 2)]))
+
+    def test_disconnected_graph(self):
+        self.assertFalse(is_cyclic(4, [(0, 1), (2, 3)]))
+        self.assertFalse(is_cyclic(2, []))
+
+    def test_tree(self):
+        self.assertFalse(is_cyclic(6, [(0, 1), (1, 3), (1, 4), (0, 2), (2, 5)]))
+
+    def test_star(self):
+        self.assertTrue(is_cyclic(5, [(0, 1), (1, 2), (2, 3), (3, 4), (4, 0)]))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
+```
+
 ### Jul 4, 2019 \[Easy\] Permutations
 ---
 > **Question:** Given a number in the form of a list of digits, return all possible permutations.
