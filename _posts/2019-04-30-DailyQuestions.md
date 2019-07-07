@@ -216,17 +216,104 @@ Example 2
 Input: "10"
 Output: 1
 
+-->
 
 ### Jul 8, 2019 \[Medium\] Maximum Path Sum
 ---
-> **Question:** Given a binary tree of integers, find the maximum path sum between two node
-s. The path must go through at least one node, and does not need to go through the root.
-
---->
+> **Question:** Given a binary tree of integers, find the maximum path sum between two nodes. The path must go through at least one node, and does not need to go through the root.
 
 ### Jul 7, 2019 \[Easy\] Binary Tree Level Sum
 ---
 > **Question:** Given a binary tree and an integer which is the depth of the target level. Calculate the sum of the nodes in the target level. 
+
+**Solution with BFS:** [https://repl.it/@trsong/Binary-Tree-Level-Sum](https://repl.it/@trsong/Binary-Tree-Level-Sum)
+```py
+import unittest
+
+class TreeNode(object):
+    def __init__(self, val, left=None, right=None):
+        self.val = val
+        self.left = left
+        self.right = right
+
+
+def tree_level_sum(tree, level):
+    queue = [tree]
+    depth_so_far = 0
+    level_sum = 0
+    while queue and depth_so_far <= level:
+        level_size = len(queue)
+        for _ in xrange(level_size):
+            current = queue.pop(0)
+            if current:
+                queue.append(current.left)
+                queue.append(current.right)
+                if depth_so_far == level:
+                    level_sum += current.val
+        depth_so_far += 1
+    return level_sum
+
+
+class TreeLevelSumSpec(unittest.TestCase):
+    def test_empty_tree(self):
+        self.assertEqual(tree_level_sum(None, 0), 0)
+        self.assertEqual(tree_level_sum(None, 1), 0)
+
+    def test_complete_tree(self):
+        """
+             1
+           /   \
+          2     3
+         / \   /
+        4   5 6
+        """
+        n2 = TreeNode(2, TreeNode(4), TreeNode(5))
+        n3 = TreeNode(3, TreeNode(6))
+        n1 = TreeNode(1, n2, n3)
+        self.assertEqual(tree_level_sum(n1, 2), 15)
+        self.assertEqual(tree_level_sum(n1, 0), 1)
+
+    def test_heavy_left_tree(self):
+        """
+              1
+             /
+            2
+           /
+          3
+         /
+        4
+        """
+        n3 = TreeNode(3, TreeNode(4))
+        n2 = TreeNode(2, n3)
+        n1 = TreeNode(1, n2)
+        self.assertEqual(tree_level_sum(n1, 0), 1)
+        self.assertEqual(tree_level_sum(n1, 3), 4)
+
+    def test_heavy_right_tree(self):
+        """
+          1
+         / \
+        2   3
+       /   / \
+      8   4   5
+         / \   \
+        6   7   9
+        """
+        n5 = TreeNode(5, right=TreeNode(9))
+        n4 = TreeNode(4, TreeNode(6), TreeNode(7))
+        n3 = TreeNode(3, n4, n5)
+        n2 = TreeNode(2, TreeNode(8))
+        n1 = TreeNode(1, n2, n3)
+        self.assertEqual(tree_level_sum(n1, 0), 1)
+        self.assertEqual(tree_level_sum(n1, 1), 5)
+        self.assertEqual(tree_level_sum(n1, 2), 17)
+        self.assertEqual(tree_level_sum(n1, 3), 22)
+        self.assertEqual(tree_level_sum(n1, 4), 0)
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
+```
 
 ### Jul 6, 2019 \[Hard\] Power Supply to All Cities
 ---
