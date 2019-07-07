@@ -61,9 +61,6 @@ For example, the list [1,2,3] should return [1,3,2]. The list [1,3,2] should ret
 
 Can you perform the operation without allocating extra memory (disregarding the input memory)?
 
-### Jul , 2019 \[Medium\]
----
-> **Question:** Given a binary tree of integers, find the maximum path sum between two nodes. The path must go through at least one node, and does not need to go through the root.
 
 ### Jul , 2019 \[Medium\]
 ---
@@ -139,12 +136,208 @@ Your function should return 3, since we would need to remove all the columns to 
 ---
 Implement a queue using two stacks. Recall that a queue is a FIFO (first-in, first-out) data structure with the following methods: enqueue, which inserts an element into the queue, and dequeue, which removes it.
 
+
+
+### Jul, 2019 LT 879 \[Medium\] Output Contest Matches
+
+Description
+During the NBA playoffs, we always arrange the rather strong team to play with the rather weak team, like make the rank 1 team play with the rank nth team, which is a good strategy to make the contest more interesting. Now, you're given n teams, and you need to output their final contest matches in the form of a string.
+
+The n teams are given in the form of positive integers from 1 to n, which represents their initial rank. (Rank 1 is the strongest team and Rank n is the weakest team.) We'll use parentheses () and commas , to represent the contest team pairing - parentheses () for pairing and commas , for partition. During the pairing process in each round, you always need to follow the strategy of making the rather strong one pair with the rather weak one.
+
+We ensure that the input n can be converted into the form 2^k, where k is a positive integer.
+
+
+Example 1:
+
+Input: 2
+Output: "(1,2)"
+
+
+Example 2:
+Input: 4
+Output: "((1,4),(2,3))"
+Explanation: 
+  In the first round, we pair the team 1 and 4, the team 2 and 3 together, as we need to make the strong team and weak team together.
+  And we got (1,4),(2,3).
+  In the second round, the winners of (1,4) and (2,3) need to play again to generate the final winner, so you need to add the paratheses outside them.
+  And we got the final answer ((1,4),(2,3)).
+  
+Example 3:
+Input: 8
+Output: "(((1,8),(4,5)),((2,7),(3,6)))"
+Explanation:
+  First round: (1,8),(2,7),(3,6),(4,5)
+  Second round: ((1,8),(4,5)),((2,7),(3,6))
+  Third round: (((1,8),(4,5)),((2,7),(3,6)))
+
+
+### Jul, 2019 LT 867 \[Medium\] 4 Keys Keyboard
+Description
+
+Imagine you have a special keyboard with the following keys:
+Key 1: (A): Print one 'A' on screen.
+Key 2: (Ctrl-A): Select the whole screen.
+Key 3: (Ctrl-C): Copy selection to buffer.
+Key 4: (Ctrl-V): Print buffer on screen appending it after what has already been printed.
+Now, you can only press the keyboard for N times (with the above four keys), find out the maximum numbers of
+'A' you can print on screen.
+
+1. 1 <= N <= 50
+2. Answers will be in the range of 32-bit signed integer.
+
+
+
+Example 1:
+Input: 3
+Output: 3
+Explanation: A, A, A
+
+Example 2:
+Input: 7
+Output: 9
+Explanation: A, A, A, Ctrl A, Ctrl C, Ctrl V, Ctrl V
+
+### Jul, 2019 LT 512 \[Meidum\] Decode Ways
+---
+> **Question:** A message containing letters from A-Z is being encoded to numbers using the following mapping:
+'A' -> 1
+'B' -> 2
+...
+'Z' -> 26
+Given an encoded message containing digits, determine the total number of ways to decode it.
+
+Example 1:
+Input: "12"
+Output: 2
+Explanation: It could be decoded as AB (1 2) or L (12).
+
+Example 2
+Input: "10"
+Output: 1
+
+
+### Jul 8, 2019 \[Medium\] Maximum Path Sum
+---
+> **Question:** Given a binary tree of integers, find the maximum path sum between two node
+s. The path must go through at least one node, and does not need to go through the root.
+
 --->
+
+### Jul 7, 2019 \[Easy\] Binary Tree Level Sum
+---
+> **Question:** Given a binary tree and an integer which is the depth of the target level. Calculate the sum of the nodes in the target level. 
 
 ### Jul 6, 2019 \[Hard\] Power Supply to All Cities
 ---
 > **Question:** Given a graph of possible electricity connections (each with their own cost) between cities in an area, find the cheapest way to supply power to all cities in the area. 
 
+**My thoughts:** This question is an undirected graph problem asking for minimum spanning tree. And there are two algorithms to solve this problem: Kruskal's vs Prim's MST Algorithm. First one keeps choosing edges whereas second one starts from connecting vertices. Either one shall work. However, personally I prefer Kruskal's MST Algorithm, as you can see how easy it is to implement using Python.  
+
+**Solution with Kruskal's MST Algorithm:** [https://repl.it/@trsong/Power-Supply-to-All-Cities](https://repl.it/@trsong/Power-Supply-to-All-Cities)
+```py
+import unittest
+
+class DisjointSet(object):
+    def __init__(self, arr):
+        self._parent = { e: e for e in arr }
+
+    def find(self, e):
+        while self._parent[e] != e:
+            e = self._parent[e]
+        return e
+
+    def union(self, e1, e2):
+        parent1 = self.find(e1)
+        parent2 = self.find(e2)
+        if parent1 != parent2:
+            self._parent[parent1] = parent2
+    
+    def is_connected(self, e1, e2):
+        return self.find(e1) == self.find(e2)
+
+
+def min_cost_power_supply(cities, cost_btw_cities):
+    uf = DisjointSet(cities)
+    connections_order_by_cost = sorted(cost_btw_cities, key=lambda connection: connection[-1])
+    chosen_connections = []
+    for connection in connections_order_by_cost:
+        src, dst, _ = connection
+        if not uf.is_connected(src, dst):
+            chosen_connections.append((src, dst))
+            uf.union(src, dst)
+    return chosen_connections
+
+
+class MinCostPowerSupplySpec(unittest.TestCase):
+    def generate_cost_lookup(self, cities, cost_btw_cities):
+        cost_lookup = { city: {} for city in cities }
+        for connection in cost_btw_cities:
+            src, dst, cost = connection
+            cost_lookup[src][dst] = cost
+            cost_lookup[dst][src] = cost
+        return cost_lookup
+
+    def assert_power_supply_cost(self, cities, cost_btw_cities, expected_cost):
+        """Test utility to validate the minimum spanning tree result"""
+        chosen_connections = min_cost_power_supply(cities, cost_btw_cities)
+
+        # Make sure it's a tree. A tree has n - 1 edges.
+        self.assertEqual(len(chosen_connections), len(cities) - 1)
+
+        # Make sure it's a spanning tree: a tree that covers all vertices
+        chosen_cities = set()
+        for connection in chosen_connections:
+            chosen_cities.add(connection[0])
+            chosen_cities.add(connection[1])
+        self.assertEqual(set(cities), chosen_cities)
+
+        # Make sure the cost satisfies the expected
+        total_cost = 0
+        cost_lookup = self.generate_cost_lookup(cities, cost_btw_cities)
+        for connection in chosen_connections:
+            src, dst = connection
+            total_cost += cost_lookup[src][dst]
+        self.assertEqual(total_cost, expected_cost)
+
+    def test_k3_graph(self):
+        cities = ['Vancouver', 'Richmond', 'Burnaby']
+        cost_btw_cities = [
+            ('Vancouver', 'Richmond', 1),
+            ('Vancouver', 'Burnaby', 1),
+            ('Richmond', 'Burnaby', 2)
+        ]
+        self.assert_power_supply_cost(cities, cost_btw_cities, 2)  # (Vancouver, Burnaby), (Vancouver, Richmond)
+
+    def test_k4_graph(self):
+        cities = ['Toronto', 'Mississauga', 'Waterloo', 'Hamilton']
+        cost_btw_cities = [
+            ('Mississauga', 'Toronto', 1),
+            ('Toronto', 'Waterloo', 2),
+            ('Waterloo', 'Hamilton', 3),
+            ('Toronto', 'Hamilton', 2),
+            ('Mississauga', 'Hamilton', 1),
+            ('Mississauga', 'Waterloo', 2)
+        ]
+        self.assert_power_supply_cost(cities, cost_btw_cities, 4)  # (Toronto, Mississauga), (Toronto, Waterloo), (Mississauga, Hamilton)
+
+    def test_connected_graph(self):
+        cities = ['Shanghai', 'Nantong', 'Suzhou', 'Hangzhou', 'Ningbo']
+        cost_btw_cities = [
+            ('Shanghai', 'Nantong', 1),
+            ('Nantong', 'Suzhou', 1),
+            ('Suzhou', 'Shanghai', 1),
+            ('Suzhou', 'Hangzhou', 3),
+            ('Hangzhou', 'Ningbo', 2),
+            ('Hangzhou', 'Shanghai', 2),
+            ('Ningbo', 'Shanghai', 2)
+        ]
+        self.assert_power_supply_cost(cities, cost_btw_cities, 6) # (Shanghai, Nantong), (Shanghai, Suzhou), (Shanghai, Hangzhou), (Shanghai, Nantong)
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
+```
 ### Jul 5, 2019 \[Hard\] Order of Course Prerequisites
 ---
 > **Question:** We're given a hashmap associating each courseId key with a list of courseIds values, which represents that the prerequisites of courseId are courseIds. Return a sorted ordering of courses such that we can finish all courses.
