@@ -246,7 +246,7 @@ Output: 500
 
 **My thoughts:** The maximum path sum can either inherit from maximum of recursive children value or calculate based on maximum left path sum and right path sum.
 
-Example1: Final result inherits from Children
+Example1: Final result inherits from children
 ```
      0
    /   \
@@ -284,7 +284,7 @@ def max_path_sum(tree):
         lps, max_lps = max_path_sum_helper(tree.left)
         rps, max_rps = max_path_sum_helper(tree.right)
 
-        # Maintain longest path sum from left and right
+        # Maintain longest path sum from left and right child
         cur_ps = tree.val + max(lps, rps)
         max_cur_ps = tree.val + lps + rps
         max_child_ps = max(max_lps, max_rps)
