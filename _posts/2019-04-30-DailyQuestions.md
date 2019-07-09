@@ -244,6 +244,113 @@ Output: 500
 ---
 > **Question:** Given a binary tree of integers, find the maximum path sum between two nodes. The path must go through at least one node, and does not need to go through the root.
 
+**My thoughts:** The maximum path sum can either inherit from maximum of recursive children value or calculate based on maximum left path sum and right path sum.
+
+Example1: Final result inherits from Children
+```
+     0
+   /   \
+  2     0
+ / \   /
+4   5 0
+```
+
+Example2: Final result is calculated based on max left path sum and right path sum
+```
+    1
+   / \
+  2   3
+ /   / \
+8   0   5
+   / \   \
+  0   0   9
+```
+
+
+**Solution:** [https://repl.it/@trsong/Maximum-Path-Sum](https://repl.it/@trsong/Maximum-Path-Sum) 
+```py
+import unittest
+
+class TreeNode(object):
+    def __init__(self, val, left=None, right=None):
+        self.val = val
+        self.left = left
+        self.right = right
+
+
+def max_path_sum(tree):
+    def max_path_sum_helper(tree):
+        if not tree: return 0, 0
+        lps, max_lps = max_path_sum_helper(tree.left)
+        rps, max_rps = max_path_sum_helper(tree.right)
+
+        # Maintain longest path sum from left and right
+        cur_ps = tree.val + max(lps, rps)
+        max_cur_ps = tree.val + lps + rps
+        max_child_ps = max(max_lps, max_rps)
+
+        # The max path sum comes from:
+        # - either inheritance from children
+        # - or calculate based on sum of left longest path sum, right longest path sum, and current value
+        return cur_ps, max(max_cur_ps, max_child_ps)
+    
+    return max_path_sum_helper(tree)[1]
+
+
+class MaxPathSumSpec(unittest.TestCase):
+    def test_empty_tree(self):
+        self.assertEqual(max_path_sum(None), 0)
+
+    def test_max_path_sum_not_pass_root(self):
+        """
+             1
+           /   \
+          2     0
+         / \   /
+        4   5 1
+        """
+        n2 = TreeNode(2, TreeNode(4), TreeNode(5))
+        n0 = TreeNode(0, TreeNode(1))
+        root = TreeNode(1, n2, n0)
+        self.assertEqual(max_path_sum(root), 11) # Path: 4 - 2 - 5
+
+    def test_max_path_sum_pass_root(self):
+        """
+              1
+             /
+            2
+           /
+          3
+         /
+        4
+        """
+        n3 = TreeNode(3, TreeNode(4))
+        n2 = TreeNode(2, n3)
+        n1 = TreeNode(1, n2)
+        self.assertEqual(max_path_sum(n1), 10)  # Path: 1 - 2 - 3 - 4
+
+    def test_heavy_right_tree(self):
+        """
+          1
+         / \
+        2   3
+       /   / \
+      8   4   5
+         / \   \
+        6   7   9
+        """
+        n5 = TreeNode(5, right=TreeNode(9))
+        n4 = TreeNode(4, TreeNode(6), TreeNode(7))
+        n3 = TreeNode(3, n4, n5)
+        n2 = TreeNode(2, TreeNode(8))
+        n1 = TreeNode(1, n2, n3)
+        self.assertEqual(max_path_sum(n1), 28)  # Path: 8 - 2 - 1 - 3 - 5 - 9 
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
+```
+
 ### Jul 7, 2019 \[Easy\] Binary Tree Level Sum
 ---
 > **Question:** Given a binary tree and an integer which is the depth of the target level. Calculate the sum of the nodes in the target level. 
