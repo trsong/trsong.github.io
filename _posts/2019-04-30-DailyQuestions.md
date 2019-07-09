@@ -218,6 +218,28 @@ Output: 1
 
 -->
 
+### Jul 9, 2019 LC787 \[Medium\] Cheapest Flights Within K Stops
+---
+> **Question:**  There are `n` cities connected by `m` flights. Each fight starts from city `u` and arrives at `v` with a price `w`.
+>
+> Now given all the cities and flights, together with starting city `src` and the destination `dst`, your task is to find the cheapest price from `src` to `dst` with up to `k` stops. If there is no such route, output `-1`.
+
+Example 1:
+```py
+Input: 
+n = 3, edges = [[0,1,100],[1,2,100],[0,2,500]]
+src = 0, dst = 2, k = 1
+Output: 200
+```
+
+Example 2:
+```py
+Input: 
+n = 3, edges = [[0,1,100],[1,2,100],[0,2,500]]
+src = 0, dst = 2, k = 0
+Output: 500
+```
+
 ### Jul 8, 2019 \[Medium\] Maximum Path Sum
 ---
 > **Question:** Given a binary tree of integers, find the maximum path sum between two nodes. The path must go through at least one node, and does not need to go through the root.
