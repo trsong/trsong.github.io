@@ -198,7 +198,9 @@ Input: 7
 Output: 9
 Explanation: A, A, A, Ctrl A, Ctrl C, Ctrl V, Ctrl V
 
-### Jul, 2019 LT 512 \[Meidum\] Decode Ways
+--->
+
+### Jul 10, 2019 LT 512 \[Meidum\] Decode Ways
 ---
 > **Question:** A message containing letters from A-Z is being encoded to numbers using the following mapping:
 'A' -> 1
@@ -208,15 +210,19 @@ Explanation: A, A, A, Ctrl A, Ctrl C, Ctrl V, Ctrl V
 Given an encoded message containing digits, determine the total number of ways to decode it.
 
 Example 1:
+
+```
 Input: "12"
 Output: 2
 Explanation: It could be decoded as AB (1 2) or L (12).
+```
 
-Example 2
+Example 2:
+
+```
 Input: "10"
 Output: 1
-
--->
+```
 
 ### Jul 9, 2019 LC787 \[Medium\] Cheapest Flights Within K Stops
 ---
@@ -238,6 +244,55 @@ Input:
 n = 3, edges = [[0,1,100],[1,2,100],[0,2,500]]
 src = 0, dst = 2, k = 0
 Output: 500
+```
+
+**My thoguhts:** Initially I thought this problem can be solved by pre-processing the graph with BFS to eliminate certain vertices and edges within range K and then perform original Dijkstra's Algorithm. However I encountered a counter-example: `[(0, 1, 100), (1, 2, 100), (2, 3, 100), (0, 2, 500)]` with `src = 0`, `dst = 3` and `K = 1`. You can see that none of edge and vertex can be eliminated. But the final result is 500 other than 300.
+
+The correct way to solve the problem is to allow Dijstra's Algorithm to be able to store path-length during the traversal of the graph. If number of path-length exceed the limit (defined as number of stops a flight can take), we never allow that vertex to exist in the priority queue. And the priority of vertex is depended on accumulated cost so that each vertex might exist in the queue mutltiple times with different accumulated cost as well as remaining path length. As the priority queue is implemented by a min-heap, we are guaranteed that for each vertex, we always return the lowest accumulated cost one for a specific vertex.   
+
+Note: as the shortest path without number of stops constraint might not satisfy the requirement, any path could satisfy the shortest path with constraint. Thus there is not need to keep track of lowest cost array defined in original Dijkstra's Algorithm.  
+
+**Solution with Modified Dijkstra's Algorithm:** [https://repl.it/@trsong/Cheapest-Flights-Within-K-Stops](https://repl.it/@trsong/Cheapest-Flights-Within-K-Stops)
+```py
+import unittest
+from queue import PriorityQueue
+
+def findCheapestPrice(n, flights, src, dst, K):
+    max_path_length = K + 1
+    neighbor = { v: {} for v in xrange(n) }
+    for edge in flights:
+        u, v, w = edge
+        neighbor[u][v] = w
+
+    pq = PriorityQueue()
+    pq.put((0, src, max_path_length))
+    while not pq.empty():
+        accumulated_cost, airport, path_length = pq.get()
+        if airport == dst:
+            return accumulated_cost
+        elif path_length > 0:
+            for nb in neighbor[airport]:
+                pq.put((accumulated_cost + neighbor[airport][nb], nb, path_length - 1))
+    
+    return -1
+
+
+class FindCheapestPriceSpec(unittest.TestCase):
+    def test_lowest_price_yet_unqualified_stops(self):
+        self.assertEqual(findCheapestPrice(3, [(0, 1, 100), (1, 2, 100), (0, 2, 300)], 0, 2, 0), 300)
+
+    def test_lowest_price_with_qualified_stops(self):
+        self.assertEqual(findCheapestPrice(3, [(0, 1, 100), (1, 2, 100), (0, 2, 300)], 0, 2, 1), 200)
+
+    def test_cheap_yet_more_stops(self):
+        flights = [(0, 1, 100), (1, 2, 100), (2, 3, 100), (0, 2, 500)]
+        self.assertEqual(findCheapestPrice(4, flights, 0, 3, 0), -1)
+        self.assertEqual(findCheapestPrice(4, flights, 0, 3, 1), 600)
+        self.assertEqual(findCheapestPrice(4, flights, 0, 3, 2), 300)
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
 ```
 
 ### Jul 8, 2019 \[Medium\] Maximum Path Sum
