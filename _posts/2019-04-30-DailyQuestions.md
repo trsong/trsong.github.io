@@ -29,24 +29,6 @@ Given N, write a function to return the number of knight's tours on an N by N ch
 
 For example if {“2”: [“a”, “b”, “c”], 3: [“d”, “e”, “f”], …} then “23” should return [“ad”, “ae”, “af”, “bd”, “be”, “bf”, “cd”, “ce”, “cf"].
 
-### Jul , 2019 \[Medium\]
----
-> **Question:**  Invert a binary tree.
-
-For example, given the following tree:
-
-    a
-   / \
-  b   c
- / \  /
-d   e f
-should become:
-
-  a
- / \
- c  b
- \  / \
-  f e  d
 
 ### Jul , 2019 \[Easy\]
 ---
@@ -68,29 +50,38 @@ Can you perform the operation without allocating extra memory (disregarding the 
 
 A binary search tree is a tree with two children, left and right, and satisfies the constraint that the key in the left child must be less than or equal to the root and the key in the right child must be greater than or equal to the root.
 
-### Jul , 2019 \[Medium\]
+
+### Jul 11, 2019 \[Medium\]
 ---
 > **Question:** A rule looks like this:
 
+```
 A NE B
-
-This means this means point A is located northeast of point B.
-
+``` 
+> This means this means point A is located northeast of point B.
+> 
+```
 A SW C
+```
+> means that point A is southwest of C.
+>
+>Given a list of rules, check if the sum of the rules validate. For example:
 
-means that point A is southwest of C.
-
-Given a list of rules, check if the sum of the rules validate. For example:
-
+```
 A N B
 B NE C
 C N A
-does not validate, since A cannot be both north and south of C.
+```
 
+> does not validate, since A cannot be both north and south of C.
+
+```
 A NW B
 A N B
-is considered valid.
+```
 
+> is considered valid.
+> 
 ### Jul , 2019 \[Medium\]
 ---
 > **Question:** You are given an N by M 2D matrix of lowercase letters. Determine the minimum number of columns that can be removed to ensure that each row is ordered from top to bottom lexicographically. That is, the letter at each column is lexicographically later as you go down each row. It does not matter whether each row itself is ordered lexicographically.
@@ -200,6 +191,31 @@ Explanation: A, A, A, Ctrl A, Ctrl C, Ctrl V, Ctrl V
 
 --->
 
+
+### Jul 11, 2019 \[Medium\] Invert a Binary Tree
+---
+> **Question:**  Invert a binary tree.
+
+For example, given the following tree:
+
+```
+     a
+   /   \
+  b     c
+ / \   /
+d   e f
+```
+should become:
+
+
+```
+   a
+ /   \
+c     b
+ \   / \
+  f e   d
+ ```
+
 ### Jul 10, 2019 LT 512 \[Meidum\] Decode Ways
 ---
 > **Question:** A message containing letters from A-Z is being encoded to numbers using the following mapping:
@@ -222,6 +238,63 @@ Example 2:
 ```
 Input: "10"
 Output: 1
+```
+
+**My thoughts:** This question can be solved w/ DP. Similar to the climb stair problem, `DP[n] = DP[n-1] + DP[n-2]` under certain conditions. If last digits can form a number, i.e. 1-9 then `DP[n] = DP[n-1]`. And if last two digits can form a number, i.e. 10 - 26, then `DP[n] = DP[n-2]`. If we consider both digits, we will have 
+
+```py
+dp[k] = dp[k-1] if str[k-1] can form a number. i.e not zero, 1-9
+       + dp[k-2] if str[k-2] and str[k-1] can form a number. 10-26
+```
+
+**Solution with DP:** [https://repl.it/@trsong/Decode-Ways](https://repl.it/@trsong/Decode-Ways)
+```py
+import unittest
+
+def decode_ways(encoded_string):
+    # Let dp[n] represent the number of way to decode when the input size = n
+    # dp[1] = 1
+    # dp[k] = dp[k-1] if str[k-1] can form a number. i.e not zero, 1-9
+    #       + dp[k-2] if str[k-2] and str[k-1] can form a number. 10-26
+    n = len(encoded_string)
+    dp = [0] * (n + 1)
+    dp[0] = 1
+    dp[1] = 1
+    ord_0 = ord('0')
+    for i in xrange(2, n+1):
+        last_digit = ord(encoded_string[i-1]) - ord_0
+        second_last_digit = ord(encoded_string[i-2]) - ord_0
+        if last_digit > 0:
+            dp[i] += dp[i-1]
+        if 10 <= 10 * second_last_digit + last_digit <= 26:
+            dp[i] += dp[i-2]
+    return dp[n]
+
+
+class DecodeWaySpec(unittest.TestCase):
+    def test_length_one_string(self):
+        self.assertEqual(decode_ways("2"), 1)
+        self.assertEqual(decode_ways("9"), 1)
+
+    def test_length_two_string(self):
+        self.assertEqual(decode_ways("20"), 1) # 20
+        self.assertEqual(decode_ways("19"), 2) # 1,9 and 19
+
+    def test_length_three_string(self):
+        self.assertEqual(decode_ways("121"), 3) # 1, 20 and 12, 0 
+        self.assertEqual(decode_ways("120"), 1) # 1, 20
+        self.assertEqual(decode_ways("209"), 1) # 20, 9
+        self.assertEqual(decode_ways("912"), 2) # 9,1,2 and 9,12
+        self.assertEqual(decode_ways("231"), 2) # 2,3,1 and 23, 1
+        self.assertEqual(decode_ways("123"), 3) # 1,2,3, and 1, 23 and 12, 3
+
+    def test_length_four_string(self):
+        self.assertEqual(decode_ways("1234"), 3)
+        self.assertEqual(decode_ways("1111"), 5)
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
 ```
 
 ### Jul 9, 2019 LC787 \[Medium\] Cheapest Flights Within K Stops
