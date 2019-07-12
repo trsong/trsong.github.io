@@ -110,14 +110,6 @@ wvu
 tsr
 Your function should return 3, since we would need to remove all the columns to order it.
 
-
-
-### Jul , 2019 \[Medium\]
----
-> **Question:** Implement division of two positive integers without using the division, multiplication, or modulus operators. Return the quotient as an integer, ignoring the remainder.
-
-
-
 ### Jul , 2019 \[Medium\]
 ---
 > **Question:** Assume you have access to a function toss_biased() which returns 0 or 1 with a probability that's not 50-50 (but also not 0-100 or 100-0). You do not know the bias of the coin.
@@ -191,6 +183,9 @@ Explanation: A, A, A, Ctrl A, Ctrl C, Ctrl V, Ctrl V
 
 --->
 
+### Jul 12, 2019 \[Medium\] Integer Division
+---
+> **Question:** Implement division of two positive integers without using the division, multiplication, or modulus operators. Return the quotient as an integer, ignoring the remainder.
 
 ### Jul 11, 2019 \[Medium\] Invert a Binary Tree
 ---
@@ -205,8 +200,8 @@ For example, given the following tree:
  / \   /
 d   e f
 ```
-should become:
 
+should become:
 
 ```
    a
@@ -215,6 +210,95 @@ c     b
  \   / \
   f e   d
  ```
+
+**Solution:** [https://repl.it/@trsong/Invert-a-Binary-Tree](https://repl.it/@trsong/Invert-a-Binary-Tree)
+```py
+import unittest
+
+class TreeNode(object):
+    def __init__(self, val, left=None, right=None):
+        self.val = val
+        self.left = left
+        self.right = right
+    def __eq__(self, other):
+        return other is not None and other.val == self.val and other.left == self.left and other.right == self.right
+
+
+def invert_tree(tree):
+    if not tree: return None
+    tree.left, tree.right = invert_tree(tree.right), invert_tree(tree.left)    
+    return tree
+
+
+class InvertTreeSpec(unittest.TestCase):
+    def test_empty_tree(self):
+        self.assertIsNone(invert_tree(None))
+
+    def test_heavy_left_tree(self):
+        """
+            1
+           /
+          2
+         /
+        3
+        """
+        tree = TreeNode(1, TreeNode(2, TreeNode(3)))
+        """
+        1
+         \
+          2
+           \
+            3
+        """
+        expected_tree = TreeNode(1, right=TreeNode(2, right=TreeNode(3)))
+        self.assertEqual(invert_tree(tree), expected_tree)
+
+    def test_heavy_right_tree(self):
+        """
+          1
+         / \
+        2   3
+           /
+          4 
+        """
+        tree = TreeNode(1, TreeNode(2), TreeNode(3, TreeNode(4)))
+        """
+          1
+         / \
+        3   2
+         \ 
+          4         
+        """
+        expected_tree = TreeNode(1, TreeNode(3, right=TreeNode(4)), TreeNode(2))
+        self.assertEqual(invert_tree(tree), expected_tree)
+
+    def test_sample_tree(self):
+        """
+             1
+           /   \
+          2     3
+         / \   /
+        4   5 6
+        """
+        n2 = TreeNode(2, TreeNode(4), TreeNode(5))
+        n3 = TreeNode(3, TreeNode(6))
+        n1 = TreeNode(1, n2, n3)
+        """
+            1
+          /   \
+         3     2
+          \   / \
+           6 5   4
+        """
+        en2 = TreeNode(2, TreeNode(5), TreeNode(4))
+        en3 = TreeNode(3, right=TreeNode(6))
+        en1 = TreeNode(1, en3, en2)
+        self.assertEqual(invert_tree(n1), en1)
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
+```
 
 ### Jul 10, 2019 LT 512 \[Meidum\] Decode Ways
 ---
