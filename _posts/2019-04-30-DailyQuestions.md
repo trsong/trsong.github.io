@@ -154,38 +154,91 @@ Explanation:
   Second round: ((1,8),(4,5)),((2,7),(3,6))
   Third round: (((1,8),(4,5)),((2,7),(3,6)))
 
+--->
 
-### Jul, 2019 LT 867 \[Medium\] 4 Keys Keyboard
-Description
+### Jul 13, 2019 LT 867 \[Medium\] 4 Keys Keyboard
+---
+> **Question:** Imagine you have a special keyboard with the following keys:
 
-Imagine you have a special keyboard with the following keys:
+```
 Key 1: (A): Print one 'A' on screen.
 Key 2: (Ctrl-A): Select the whole screen.
 Key 3: (Ctrl-C): Copy selection to buffer.
 Key 4: (Ctrl-V): Print buffer on screen appending it after what has already been printed.
-Now, you can only press the keyboard for N times (with the above four keys), find out the maximum numbers of
-'A' you can print on screen.
+```
+> Now, you can only press the keyboard for N times (with the above four keys), find out the maximum numbers of 'A' you can print on screen.
 
-1. 1 <= N <= 50
-2. Answers will be in the range of 32-bit signed integer.
+**Example 1:**
 
-
-
-Example 1:
+```
 Input: 3
 Output: 3
 Explanation: A, A, A
+```
 
-Example 2:
+**Example 2:**
+
+```
 Input: 7
 Output: 9
 Explanation: A, A, A, Ctrl A, Ctrl C, Ctrl V, Ctrl V
-
---->
+```
 
 ### Jul 12, 2019 \[Medium\] Integer Division
 ---
 > **Question:** Implement division of two positive integers without using the division, multiplication, or modulus operators. Return the quotient as an integer, ignoring the remainder.
+
+**My thoughts:** The quotient can be broken down into sum of multiple 2's powers. e.g. 
+321 = 45 * 7 + 6 = (32 + 8 + 4 + 1) * 7 + 6. Thus we can sums up those 2's powers to get quotient.
+
+**Solution:** [https://repl.it/@trsong/Integer-Division](https://repl.it/@trsong/Integer-Division)
+```py
+import unittest
+
+def divide(dividend, divisor):
+    if divisor == 0: raise ZeroDivisionError
+    sign = -1 if (dividend > 0) ^ (divisor > 0) else 1
+    abs_dividend = abs(dividend)
+    abs_divisor = abs(divisor)
+    quotient = 0
+    while abs_dividend > abs_divisor:
+        base = 0
+        while abs_dividend - (abs_divisor << (base + 1)) >= 0:
+            base += 1
+        abs_dividend -= abs_divisor << base    
+        quotient += 1 << base
+
+    if sign * abs_dividend < 0 and dividend < 0:
+        return sign * quotient - 1
+    else:
+        return sign * quotient
+        
+        
+class DivideSpec(unittest.TestCase):
+    def test_divide_by_zero(self):
+        self.assertRaises(ZeroDivisionError, divide, 1, 0)
+
+    def test_dividend_is_divisible(self):
+        self.assertEqual(divide(30, 5), 6)
+        self.assertEqual(divide(0, 5), 0)
+
+    def test_dividend_is_negative(self):
+        self.assertEqual(divide(-25, 7), -4)
+        self.assertEqual(divide(-18, 3), -6)
+
+    def test_dividend_is_positive(self):
+        self.assertEqual(divide(321, 7), 45)
+        self.assertEqual(divide(123, 455), 0)
+
+    def test_divisor_is_negative(self):
+        self.assertEqual(divide(43, -8), -5)
+
+    def test_both_numbers_are_negative(self):
+        self.assertEqual(divide(-10, -3), 3)
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
+```
 
 ### Jul 11, 2019 \[Medium\] Invert a Binary Tree
 ---
