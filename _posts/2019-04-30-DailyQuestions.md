@@ -119,25 +119,25 @@ Your function should return 3, since we would need to remove all the columns to 
 ---
 Implement a queue using two stacks. Recall that a queue is a FIFO (first-in, first-out) data structure with the following methods: enqueue, which inserts an element into the queue, and dequeue, which removes it.
 
+--->
 
+### Jul 14, 2019 LT 879 \[Medium\] NBA Playoff Matches
+---
+> **Question:** During the NBA playoffs, we always arrange the rather strong team to play with the rather weak team, like make the rank 1 team play with the rank nth team, which is a good strategy to make the contest more interesting. Now, you're given n teams, and you need to output their final contest matches in the form of a string.
+>
+> The n teams are given in the form of positive integers from 1 to n, which represents their initial rank. (Rank 1 is the strongest team and Rank n is the weakest team.) We'll use parentheses () and commas , to represent the contest team pairing - parentheses () for pairing and commas , for partition. During the pairing process in each round, you always need to follow the strategy of making the rather strong one pair with the rather weak one.
+>
+> We ensure that the input n can be converted into the form `2^k`, where k is a positive integer.
 
-### Jul, 2019 LT 879 \[Medium\] Output Contest Matches
+**Example 1:**
 
-Description
-During the NBA playoffs, we always arrange the rather strong team to play with the rather weak team, like make the rank 1 team play with the rank nth team, which is a good strategy to make the contest more interesting. Now, you're given n teams, and you need to output their final contest matches in the form of a string.
-
-The n teams are given in the form of positive integers from 1 to n, which represents their initial rank. (Rank 1 is the strongest team and Rank n is the weakest team.) We'll use parentheses () and commas , to represent the contest team pairing - parentheses () for pairing and commas , for partition. During the pairing process in each round, you always need to follow the strategy of making the rather strong one pair with the rather weak one.
-
-We ensure that the input n can be converted into the form 2^k, where k is a positive integer.
-
-
-Example 1:
-
+```py
 Input: 2
 Output: "(1,2)"
+```
 
-
-Example 2:
+**Example 2:**
+```py
 Input: 4
 Output: "((1,4),(2,3))"
 Explanation: 
@@ -145,16 +145,17 @@ Explanation:
   And we got (1,4),(2,3).
   In the second round, the winners of (1,4) and (2,3) need to play again to generate the final winner, so you need to add the paratheses outside them.
   And we got the final answer ((1,4),(2,3)).
-  
-Example 3:
+```
+
+**Example 3:**
+```py
 Input: 8
 Output: "(((1,8),(4,5)),((2,7),(3,6)))"
 Explanation:
   First round: (1,8),(2,7),(3,6),(4,5)
   Second round: ((1,8),(4,5)),((2,7),(3,6))
   Third round: (((1,8),(4,5)),((2,7),(3,6)))
-
---->
+```
 
 ### Jul 13, 2019 LT 867 \[Medium\] 4 Keys Keyboard
 ---
@@ -184,6 +185,55 @@ Output: 9
 Explanation: A, A, A, Ctrl A, Ctrl C, Ctrl V, Ctrl V
 ```
 
+**My thoughts:** This question can be solved with DP. Let dp[n] to be the max number of A's when the problem size is n. Then we want to define sub-problems and combine result of subproblems: 
+
+First, notice that when max number of A's equals n when n <= 6. Second, if n > 6, we want to accumulate enought A's before we can double the result. Thus the last few keys must all be Ctrl + V.  But we also see that the overhead of double the total number of A's is 3: we need Ctrl + A, Ctrl + C and Ctrl + V to double the size of n - 3 problem. And we can do Ctrl + V and another Ctrl + V back-to-back to bring two copys of original string. That will triple the number of A's of n - 4 problem.
+
+Thus based on above observation, we find that the recursive formula is `dp[n] = max(2 * dp[n-3], 3 * dp[n - 4], 4 * dp[n - 5], ..., (k-1) * dp[n-k], ..., (n-2) * dp[1])`. As for certain problem size k, it is calculated over and over again, we will need to cache the result. 
+
+**Top-down DP Solution:** [https://repl.it/@trsong/4-Keys-Keyboard](https://repl.it/@trsong/4-Keys-Keyboard)
+```py
+import unittest
+
+def solve_four_keys_keyboard_helper(n, cache):
+    if n <= 6: return n
+    max_keys = 0
+    for k in xrange(3, n):
+        sub_problem = solve_four_keys_keyboard_with_cache(n - k, cache)
+        num_copy = k - 2 + 1  # take out Ctrl + A, Ctrl + C and plus one for original copy
+        max_keys = max(max_keys, num_copy * sub_problem)
+    return max_keys    
+
+
+def solve_four_keys_keyboard_with_cache(n, cache):
+    if cache[n] is None:
+        cache[n] = solve_four_keys_keyboard_helper(n, cache)
+    return cache[n]
+
+
+def solve_four_keys_keyboard(n):
+    cache = [None] * (n + 1)
+    return solve_four_keys_keyboard_with_cache(n, cache)
+
+
+class SolveFourKeysKeyboardSpec(unittest.TestCase):
+    def test_n_less_than_7(self):
+        self.assertEqual(solve_four_keys_keyboard(0), 0) 
+        self.assertEqual(solve_four_keys_keyboard(1), 1) # A
+        self.assertEqual(solve_four_keys_keyboard(2), 2) # A, A
+        self.assertEqual(solve_four_keys_keyboard(3), 3) # A, A, A
+        self.assertEqual(solve_four_keys_keyboard(4), 4) # A, A, A, A
+        self.assertEqual(solve_four_keys_keyboard(5), 5) # A, A, A, A, A
+        self.assertEqual(solve_four_keys_keyboard(6), 6) # A, A, A, Ctrl + A, Ctrl + C, Ctrl + V
+
+    def test_n_greater_than_7(self):
+        self.assertEqual(solve_four_keys_keyboard(7), 9) # A, A, A, Ctrl + A, Ctrl + C, Ctrl + V, Ctrl + V
+        self.assertEqual(solve_four_keys_keyboard(8), 12) # A, A, A, A, Ctrl + A, Ctrl + C, Ctrl + V, Ctrl + V
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
+```
 ### Jul 12, 2019 \[Medium\] Integer Division
 ---
 > **Question:** Implement division of two positive integers without using the division, multiplication, or modulus operators. Return the quotient as an integer, ignoring the remainder.
