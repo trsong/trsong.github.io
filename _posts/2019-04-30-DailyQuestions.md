@@ -119,8 +119,84 @@ Your function should return 3, since we would need to remove all the columns to 
 ---
 Implement a queue using two stacks. Recall that a queue is a FIFO (first-in, first-out) data structure with the following methods: enqueue, which inserts an element into the queue, and dequeue, which removes it.
 
+
+
+### Jul , 2019 \[Medium\] The painter’s partition problem
+We have to paint n boards of length {A1, A2…An}. There are k painters available and each takes 1 unit time to paint 1 unit of board. The problem is to find the minimum time to get
+this job done under the constraints that any painter will only paint continuous sections of boards, say board {2, 3, 4} or only board {1} or nothing but not board {2, 4, 5}.
+
+Examples:
+
+Input : k = 2, A = {10, 10, 10, 10} 
+Output : 20.
+Here we can divide the boards into 2
+equal sized partitions, so each painter 
+gets 20 units of board and the total
+time taken is 20. 
+
+Input : k = 2, A = {10, 20, 30, 40} 
+Output : 60.
+Here we can divide first 3 boards for
+one painter and the last board for 
+second painter.
+
+
+### Jul , 2019 \[Medium\] Allocate minimum number of pages
+Given number of pages in n different books and m students. The books are arranged in ascending order of number of pages. Every student is assigned to read some consecutive books. The task is to assign books in such a way that the maximum number of pages assigned to a student is minimum.
+
+Example :
+
+Input : pages[] = {12, 34, 67, 90}
+        m = 2
+Output : 113
+Explanation:
+There are 2 number of students. Books can be distributed 
+in following fashion : 
+  1) [12] and [34, 67, 90]
+      Max number of pages is allocated to student 
+      2 with 34 + 67 + 90 = 191 pages
+  2) [12, 34] and [67, 90]
+      Max number of pages is allocated to student
+      2 with 67 + 90 = 157 pages 
+  3) [12, 34, 67] and [90]
+      Max number of pages is allocated to student 
+      1 with 12 + 34 + 67 = 113 pages
+
+Of the 3 cases, Option 3 has the minimum pages = 113. 
 --->
 
+### Jul 15, 2019 \[Easy\] Fancy Number
+---
+> **Question:** Check if a given number is Fancy. A fancy number is one which when rotated 180 degrees is the same. Given a number, find whether it is fancy or not.
+>
+> 180 degree rotations of 6, 9, 1, 0 and 8 are 9, 6, 1, 0 and 8 respectively
+>
+
+**Example 1:**
+```py
+Input:  num =  96
+Output: Yes
+If we rotate given number by 180, we get same number
+```
+
+**Example 2:**
+```py
+Input:  num =  916
+Output: Yes
+If we rotate given number by 180, we get same number
+```
+
+**Example 3:**
+```py
+Input:  num =  996
+Output: No
+```
+
+**Example 4:**
+```py
+Input:  num =  121
+Output: No
+```
 ### Jul 14, 2019 LT 879 \[Medium\] NBA Playoff Matches
 ---
 > **Question:** During the NBA playoffs, we always arrange the rather strong team to play with the rather weak team, like make the rank 1 team play with the rank nth team, which is a good strategy to make the contest more interesting. Now, you're given n teams, and you need to output their final contest matches in the form of a string.
@@ -157,6 +233,34 @@ Explanation:
   Third round: (((1,8),(4,5)),((2,7),(3,6)))
 ```
 
+**Solution:** [https://repl.it/@trsong/NBA-Playoff-Matches](https://repl.it/@trsong/NBA-Playoff-Matches)
+```py
+import unittest
+
+def NBA_Playoff_Matches(n):
+    res = [[str(x)] for x in xrange(1, n+1)]
+    while n > 0:
+        for i in xrange(n/2):
+            # Per round, match highest-rank team with lowest-rank team 
+            res[i] = ["("] + res[i] + [","] + res[n-1-i] + [")"]
+        n = n / 2
+    return "".join(res[0])
+
+
+class NBAPlayoffMatcheSpec(unittest.TestCase):
+    def test_2_teams(self):
+        self.assertEqual(NBA_Playoff_Matches(2), "(1,2)")
+
+    def test_4_teams(self):
+        self.assertEqual(NBA_Playoff_Matches(4), "((1,4),(2,3))")
+
+    def test_8_teams(self):
+        self.assertEqual(NBA_Playoff_Matches(8), "(((1,8),(4,5)),((2,7),(3,6)))")
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
+```
 ### Jul 13, 2019 LT 867 \[Medium\] 4 Keys Keyboard
 ---
 > **Question:** Imagine you have a special keyboard with the following keys:
