@@ -140,15 +140,20 @@ Here we can divide first 3 boards for
 one painter and the last board for 
 second painter.
 
+--->
 
-### Jul , 2019 \[Medium\] Allocate minimum number of pages
-Given number of pages in n different books and m students. The books are arranged in ascending order of number of pages. Every student is assigned to read some consecutive books. The task is to assign books in such a way that the maximum number of pages assigned to a student is minimum.
+### Jul 16, 2019 \[Medium\] Allocate Minimum Number of Pages
+---
+> **Question:** Given number of pages in n different books and m students. The books are arranged in ascending order of number of pages. Every student is assigned to read some consecutive books. The task is to assign books in such a way that the maximum number of pages assigned to a student is minimum.
 
-Example :
 
+**Example:**
+
+```
 Input : pages[] = {12, 34, 67, 90}
         m = 2
 Output : 113
+
 Explanation:
 There are 2 number of students. Books can be distributed 
 in following fashion : 
@@ -161,9 +166,9 @@ in following fashion :
   3) [12, 34, 67] and [90]
       Max number of pages is allocated to student 
       1 with 12 + 34 + 67 = 113 pages
+Of the 3 cases, Option 3 has the minimum pages = 113.       
+```
 
-Of the 3 cases, Option 3 has the minimum pages = 113. 
---->
 
 ### Jul 15, 2019 \[Easy\] Fancy Number
 ---
@@ -196,6 +201,41 @@ Output: No
 ```py
 Input:  num =  121
 Output: No
+```
+
+**Solution:** [https://repl.it/@trsong/Fancy-Number](https://repl.it/@trsong/Fancy-Number)
+```py
+import unittest
+
+rotation_mapping = [0, 1, None, None, None, None, 9, None, 8, 6]
+
+def reverse_rotate(num):
+    global rotation_mapping
+    reverse_rotation_res = 0
+    while num > 0:
+        rotation = rotation_mapping[num % 10]
+        if rotation is None: return None
+        reverse_rotation_res = 10 * reverse_rotation_res + rotation
+        num /= 10
+    return reverse_rotation_res
+
+def is_fancy_number(num):
+    return num == reverse_rotate(num)
+
+class IsFancyNumberSpec(unittest.TestCase):
+    def test_fancy_number(self):
+        self.assertTrue(is_fancy_number(69))
+        self.assertTrue(is_fancy_number(916))
+        self.assertTrue(is_fancy_number(0))
+
+    def test_not_fancy_number(self):
+        self.assertFalse(is_fancy_number(996))
+        self.assertFalse(is_fancy_number(121))
+        self.assertFalse(is_fancy_number(110))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
 ```
 ### Jul 14, 2019 LT 879 \[Medium\] NBA Playoff Matches
 ---
