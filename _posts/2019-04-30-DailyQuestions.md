@@ -142,6 +142,26 @@ second painter.
 
 --->
 
+### Jul 17, 2019 LC 312 \[Hard\] Burst Balloons
+---
+> **Question:** Given n balloons, indexed from 0 to n-1. Each balloon is painted with a number on it represented by array nums. You are asked to burst all the balloons. If the you burst balloon i you will get `nums[left] * nums[i] * nums[right]` coins. Here left and right are adjacent indices of i. After the burst, the left and right then becomes adjacent.
+>
+> Find the maximum coins you can collect by bursting the balloons wisely.
+>
+> Note:
+>
+> You may imagine nums[-1] = nums[n] = 1. They are not real therefore you can not burst them.
+0 ≤ n ≤ 500, 0 ≤ nums[i] ≤ 100
+
+**Example:**
+
+```
+Input: [3,1,5,8]
+Output: 167 
+Explanation: nums = [3,1,5,8] --> [3,5,8] -->   [3,8]   -->  [8]  --> []
+             coins =  3*1*5      +  3*5*8    +  1*3*8      + 1*8*1   = 167
+```
+
 ### Jul 16, 2019 \[Medium\] Allocate Minimum Number of Pages
 ---
 > **Question:** Given number of pages in n different books and m students. The books are arranged in ascending order of number of pages. Every student is assigned to read some consecutive books. The task is to assign books in such a way that the maximum number of pages assigned to a student is minimum.
@@ -169,6 +189,71 @@ in following fashion :
 Of the 3 cases, Option 3 has the minimum pages = 113.       
 ```
 
+**My thoughts:** Think about the problem backwards: let's first determine how many books the last student can read. He must at least read 1 book and at most `n-(s-1)` where n is total number of books and s is total number of students as there are s-1 student ahead. We don't want last student to read too many books, as this would bring up the min number of books a student can read at most. And we dont't want the last student to read to few books as other student have to read the remaining books and bring up the min number of books a student can read at most. 
+
+Thus we see the min of max might come from last student in each iteration or from applying the same algorithm to previous students. 
+
+We can solve this problem use DP. Let dp[b][s] represents min of max pages number of s student can read from 0 to b-1 books. `dp[b][s] = max(dp[b-i][s-1], sum all pages between b-i to b-1)` where i from 1 to b-s+1, here i represent number of book the last student read, and each student at least read 1 book.
+
+Then the `dp[n][s]` cell will be the min of max book a student can read at most. 
+
+**Solution with DP:** [https://repl.it/@trsong/Allocate-Minimum-Number-of-Pages](https://repl.it/@trsong/Allocate-Minimum-Number-of-Pages)
+```py
+import unittest
+import sys
+
+def allocate_min_num_books(pages, num_students):
+    n = len(pages)
+    sum_until = [0] * n
+    sum_until[0] = pages[0]
+    for i in xrange(1, n):
+        sum_until[i] = sum_until[i-1] + pages[i]
+
+    def sum_between(i, j):
+        if i > j: 
+            return 0
+        elif i > 0:
+            return sum_until[j] - sum_until[i-1]
+        else:
+            return sum_until[j]
+        
+    # let dp[b][s] represents min of max pages number of s student can read from 0 to b-1 books
+    # dp[b][s] = max(dp[b-i][s-1], sum all pages between b-i to b-1) where i from 1 to b-s+1, 
+    # here i represent number of book the last student read, and each student at least read 1 book, 
+    dp = [[sys.maxint for _ in xrange(num_students+1)] for _ in xrange(n+1)]
+    dp[0][0] = 0
+    for b in xrange(1, n+1):
+        for s in xrange(1, num_students+1):
+            for i in xrange(1, b-s+2):
+                dp[b][s] = min(dp[b][s], max(dp[b-i][s-1], sum_between(b-i, b-1)))
+    return dp[n][num_students]
+
+
+class AllocateMinNumBooks(unittest.TestCase):
+    def test_two_students(self):
+        pages = [12, 34, 67, 90]
+        num_students = 2
+        self.assertEqual(allocate_min_num_books(pages, num_students), 113) # max of book sum([12, 34, 67], [90]) = 12+34+67 = 113
+
+    def test_three_students(self):
+        pages = [1, 1, 1, 1, 1, 1, 1, 1, 1]
+        num_students = 3
+        self.assertEqual(allocate_min_num_books(pages, num_students), 3) # max of book sum([1, 1, 1], [1, 1, 1], [1, 1, 1]) = 1+1+1 = 3
+
+    def test_four_students(self):
+        pages = [100, 101, 102, 103, 104]
+        num_students = 4
+        self.assertEqual(allocate_min_num_books(pages, num_students), 201) # max of book sum([100, 101], [102], [103], [104]) = 100 + 101 = 201
+
+    def test_five_students(self):
+        pages = [8, 9, 8, 8, 6, 7, 8, 9, 10]
+        num_students = 5
+        self.assertEqual(allocate_min_num_books(pages, num_students), 17) # max of book sum([9, 8], [8, 8], [6, 7], [8, 9], [10]) = 9+8 = 17
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
+```
 
 ### Jul 15, 2019 \[Easy\] Fancy Number
 ---
