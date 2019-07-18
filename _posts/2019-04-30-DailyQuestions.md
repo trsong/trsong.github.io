@@ -119,7 +119,53 @@ Your function should return 3, since we would need to remove all the columns to 
 ---
 Implement a queue using two stacks. Recall that a queue is a FIFO (first-in, first-out) data structure with the following methods: enqueue, which inserts an element into the queue, and dequeue, which removes it.
 
---->
+
+
+
+### Jul, 2019 LC 743 \[Hard\]  Minimum Window Substring
+
+> **Question:** Given a string S and a string T, find the minimum window in S which will contain all the characters in T in complexity O(n).
+
+Note:
+
+If there is no such window in S that covers all characters in T, return the empty string "".
+If there is such window, you are guaranteed that there will always be only one unique minimum window in S.
+
+Example:
+```
+Input: S = "ADOBECODEBANC", T = "ABC"
+Output: "BANC"
+```
+
+-->
+
+### Jul 19, 2019 \[Medium\] Longest Common Subsequence
+---
+> **Question:** Given two sequences, find the length of longest subsequence present in both of them. 
+>
+> A subsequence is a sequence that appears in the same relative order, but not necessarily contiguous.
+
+**Example 1:**
+
+```
+Input:  "ABCD" and "EDCA"
+Output:  1
+	
+Explanation:
+LCS is 'A' or 'D' or 'C'
+```
+
+**Example 2:**
+
+```
+Input: "ABCD" and "EACB"
+Output:  2
+	
+Explanation: 
+LCS is "AC"
+```
+
+
 ### Jul 18, 2019 LC 743 \[Medium\] Network Delay Time
 ---
 > **Question:** There are N network nodes, labelled 1 to N.
