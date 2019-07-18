@@ -195,6 +195,8 @@ class BurstBalloonSpec(unittest.TestCase):
         self.assertEqual(burst_balloons([3, 1, 5, 8]), 167) 
 
     def test_ascending_balloons(self):
+        # Burst 3, 2, 1, 4 in order gives:
+        # 2*3*4 + 1*2*4 + 1*1*4 + 1*4*1 = 40
         self.assertEqual(burst_balloons([1, 2, 3, 4]), 40) 
 
     
