@@ -119,28 +119,21 @@ Your function should return 3, since we would need to remove all the columns to 
 ---
 Implement a queue using two stacks. Recall that a queue is a FIFO (first-in, first-out) data structure with the following methods: enqueue, which inserts an element into the queue, and dequeue, which removes it.
 
-
-
-### Jul , 2019 \[Medium\] The painter’s partition problem
-We have to paint n boards of length {A1, A2…An}. There are k painters available and each takes 1 unit time to paint 1 unit of board. The problem is to find the minimum time to get
-this job done under the constraints that any painter will only paint continuous sections of boards, say board {2, 3, 4} or only board {1} or nothing but not board {2, 4, 5}.
-
-Examples:
-
-Input : k = 2, A = {10, 10, 10, 10} 
-Output : 20.
-Here we can divide the boards into 2
-equal sized partitions, so each painter 
-gets 20 units of board and the total
-time taken is 20. 
-
-Input : k = 2, A = {10, 20, 30, 40} 
-Output : 60.
-Here we can divide first 3 boards for
-one painter and the last board for 
-second painter.
-
 --->
+### Jul 18, 2019 LC 743 \[Medium\] Network Delay Time
+---
+> **Question:** There are N network nodes, labelled 1 to N.
+>
+> Given times, a list of travel times as directed edges `times[i] = (u, v, w)`, where u is the source node, v is the target node, and w is the time it takes for a signal to travel from source to target.
+>
+> Now, we send a signal from a certain node K. How long will it take for all nodes to receive the signal? If it is impossible, return -1.
+
+**Example:**
+
+```py
+Input: times = [[2,1,1],[2,3,1],[3,4,1]], N = 4, K = 2
+Output: 2
+```
 
 ### Jul 17, 2019 LC 312 \[Hard\] Burst Balloons
 ---
@@ -151,7 +144,6 @@ second painter.
 > Note:
 >
 > You may imagine nums[-1] = nums[n] = 1. They are not real therefore you can not burst them.
-0 ≤ n ≤ 500, 0 ≤ nums[i] ≤ 100
 
 **Example:**
 
@@ -162,6 +154,53 @@ Explanation: nums = [3,1,5,8] --> [3,5,8] -->   [3,8]   -->  [8]  --> []
              coins =  3*1*5      +  3*5*8    +  1*3*8      + 1*8*1   = 167
 ```
 
+
+**My thoughts:** think about the problem backwards: the last balloon will have coins coins[-1] * coins[i] * coins[n] for some i. 
+We can solve this problem recursively to figure out the index i at each step to give the maximum coins. That gives recursive formula:
+
+```
+burst_in_range_recur(left, right) = max of (coins[left] * coins[i] * coins[right] + burst_in_range_recur(left, i) + burst_in_range_recur(i, right)) for all i between left and right.
+```
+
+The final result is by calling `burst_in_range_recur(-1, n)`.
+
+**Solution with DP:** [https://repl.it/@trsong/Burst-Balloons](https://repl.it/@trsong/Burst-Balloons)
+```py
+import unittest
+
+def burst_balloons(coins):
+	n = len(coins)
+	cache = [[None for _ in range(n+2)] for _ in range(n+2)]
+	return burst_in_range_recur(coins, cache, -1, n)
+
+def burst_in_range_recur(coins, cache, left, right):
+	if left + 1 >= right:
+		return 0
+	elif cache[left][right] is None:
+		res = 0
+		left_coins = coins[left] if left >= 0 else 1
+		right_coins = coins[right] if right < len(coins) else 1
+		for i in range(left+1, right):
+			left_res = burst_in_range_recur(coins, cache, left, i)
+			right_res = burst_in_range_recur(coins, cache, i, right)
+			res = max(res, left_coins * coins[i] * right_coins + left_res + right_res)
+		cache[left][right] = res
+	return cache[left][right]
+
+
+class BurstBalloonSpec(unittest.TestCase):
+    def test_sample_example(self):
+        # Burst 1, 5, 3, 8 in order gives:
+        # 3*1*5 + 3*5*8 + 1*3*8 + 1*8*1 = 167
+        self.assertEqual(burst_balloons([3, 1, 5, 8]), 167) 
+
+    def test_ascending_balloons(self):
+        self.assertEqual(burst_balloons([1, 2, 3, 4]), 40) 
+
+    
+if __name__ == '__main__':
+    unittest.main(exit=False)
+```
 ### Jul 16, 2019 \[Medium\] Allocate Minimum Number of Pages
 ---
 > **Question:** Given number of pages in n different books and m students. The books are arranged in ascending order of number of pages. Every student is assigned to read some consecutive books. The task is to assign books in such a way that the maximum number of pages assigned to a student is minimum.
