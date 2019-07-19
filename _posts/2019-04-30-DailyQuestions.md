@@ -175,10 +175,130 @@ LCS is "AC"
 > Now, we send a signal from a certain node K. How long will it take for all nodes to receive the signal? If it is impossible, return -1.
 
 **Example:**
-
 ```py
 Input: times = [[2,1,1],[2,3,1],[3,4,1]], N = 4, K = 2
 Output: 2
+```
+
+**Solution with Dijkstra's Algorithm:** [https://repl.it/@trsong/Network-Delay-Time](https://repl.it/@trsong/Network-Delay-Time)
+```py
+import unittest
+import sys
+from queue import PriorityQueue
+
+def max_network_delay(times, nodes, start):
+    neighbor = [None] * (nodes + 1)
+    for u, v, w in times:
+        if neighbor[u] is None:
+            neighbor[u] = []
+        neighbor[u].append((v, w))
+
+    # initially set distance to all other nodes to be infinite
+    distance = [sys.maxint] * (nodes+1)
+    pq = PriorityQueue()
+    pq.put((0, start))
+
+    while not pq.empty():
+        dist, node = pq.get()
+
+        # If we have previously solved distance for node, then we skip this iteration
+        if distance[node] < sys.maxint:
+            continue
+        distance[node] = dist
+        if neighbor[node] is None:
+            continue
+        for nb, weight in neighbor[node]:
+            alt = dist + weight
+
+            # If neighbor's distance not settle, add alternative path to queue
+            if distance[nb] == sys.maxint:
+                pq.put((alt, nb))
+
+    distance[0] = 0
+    max_distance = max(distance)
+
+    # if max_distance is infinite that means certain node cannot be reached from start node. 
+    return max_distance if max_distance != sys.maxint else -1 
+        
+
+class MaxNetworkDelay(unittest.TestCase):
+    def test_disconnected_graph(self):
+        """
+        1(start)    3
+        |           |
+        v           v
+        2           4
+        """
+        times = [[1, 2, 1], [3, 4, 2]]
+        self.assertEqual(max_network_delay(times, nodes=4, start=1), -1)
+
+    def test_unreachable_node(self):
+        """
+        1
+        |
+        v
+        2 
+        |
+        v
+        3 (start)
+        |
+        v
+        4
+        """
+        times = [[1, 2, 1], [2, 3, 2], [3, 4, 3]]
+        self.assertEqual(max_network_delay(times, nodes=4, start=3), -1)
+
+    def test_given_example(self):
+        """
+    (start)
+        2 --> 3
+        |     |
+        v     v
+        1     4
+        """
+        times = [[2, 1, 1], [2, 3, 1], [3, 4, 1]]
+        self.assertEqual(max_network_delay(times, nodes=4, start=2), 2)
+
+    def test_exist_alternative_path(self):
+        """
+    (start)  1
+        1 ---> 3
+      1 | \ 4  | 2
+        v  \   v
+        2   -> 4
+        """
+        times = [[1, 2, 1], [1, 3, 1], [1, 4, 4], [3, 4, 2]]
+        self.assertEqual(max_network_delay(times, nodes=4, start=1), 3)  # max path: 1 - 3 - 4
+
+    def test_graph_with_cycle(self):
+        """
+    (start) 
+        1 --> 2
+        ^     |
+        |     v
+        4 <-- 3
+        """
+        times = [[1, 2, 1], [2, 3, 1], [3, 4, 1], [4, 1, 1]]
+        self.assertEqual(max_network_delay(times, nodes=4, start=1), 3)  # max path: 1 - 2 - 3
+
+    def test_multiple_paths(self):
+        """
+            1
+           /|\
+          / | \
+        1| 2| 3|
+         v  v  v
+         2  3  4
+        2| 3| 1|
+         v  v  v
+         5  6  7
+        """
+        times = [[1, 2, 1], [1, 3, 2], [1, 4, 3], [2, 5, 2], [3, 6, 3], [4, 7, 1]]
+        self.assertEqual(max_network_delay(times, nodes=7, start=1), 5)  # max path: 1 - 3 - 6
+
+    
+if __name__ == '__main__':
+    unittest.main(exit=False)
 ```
 
 ### Jul 17, 2019 LC 312 \[Hard\] Burst Balloons
