@@ -139,6 +139,15 @@ Output: "BANC"
 
 -->
 
+### Jul 21, 2019 \[Easy\] Maximum Subarray Sum 
+---
+> **Question:** You are given a one dimensional array that may contain both positive and negative integers, find the sum of contiguous subarray of numbers which has the largest sum.
+>
+> For example, if the given array is {-2, -5, 6, -2, -3, 1, 5, -6}, then the maximum subarray sum is 7 as sum of [6, -2, -3, 1, 5] = 7
+>
+> Solve this problem with Divide and Conquer as well as DP separately.
+
+
 ### Jul 20, 2019 \[Medium\] Cutting a Rod
 ---
 > **Question:** Given a rod of length n inches and an array of prices that contains prices of all pieces of size smaller than n. Determine the maximum value obtainable by cutting up the rod and selling the pieces. 
@@ -159,6 +168,46 @@ length   | 1   2   3   4   5   6   7   8
 price    | 3   5   8   9  10  17  17  20
 ```
 
+**My thoughts:** Think about the problem backwards: among all rot cutting spaces, at the very last step we have to choose one cut the length n rod into `{ all (first_rod, second_rod)} = {(0, n), (1, n-1), (2, n-2), ..., (n-1, 1)}` And suppose there is a magic function f(n) that can gives the max price we can get when rod length is n, then we can say that `f(n) = max of f(first_rod) + price of second_rod for all (first_rod, second_roc)`, that means, `f(n) = max(f(n-k) + price(k)) (index is 1-based) for all k` which can be solved using DP.
+
+**Solution with DP:** [https://repl.it/@trsong/Cutting-a-Rod](https://repl.it/@trsong/Cutting-a-Rod)
+```py
+import unittest
+
+def max_cut_rod_price(piece_prices):
+    n = len(piece_prices)
+    # Let dp[i] where 0 <= i <= n represents max cut rod price when the rod length is i
+    # dp[i] = max(dp[i-k] + piece_prices[k-1]) for k from 1 to i
+    dp = [0] * (n+1)
+    for i in xrange(1, n+1):
+        for k in xrange(1, i+1):
+            dp[i] = max(dp[i], dp[i-k] + piece_prices[k-1])
+    return dp[n]
+
+
+class MaxCutRodPriceSpec(unittest.TestCase):
+    def test_all_cut_to_one(self):
+        self.assertEqual(max_cut_rod_price([3, 4, 5]), 9) # 3 + 3 + 3 = 9
+
+    def test_cut_to_one_and_two(self):
+        self.assertEqual(max_cut_rod_price([3, 7, 8]), 10) # 3 + 7 = 10
+
+    def test_when_cut_has_tie(self):
+        self.assertEqual(max_cut_rod_price([1, 3, 4]), 4) # 4 or 1 + 3
+
+    def test_no_need_to_cut(self):
+        self.assertEqual(max_cut_rod_price([1, 2, 5]), 5) # 5
+
+    def test_example1(self):
+        self.assertEqual(max_cut_rod_price([1, 5, 8, 9, 10, 17, 17, 20]), 22) # 5 + 17 = 22
+
+    def test_example2(self):
+        self.assertEqual(max_cut_rod_price([3, 5, 8, 9, 10, 17, 17, 20]), 24) # 3 * 8 = 24
+        
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
+```
 
 ### Jul 19, 2019 \[Medium\] Longest Common Subsequence
 ---
