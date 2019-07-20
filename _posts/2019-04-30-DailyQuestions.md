@@ -186,6 +186,66 @@ Explanation:
 LCS is "AC"
 ```
 
+**My thoughts:** This problem is similar to Levenshtein Edit Distance in multiple ways:
+
+1. If the last digit of each string matches each other, i.e. lcs(seq1 + s, seq2 + s) then result = 1 + lcs(seq1, seq2).
+2. If the last digit not matches,  i.e. lcs(seq1 + s, seq2 + p), then res is either ignore s or ignore q. Just like insert a whitespace or remove a letter from edit distance, which gives max(lcs(seq1, seq2 + p), lcs(seq1 + s, seq2))
+
+The difference between this question and edit distance is that each subsequence does not allow switching to different letters.
+ 
+**Solution with DP:** [https://repl.it/@trsong/Longest-Common-Sub-sequence](https://repl.it/@trsong/Longest-Common-Sub-sequence)
+```py
+import unittest
+
+def lcs(seq1, seq2):
+    n, m = len(seq1), len(seq2)
+    # dp[i][j] represents lcs(seq1[0:i], seq2[0:j]), i from 1 to n, j from 1 to m
+    # dp[i][j] = 1 + dp[i-1][j-1] if seq1[i-1] match seq2[j-1]
+    # dp[i][j] = max(dp[i-1][j], dp[i][j-1]) if not match
+    dp = [[0 for _ in xrange(m+1)] for _ in xrange(n+1)]
+    for i in xrange(1, n+1):
+        for j in xrange(1, m+1):
+            if seq1[i-1] == seq2[j-1]:
+                dp[i][j] = 1 + dp[i-1][j-1]
+            else:
+                dp[i][j] = max(dp[i-1][j], dp[i][j-1])
+    return dp[n][m]
+    
+
+class LCSSpec(unittest.TestCase):
+    def test_empty_sequences(self):
+        self.assertEqual(lcs("", ""), 0)
+
+    def test_match_last_position(self):
+        self.assertEqual(lcs("abcdz", "efghijz"), 1)  # a
+
+    def test_match_first_position(self):
+        self.assertEqual(lcs("aefgh", "aijklmnop"), 1) # a
+
+    def test_off_by_one_position(self):
+        self.assertEqual(lcs("10101", "01010"), 4) # 0101
+        self.assertEqual(lcs("12345", "1235"), 4) # 1235
+        self.assertEqual(lcs("1234", "1243"), 3) # 124
+        self.assertEqual(lcs("12345", "12340"), 4) # 1234
+
+    def test_multiple_matching(self):
+        self.assertEqual(lcs("afbgchdie", "__a__b_c__de___f_g__h_i___"), 5) # abcde
+
+    def test_ascending_vs_descending(self):
+        self.assertEqual(lcs("01234", "_4__3___2_1_0__"), 1) # 0
+
+    def test_multiple_ascending(self):
+        self.assertEqual(lcs("012312342345", "012345"), 6) # 012345
+
+    def test_multiple_descending(self):
+        self.assertEqual(lcs("5432432321", "54321"), 5) # 54321
+
+    def test_example(self):
+        self.assertEqual(lcs("ABCD", "EACB"), 2)  # AC
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
+```
 
 ### Jul 18, 2019 LC 743 \[Medium\] Network Delay Time
 ---
