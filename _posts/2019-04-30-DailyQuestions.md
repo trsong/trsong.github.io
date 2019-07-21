@@ -139,11 +139,20 @@ Output: "BANC"
 
 -->
 
+### Jul 22, 2019 \[Easy\] Sorted Square of Integers
+---
+> **Question:** Given a sorted list of integers, square the elements and give the output in sorted order.
+>
+> For example, given `[-9, -2, 0, 2, 3]`, return `[0, 4, 4, 9, 81]`.
+>
+> Additonal Requirement: Do it in-place. i.e. Space Complexity O(1).  
+
+
 ### Jul 21, 2019 \[Easy\] Maximum Subarray Sum 
 ---
 > **Question:** You are given a one dimensional array that may contain both positive and negative integers, find the sum of contiguous subarray of numbers which has the largest sum.
 >
-> For example, if the given array is {-2, -5, 6, -2, -3, 1, 5, -6}, then the maximum subarray sum is 7 as sum of [6, -2, -3, 1, 5] = 7
+> For example, if the given array is `[-2, -5, 6, -2, -3, 1, 5, -6]`, then the maximum subarray sum is 7 as sum of `[6, -2, -3, 1, 5]` equals 7
 >
 > Solve this problem with Divide and Conquer as well as DP separately.
 
