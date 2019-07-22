@@ -214,6 +214,36 @@ if __name__ == '__main__':
     unittest.main(exit=False)
 ```
 
+**Solution with Divide and Conquer:** [https://repl.it/@trsong/Maximum-Sub-array-Sum-Divide-and-Conquer](https://repl.it/@trsong/Maximum-Sub-array-Sum-Divide-and-Conquer)
+
+```py
+def max_sub_array_sum(nums):
+    if not nums: return 0
+    return max_sub_array_sum_recur(nums, 0, len(nums) - 1).max
+
+class Result(object):
+    def __init__(self, x):
+        self.max = x
+        self.prefix = x
+        self.suffix = x
+        self.sum = x
+
+def max_sub_array_sum_recur(nums, left, right):
+    if left == right:
+        return Result(nums[left])
+    
+    mid = left + (right - left) / 2
+    left_res = max_sub_array_sum_recur(nums, left, mid)
+    right_res = max_sub_array_sum_recur(nums, mid+1, right)
+
+    res = Result(0)
+    res.prefix = max(0, left_res.prefix, left_res.sum + right_res.prefix, left_res.sum + right_res.sum)
+    res.suffix = max(0, right_res.suffix, right_res.sum + left_res.suffix, left_res.sum + right_res.sum)
+    res.sum = left_res.sum + right_res.sum
+    res.max = max(res.prefix, res.suffix, left_res.suffix + right_res.prefix, left_res.max, right_res.max)
+    return res
+```
+
 ### Jul 20, 2019 \[Medium\] Cutting a Rod
 ---
 > **Question:** Given a rod of length n inches and an array of prices that contains prices of all pieces of size smaller than n. Determine the maximum value obtainable by cutting up the rod and selling the pieces. 
@@ -479,7 +509,7 @@ class MaxNetworkDelay(unittest.TestCase):
 
     def test_multiple_paths(self):
         """
-            1
+            1 (start)
            /|\
           / | \
         1| 2| 3|
