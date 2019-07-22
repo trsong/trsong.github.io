@@ -527,6 +527,22 @@ if __name__ == '__main__':
     unittest.main(exit=False)
 ```
 
+**Solution with Bellman-Ford Algorithm:** [https://repl.it/@trsong/Network-Delay-Time-Bellman-Ford](https://repl.it/@trsong/Network-Delay-Time-Bellman-Ford)
+```py
+import sys
+
+def max_network_delay(times, nodes, start):
+    distance = [sys.maxint] * (nodes + 1)
+    distance[start] = 0
+    for _ in xrange(nodes-1):
+        for u, v, w in times:
+            distance[v] = min(distance[v], distance[u] + w)
+    
+    distance[0] = 0
+    res = max(distance)
+    return res if res != sys.maxint else -1
+```
+
 ### Jul 17, 2019 LC 312 \[Hard\] Burst Balloons
 ---
 > **Question:** Given n balloons, indexed from 0 to n-1. Each balloon is painted with a number on it represented by array nums. You are asked to burst all the balloons. If the you burst balloon i you will get `nums[left] * nums[i] * nums[right]` coins. Here left and right are adjacent indices of i. After the burst, the left and right then becomes adjacent.
