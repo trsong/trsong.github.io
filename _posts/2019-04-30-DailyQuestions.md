@@ -157,6 +157,63 @@ Output: "BANC"
 > Solve this problem with Divide and Conquer as well as DP separately.
 
 
+**Solution with DP:** [https://repl.it/@trsong/Maximum-Sub-array-Sum](https://repl.it/@trsong/Maximum-Sub-array-Sum)
+```py
+import unittest
+
+def max_sub_array_sum(nums):
+    # Let dp[i] represents max sub array sum ends at nums[i-1] inclusive
+    # Notice dp[i] is only local max sum of subarray with last element as nums[i-1]
+    # dp[i] = dp[i-1] + nums[i-1] if dp[i-1] > 0 
+    # else = nums[i-1]
+    n = len(nums)
+    dp = [0] * (n + 1)
+    for i in xrange(1, n+1):
+        dp[i] = nums[i-1] + max(0, dp[i-1])
+    # The global max sub array is the max of dp, 
+    # i.e. max of all possible maximum of local max of subarray with last element as i
+    return max(dp)
+
+
+class MaxSubArraySum(unittest.TestCase):
+    def test_empty_array(self):
+        self.assertEqual(max_sub_array_sum([]), 0)
+
+    def test_ascending_array(self):
+        self.assertEqual(max_sub_array_sum([-3, -2, -1, 0, 1, 2, 3]), 6)
+        
+    def test_descending_array(self):
+        self.assertEqual(max_sub_array_sum([3, 2, 1, 0, -1]), 6)
+
+    def test_example_array(self):
+        self.assertEqual(max_sub_array_sum([-2, -5, 6, -2, -3, 1, 5, -6]), 7)
+
+    def test_negative_array(self):
+        self.assertEqual(max_sub_array_sum([-2, -1]), 0)
+
+    def test_positive_array(self):
+        self.assertEqual(max_sub_array_sum([1, 2]), 3)
+
+    def test_swing_array(self):
+        self.assertEqual(max_sub_array_sum([-3, 3, -2, 2, -5, 5]), 5)
+        self.assertEqual(max_sub_array_sum([-1, 1, -1, 1, -1]), 1)
+        self.assertEqual(max_sub_array_sum([-100, 1, -100, 2, -100]), 2)
+
+    def test_converging_array(self):
+        self.assertEqual(max_sub_array_sum([-3, 3, -2, 2, 1, 0]), 4)
+
+    def test_positive_negative_positive_array(self):
+        self.assertEqual(max_sub_array_sum([7, -1, -2, 3, 1]), 8)
+        self.assertEqual(max_sub_array_sum([7, -1, -2, 0, 1, 1]), 7)
+
+    def test_negative_positive_array(self):
+        self.assertEqual(max_sub_array_sum([-100, 1, 0, 2, -100]), 3)
+  
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
+```
+
 ### Jul 20, 2019 \[Medium\] Cutting a Rod
 ---
 > **Question:** Given a rod of length n inches and an array of prices that contains prices of all pieces of size smaller than n. Determine the maximum value obtainable by cutting up the rod and selling the pieces. 
