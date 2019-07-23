@@ -120,24 +120,24 @@ Your function should return 3, since we would need to remove all the columns to 
 Implement a queue using two stacks. Recall that a queue is a FIFO (first-in, first-out) data structure with the following methods: enqueue, which inserts an element into the queue, and dequeue, which removes it.
 
 
+-->
 
-
-### Jul, 2019 LC 743 \[Hard\]  Minimum Window Substring
-
+### Jul 23, 2019 LC 743 \[Hard\]  Minimum Window Substring
+---
 > **Question:** Given a string S and a string T, find the minimum window in S which will contain all the characters in T in complexity O(n).
+>
+> Note:
+>
+> If there is no such window in S that covers all characters in T, return the empty string "".
+> 
+> If there is such window, you are guaranteed that there will always be only one unique minimum window in S.
 
-Note:
+**Example:**
 
-If there is no such window in S that covers all characters in T, return the empty string "".
-If there is such window, you are guaranteed that there will always be only one unique minimum window in S.
-
-Example:
 ```
 Input: S = "ADOBECODEBANC", T = "ABC"
 Output: "BANC"
 ```
-
--->
 
 ### Jul 22, 2019 \[Easy\] Sorted Square of Integers
 ---
@@ -147,6 +147,88 @@ Output: "BANC"
 >
 > Additonal Requirement: Do it in-place. i.e. Space Complexity O(1).  
 
+**My thoughts:** This question requires binary search to find the index of first positive. And then we can rotate negative part of array as it is before the index of first positive. After that we square all numbers. Finally, we will have two sorted array in-place. We will need to merge those two sorted array in-place.
+
+**Solution:** [https://repl.it/@trsong/Sorted-Square-of-Integers](https://repl.it/@trsong/Sorted-Square-of-Integers)
+```py
+import unittest
+
+def find_positive_index_binary_search(nums):
+    lo = 0
+    hi = len(nums)
+    while lo < hi:
+        mid = lo + (hi - lo) / 2
+        if nums[mid] < 0:
+            lo = mid + 1
+        else:
+            hi = mid
+    return lo
+
+
+def swap_between(nums, i, j):
+    while i < j:
+        nums[i], nums[j] = nums[j], nums[i]
+        i += 1
+        j -= 1
+
+
+def square_between(nums, i, j):
+    for idx in xrange(i, j+1):
+        nums[idx] *= nums[idx]
+
+
+def merge_in_place(nums, s1, s2):
+    n = len(nums)
+    while s1 < s2 < n:
+        while s1 < s2 and nums[s1] <= nums[s2]:
+            s1 += 1
+
+        while s2 < n and nums[s1] > nums[s2]:
+            tmp = nums[s2]
+            for i in xrange(s2, s1, -1):
+                nums[i] = nums[i-1]
+            nums[s1] = tmp
+            s1 += 1
+            s2 += 1
+        
+
+def sorted_square(nums):
+    positive_start_index = find_positive_index_binary_search(nums)
+
+    # If there exists negative number, we flip position of all negative numbers
+    if positive_start_index > 0:
+        swap_between(nums, 0, positive_start_index - 1)
+
+    # Map all nums into squares
+    square_between(nums, 0, len(nums) - 1)
+
+    # Merge two sorted array in-place
+    if positive_start_index >= 1:
+        merge_in_place(nums, 0, positive_start_index)
+
+    return nums
+    
+
+class SortedSquareSpec(unittest.TestCase):
+    def test_array_with_duplicate_elements(self):
+        self.assertEqual(sorted_square([-1, -1, -1, 0, 0, 0, 1, 1, 1]), [0, 0, 0, 1, 1, 1, 1, 1, 1])
+
+    def test_array_with_all_negative_elements(self):
+        self.assertEqual(sorted_square([-3, -2, -1]), [1, 4, 9])
+
+    def test_example(self):
+        self.assertEqual(sorted_square([-9, -2, 0, 2, 3]), [0, 4, 4, 9, 81])
+
+    def test_array_with_positive_elements(self):
+        self.assertEqual(sorted_square([1, 2, 3]), [1, 4, 9])
+
+    def test_array_with_positive_elements(self):
+        self.assertEqual(sorted_square([-7, -6, 1, 2, 3, 9]), [1, 4, 9, 36, 49, 81])    
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
+```
 
 ### Jul 21, 2019 \[Easy\] Maximum Subarray Sum 
 ---
