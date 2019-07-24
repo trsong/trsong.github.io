@@ -119,7 +119,20 @@ Your function should return 3, since we would need to remove all the columns to 
 ---
 Implement a queue using two stacks. Recall that a queue is a FIFO (first-in, first-out) data structure with the following methods: enqueue, which inserts an element into the queue, and dequeue, which removes it.
 
+### Jul , 2019 \[Medium\]  Maximum Number of Connected Colors
+---
+Question: Given a grid with cells in different colors, find the maximum number of same color cells that are connected.
 
+Note: two cells are connected if they are of the same color and adjacent to each other: left, right, top or bottom.
+
+To stay simple, we use integers to represent colors:
+
+// The following grid have max 4 connected colors. [color 3: (1, 2), (1, 3), (2, 1), (2, 2)]
+ [
+    [1, 1, 2, 2, 3], 
+    [1, 2, 3, 3, 1],
+    [2, 3, 3, 1, 2]
+ ]
 -->
 ### Jul 24, 2019 \[Medium\] Contiguous Sum to K
 ---
