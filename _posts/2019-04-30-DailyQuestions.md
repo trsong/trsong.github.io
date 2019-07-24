@@ -121,8 +121,14 @@ Implement a queue using two stacks. Recall that a queue is a FIFO (first-in, fir
 
 
 -->
+### Jul 24, 2019 \[Medium\] Contiguous Sum to K
+---
+> **Question:** Given a list of integers and a number K, return which contiguous elements of the list sum to K.
+>
+> For example, if the list is `[1, 2, 3, 4, 5]` and K is 9, then it should return `[2, 3, 4]`, since 2 + 3 + 4 = 9.
 
-### Jul 23, 2019 LC 743 \[Hard\]  Minimum Window Substring
+
+### Jul 23, 2019 LC 76 \[Hard\]  Minimum Window Substring
 ---
 > **Question:** Given a string S and a string T, find the minimum window in S which will contain all the characters in T in complexity O(n).
 >
