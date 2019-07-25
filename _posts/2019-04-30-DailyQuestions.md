@@ -143,6 +143,54 @@ Implement a queue using two stacks. Recall that a queue is a FIFO (first-in, fir
 >
 > For example, if the list is `[1, 2, 3, 4, 5]` and K is 9, then it should return `[2, 3, 4]`, since 2 + 3 + 4 = 9.
 
+**My thoughts:** This is a special version of sliding window in a sense that instead of having monotonic increase
+ in [start, end] window. We keep track of all previous [s, end] for all s < end and proceed end. 
+
+ So the idea of solving this question is to find a specific window [i, j] i.e. j > i such that `prefix_sum[j] - prefix_sum[i] = K` where `prefix_sum[x] is nums[0] + nums[1] + ... + nums[x]`. Notice that if nums is **non-negative**, we can simply use two pointers to keep track of window [i, j]; proceed j if `prefix_sum[j] - prefix_sum[i] < K` and proceed i if `prefix_sum[j] - prefix_sum[i] > K`. Such algorithm works for non-negative because prefix_sum[x] only monotonic increase. 
+ 
+ However in this question, since we do have negative number as element, we can no longer use two pointers. However, that does not say we cannot have O(n) solution for this problem as we can still calculate `prefix_sum[j] - prefix_sum[i]` efficiently. Because as we proceed j, we are searching all i < j, that is, we have seen prefix_sum[i] before. And that's why we have cache come into our place: by keep track of all previous seen prefix_sum[i] for all i < j we can tell whether `prefix_sum[j] - prefix_sum[i] = k` exists for all i < j which gives the following solution.
+
+**Solution with Sliding Window:** [https://repl.it/@trsong/Contiguous-Sum-to-K](https://repl.it/@trsong/Contiguous-Sum-to-K)
+```py
+import unittest
+
+def subarray_sum(nums, K):
+    if not nums: return [] if K == 0 else None
+    prefix_sum_lookup = {}
+    sum_so_far = 0
+    for j in xrange(len(nums)):
+        sum_so_far += nums[j]
+        target_sum = sum_so_far - K
+        if sum_so_far == K:
+            return nums[0: j+1]
+        elif target_sum in prefix_sum_lookup:
+            return nums[prefix_sum_lookup[target_sum]+1: j+1]
+        else:
+            prefix_sum_lookup[sum_so_far] = j
+    return None
+
+
+class SubarraySumSpec(unittest.TestCase):
+    def test_empty_array(self):
+        self.assertEqual(subarray_sum([], 0), [])
+        self.assertIsNone(subarray_sum([], 1))
+
+    def test_non_negative_array(self):
+        self.assertEqual(subarray_sum([1, 2, 3, 4, 5], 9), [2, 3, 4])
+        self.assertEqual(subarray_sum([6, 0, 5, 2, 1, 4, 3], 10), [2, 1, 4, 3])
+
+    def test_negative_array(self):
+        self.assertEqual(subarray_sum([-5, -1, -3, -2, -7, -4], -13), [-1, -3, -2, -7])
+
+    def test_all_integer_array(self):
+        self.assertEqual(subarray_sum([1, 2, -1, -2, 4], 0), [1, 2, -1, -2])
+        self.assertEqual(subarray_sum([1, 2, -3, 7, -1, 4], 5), [2, -3, 7, -1])
+        self.assertIsNone(subarray_sum([1, 2, -3, 7, -1, 4], 42))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
+```
 
 ### Jul 23, 2019 LC 76 \[Hard\]  Minimum Window Substring
 ---
