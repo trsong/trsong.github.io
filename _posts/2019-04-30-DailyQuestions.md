@@ -137,6 +137,7 @@ max_applicants(m=6, n=6, applications=[[1,2], [], [0,3], [2], [2,3],[5]]) # give
 > **Question:** Given a graph which represents a flow network where every edge has a capacity. Also given two vertices source 's' and sink 't' in the graph, find the maximum possible flow from s to t with following constraints:
 >
 > 1) Flow on an edge doesn’t exceed the given capacity of the edge.
+> 
 > 2) Incoming flow is equal to outgoing flow for every vertex except s and t.
 
  For example, consider the following graph from CLRS book.
@@ -144,6 +145,14 @@ max_applicants(m=6, n=6, applications=[[1,2], [], [0,3], [2], [2,3],[5]]) # give
 
  The maximum possible flow in the above graph is 23.
 ![Ford-Fulkerson Algorithm Example2](https://www.geeksforgeeks.org/wp-content/uploads/ford_fulkerson2.png)
+
+**Example:**
+```py
+max_flow(vertices=6, capacity=[
+    (0, 1, 16), (0, 2, 13), (1, 2, 10), (2, 1, 4),
+    (1, 3, 12), (3, 2, 9), (2, 4, 14), (4, 3, 7),
+    (3, 5, 20), (4, 5, 4)])  # returns 23
+```
 
 **Note:** Implement ***Ford-Fulkerson Algorithm*** to solve above problem:
 
@@ -154,13 +163,8 @@ max_applicants(m=6, n=6, applications=[[1,2], [], [0,3], [2], [2,3],[5]]) # give
 3) Return flow.
 ```
 
-**Example:**
-```py
-max_flow(vertices=6, capacity=[
-    (0, 1, 16), (0, 2, 13), (1, 2, 10), (2, 1, 4),
-    (1, 3, 12), (3, 2, 9), (2, 4, 14), (4, 3, 7),
-    (3, 5, 20), (4, 5, 4)])  # returns 23
-```
+Take a look at Edmonds–Karp Implementation for Ford-Fulkerson Algorithm for details: [https://en.wikipedia.org/wiki/Edmonds%E2%80%93Karp_algorithm](https://en.wikipedia.org/wiki/Edmonds%E2%80%93Karp_algorithm)
+
 
 ### Jul 25, 2019 \[Medium\]  Maximum Number of Connected Colors
 ---
