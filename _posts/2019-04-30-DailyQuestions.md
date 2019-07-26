@@ -148,7 +148,7 @@ max_applicants(m=6, n=6, applications=[[1,2], [], [0,3], [2], [2,3],[5]]) # give
 
 **Example:**
 ```py
-max_flow(vertices=6, capacity=[
+max_flow(vertices=6, source=0, sink=5, capacity=[
     (0, 1, 16), (0, 2, 13), (1, 2, 10), (2, 1, 4),
     (1, 3, 12), (3, 2, 9), (2, 4, 14), (4, 3, 7),
     (3, 5, 20), (4, 5, 4)])  # returns 23
