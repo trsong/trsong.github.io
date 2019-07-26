@@ -121,6 +121,16 @@ Implement a queue using two stacks. Recall that a queue is a FIFO (first-in, fir
 
 -->
 
+### Jul 26, 2019 \[Hard\] Maximum Number of Applicants
+---
+> **Question:**  There are M job applicants and N jobs. Each applicant has a subset of jobs that he/she is interested in. Each job opening can only accept one applicant and a job applicant can be appointed for only one job. Find an assignment of jobs to applicants in such that as many applicants as possible get jobs.
+
+**Example:**
+```py
+max_applicants(m=6, n=6, applications=[[1,2], [], [0,3], [2], [2,3],[5]]) # gives 5, as (applicants, jobs) = (0, 1), (2, 0), (3, 2), (4, 3), (5, 5)
+``` 
+![Max Number of Applicants](https://www.geeksforgeeks.org/wp-content/uploads/maximum_matching1.png)
+
 ### Jul 25, 2019 \[Medium\]  Maximum Number of Connected Colors
 ---
 > **Question:** Given a grid with cells in different colors, find the maximum number of same color  cells that are connected.
@@ -136,6 +146,78 @@ Implement a queue using two stacks. Recall that a queue is a FIFO (first-in, fir
     [2, 3, 3, 1, 2]
  ]
  ```
+**My thoughts:** Perform BFS/DFS or Union-Find on all unvisited cells, count its neighbors of same color and mark them as visited.
+
+**Solution with BFS:** [https://repl.it/@trsong/Maximum-Number-of-Connected-Colors](https://repl.it/@trsong/Maximum-Number-of-Connected-Colors)
+```py
+import unittest
+
+def max_connected_colors(grid):
+    n, m = len(grid), len(grid[0])
+    res = 0
+    visited = [[False for _ in xrange(m)] for _ in xrange(n)]
+    for row in xrange(n):
+        for col in xrange(m):
+            # Perform BFS on each cell and mark all connected color as visited
+            if not visited[row][col]:
+                connected_colors = 0
+                current_color = grid[row][col]
+                queue = [(row, col)]
+                while queue:
+                    level_num = len(queue)
+                    for _ in xrange(level_num):
+                        r, c = queue.pop(0)
+                        if not visited[r][c] and grid[r][c] == current_color:
+                            connected_colors += 1
+                            visited[r][c] = True
+                            if r > 0:
+                                queue.append((r-1, c))
+                            if r < n - 1:
+                                queue.append((r+1, c))
+                            if c > 0:
+                                queue.append((r, c-1))
+                            if c < m - 1:
+                                queue.append((r, c+1))
+                res = max(res, connected_colors)
+    return res
+                
+
+class MaxConnectedColorSpec(unittest.TestCase):
+    def test_empty_graph(self):
+        self.assertEqual(max_connected_colors([[]]), 0)   
+
+    def test_example(self):
+        self.assertEqual(max_connected_colors([
+            [1, 1, 2, 2, 3],
+            [1, 2, 3, 3, 1],
+            [2, 3, 3, 1, 2]
+        ]), 4)
+
+    def test_disconnected_colors(self):
+        self.assertEqual(max_connected_colors([
+            [1, 0, 1],
+            [0, 1, 0],
+            [1, 0, 1]
+        ]), 1)
+
+    def test_cross_shap(self):
+        self.assertEqual(max_connected_colors([
+            [1, 0, 1],
+            [0, 0, 0],
+            [1, 0, 1]
+        ]), 5)
+
+    def test_boundary(self):
+        self.assertEqual(max_connected_colors([
+            [1, 1, 1],
+            [1, 0, 1],
+            [1, 1, 1]
+        ]), 8)
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
+```
 
 ### Jul 24, 2019 \[Medium\] Contiguous Sum to K
 ---
