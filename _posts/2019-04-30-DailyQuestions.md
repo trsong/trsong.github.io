@@ -23,11 +23,7 @@ categories: Python/Java
 
 Given N, write a function to return the number of knight's tours on an N by N chessboard.
 
-### Jul , 2019 \[Easy\]
----
-> **Question:** Given a mapping of digits to letters (as in a phone number), and a digit string, return all possible letters the number could represent. You can assume each valid number in the mapping is a single digit.
 
-For example if {“2”: [“a”, “b”, “c”], 3: [“d”, “e”, “f”], …} then “23” should return [“ad”, “ae”, “af”, “bd”, “be”, “bf”, “cd”, “ce”, “cf"].
 
 
 ### Jul , 2019 \[Easy\]
@@ -43,12 +39,6 @@ For example, the list [1,2,3] should return [1,3,2]. The list [1,3,2] should ret
 
 Can you perform the operation without allocating extra memory (disregarding the input memory)?
 
-
-### Jul , 2019 \[Medium\]
----
-> **Question:** Determine whether a tree is a valid binary search tree.
-
-A binary search tree is a tree with two children, left and right, and satisfies the constraint that the key in the left child must be less than or equal to the root and the key in the right child must be greater than or equal to the root.
 
 
 ### Jul 11, 2019 \[Medium\]
@@ -115,11 +105,18 @@ Your function should return 3, since we would need to remove all the columns to 
 > **Question:** Assume you have access to a function toss_biased() which returns 0 or 1 with a probability that's not 50-50 (but also not 0-100 or 100-0). You do not know the bias of the coin.
 
 
-### Jul , 2019 \[Medium\]
+### Jul 27, 2019 \[Medium\] Valid Binary Search Tree
 ---
-Implement a queue using two stacks. Recall that a queue is a FIFO (first-in, first-out) data structure with the following methods: enqueue, which inserts an element into the queue, and dequeue, which removes it.
-
+> **Question:** Determine whether a tree is a valid binary search tree.
+>
+> A binary search tree is a tree with two children, left and right, and satisfies the constraint that the key in the left child must be less than or equal to the root and the key in the right child must be greater than or equal to the root.
 -->
+
+### Jul 27, 2019 \[Easy\] Map Digits to Letters
+---
+> **Question:** Given a mapping of digits to letters (as in a phone number), and a digit string, return all possible letters the number could represent. You can assume each valid number in the mapping is a single digit.
+>
+> For example if {“2”: [“a”, “b”, “c”], 3: [“d”, “e”, “f”], …} then “23” should return [“ad”, “ae”, “af”, “bd”, “be”, “bf”, “cd”, “ce”, “cf"].
 
 ### Jul 26, 2019 \[Hard\] Maximum Number of Applicants
 ---
@@ -131,6 +128,77 @@ max_applicants(m=6, n=6, applications=[[1,2], [], [0,3], [2], [2,3],[5]]) # give
 ``` 
 ![Max Number of Applicants](https://www.geeksforgeeks.org/wp-content/uploads/maximum_matching1.png)
 
+**My thoughts:** Maximum Number of Applicants is a biparte matching problem and can be solved by converting to a max network flow problem. Take a look at Edmonds–Karp Implementation for Ford-Fulkerson Algorithm for details: [https://en.wikipedia.org/wiki/Edmonds%E2%80%93Karp_algorithm](https://en.wikipedia.org/wiki/Edmonds%E2%80%93Karp_algorithm)
+
+**Solution with Edmonds–Karp Algorithm:** [https://repl.it/@trsong/Maximum-Number-of-Applicants](https://repl.it/@trsong/Maximum-Number-of-Applicants)
+```py
+import unittest
+
+def BFS_find_path(neighbor, start, end):
+    n = len(neighbor)
+    visited = [False] * n
+    parent = [-1] * n
+    queue = [start]
+
+    while queue:
+        cur = queue.pop(0)
+        if cur == end:
+            return parent
+        
+        if not visited[cur]:
+            visited[cur] = True
+            for v in neighbor[cur]:
+                if not visited[v] and neighbor[cur][v] > 0:
+                    parent[v] = cur
+                    queue.append(v)
+    return None
+
+
+def max_applicants(num_applicants, num_jobs, applications):
+    # Create flow graph so that source connects to all applications
+    # And all jobs connect to sink
+    neighbor = [None] * (num_applicants + num_jobs + 2)
+    for applicant in xrange(num_applicants):
+        jobs = applications[applicant]
+        neighbor[applicant] = { (num_applicants + job): 1 for job in jobs}
+    
+    source = -1
+    sink = -2
+    neighbor[source] = {applicant: 1 for applicant in xrange(num_applicants)}
+    for job in xrange(num_jobs):
+        shifted_job = num_applicants + job
+        neighbor[shifted_job] = {sink: 1}
+
+    max_matching = 0
+    while True:
+        path_parent = BFS_find_path(neighbor, source, sink)
+        if not path_parent:
+            break
+
+        v = sink
+        while v != source:
+            u = path_parent[v]
+            if not neighbor[v]:
+                neighbor[v] = {}
+            if u not in neighbor[v]:
+                neighbor[v][u] = 0
+
+            neighbor[u][v] -= 1
+            neighbor[v][u] += 1
+            v = u
+        
+        max_matching += 1
+    return max_matching
+
+class MaxApplicationSpec(unittest.TestCase):
+    def test_example(self):
+        self.assertEqual(max_applicants(num_applicants=6, num_jobs=6, applications=[
+            [1,2], [], [0,3], [2], [2,3], [5]]), 5)
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
+```
 
 ### Additional Question: \[Special\] Maximum Flow Problem
 ---
@@ -165,6 +233,88 @@ max_flow(vertices=6, source=0, sink=5, capacity=[
 
 Take a look at Edmonds–Karp Implementation for Ford-Fulkerson Algorithm for details: [https://en.wikipedia.org/wiki/Edmonds%E2%80%93Karp_algorithm](https://en.wikipedia.org/wiki/Edmonds%E2%80%93Karp_algorithm)
 
+
+**Solution with Edmonds–Karp Algorithm:** [https://repl.it/@trsong/Maximum-Flow-Problem](https://repl.it/@trsong/Maximum-Flow-Problem)
+```py
+import unittest
+import sys
+
+def BFS_find_path(neighbor, start, end):
+    n = len(neighbor)
+    visited = [False] * n
+    parent = [-1] * n
+    queue = [start]
+
+    while queue:
+        cur = queue.pop(0)
+        if cur == end:
+            return parent
+        
+        if not visited[cur]:
+            visited[cur] = True
+            for v in neighbor[cur]:
+                if not visited[v] and neighbor[cur][v] > 0:
+                    parent[v] = cur
+                    queue.append(v)
+    return None
+
+
+def max_flow(vertices, source, sink, capacity):
+    neighbor = [None] * vertices
+    for u, v, w in capacity:
+        if not neighbor[u]:
+            neighbor[u] = {}
+        neighbor[u][v] = w
+
+    max_flow_num = 0
+    while True:
+        path_parent = BFS_find_path(neighbor, source, sink)
+        if not path_parent:
+            break
+
+        # Calculate the bottle-neck of this path and let flow_num be the bottle-neck
+        flow_num = sys.maxint
+        v = sink
+        while v != source:
+            u = path_parent[v]
+            flow_num = min(flow_num, neighbor[u][v])
+            v = u
+        
+        # All forward edge minus bottle-neck and all backward edge plus bottle-neck
+        v = sink
+        while v != source:
+            u = path_parent[v]
+            if not neighbor[v]:
+                neighbor[v] = {}
+            if u not in neighbor[v]:
+                neighbor[v][u] = 0
+
+            neighbor[u][v] -= flow_num
+            neighbor[v][u] += flow_num
+            v = u
+        
+        max_flow_num += flow_num
+
+    return max_flow_num
+
+
+class MaxFlowSpec(unittest.TestCase):
+    def test_example(self):
+        self.assertEqual(max_flow(vertices=6, source=0, sink=5, capacity=[
+            (0, 1, 16), (0, 2, 13), (1, 2, 10),
+            (2, 1, 4), (1, 3, 12), (3, 2, 9),
+            (2, 4, 14), (4, 3, 7), (3, 5, 20), (4, 5, 4)
+        ]), 23)
+
+    def test_flow_graph2(self):
+        self.assertEqual(max_flow(vertices=4, source=0, sink=3, capacity=[
+            (0, 1, 20), (0, 2, 10), (1, 2, 30), (1, 3, 10), (2, 3, 20)
+        ]), 30)
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
+```
 
 ### Jul 25, 2019 \[Medium\]  Maximum Number of Connected Colors
 ---
