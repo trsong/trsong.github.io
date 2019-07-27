@@ -112,11 +112,78 @@ Your function should return 3, since we would need to remove all the columns to 
 > A binary search tree is a tree with two children, left and right, and satisfies the constraint that the key in the left child must be less than or equal to the root and the key in the right child must be greater than or equal to the root.
 -->
 
+
+### Jul 28, 2019 LC 169 \[Easy\] Majority Element
+---
+> **Question:**  Given an array of size n, find the majority element. The majority element is the element that appears more than ⌊ n/2 ⌋ times.
+>
+> You may assume that the array is non-empty and the majority element always exist in the array.
+> 
+> Follow-up: Do that in O(1) Space Complexity.  
+
+**Example 1:**
+
+```
+Input: [3,2,3]
+Output: 3
+```
+
+**Example 2:**
+```
+Input: [2,2,1,1,1,2,2]
+Output: 2
+```
+
 ### Jul 27, 2019 \[Easy\] Map Digits to Letters
 ---
 > **Question:** Given a mapping of digits to letters (as in a phone number), and a digit string, return all possible letters the number could represent. You can assume each valid number in the mapping is a single digit.
 >
 > For example if {“2”: [“a”, “b”, “c”], 3: [“d”, “e”, “f”], …} then “23” should return [“ad”, “ae”, “af”, “bd”, “be”, “bf”, “cd”, “ce”, “cf"].
+
+**My thoughts:** The final result equals cartesian product of letters represented by each digit. e.g.  `"23" =  ['a', 'b', 'c'] x ['d', 'e', 'f'] = ['ad', 'ae', 'af', 'bd', 'be', 'bf', 'cd', 'ce', 'cf']`
+
+**Solution:** [https://repl.it/@trsong/Map-Digits-to-Letters](https://repl.it/@trsong/Map-Digits-to-Letters)
+```py
+import unittest
+
+def cartesian_product(accu_lists, letters):
+    res = []
+    for lst in accu_lists:
+        for l in letters:
+            res.append(lst[:] + [l])
+    return res
+
+
+def digits_to_letters(digits, dictionary):
+    if not digits: return []
+    res = [[]]
+    for digit in digits:
+        letters = dictionary[digit]
+        res = cartesian_product(res, letters)
+    return map(lambda lst: ''.join(lst), res)
+
+
+class DigitsToLetterSpec(unittest.TestCase):
+    def assert_letters(self, res, expected):
+        self.assertEqual(sorted(res), sorted(expected))
+
+    def test_empty_digits(self):
+        self.assert_letters(digits_to_letters("", {}), [])
+
+    def test_example(self):
+        dictionary = {'2': ['a', 'b', 'c'], '3': ['d', 'e', 'f']}
+        self.assert_letters(
+            digits_to_letters("23", dictionary),
+            ['ad', 'ae', 'af', 'bd', 'be', 'bf', 'cd', 'ce', 'cf'])
+
+    def test_early_google_url(self):
+        dictionary = {'2': ['a', 'b', 'c'], '3': ['d', 'e', 'f'], '4': ['g', 'h', 'i'], '5': ['j', 'k', 'l'], '6': ['m', 'n', 'o']}
+        self.assertTrue('google' in digits_to_letters("466453", dictionary))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
+```
 
 ### Jul 26, 2019 \[Hard\] Maximum Number of Applicants
 ---
