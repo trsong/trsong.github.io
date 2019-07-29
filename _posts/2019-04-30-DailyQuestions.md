@@ -195,6 +195,39 @@ if __name__ == '__main__':
     unittest.main(exit=False)
 ```
 
+Howevever, ***Boyce-Moore Algorithm*** is the one we should take a close look at. As it can gives O(n) time complexity and O(1) space complexity: here is how it works, the idea is to shrink the array so that the majority result is equivalent between the original array as well as the shrinked array.
+
+The way we shrink the array is to treat the very first element as majority candidate and  shrink the array recursively. 
+- If the candidate is not majority, there exists an even point p > 0 such that the number of "majority" vs "minority" is the same. And we chop out the array before and equal to the even point p. And the real majority of the rest of array should be the same as the shrinked array
+- If the candidate is indeed majority however there is still an even point q such that the number of majority vs minority is the same. And we the same thing to chop out the array before and equal to the even point q. And a majority should still be a majority of the rest of array as we eliminate same number of majority and minority that leaves the majority unchange. 
+- If the candidate is indeed majority and there is no even point such that the number of majority vs minority is the same. Thus the candidate can be safely returned as majority.
+
+**Solution with Boyce-Moore Algorithm:** [https://repl.it/@trsong/Majority-Element-Boyce-Moore-Algorithms](https://repl.it/@trsong/Majority-Element-Boyce-Moore-Algorithms)
+```py
+def majority_element(nums):
+    n = len(nums)
+    res = None
+    count = 0
+
+    for elem in nums:
+        # Treat the first element as candidate for majority elem
+        # Shrink the array if # of majority candidate equals # of minority elem
+        if count == 0:
+            res = elem
+        count += 1 if elem == res else -1
+
+    count_res = count_target(nums, res)
+    return res if count_res > n / 2 else None
+
+
+def count_target(nums, target):
+    count = 0
+    for elem in nums:
+        if elem == target:
+            count += 1
+    return count
+```
+
 ### Jul 27, 2019 \[Easy\] Map Digits to Letters
 ---
 > **Question:** Given a mapping of digits to letters (as in a phone number), and a digit string, return all possible letters the number could represent. You can assume each valid number in the mapping is a single digit.
