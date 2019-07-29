@@ -104,14 +104,13 @@ Your function should return 3, since we would need to remove all the columns to 
 ---
 > **Question:** Assume you have access to a function toss_biased() which returns 0 or 1 with a probability that's not 50-50 (but also not 0-100 or 100-0). You do not know the bias of the coin.
 
+--->
 
-### Jul 27, 2019 \[Medium\] Valid Binary Search Tree
+### Jul 29, 2019 \[Medium\] Valid Binary Search Tree
 ---
 > **Question:** Determine whether a tree is a valid binary search tree.
 >
 > A binary search tree is a tree with two children, left and right, and satisfies the constraint that the key in the left child must be less than or equal to the root and the key in the right child must be greater than or equal to the root.
--->
-
 
 ### Jul 28, 2019 LC 169 \[Easy\] Majority Element
 ---
@@ -132,6 +131,68 @@ Output: 3
 ```
 Input: [2,2,1,1,1,2,2]
 Output: 2
+```
+
+**My thoughts:** As this problem requires O(1) space complexity, we cannot use map or priority queue to calculate the count of each element. Instead, besides sort the array and return the n/2'th element, this problem can be solved with divide and conquer: recursively break array into equally left and right parts and let them decide the majority elements separately, after that check if both of them return the same element, otherwise return the element with larger count. And finally, make sure to check the final result to see if it's really the majority element.
+
+**Solution with Divide and Conquer:** [https://repl.it/@trsong/Majority-Element](https://repl.it/@trsong/Majority-Element)
+```py
+import unittest
+
+def majority_element(nums):
+    n = len(nums)
+    res = majority_element_recur(nums, 0, n - 1)
+    count_res = count_range(nums, res, 0, n - 1)
+    return res if count_res > n / 2 else None
+
+def count_range(nums, target, left, right):
+    count = 0
+    for i in xrange(left, right + 1):
+        if nums[i] == target:
+            count += 1
+    return count
+
+
+def majority_element_recur(nums, left, right):
+    if left == right:
+        return nums[left]
+    
+    mid = left + (right - left) / 2
+    left_res = majority_element_recur(nums, left, mid)
+    right_res = majority_element_recur(nums, mid+1, right)
+    if left_res == right_res:
+        return left_res
+    
+    count_left = count_range(nums, left_res, left, mid)
+    count_right = count_range(nums, right_res, mid+1, right)
+    return left_res if count_left > count_right else right_res
+
+
+class MajorityElementSpec(unittest.TestCase):
+    def test_no_majority_element_exists(self):
+        self.assertIsNone(majority_element([1, 2, 3, 4]))
+
+    def test_example1(self):
+        self.assertEqual(majority_element([3, 2, 3]), 3)
+
+    def test_example2(self):
+        self.assertEqual(majority_element([2, 2, 1, 1, 1, 2, 2]), 2)
+
+    def test_there_is_a_tie(self):
+        self.assertIsNone(majority_element([1, 2, 1, 2, 1, 2]))
+
+    def test_majority_on_second_half_of_list(self):
+        self.assertEqual(majority_element([2, 2, 1, 2, 1, 1, 1]), 1)
+    
+    def test_more_than_two_kinds(self):
+        self.assertEqual(majority_element([1, 2, 1, 1, 2, 2, 1, 3, 1, 1, 1]), 1)
+
+    def test_zero_is_the_majority_element(self):
+        self.assertEqual(majority_element([0, 1, 0, 1, 0, 1, 0]), 0)
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
 ```
 
 ### Jul 27, 2019 \[Easy\] Map Digits to Letters
