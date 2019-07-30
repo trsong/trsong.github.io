@@ -106,11 +106,144 @@ Your function should return 3, since we would need to remove all the columns to 
 
 --->
 
+### Jul 30, 2019 LC 74 \[Medium\] Search a 2D Matrix
+---
+> **Question:** Write an efficient algorithm that searches for a value in an m x n matrix. This matrix has the following properties:
+>
+> Integers in each row are sorted from left to right.
+The first integer of each row is greater than the last integer of the previous row.
+
+**Example 1:**
+
+```
+Input:
+matrix = [
+  [1,   3,  5,  7],
+  [10, 11, 16, 20],
+  [23, 30, 34, 50]
+]
+target = 3
+Output: true
+```
+
+**Example 2:**
+
+```
+Input:
+matrix = [
+  [1,   3,  5,  7],
+  [10, 11, 16, 20],
+  [23, 30, 34, 50]
+]
+target = 13
+Output: false
+```
+
 ### Jul 29, 2019 \[Medium\] Valid Binary Search Tree
 ---
 > **Question:** Determine whether a tree is a valid binary search tree.
 >
 > A binary search tree is a tree with two children, left and right, and satisfies the constraint that the key in the left child must be less than or equal to the root and the key in the right child must be greater than or equal to the root.
+
+
+**Recursive Solution:** [https://repl.it/@trsong/Valid-Binary-Search-Tree](https://repl.it/@trsong/Valid-Binary-Search-Tree)
+```py
+import unittest
+import sys
+
+class TreeNode(object):
+    def __init__(self, val, left=None, right=None):
+        self.val = val
+        self.left = left
+        self.right = right
+
+
+def is_valid_BST(tree):
+    def is_valid_BST_recur(tree, low_boundary, hi_boundary):
+        if not tree: return True
+        return low_boundary <= tree.val <= hi_boundary and is_valid_BST_recur(tree.left, low_boundary, tree.val) and  is_valid_BST_recur(tree.right, tree.val, hi_boundary) 
+
+    return is_valid_BST_recur(tree, -sys.maxint - 1, sys.maxint)
+
+
+class IsValidBSTSpec(unittest.TestCase):
+    def test_empty_tree(self):
+        self.assertTrue(is_valid_BST(None))
+
+    def test_left_tree_invalid(self):
+        """
+          0
+         /
+        1
+        """
+        self.assertFalse(is_valid_BST(TreeNode(0, TreeNode(1))))
+
+
+    def test_right_right_invalid(self):
+        """
+          1
+         / \
+        0   0
+        """
+        self.assertFalse(is_valid_BST(TreeNode(1, TreeNode(0), TreeNode(0))))
+
+    
+    def test_multi_level_BST(self):
+        """
+               50
+             /    \
+           20       60
+          /  \     /  \ 
+         5   30   55    70
+                       /  \
+                     65    80
+        """
+        n20 = TreeNode(20, TreeNode(5), TreeNode(30))
+        n70 = TreeNode(70, TreeNode(65), TreeNode(80))
+        n60 = TreeNode(60, TreeNode(55), n70)
+        n50 = TreeNode(50, n20, n60)
+        self.assertTrue(is_valid_BST(n50))
+
+    
+    def test_multi_level_invalid_BST(self):
+        """
+               50
+             /    \
+           30       60
+          /  \     /  \ 
+         5   20   45    70
+                       /  \
+                     45    80
+        """
+        n30 = TreeNode(30, TreeNode(5), TreeNode(20))
+        n70 = TreeNode(70, TreeNode(45), TreeNode(80))
+        n60 = TreeNode(60, TreeNode(45), n70)
+        n50 = TreeNode(50, n30, n60)
+        self.assertFalse(is_valid_BST(n50))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
+```
+
+**Iterative Solution:** [https://repl.it/@trsong/Valid-Binary-Search-Tree-Iterative](https://repl.it/@trsong/Valid-Binary-Search-Tree-Iterative)
+```py
+import sys
+
+def is_valid_BST(tree):
+    stack = [(tree, -sys.maxint - 1, sys.maxint)]
+    while stack:
+        cur, low_boundary, hi_boundary = stack.pop()
+        if not cur:
+            continue
+        elif not(low_boundary <= cur.val <= hi_boundary):
+            return False
+        else:
+            stack.append((cur.left, low_boundary, cur.val))
+            stack.append((cur.right, cur.val, hi_boundary))
+    return True
+
+```
 
 ### Jul 28, 2019 LC 169 \[Easy\] Majority Element
 ---
