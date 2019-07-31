@@ -104,7 +104,46 @@ Your function should return 3, since we would need to remove all the columns to 
 ---
 > **Question:** Assume you have access to a function toss_biased() which returns 0 or 1 with a probability that's not 50-50 (but also not 0-100 or 100-0). You do not know the bias of the coin.
 
+### Aug 1, 2019 \[Medium\] All Root to Leaf Paths in Binary Tree
+---
+> **Question:** Given a binary tree, return all paths from the root to leaves.
+>
+> For example, given the tree:
+
+```py
+   1
+  / \
+ 2   3
+    / \
+   4   5
+```
+> Return `[[1, 2], [1, 3, 4], [1, 3, 5]]`.
+
 --->
+
+### Jul 30, 2019 LC 240 \[Medium\] Search a 2D Matrix II
+---
+> **Question:** Write an efficient algorithm that searches for a value in an m x n matrix. This matrix has the following properties:
+
+- Integers in each row are sorted in ascending from left to right.
+- Integers in each column are sorted in ascending from top to bottom.
+
+
+**Example:**
+
+```py
+Consider the following matrix:
+
+[
+  [1,   4,  7, 11, 15],
+  [2,   5,  8, 12, 19],
+  [3,   6,  9, 16, 22],
+  [10, 13, 14, 17, 24],
+  [18, 21, 23, 26, 30]
+]
+Given target = 5, return True.
+Given target = 20, return False.
+```
 
 ### Jul 30, 2019 LC 74 \[Medium\] Search a 2D Matrix
 ---
@@ -115,7 +154,7 @@ The first integer of each row is greater than the last integer of the previous r
 
 **Example 1:**
 
-```
+```py
 Input:
 matrix = [
   [1,   3,  5,  7],
@@ -123,12 +162,12 @@ matrix = [
   [23, 30, 34, 50]
 ]
 target = 3
-Output: true
+Output: True
 ```
 
 **Example 2:**
 
-```
+```py
 Input:
 matrix = [
   [1,   3,  5,  7],
@@ -136,7 +175,60 @@ matrix = [
   [23, 30, 34, 50]
 ]
 target = 13
-Output: false
+Output: False
+```
+
+**My thoughts:** Don't treat input matrix as array of sorted numbers. Instead, virtually flatten matrix into a long sorted list and perform binary search. 
+
+Although the time complexity between performing two binary search vs one is exactly the same. `O(log(n) + log(m)) = O(log(nm))`.
+
+**Solution with Binary Search:** [https://repl.it/@trsong/Search-a-2D-Matrix](https://repl.it/@trsong/Search-a-2D-Matrix)
+```py
+import unittest
+
+def search_matrix(matrix, target):
+    if not matrix or not matrix[0]: return False
+    n, m = len(matrix), len(matrix[0])
+    lo = 0
+    hi = n * m - 1
+    while lo <= hi:
+        mid = lo + (hi - lo) / 2
+        r, c = mid / m, mid % m
+        if matrix[r][c] == target:
+            return True
+        elif matrix[r][c] < target:
+            lo = mid + 1
+        else:
+            hi = mid - 1
+    return False
+
+
+class SearchMatrixSpec(unittest.TestCase):
+    def setUp(self):
+        self.matrix = [
+            [1,   3,  5,  7],
+            [10, 11, 16, 20],
+            [23, 30, 34, 50]
+        ]
+
+    def test_empty_matrix(self):
+        self.assertFalse(search_matrix([], 1))
+        self.assertFalse(search_matrix([[]], 1))
+
+    def test_example(self):
+        self.assertTrue(search_matrix(self.matrix, target = 3))
+        self.assertTrue(search_matrix(self.matrix, target = 16))
+        self.assertFalse(search_matrix(self.matrix, target = 13))
+    
+    def test_search_boundary_element(self):
+        self.assertTrue(search_matrix(self.matrix, target = 1))
+        self.assertTrue(search_matrix(self.matrix, target = 7))
+        self.assertTrue(search_matrix(self.matrix, target = 23))
+        self.assertTrue(search_matrix(self.matrix, target = 50))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
 ```
 
 ### Jul 29, 2019 \[Medium\] Valid Binary Search Tree
@@ -328,14 +420,14 @@ if __name__ == '__main__':
     unittest.main(exit=False)
 ```
 
-Howevever, ***Boyce-Moore Algorithm*** is the one we should take a close look at. As it can gives O(n) time complexity and O(1) space complexity: here is how it works, the idea is to shrink the array so that the majority result is equivalent between the original array as well as the shrinked array.
+Howevever, ***Boyce-Moore Voting Algorithm*** is the one we should take a close look at. As it can gives O(n) time complexity and O(1) space complexity: here is how it works, the idea is to shrink the array so that the majority result is equivalent between the original array as well as the shrinked array.
 
 The way we shrink the array is to treat the very first element as majority candidate and  shrink the array recursively. 
 - If the candidate is not majority, there exists an even point p > 0 such that the number of "majority" vs "minority" is the same. And we chop out the array before and equal to the even point p. And the real majority of the rest of array should be the same as the shrinked array
 - If the candidate is indeed majority however there is still an even point q such that the number of majority vs minority is the same. And we the same thing to chop out the array before and equal to the even point q. And a majority should still be a majority of the rest of array as we eliminate same number of majority and minority that leaves the majority unchange. 
 - If the candidate is indeed majority and there is no even point such that the number of majority vs minority is the same. Thus the candidate can be safely returned as majority.
 
-**Solution with Boyce-Moore Algorithm:** [https://repl.it/@trsong/Majority-Element-Boyce-Moore-Algorithms](https://repl.it/@trsong/Majority-Element-Boyce-Moore-Algorithms)
+**Solution with Boyce-Moore Voting Algorithm:** [https://repl.it/@trsong/Majority-Element-Boyce-Moore-Algorithms](https://repl.it/@trsong/Majority-Element-Boyce-Moore-Algorithms)
 ```py
 def majority_element(nums):
     n = len(nums)
