@@ -121,7 +121,7 @@ Your function should return 3, since we would need to remove all the columns to 
 
 --->
 
-### Jul 30, 2019 LC 240 \[Medium\] Search a 2D Matrix II
+### Jul 31, 2019 LC 240 \[Medium\] Search a 2D Matrix II
 ---
 > **Question:** Write an efficient algorithm that searches for a value in an m x n matrix. This matrix has the following properties:
 
