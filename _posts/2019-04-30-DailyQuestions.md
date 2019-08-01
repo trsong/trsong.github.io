@@ -104,6 +104,8 @@ Your function should return 3, since we would need to remove all the columns to 
 ---
 > **Question:** Assume you have access to a function toss_biased() which returns 0 or 1 with a probability that's not 50-50 (but also not 0-100 or 100-0). You do not know the bias of the coin.
 
+---> 
+
 ### Aug 1, 2019 \[Medium\] All Root to Leaf Paths in Binary Tree
 ---
 > **Question:** Given a binary tree, return all paths from the root to leaves.
@@ -119,7 +121,6 @@ Your function should return 3, since we would need to remove all the columns to 
 ```
 > Return `[[1, 2], [1, 3, 4], [1, 3, 5]]`.
 
---->
 
 ### Jul 31, 2019 LC 240 \[Medium\] Search a 2D Matrix II
 ---
@@ -143,6 +144,99 @@ Consider the following matrix:
 ]
 Given target = 5, return True.
 Given target = 20, return False.
+```
+
+**My thoughts:** This problem can be solved using Divide and Conquer. First we find a mid-point (mid of row and column point). We break the matrix into 4 sub-matrices: top-left, top-right, bottom-left, bottom-right. And notice the following properties:
+1. number in top-left matrix is strictly is **less** than mid-point 
+2. number in bottom-right matrix is strictly **greater** than mid-point
+3. number in the other two could be **greater** or **smaller** than mid-point, we cannot say until find out
+
+So each time when we find a mid-point in recursion, if target number is greater than mid-point then we can say that it cannot be in top-left matrix (property 1). Or if the target number is smaller than mid-point then we can say it cannot be in bottom-right matrix (property 2). And we always need to check the other two sub-matrices. 
+
+Therefore we have `T(mn) = 3/4 * (mn/4) + O(1)`. By Master Theorem, the time complexity is `O(log(mn)) = O(log(m) + log(n))`
+
+
+**Solution with Divide and Conquer:** [https://repl.it/@trsong/Search-a-2D-Matrix-II](https://repl.it/@trsong/Search-a-2D-Matrix-II)
+```py
+import unittest
+
+def search_matrix(matrix, target):
+    if not matrix or not matrix[0]: return False
+    n, m = len(matrix), len(matrix[0])
+
+    def search_row_col(row, col):
+        for c in xrange(m):
+            if matrix[row][c] == target:
+                return True
+        for r in xrange(n):
+            if matrix[r][col] == target:
+                return True
+        return False
+
+    def search_matrix_recur(rlo, rhi, clo, chi):
+        if rlo > rhi or clo > chi: return False
+        rmid = rlo + (rhi - rlo) / 2
+        cmid = clo + (chi - clo) / 2
+        if matrix[rmid][cmid] == target:
+            return True
+        elif search_row_col(rmid, cmid):
+            return True
+        elif matrix[rmid][cmid] > target and search_matrix_recur(rlo, rmid-1, clo, cmid-1):
+            # target in top left
+            return True
+        elif matrix[rmid][cmid] < target and search_matrix_recur(rmid+1, rhi, cmid+1, chi):
+            # target in bottom right
+            return True
+        else:
+            # target could be in top right or bottom left, we cannot say which is the case
+            return search_matrix_recur(rlo, rmid-1, cmid+1, chi) or search_matrix_recur(rmid+1, rhi, clo, cmid-1)
+
+    return search_matrix_recur(rlo=0, rhi=n-1, clo=0, chi=m-1)
+
+
+class SearchMatrixSpec(unittest.TestCase):
+    def test_empty_matrix(self):
+        self.assertFalse(search_matrix([], target=0))
+        self.assertFalse(search_matrix([[]], target=0))
+
+    def test_example(self):
+        matrix = [
+            [ 1, 4, 7,11,15],
+            [ 2, 5, 8,12,19],
+            [ 3, 6, 9,16,22],
+            [10,13,14,17,24],
+            [18,21,23,26,30]
+        ]
+        self.assertTrue(search_matrix(matrix, target=5))
+        self.assertFalse(search_matrix(matrix, target=20))
+
+    def test_mid_less_than_top_right(self):
+        matrix = [
+            [ 1, 2, 3, 4, 5],
+            [ 6, 7, 8, 9,10],
+            [11,12,13,14,15],
+            [16,17,18,19,20],
+            [21,22,23,24,25]
+        ]
+        self.assertTrue(search_matrix(matrix, target=5))
+
+    def test_mid_greater_than_top_right(self):
+        matrix = [
+            [5 , 6,10,14],
+            [6 ,10,13,18],
+            [10,13,18,19]
+        ]
+        self.assertTrue(search_matrix(matrix, target=14))
+
+    def test_mid_less_than_bottom_right(self):
+        matrix = [
+            [1,4],
+            [2,5]
+        ]
+        self.assertTrue(search_matrix(matrix, target=5))
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
 ```
 
 ### Jul 30, 2019 LC 74 \[Medium\] Search a 2D Matrix
