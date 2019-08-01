@@ -151,7 +151,9 @@ Given target = 20, return False.
 2. number in bottom-right matrix is strictly **greater** than mid-point
 3. number in the other two could be **greater** or **smaller** than mid-point, we cannot say until find out
 
-So each time when we find a mid-point in recursion, if target number is greater than mid-point then we can say that it cannot be in top-left matrix (property 1). Or if the target number is smaller than mid-point then we can say it cannot be in bottom-right matrix (property 2). And we always need to check the other two sub-matrices. 
+So each time when we find a mid-point in recursion, if target number is greater than mid-point then we can say that it cannot be in top-left matrix (property 1). So we check all other 3 matrices except top-left.
+
+Or if the target number is smaller than mid-point then we can say it cannot be in bottom-right matrix (property 2). We check all other 3 matrices except bottom-right.
 
 Therefore we have `T(mn) = 3/4 * (mn/4) + O(1)`. By Master Theorem, the time complexity is `O(log(mn)) = O(log(m) + log(n))`
 
