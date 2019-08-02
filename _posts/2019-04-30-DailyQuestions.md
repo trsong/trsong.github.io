@@ -106,6 +106,35 @@ Your function should return 3, since we would need to remove all the columns to 
 
 ---> 
 
+### Aug 2, 2019 \[Medium\] The Tower of Hanoi
+---
+> **Question:**  The Tower of Hanoi is a puzzle game with three rods and n disks, each a different size.
+>
+> All the disks start off on the first rod in a stack. They are ordered by size, with the largest disk on the bottom and the smallest one at the top.
+>
+> The goal of this puzzle is to move all the disks from the first rod to the last rod while following these rules:
+>
+> - You can only move one disk at a time.
+> - A move consists of taking the uppermost disk from one of the stacks and placing it on top of another stack.
+> - You cannot place a larger disk on top of a smaller disk.
+>
+> Write a function that prints out all the steps necessary to complete the Tower of Hanoi. 
+> - You should assume that the rods are numbered, with the first rod being 1, the second (auxiliary) rod being 2, and the last (goal) rod being 3.
+
+**Example:** 
+
+```
+with n = 3, we can do this in 7 moves:
+
+Move 1 to 3
+Move 1 to 2
+Move 3 to 2
+Move 1 to 3
+Move 2 to 1
+Move 2 to 3
+Move 1 to 3
+```
+
 ### Aug 1, 2019 \[Medium\] All Root to Leaf Paths in Binary Tree
 ---
 > **Question:** Given a binary tree, return all paths from the root to leaves.
@@ -121,6 +150,61 @@ Your function should return 3, since we would need to remove all the columns to 
 ```
 > Return `[[1, 2], [1, 3, 4], [1, 3, 5]]`.
 
+**Solution with Recursion:** [https://repl.it/@trsong/All-Root-to-Leaf-Paths-in-Binary-Tree](https://repl.it/@trsong/All-Root-to-Leaf-Paths-in-Binary-Tree)
+```py
+import unittest
+
+class TreeNode(object):
+    def __init__(self, val, left=None, right=None):
+        self.val = val
+        self.left = left
+        self.right= right
+
+
+def path_to_leaves(tree):
+    if not tree: return []
+    res = []
+    def path_to_leaves_recur(tree, root_to_parent):
+        root_to_current = root_to_parent + [tree.val]
+        if not tree.left and not tree.right: 
+            res.append(root_to_current)
+        else:
+            if tree.left:
+                path_to_leaves_recur(tree.left, root_to_current)
+            if tree.right:
+                path_to_leaves_recur(tree.right, root_to_current)
+    
+    path_to_leaves_recur(tree, [])
+    return res
+
+
+class PathToLeavesSpec(unittest.TestCase):
+    def test_empty_tree(self):
+        self.assertEqual(path_to_leaves(None), [])
+
+    def test_one_level_tree(self):
+        self.assertEqual(path_to_leaves(TreeNode(1)), [[1]])
+
+    def test_two_level_tree(self):
+        tree = TreeNode(1, TreeNode(2), TreeNode(3))
+        self.assertEqual(path_to_leaves(tree), [[1, 2], [1, 3]])
+
+    def test_example(self):
+        """
+          1
+         / \
+        2   3
+           / \
+          4   5
+        """
+        n3 = TreeNode(3, TreeNode(4), TreeNode(5))
+        tree = TreeNode(1, TreeNode(2), n3)
+        self.assertEqual(path_to_leaves(tree), [[1, 2], [1, 3, 4], [1, 3, 5]])
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
+```
 
 ### Jul 31, 2019 LC 240 \[Medium\] Search a 2D Matrix II
 ---
