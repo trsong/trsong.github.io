@@ -100,11 +100,12 @@ wvu
 tsr
 Your function should return 3, since we would need to remove all the columns to order it.
 
-### Jul , 2019 \[Medium\]
----
-> **Question:** Assume you have access to a function toss_biased() which returns 0 or 1 with a probability that's not 50-50 (but also not 0-100 or 100-0). You do not know the bias of the coin.
+--->
 
----> 
+### Aug 3, 2019 \[Medium\] Toss Biased Coin
+---
+> **Question:** Assume you have access to a function toss_biased() which returns 0 or 1 with a probability that's not 50-50 (but also not 0-100 or 100-0). You do not know the bias of the coin. Write a function to simulate an unbiased coin toss.
+
 
 ### Aug 2, 2019 \[Medium\] The Tower of Hanoi
 ---
@@ -133,6 +134,105 @@ Move 1 to 3
 Move 2 to 1
 Move 2 to 3
 Move 1 to 3
+```
+
+**My thoughts:** Think about the problem backwards, like what is the most significant states to reach the final state. There are three states coming into my mind: 
+
+- First state, we move all disks except for last one from rod 1 to rod 2. i.e. `[[3], [1, 2], []]`.
+- Second state, we move the last disk from rod 1 to rod 3. i.e. `[[], [1, 2], [3]]`
+- Third state, we move all disks from rod 2 to rod 3. i.e. `[[], [], [1, 2, 3]]`
+
+There is a clear recrusive relationship between game with size n and size n - 1. So we can perform above stategy recursively for game with size n - 1 which gives the following implementation.
+
+**Solution with Recursion:** [https://repl.it/@trsong/The-Tower-of-Hanoi](https://repl.it/@trsong/The-Tower-of-Hanoi)
+```py
+import unittest
+
+class HanoiGame(object):
+    def __init__(self, num_disks):
+        self.num_disks = num_disks
+        self.reset()
+        
+    def reset(self):
+        self.rods = [[disk for disk in xrange(self.num_disks, 0, -1)], [], []]
+
+    def move(self, src, dst):
+        disk = self.rods[src].pop()
+        self.rods[dst].append(disk)
+
+    def is_feasible_move(self, src, dst):
+        return 0 <= src <= 2 and 0 <= dst <= 2 and self.rods[src] and (not self.rods[dst] or self.rods[src][-1] < self.rods[dst][-1])
+
+    def is_game_finished(self):
+        return len(self.rods[-1]) == self.num_disks
+
+    def can_moves_finish_game(self, actions):
+        self.reset()
+        for src, dst in actions:
+            if not self.is_feasible_move(src, dst):
+                return False
+            else:
+                self.move(src, dst)
+        return self.is_game_finished()
+    
+
+class HanoiGameSpec(unittest.TestCase):
+    def test_example_moves(self):
+        game = HanoiGame(3)
+        moves = [(0, 2), (0, 1), (2, 1), (0, 2), (1, 0), (1, 2), (0, 2)]
+        self.assertTrue(game.can_moves_finish_game(moves))
+
+    def test_invalid_moves(self):
+        game = HanoiGame(3)
+        moves = [(0, 1), (0, 1)]
+        self.assertFalse(game.can_moves_finish_game(moves))
+
+    def test_unfinished_moves(self):
+        game = HanoiGame(3)
+        moves = [(0, 1)]
+        self.assertFalse(game.can_moves_finish_game(moves))
+
+
+def hanoi_moves(n):
+    moves = []
+
+    def hanoi_moves_recur(n, src, dst):
+        if n <= 0: return
+        other = 3 - src - dst
+
+        # Step1: move n - 1 disks from src to 'other' to allow last disk move to dst
+        hanoi_moves_recur(n-1, src, other)
+
+        # Step2: move last disk from src to dst
+        moves.append((src, dst))
+
+        # Step3: move n - 1 disks from 'other' to dst
+        hanoi_moves_recur(n-1, other, dst)
+
+    hanoi_moves_recur(n, 0, 2)
+    return moves
+
+
+class HanoiMoveSpec(unittest.TestCase):
+    def assert_hanoi_moves(self, n, moves):
+        game = HanoiGame(n)
+        self.assertTrue(game.can_moves_finish_game(moves))
+
+    def test_three_disks(self):
+        moves = hanoi_moves(3)
+        self.assert_hanoi_moves(3, moves)
+
+    def test_one_disk(self):
+        moves = hanoi_moves(1)
+        self.assert_hanoi_moves(1, moves)
+
+    def test_ten_disks(self):
+        moves = hanoi_moves(10)
+        self.assert_hanoi_moves(10, moves)
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
 ```
 
 ### Aug 1, 2019 \[Medium\] All Root to Leaf Paths in Binary Tree
@@ -220,9 +320,9 @@ if __name__ == '__main__':
 Consider the following matrix:
 
 [
-  [1,   4,  7, 11, 15],
-  [2,   5,  8, 12, 19],
-  [3,   6,  9, 16, 22],
+  [ 1,  4,  7, 11, 15],
+  [ 2,  5,  8, 12, 19],
+  [ 3,  6,  9, 16, 22],
   [10, 13, 14, 17, 24],
   [18, 21, 23, 26, 30]
 ]
