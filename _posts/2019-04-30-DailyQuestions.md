@@ -102,10 +102,73 @@ Your function should return 3, since we would need to remove all the columns to 
 
 --->
 
+### Aug 4, 2019 LC 392 \[Medium\] Is Subsequence
+---
+> **Question:** Given a string s and a string t, check if s is subsequence of t.
+>
+> A subsequence of a string is a new string which is formed from the original string by deleting some (can be none) of the characters without disturbing the relative positions of the remaining characters. (ie, "ace" is a subsequence of "abcde" while "aec" is not).
+
+**Example 1:**
+```
+s = "abc", t = "ahbgdc"
+Return true.
+```
+
+**Example 2:**
+```
+s = "axc", t = "ahbgdc"
+Return false.
+```
+
 ### Aug 3, 2019 \[Medium\] Toss Biased Coin
 ---
 > **Question:** Assume you have access to a function toss_biased() which returns 0 or 1 with a probability that's not 50-50 (but also not 0-100 or 100-0). You do not know the bias of the coin. Write a function to simulate an unbiased coin toss.
 
+**My thoughts:** Suppose the biased toss has probablilty p to return 0 and (1-p) to get 1. Then the probability to get:
+
+- 0, 0 is `p * p`
+- 1, 1 is `(1-p) * (1-p)`
+- 1, 0 is `(1-p) * p`
+- 0, 1 is `p * (1-p)`
+  
+Thus we can take advantage that 1, 0 and 0, 1 has same probility to get unbiased toss. Of course, above logic works only if p is neither 0% nor 100%. 
+
+
+**Solution:** [https://repl.it/@trsong/Toss-Biased-Coin](https://repl.it/@trsong/Toss-Biased-Coin)
+```py
+from random import randint
+
+def toss_biased():
+    # suppose the toss has 1/4 chance to get 0 and 3/4 to get 1
+    return 0 if randint(0, 3) == 0 else 1
+
+
+def toss_unbiased():
+    while True:
+        t1 = toss_biased()
+        t2 = toss_biased()
+        if t1 != t2:
+            return t1
+
+
+def print_distribution(repeat):
+    histogram = {}
+    for _ in xrange(repeat):
+        res = toss_unbiased()
+        if res not in histogram:
+            histogram[res] = 0
+        histogram[res] += 1
+    print histogram
+
+
+def main():
+    # Distribution looks like {0: 99931, 1: 100069}
+    print_distribution(repeat=200000)
+
+
+if __name__ == '__main__':
+    main()
+```
 
 ### Aug 2, 2019 \[Medium\] The Tower of Hanoi
 ---
