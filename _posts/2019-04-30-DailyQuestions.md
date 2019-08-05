@@ -96,7 +96,7 @@ Your function should return 3, since we would need to remove all the columns to 
 
 --->
 
-### Aug 5, 2019 \[Easy\]
+### Aug 5, 2019 \[Easy\] Single Bit Switch
 ---
 > **Question:** Given three 32-bit integers x, y, and b, return x if b is 1 and y if b is 0, using only mathematical or bit operations. You can assume b can only be 1 or 0.
 
