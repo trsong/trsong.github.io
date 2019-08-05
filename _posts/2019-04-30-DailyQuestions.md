@@ -140,7 +140,7 @@ def isSubsequence(s, t):
 class IsSubsequenceSpec(unittest.TestCase):
     def test_empty_s(self):
         self.assertTrue(isSubsequence("", ""))
-        self.assertFalse(isSubsequence("", "a"))
+        self.assertTrue(isSubsequence("", "a"))
 
     def test_empty_t(self):
         self.assertFalse(isSubsequence("a", ""))
@@ -156,10 +156,10 @@ class IsSubsequenceSpec(unittest.TestCase):
         self.assertTrue(isSubsequence("ab", "aaaaccb"))
 
     def test_example(self):
-        self.assertTrue(isinstance("abc", "ahbgdc"))
+        self.assertTrue(isSubsequence("abc", "ahbgdc"))
 
     def test_example2(self):
-        self.assertFalse(isinstance("axc", "ahbgdc"))
+        self.assertFalse(isSubsequence("axc", "ahbgdc"))
 
 
 if __name__ == '__main__':
