@@ -24,12 +24,6 @@ categories: Python/Java
 Given N, write a function to return the number of knight's tours on an N by N chessboard.
 
 
-
-
-### Jul , 2019 \[Easy\]
----
-> **Question:** Given three 32-bit integers x, y, and b, return x if b is 1 and y if b is 0, using only mathematical or bit operations. You can assume b can only be 1 or 0.
-
 ### Jul , 2019 \[Hard\]
 ---
 > **Question:**
@@ -102,6 +96,10 @@ Your function should return 3, since we would need to remove all the columns to 
 
 --->
 
+### Aug 5, 2019 \[Easy\]
+---
+> **Question:** Given three 32-bit integers x, y, and b, return x if b is 1 and y if b is 0, using only mathematical or bit operations. You can assume b can only be 1 or 0.
+
 ### Aug 4, 2019 LC 392 \[Medium\] Is Subsequence
 ---
 > **Question:** Given a string s and a string t, check if s is subsequence of t.
@@ -120,6 +118,53 @@ s = "axc", t = "ahbgdc"
 Return false.
 ```
 
+**My thoughts:** Just base on the definition of subsequence, mantaining an pointer of s to the next letter we are about to checking and check it against all letter of t.
+
+**Solution:** [https://repl.it/@trsong/Is-Subsequence](https://repl.it/@trsong/Is-Subsequence)
+
+```py
+import unittest
+
+def isSubsequence(s, t):
+    if len(s) > len(t): return False
+    if not len(s): return True
+    i = 0
+    for c in t:
+        if i >= len(s):
+            break
+        if c == s[i]:
+            i += 1
+    return i >= len(s)
+
+
+class IsSubsequenceSpec(unittest.TestCase):
+    def test_empty_s(self):
+        self.assertTrue(isSubsequence("", ""))
+        self.assertFalse(isSubsequence("", "a"))
+
+    def test_empty_t(self):
+        self.assertFalse(isSubsequence("a", ""))
+
+    def test_s_longer_than_t(self):
+        self.assertFalse(isSubsequence("ab", "a"))
+
+    def test_size_one_input(self):
+        self.assertTrue(isSubsequence("a", "a"))
+        self.assertFalse(isSubsequence("a", "b"))
+
+    def test_end_with_same_letter(self):
+        self.assertTrue(isSubsequence("ab", "aaaaccb"))
+
+    def test_example(self):
+        self.assertTrue(isinstance("abc", "ahbgdc"))
+
+    def test_example2(self):
+        self.assertFalse(isinstance("axc", "ahbgdc"))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
+```
 ### Aug 3, 2019 \[Medium\] Toss Biased Coin
 ---
 > **Question:** Assume you have access to a function toss_biased() which returns 0 or 1 with a probability that's not 50-50 (but also not 0-100 or 100-0). You do not know the bias of the coin. Write a function to simulate an unbiased coin toss.
