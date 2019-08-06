@@ -95,10 +95,65 @@ tsr
 Your function should return 3, since we would need to remove all the columns to order it.
 
 --->
+### Aug 6, 2019 LC 236 \[Medium\] Lowest Common Ancestor of a Binary Tree
+---
+> **Question:** Given a binary tree, find the lowest common ancestor (LCA) of two given nodes in the tree.
+
+**Example:**
+
+```py
+     1
+   /   \
+  2     3
+ / \   / \
+4   5 6   7
+
+LCA(4, 5) = 2
+LCA(4, 6) = 1
+LCA(3, 4) = 1
+LCA(2, 4) = 2
+```
 
 ### Aug 5, 2019 \[Easy\] Single Bit Switch
 ---
 > **Question:** Given three 32-bit integers x, y, and b, return x if b is 1 and y if b is 0, using only mathematical or bit operations. You can assume b can only be 1 or 0.
+
+**Solution:** [https://repl.it/@trsong/Single-Bit-Switch](https://repl.it/@trsong/Single-Bit-Switch)
+```py
+import unittest
+
+def single_bit_switch_1(b, x, y):
+    return b * x + (1 - b) * y
+
+
+def single_bit_switch_2(b, x, y):
+    # When b = 0001b,
+    # -b = 1111b, ~-b = 0000b
+    # When b = 0000b
+    # -b = 0000b, ~-b = 1111b
+    return (x & -b) | (y & ~-b) 
+
+
+class SingleBitSwitch(unittest.TestCase):
+    def test_b_is_zero(self):
+        b, x, y = 0, 8, 16
+        self.assertEqual(single_bit_switch_1(b, x, y), y)
+        self.assertEqual(single_bit_switch_2(b, x, y), y)
+
+    def test_b_is_one(self):
+        b, x, y = 1, 8, 16
+        self.assertEqual(single_bit_switch_1(b, x, y), x)
+        self.assertEqual(single_bit_switch_2(b, x, y), x)
+
+    def test_negative_numbers(self):
+        b0, b1, x, y = 0, 1, -1, -2
+        self.assertEqual(single_bit_switch_1(b0, x, y), y)
+        self.assertEqual(single_bit_switch_2(b1, x, y), x)
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
+```
 
 ### Aug 4, 2019 LC 392 \[Medium\] Is Subsequence
 ---
