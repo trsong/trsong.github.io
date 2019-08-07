@@ -65,36 +65,49 @@ A N B
 ```
 
 > is considered valid.
-> 
-### Jul , 2019 \[Medium\]
+--->
+
+### Aug 7, 2019 \[Medium\] Remove Unlexicographical Column
 ---
 > **Question:** You are given an N by M 2D matrix of lowercase letters. Determine the minimum number of columns that can be removed to ensure that each row is ordered from top to bottom lexicographically. That is, the letter at each column is lexicographically later as you go down each row. It does not matter whether each row itself is ordered lexicographically.
 
-For example, given the following table:
+**Example 1:**
 
+```
+Given the following table:
 cba
 daf
 ghi
-This is not ordered because of the a in the center. We can remove the second column to make it ordered:
 
+This is not ordered because of the a in the center. We can remove the second column to make it ordered:
 ca
 df
 gi
+
 So your function should return 1, since we only needed to remove 1 column.
+```
 
-As another example, given the following table:
+**Example 2:**
 
+
+```
+Given the following table:
 abcdef
+
 Your function should return 0, since the rows are already ordered (there's only one row).
+```
 
-As another example, given the following table:
+**Example 3:**
 
+```
+Given the following table:
 zyx
 wvu
 tsr
-Your function should return 3, since we would need to remove all the columns to order it.
 
---->
+Your function should return 3, since we would need to remove all the columns to order it.
+```
+
 ### Aug 6, 2019 LC 236 \[Medium\] Lowest Common Ancestor of a Binary Tree
 ---
 > **Question:** Given a binary tree, find the lowest common ancestor (LCA) of two given nodes in the tree.
@@ -112,6 +125,93 @@ LCA(4, 5) = 2
 LCA(4, 6) = 1
 LCA(3, 4) = 1
 LCA(2, 4) = 2
+```
+
+**My thoughts:** Notice that only the nodes at the same level can find common ancestor with same number of tracking backward. e.g. Consider 3 and 4 in above example: the common ancestor is 1, 3 needs 1 tracking backward, but 4 need 2 tracking backward. So the idea is to move those two nodes to the same level and then tacking backward until hit the common ancestor. The algorithm works as below:
+
+We can use BFS to find target nodes and their depth. And by tracking backward the parent of the deeper node, we can make sure both of nodes are on the same level. Finally, we can tracking backwards until hit a common ancestor. 
+
+**Solution with BFS and Backward Tracking Ancestor:** [https://repl.it/@trsong/Lowest-Common-Ancestor-of-a-Binary-Tree](https://repl.it/@trsong/Lowest-Common-Ancestor-of-a-Binary-Tree)
+```py
+import unittest
+
+class TreeNode(object):
+    def __init__(self, val, left=None, right=None):
+        self.val = val
+        self.left = left
+        self.right = right
+
+
+def LCA(tree, v1, v2):
+    if v1 == v2: return v1
+    parent = {}
+    n1 = n2 = None
+    lv1 = lv2 = lv = 0
+    queue = [tree]
+    
+    # Run BFS to find node with value v1 and v2 and its depth
+    while queue and (n1 is None or n2 is None):
+        level_size = len(queue)
+        for _ in xrange(level_size):
+            node = queue.pop(0)
+            if node.val == v1:
+                n1 = node
+                lv1 = lv
+            elif node.val == v2:
+                n2 = node
+                lv2 = lv
+            
+            if node.left:
+                parent[node.left] = node
+                queue.append(node.left)
+            if node.right:
+                parent[node.right] = node
+                queue.append(node.right)
+        lv += 1
+    
+    # Backtrack the parent of deeper node up until at the same level as the other node
+    (deeper_node, other_node) = (n1, n2) if lv1 > lv2 else (n2, n1)
+    for _ in xrange(abs(lv1 - lv2)):
+        deeper_node = parent[deeper_node]
+
+    # Find the ancestor of both nodes recursively until find the common ancestor
+    while deeper_node != other_node:
+        deeper_node = parent[deeper_node]
+        other_node = parent[other_node]
+
+    return deeper_node.val
+
+
+class LCASpec(unittest.TestCase):
+    def setUp(self):
+        """
+             1
+           /   \
+          2     3
+         / \   / \
+        4   5 6   7
+        """
+        n2 = TreeNode(2, TreeNode(4), TreeNode(5))
+        n3 = TreeNode(3, TreeNode(6), TreeNode(7))
+        self.tree = TreeNode(1, n2, n3)
+
+    def test_both_nodes_on_leaves(self):
+        self.assertEqual(LCA(self.tree, 4, 5), 2)
+        self.assertEqual(LCA(self.tree, 6, 7), 3)
+        self.assertEqual(LCA(self.tree, 4, 6), 1)
+
+    def test_nodes_on_different_levels(self):
+        self.assertEqual(LCA(self.tree, 4, 2), 2)
+        self.assertEqual(LCA(self.tree, 4, 3), 1)
+        self.assertEqual(LCA(self.tree, 4, 1), 1)
+
+    def test_same_nodes(self):
+        self.assertEqual(LCA(self.tree, 2, 2), 2)
+        self.assertEqual(LCA(self.tree, 6, 6), 6)
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
 ```
 
 ### Aug 5, 2019 \[Easy\] Single Bit Switch
