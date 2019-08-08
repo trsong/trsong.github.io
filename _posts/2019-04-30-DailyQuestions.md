@@ -65,9 +65,123 @@ A N B
 ```
 
 > is considered valid.
+
+LC 54. Spiral Matrix 
+Given a matrix of m x n elements (m rows, n columns), return all elements of the matrix in spiral order.
+
+Example 1:
+
+Input:
+[
+ [ 1, 2, 3 ],
+ [ 4, 5, 6 ],
+ [ 7, 8, 9 ]
+]
+Output: [1,2,3,6,9,8,7,4,5]
+Example 2:
+
+Input:
+[
+  [1, 2, 3, 4],
+  [5, 6, 7, 8],
+  [9,10,11,12]
+]
+Output: [1,2,3,4,8,12,11,10,9,5,6,7]
+
+
+LC 307. Range Sum Query - Mutable
+
+Given an integer array nums, find the sum of the elements between indices i and j (i ≤ j), inclusive.
+
+The update(i, val) function modifies nums by updating the element at index i to val.
+
+Example:
+
+Given nums = [1, 3, 5]
+
+sumRange(0, 2) -> 9
+update(1, 2)
+sumRange(0, 2) -> 8
+
+
+### Additional Question: LC 114 \[Medium\] Flatten Binary Tree to Linked List
+---
+> **Question:** Given a binary tree, flatten it to a linked list in-place.
+>
+> For example, given the following tree:
+
+```
+    1
+   / \
+  2   5
+ / \   \
+3   4   6
+```
+>
+> The flattened tree should look like:
+
+```
+1
+ \
+  2
+   \
+    3
+     \
+      4
+       \
+        5
+         \
+          6
+```
 --->
 
-### Aug 7, 2019 \[Medium\] Remove Unlexicographical Column
+### Aug 8, 2019 \[Medium\] Delete Columns to Make Sorted II
+---
+> **Question:** You are given an N by M 2D matrix of lowercase letters. The task is to count the number of columns to be deleted so that all the rows are lexicographically sorted.
+
+**Example 1:**
+```
+Given the following table:
+hello
+geeks
+
+Your function should return 1 as deleting column 1 (index 0)
+Now both strings are sorted in lexicographical order:
+ello
+eeks
+```
+
+**Example 2:**
+```
+Given the following table:
+xyz
+lmn
+pqr
+
+Your function should return 0. All rows are already sorted lexicographically.
+```
+
+
+### Additional Question: LT 640 \[Medium\] One Edit Distance
+---
+> **Question:** Given two strings S and T, determine if they are both one edit distance apart.
+
+**Example 1:**
+
+```
+Input: s = "aDb", t = "adb" 
+Output: true
+```
+
+**Example 2:**
+```
+Input: s = "ab", t = "ab" 
+Output: false
+Explanation:
+s=t, so they aren't one edit distance apart
+```
+
+### Aug 7, 2019 \[Easy\] Delete Columns to Make Sorted I
 ---
 > **Question:** You are given an N by M 2D matrix of lowercase letters. Determine the minimum number of columns that can be removed to ensure that each row is ordered from top to bottom lexicographically. That is, the letter at each column is lexicographically later as you go down each row. It does not matter whether each row itself is ordered lexicographically.
 
@@ -106,6 +220,52 @@ wvu
 tsr
 
 Your function should return 3, since we would need to remove all the columns to order it.
+```
+
+**My thoughts:** Wordy this problem may be, but extremely easy to be solved. We will take a look at *Delete Columns to Make Sorted II* tomorrow.
+
+**Solution:** [https://repl.it/@trsong/Delete-Columns-to-Make-Sorted-I](https://repl.it/@trsong/Delete-Columns-to-Make-Sorted-I)
+```py
+import unittest
+
+def columns_to_delete(table):
+    if not table or not table[0]: return 0
+    n, m = len(table), len(table[0])
+    count = 0
+    for c in xrange(m):
+        for r in xrange(1, n):
+            if table[r][c] < table[r-1][c]:
+                count += 1
+                break
+    return count
+
+class ColumnToDeleteSpec(unittest.TestCase):
+    def test_empty_table(self):
+        self.assertEqual(columns_to_delete([]), 0)
+        self.assertEqual(columns_to_delete([""]), 0)
+
+    def test_example1(self):
+        self.assertEqual(columns_to_delete([
+            'cba',
+            'daf',
+            'ghi'
+        ]), 1)
+
+    def test_example2(self):
+        self.assertEqual(columns_to_delete([
+            'abcdef'
+        ]), 0)
+
+    def test_example3(self):
+        self.assertEqual(columns_to_delete([
+            'zyx',
+            'wvu',
+            'tsr'
+        ]), 3)
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False)     
 ```
 
 ### Aug 6, 2019 LC 236 \[Medium\] Lowest Common Ancestor of a Binary Tree
@@ -234,7 +394,7 @@ def single_bit_switch_2(b, x, y):
     return (x & -b) | (y & ~-b) 
 
 
-class SingleBitSwitch(unittest.TestCase):
+class SingleBitSwitchSpec(unittest.TestCase):
     def test_b_is_zero(self):
         b, x, y = 0, 8, 16
         self.assertEqual(single_bit_switch_1(b, x, y), y)
@@ -2508,7 +2668,7 @@ if __name__ == '__main__':
     unittest.main(exit=False)
 ```
 
-### Jul 10, 2019 LT 512 \[Meidum\] Decode Ways
+### Jul 10, 2019 LT 512 \[Medium\] Decode Ways
 ---
 > **Question:** A message containing letters from A-Z is being encoded to numbers using the following mapping:
 'A' -> 1
@@ -4726,7 +4886,7 @@ class PowSpec(unittest.TestCase):
 if __name__ == '__main__':
     unittest.main(exit=False)
 ```
-### June 19, 2019 \[Medium\] Conway's Game of Life
+### June 19, 2019 LC 289 \[Medium\] Conway's Game of Life
 ---
 > **Question:** Conway's Game of Life takes place on an infinite two-dimensional board of square cells. Each cell is either dead or alive, and at each tick, the following rules apply:
 >
