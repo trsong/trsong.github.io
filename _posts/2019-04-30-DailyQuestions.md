@@ -88,20 +88,23 @@ Input:
 ]
 Output: [1,2,3,4,8,12,11,10,9,5,6,7]
 
+--->
 
-LC 307. Range Sum Query - Mutable
+### Aug 9, 2019 LC 307 \[Medium\] Range Sum Query - Mutable
+---
+> **Question:** Given an integer array nums, find the sum of the elements between indices i and j (i ≤ j), inclusive.
+>
+> The update(i, val) function modifies nums by updating the element at index i to val.
 
-Given an integer array nums, find the sum of the elements between indices i and j (i ≤ j), inclusive.
+**Example:**
 
-The update(i, val) function modifies nums by updating the element at index i to val.
-
-Example:
-
+```py
 Given nums = [1, 3, 5]
 
 sumRange(0, 2) -> 9
 update(1, 2)
 sumRange(0, 2) -> 8
+```
 
 
 ### Additional Question: LC 114 \[Medium\] Flatten Binary Tree to Linked List
@@ -110,7 +113,7 @@ sumRange(0, 2) -> 8
 >
 > For example, given the following tree:
 
-```
+```py
     1
    / \
   2   5
@@ -120,7 +123,7 @@ sumRange(0, 2) -> 8
 >
 > The flattened tree should look like:
 
-```
+```py
 1
  \
   2
@@ -133,7 +136,6 @@ sumRange(0, 2) -> 8
          \
           6
 ```
---->
 
 ### Aug 8, 2019 \[Medium\] Delete Columns to Make Sorted II
 ---
@@ -170,15 +172,70 @@ Your function should return 0. All rows are already sorted lexicographically.
 
 ```
 Input: s = "aDb", t = "adb" 
-Output: true
+Output: True
 ```
 
 **Example 2:**
 ```
 Input: s = "ab", t = "ab" 
-Output: false
+Output: False
 Explanation:
 s=t, so they aren't one edit distance apart
+```
+
+**My thougths:** The trick for this problem is that one insertion of shorter string is equivalent to one removal of longer string. And if both string of same length, then we only allow one replacement. The other cases are treated as more than one edit distance between two strings.
+
+**Solution:** [https://repl.it/@trsong/One-Edit-Distance](https://repl.it/@trsong/One-Edit-Distance)
+```py
+import unittest
+
+def is_one_edit_distance_between(s1, s2):
+    len1, len2 = len(s1), len(s2)
+    if abs(len1 - len2) > 1: return False
+    i = distance = 0
+    (shorter_str, longer_str) = (s1, s2) if len1 < len2 else (s2, s1)
+    len_shorter_str = len(shorter_str)
+    for c in longer_str:
+        if distance > 1: return False
+        if i >= len_shorter_str or c != shorter_str[i]:
+            distance += 1
+            if len1 != len2:
+                # when two strings of different length and there is mismatch, only proceed the pointer to longer string
+                i -= 1
+        i += 1
+    return distance == 1
+
+
+class IsOneEditDistanceBetweenSpec(unittest.TestCase):
+    def test_example1(self):
+        self.assertTrue(is_one_edit_distance_between('aDb', 'adb'))
+
+    def test_example2(self):
+        self.assertFalse(is_one_edit_distance_between('ab', 'ab'))
+
+    def test_empty_string(self):
+        self.assertFalse(is_one_edit_distance_between('', ''))
+        self.assertTrue(is_one_edit_distance_between('', 'a'))
+        self.assertFalse(is_one_edit_distance_between('', 'ab'))
+
+    def test_one_insert_between_two_strings(self):
+        self.assertTrue(is_one_edit_distance_between('abc', 'ac'))
+        self.assertFalse(is_one_edit_distance_between('abcd', 'ad'))
+
+    def test_one_remove_between_two_strings(self):
+        self.assertTrue(is_one_edit_distance_between('abcd', 'abd'))
+        self.assertFalse(is_one_edit_distance_between('abcd', 'cd'))
+
+    def test_one_replace_between_two_string(self):
+        self.assertTrue(is_one_edit_distance_between('abc', 'abd'))
+        self.assertFalse(is_one_edit_distance_between('abc', 'ddc'))
+
+    def test_length_difference_greater_than_one(self):
+        self.assertFalse(is_one_edit_distance_between('abcd', 'abcdef'))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
 ```
 
 ### Aug 7, 2019 \[Easy\] Delete Columns to Make Sorted I
