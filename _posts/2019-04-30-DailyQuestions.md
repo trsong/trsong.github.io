@@ -163,7 +163,7 @@ pqr
 Your function should return 0. All rows are already sorted lexicographically.
 ```
 
-**My thoughts:** This problems feels like 2D version of ***The Longest Increasing Subsequence Problem*** (LIP) (check Jul 2, 2019 problem for details). The LIP says find longest increasing subsequence. e.g. `01212342345` gives `01[2]1234[23]45`, with `2,2,3` removed. So if we only have 1 row, we can simply find longest increasing subsequence and use that to calculate which index to remove. Similarly, for n by m table, we can first find longest increasing sub-columns and use that to calculate which columns to remove. Which can be done using DP:
+**My thoughts:** This problem feels like 2D version of ***The Longest Increasing Subsequence Problem*** (LIP) (check Jul 2, 2019 problem for details). The LIP says find longest increasing subsequence. e.g. `01212342345` gives `01[2]1234[23]45`, with `2,2,3` removed. So if we only have 1 row, we can simply find longest increasing subsequence and use that to calculate how many columns to remove i.e. `# of columns to remove = m - LIP`. Similarly, for n by m table, we can first find longest increasing sub-columns and use that to calculate which columns to remove. Which can be done using DP:
 
 let `dp[i]` represents max number of columns to keep at ends at column i. 
 - `dp[i] = max(dp[j]) + 1 where j < i` if all characters in column `i` have lexicographical order larger than column `j`
