@@ -66,29 +66,35 @@ A N B
 
 > is considered valid.
 
-LC 54. Spiral Matrix 
-Given a matrix of m x n elements (m rows, n columns), return all elements of the matrix in spiral order.
+--->
 
-Example 1:
+### Aug 10, 2019 LC 54 \[Medium\] Spiral Matrix 
+---
+> **Question:** Given a matrix of n x m elements (n rows, m columns), return all elements of the matrix in spiral order.
 
+**Example 1:**
+
+```py
 Input:
 [
  [ 1, 2, 3 ],
  [ 4, 5, 6 ],
  [ 7, 8, 9 ]
 ]
-Output: [1,2,3,6,9,8,7,4,5]
-Example 2:
+Output: [1, 2, 3, 6, 9, 8, 7, 4, 5]
+```
 
+**Example 2:**
+
+```py
 Input:
 [
-  [1, 2, 3, 4],
-  [5, 6, 7, 8],
-  [9,10,11,12]
+  [1,  2,  3,  4],
+  [5,  6,  7,  8],
+  [9, 10, 11, 12]
 ]
-Output: [1,2,3,4,8,12,11,10,9,5,6,7]
-
---->
+Output: [1, 2, 3, 4, 8, 12, 11, 10, 9, 5, 6, 7]
+```
 
 ### Aug 9, 2019 LC 307 \[Medium\] Range Sum Query - Mutable
 ---
@@ -135,6 +141,103 @@ sumRange(0, 2) -> 8
         5
          \
           6
+```
+
+**Solution with Recursion:** [https://repl.it/@trsong/Flatten-Binary-Tree-to-Linked-List](https://repl.it/@trsong/Flatten-Binary-Tree-to-Linked-List)
+```py
+import unittest
+
+class TreeNode(object):
+    def __init__(self, val, left=None, right=None):
+        self.val = val
+        self.left = left
+        self.right = right
+
+    def __eq__(self, other):
+        return other and other.val == self.val and other.left == self.left and other.right == self.right
+
+
+def flatten(tree):
+    flatten_and_get_leaf(tree)
+
+
+def flatten_and_get_leaf(tree):
+    # flatten the tree and return the leaf node of that tree
+    if not tree or not tree.left and not tree.right: return tree
+    right_leaf = flatten_and_get_leaf(tree.right)
+    left_leaf = flatten_and_get_leaf(tree.left)
+
+    if left_leaf:
+        # append right tree to the end of left tree leaf 
+        left_leaf.right = tree.right
+    if tree.left:
+        # move left tree to right tree
+        tree.right = tree.left
+    tree.left = None
+
+    # return tree right leaf if exits otherwise return left one 
+    return right_leaf if right_leaf else left_leaf
+
+
+class FlattenSpec(unittest.TestCase):
+    def list_to_tree(self, lst):
+        p = dummy = TreeNode(-1)
+        for num in lst:
+            p.right = TreeNode(num)
+            p = p.right
+        return dummy.right
+
+    def test_example(self):
+        """
+            1
+           / \
+          2   5
+         / \   \
+        3   4   6
+        """
+        n2 = TreeNode(2, TreeNode(3), TreeNode(4))
+        n5 = TreeNode(5, right = TreeNode(6))
+        tree = TreeNode(1, n2, n5)
+        flatten_list = [1, 2, 3, 4, 5, 6]
+        flatten(tree)
+        self.assertEqual(tree, self.list_to_tree(flatten_list))
+
+    def test_empty_tree(self):
+        tree = None
+        flatten(tree)
+        self.assertIsNone(tree)
+
+    def test_only_right_child(self):
+        """
+        1
+         \
+          2
+           \
+            3
+        """
+        n2 = TreeNode(2, right=TreeNode(3))
+        tree = TreeNode(1, right = n2)
+        flatten_list = [1, 2, 3]
+        flatten(tree)
+        self.assertEqual(tree, self.list_to_tree(flatten_list))
+
+    def test_only_left_child(self):
+        """
+            1
+           /
+          2
+         /
+        3
+        """
+        n2 = TreeNode(2, TreeNode(3))
+        tree = TreeNode(1, n2)
+        flatten_list = [1, 2, 3]
+        flatten(tree)
+        self.assertEqual(tree, self.list_to_tree(flatten_list))  
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
 ```
 
 ### Aug 8, 2019 \[Medium\] Delete Columns to Make Sorted II
