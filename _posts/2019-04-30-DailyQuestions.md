@@ -68,7 +68,96 @@ A N B
 
 --->
 
-### Aug 10, 2019 LC 54 \[Medium\] Spiral Matrix 
+### Aug 10, 2019 LC 308 \[Medium\] Range Sum Query 2D - Mutable
+---
+> **Question:** Given a 2D matrix matrix, find the sum of the elements inside the rectangle defined by its upper left corner (row1, col1) and lower right corner (row2, col2).
+
+**Example:**
+
+```py
+Given matrix = [
+  [3, 0, 1, 4, 2],
+  [5, 6, 3, 2, 1],
+  [1, 2, 0, 1, 5],
+  [4, 1, 0, 1, 7],
+  [1, 0, 3, 0, 5]
+]
+
+sumRegion(2, 1, 4, 3) -> 8
+update(3, 2, 2)
+sumRegion(2, 1, 4, 3) -> 10
+```
+
+**Solution with Binary Indexed Tree:** [https://repl.it/@trsong/Range-Sum-Query-Mutable](https://repl.it/@trsong/Range-Sum-Query-Mutable)
+```py
+import unittest
+
+class RangeSumQuery(object):
+    @staticmethod
+    def last_bit(num):
+        return num & -num
+
+    def __init__(self, nums):
+        n = len(nums)
+        self._BITree = [0] * (n + 1)
+        for i in xrange(n):
+            self.update(i, nums[i])
+
+    def prefixSum(self, i):
+        """Get sum of value from index 0 to i """
+        # BITree starts from index 1
+        index = i + 1
+        res = 0
+        while index > 0:
+            res += self._BITree[index]
+            index -= RangeSumQuery.last_bit(index)
+        return res
+
+    def rangeSum(self, i, j):
+        return self.prefixSum(j) - self.prefixSum(i-1)
+
+    def update(self, i, val):
+        """Update the sum by add delta on top of result"""
+        # BITree starts from index 1
+        delta = val - self.rangeSum(i, i)
+        index = i + 1
+        while index < len(self._BITree):
+            self._BITree[index] += delta
+            index += RangeSumQuery.last_bit(index)
+
+
+class RangeSumQuerySpec(unittest.TestCase):
+    def test_example(self):
+        rsq = RangeSumQuery([1, 3, 5])
+        self.assertEqual(rsq.rangeSum(0, 2), 9)
+        rsq.update(1, 2)
+        self.assertEqual(rsq.rangeSum(0, 2), 8)
+
+    def test_one_elem_array(self):
+        rsq = RangeSumQuery([8])
+        rsq.update(0, 2)
+        self.assertEqual(rsq.rangeSum(0, 0), 2)
+
+    def test_update_all_elements(self):
+        req = RangeSumQuery([1, 4, 2, 3])
+        self.assertEqual(req.rangeSum(0, 3), 10)
+        req.update(0, 0)
+        req.update(2, 0)
+        req.update(1, 0)
+        req.update(3, 0)
+        self.assertEqual(req.rangeSum(0, 3), 0)
+        req.update(2, 1)
+        self.assertEqual(req.rangeSum(0, 1), 0)
+        self.assertEqual(req.rangeSum(1, 2), 1)
+        self.assertEqual(req.rangeSum(2, 3), 1)
+        self.assertEqual(req.rangeSum(3, 3), 0)
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
+```
+
+### Additional Question: LC 54 \[Medium\] Spiral Matrix 
 ---
 > **Question:** Given a matrix of n x m elements (n rows, m columns), return all elements of the matrix in spiral order.
 
