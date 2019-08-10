@@ -87,6 +87,49 @@ sumRegion(2, 1, 4, 3) -> 8
 update(3, 2, 2)
 sumRegion(2, 1, 4, 3) -> 10
 ```
+### Additional Question: LC 54 \[Medium\] Spiral Matrix 
+---
+> **Question:** Given a matrix of n x m elements (n rows, m columns), return all elements of the matrix in spiral order.
+
+**Example 1:**
+
+```py
+Input:
+[
+ [ 1, 2, 3 ],
+ [ 4, 5, 6 ],
+ [ 7, 8, 9 ]
+]
+Output: [1, 2, 3, 6, 9, 8, 7, 4, 5]
+```
+
+**Example 2:**
+
+```py
+Input:
+[
+  [1,  2,  3,  4],
+  [5,  6,  7,  8],
+  [9, 10, 11, 12]
+]
+Output: [1, 2, 3, 4, 8, 12, 11, 10, 9, 5, 6, 7]
+```
+
+### Aug 9, 2019 LC 307 \[Medium\] Range Sum Query - Mutable
+---
+> **Question:** Given an integer array nums, find the sum of the elements between indices i and j (i ≤ j), inclusive.
+>
+> The update(i, val) function modifies nums by updating the element at index i to val.
+
+**Example:**
+
+```py
+Given nums = [1, 3, 5]
+
+sumRange(0, 2) -> 9
+update(1, 2)
+sumRange(0, 2) -> 8
+```
 
 **Solution with Binary Indexed Tree:** [https://repl.it/@trsong/Range-Sum-Query-Mutable](https://repl.it/@trsong/Range-Sum-Query-Mutable)
 ```py
@@ -156,51 +199,6 @@ class RangeSumQuerySpec(unittest.TestCase):
 if __name__ == '__main__':
     unittest.main(exit=False)
 ```
-
-### Additional Question: LC 54 \[Medium\] Spiral Matrix 
----
-> **Question:** Given a matrix of n x m elements (n rows, m columns), return all elements of the matrix in spiral order.
-
-**Example 1:**
-
-```py
-Input:
-[
- [ 1, 2, 3 ],
- [ 4, 5, 6 ],
- [ 7, 8, 9 ]
-]
-Output: [1, 2, 3, 6, 9, 8, 7, 4, 5]
-```
-
-**Example 2:**
-
-```py
-Input:
-[
-  [1,  2,  3,  4],
-  [5,  6,  7,  8],
-  [9, 10, 11, 12]
-]
-Output: [1, 2, 3, 4, 8, 12, 11, 10, 9, 5, 6, 7]
-```
-
-### Aug 9, 2019 LC 307 \[Medium\] Range Sum Query - Mutable
----
-> **Question:** Given an integer array nums, find the sum of the elements between indices i and j (i ≤ j), inclusive.
->
-> The update(i, val) function modifies nums by updating the element at index i to val.
-
-**Example:**
-
-```py
-Given nums = [1, 3, 5]
-
-sumRange(0, 2) -> 9
-update(1, 2)
-sumRange(0, 2) -> 8
-```
-
 
 ### Additional Question: LC 114 \[Medium\] Flatten Binary Tree to Linked List
 ---
