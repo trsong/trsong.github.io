@@ -100,7 +100,7 @@ Explanation: The given undirected graph will be like this:
     4 - 3
 ```
 
-### Aug 10, 2019 LC 308 \[Medium\] Range Sum Query 2D - Mutable
+### Aug 10, 2019 LC 308 \[Hard\] Range Sum Query 2D - Mutable
 ---
 > **Question:** Given a 2D matrix matrix, find the sum of the elements inside the rectangle defined by its upper left corner (row1, col1) and lower right corner (row2, col2).
 
@@ -118,6 +118,84 @@ Given matrix = [
 sumRegion(2, 1, 4, 3) -> 8
 update(3, 2, 2)
 sumRegion(2, 1, 4, 3) -> 10
+```
+
+**Solution with 2D Binary Indexed Tree:** [https://repl.it/@trsong/Range-Sum-Query-2D-Mutable](https://repl.it/@trsong/Range-Sum-Query-2D-Mutable)
+```py
+import unittest
+
+class RangeSumQuery(object):
+    def __init__(self, matrix):
+        n, m = len(matrix), len(matrix[0])
+        self.bit_matrix = [[0 for _ in xrange(m+1)] for _ in xrange(n+1)]
+        for r in xrange(n):
+            for c in xrange(m):
+                self.update(r, c, matrix[r][c])
+
+    def sumOriginToPosition(self, position):
+        row, col = position
+        rIdx = row + 1
+        cIdx = col + 1
+        res = 0
+        while rIdx > 0:
+            cIdx = col + 1 # reset cIdex
+            while cIdx > 0:
+                res += self.bit_matrix[rIdx][cIdx]
+                cIdx -= cIdx & -cIdx
+            rIdx -= rIdx & -rIdx
+        return res
+
+    def sumRegion(self, row1, col1, row2, col2):
+        top_left = (row1 - 1, col1 - 1)
+        top_right = (row1 - 1, col2)
+        bottom_left = (row2, col1 - 1)
+        bottom_right = (row2, col2)
+        top_left_sum = self.sumOriginToPosition(top_left)
+        top_right_sum = self.sumOriginToPosition(top_right)
+        bottom_left_sum = self.sumOriginToPosition(bottom_left)
+        bottom_right_sum = self.sumOriginToPosition(bottom_right)
+        return bottom_right_sum - bottom_left_sum - top_right_sum + top_left_sum
+
+    def update(self, row, col, val):
+        diff = val - self.sumRegion(row, col, row, col)
+        rIdx = row + 1
+        cIdx = col + 1
+        n, m = len(self.bit_matrix), len(self.bit_matrix[0])
+        while rIdx < n:
+            cIdx = col + 1
+            while cIdx < m:
+                self.bit_matrix[rIdx][cIdx] += diff
+                cIdx += cIdx & -cIdx
+            rIdx += rIdx & -rIdx
+
+
+class RangeSumQuerySpec(unittest.TestCase):
+    def test_example(self):
+        matrix = [
+            [3, 0, 1, 4, 2],
+            [5, 6, 3, 2, 1],
+            [1, 2, 0, 1, 5],
+            [4, 1, 0, 1, 7],
+            [1, 0, 3, 0, 5]
+        ]
+        rsq = RangeSumQuery(matrix)
+        self.assertEqual(rsq.sumRegion(2, 1, 4, 3), 8)
+        rsq.update(3, 2, 2)
+        self.assertEqual(rsq.sumRegion(2, 1, 4, 3), 10)
+
+    def test_non_square_matrix(self):
+        matrix = [
+            [1, 1, 1, 1, 1],
+            [1, 1, 1, 1, 1]
+        ]
+        rsq = RangeSumQuery(matrix)
+        self.assertEqual(rsq.sumRegion(0, 1, 1, 3), 6)
+        rsq.update(0, 2, 2)
+        self.assertEqual(rsq.sumRegion(0, 1, 1, 3), 7)
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
 ```
 ### Additional Question: LC 54 \[Medium\] Spiral Matrix 
 ---
@@ -242,7 +320,6 @@ class SpiralOrderSpec(unittest.TestCase):
             [2],
             [3]
         ]), [1, 2, 3])
-
 
 
 if __name__ == '__main__':
