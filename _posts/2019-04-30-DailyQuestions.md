@@ -134,11 +134,10 @@ class RangeSumQuery(object):
 
     def sumOriginToPosition(self, position):
         row, col = position
-        rIdx = row + 1
-        cIdx = col + 1
         res = 0
+        rIdx = row + 1
         while rIdx > 0:
-            cIdx = col + 1 # reset cIdex
+            cIdx = col + 1
             while cIdx > 0:
                 res += self.bit_matrix[rIdx][cIdx]
                 cIdx -= cIdx & -cIdx
@@ -158,9 +157,8 @@ class RangeSumQuery(object):
 
     def update(self, row, col, val):
         diff = val - self.sumRegion(row, col, row, col)
-        rIdx = row + 1
-        cIdx = col + 1
         n, m = len(self.bit_matrix), len(self.bit_matrix[0])
+        rIdx = row + 1
         while rIdx < n:
             cIdx = col + 1
             while cIdx < m:
@@ -266,15 +264,12 @@ def spiral_order(matrix):
         row_lower_bound += 1
         
     r, c = row_lower_bound, col_lower_bound
-    if row_lower_bound == row_upper_bound and col_lower_bound == col_upper_bound:
-        # Edge Case 1: when remaining block is 1x1
-        res.append(matrix[r][c])
-    elif row_lower_bound == row_upper_bound: 
-        # Edge Case 2: when remaining block is 1xk
+    if row_lower_bound == row_upper_bound: 
+        # Edge Case 1: when remaining block is 1xk
         for col in xrange(col_lower_bound, col_upper_bound + 1):
             res.append(matrix[r][col])
     elif col_lower_bound == col_upper_bound:
-        # Edge Case 3: when remaining block is kx1
+        # Edge Case 2: when remaining block is kx1
         for row in xrange(row_lower_bound, row_upper_bound + 1):
             res.append(matrix[row][c])
             
