@@ -68,6 +68,38 @@ A N B
 
 --->
 
+### Aug 11, 2019 LC 684 \[Medium\] Redundant Connection
+---
+> **Question:** In this problem, a tree is an **undirected** graph that is connected and has no cycles.
+>
+> The given input is a graph that started as a tree with N nodes (with distinct values 1, 2, ..., N), with one additional edge added. The added edge has two different vertices chosen from 1 to N, and was not an edge that already existed.
+>
+> The resulting graph is given as a 2D-array of edges. Each element of edges is a pair [u, v] with u < v, that represents an undirected edge connecting nodes u and v.
+>
+> Return an edge that can be removed so that the resulting graph is a tree of N nodes. If there are multiple answers, return the answer that occurs last in the given 2D-array. The answer edge [u, v] should be in the same format, with u < v.
+
+**Example 1:**
+
+```
+Input: [[1,2], [1,3], [2,3]]
+Output: [2,3]
+Explanation: The given undirected graph will be like this:
+  1
+ / \
+2 - 3
+```
+
+**Example 2:**
+
+```
+Input: [[1,2], [2,3], [3,4], [1,4], [1,5]]
+Output: [1,4]
+Explanation: The given undirected graph will be like this:
+5 - 1 - 2
+    |   |
+    4 - 3
+```
+
 ### Aug 10, 2019 LC 308 \[Medium\] Range Sum Query 2D - Mutable
 ---
 > **Question:** Given a 2D matrix matrix, find the sum of the elements inside the rectangle defined by its upper left corner (row1, col1) and lower right corner (row2, col2).
@@ -113,6 +145,108 @@ Input:
   [9, 10, 11, 12]
 ]
 Output: [1, 2, 3, 4, 8, 12, 11, 10, 9, 5, 6, 7]
+```
+
+**Solution:** [https://repl.it/@trsong/Spiral-Matrix](https://repl.it/@trsong/Spiral-Matrix)
+```py
+import unittest
+
+def spiral_order(matrix):
+    if not matrix or not matrix[0]: return []
+    n, m = len(matrix), len(matrix[0])
+    row_lower_bound = 0
+    row_upper_bound = n - 1
+    col_lower_bound = 0
+    col_upper_bound = m - 1
+    res = []
+        
+    while row_lower_bound < row_upper_bound and col_lower_bound < col_upper_bound:
+        r, c = row_lower_bound, col_lower_bound
+        # top
+        while c < col_upper_bound:
+            res.append(matrix[r][c])
+            c += 1
+        
+        # right
+        while r < row_upper_bound:
+            res.append(matrix[r][c])
+            r += 1
+        
+        # bottom
+        while c > col_lower_bound:
+            res.append(matrix[r][c])
+            c -= 1
+        
+        # left 
+        while r > row_lower_bound:
+            res.append(matrix[r][c])
+            r -= 1
+    
+        col_upper_bound -= 1
+        col_lower_bound += 1
+        row_upper_bound -= 1
+        row_lower_bound += 1
+        
+    r, c = row_lower_bound, col_lower_bound
+    if row_lower_bound == row_upper_bound and col_lower_bound == col_upper_bound:
+        # Edge Case 1: when remaining block is 1x1
+        res.append(matrix[r][c])
+    elif row_lower_bound == row_upper_bound: 
+        # Edge Case 2: when remaining block is 1xk
+        for col in xrange(col_lower_bound, col_upper_bound + 1):
+            res.append(matrix[r][col])
+    elif col_lower_bound == col_upper_bound:
+        # Edge Case 3: when remaining block is kx1
+        for row in xrange(row_lower_bound, row_upper_bound + 1):
+            res.append(matrix[row][c])
+            
+    return res
+
+
+class SpiralOrderSpec(unittest.TestCase):
+    def test_example1(self):
+        self.assertEqual(spiral_order([
+            [ 1, 2, 3 ],
+            [ 4, 5, 6 ],
+            [ 7, 8, 9 ]
+        ]), [1, 2, 3, 6, 9, 8, 7, 4, 5])
+
+    def test_example2(self):
+        self.assertEqual(spiral_order([
+            [1,  2,  3,  4],
+            [5,  6,  7,  8],
+            [9, 10, 11, 12]
+        ]), [1, 2, 3, 4, 8, 12, 11, 10, 9, 5, 6, 7])
+
+    def test_empty_table(self):
+        self.assertEqual(spiral_order([]), [])
+        self.assertEqual(spiral_order([[]]), [])
+
+    def test_two_by_two_table(self):
+        self.assertEqual(spiral_order([
+            [1, 2],
+            [4, 3]
+        ]), [1, 2, 3, 4])
+
+    def test_one_element_table(self):
+        self.assertEqual(spiral_order([[1]]), [1])
+
+    def test_one_by_k_table(self):
+        self.assertEqual(spiral_order([
+            [1, 2, 3, 4]
+        ]), [1, 2, 3, 4])
+
+    def test_k_by_one_table(self):
+        self.assertEqual(spiral_order([
+            [1],
+            [2],
+            [3]
+        ]), [1, 2, 3])
+
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
 ```
 
 ### Aug 9, 2019 LC 307 \[Medium\] Range Sum Query - Mutable
