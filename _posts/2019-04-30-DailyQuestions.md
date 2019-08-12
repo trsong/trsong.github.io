@@ -68,6 +68,41 @@ A N B
 
 --->
 
+
+### Aug 12, 2019 LC 230 \[Medium\] Kth Smallest Element in a BST
+> **Question:** Given a binary search tree, write a function kthSmallest to find the kth smallest element in it.
+
+**Example 1:**
+
+```py
+Input: 
+   3
+  / \
+ 1   4
+  \
+   2
+
+k = 1
+Output: 1
+```
+
+
+**Example 2:**
+
+```py
+Input: 
+       5
+      / \
+     3   6
+    / \
+   2   4
+  /
+ 1
+
+k = 3
+Output: 3
+```
+
 ### Aug 11, 2019 LC 684 \[Medium\] Redundant Connection
 ---
 > **Question:** In this problem, a tree is an **undirected** graph that is connected and has no cycles.
@@ -98,6 +133,62 @@ Explanation: The given undirected graph will be like this:
 5 - 1 - 2
     |   |
     4 - 3
+```
+
+**My thoughts:** Process edges one by one, when we encouter an edge that has two ends already connected then adding current edge will form a cycle, then we return such edge. 
+
+In order to efficiently checking connection between any two nodes. The idea is to keep track of all nodes that are already connected. Disjoint-set(Union Find) is what we are looking for. Initially UF makes all nodes disconnected, and whenever we encounter an edge, connect both ends. And we do that for all edges. 
+
+**Solution with Disjoint-Set(Union-Find):** [https://repl.it/@trsong/CharmingCluelessApplets](https://repl.it/@trsong/CharmingCluelessApplets)
+```py
+import unittest
+
+class UnionFind(object):
+    def __init__(self, size):
+        self.parent = range(size)
+        self.rank = [0] * size
+    
+    def find(self, v):
+        p = v
+        while self.parent[p] != p:
+            p = self.parent[p]
+        self.parent[v] = p
+        return p
+    
+    def union(self, v1, v2):
+        p1 = self.find(v1)
+        p2 = self.find(v2)
+        if p1 != p2:
+            if self.rank[p1] > self.rank[p2]:
+                self.parent[p2] = p1
+                self.rank[p1] += 1
+            else:
+                self.parent[p1] = p2
+                self.rank[p2] += 1            
+            
+    def is_connected(self, v1, v2):
+        return self.find(v1) == self.find(v2)
+
+def find_redundant_connection(edges):
+    uf = UnionFind(len(edges) + 1)
+    for u, v in edges:
+        if uf.is_connected(u, v):
+            return [u, v]
+        else:
+            uf.union(u, v)
+    return None
+
+
+class FindRedundantConnectionSpec(unittest.TestCase):
+    def test_example1(self):
+        self.assertEqual(find_redundant_connection([[1,2], [1,3], [2,3]]), [2, 3])
+
+    def test_example2(self):
+        self.assertEqual(find_redundant_connection([[1,2], [2,3], [3,4], [1,4], [1,5]]), [1,4])
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
 ```
 
 ### Aug 10, 2019 LC 308 \[Hard\] Range Sum Query 2D - Mutable
