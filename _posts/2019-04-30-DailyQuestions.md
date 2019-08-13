@@ -68,8 +68,26 @@ A N B
 
 --->
 
+### Aug 13, 2019 LC 727 \[Hard\] Minimum Window Subsequence
+---
+> **Question:** Given strings S and T, find the minimum (contiguous) substring W of S, so that T is a subsequence of W.
+>
+> If there is no such window in S that covers all characters in T, return the empty string "". If there are multiple such minimum-length windows, return the one with the left-most starting index.
+
+**Example:**
+
+```
+Input: 
+S = "abcdebdde", T = "bde"
+Output: "bcde"
+
+Explanation: 
+"bcde" is the answer because it occurs before "bdde" which has the same length.
+"deb" is not a smaller window because the elements of T in the window must occur in order.
+```
 
 ### Aug 12, 2019 LC 230 \[Medium\] Kth Smallest Element in a BST
+---
 > **Question:** Given a binary search tree, write a function kthSmallest to find the kth smallest element in it.
 
 **Example 1:**
@@ -101,6 +119,91 @@ Input:
 
 k = 3
 Output: 3
+```
+
+**My thoughts:** In BST, the in-order traversal presents orders from smallest to largest. Thus you can use both recursion with global variable k or the following template for iterative in-order traversal.
+
+**Template for Iterative In-order Traversal:**
+
+```py
+while True:
+    if t is not None:
+        stack.append(t)
+        t = t.left
+    elif stack:
+        t = stack.pop()
+        print t.val # this will give node value follows in-order traversal    
+        t = t.right
+    else:
+        break
+return None
+```
+
+**Solution with Iterative In-order Traversal:** [https://repl.it/@trsong/Kth-Smallest-Element-in-a-BST](https://repl.it/@trsong/Kth-Smallest-Element-in-a-BST)
+```py
+import unittest
+
+class TreeNode(object):
+    def __init__(self, val, left=None, right=None):
+        self.val = val
+        self.left = left
+        self.right = right
+
+def kth_smallest(tree, k):
+    t = tree
+    stack = []
+
+    while True:
+        if t is not None:
+            stack.append(t)
+            t = t.left
+        elif stack:
+            t = stack.pop()
+            if k == 1:
+                return t.val
+            else:
+                k -= 1
+            t = t.right
+        else:
+            break
+    return None
+
+
+class KthSmallestSpec(unittest.TestCase):
+    def test_example1(self):
+        """
+           3
+          / \
+         1   4
+          \
+           2
+        """
+        n1 = TreeNode(1, right=TreeNode(2))
+        tree = TreeNode(3, n1, TreeNode(4))
+        check_expected = [1, 2, 3, 4]
+        for e in check_expected:
+            self.assertEqual(kth_smallest(tree, e), e)
+
+    def test_example2(self):
+        """
+              5
+             / \
+            3   6
+           / \
+          2   4
+         /
+        1
+        """
+        n2 = TreeNode(2, TreeNode(1))
+        n3 = TreeNode(3, n2, TreeNode(4))
+        tree = TreeNode(5, n3, TreeNode(6))
+        check_expected = [1, 2, 3, 4, 5, 6]
+        for e in check_expected:
+            self.assertEqual(kth_smallest(tree, e), e)
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
 ```
 
 ### Aug 11, 2019 LC 684 \[Medium\] Redundant Connection
