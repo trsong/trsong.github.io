@@ -120,7 +120,6 @@ Take a look at base case:
 - when 1 number to pick, the min $ to secure a win is $0
 - when 2 numbers to pick, the min $ to secure a win is to choose the smaller one, 
 - when 3 numbers to pick, the min $ to secure a win is to choose the middle one
-- when m numbers to pick, find k among those numbers and break problems into smaller subsproblems.
 
 **Solution with Top-down DP(Recursion with Cache):** [https://repl.it/@trsong/Guess-Number-Higher-or-Lower-II](https://repl.it/@trsong/Guess-Number-Higher-or-Lower-II)
 ```py
