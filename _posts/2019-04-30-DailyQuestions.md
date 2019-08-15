@@ -67,6 +67,17 @@ A N B
 > is considered valid.
 
 --->
+### Aug 16, 2019 \[Medium\] Longest Substring without Repeating Characters
+---
+> **Question:** Given a string, find the length of the longest substring without repeating characters.
+>
+> **Note:** Can you find a solution in linear time?
+ 
+**Example:**
+```py
+lengthOfLongestSubstring("abrkaabcdefghijjxxx") # => 10 as len("abcdefghij") == 10
+```
+
 
 ### Aug 15, 2019 \[Medium\] Largest Rectangle
 ---
