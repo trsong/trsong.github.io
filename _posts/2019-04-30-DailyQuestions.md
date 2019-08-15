@@ -68,6 +68,26 @@ A N B
 
 --->
 
+### Aug 15, 2019 \[Medium\] Largest Rectangle
+---
+> **Question:** Given an N by M matrix consisting only of 1's and 0's, find the largest rectangle containing only 1's and return its area.
+
+**For Example:**
+
+```py
+Given the following matrix:
+
+[[1, 0, 0, 0],
+ [1, 0, 1, 1],
+ [1, 0, 1, 1],
+ [0, 1, 0, 0]]
+
+Return 4. As the following 1s form the largest rectangle containing only 1s:
+ [1, 1],
+ [1, 1]
+```
+
+
 ### Aug 14, 2019 LC 375 \[Medium\] Guess Number Higher or Lower II
 ---
 > **Question:** We are playing the Guess Game. The game is as follows:
@@ -94,6 +114,64 @@ You end up paying $5 + $7 + $9 = $21.
 
 Given a particular n ≥ 1, find out how much money you need to have to guarantee a win.
 
+**My thoughts:** This question looks really similar to *LC 312 [Hard] Burst Balloons* in a sense that it choose the best candidate at each step and deligate the subproblem to recursive calls. eg. `guess_number_cost_between(i, j) = max(k + guess_number_cost_between(i, k-1), guess_number_cost_between(k+1, j)) for all k between i+1 and j-1 inclusive`.
+
+Take a look at base case:
+- when 1 number to pick, the min $ to secure a win is $0
+- when 2 numbers to pick, the min $ to secure a win is to choose the smaller one, 
+- when 3 numbers to pick, the min $ to secure a win is to choose the middle one
+- when m numbers to pick, find k among those numbers and break problems into smaller subsproblems.
+
+**Solution with Top-down DP(Recursion with Cache):** [https://repl.it/@trsong/Guess-Number-Higher-or-Lower-II](https://repl.it/@trsong/Guess-Number-Higher-or-Lower-II)
+```py
+import unittest
+import sys
+
+def guess_number_cost(n):
+    cache = [[None for _ in xrange(n+1)] for _ in xrange(n+1)]
+    return guess_number_cost_with_cache(1, n, cache)
+
+
+def guess_number_cost_between(i, j, cache):
+    if i == j: return 0
+    elif i + 1 == j: return i
+    elif i + 2 == j: return i + 1
+    cost = sys.maxint
+    for k in xrange(i+1, j):
+        pick_k_cost = k + guess_number_cost_between(i, k-1, cache) + guess_number_cost_between(k+1, j, cache)
+        cost = min(cost, pick_k_cost)
+    return cost
+
+
+def guess_number_cost_with_cache(i, j, cache):
+    if cache[i][j] is None:
+        cache[i][j] = guess_number_cost_between(i, j, cache)
+    return cache[i][j]
+
+
+class GuessNumberCostSpec(unittest.TestCase):
+    def test_n_equals_one(self):
+        self.assertEqual(guess_number_cost(1), 0)
+
+    def test_n_equals_two(self):
+        self.assertEqual(guess_number_cost(2), 1) # pick: 1
+
+    def test_n_equals_three(self):
+        self.assertEqual(guess_number_cost(3), 2) # pick: 2
+
+    def test_n_equals_four(self):
+        self.assertEqual(guess_number_cost(4), 4) # pick: 1, 3
+
+    def test_n_equals_five(self):
+        self.assertEqual(guess_number_cost(5), 6) # pick: 2, 4
+
+    def test_n_equals_six(self):
+        self.assertEqual(guess_number_cost(6), 9) # pick 1, 3, 5
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
+```
 
 ### Aug 13, 2019 LC 727 \[Hard\] Minimum Window Subsequence
 ---
