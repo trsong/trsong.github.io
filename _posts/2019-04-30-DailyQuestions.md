@@ -133,6 +133,8 @@ The histogram of third row is:
     [0, 1, 1, 0]
     =
     [0, 3, 2, 0]  # largest_rectangle_in_histogram => 4 as max at height 2 * width 2
+              ^ will not accumulate 0
+     ^ will not accumulate 0
 
 Therefore, the largest rectangle has 4 1s in it.
 ```
