@@ -79,7 +79,7 @@ lengthOfLongestSubstring("abrkaabcdefghijjxxx") # => 10 as len("abcdefghij") == 
 ```
 
 
-### Aug 15, 2019 \[Medium\] Largest Rectangle
+### Aug 15, 2019 \[Hard\] Largest Rectangle
 ---
 > **Question:** Given an N by M matrix consisting only of 1's and 0's, find the largest rectangle containing only 1's and return its area.
 
@@ -96,6 +96,147 @@ Given the following matrix:
 Return 4. As the following 1s form the largest rectangle containing only 1s:
  [1, 1],
  [1, 1]
+```
+
+**My thoughts:** This problem is an application of finding largest rectangle in histogram. That question gives you an array of height of bar in histogram and find the largest area of rectangle bounded by the bar. (consider bar width as 1)
+
+Example:
+```py
+largest_rectangle_in_histogram([3, 4, 5, 4, 3]) # return 15 as max at height 3 * width 5
+```
+
+Now the way we take advantage of largest_rectangle_in_histogram is that, we can calculate the histogram of each row with each cell value being the accumulated value since last saw 1. 
+
+Example:
+
+```py
+Suppose the table looks like the following:
+
+[
+    [0, 1, 0, 1],
+    [1, 1, 1, 0],
+    [0, 1, 1, 0]
+]
+
+The histogram of first row is just itself:
+    [0, 1, 0, 1]  # largest_rectangle_in_histogram => 1 as max at height 1 * width 1
+The histogram of second row is:
+    [0, 1, 0, 1]
+    +
+    [1, 1, 1, 0]
+    =
+    [1, 2, 1, 0]  # largest_rectangle_in_histogram => 3 as max at height 1 * width 3
+              ^ will not accumulate 0
+The histogram of third row is:
+    [1, 2, 1, 0]       
+    +
+    [0, 1, 1, 0]
+    =
+    [0, 3, 2, 0]  # largest_rectangle_in_histogram => 4 as max at height 2 * width 2
+
+Therefore, the largest rectangle has 4 1s in it.
+```
+
+**Solution with DP:** [https://repl.it/@trsong/Largest-Rectangle](https://repl.it/@trsong/Largest-Rectangle)
+```py
+import unittest
+
+def largest_rectangle_in_histogram(histogram):
+    stack = []
+    i = 0
+    max_area = 0
+    while i < len(histogram) or stack:
+        if not stack or i < len(histogram) and histogram[stack[-1]] <= histogram[i]:
+            # maintain an ascending stack
+            stack.append(i)
+            i += 1
+        else:
+            # if stack starts decreasing,
+            # then left boundary must be stack[-2] and right boundary must be i. Note both boundaries are exclusive
+            # and height is stack[-1]
+            height = histogram[stack.pop()]
+            left_boundary = stack[-1] if stack else -1
+            right_boundary = i
+            current_area = height * (right_boundary - left_boundary - 1)
+            max_area = max(max_area, current_area)
+    return max_area
+
+
+class LargestRectangleInHistogramSpec(unittest.TestCase):
+    def test_ascending_sequence(self):
+        self.assertEqual(largest_rectangle_in_histogram([0, 1, 2, 3, 4]), 6) # max at height 2 * width 3
+
+    def test_descending_sequence(self):
+        self.assertEqual(largest_rectangle_in_histogram([4, 3, 2, 1, 0]), 6) # max at height 3 * width 2
+
+    def test_sequence3(self):
+        self.assertEqual(largest_rectangle_in_histogram([3, 4, 5, 4, 3]), 15) # max at height 3 * width 5
+
+    def test_sequence4(self):
+        self.assertEqual(largest_rectangle_in_histogram([3, 10, 4, 10, 5, 10, 4, 10, 3]), 28)  # max at height 4 * width 7
+
+    def test_sequence5(self):
+        self.assertEqual(largest_rectangle_in_histogram([6, 2, 5, 4, 5, 1, 6]), 12)  # max at height 4 * width 3
+
+
+def largest_rectangle(table):
+    if not table or not table[0]: return 0
+    n, m = len(table), len(table[0])
+    max_area = largest_rectangle_in_histogram(table[0])
+    for r in xrange(1, n):
+        for c in xrange(m):
+            # calculate the histogram of each row since last saw 1 at same column
+            if table[r][c] == 1:
+                table[r][c] = table[r-1][c] + 1
+        max_area = max(max_area, largest_rectangle_in_histogram(table[r]))
+    return max_area
+    
+
+class LargestRectangleSpec(unittest.TestCase):
+    def test_empty_table(self):
+        self.assertEqual(largest_rectangle([]), 0)
+        self.assertEqual(largest_rectangle([[]]), 0)
+
+    def test_example(self):
+        self.assertEqual(largest_rectangle([
+            [1, 0, 0, 0],
+            [1, 0, 1, 1],
+            [1, 0, 1, 1],
+            [0, 1, 0, 0]
+        ]), 4)
+
+    def test_table2(self):
+        self.assertEqual(largest_rectangle([
+            [0, 1, 0, 1],
+            [1, 1, 1, 0],
+            [0, 1, 1, 0]
+        ]), 4)
+
+    def test_table3(self):
+        self.assertEqual(largest_rectangle([
+            [0, 1, 1, 1, 0],
+            [1, 1, 0, 1, 1],
+            [0, 1, 1, 1, 0],
+        ]), 3)
+
+    def test_table4(self):
+        self.assertEqual(largest_rectangle([
+            [0, 0, 1, 0, 1],
+            [0, 1, 1, 1, 1],
+            [0, 0, 1, 0, 1],
+        ]), 4)
+
+    def test_table5(self):
+        self.assertEqual(largest_rectangle([
+            [0, 1, 1, 0],
+            [1, 1, 1, 1],
+            [1, 1, 1, 1],
+            [1, 1, 0, 0]
+        ]), 8)
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
 ```
 
 
@@ -148,7 +289,7 @@ def guess_number_cost_between(i, j, cache):
     elif i + 2 == j: return i + 1
     cost = sys.maxint
     for k in xrange(i+1, j):
-        pick_k_cost = k + guess_number_cost_between(i, k-1, cache) + guess_number_cost_between(k+1, j, cache)
+        pick_k_cost = k + guess_number_cost_with_cache(i, k-1, cache) + guess_number_cost_with_cache(k+1, j, cache)
         cost = min(cost, pick_k_cost)
     return cost
 
