@@ -67,6 +67,12 @@ A N B
 > is considered valid.
 
 --->
+
+### Aug 17, 2019 \[Medium\] Deep Copy Linked List with Pointer to Random Node
+---
+> **Question:** Make a deep copy of a linked list that has a random link pointer and a next pointer.
+ 
+
 ### Aug 16, 2019 \[Medium\] Longest Substring without Repeating Characters
 ---
 > **Question:** Given a string, find the length of the longest substring without repeating characters.
