@@ -84,6 +84,49 @@ A N B
 lengthOfLongestSubstring("abrkaabcdefghijjxxx") # => 10 as len("abcdefghij") == 10
 ```
 
+**My thoughts:** This is a typical sliding window problem. The idea is to mantain a last occurance map while proceeding the sliding window. Such window is bounded by indices `(i, j)`, whenever we process next character j, we check the last occurance map to see if the current character `a[j]` is duplicated within the window `(i, j)`, ie. `i <= k < j`, if that's the case, we move `i` to `k + 1` so that `a[j]` no longer exists in window. And we mantain the largest window size `j - i + 1` as the longest substring without repeating characters.
+
+**Solution with sliding window:** [https://repl.it/@trsong/Longest-Substring-without-Repeating-Characters](https://repl.it/@trsong/Longest-Substring-without-Repeating-Characters)
+```py
+import unittest
+
+def longest_nonrepeated_substring(input_string):
+    if not input_string: return 0
+    last_occur = {}
+    max_len = 0
+    i = 0
+    for j in xrange(len(input_string)):
+        cur = input_string[j]
+        last_index = last_occur.get(cur, -1)
+        if last_index >= i:
+            i = last_index + 1
+        last_occur[cur] = j
+        max_len = max(max_len, j - i + 1)
+    return max_len
+    
+
+class LongestNonrepeatedSubstringSpec(unittest.TestCase):
+    def test_example(self):
+        self.assertEqual(longest_nonrepeated_substring("abrkaabcdefghijjxxx"), 10) # "abcdefghij"
+
+    def test_empty_string(self):
+        self.assertEqual(longest_nonrepeated_substring(""), 0)
+
+    def test_string_with_repeated_characters(self):
+        self.assertEqual(longest_nonrepeated_substring("aabbafacbbcacbfa"), 4) # "facb"
+
+    def test_some_random_string(self):
+        self.assertEqual(longest_nonrepeated_substring("ABDEFGABEF"), 6) # "ABDEFG"
+
+    def test_all_repated_characters(self):
+        self.assertEqual(longest_nonrepeated_substring("aaa"), 1) # "a"
+    
+    def test_non_repated_characters(self):
+        self.assertEqual(longest_nonrepeated_substring("abcde"), 5) # "abcde"
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
+```
 
 ### Aug 15, 2019 \[Hard\] Largest Rectangle
 ---
