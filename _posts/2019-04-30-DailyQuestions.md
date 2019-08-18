@@ -68,6 +68,31 @@ A N B
 
 --->
 
+### Aug 18, 2019 LT 612 \[Medium\] K Closest Points
+--- 
+> **Question:** Given some points and a point origin in two dimensional space, find k points out of the some points which are nearest to origin.
+> 
+> Return these points sorted by distance, if they are same with distance, sorted by x-axis, otherwise sorted by y-axis.
+
+
+**Example:**
+
+```py
+Given points = [[4,6],[4,7],[4,4],[2,5],[1,1]], origin = [0, 0], k = 3
+return [[1,1],[2,5],[4,4]]
+```
+
+### Additional Question: \[Medium\] Swap Even and Odd Bits
+---
+> **Question:** Given an unsigned 8-bit integer, swap its even and odd bits. The 1st and 2nd bit should be swapped, the 3rd and 4th bit should be swapped, and so on.
+
+**Example:**
+
+```py
+10101010 should be 01010101. 11100010 should be 11010001.
+```
+> Bonus: Can you do this in one line?
+
 ### Aug 17, 2019 \[Medium\] Deep Copy Linked List with Pointer to Random Node
 ---
 > **Question:** Make a deep copy of a linked list that has a random link pointer and a next pointer.
@@ -86,7 +111,7 @@ lengthOfLongestSubstring("abrkaabcdefghijjxxx") # => 10 as len("abcdefghij") == 
 
 **My thoughts:** This is a typical sliding window problem. The idea is to mantain a last occurance map while proceeding the sliding window. Such window is bounded by indices `(i, j)`, whenever we process next character j, we check the last occurance map to see if the current character `a[j]` is duplicated within the window `(i, j)`, ie. `i <= k < j`, if that's the case, we move `i` to `k + 1` so that `a[j]` no longer exists in window. And we mantain the largest window size `j - i + 1` as the longest substring without repeating characters.
 
-**Solution with sliding window:** [https://repl.it/@trsong/Longest-Substring-without-Repeating-Characters](https://repl.it/@trsong/Longest-Substring-without-Repeating-Characters)
+**Solution with Sliding Window:** [https://repl.it/@trsong/Longest-Substring-without-Repeating-Characters](https://repl.it/@trsong/Longest-Substring-without-Repeating-Characters)
 ```py
 import unittest
 
