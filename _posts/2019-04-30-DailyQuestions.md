@@ -96,7 +96,121 @@ return [[1,1],[2,5],[4,4]]
 ### Aug 17, 2019 \[Medium\] Deep Copy Linked List with Pointer to Random Node
 ---
 > **Question:** Make a deep copy of a linked list that has a random link pointer and a next pointer.
- 
+
+**My thoughts:** The way we solve this problem is to mingle old nodes and cloned nodes so that every odd node is original node and every even node is clone node which will allow us to access both nodes through `node.next` and `node.next.next`. And we then build random pointer and finally connect every other node to build cloned node's next as well as restore original node's next. 
+
+**Solution:** [https://repl.it/@trsong/Deep-Copy-Linked-List-with-Pointer-to-Random-Node](https://repl.it/@trsong/Deep-Copy-Linked-List-with-Pointer-to-Random-Node)
+```py
+import unittest
+
+class ListNode(object):
+    def __init__(self, val, next=None, random=None):
+        self.val = val
+        self.next = next
+        self.random = random
+    
+    def __eq__(self, other):
+        if other is not None:
+            is_random_valid = self.random is None and other.random is None or self.random is not None and other.random is not None and self.random.val == other.random.val
+            return is_random_valid and self.val == other.val and self.next == other.next
+        else:
+            return False
+
+def deep_copy(lst):
+    if not lst: return None
+    
+    # Insert cloned node into original list
+    # Now every odd pointer is old node and every even pointer is cloned node
+    node = lst
+    while node:
+        node.next = ListNode(node.val, node.next)
+        node = node.next.next
+
+    # Build cloned node's random pointer
+    node = lst
+    while node:
+        node.next.random = node.random.next if node.random else None
+        node = node.next.next
+
+    # Build cloned node's next and restore old node's next
+    node = lst
+    res = lst.next
+    while node:
+        cloned_node = node.next
+        old_next = cloned_node.next
+        if old_next:
+            cloned_node.next = old_next.next
+        node.next = old_next
+        node = old_next
+    
+    return res
+
+
+class DeepCopySpec(unittest.TestCase):
+    def test_empty_list(self):
+        self.assertIsNone(deep_copy(None))
+    
+    def test_list_with_random_point_to_itself(self):
+        n = ListNode(1)
+        n.random = n
+        self.assertEqual(deep_copy(n), n)
+
+    def test_list_with_forward_random_pointers(self):
+        # 1 -> 2 -> 3 -> 4
+        n4 = ListNode(4)
+        n3 = ListNode(3, n4)
+        n2 = ListNode(2, n3)
+        n1 = ListNode(1, n2)
+
+        # random pointer:
+        # 1 -> 3
+        # 2 -> 3
+        # 3 -> 4
+        n1.random = n3
+        n2.random = n3
+        n3.random = n4
+        self.assertEqual(deep_copy(n1), n1)
+
+    def test_list_with_backward_random_pointers(self):
+        # 1 -> 2 -> 3 -> 4
+        n4 = ListNode(4)
+        n3 = ListNode(3, n4)
+        n2 = ListNode(2, n3)
+        n1 = ListNode(1, n2)
+
+        # random pointer:
+        # 1 -> 1
+        # 2 -> 1
+        # 3 -> 2
+        # 4 -> 1
+        n1.random = n1
+        n2.random = n1
+        n3.random = n2
+        n4.random = n1
+        self.assertEqual(deep_copy(n1), n1)
+
+    def test_list_with_both_forward_and_backward_pointers(self):
+        # 1 -> 2 -> 3 -> 4
+        n4 = ListNode(4)
+        n3 = ListNode(3, n4)
+        n2 = ListNode(2, n3)
+        n1 = ListNode(1, n2)
+
+        # random pointer:
+        # 1 -> 3
+        # 2 -> 1
+        # 3 -> 4
+        # 4 -> 3
+        n1.random = n3
+        n2.random = n2
+        n3.random = n4
+        n4.random = n3
+        self.assertEqual(deep_copy(n1), n1)
+        
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
+``` 
 
 ### Aug 16, 2019 \[Medium\] Longest Substring without Repeating Characters
 ---
