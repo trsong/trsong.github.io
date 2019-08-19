@@ -68,6 +68,26 @@ A N B
 
 --->
 
+### Aug 19, 2019 \[Medium\] Jumping Numbers
+---
+> **Question:** Given a positive int n, print all jumping numbers smaller than or equal to n. A number is called a jumping number if all adjacent digits in it differ by 1. For example, 8987 and 4343456 are jumping numbers, but 796 and 89098 are not. All single digit numbers are considered as jumping numbers.
+
+**Example:**
+
+```py
+Input: 105
+Output: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 12, 21, 23, 32, 34, 43, 45, 54, 56, 65, 67, 76, 78, 87, 89, 98, 101]
+```
+
+### Additional Question: \[Easy\] Swap Even and Odd Nodes
+---
+> **Question:** Given the head of a singly linked list, swap every two nodes and return its head.
+
+**Example:**
+```py
+given 1 -> 2 -> 3 -> 4, return 2 -> 1 -> 4 -> 3.
+```
+
 ### Aug 18, 2019 LT 612 \[Medium\] K Closest Points
 --- 
 > **Question:** Given some points and a point origin in two dimensional space, find k points out of the some points which are nearest to origin.
@@ -78,8 +98,82 @@ A N B
 **Example:**
 
 ```py
-Given points = [[4,6],[4,7],[4,4],[2,5],[1,1]], origin = [0, 0], k = 3
-return [[1,1],[2,5],[4,4]]
+Given points = [[4, 6], [4, 7], [4, 4], [2, 5], [1, 1]], origin = [0, 0], k = 3
+return [[1, 1], [2, 5], [4, 4]]
+```
+
+**My thoguhts:** This problem can be easily solved with k Max-heap with key being the distance and value being the point. First heapify first k elements to form a k max-heap. Then for the remaining n - k element, replace top of heap with smaller-distance point.
+
+**Solution with k Max-Heap:** [https://repl.it/@trsong/K-Closest-Points](https://repl.it/@trsong/K-Closest-Points)
+```py
+import unittest
+from Queue import PriorityQueue
+
+def distance2(p1, p2):
+    dx = p1[0] - p2[0]
+    dy = p1[1] - p2[1]
+    return dx * dx + dy * dy 
+
+def k_closest_points(points, origin, k):
+    if not points and k == 0: return []
+    elif len(points) < k: return None
+
+    max_heap = PriorityQueue()
+    for i in xrange(k):
+        max_heap.put((-distance2(points[i], origin), points[i]))
+
+    for i in xrange(k, len(points)):
+        dist = distance2(points[i], origin)
+        top = max_heap.queue[0]
+        if -top[0] > dist:   
+            max_heap.get()
+            max_heap.put((-dist, points[i]))
+            
+    res = [None] * k
+    for i in xrange(k-1, -1, -1):
+        res[i] = max_heap.get()[1]
+    return res
+
+
+class KClosestPointSpec(unittest.TestCase):
+    def assert_points(self, result, expected):
+        self.assertEqual(sorted(result), sorted(expected))
+
+    def test_example(self):
+        points = [[4, 6], [4, 7], [4, 4], [2, 5], [1, 1]]
+        origin = [0, 0]
+        k = 3
+        expected = [[1, 1], [2, 5], [4, 4]]
+        self.assert_points(k_closest_points(points, origin, k), expected)
+
+    def test_empty_points(self):
+        self.assert_points(k_closest_points([], [0, 0], 0), [])
+        self.assertIsNone(k_closest_points([], [0, 0], 1))
+
+    def test_descending_distance(self):
+        points = [[1, 6], [1, 5], [1, 4], [1, 3], [1, 2], [1, 1]]
+        origin = [1, 1]
+        k = 2
+        expected = [[1, 2], [1, 1]]
+        self.assert_points(k_closest_points(points, origin, k), expected)
+
+    def test_ascending_distance(self):
+        points = [[-1, -1], [-2, -1], [-3, -1], [-4, -1], [-5, -1], [-6, -1]]
+        origin = [-1, -1]
+        k = 1
+        expected = [[-1, -1]]
+        self.assert_points(k_closest_points(points, origin, k), expected)
+
+    def test_duplicated_distance(self):
+        points = [[1, 0], [0, 1], [-1, -1], [1, 1], [2, 1], [-2, 0]]
+        origin = [0, 0]
+        k = 5
+        expected = [[1, 0], [0, 1], [-1, -1], [1, 1], [-2, 0]]
+        self.assert_points(k_closest_points(points, origin, k), expected)
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
 ```
 
 ### Additional Question: \[Medium\] Swap Even and Odd Bits
@@ -92,6 +186,41 @@ return [[1,1],[2,5],[4,4]]
 10101010 should be 01010101. 11100010 should be 11010001.
 ```
 > Bonus: Can you do this in one line?
+
+**Solution:** [https://repl.it/@trsong/Swap-Even-and-Odd-Bits](https://repl.it/@trsong/Swap-Even-and-Odd-Bits)
+```py
+import unittest
+
+def swap_bits(num):
+    # 1010 is 0xa and  0101 is 0x5
+    # 32 bit has 8 bits (4 * 8 = 32)
+    return (num & 0xaaaaaaaa) >> 1 | (num & 0x55555555) << 1
+
+class SwapBitSpec(unittest.TestCase):
+    def test_example1(self):
+        self.assertEqual(swap_bits(0b10101010), 0b01010101)
+
+    def test_example2(self):
+        self.assertEqual(swap_bits(0b11100010), 0b11010001)
+
+    def test_zero(self):
+        self.assertEqual(swap_bits(0), 0)
+    
+    def test_one(self):
+        self.assertEqual(swap_bits(0b1), 0b10)
+
+    def test_odd_digits(self):
+        self.assertEqual(swap_bits(0b111), 0b1011)
+
+    def test_large_number(self):
+        self.assertEqual(swap_bits(0xffffffff), 0xffffffff)
+        self.assertEqual(swap_bits(0x55555555), 0xaaaaaaaa)
+        self.assertEqual(swap_bits(0xaaaaaaaa), 0x55555555)
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
+```
 
 ### Aug 17, 2019 \[Medium\] Deep Copy Linked List with Pointer to Random Node
 ---
