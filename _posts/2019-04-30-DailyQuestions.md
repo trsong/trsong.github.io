@@ -66,7 +66,170 @@ A N B
 
 > is considered valid.
 
+
+Cut Wood
+---
+> **Question:** Given an int array wood representing the length of n pieces of wood and an int k. It is required to cut these pieces of wood such that more or equal to k pieces of the same length len are cut. What is the longest len you can get?
+
+Example 1:
+
+Input: wood = [5, 9, 7], k = 3
+Output: 5
+Explanation: 
+5 -> 5
+9 -> 5 + 4
+7 -> 5 + 2
+Example 2:
+
+Input: wood = [5, 9, 7], k = 4
+Output: 4
+Explanation: 
+5 -> 4 + 1
+9 -> 4 * 2 + 1
+7 -> 4 + 3
+
+Rearrange String k Distance Apart
+---
+> **Question:** Given a non-empty string str and an integer k, rearrange the string such that the same characters are at least distance k from each other.
+
+All input strings are given in lowercase letters. If it is not possible to rearrange the string, return an empty string "".
+
+Example 1:
+str = "aabbcc", k = 3
+
+Result: "abcabc"
+
+The same letters are at least distance 3 from each other.
+Example 2:
+str = "aaabc", k = 3 
+
+Answer: ""
+
+It is not possible to rearrange the string.
+Example 3:
+str = "aaadbbcc", k = 2
+
+Answer: "abacabcd"
+
+Another possible answer is: "abcabcda"
+
+The same letters are at least distance 2 from each other.
+
+1.   Task Scheduler
+---
+> **Question:** Given a char array representing tasks CPU need to do. It contains capital letters A to Z where different letters represent different tasks. Tasks could be done without original order. Each task could be done in one interval. For each interval, CPU could finish one task or just be idle.
+
+However, there is a non-negative cooling interval n that means between two same tasks, there must be at least n intervals that CPU are doing different tasks or just be idle.
+
+You need to return the least number of intervals the CPU will take to finish all the given tasks.
+
+ 
+
+Example:
+
+Input: tasks = ["A","A","A","B","B","B"], n = 2
+Output: 8
+Explanation: A -> B -> idle -> A -> B -> idle -> A -> B.
+
+Amazing Number
+---
+> **Question:** 
+
+Define amazing number as: its value is less than or equal to its index. Given a circular array, find the starting position, such that the total number of amazing numbers in the array is maximized.
+Example 1: 0, 1, 2, 3
+Ouptut: 0. When starting point at position 0, all the elements in the array are equal to its index. So all the numbers are amazing number.
+Example 2: 1, 0 , 0
+Output: 1. When starting point at position 1, the array becomes 0, 0, 1. All the elements are amazing number.
+If there are multiple positions, return the smallest one.
+
+should get a solution with time complexity less than O(N^2)
+
+
+Hard 273. Integer to English Words
+---
+> **Question:** Convert a non-negative integer to its english words representation. Given input is guaranteed to be less than 231 - 1.
+
+Example 1:
+
+Input: 123
+Output: "One Hundred Twenty Three"
+Example 2:
+
+Input: 12345
+Output: "Twelve Thousand Three Hundred Forty Five"
+Example 3:
+
+Input: 1234567
+Output: "One Million Two Hundred Thirty Four Thousand Five Hundred Sixty Seven"
+Example 4:
+
+Input: 1234567891
+Output: "One Billion Two Hundred Thirty Four Million Five Hundred Sixty Seven Thousand Eight Hundred Ninety One"
+
 --->
+
+### Aug 20, 2019 \[Hard\] Serialize and Deserialize Binary Tree
+---
+> **Question:** Serialization is the process of converting a data structure or object into a sequence of bits so that it can be stored in a file or memory buffer, or transmitted across a network connection link to be reconstructed later in the same or another computer environment.
+>
+> Design an algorithm to serialize and deserialize a binary tree. There is no restriction on how your serialization/deserialization algorithm should work. You just need to ensure that a binary tree can be serialized to a string and this string can be deserialized to the original tree structure.
+
+**Example 1:**
+
+```py
+You may serialize the following tree:
+
+    1
+   / \
+  2   3
+     / \
+    4   5
+
+as "[1,2,3,null,null,4,5]"
+```
+
+**Example 2:**
+
+```py
+You may serialize the following tree:
+
+       5
+      / \ 
+     4   7
+    /   /
+   3   2
+  /   /
+-1   9
+
+as "[5,4,7,3,null,2,null,-1,null,9]"
+```
+
+### Additional Question: \[Medium\] M Smallest in K Sorted Lists
+---
+> **Question:** Given k sorted arrays of possibly different sizes, find m-th smallest value in the merged array.
+
+**Example 1:**
+
+```py
+Input: [[1, 3], [2, 4, 6], [0, 9, 10, 11]], m = 5
+Output: 4
+Explanation: The merged array would be [0, 1, 2, 3, 4, 6, 9, 10, 11].  
+The 5-th smallest element in this merged array is 4.
+```
+
+**Example 2:**
+
+```py
+Input: [[1, 3, 20], [2, 4, 6]], m = 2
+Output: 2
+```
+
+**Example 3:**
+
+```py
+Input: [[1, 3, 20], [2, 4, 6]], m = 6
+Output: 20
+```
 
 ### Aug 19, 2019 \[Medium\] Jumping Numbers
 ---
@@ -82,11 +245,16 @@ Output: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 12, 21, 23, 32, 34, 43, 45, 54, 56, 6
 ### Additional Question: \[Easy\] Swap Even and Odd Nodes
 ---
 > **Question:** Given the head of a singly linked list, swap every two nodes and return its head.
+> 
+> Note: Make sure it's acutally nodes that get swapped not value. 
+
 
 **Example:**
 ```py
 given 1 -> 2 -> 3 -> 4, return 2 -> 1 -> 4 -> 3.
 ```
+
+
 
 ### Aug 18, 2019 LT 612 \[Medium\] K Closest Points
 --- 
