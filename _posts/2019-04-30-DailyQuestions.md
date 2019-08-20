@@ -242,6 +242,71 @@ Input: 105
 Output: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 12, 21, 23, 32, 34, 43, 45, 54, 56, 65, 67, 76, 78, 87, 89, 98, 101]
 ```
 
+**My thoughts:** We can use Brutal Force to search from 0 to given upperbound to find jumping numbers which might not be so efficient. Or we can take advantage of the property of jummping number: a jumping number jmp is:
+- either one of all single digit numbers 
+- or 10 * some jumping number + last digit of that jumping number +/- by 1
+
+For example, 
+
+```
+1 -> 10, 12.
+2 -> 21, 23.
+3 -> 32, 34.
+...
+10 -> 101
+12 -> 121, 123
+```
+
+We can get all qualified jumping number by BFS searching for all candidates.
+
+**Solution with BFS:** [https://repl.it/@trsong/Jumping-Numbers](https://repl.it/@trsong/Jumping-Numbers)
+```py
+import unittest
+
+def generate_jumping_numbers(upper_bound):
+    if upper_bound < 0: return []
+    queue = [x for x in xrange(1, 10)]
+    res = [0]
+    while queue:
+        # Apply BFS to search for jumping numbers
+        cur = queue.pop(0)
+        if cur > upper_bound:
+            break
+        res.append(cur)
+        last_digit = cur % 10
+        if last_digit > 0:
+            queue.append(10 * cur + last_digit - 1)
+        
+        if last_digit < 9:
+            queue.append(10 * cur + last_digit + 1)
+    return res
+
+
+class GenerateJumpingNumberSpec(unittest.TestCase):
+    def test_zero_as_upperbound(self):
+        self.assertEqual(generate_jumping_numbers(0), [0])
+
+    def test_single_digits_are_all_jummping_numbers(self):
+        self.assertEqual(generate_jumping_numbers(9), [0, 1, 2, 3, 4, 5, 6, 7, 8, 9])
+
+    def test_five_as_upperbound(self):
+        self.assertEqual(generate_jumping_numbers(5), [0, 1, 2, 3, 4, 5])
+
+    def test_not_always_contains_upperbound(self):
+        self.assertEqual(generate_jumping_numbers(13), [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 12])
+
+    def test_example(self):
+        expected = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 12, 21, 23, 32, 34, 43, 45, 54, 56, 65, 67, 76, 78, 87, 89, 98, 101]
+        self.assertEqual(generate_jumping_numbers(105), expected)
+    
+    def test_negative_upperbound(self):
+        self.assertEqual(generate_jumping_numbers(-1), [])
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
+```
+
 ### Additional Question: \[Easy\] Swap Even and Odd Nodes
 ---
 > **Question:** Given the head of a singly linked list, swap every two nodes and return its head.
@@ -254,6 +319,88 @@ Output: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 12, 21, 23, 32, 34, 43, 45, 54, 56, 6
 given 1 -> 2 -> 3 -> 4, return 2 -> 1 -> 4 -> 3.
 ```
 
+**Solution with Recursion:** [https://repl.it/@trsong/Swap-Even-and-Odd-Nodes](https://repl.it/@trsong/Swap-Even-and-Odd-Nodes)
+```py
+import unittest
+
+class ListNode(object):
+    def __init__(self, val, next=None):
+        self.val = val
+        self.next = next
+
+
+def swap_list(lst):
+    if not lst or not lst.next:
+        return lst
+    first = lst
+    second = first.next
+    third = second.next
+
+    second.next = first
+    first.next = swap_list(third)
+    return second
+  
+
+class SwapListSpec(unittest.TestCase):
+    def assert_lists(self, lst, node_seq):
+        p = lst
+        for node in node_seq:
+            if p != node: print (p.data if p else "None"), (node.data if node else "None")
+            self.assertTrue(p == node)
+            p = p.next
+        self.assertTrue(p is None)
+
+    def test_empty(self):
+        self.assert_lists(swap_list(None), [])
+
+    def test_one_elem_list(self):
+        n1 = ListNode(1)
+        self.assert_lists(swap_list(n1), [n1])
+
+    def test_two_elems_list(self):
+        # 1 -> 2
+        n2 = ListNode(2)
+        n1 = ListNode(1, n2)
+        self.assert_lists(swap_list(n1), [n2, n1])
+
+    def test_three_elems_list(self):
+        # 1 -> 2 -> 3
+        n3 = ListNode(3)
+        n2 = ListNode(2, n3)
+        n1 = ListNode(1, n2)
+        self.assert_lists(swap_list(n1), [n2, n1, n3])
+
+    def test_four_elems_list(self):
+        # 1 -> 2 -> 3 -> 4
+        n4 = ListNode(4)
+        n3 = ListNode(3, n4)
+        n2 = ListNode(2, n3)
+        n1 = ListNode(1, n2)
+        self.assert_lists(swap_list(n1), [n2, n1, n4, n3])
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
+```
+
+**Solution2 with Iteration:** [https://repl.it/@trsong/Swap-Even-and-Odd-Nodes-Iterative](https://repl.it/@trsong/Swap-Even-and-Odd-Nodes-Iterative)
+
+```py
+def swap_list(lst):
+    dummy = ListNode(-1, lst)
+    prev = dummy
+    p = lst
+    while p and p.next:
+        first = p
+        second = first.next
+
+        first.next = second.next
+        second.next = first
+        prev.next = second
+        prev = first
+        p = prev.next
+    return dummy.next
+```
 
 
 ### Aug 18, 2019 LT 612 \[Medium\] K Closest Points
