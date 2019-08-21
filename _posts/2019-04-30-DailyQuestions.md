@@ -144,31 +144,37 @@ If there are multiple positions, return the smallest one.
 
 should get a solution with time complexity less than O(N^2)
 
-
-Hard 273. Integer to English Words
----
-> **Question:** Convert a non-negative integer to its english words representation. Given input is guaranteed to be less than 231 - 1.
-
-Example 1:
-
-Input: 123
-Output: "One Hundred Twenty Three"
-Example 2:
-
-Input: 12345
-Output: "Twelve Thousand Three Hundred Forty Five"
-Example 3:
-
-Input: 1234567
-Output: "One Million Two Hundred Thirty Four Thousand Five Hundred Sixty Seven"
-Example 4:
-
-Input: 1234567891
-Output: "One Billion Two Hundred Thirty Four Million Five Hundred Sixty Seven Thousand Eight Hundred Ninety One"
-
 --->
 
-### Aug 20, 2019 \[Hard\] Serialize and Deserialize Binary Tree
+### Aug 21, 2019 LC 273 \[Hard\] Integer to English Words
+---
+> **Question:** Convert a non-negative integer to its english words representation. 
+
+**Example 1:**
+```py
+Input: 123
+Output: "One Hundred Twenty Three"
+```
+
+**Example 2:**
+```py
+Input: 12345
+Output: "Twelve Thousand Three Hundred Forty Five"
+```
+
+**Example 3:**
+```py
+Input: 1234567
+Output: "One Million Two Hundred Thirty Four Thousand Five Hundred Sixty Seven"
+```
+
+**Example 4:**
+```py
+Input: 1234567891
+Output: "One Billion Two Hundred Thirty Four Million Five Hundred Sixty Seven Thousand Eight Hundred Ninety One"
+```
+
+### Aug 20, 2019 LC 297 \[Hard\] Serialize and Deserialize Binary Tree
 ---
 > **Question:** Serialization is the process of converting a data structure or object into a sequence of bits so that it can be stored in a file or memory buffer, or transmitted across a network connection link to be reconstructed later in the same or another computer environment.
 >
@@ -204,12 +210,141 @@ You may serialize the following tree:
 as "[5,4,7,3,null,2,null,-1,null,9]"
 ```
 
+**Solution with BFS:** [https://repl.it/@trsong/Serialize-and-Deserialize-Binary-Tree](https://repl.it/@trsong/Serialize-and-Deserialize-Binary-Tree)
+```py
+import unittest
+
+class TreeNode(object):
+    def __init__(self, val, left=None, right=None):
+        self.val = val
+        self.left = left
+        self.right = right
+    
+    def __eq__(self, other):
+        return other and other.val == self.val and other.left == self.left and other.right == self.right
+
+class BinaryTreeSerializer(object):
+    @staticmethod
+    def serialize(tree):
+        if not tree: return "[]"
+        res = []
+        queue = [tree]
+        is_done = False
+        while queue and not is_done:
+            level_size = len(queue)
+            is_done = True
+            for _ in xrange(level_size):
+                cur = queue.pop(0)
+                if not cur:
+                    res.append("null")
+                else:
+                    res.append(str(cur.val))
+                    if cur.left or cur.right:
+                        is_done = False
+                    queue.append(cur.left)
+                    queue.append(cur.right)
+        return "[" + ",".join(res) + "]"
+
+    @staticmethod
+    def deserialize(encoded_string):
+        if encoded_string == "[]": return None
+        nums = encoded_string[1:-1].split(',')
+        tree = TreeNode(int(nums[0]))
+        i = 1
+        queue = [tree]
+        while queue:
+            level_size = len(queue)
+            for _ in xrange(level_size):
+                cur = queue.pop(0)
+                if i < len(nums) and nums[i] != "null":
+                    cur.left = TreeNode(int(nums[i]))
+                    queue.append(cur.left)
+                i += 1
+
+                if i < len(nums) and nums[i] != "null":
+                    cur.right = TreeNode(int(nums[i]))
+                    queue.append(cur.right)
+                i += 1
+
+                if i > len(nums):
+                    break
+        return tree
+   
+
+class BinaryTreeSerializerSpec(unittest.TestCase):
+    def test_example1(self):
+        """
+            1
+           / \
+          2   3
+             / \
+            4   5
+        """
+        n3 = TreeNode(3, TreeNode(4), TreeNode(5))
+        n1 = TreeNode(1, TreeNode(2), n3)
+        encoded = BinaryTreeSerializer.serialize(n1)
+        decoded = BinaryTreeSerializer.deserialize(encoded)
+        self.assertEqual(decoded, n1)
+
+    def test_example2(self):
+        """
+               5
+              / \ 
+             4   7
+            /   /
+           3   2
+          /   /
+        -1   9
+        """
+        n4 = TreeNode(4, TreeNode(3, TreeNode(-1)))
+        n7 = TreeNode(7, TreeNode(2, TreeNode(9)))
+        n5 = TreeNode(5, n4, n7)
+        encoded = BinaryTreeSerializer.serialize(n5)
+        decoded = BinaryTreeSerializer.deserialize(encoded)
+        self.assertEqual(decoded, n5)
+
+    def test_serialize_empty_tree(self):
+        encoded = BinaryTreeSerializer.serialize(None)
+        decoded = BinaryTreeSerializer.deserialize(encoded)
+        self.assertIsNone(decoded)
+
+    def test_serialize_left_heavy_tree(self):
+        """
+            1
+           /
+          2
+         /
+        3
+        """
+        tree = TreeNode(1, TreeNode(2, TreeNode(3)))
+        encoded = BinaryTreeSerializer.serialize(tree)
+        decoded = BinaryTreeSerializer.deserialize(encoded)
+        self.assertEqual(decoded, tree)
+
+    def test_serialize_right_heavy_tree(self):
+        """
+        1
+         \
+          2
+         /
+        3
+        """
+        tree = TreeNode(1, right=TreeNode(2, TreeNode(3)))
+        encoded = BinaryTreeSerializer.serialize(tree)
+        decoded = BinaryTreeSerializer.deserialize(encoded)
+        self.assertEqual(decoded, tree) 
+        
+
+        
+if __name__ == '__main__':
+    unittest.main(exit=False)
+```
+
 ### Additional Question: \[Medium\] M Smallest in K Sorted Lists
 ---
 > **Question:** Given k sorted arrays of possibly different sizes, find m-th smallest value in the merged array.
 
 **Example 1:**
-
 ```py
 Input: [[1, 3], [2, 4, 6], [0, 9, 10, 11]], m = 5
 Output: 4
@@ -218,17 +353,64 @@ The 5-th smallest element in this merged array is 4.
 ```
 
 **Example 2:**
-
 ```py
 Input: [[1, 3, 20], [2, 4, 6]], m = 2
 Output: 2
 ```
 
 **Example 3:**
-
 ```py
 Input: [[1, 3, 20], [2, 4, 6]], m = 6
 Output: 20
+```
+
+**My thoughts:** This problem is almost the same as merge k sorted list. The idea is to leverage priority queue to keep track of minimum element among all k sorted list.
+
+**Solution:** [https://repl.it/@trsong/M-Smallest-in-K-Sorted-Lists](https://repl.it/@trsong/M-Smallest-in-K-Sorted-Lists)
+```py
+import unittest
+from Queue import PriorityQueue
+
+def find_m_smallest(ksorted_list, m):
+    pq = PriorityQueue()
+    for lst in ksorted_list:
+        if lst:
+            pq.put((lst[0], [0, lst]))
+    
+    res = None
+    while not pq.empty() and m >= 1:
+        index, lst = pq.get()[1]
+        if m == 1:
+            res = lst[index]
+            break
+        m -= 1
+        if index + 1 < len(lst):
+            pq.put((lst[index + 1], [index + 1, lst]))
+    return res
+
+
+class FindMSmallestSpec(unittest.TestCase):
+    def test_example1(self):
+        self.assertEqual(find_m_smallest([[1, 3], [2, 4, 6], [0, 9, 10, 11]], m=5), 4) 
+
+    def test_example2(self):
+        self.assertEqual(find_m_smallest([[1, 3, 20], [2, 4, 6]], m=2), 2) 
+
+    def test_example3(self):
+        self.assertEqual(find_m_smallest([[1, 3, 20], [2, 4, 6]], m=6), 20)
+
+    def test_empty_sublist(self):
+        self.assertEqual(find_m_smallest([[1], [], [0, 2]], m=2), 1)
+
+    def test_one_sublist(self):
+        self.assertEqual(find_m_smallest([[1, 2, 3, 4, 5]], m=5), 5)
+
+    def test_target_out_of_boundary(self):
+        self.assertIsNone(find_m_smallest([[1, 2, 3], [4, 5, 6]], 7))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
 ```
 
 ### Aug 19, 2019 \[Medium\] Jumping Numbers
