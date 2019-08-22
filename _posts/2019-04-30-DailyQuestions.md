@@ -131,24 +131,33 @@ Input: tasks = ["A","A","A","B","B","B"], n = 2
 Output: 8
 Explanation: A -> B -> idle -> A -> B -> idle -> A -> B.
 
-Amazing Number
----
-> **Question:** 
+--->
 
-Define amazing number as: its value is less than or equal to its index. Given a circular array, find the starting position, such that the total number of amazing numbers in the array is maximized.
-Example 1: 0, 1, 2, 3
+### Aug 22, 2019 \[Medium\] Amazing Number
+---
+> **Question:** Define amazing number as: its value is less than or equal to its index. Given a circular array, find the starting position, such that the total number of amazing numbers in the array is maximized. 
+> 
+> Follow-up: Should get a solution with time complexity less than O(N^2)
+
+**Example 1:**
+```py
+Input: [0, 1, 2, 3]
 Ouptut: 0. When starting point at position 0, all the elements in the array are equal to its index. So all the numbers are amazing number.
-Example 2: 1, 0 , 0
+```
+
+**Example 2:** 
+```py
+Input: [1, 0, 0]
 Output: 1. When starting point at position 1, the array becomes 0, 0, 1. All the elements are amazing number.
 If there are multiple positions, return the smallest one.
+```
 
-should get a solution with time complexity less than O(N^2)
 
---->
+
 
 ### Aug 21, 2019 LC 273 \[Hard\] Integer to English Words
 ---
-> **Question:** Convert a non-negative integer to its english words representation. 
+> **Question:** Convert a non-negative integer to its English word representation. 
 
 **Example 1:**
 ```py
@@ -172,6 +181,96 @@ Output: "One Million Two Hundred Thirty Four Thousand Five Hundred Sixty Seven"
 ```py
 Input: 1234567891
 Output: "One Billion Two Hundred Thirty Four Million Five Hundred Sixty Seven Thousand Eight Hundred Ninety One"
+```
+
+**My thoughts:** The main difficulty of this problem comes from edge case scenarios from breaking large number into smaller ones and conquer them separately. Includes but not limit to "Zero", "Ten", "Twenty One" and other edge cases from missing millions, thousands and hundreds, like "Thirty Billion Two Million" and "Fifty Billion Two Hundred".
+
+
+**Solution:** [https://repl.it/@trsong/Integer-to-English-Words](https://repl.it/@trsong/Integer-to-English-Words)
+```py
+import unittest
+
+word_lookup = {
+    0: 'Zero', 1: 'One', 2: 'Two', 3: 'Three', 4: 'Four', 5: 'Five',
+    6: 'Six', 7: 'Seven', 8: 'Eight', 9: 'Nine', 10: 'Ten',
+    11: 'Eleven', 12: 'Twelve', 13: 'Thirteen', 14: 'Fourteen', 15: 'Fifteen',
+    16: 'Sixteen', 17: 'Seventeen', 18: 'Eighteen', 19: 'Nineteen', 20: 'Twenty',
+    30: 'Thirty', 40: 'Forty', 50: 'Fifty', 60: 'Sixty', 
+    70: 'Seventy', 80: 'Eighty', 90: 'Ninety',
+    100: 'Hundred', 1000: 'Thousand', 1000000: 'Million', 1000000000: 'Billion'
+}
+
+def read_hundreds(num):
+    # Helper function to read num between 1 and 999
+    global word_lookup
+    if num == 0: return []
+    res = []
+    if num >= 100:
+        res.append(word_lookup[num / 100])
+        res.append(word_lookup[100])
+    
+    num %= 100
+    if 21 <= num <= 99:
+        res.append(word_lookup[num - num % 10])
+        if num % 10 > 0:
+            res.append(word_lookup[num % 10])
+    elif num > 0:
+        res.append(word_lookup[num])
+        
+    return res
+
+
+def number_to_words(num):
+    global word_lookup
+    if num == 0: return word_lookup[0]
+    res = []
+    separators = [1000000000, 1000000, 1000] # 'Billion', 'Million', 'Thousand'
+    for sep in separators:
+        if num >= sep:
+            res += read_hundreds(num/sep)
+            res.append(word_lookup[sep])
+            num %= sep
+    if num > 0:
+        res += read_hundreds(num)
+    return ' '.join(res)
+
+
+class NumberToWordSpec(unittest.TestCase):
+    def test_example1(self):
+        self.assertEqual(number_to_words(123), "One Hundred Twenty Three")
+
+    def test_example2(self):
+        self.assertEqual(number_to_words(12345), "Twelve Thousand Three Hundred Forty Five")
+
+    def test_example3(self):
+        self.assertEqual(number_to_words(1234567), "One Million Two Hundred Thirty Four Thousand Five Hundred Sixty Seven")
+
+    def test_example4(self):
+        self.assertEqual(number_to_words(1234567891), "One Billion Two Hundred Thirty Four Million Five Hundred Sixty Seven Thousand Eight Hundred Ninety One")
+
+    def test_zero(self):
+        self.assertEqual(number_to_words(0), "Zero")
+
+    def test_one_digit(self):
+        self.assertEqual(number_to_words(8), "Eight")
+
+    def test_two_digits(self):
+        self.assertEqual(number_to_words(21), "Twenty One")
+        self.assertEqual(number_to_words(10), "Ten")
+        self.assertEqual(number_to_words(20), "Twenty")
+        self.assertEqual(number_to_words(16), "Sixteen")
+        self.assertEqual(number_to_words(32), "Thirty Two")
+        self.assertEqual(number_to_words(30), "Thirty")
+
+    def test_ignore_thousand_part(self):
+        self.assertEqual(number_to_words(30002000000), "Thirty Billion Two Million")
+
+    def test_ignore_million_part(self):
+        self.assertEqual(number_to_words(50000000200), "Fifty Billion Two Hundred")
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
 ```
 
 ### Aug 20, 2019 LC 297 \[Hard\] Serialize and Deserialize Binary Tree
