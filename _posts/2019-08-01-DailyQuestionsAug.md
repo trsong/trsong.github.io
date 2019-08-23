@@ -113,23 +113,22 @@ Another possible answer is: "abcabcda"
 
 The same letters are at least distance 2 from each other.
 
-1.   Task Scheduler
+--->
+
+### Aug 23, 2019 LC 621 \[Medium\] Task Scheduler
 ---
 > **Question:** Given a char array representing tasks CPU need to do. It contains capital letters A to Z where different letters represent different tasks. Tasks could be done without original order. Each task could be done in one interval. For each interval, CPU could finish one task or just be idle.
+>
+> However, there is a non-negative cooling interval n that means between two same tasks, there must be at least n intervals that CPU are doing different tasks or just be idle.
+>
+> You need to return the least number of intervals the CPU will take to finish all the given tasks.
 
-However, there is a non-negative cooling interval n that means between two same tasks, there must be at least n intervals that CPU are doing different tasks or just be idle.
-
-You need to return the least number of intervals the CPU will take to finish all the given tasks.
-
- 
-
-Example:
-
-Input: tasks = ["A","A","A","B","B","B"], n = 2
+**Example:**
+```py
+Input: tasks = ["A", "A", "A", "B", "B", "B"], n = 2
 Output: 8
 Explanation: A -> B -> idle -> A -> B -> idle -> A -> B.
-
---->
+```
 
 ### Aug 22, 2019 \[Medium\] Amazing Number
 ---
@@ -148,6 +147,105 @@ Ouptut: 0. When starting point at position 0, all the elements in the array are 
 Input: [1, 0, 0]
 Output: 1. When starting point at position 1, the array becomes 0, 0, 1. All the elements are amazing number.
 If there are multiple positions, return the smallest one.
+```
+
+**My thoughts:** We can use Brute-force Solution to get answer in O(n^2). But can we do better? Well, some smart observation is needed.
+
+- First, we know that 0 and all negative numbers are amazing numbers. 
+- Second, if a number is too big, i.e. greater than the length of array, then there is no way for that number to be an amazing number. 
+- Finally, if a number is neither too small nor too big, i.e. between (0, n-1), then we can define "dangerous" range as [i - nums[i] + 1, i] and its complement: "safe" range [i + 1, i - nums[i]] should be safe. So we store all safe intervals to an array.
+
+We accumlate those intervals by using interval counting technique: define interval_accu array, for each interval (start, end), interval_accu[start] += 1 and interval_accu[end+1] -= 1 so that when we can make interval accumulation by interval_accu[i] += interval_accu[i-1] for all i. 
+
+Find max safe interval along the interval accumulation, i.e. the index that has maximum safe interval overlapping. 
+
+**Brute-force Solution:** [https://repl.it/@trsong/Amazing-Number-Brute-force](https://repl.it/@trsong/Amazing-Number-Brute-force)
+```py
+def max_amazing_number_index(nums):
+    n = len(nums)
+    max_count = 0
+    max_count_index = 0
+    for i in xrange(n):
+        count = 0
+        for j in xrange(i, i + n):
+            index = (j - i) % n
+            if nums[j % n] <= index:
+                count += 1
+        
+        if count > max_count:
+            max_count = count
+            max_count_index = i
+    return max_count_index
+```
+
+**Efficient Solution with Interval Count:** [https://repl.it/@trsong/Amazing-Number](https://repl.it/@trsong/Amazing-Number)
+```py
+import unittest
+
+def max_amazing_number_index(nums):
+    n = len(nums)
+    valid_intervals = []
+    for i in xrange(n):
+        # invalid zone starts from i - nums[i] + 1 and ends at i
+        # 0 0 0 0 0 3 0 0 0 0 0 
+        #       ^ ^ ^
+        #       invalid
+        # thus the valid zone is the complement [i + 1, i - nums[i]]
+        if nums[i] > n:
+            continue
+        elif nums[i] < 0:
+            valid_intervals.append([0, n-1])
+        else:
+            valid_intervals.append([(i + 1) % n, (i - nums[i]) % n])
+
+    interval_accumulation = [0] * n
+    for start, end in valid_intervals:
+        # valid interval [start, end] is circular, i.e. end < start
+        # thus can be broken into [0, end] and [start, n-1]
+        interval_accumulation[start] += 1
+
+        # with one exception: end > start, when the number is too small, like smaller than 0,
+        # if that's the case, we don't count 
+        if start > end:
+            interval_accumulation[0] += 1
+
+        if end + 1 < n:
+            interval_accumulation[end + 1] -= 1
+
+    max_count = interval_accumulation[0]
+    max_count_index = 0
+    for i in xrange(1, n):
+        interval_accumulation[i] += interval_accumulation[i-1]
+        if interval_accumulation[i] > max_count:
+            max_count = interval_accumulation[i]
+            max_count_index = i
+    return max_count_index 
+
+
+class MaxAmazingNumberIndexSpec(unittest.TestCase):
+    def test_example1(self):
+        self.assertEqual(max_amazing_number_index([0, 1, 2, 3]), 0)  # max # amazing number = 4 at [0, 1, 2, 3]
+
+    def test_example2(self):
+        self.assertEqual(max_amazing_number_index([1, 0, 0]), 1)  # max # amazing number = 3 at [0, 0, 1]
+
+    def test_non_descending_array(self):
+        self.assertEqual(max_amazing_number_index([0, 0, 0, 1, 2, 3]), 0)  # max # amazing number = 0 at [0, 0, 0, 1, 2, 3]
+
+    def test_random_array(self):
+        self.assertEqual(max_amazing_number_index([1, 4, 3, 2]), 1)  # max # amazing number = 2 at [4, 3, 2, 1]
+
+    def test_non_ascending_array(self):
+        self.assertEqual(max_amazing_number_index([3, 3, 2, 1, 0]), 2)  # max # amazing number = 4 at [2, 1, 0, 3, 3]
+
+    def test_return_smallest_index_when_no_amazing_number(self):
+        self.assertEqual(max_amazing_number_index([99, 99, 99, 99]), 0)  # max # amazing number = 0 thus return smallest possible index
+
+    def test_negative_number(self):
+        self.assertEqual(max_amazing_number_index([3, -99, -99, -99]), 1)  # max # amazing number = 4 at [-1, -1, -1, 3])
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
 ```
 
 
