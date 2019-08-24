@@ -86,34 +86,35 @@ Explanation:
 9 -> 4 * 2 + 1
 7 -> 4 + 3
 
-Rearrange String k Distance Apart
+--->
+
+### Aug 24, 2019 LC 358 \[Hard\] Rearrange String k Distance Apart
 ---
 > **Question:** Given a non-empty string str and an integer k, rearrange the string such that the same characters are at least distance k from each other.
+>
+> All input strings are given in lowercase letters. If it is not possible to rearrange the string, return an empty string "".
 
-All input strings are given in lowercase letters. If it is not possible to rearrange the string, return an empty string "".
-
-Example 1:
+**Example 1:**
+```
 str = "aabbcc", k = 3
-
 Result: "abcabc"
-
 The same letters are at least distance 3 from each other.
-Example 2:
+```
+
+**Example 2:**
+```
 str = "aaabc", k = 3 
-
 Answer: ""
-
 It is not possible to rearrange the string.
-Example 3:
+```
+
+**Example 3:**
+```
 str = "aaadbbcc", k = 2
-
 Answer: "abacabcd"
-
 Another possible answer is: "abcabcda"
-
 The same letters are at least distance 2 from each other.
-
---->
+```
 
 ### Aug 23, 2019 LC 621 \[Medium\] Task Scheduler
 ---
@@ -128,6 +129,78 @@ The same letters are at least distance 2 from each other.
 Input: tasks = ["A", "A", "A", "B", "B", "B"], n = 2
 Output: 8
 Explanation: A -> B -> idle -> A -> B -> idle -> A -> B.
+```
+
+**My thoughts:** Treat n+1 as the size of each window. For each window, we try to fit as many tasks as possible following the max number of remaining tasks. If all tasks are chosen, we instead use idle. 
+
+**Solution with Greedy Algorithm:** [https://repl.it/@trsong/Task-Scheduler](https://repl.it/@trsong/Task-Scheduler)
+```py
+import unittest
+from Queue import PriorityQueue
+
+def least_interval(tasks, n):
+    if not tasks: return 0
+    occurrence = {}
+    for task in tasks:
+        occurrence[task] = occurrence.get(task, 0) + 1
+    
+    max_heap = PriorityQueue()
+    for task, occur in occurrence.items():
+        # use negative key with min-heap to achieve max heap
+        max_heap.put((-occur, task))
+    
+    res = 0
+    while not max_heap.empty():
+        remaining_tasks = []
+        for _ in xrange(n+1):
+            if max_heap.empty() and not remaining_tasks:
+                break
+            elif not max_heap.empty():
+                # Greedily choose the task with max occurrence 
+                negative_occur, task = max_heap.get()
+                occur = -negative_occur - 1
+                if occur > 0:
+                    remaining_tasks.append((-occur, task))
+            res += 1
+        for task_occur in remaining_tasks:
+            max_heap.put(task_occur)
+    
+    return res
+
+
+class LeastIntervalSpec(unittest.TestCase):
+    def test_example(self):
+        tasks = ["A", "A", "A", "B", "B", "B"]
+        n = 2
+        self.assertEqual(least_interval(tasks, n), 8) # A -> B -> idle -> A -> B -> idle -> A -> B
+
+    def test_no_tasks(self):
+        self.assertEqual(least_interval([], 0), 0)
+        self.assertEqual(least_interval([], 2), 0)
+    
+    def test_same_task_and_idle(self):
+        tasks = ["A", "A", "A"]
+        n = 1
+        self.assertEqual(least_interval(tasks, n), 5)  # A -> idle -> A -> idle -> A
+
+    def test_three_kind_tasks_no_idle(self):
+        tasks = ["A", "B", "A", "C"]
+        n = 1
+        self.assertEqual(least_interval(tasks, n), 4)  # A -> B -> A -> C
+    
+    def test_three_kind_tasks_with_one_idle(self):
+        tasks = ["A", "A", "A", "B", "C", "C"]
+        n = 2
+        self.assertEqual(least_interval(tasks, n), 7)  # A -> C -> B -> A -> C -> idle -> A
+
+    def test_each_kind_one_task(self):
+        tasks = ["A", "B", "C", "D"]
+        n = 10
+        self.assertEqual(least_interval(tasks, n), 4)  # A -> B -> C -> D
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
 ```
 
 ### Aug 22, 2019 \[Medium\] Amazing Number
