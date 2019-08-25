@@ -64,31 +64,30 @@ A N B
 
 > is considered valid.
 
-
-Cut Wood
----
-> **Question:** Given an int array wood representing the length of n pieces of wood and an int k. It is required to cut these pieces of wood such that more or equal to k pieces of the same length len are cut. What is the longest len you can get?
-
-Example 1:
-
-Input: wood = [5, 9, 7], k = 3
-Output: 5
-Explanation: 
-5 -> 5
-9 -> 5 + 4
-7 -> 5 + 2
-Example 2:
-
-Input: wood = [5, 9, 7], k = 4
-Output: 4
-Explanation: 
-5 -> 4 + 1
-9 -> 4 * 2 + 1
-7 -> 4 + 3
-
 --->
 
-### Aug 24, 2019 LC 358 \[Hard\] Rearrange String k Distance Apart
+### Aug 25, 2019 \[Medium\] Longest Subarray with Sum Divisible by K
+---
+> **Question:** Given an arr[] containing n integers and a positive integer k. The problem is to find the length of the longest subarray with sum of the elements divisible by the given value k.
+
+**Example:**
+```py
+Input : arr[] = {2, 7, 6, 1, 4, 5}, k = 3
+Output : 4
+The subarray is {7, 6, 1, 4} with sum 18, which is divisible by 3.
+```
+
+### Additional Question: LC 560 \[Medium\] Subarray Sum Equals K
+---
+> **Question:** Given an array of integers and an integer k, you need to find the total number of continuous subarrays whose sum equals to k.
+
+**Example:**
+```py
+Input: nums = [1, 1, 1], k = 2
+Output: 2
+```
+
+### Aug 24, 2019 LC 358 \[Hard\] Rearrange String K Distance Apart
 ---
 > **Question:** Given a non-empty string str and an integer k, rearrange the string such that the same characters are at least distance k from each other.
 >
@@ -114,6 +113,104 @@ str = "aaadbbcc", k = 2
 Answer: "abacabcd"
 Another possible answer is: "abcabcda"
 The same letters are at least distance 2 from each other.
+```
+
+**My thoughts:** The problem is just a variant of yesterday's Task Scheduler problem. The idea is to greedily choose the character with max remaining number for each window k. If no such character satisfy return empty string directly.
+
+**Solution with Greedy Algorithm:** [https://repl.it/@trsong/Rearrange-String-K-Distance-Apart](https://repl.it/@trsong/Rearrange-String-K-Distance-Apart)
+```py
+import unittest
+from Queue import PriorityQueue
+
+def rearrange_string(input_string, k):
+    if not input_string or k <= 0: return ""
+    histogram = {}
+    for c in input_string:
+        # use negative key with min-heap to achieve max heap
+        histogram[c] = histogram.get(c, 0) + 1
+    
+    max_heap = PriorityQueue()
+    for c, count in histogram.items():
+        max_heap.put((-count, c))
+
+    res = []
+    while not max_heap.empty():
+        remaining_char = []
+        for _ in xrange(k):
+            # Greedily choose the char with max remaining count
+            if max_heap.empty() and not remaining_char:
+                break
+            elif max_heap.empty():
+                return ""
+            neg_count, char = max_heap.get()
+            count = -neg_count - 1
+            res.append(char)
+            if count > 0:
+                remaining_char.append((-count, char))
+        for count_char in remaining_char:
+            max_heap.put(count_char)
+    return ''.join(res)
+
+
+class RearrangeStringSpec(unittest.TestCase):
+    def assert_k_distance_apart(self, rearranged_string, original_string, k):
+        # Test same length
+        self.assertTrue(len(original_string) == len(rearranged_string))
+
+        # Test containing all characters
+        self.assertTrue(sorted(original_string) == sorted(rearranged_string))
+
+        # Test K distance apart
+        last_occur_map = {}
+        for i, c in enumerate(rearranged_string):
+            last_occur = last_occur_map.get(c, float('-inf'))
+            self.assertTrue(i - last_occur >= k)
+            last_occur_map[c] = i
+    
+    def test_utility_function_is_correct(self):
+        original_string = "aaadbbcc"
+        k = 2
+        ans1 = "abacabcd"
+        ans2 = "abcabcda"
+        self.assert_k_distance_apart(ans1, original_string, k)
+        self.assert_k_distance_apart(ans2, original_string, k)
+        self.assertRaises(AssertionError, self.assert_k_distance_apart, original_string, original_string, k)
+
+    def test_example1(self):
+        original_string = "aabbcc"
+        k = 3
+        target_string = rearrange_string(original_string, k)
+        self.assert_k_distance_apart(target_string, original_string, k)
+    
+    def test_example2(self):
+        original_string = "aaabc"
+        self.assertEqual(rearrange_string(original_string, 3),"")
+    
+    def test_example3(self):
+        original_string = "aaadbbcc"
+        k = 2
+        target_string = rearrange_string(original_string, k)
+        self.assert_k_distance_apart(target_string, original_string, k)
+    
+    def test_large_distance(self):
+        original_string = "abcd"
+        k = 10
+        rearranged_string = rearrange_string(original_string, k)
+        self.assert_k_distance_apart(rearranged_string, original_string, k)
+
+    def test_empty_input_string(self):
+        self.assertEqual(rearrange_string("", 1),"")
+    
+    def test_impossible_to_rearrange(self):
+        self.assertEqual(rearrange_string("aaaabbbcc", 3), "")
+
+    def test_k_too_small(self):
+        self.assertEqual(rearrange_string("a", 0), "")
+        self.assertEqual(rearrange_string("a", -1), "")
+    
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
 ```
 
 ### Aug 23, 2019 LC 621 \[Medium\] Task Scheduler
