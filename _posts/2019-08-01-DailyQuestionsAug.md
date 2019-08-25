@@ -111,7 +111,7 @@ class LongestSubarraySpec(unittest.TestCase):
         self.assertEqual(longest_subarray([4, 5, 9, 17, 8, 3, 7, -1], 4), 8)  # entire array sum = 52 (52 % 4 = 0)
 
     def test_unique_subarray(self):
-        # Modulo 6, prefix array: [0, 1, 1, 2, 3, 2, 4, 4, 5]. max (end - start) = 2 such that f[end] - f[start-1] = 0
+        # Modulo 6, prefix array: [0, 1, 1, 2, 3, 2, 4, 4, 5]. max (end - start) = 2 such that prefix[end] - prefix[start-1] = 0
         self.assertEqual(longest_subarray([0, 1, 0, 1, 1, -1, 2, 0, 1], 6), 2)  #  sum([1, -1]) = 0
         self.assertEqual(longest_subarray([6, 7, 12, 7, 13, 5, 8, 36, 19], 6), 2)  #  sum([13, 5]) = 18 (18 % 6 = 0)
     
@@ -129,6 +129,47 @@ if __name__ == '__main__':
 ```py
 Input: nums = [1, 1, 1], k = 2
 Output: 2
+```
+
+**My thoughts:** Just like how we efficiently calculate prefix_sum in previous question. We want to find how many index i exists such that `prefix[j] - prefix[i] = k`. As `j > i`, when we reach j, we pass i already, so we can store `prefix[i]` in a map and put value as occurance of `prefix[i]`, that is why this question feels similar to Two Sum question.
+
+**Solution:** [https://repl.it/@trsong/Subarray-Sum-Equals-K](https://repl.it/@trsong/Subarray-Sum-Equals-K)
+```py
+import unittest
+
+def subarray_sum(nums, k):
+    sum_so_far = 0
+    prefix_sum_occur_map = {0: 1}
+    res = 0
+    for num in nums:
+        sum_so_far += num
+        target_sum = sum_so_far - k
+        res += prefix_sum_occur_map.get(target_sum, 0)
+        prefix_sum_occur_map[sum_so_far] = prefix_sum_occur_map.get(sum_so_far, 0) + 1
+    return res
+
+
+class SubarraySumSpec(unittest.TestCase):
+    def test_example(self):
+        self.assertEqual(subarray_sum([1, 1, 1], 2), 2)  # [1, 1] and [1, 1]
+    
+    def test_empty_array(self):
+        self.assertEqual(subarray_sum([], 2), 0) 
+
+    def test_target_is_zero(self):
+        self.assertEqual(subarray_sum([0, 0], 0), 3) # [0], [0], [0, 0]
+
+    def test_array_with_one_elem(self):
+        self.assertEqual(subarray_sum([1], 0), 0)
+        self.assertEqual(subarray_sum([1], 1), 1) # [1]
+
+    def test_array_with_unique_target_prefix(self):
+        # suppose the prefix_sum = [1, 2, 3, 3, 2, 1]
+        self.assertEqual(subarray_sum([1, 1, 1, 0, -1, -1], 2), 4)  # [1, 1], [1, ,1], [1, 1, 0], [1, 1, 1, 0, -1]
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
 ```
 
 ### Aug 24, 2019 LC 358 \[Hard\] Rearrange String K Distance Apart
