@@ -40,7 +40,7 @@ SSH Steps
 3. Use Hashing to make sure of no funny business between client and server
 4. Authenticate User
 
-In step 4, the traditional way is to enter a password; However, we cannot avoid brutal force as well as the hassle to memorize/enter the password. A better way is to take advantage of RSA token.
+In step 4, the traditional way is to enter a password; However, we cannot avoid brutal force as well as the hassle to memorize/enter the password. A better way is to take advantage of RSA keys - a way to verify our identities without typing a password.
 
 ```sh
 cd ~/.ssh  # mkdir .ssh  if your local machine don't have one
@@ -62,13 +62,19 @@ vi authorized_keys  # create one if remote don't have one
 exit   # exit from remote to local
 
 # for windows WSL only:
-eval `ssh-agent -s`
+eval `ssh-agent -s` # note: each time open terminal you have to do this, plus ssh-add ~/.ssh/id_rsa_YourPrivateKeys
 
 ssh-add ~/.ssh/id_rsa_raspberrypi   # the reason we want to do this is we want ssh use the private key automatically
 ssh pi@RASPBERRY  # should not require any password
+
+# Useful command
+ssh-add -l  # to list all keys being registered
+ssh-add -D  # to clear all registered keys
+ssh -tt pi@1.2.3.4 ssh -tt pi@5.6.7.8 ssh -tt .......  # to tunnel all ssh from one machine to another
 ```
 
 ### Performance
+A lot of companies weight performance as first priority. Amazon calculated 1 sec slow down could cause 1.6 billion in sales per year. Google also did calculation that 40% slow of a second could lose million search result meaning they will lose all ads money that they get.
 #### Network Optimizations
 #### Front End Optimizations
 #### Back End Optimizations

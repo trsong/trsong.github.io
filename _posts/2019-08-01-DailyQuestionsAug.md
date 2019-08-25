@@ -15,24 +15,6 @@ categories: Python/Java
 **Python 2.7 Playground:** [https://repl.it/languages/python](https://repl.it/languages/python)
 
 <!--
-### Jul , 2019 \[Hard\]
----
-> **Question:** A knight's tour is a sequence of moves by a knight on a chessboard such that all squares are visited once.
-
-Given N, write a function to return the number of knight's tours on an N by N chessboard.
-
-
-### Jul , 2019 \[Hard\]
----
-> **Question:**
-Given a number represented by a list of digits, find the next greater permutation of a number, in terms of lexicographic ordering. If there is not greater permutation possible, return the permutation with the lowest value/ordering.
-
-For example, the list [1,2,3] should return [1,3,2]. The list [1,3,2] should return [2,1,3]. The list [3,2,1] should return [1,2,3].
-
-Can you perform the operation without allocating extra memory (disregarding the input memory)?
-
-
-
 ### Jul 11, 2019 \[Medium\]
 ---
 > **Question:** A rule looks like this:
@@ -66,6 +48,14 @@ A N B
 
 --->
 
+### Aug 26, 2019 \[Hard\] Find Next Greater Permutation
+---
+> **Question:** Given a number represented by a list of digits, find the next greater permutation of a number, in terms of lexicographic ordering. If there is not greater permutation possible, return the permutation with the lowest value/ordering.
+>
+> For example, the list [1,2,3] should return [1,3,2]. The list [1,3,2] should return [2,1,3]. The list [3,2,1] should return [1,2,3].
+>
+> Can you perform the operation without allocating extra memory (disregarding the input memory)?
+
 ### Aug 25, 2019 \[Medium\] Longest Subarray with Sum Divisible by K
 ---
 > **Question:** Given an arr[] containing n integers and a positive integer k. The problem is to find the length of the longest subarray with sum of the elements divisible by the given value k.
@@ -75,6 +65,60 @@ A N B
 Input : arr[] = {2, 7, 6, 1, 4, 5}, k = 3
 Output : 4
 The subarray is {7, 6, 1, 4} with sum 18, which is divisible by 3.
+```
+
+**My thoughts:** Recall the way to efficiently calculate subarray sum is to calculate prefix sum, `prefix_sum[i] = arr[0] + arr[1] + ... + arr[i] and prefix_sum[i] = prefix_sum[i-1] + arr[i]`. The subarray sum between index i and j, `arr[i] + arr[i+1] + ... + arr[j] = prefix_sum[j] - prefix_sum[i-1]`.
+
+But this question is asking to find subarray whose sum is divisible by 3, that is,  `(prefix_sum[j] - prefix_sum[i-1]) mod k == 0 ` which implies `prefix_sum[j] % k == prefix_sum[j-1] % k`. So we just need to generate prefix_modulo array and find i,j such that `j - i reaches max` and `prefix_modulo[j] == prefix_modulo[i-1]`. As `j > i` and we must have value of `prefix_modulo[i-1]` already when we reach j. We can use a map to store the first occurance of certain prefix_modulo. This feels similar to Two-Sum question in a sense that we use map to store previous reached element and is able to quickly tell if current element satisfies or not.
+
+**Solution:** [https://repl.it/@trsong/Longest-Subarray-with-Sum-Divisible-by-K](https://repl.it/@trsong/Longest-Subarray-with-Sum-Divisible-by-K)
+```py
+import unittest
+
+def longest_subarray(nums, k):
+    if not nums: return 0
+    n = len(nums)
+    prefix_modulo = [0] * n
+    mod_so_far = 0
+    for i in xrange(n):
+        mod_so_far = (mod_so_far + nums[i] % k) % k
+        prefix_modulo[i] = mod_so_far
+    
+    mod_first_occur_map = {0: -1}
+    max_len = 0
+    for i, prefix_mod in enumerate(prefix_modulo):
+        if prefix_mod not in mod_first_occur_map:
+            mod_first_occur_map[prefix_mod] = i
+        else:
+            max_len = max(max_len, i - mod_first_occur_map[prefix_mod])
+    return max_len
+
+
+class LongestSubarraySpec(unittest.TestCase):
+    def test_example(self):
+        # Modulo 3, prefix array = [2, 0, 0, 1, 2, 1]. max (end - start) = 4 such that prefix[end] - prefix[start-1] = 0
+        self.assertEqual(longest_subarray([2, 7, 6, 1, 4, 5], 3), 4)  # sum([7, 6, 1, 4]) = 18 (18 % 3 = 0)
+
+    def test_empty_array(self):
+        self.assertEqual(longest_subarray([], 10), 0)
+    
+    def test_no_existance_of_such_subarray(self):
+        self.assertEqual(longest_subarray([1, 2, 3, 4], 11), 0)
+    
+    def test_entire_array_qualify(self):
+        # Modulo 4, prefix array: [0, 1, 2, 3, 3, 2, 1, 0]. max (end - start) = 8 such that prefix[end] - prefix[start-1] = 0
+        self.assertEqual(longest_subarray([0, 1, 1, 1, 0, -1, -1, -1], 4), 8)  # entire array sum = 0
+        self.assertEqual(longest_subarray([4, 5, 9, 17, 8, 3, 7, -1], 4), 8)  # entire array sum = 52 (52 % 4 = 0)
+
+    def test_unique_subarray(self):
+        # Modulo 6, prefix array: [0, 1, 1, 2, 3, 2, 4, 4, 5]. max (end - start) = 2 such that f[end] - f[start-1] = 0
+        self.assertEqual(longest_subarray([0, 1, 0, 1, 1, -1, 2, 0, 1], 6), 2)  #  sum([1, -1]) = 0
+        self.assertEqual(longest_subarray([6, 7, 12, 7, 13, 5, 8, 36, 19], 6), 2)  #  sum([13, 5]) = 18 (18 % 6 = 0)
+    
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
+
 ```
 
 ### Additional Question: LC 560 \[Medium\] Subarray Sum Equals K
