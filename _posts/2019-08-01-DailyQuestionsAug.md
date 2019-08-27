@@ -48,13 +48,111 @@ A N B
 
 --->
 
+### Aug 27, 2019 \[Hard\] Minimum Appends to Craft a Palindrome
+---
+> **Question:** Given a string s we need to append (insertion at end) minimum characters to make a string palindrome.
+>
+> Follow-up: Do that use Manacher’s Algorithm, even though Longest Palindromic Substring can be efficiently solved with that algorithm.  
+
+**Example 1:**
+
+```
+Input : s = "abede"
+Output : "abedeba"
+We can make string palindrome as "abedeba" by adding ba at the end of the string.
+```
+
+**Example 2:**
+```
+Input : s = "aabb"
+Output : "aabbaa"
+We can make string palindrome as"aabbaa" by adding aa at the end of the string.
+```
+
 ### Aug 26, 2019 \[Hard\] Find Next Greater Permutation
 ---
 > **Question:** Given a number represented by a list of digits, find the next greater permutation of a number, in terms of lexicographic ordering. If there is not greater permutation possible, return the permutation with the lowest value/ordering.
 >
-> For example, the list [1,2,3] should return [1,3,2]. The list [1,3,2] should return [2,1,3]. The list [3,2,1] should return [1,2,3].
+> For example, the list `[1,2,3]` should return `[1,3,2]`. The list `[1,3,2]` should return `[2,1,3]`. The list `[3,2,1]` should return `[1,2,3]`.
 >
 > Can you perform the operation without allocating extra memory (disregarding the input memory)?
+
+**My thoughts:** Imagine the list as a number, if it's in descending order, then there will be no number greater than that and we have to return the number in ascending order, that is, the smallest number. e.g. 321 will become 123. 
+
+Now if the later part of array are first increasing then decreasing, like 1321, then based on previous observation, we know the descending part will change from largest to smallest, we want the last increasing digit to increase as little as possible, i.e. slightly larger number on the right. e.g. 2113
+
+Here are all the steps:
+1. Find last increase number
+2. Find the slightly larger number. i.e. the smallest one among all number greater than the last increase number on the right
+3. Swap the slightly larger number with last increase number
+4. Turn the descending array on right to be ascending array 
+
+**Solution:** [https://repl.it/@trsong/Find-Next-Greater-Permutation](https://repl.it/@trsong/Find-Next-Greater-Permutation)
+```py
+import unittest
+
+def next_greater_permutation(num_lst):
+    n = len(num_lst)
+    last_increase_index = n - 2
+
+    # Step1: Find last increase number
+    while last_increase_index >= 0:
+        if num_lst[last_increase_index] >= num_lst[last_increase_index + 1]:
+            last_increase_index -= 1
+        else:
+            break
+
+    if last_increase_index < 0:
+        num_lst.sort()
+        return num_lst
+
+    # Step2: Find the slightly larger number. i.e. the smallest one among all number greater than the last increase number on the right
+    larger_num_index = n - 1
+    while num_lst[larger_num_index] <= num_lst[last_increase_index]:
+        larger_num_index -= 1
+
+    # Step3: Swap the slightly larger number with last increase number
+    num_lst[larger_num_index], num_lst[last_increase_index] = num_lst[last_increase_index], num_lst[larger_num_index]
+
+    # Step4: Turn the descending array on right to be ascending array 
+    i, j = last_increase_index + 1, n - 1
+    while i < j:
+        num_lst[i], num_lst[j] = num_lst[j], num_lst[i]
+        i += 1
+        j -= 1
+    return num_lst
+
+
+class NextGreaterPermutationSpec(unittest.TestCase):
+    def test_example1(self):
+        self.assertEqual(next_greater_permutation([1, 2, 3]), [1, 3, 2])
+    
+    def test_example2(self):
+        self.assertEqual(next_greater_permutation([1, 3, 2]), [2, 1, 3])
+
+    def test_example3(self):
+        self.assertEqual(next_greater_permutation([3, 2, 1]), [1, 2, 3])
+
+    def test_empty_array(self):
+        self.assertEqual(next_greater_permutation([]), [])
+
+    def test_one_elem_array(self):
+        self.assertEqual(next_greater_permutation([1]), [1])
+
+    def test_decrease_increase_decrease_array(self):
+        self.assertEqual(next_greater_permutation([3, 2, 1, 6, 5, 4]), [3, 2, 4, 1, 5, 6])
+        self.assertEqual(next_greater_permutation([3, 2, 4, 6, 5, 4]), [3, 2, 5, 4, 4, 6])
+
+    def test_increasing_decreasing_increasing_array(self):
+        self.assertEqual(next_greater_permutation([4, 5, 6, 1, 2, 3]), [4, 5, 6, 1, 3, 2])
+
+    def test_multiple_decreasing_and_increasing_array(self):
+        self.assertEqual(next_greater_permutation([5, 3, 4, 9, 7, 6]), [5, 3, 6, 4, 7, 9])
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
+```
 
 ### Aug 25, 2019 \[Medium\] Longest Subarray with Sum Divisible by K
 ---
