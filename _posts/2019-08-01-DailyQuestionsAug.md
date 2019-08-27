@@ -79,7 +79,7 @@ We can make string palindrome as"aabbaa" by adding aa at the end of the string.
 
 **My thoughts:** Imagine the list as a number, if it's in descending order, then there will be no number greater than that and we have to return the number in ascending order, that is, the smallest number. e.g. 321 will become 123. 
 
-Now if the later part of array are first increasing then decreasing, like 1321, then based on previous observation, we know the descending part will change from largest to smallest, we want the last increasing digit to increase as little as possible, i.e. slightly larger number on the right. e.g. 2113
+Leave first part untouched. If the later part of array are first increasing then decreasing, like 1321, then based on previous observation, we know the descending part will change from largest to smallest, we want the last increasing digit to increase as little as possible, i.e. slightly larger number on the right. e.g. 2113
 
 Here are all the steps:
 1. Find last increase number
@@ -102,17 +102,14 @@ def next_greater_permutation(num_lst):
         else:
             break
 
-    if last_increase_index < 0:
-        num_lst.sort()
-        return num_lst
+    if last_increase_index >= 0:
+        # Step2: Find the slightly larger number. i.e. the smallest one among all number greater than the last increase number on the right
+        larger_num_index = n - 1
+        while num_lst[larger_num_index] <= num_lst[last_increase_index]:
+            larger_num_index -= 1
 
-    # Step2: Find the slightly larger number. i.e. the smallest one among all number greater than the last increase number on the right
-    larger_num_index = n - 1
-    while num_lst[larger_num_index] <= num_lst[last_increase_index]:
-        larger_num_index -= 1
-
-    # Step3: Swap the slightly larger number with last increase number
-    num_lst[larger_num_index], num_lst[last_increase_index] = num_lst[last_increase_index], num_lst[larger_num_index]
+        # Step3: Swap the slightly larger number with last increase number
+        num_lst[larger_num_index], num_lst[last_increase_index] = num_lst[last_increase_index], num_lst[larger_num_index]
 
     # Step4: Turn the descending array on right to be ascending array 
     i, j = last_increase_index + 1, n - 1
