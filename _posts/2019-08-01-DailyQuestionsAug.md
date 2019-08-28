@@ -48,11 +48,31 @@ A N B
 
 --->
 
+### Aug 28, 2019 LC 103 \[Medium\] Binary Tree Zigzag Level Order Traversal
+---
+> **Question:** Given a binary tree, return the zigzag level order traversal of its nodes' values. (ie, from left to right, then right to left for the next level and alternate between).
+
+**For example:**
+```py
+Given following binary tree:
+    3
+   / \
+  9  20
+    /  \
+   15   7
+return its zigzag level order traversal as:
+[
+  [3],
+  [20,9],
+  [15,7]
+]
+```
+
 ### Aug 27, 2019 \[Hard\] Minimum Appends to Craft a Palindrome
 ---
 > **Question:** Given a string s we need to append (insertion at end) minimum characters to make a string palindrome.
 >
-> Follow-up: Do that use Manacher’s Algorithm, even though Longest Palindromic Substring can be efficiently solved with that algorithm.  
+> Follow-up: Don't use Manacher’s Algorithm, even though Longest Palindromic Substring can be efficiently solved with that algorithm.  
 
 **Example 1:**
 
@@ -67,6 +87,74 @@ We can make string palindrome as "abedeba" by adding ba at the end of the string
 Input : s = "aabb"
 Output : "aabbaa"
 We can make string palindrome as"aabbaa" by adding aa at the end of the string.
+```
+
+**My thoughts:** An efficient way to solve this problem is to find the max len of suffix that is a palindrome. We can use a rolling hash function to quickly convert string into a number and by comparing the forward and backward hash value we can easily tell if a string is a palidrome or not. 
+Example 1:
+```py
+Hash("123") = 123, Hash("321") = 321. Not Palindrome 
+```
+Example 2:
+```py
+Hash("101") = 101, Hash("101") = 101. Palindrome.
+```
+Rolling hashes are amazing, they provide you an ability to calculate the hash values without rehashing the whole string. eg. Hash("123") = Hash("12") ~ 3.  ~ is some function that can efficient using previous hashing value to build new caching value. 
+
+However, we should not use Hash("123") = 123 as when the number become too big, the hash value be come arbitrarily big. Thus we use the following formula for rolling hash:
+
+```py
+hash("1234") = (1*p0^3 + 2*p0^2 + 3*p0^1 + 4*p0^0) % p1. where p0 is a much smaller prime and p1 is relatively large prime. 
+```
+
+There might be some hashing collision. However by choosing a much smaller p0 and relatively large p1, such collison is highly unlikely. Here I choose to remember a special large prime number `666667` and smaller number you can just use any smaller prime number, it shouldn't matter.
+
+
+**Solution with Rolling Hash:** [https://repl.it/@trsong/Minimum-Appends-to-Craft-a-Palindrome](https://repl.it/@trsong/Minimum-Appends-to-Craft-a-Palindrome)
+```py
+import unittest
+
+def craft_palindrome_with_min_appends(input_string):
+    p0 = 17
+    p1 = 666667  # large prime number worth to remember 
+    reversed_string = input_string[::-1]
+    forward_hash = 0  # right-most is most significant digit
+    backward_hash = 0  # left-most is most significant digit
+    max_len_palindrome_suffix = 0
+    for i, char in enumerate(reversed_string):
+        ord_char = ord(char)
+        forward_hash = (forward_hash + ord_char * pow(p0, i)) % p1
+        backward_hash = (p0 * backward_hash + ord_char) % p1
+        if forward_hash == backward_hash:
+            max_len_palindrome_suffix = i + 1
+
+    return input_string + reversed_string[max_len_palindrome_suffix:]
+  
+
+class CraftPalindromeWithMinAppendSpec(unittest.TestCase):
+    def test_example1(self):
+        self.assertEqual(craft_palindrome_with_min_appends('abede'), 'abedeba')
+
+    def test_example2(self):
+        self.assertEqual(craft_palindrome_with_min_appends('aabb'), 'aabbaa')
+
+    def test_empty_string(self):
+        self.assertEqual(craft_palindrome_with_min_appends(''), '')
+    
+    def test_already_palindrome(self):
+        self.assertEqual(craft_palindrome_with_min_appends('147313741'), '147313741')
+        self.assertEqual(craft_palindrome_with_min_appends('328823'), '328823')
+
+    def test_ascending_sequence(self):
+        self.assertEqual(craft_palindrome_with_min_appends('12345'), '123454321')
+
+    def test_binary_sequence(self):
+        self.assertEqual(craft_palindrome_with_min_appends('10001001'), '100010010001')
+        self.assertEqual(craft_palindrome_with_min_appends('100101'), '100101001')
+        self.assertEqual(craft_palindrome_with_min_appends('010101'), '0101010')
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
 ```
 
 ### Aug 26, 2019 \[Hard\] Find Next Greater Permutation
