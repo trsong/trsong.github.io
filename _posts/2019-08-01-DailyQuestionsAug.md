@@ -48,6 +48,18 @@ A N B
 
 --->
 
+### Aug 29, 2019 \[Easy\] Flip Bit to Get Longest Sequence of 1s
+---
+> **Question:** : Given an integer, can you flip exactly one bit from a 0 to a 1 to get the longest sequence of 1s? Return the longest possible length of 1s after flip.
+
+**Example:**
+```py
+Input: 183 (or binary: 10110111)
+Output: 6
+Explanation: 10110111 => 10111111. The longest sequence of 1s is of length 6.
+```
+
+
 ### Aug 28, 2019 LC 103 \[Medium\] Binary Tree Zigzag Level Order Traversal
 ---
 > **Question:** Given a binary tree, return the zigzag level order traversal of its nodes' values. (ie, from left to right, then right to left for the next level and alternate between).
@@ -66,6 +78,105 @@ return its zigzag level order traversal as:
   [20,9],
   [15,7]
 ]
+```
+
+**Solution with BFS and Two Stacks:** [https://repl.it/@trsong/Binary-Tree-Zigzag-Level-Order-Traversal](https://repl.it/@trsong/Binary-Tree-Zigzag-Level-Order-Traversal)
+```py
+import unittest
+
+class Node(object):
+    def __init__(self, val, left=None, right=None):
+        self.val = val
+        self.left = left
+        self.right = right
+
+
+def zig_zag_level_order(root):
+    if not root:
+        return []
+    stack = [root]
+    res = []
+    is_left_first = True
+    while stack:
+        level = []
+        next_stack = []
+        for _ in xrange(len(stack)):
+            cur = stack.pop()
+            if cur:
+                level.append(cur.val)
+                if is_left_first:
+                    next_stack.append(cur.left)
+                    next_stack.append(cur.right)
+                else:
+                    next_stack.append(cur.right)
+                    next_stack.append(cur.left)
+        stack = next_stack
+        is_left_first ^= True # flip the boolean flag
+        if level:
+            res.append(level)
+    return res
+
+
+class ZigZagLevelOrderSpec(unittest.TestCase):
+    def test_example(self):
+        """
+            3
+           / \
+          9  20
+            /  \
+           15   7
+        """
+        n20 = Node(20, Node(15), Node(7))
+        n3 = Node(3, Node(9), n20)
+        self.assertEqual(zig_zag_level_order(n3), [
+            [3],
+            [20, 9],
+            [15, 7]
+        ])
+    
+    def test_complete_tree(self):
+        """
+             1
+           /   \
+          3     2
+         / \   /  
+        4   5 6  
+        """
+        n3 = Node(3, Node(4), Node(5))
+        n2 = Node(2, Node(6))
+        n1 = Node(1, n3, n2)
+        self.assertEqual(zig_zag_level_order(n1), [
+            [1],
+            [2, 3],
+            [4, 5, 6]
+        ])
+
+    def test_sparse_tree(self):
+        """
+             1
+           /   \
+          3     2
+           \   /  
+            4 5
+           /   \
+          7     6
+           \   /  
+            8 9
+        """
+        n3 = Node(3, right=Node(4, Node(7, right=Node(8))))
+        n2 = Node(2, Node(5, right=Node(6, Node(9))))
+        n1 = Node(1, n3, n2)
+        self.assertEqual(zig_zag_level_order(n1), [
+            [1],
+            [2, 3],
+            [4, 5],
+            [6, 7],
+            [8, 9]
+        ])
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
 ```
 
 ### Aug 27, 2019 \[Hard\] Minimum Appends to Craft a Palindrome
