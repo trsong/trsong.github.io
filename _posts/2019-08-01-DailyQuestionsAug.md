@@ -76,7 +76,7 @@ from "z" and "x"，we can get 'z' < 'x'
 So return "zx"
 --->
 
-### Aug 29, 2019 LT 623 \[Medium\] K Edit Distance
+### Aug 30, 2019 LT 623 \[Medium\] K Edit Distance
 ---
 > **Question:** Given a set of strings which just has lower case letters and a target string, output all the strings for each the edit distance with the target no greater than k.
 You have the following 3 operations permitted on a word:
