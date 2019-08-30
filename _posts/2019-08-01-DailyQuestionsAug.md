@@ -46,11 +46,68 @@ A N B
 
 > is considered valid.
 
+
+LT 892. Alien Dictionary
+There is a new alien language which uses the latin alphabet. However, the order among letters are unknown to you. You receive a list of non-empty words from the dictionary, where words are sorted lexicographically by the rules of this new language. Derive the order of letters in this language.
+
+You may assume all letters are in lowercase.
+You may assume that if a is a prefix of b, then a must appear before b in the given dictionary.
+If the order is invalid, return an empty string.
+There may be multiple valid order of letters, return the smallest in normal lexicographical order
+Have you met this question in a real interview?  
+Example
+Example 1:
+
+Input：["wrt","wrf","er","ett","rftt"]
+Output："wertf"
+Explanation：
+from "wrt"and"wrf" ,we can get 't'<'f'
+from "wrt"and"er" ,we can get 'w'<'e'
+from "er"and"ett" ,we can get 'r'<'t'
+from "ett"and"rtff" ,we can get 'e'<'r'
+So return "wertf"
+
+Example 2:
+
+Input：["z","x"]
+Output："zx"
+Explanation：
+from "z" and "x"，we can get 'z' < 'x'
+So return "zx"
 --->
+
+### Aug 29, 2019 LT 623 \[Medium\] K Edit Distance
+---
+> **Question:** Given a set of strings which just has lower case letters and a target string, output all the strings for each the edit distance with the target no greater than k.
+You have the following 3 operations permitted on a word:
+> - Insert a character
+> - Delete a character
+> - Replace a character
+
+**Example 1:**
+```py
+Given words = ["abc", "abd", "abcd", "adc"] and target = "ac", k = 1
+Return ["abc", "adc"]
+Explanation:
+- "abc" remove "b"
+- "adc" remove "d"
+```
+
+**Example 2:**
+```py
+Given words = ["acc","abcd","ade","abbcd"] and target = "abc", k = 2
+Return ["acc","abcd","ade","abbcd"]
+Explanation:
+- "acc" turns "c" into "b"
+- "abcd" remove "d"
+- "ade" turns "d" into "b" turns "e" into "c"
+- "abbcd" gets rid of "b" and "d"
+```
+
 
 ### Aug 29, 2019 \[Easy\] Flip Bit to Get Longest Sequence of 1s
 ---
-> **Question:** : Given an integer, can you flip exactly one bit from a 0 to a 1 to get the longest sequence of 1s? Return the longest possible length of 1s after flip.
+> **Question:** Given an integer, can you flip exactly one bit from a 0 to a 1 to get the longest sequence of 1s? Return the longest possible length of 1s after flip.
 
 **Example:**
 ```py
@@ -59,6 +116,46 @@ Output: 6
 Explanation: 10110111 => 10111111. The longest sequence of 1s is of length 6.
 ```
 
+**Solution:** [https://repl.it/@trsong/Flip-Bit-to-Get-Longest-Sequence-of-1s](https://repl.it/@trsong/Flip-Bit-to-Get-Longest-Sequence-of-1s)
+```py
+import unittest
+
+def flip_bits(num):
+    prev = 0
+    cur = 0
+    max_len = 0
+    while num > 0:
+        last_digit = num & 1
+        if last_digit == 1:
+            cur += 1
+        else:
+            max_len = max(max_len, cur + prev + 1)
+            prev = cur
+            cur = 0
+        num >>= 1
+    return max(max_len, cur + prev + 1)
+
+
+class FlipBitSpec(unittest.TestCase):
+    def test_example(self):
+        self.assertEqual(flip_bits(0b10110111), 6)  # 10110111 => 10111111
+
+    def test_not_exist_ones(self):
+        self.assertEqual(flip_bits(0), 1)  # 0 => 1
+
+    def test_flip_last_digit(self):
+        self.assertEqual(flip_bits(0b100110), 3)  # 100110 => 100111
+
+    def test_three_zeros(self):
+        self.assertEqual(flip_bits(0b1011110110111), 7)  # 1011110110111 => 1011111110111
+
+    def test_one(self):
+        self.assertEqual(flip_bits(1), 2)  # 01 => 11
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
+```
 
 ### Aug 28, 2019 LC 103 \[Medium\] Binary Tree Zigzag Level Order Traversal
 ---
