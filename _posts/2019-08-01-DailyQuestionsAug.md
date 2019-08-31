@@ -76,6 +76,15 @@ from "z" and "x"，we can get 'z' < 'x'
 So return "zx"
 --->
 
+### Aug 31, 2019 \[Hard\] Encode and Decode Array of Strings
+---
+> **Question:** Given an array of string, write function "encode" to convert an array of strings into a single string and function "decode" to restore the original array.
+> 
+> Hint: string can be encoded as `<length>:<contents>`
+> 
+> Follow-up: what about array of integers, strings, and dictionaries?
+
+
 ### Aug 30, 2019 LT 623 \[Medium\] K Edit Distance
 ---
 > **Question:** Given a set of strings which just has lower case letters and a target string, output all the strings for each the edit distance with the target no greater than k.
@@ -102,6 +111,116 @@ Explanation:
 - "abcd" remove "d"
 - "ade" turns "d" into "b" turns "e" into "c"
 - "abbcd" gets rid of "b" and "d"
+```
+
+**My thoughts:** The brutal force way is to calculate the distance between each word and target and filter those qualified words. However, notice that word might have exactly the same prefix and that share the same DP array. So we can build a prefix tree that contains all words and calculate the DP array along the way.
+
+**Solution with Trie and BFS:** [https://repl.it/@trsong/K-Edit-Distance](https://repl.it/@trsong/K-Edit-Distance)
+```py
+import unittest
+
+class Trie(object):
+    def __init__(self):
+        self.count = 0
+        self.word = None
+        self.edit_distance_dp = None
+        self.children = None
+
+    def insert(self, word): 
+        t = self
+        for char in word:
+            if not t.children:
+                t.children = {}
+            if char not in t.children:
+                t.children[char] = Trie()
+            t = t.children[char]
+        t.count += 1
+        t.word = word
+
+
+def filter_k_edit_distance(words, target, k):
+    trie = Trie()
+    n = len(target)
+    filtered_word = filter(lambda word: n - k <= len(word) <= n + k, words)
+    for word in filtered_word:
+        trie.insert(word)
+        
+    trie.edit_distance_dp = [i for i in xrange(n+1)] # edit distance between "" and target[:i] equals i (insert i letters)
+    stack = [trie]
+    res = []
+    while stack:
+        parent = stack.pop()
+
+        parent_dp = parent.edit_distance_dp
+        if parent.word is not None and parent_dp[n] <= k:
+            res.extend([parent.word] * parent.count)
+
+        if not parent.children:
+            continue
+
+        for char, child in parent.children.items():
+            dp = [0] * (n+1)
+            dp[0] = parent_dp[0] + 1
+            for j in xrange(1, n+1):
+                if char == target[j-1]:
+                    dp[j] = parent_dp[j-1]
+                else:
+                    dp[j] = min(1 + parent_dp[j-1], 1 + dp[j-1], 1 + parent_dp[j])
+            child.edit_distance_dp = dp
+            stack.append(child)
+    
+    return res
+
+
+class FilterKEditDistance(unittest.TestCase):
+    def assert_k_distance_array(self, res, expected):
+        self.assertEqual(sorted(res), sorted(expected))
+
+    def test_example1(self):
+        words =["abc", "abd", "abcd", "adc"] 
+        target = "ac"
+        k = 1
+        expected = ["abc", "adc"]
+        self.assert_k_distance_array(filter_k_edit_distance(words, target, k), expected)
+    
+    def test_example2(self):
+        words = ["acc","abcd","ade","abbcd"]
+        target = "abc"
+        k = 2
+        expected = ["acc","abcd","ade","abbcd"]
+        self.assert_k_distance_array(filter_k_edit_distance(words, target, k), expected)
+
+    def test_duplicated_words(self):
+        words = ["a","b","a","c", "bb", "cc"]
+        target = ""
+        k = 1
+        expected = ["a","b","a","c"]
+        self.assert_k_distance_array(filter_k_edit_distance(words, target, k), expected)
+
+    def test_empty_words(self):
+        words = ["", "", "", "c", "bbbbb", "cccc"]
+        target = "ab"
+        k = 2
+        expected = ["", "", "", "c"]
+        self.assert_k_distance_array(filter_k_edit_distance(words, target, k), expected)
+
+    def test_same_word(self):
+        words = ["ab", "ab", "ab"]
+        target = "ab"
+        k = 1000
+        expected = ["ab", "ab", "ab"]
+        self.assert_k_distance_array(filter_k_edit_distance(words, target, k), expected)
+
+    def test_unqualified_words(self):
+        words = ["", "a", "aa", "aaa", "aaaa", "aaaaa", "aaaaaa", "aaaaaaa", "aaaaaaaa"]
+        target = "aaaaa"
+        k = 2
+        expected = ["aaa", "aaaa", "aaaaa", "aaaaaa", "aaaaaaa"]
+        self.assert_k_distance_array(filter_k_edit_distance(words, target, k), expected)
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
 ```
 
 
