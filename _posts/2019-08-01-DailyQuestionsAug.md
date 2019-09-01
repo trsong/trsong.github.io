@@ -46,35 +46,39 @@ A N B
 
 > is considered valid.
 
+--->
 
-LT 892. Alien Dictionary
-There is a new alien language which uses the latin alphabet. However, the order among letters are unknown to you. You receive a list of non-empty words from the dictionary, where words are sorted lexicographically by the rules of this new language. Derive the order of letters in this language.
-
-You may assume all letters are in lowercase.
-You may assume that if a is a prefix of b, then a must appear before b in the given dictionary.
-If the order is invalid, return an empty string.
+### Sep 1, 2019 LT 892 \[Medium\] Alien Dictionary
+---
+> **Question:** There is a new alien language which uses the latin alphabet. However, the order among letters are unknown to you. You receive a list of non-empty words from the dictionary, where words are sorted lexicographically by the rules of this new language. Derive the order of letters in this language.
+>
+> - You may assume all letters are in lowercase.
+> 
+> - You may assume that if a is a prefix of b, then a must appear before b in the given dictionary.
+> 
+> - If the order is invalid, return an empty string.
 There may be multiple valid order of letters, return the smallest in normal lexicographical order
-Have you met this question in a real interview?  
-Example
-Example 1:
 
+**Example 1:**
+```py
 Input：["wrt","wrf","er","ett","rftt"]
 Output："wertf"
 Explanation：
-from "wrt"and"wrf" ,we can get 't'<'f'
-from "wrt"and"er" ,we can get 'w'<'e'
-from "er"and"ett" ,we can get 'r'<'t'
-from "ett"and"rtff" ,we can get 'e'<'r'
+from "wrt" and "wrf", we can get 't'<'f'
+from "wrt" and "er", we can get 'w'<'e'
+from "er" and "ett", we can get 'r'<'t'
+from "ett" and "rtff", we can get 'e'<'r'
 So return "wertf"
+```
 
-Example 2:
-
+**Example 2:**
+```py
 Input：["z","x"]
 Output："zx"
 Explanation：
 from "z" and "x"，we can get 'z' < 'x'
 So return "zx"
---->
+```
 
 ### Aug 31, 2019 \[Hard\] Encode and Decode Array of Strings
 ---
@@ -84,8 +88,183 @@ So return "zx"
 > 
 > Follow-up: what about array of integers, strings, and dictionaries?
 
+**My thoughts:** There are many ways to encode/decode. Our solution use BEncode, the encoding used by BitTorrent. 
 
-### Aug 30, 2019 LT 623 \[Medium\] K Edit Distance
+According to BEncode Wiki: [https://en.wikipedia.org/wiki/Bencode](https://en.wikipedia.org/wiki/Bencode) and specification of BitTorrent: [http://www.bittorrent.org/beps/bep_0003.html](http://www.bittorrent.org/beps/bep_0003.html). BEncode works as following:
+
+- Integer num is encoded as `"i{num}e"`. eg. `42 => "i42e"`, `-32 => "i-32e"`, `0 => "i0e"`
+- String s is encoded as `"{len(s)}:{s}"`. eg. `"abc" => "3:abc"`, `"" => "0:"`, `"s" => "1:s"`, `"doge" => "4:doge"`
+- List lst is encoded as `"l{encode(lst[0])}{encode(lst[1])}....{encode(lst[n-1])}e"`.  e.g. `[] => "le"`, `[42, "cat"]` => `"li42e3:cate"`, `[[11], [22], [33]] => lli11eeli22eeli33eee`
+- Dictionary d is encoded as `"d{encode(key1)}{encode(val1)}...{encode(key_n)}{encode(val_n)}e"` e.g. `{'bar': 'spam','foo': 42} => "d3:bar4:spam3:fooi42ee"`
+
+
+**Solution with BEncode:** [https://repl.it/@trsong/Encode-and-Decode-Array-of-Strings](https://repl.it/@trsong/Encode-and-Decode-Array-of-Strings)
+```py
+import unittest
+
+"""
+Encode Utilities
+"""
+def encode_int(num):
+    return ["i", str(num), "e"]
+
+def encode_str(string):
+    return [str(len(string)), ":", string]
+
+def encode_list(lst):
+    res = ["l"]
+    for e in lst:
+        res.extend(encode_func[type(e)](e))
+    res.append("e")
+    return res
+
+def encode_dict(dicionary):
+    res = ["d"]
+    for k, v in sorted(dicionary.items()):
+        res.extend(encode_str(k))
+        res.extend(encode_func[type(v)](v))
+    res.append("e")
+    return res
+
+encode_func = {
+    int: encode_int,
+    str: encode_str,
+    list: encode_list,
+    dict: encode_dict
+}
+
+"""
+Decode Utilities
+"""
+def decode_int(encoded, pos):
+    pos += 1
+    new_pos = encoded.index('e', pos)
+    num = int(encoded[pos:new_pos])
+    return (num, new_pos + 1)
+
+def decode_str(encoded, pos):
+    colon = encoded.index(':', pos)
+    n = int(encoded[pos:colon])
+    str_start = colon + 1
+    return (encoded[str_start:str_start + n], str_start + n)
+
+def decode_list(encoded, pos):
+    res = []
+    pos += 1
+    while encoded[pos] != 'e':
+        val, new_pos = decode_func[encoded[pos]](encoded, pos)
+        pos = new_pos
+        res.append(val)
+    return (res, pos + 1)
+
+def decode_dict(encoded, pos):
+    res = {}
+    pos += 1
+    while encoded[pos] != 'e':
+        key, key_end_pos = decode_str(encoded, pos)
+        val, val_end_pos = decode_func[encoded[key_end_pos]](encoded, key_end_pos)
+        pos = val_end_pos
+        res[key] = val
+    return (res, pos + 1)
+
+decode_func = {
+    'l': decode_list,
+    'd': decode_dict,
+    'i': decode_int
+}
+decode_func.update({
+    chr(ord('0') + i): decode_str for i in xrange(10) # 0-9 all use decode_str
+})
+
+
+class BEncode(object):
+    @staticmethod
+    def encode(obj):
+        return "".join(encode_func[type(obj)](obj))
+
+    
+    @staticmethod
+    def decode(encoded):
+        obj, _ = decode_func[encoded[0]](encoded, 0)
+        return obj
+
+
+class BEncodeSpec(unittest.TestCase):
+    def assert_BEncode_result(self, obj):
+        encoded_str = BEncode.encode(obj)
+        decoded_obj = BEncode.decode(encoded_str)
+        self.assertEqual(decoded_obj, obj)
+
+    def test_positive_integer(self):
+        self.assert_BEncode_result(42)  # encode as "i42e"
+    
+    def test_negative_integer(self):
+        self.assert_BEncode_result(-32)  # encode as "i-32e"
+
+    def test_zero(self):
+        self.assert_BEncode_result(0)  # encode as "i0e"
+
+    def test_empty_string(self):
+        self.assert_BEncode_result("")  # encode as "0:""
+
+    def test_string_with_whitespaces(self):
+        self.assert_BEncode_result(" ")  # encode as "1: "
+        self.assert_BEncode_result(" a ")  # encode as "3: a "
+        self.assert_BEncode_result("a b  c   1 2 3 ")  # encode as "15:a b  c   1 2 3 "
+
+    def test_string_with_delimiter_characters(self):
+        self.assert_BEncode_result("i42ei42e")  # encode as "8:i42ei42e"
+        self.assert_BEncode_result("4:spam")  # encode as "6:4:spam"
+        self.assert_BEncode_result("d3:bar4:spam3:fooi42ee")  # encode as "22:d3:bar4:spam3:fooi42ee"
+    
+    def test_string_with_special_characters(self):
+        self.assert_BEncode_result("!@#$%^&*(){}[]|\;:'',.?/`~") # encode as "26:!@#$%^&*(){}[]|\;:'',.?/`~"
+
+    def test_empty_list(self):
+        self.assert_BEncode_result([])  # encode as "le"
+
+    def test_list_of_empty_strings(self):
+        self.assert_BEncode_result(["", "", ""])  # encode as "l0:0:0:e"
+
+    def test_nested_empty_lists(self):
+        self.assert_BEncode_result([[], [[]], [[[]]]]) # encoded as "llelleellleee"
+
+    def test_list_of_strings(self):
+        self.assert_BEncode_result(['a', '', 'abc']) # encode as "l1:a0:3:abce"
+
+    def test_nested_lists(self):
+        self.assert_BEncode_result([0, ["a", 1], "ab", [[2], "c"]]) # encode as "li0el1:ai1ee2:ablli2ee1:cee"
+
+    def test_empty_dictionary(self):
+        self.assert_BEncode_result({}) # encode as "de"
+
+    def test_dictionary(self):
+        self.assert_BEncode_result({
+            'bar': 'spam',
+            'foo': 42
+        })  # encode as "d3:bar4:spam3:fooi42ee"
+
+    def test_nested_dictionary(self):
+        self.assert_BEncode_result([
+            "s",
+            42, 
+            { 
+                'a': 12,
+                'list': [
+                    'b', 
+                    {
+                        'c': [[1], 2, [3, [4]]],
+                        'd': 12
+                    }]
+            }]) # encode as 'l1:si42ed1:ai12e4:listl1:bd1:clli1eei2eli3eli4eeee1:di12eeeee'
+ 
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
+```
+
+
+### Aug 30, 2019 LT 623 \[Hard\] K Edit Distance
 ---
 > **Question:** Given a set of strings which just has lower case letters and a target string, output all the strings for each the edit distance with the target no greater than k.
 You have the following 3 operations permitted on a word:
@@ -115,7 +294,7 @@ Explanation:
 
 **My thoughts:** The brutal force way is to calculate the distance between each word and target and filter those qualified words. However, notice that word might have exactly the same prefix and that share the same DP array. So we can build a prefix tree that contains all words and calculate the DP array along the way.
 
-**Solution with Trie and BFS:** [https://repl.it/@trsong/K-Edit-Distance](https://repl.it/@trsong/K-Edit-Distance)
+**Solution with Trie and DFS:** [https://repl.it/@trsong/K-Edit-Distance](https://repl.it/@trsong/K-Edit-Distance)
 ```py
 import unittest
 
