@@ -100,6 +100,130 @@ from "z" and "x"，we can get 'z' < 'x'
 So return "zx"
 ```
 
+**My thoughts:** As the alien letters are topologically sorted, we can just mimic what topological sort with numbers and try to find pattern.
+
+Suppose the dictionary contains: `01234`. Then the words can be `023, 024, 12, 133, 2433`. Notice that we can only find the relative order by finding first unequal letters between consecutive words. eg.  `023, 024 => 3 < 4`.  `024, 12 => 0 < 1`.  `12, 133 => 2 < 3`
+
+With relative relation, we can build a graph with each occurring letters being veteces and edge `(u, v)` represents `u < v`. If there exists a loop that means we have something like `a < b < c < a` and total order not exists. Otherwise we preform a topological sort to generate the total order which reveals the alien dictionary. 
+
+
+**Solution with Topological Sort:** [https://repl.it/@trsong/Alien-Dictionary](https://repl.it/@trsong/Alien-Dictionary)
+```py
+import unittest
+
+class NodeState(object):
+    UNVISITED = 0
+    VISITING = 1
+    VISITED = 2
+
+def alien_dict_order(words):
+    neigbor = {}
+    for i in xrange(1, len(words)):
+        prev_word, cur_word = words[i-1], words[i]
+        for j in xrange(min(len(prev_word), len(cur_word))):
+            prev_word_char, cur_word_char = prev_word[j], cur_word[j]
+            if prev_word_char != cur_word_char:
+                if prev_word_char not in neigbor:
+                    neigbor[prev_word_char] = []
+                neigbor[prev_word_char].append(cur_word_char)
+                break
+    
+    for key in neigbor:
+        neigbor[key].sort()
+
+    node_states = {}
+    stack = []
+    tsort_stack = []
+    for word in words:
+        for char in word:
+            if char not in neigbor:
+                neigbor[char] = []
+            node_states[char] = NodeState.UNVISITED
+
+
+    for node in sorted(neigbor.keys(), reverse=True):
+        if node_states[node] != NodeState.VISITED:
+            stack.append(node)
+
+        while stack:
+            cur = stack[-1]
+            if node_states[cur] == NodeState.VISITING:
+                node_states[cur] = NodeState.VISITED
+            elif node_states[cur] == NodeState.UNVISITED: 
+                node_states[cur] = NodeState.VISITING
+                for nei in neigbor[cur]:
+                    if node_states[nei] == NodeState.VISITING:
+                        return ""
+                    elif node_states[nei] == NodeState.UNVISITED:
+                        stack.append(nei)
+            else:
+                tsort_stack.append(stack.pop())
+
+    top_order = []
+    while tsort_stack:
+        top_order.append(tsort_stack.pop())
+        
+    return "".join(top_order)
+            
+
+class AlienDictOrderSpec(unittest.TestCase):
+    def test_example1(self):
+        # 01234
+        # wertf
+        # decode array result become 023, 024, 12, 133, 2433
+        self.assertEqual(alien_dict_order(["wrt", "wrf", "er", "ett", "rftt"]), "wertf")
+
+    def test_example2(self):
+        self.assertEqual(alien_dict_order(["z", "x"]), "zx")
+
+    def test_invalid_order(self):
+        self.assertEqual(alien_dict_order(["a", "b", "a"]), "")
+
+    def test_invalid_order2(self):
+        # 012
+        # abc
+        # decode array result become 210, 211, 212, 012
+        self.assertEqual(alien_dict_order(["cba", "cbb", "cbc", "abc"]), "")
+
+    def test_invalid_order3(self):
+        # 012
+        # abc
+        # decode array result become 10, 11, 211, 22, 20 
+        self.assertEqual(alien_dict_order(["ba", "bb", "cbb", "cc", "ca"]), "")
+
+    def test_valid_order(self):
+        # 012
+        # abc
+        # decode array result become 01111, 122, 20
+        self.assertEqual(alien_dict_order(["abbbb", "bcc", "ca"]), "abc")
+
+    def test_valid_order2(self):
+        # 0123
+        # bdac
+        # decode array result become 022, 2031, 2032, 320, 321
+        self.assertEqual(alien_dict_order(["baa", "abcd", "abca", "cab", "cad"]), "bdac")
+
+    def test_multiple_valid_result(self):
+        self.assertEqual(alien_dict_order(["edcba"]), "abcde")
+
+    def test_multiple_valid_result2(self):
+        # 01
+        # ab
+        # cd
+        self.assertEqual(alien_dict_order(["aa", "ab", "cc", "cd"]), "abcd")
+
+    def test_multiple_valid_result3(self):
+        # 01
+        # ab
+        #  c
+        #  d
+        self.assertEqual(alien_dict_order(["aaaaa", "aaad", "aab", "ac"]), "abcd")
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
+```
+
 ### Aug 31, 2019 \[Hard\] Encode and Decode Array of Strings
 ---
 > **Question:** Given an array of string, write function "encode" to convert an array of strings into a single string and function "decode" to restore the original array.
