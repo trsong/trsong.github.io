@@ -14,39 +14,37 @@ categories: Python/Java
 
 **Python 2.7 Playground:** [https://repl.it/languages/python](https://repl.it/languages/python)
 
-<!--
-### Jul 11, 2019 \[Medium\]
+### Sep 3, 2019 \[Medium\] Direction and Position Rule Verification
 ---
 > **Question:** A rule looks like this:
-
-```
-A NE B
-``` 
+>
+> ```py
+> A NE B
+> ``` 
 > This means this means point A is located northeast of point B.
 > 
-```
-A SW C
-```
+> ```
+> A SW C
+> ```
 > means that point A is southwest of C.
 >
 >Given a list of rules, check if the sum of the rules validate. For example:
-
-```
-A N B
-B NE C
-C N A
-```
-
+> 
+> ```
+> A N B
+> B NE C
+> C N A
+> ```
+> 
 > does not validate, since A cannot be both north and south of C.
-
-```
-A NW B
-A N B
-```
-
+> 
+> ```
+> A NW B
+> A N B
+> ```
+> 
 > is considered valid.
 
---->
 ### Sep 2, 2019 LC 937 \[Easy\] Reorder Log Files
 ---
 > **Question:** You have an array of logs. Each log is a space delimited string of words.
@@ -66,6 +64,89 @@ We will call these two varieties of logs letter-logs and digit-logs.  It is guar
 ```py
 Input: ["a1 9 2 3 1","g1 act car","zo4 4 7","ab1 off key dog","a8 act zoo"]
 Output: ["g1 act car","a8 act zoo","ab1 off key dog","a1 9 2 3 1","zo4 4 7"]
+```
+
+**Solution with Customized Sort Function:** [https://repl.it/@trsong/Reorder-Log-Files](https://repl.it/@trsong/Reorder-Log-Files)
+```py
+import unittest
+
+def is_number(char):
+    return '0' <= char <= '9'
+
+def compare_string(s1, begin1, end1, s2, begin2, end2):
+    i = 0
+    while begin1 + i < end1 and begin2 + i < end2:
+        char1 = s1[begin1 + i]
+        char2 = s2[begin2 + i]
+        if char1 < char2:
+            return -1
+        elif char1 > char2:
+            return 1
+        i += 1
+    
+    len1 = end1 - begin1
+    len2 = end2 - begin2
+    if len1 < len2:
+        return -1
+    elif len1 > len2:
+        return 1
+    else:
+        return 0
+
+def compare(log1_with_index, log2_with_index):
+    log1, pos1 = log1_with_index
+    log2, pos2 = log2_with_index
+    is_log1_digit = is_number(log1[pos1])
+    is_log2_digit = is_number(log2[pos2])
+    if is_log1_digit and is_log2_digit:
+        return 0
+    elif is_log1_digit:
+        return 1
+    elif is_log2_digit:
+        return -1
+    else:
+        log_res = compare_string(log1, pos1, len(log1), log2, pos2, len(log2))
+        if log_res != 0:
+            return log_res
+        else:
+            return compare_string(log1, 0, pos1, log2, 0, pos2)
+
+def reorder_log_files(logs):
+    logs_with_index = map(lambda log: (log, log.index(' ') + 1), logs)
+    logs_with_index.sort(cmp = compare)
+    return map(lambda x: x[0], logs_with_index)
+
+
+class ReorderLogFileSpec(unittest.TestCase):
+    dlog1 = "a1 9 2 3 1"
+    dlog2 = "zo4 4 7"
+    llog1 = "g1 act car"
+    llog2 = "ab1 off key dog"
+    llog3 = "a8 act zoo"
+    llog4 = "g1 act car jet jet jet"
+    llog5 = "hhh1 act car"
+    llog6 = "g1 act car jet"
+
+    def test_example(self):
+        self.assertEqual(
+            reorder_log_files([self.dlog1, self.llog1, self.dlog2, self.llog2, self.llog3]), 
+            [self.llog1,self.llog3, self.llog2, self.dlog1, self.dlog2])
+
+    def test_empty_logs(self):
+        self.assertEqual(reorder_log_files([]), [])
+
+    def test_digit_logs_maintaining_same_order(self):
+        self.assertEqual(reorder_log_files([self.dlog1, self.dlog2]), [self.dlog1, self.dlog2])
+        self.assertEqual(reorder_log_files([self.dlog2, self.dlog1, self.dlog2]), [self.dlog2, self.dlog1, self.dlog2])
+
+    def test_when_letter_logs_have_a_tie(self):
+        self.assertEqual(
+            reorder_log_files([self.llog6, self.llog4, self.llog1, self.llog5]), 
+            [self.llog1, self.llog5, self.llog6, self.llog4])
+    
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
 ```
 
 ### Sep 1, 2019 LT 892 \[Medium\] Alien Dictionary
@@ -495,7 +576,7 @@ def filter_k_edit_distance(words, target, k):
     return res
 
 
-class FilterKEditDistance(unittest.TestCase):
+class FilterKEditDistanceSpec(unittest.TestCase):
     def assert_k_distance_array(self, res, expected):
         self.assertEqual(sorted(res), sorted(expected))
 
