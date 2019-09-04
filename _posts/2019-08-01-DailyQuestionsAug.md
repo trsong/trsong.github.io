@@ -14,6 +14,42 @@ categories: Python/Java
 
 **Python 2.7 Playground:** [https://repl.it/languages/python](https://repl.it/languages/python)
 
+
+### Sep 4, 2019 \[Hard\] Reverse Words Keep Delimiters
+---
+> **Question:** Given a string and a set of delimiters, reverse the words in the string while maintaining the relative order of the delimiters. For example, given "hello/world:here", return "here/world:hello"
+>
+> Follow-up: Does your solution work for the following cases: "hello/world:here/", "hello//world:here"
+
+### Similar Question: LC 151 \[Medium\] Reverse Words in a String
+---
+> **Question:** Given an input string, reverse the string word by word.
+>
+> Note:
+>
+> - A word is defined as a sequence of non-space characters.
+> - Input string may contain leading or trailing spaces. However, your reversed string should not contain leading or trailing spaces.
+> - You need to reduce multiple spaces between two words to a single space in the reversed string.
+**Example 1:**
+```py
+Input: "the sky is blue"
+Output: "blue is sky the"
+```
+
+**Example 2:**
+```py
+Input: "  hello world!  "
+Output: "world! hello"
+Explanation: Your reversed string should not contain leading or trailing spaces.
+```
+
+**Example 3:**
+```py
+Input: "a good   example"
+Output: "example good a"
+Explanation: You need to reduce multiple spaces between two words to a single space in the reversed string.
+```
+
 ### Sep 3, 2019 \[Medium\] Direction and Position Rule Verification
 ---
 > **Question:** A rule looks like this:
@@ -44,6 +80,113 @@ categories: Python/Java
 > ```
 > 
 > is considered valid.
+
+**My thoughts:** A rule is considered invalid if there exists an opposite rule either implicitly or explicitly. eg. `'A N B'`, `'B N C'` and `'C N A'`. But that doesn't mean we need to scan through the rules over and over again to check if any pair of two rules are conflicting with each other. We can simply scan through the list of rules to build a directional graph for each direction. i.e. E, S, W, N
+
+Then what about diagonal directions. i.e. NE, NW, SE, SW.? As the nature of those rules are 'AND' relation, we can break one diagonal rules into two normal rules. eg, `'A NE B' => 'A N B' and 'A E B'`.
+
+For each direction we build a directional graph, with nodes being the points and edge represents a rule. And each rule will be added to two graphs with opposite directions. e.g. `'A N B'` added to both 'N' graph and 'S' graph. If doing this rule forms a cycle, we simply return False. And if otherwise for all rules, then we return True in the end. 
+
+**Solution with DFS:** [https://repl.it/@trsong/Direction-and-Position-Rule-Verification](https://repl.it/@trsong/Direction-and-Position-Rule-Verification)
+```py
+import unittest
+
+class Direction:
+    E = 'E'
+    S = 'S'
+    W = 'W'
+    N = 'N'
+    
+    @staticmethod
+    def get_opposite_direction(d):
+        if d == Direction.E: return Direction.W
+        if d == Direction.W: return Direction.E
+        if d == Direction.S: return Direction.N
+        if d == Direction.N: return Direction.S
+        return None
+        
+
+def DFS_check_connection(neighbors, start, end):
+    visited = set()
+    stack = [start]
+    while stack:
+        cur = stack.pop()
+        if cur == end:
+            return True
+
+        if cur not in visited:
+            if cur not in neighbors: continue
+            stack.extend(neighbors[cur])
+            visited.add(cur)
+    return False
+        
+
+def direction_rule_validate(rules):
+    direction_neighbor = { d:{} for d in [Direction.E, Direction.S, Direction.W, Direction.N] }
+    for rule in rules:
+        p1, directions, p2 = rule.split(' ')
+        for d in directions:
+            neighbors = direction_neighbor[d]
+            # Before add edge (p1, p2), check connection between (p2, p1) to detect cycle
+            if DFS_check_connection(neighbors, p2, p1):
+                return False
+            
+            if p1 not in neighbors:
+                neighbors[p1] = []
+            neighbors[p1].append(p2)
+
+            opposite_neighbor = direction_neighbor[Direction.get_opposite_direction(d)]
+            if p2 not in opposite_neighbor:
+                opposite_neighbor[p2] = []
+            opposite_neighbor[p2].append(p1)
+    return True
+
+
+class DirectionRuleValidationSpec(unittest.TestCase):
+    def test_example1(self):
+        self.assertFalse(direction_rule_validate([
+            "A N B",
+            "B NE C",
+            "C N A"
+        ]))
+
+    def test_example2(self):
+        self.assertTrue(direction_rule_validate([
+            "A NW B",
+            "A N B"
+        ]))
+
+    def test_ambigious_rules(self):
+        self.assertTrue(direction_rule_validate([
+            "A SE B",
+            "C SE B",
+            "C SE A",
+            "A N C"
+        ]))
+
+    def test_conflict_diagonal_directions(self):
+        self.assertFalse(direction_rule_validate([
+            "B NW A",
+            "C SE A",
+            "C NE B"
+        ]))
+
+    def test_paralllel_rules(self):
+        self.assertTrue(direction_rule_validate([
+            "A N B",
+            "C N D",
+            "C E B",
+            "B W D",
+            "B S D",
+            "A N C",
+            "D N B",
+            "C E A"
+        ]))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
+```
 
 ### Sep 2, 2019 LC 937 \[Easy\] Reorder Log Files
 ---
