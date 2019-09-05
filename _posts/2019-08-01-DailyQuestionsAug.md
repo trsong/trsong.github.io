@@ -51,6 +51,63 @@ Output: "example good a"
 Explanation: You need to reduce multiple spaces between two words to a single space in the reversed string.
 ```
 
+**My thoughts:** Solution with space complexity O(n) can be easily achieved through two pointers iterate from the back of string and a buffer to store each word along the way. However in-place solution with O(1) space complexity using C++ requires some trick:
+
+Suppose the original string is `"the sky is blue"`
+1. reverse entire sentence. `"eulb si yks eht"`
+2. reverse each word in that sentence. `"blue is sky the"`
+
+**Solution with Two Pointers:** [https://repl.it/@trsong/Reverse-Words-in-a-String](https://repl.it/@trsong/Reverse-Words-in-a-String)
+```py
+import unittest
+
+def reverse_word(s):
+    if not s: return ""
+    res = []
+    i = j = len(s) - 1
+    while j >= 0:
+        if j >= 0 and s[j] == ' ':
+            j -= 1
+            i -= 1
+        elif i >= 0 and s[i] != ' ':
+            i -= 1
+        else:
+            for k in xrange(i+1, j+1):
+                res.append(s[k])
+            res.append(' ')
+            j = i
+    if res:
+        # pop the last whitespace
+        res.pop()
+    return ''.join(res)
+
+
+class ReverseWordSpec(unittest.TestCase):
+    def test_example1(self):
+        self.assertEqual(reverse_word("the sky is blue"), "blue is sky the")
+
+    def test_example2(self):
+        self.assertEqual(reverse_word("  hello world!  "), "world! hello")
+
+    def test_example3(self):
+        self.assertEqual(reverse_word("a good   example"), "example good a")
+
+    def test_mutliple_whitespaces(self):
+        self.assertEqual(reverse_word("   "), "")
+        self.assertEqual(reverse_word(""), "")
+
+    def test_even_number_of_words(self):
+        self.assertEqual(reverse_word(" car cat"), "cat car")
+        self.assertEqual(reverse_word("car cat "), "cat car")
+
+    def test_no_whitespaces(self):
+        self.assertEqual(reverse_word("asparagus"), "asparagus")
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
+```
+
 ### Sep 3, 2019 \[Medium\] Direction and Position Rule Verification
 ---
 > **Question:** A rule looks like this:
