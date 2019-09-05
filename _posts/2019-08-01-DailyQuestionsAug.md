@@ -15,6 +15,14 @@ categories: Python/Java
 **Python 2.7 Playground:** [https://repl.it/languages/python](https://repl.it/languages/python)
 
 
+### Sep 5, 2019 \[Medium\] In-place Array Rotation
+---
+> **Question:** Write a function that rotates a list by k elements. 
+> 
+> For example, `[1, 2, 3, 4, 5, 6]` rotated by two becomes `[3, 4, 5, 6, 1, 2]`.
+> 
+> Try solving this without creating a copy of the list. How many swap or move operations do you need?
+
 ### Sep 4, 2019 \[Hard\] Reverse Words Keep Delimiters
 ---
 > **Question:** Given a string and a set of delimiters, reverse the words in the string while maintaining the relative order of the delimiters. For example, given "hello/world:here", return "here/world:hello"
