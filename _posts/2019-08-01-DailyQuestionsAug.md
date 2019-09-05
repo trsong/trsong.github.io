@@ -21,6 +21,76 @@ categories: Python/Java
 >
 > Follow-up: Does your solution work for the following cases: "hello/world:here/", "hello//world:here"
 
+**My thoughts:** Tokenize the word into multiple smaller words with each of them either being a normal word or delimiter word. While performing tokenization, memorize the index of normal words. After that just reverse order of normal words using that index of normal words. Finally combine all tokens to form a new word. 
+
+**Solution:** [https://repl.it/@trsong/Reverse-Words-Keep-Delimiters](https://repl.it/@trsong/Reverse-Words-Keep-Delimiters)
+```py
+import unittest
+
+def reverse_list_wit_indices(lst, indices):
+    i = 0
+    j = len(indices) - 1
+    while i < j:
+        index_i = indices[i]
+        index_j = indices[j]
+        lst[index_i], lst[index_j] = lst[index_j], lst[index_i]
+        i += 1
+        j -= 1
+
+def reverse_words_keep_delimiters(s, delimiters):
+    if not s: return ""
+    delimiter_set = set(delimiters)
+    res = []
+    word_indices = []
+    i = 0
+    while i < len(s):
+        tmp = []
+        while i < len(s) and s[i] not in delimiter_set:
+            tmp.append(s[i])
+            i += 1
+        if tmp:
+            word_indices.append(len(res))
+            res.append(tmp)
+                
+        tmp = []
+        while i < len(s) and s[i] in delimiter_set:
+            tmp.append(s[i])
+            i += 1
+        if tmp:
+            res.append(tmp)
+
+    reverse_list_wit_indices(res, word_indices)
+    return ''.join(map(lambda lst: ''.join(lst), res))
+     
+
+class ReverseWordsKeepDelimiterSpec(unittest.TestCase):
+    def test_example1(self):
+        self.assertEqual(reverse_words_keep_delimiters("hello/world:here", ['/', ':']), "here/world:hello")
+    
+    def test_example2(self):
+        self.assertEqual(reverse_words_keep_delimiters("hello/world:here/", ['/', ':']), "here/world:hello/")
+
+    def test_example3(self):
+        self.assertEqual(reverse_words_keep_delimiters("hello//world:here", ['/', ':']), "here//world:hello")
+
+    def test_only_has_delimiters(self):
+        self.assertEqual(reverse_words_keep_delimiters("--++--+++", ['-', '+']), "--++--+++")
+
+    def test_without_delimiters(self):
+        self.assertEqual(reverse_words_keep_delimiters("--++--+++", []), "--++--+++")
+        self.assertEqual(reverse_words_keep_delimiters("--++--+++", ['a', 'b']), "--++--+++")
+
+    def test_first_delimiter_then_word(self):
+        self.assertEqual(reverse_words_keep_delimiters("///a/b", ['/']), "///b/a")
+    
+    def test_first_word_then_delimiter(self):
+        self.assertEqual(reverse_words_keep_delimiters("a///b///", ['/']), "b///a///")
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
+```
+
 ### Similar Question: LC 151 \[Medium\] Reverse Words in a String
 ---
 > **Question:** Given an input string, reverse the string word by word.
