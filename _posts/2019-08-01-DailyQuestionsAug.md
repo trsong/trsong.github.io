@@ -48,6 +48,146 @@ The path does not have to pass through the root, and each node can have any amou
 > 
 > Try solving this without creating a copy of the list. How many swap or move operations do you need?
 
+**My thoughts:** Test different examples until find pattern.
+
+**Experiment 1:** How do you shift one element all the way till the end? You might want to do something like the following:
+
+```py
+[0, 1, 2, 3] => [1, 0, 2, 3] => [1, 2, 0, 3] => [1, 2, 3, 0]
+ ^                  ^                  ^                  ^
+```
+
+**Experiment 2:** What about two elements?
+
+```py
+[0, 1, 2, 3] => [2, 3, 0, 1]
+ ^  ^                  ^  ^
+```
+
+**Experiment 3:** If the array is able to fit in two windows with size k, we can shrink the problem into smaller one:
+
+Suppose k = 3
+```py
+[0, 1, 2, 3, 4, 5, 6, 7, 8, 9] => [3, 4, 5, 0, 1, 2, 6, 7, 8, 9]
+ ^  ^  ^                                    ^  ^  ^
+
+The problem become swap the following array with window size 3
+[0, 1, 2, 6, 7, 8, 9] => [6, 7, 8, 0, 1, 2, 9]
+ ^  ^  ^                           ^  ^  ^
+
+Until we are not able to fit two windows of size k
+[0, 1, 2, 9]
+ ^  ^  ^
+```
+
+**Experiment 4:** If we are not able to fit two windows of size k, we can shift the element backwards
+
+Suppose k = 3:
+```py
+Since we are not able to fit two windows of size k
+[0, 1, 2, 4, 5]
+ ^  ^  ^
+
+We instead shift the remaining elements backwards:
+[0, 1, 2, 4, 5] => [0, 4, 5, 1, 2] 
+          ^  ^         ^  ^
+
+The problem size shrink again:
+[0, 4, 5]
+    ^  ^
+
+As we cannot longer backward shift, we shift the remaining element forward
+[0, 4, 5] => [4, 0, 5] => [4, 5, 0] 
+ ^               ^               ^
+
+that is:
+[4, 5, 0, 1, 2] 
+```
+
+**Experiment 5:** Let's shift forwards and backwards multiple times with the following example
+
+Suppose k = 5:
+```py
+k = 5, Forwards >>>
+[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12] => [5, 6, 7, 8, 9, 0, 1, 2, 3, 4, 10, 11, 12] 
+ ^  ^  ^  ^  ^  ^                                             ^  ^  ^  ^  ^
+
+k = 3, Backwards <<<
+[0, 1, 2, 3, 4, 10, 11, 12] => [0, 1, 10, 11, 12, 2, 3, 4]
+                ^^  ^^  ^^            ^^  ^^  ^^
+that is [5, 6, 7, 8, 9, 0, 1, 10, 11, 12, 2, 3, 4]
+
+k = 2, Forwards >>>
+[0, 1, 10, 11, 12] => [10, 11, 0, 1, 12]
+ ^  ^                          ^  ^
+that is [5, 6, 7, 8, 9, 10, 11, 0, 1, 12, 2, 3, 4]
+
+k = 1, Backwards <<<
+[0, 1, 12] => [12, 0, 1] 
+       ^^      ^^
+that is [5, 6, 7, 8, 9, 10, 11, 12, 0, 1, 2, 3, 4]
+```
+
+
+ 
+**Solution with Two Pointers:** [https://repl.it/@trsong/In-place-Array-Rotation](https://repl.it/@trsong/In-place-Array-Rotation)
+```py
+import unittest
+
+def swap_array(nums, pos1, pos2, size):
+    for i in xrange(size):
+        nums[pos1 + i], nums[pos2 + i] = nums[pos2 + i], nums[pos1 + i]
+ 
+
+def rotate(nums, k):
+    if not nums: return []
+    k = k % len(nums)
+    left = 0
+    right = len(nums) - 1
+    while left < right and k > 0:
+        # Forward swap
+        while left + 2*k - 1 <= right:
+            swap_array(nums, left, left + k, k)
+            left += k
+        k = right - left + 1 - k
+        if k == 0: break
+
+        # Backward swap
+        while right + 1 - 2*k >= left:
+            swap_array(nums, right + 1 - k, right + 1 - 2*k, k)
+            right -= k
+        k = right - left + 1 - k
+    return nums
+
+
+class RotateSpec(unittest.TestCase):
+    def test_example(self):
+        self.assertEqual(rotate([1, 2, 3, 4, 5, 6], k=2), [3, 4, 5, 6, 1, 2])
+
+    def test_rotate_0_position(self):
+        self.assertEqual(rotate([0, 1, 2, 3], k=0), [0, 1, 2, 3])
+
+    def test_empty_array(self):
+        self.assertEqual(rotate([], k=10), [])
+
+    def test_shift_negative_position(self):
+        self.assertEqual(rotate([0, 1, 2, 3], k=-1), [3, 0, 1, 2])
+
+    def test_shift_more_than_array_size(self):
+        self.assertEqual(rotate([1, 2, 3, 4, 5, 6], k=8), [3, 4, 5, 6, 1, 2])
+
+    def test_multiple_round_of_forward_and_backward_shift(self):
+        nums = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
+        k = 5
+        expected = [5, 6, 7, 8, 9, 10, 11, 12, 0, 1, 2, 3, 4]
+        self.assertEqual(rotate(nums, k), expected)
+        
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
+```
+
+
 ### Sep 4, 2019 \[Hard\] Reverse Words Keep Delimiters
 ---
 > **Question:** Given a string and a set of delimiters, reverse the words in the string while maintaining the relative order of the delimiters. For example, given "hello/world:here", return "here/world:hello"
