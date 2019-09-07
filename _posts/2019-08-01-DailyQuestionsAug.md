@@ -36,9 +36,106 @@ and the weights: a-b: 3, a-c: 5, a-d: 8, d-e: 2, d-f: 4, e-g: 1, e-h: 1, the lon
 The path does not have to pass through the root, and each node can have any amount of children.
 -->
 
-### Sep 6, 2019 \[Medium\] Find Duplicated Numbers
+### Sep 7, 2019 LC 838 \[Medium\] Push Dominoes
+---
+> **Question:** Given a string with the initial condition of dominoes, where:
+>
+> - . represents that the domino is standing still
+> - L represents that the domino is falling to the left side
+> - R represents that the domino is falling to the right side
+>
+> Figure out the final position of the dominoes. If there are dominoes that get pushed on both ends, the force cancels out and that domino remains upright.
+
+**Example 1:**
+```py
+Input:  "..R...L..R."
+Output: "..RR.LL..RR"
+```
+
+**Example 2:**
+```py
+Input: "RR.L"
+Output: "RR.L"
+Explanation: The first domino expends no additional force on the second domino.
+```
+
+**Example 3:**
+```py
+Input: ".L.R...LR..L.."
+Output: "LL.RR.LLRRLL.."
+```
+
+### Sep 6, 2019 LC 287 \[Medium\] Find the Duplicate Number
 ---
 > **Question:** You are given an array of length `n + 1` whose elements belong to the set `{1, 2, ..., n}`. By the pigeonhole principle, there must be a duplicate. Find it in linear time and space.
+
+**My thoughts:** Use value as the 'next' element index which will form a loop evently. 
+
+Why? Because the following two scenarios will happen:
+
+**Scenario 1:** If `a[i] != i for all i`, then since a[1] ... a[n] contains elements 1 to n, each time when interate to next index, one of the element will be removed until no element is available and hit a previous used element and form a loop.  
+
+**Scenario 2:** If `a[i] == i for all i > 0`, then as `a[0] != 0`, we will have a loop 0 -> a[0] -> a[0]
+
+**Scenario 3:** If `a[i] == i for some i > 0`, then like scenario 2 we either we hit i evently or like scenario 1, for each iteration, we consume one element between 1 to n until all elements are used up and form a cycle. 
+
+So we can use a fast and slow pointer to find the element when loop begins. 
+
+**Solution with Fast and Slow Pointers:** [https://repl.it/@trsong/Find-the-Duplicate-Number](https://repl.it/@trsong/Find-the-Duplicate-Number)
+```py
+import unittest
+
+def find_duplicate(nums):
+    slow = fast = 0
+    while True:
+        slow = nums[slow]
+        fast = nums[nums[fast]]
+        if slow == fast:
+            break
+    
+    p = 0
+    while p != slow:
+        p = nums[p]
+        slow = nums[slow]
+    return p
+
+
+class FindDuplicateSpec(unittest.TestCase):
+    def test_all_numbers_are_same(self):
+        self.assertEqual(find_duplicate([2, 2, 2, 2, 2]), 2)
+
+    def test_number_duplicate_twice(self):
+        # index: 0 1 2 3 4 5 6
+        # value: 2 6 4 1 3 1 5
+        # chain: 0 -> 2 -> 4 -> 3 -> 1 -> 6 -> 5 -> 1
+        #                            ^              ^
+        self.assertEqual(find_duplicate([2, 6, 4, 1, 3, 1, 5]), 1)
+
+    def test_rest_of_element_form_a_loop(self):
+        # index: 0 1 2 3 4
+        # value: 3 1 3 4 2
+        # chain: 0 -> 3 -> 4 -> 2 -> 3
+        #             ^              ^
+        self.assertEqual(find_duplicate([3, 1, 3, 4, 2]), 3)
+
+    def test_rest_of_element_are_sorted(self):
+        # index: 0 1 2 3 4
+        # value: 4 1 2 3 4
+        # chain: 0 -> 4 -> 4
+        #             ^    ^
+        self.assertEqual(find_duplicate([4, 1, 2, 3, 4]), 4)
+    
+    def test_number_duplicate_more_than_twice(self):
+        # index: 0 1 2 3 4 5 6 7 8 9
+        # value: 2 5 9 6 9 3 8 9 7 1
+        # chain: 0 -> 2 -> 9 -> 1 -> 5 -> 3 -> 6 -> 8 -> 7 -> 9
+        #                  ^                                  ^
+        self.assertEqual(find_duplicate([2, 5, 9, 6, 9, 3, 8, 9, 7, 1]), 9)
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
+```
 
 ### Sep 5, 2019 \[Medium\] In-place Array Rotation
 ---
