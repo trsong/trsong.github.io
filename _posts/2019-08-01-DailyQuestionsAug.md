@@ -71,9 +71,9 @@ Output: "LL.RR.LLRRLL.."
 
 **My thoughts:** Use value as the 'next' element index which will form a loop evently. 
 
-Why? Because the following two scenarios will happen:
+Why? Because the following scenarios will happen:
 
-**Scenario 1:** If `a[i] != i for all i`, then since a[1] ... a[n] contains elements 1 to n, each time when interate to next index, one of the element will be removed until no element is available and hit a previous used element and form a loop.  
+**Scenario 1:** If `a[i] != i for all i`, then since a[1] ... a[n] contains elements 1 to n, each time when interate to next index, one of the element within range 1 to n will be removed until no element is available and/or hit a previous used element and form a loop.  
 
 **Scenario 2:** If `a[i] == i for all i > 0`, then as `a[0] != 0`, we will have a loop 0 -> a[0] -> a[0]
 
