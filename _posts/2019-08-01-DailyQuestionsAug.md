@@ -36,7 +36,7 @@ and the weights: a-b: 3, a-c: 5, a-d: 8, d-e: 2, d-f: 4, e-g: 1, e-h: 1, the lon
 The path does not have to pass through the root, and each node can have any amount of children.
 -->
 
-### Sep 8, 2019 \[Medium\] Evaluate Reverse Polish Notation
+### Sep 8, 2019 \[Medium\] Evaluate Expression in Reverse Polish Notation
 ---
 > **Question:** Given an arithmetic expression in **Reverse Polish Notation**, write a program to evaluate it.
 >
