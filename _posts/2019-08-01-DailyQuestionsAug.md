@@ -36,6 +36,23 @@ and the weights: a-b: 3, a-c: 5, a-d: 8, d-e: 2, d-f: 4, e-g: 1, e-h: 1, the lon
 The path does not have to pass through the root, and each node can have any amount of children.
 -->
 
+### Sep 8, 2019 \[Medium\] Evaluate Reverse Polish Notation
+---
+> **Question:** Given an arithmetic expression in **Reverse Polish Notation**, write a program to evaluate it.
+>
+> The expression is given as a list of numbers and operands. 
+
+**Example 1:** 
+```py
+[5, 3, '+'] should return 5 + 3 = 8.
+```
+
+**Example 2:**
+```py
+ [15, 7, 1, 1, '+', '-', '/', 3, '*', 2, 1, 1, '+', '+', '-'] should return 5, 
+ since it is equivalent to ((15 / (7 - (1 + 1))) * 3) - (2 + (1 + 1)) = 5.
+ ```
+
 ### Sep 7, 2019 LC 838 \[Medium\] Push Dominoes
 ---
 > **Question:** Given a string with the initial condition of dominoes, where:
