@@ -115,6 +115,92 @@ Input: ".L.R...LR..L.."
 Output: "LL.RR.LLRRLL.."
 ```
 
+**My thoughts:** After some observation, you will find that 'R' and 'L' will always stay the same but '.' is depended on state of first non-dot on left and right:
+
+- `.....L => LLLLLL`
+- `R..... => RRRRRR`
+- `L....L => LLLLLL`
+- `R....R => RRRRRR`
+- `R....L => RRRLLL`
+- `R...L => RR.LL`
+
+So, we just need to store the last non-dot domino state and compare w/ current domino will give the current state of domino.
+
+**Solution:** [https://repl.it/@trsong/Push-Dominoes](https://repl.it/@trsong/Push-Dominoes)
+```py
+import unittest
+
+def push_dominoes(dominoes):
+    if len(dominoes) <= 1: return dominoes
+    n = len(dominoes)
+    last_falling_position = 0
+    res = ['.'] * n
+    for i, domino in enumerate(dominoes):
+        if domino == '.':
+            continue
+       
+        if domino == 'L' and dominoes[last_falling_position] == 'R':
+            # R....L => RRRLLL
+            # R...L => RR.LL
+            j = last_falling_position
+            k = i
+            while j < k:
+                res[j] = 'R'
+                res[k] = 'L'
+                j += 1
+                k -= 1
+        elif domino == dominoes[last_falling_position] or last_falling_position == 0 and domino == 'L':
+            # .....L => LLLLLL
+            # L....L => LLLLLL
+            # R....R => RRRRRR
+            for j in xrange(last_falling_position, i+1):
+                res[j] = domino
+        last_falling_position = i
+            
+    if dominoes[last_falling_position] == 'R':
+        # R.... => RRRR
+        for j in xrange(last_falling_position, n):
+            res[j] = 'R'
+    return ''.join(res)
+
+
+class PushDominoeSpec(unittest.TestCase):
+    def test_example1(self):
+        self.assertEqual(push_dominoes("..R...L..R."), "..RR.LL..RR")
+
+    def test_example2(self):
+        self.assertEqual(push_dominoes("RR.L"), "RR.L")
+
+    def test_example3(self):
+        self.assertEqual(push_dominoes(".L.R...LR..L.."), "LL.RR.LLRRLL..")
+
+    def test_empty_dominoes(self):
+        self.assertEqual(push_dominoes(""), "")
+    
+    def test_one_domino(self):
+        self.assertEqual(push_dominoes("."), ".")
+        self.assertEqual(push_dominoes("L"), "L")
+        self.assertEqual(push_dominoes("R"), "R")
+    
+    def test_all_fall_to_left(self):
+        self.assertEqual(push_dominoes("...L"), "LLLL")
+    
+    def test_all_fall_to_right(self):
+        self.assertEqual(push_dominoes("R..."), "RRRR")
+    
+    def test_left_right_and_right_left(self):
+        self.assertEqual(push_dominoes(".L.RR..L."), "LL.RRRLL.")
+
+    def test_right_left_and_left_right(self):
+        self.assertEqual(push_dominoes(".R.LL..R."), ".R.LL..RR")
+    
+    def test_right_right_left_left(self):
+        self.assertEqual(push_dominoes("R.R...LL"), "RRRR.LLL")
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
+```
 ### Sep 6, 2019 LC 287 \[Medium\] Find the Duplicate Number
 ---
 > **Question:** You are given an array of length `n + 1` whose elements belong to the set `{1, 2, ..., n}`. By the pigeonhole principle, there must be a duplicate. Find it in linear time and space.
