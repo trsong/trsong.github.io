@@ -88,6 +88,63 @@ the gap between the 5th and 6th stone is too large.
  since it is equivalent to ((15 / (7 - (1 + 1))) * 3) - (2 + (1 + 1)) = 5.
  ```
 
+**Solution with Stack:** [https://repl.it/@trsong/Evaluate-Expression-in-Reverse-Polish-Notation](https://repl.it/@trsong/Evaluate-Expression-in-Reverse-Polish-Notation)
+ ```py
+ import unittest
+
+class RPNExprEvaluator(object):
+    op = {
+        '+': lambda a,b: a + b,
+        '-': lambda a,b: a - b,
+        '*': lambda a,b: a * b,
+        '/': lambda a,b: a / b
+    }
+
+    @staticmethod
+    def run(tokens):
+        stack = []
+        for token in tokens:
+            if type(token) == int:
+                stack.append(token)
+            else:
+                operand2 = stack.pop()
+                operand1 = stack.pop()
+                op = RPNExprEvaluator.op[token]
+                stack.append(op(operand1, operand2))
+        return stack[-1] if stack else 0
+
+
+class RPNExprEvaluatorSpec(unittest.TestCase):
+    def test_example1(self):
+        self.assertEqual(RPNExprEvaluator.run([5, 3, '+']), 8) # 5 + 3 = 8
+
+    def test_example2(self):
+        tokens = [15, 7, 1, 1, '+', '-', '/', 3, '*', 2, 1, 1, '+', '+', '-']
+        self.assertEqual(RPNExprEvaluator.run(tokens), 5)
+
+    def test_empty_tokens(self):
+        self.assertEqual(RPNExprEvaluator.run([]), 0)
+
+    def test_expression_contains_just_number(self):
+        self.assertEqual(RPNExprEvaluator.run([42]), 42)
+    
+    def test_balanced_expression_tree(self):
+        tokens = [7, 2, '-', 4, 1, '+', '*'] 
+        self.assertEqual(RPNExprEvaluator.run(tokens), 25)  # (7 - 2) * (4 + 1) = 25
+    
+    def test_left_heavy_expression_tree(self):
+        tokens = [6, 4, '-', 2, '/']  
+        self.assertEqual(RPNExprEvaluator.run(tokens), 1) # (6 - 4) / 2 = 1
+
+    def test_right_heavy_expression_tree(self):
+        tokens = [2, 8, 2, '/', '*']
+        self.assertEqual(RPNExprEvaluator.run(tokens), 8) # 2 * (8 / 2) = 8
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
+ ```
+
 ### Sep 7, 2019 LC 838 \[Medium\] Push Dominoes
 ---
 > **Question:** Given a string with the initial condition of dominoes, where:
