@@ -35,6 +35,8 @@ and the weights: a-b: 3, a-c: 5, a-d: 8, d-e: 2, d-f: 4, e-g: 1, e-h: 1, the lon
 
 The path does not have to pass through the root, and each node can have any amount of children.
 
+-->
+
 ### Sep 9, 2019 LC 403 \[Hard\] Frog Jump
 ---
 > **Question:** A frog is crossing a river. The river is divided into x units and at each unit there may or may not exist a stone. The frog can jump on a stone, but it must not jump into the water.
@@ -67,7 +69,7 @@ Return true. The frog can jump to the last stone by jumping
 Return false. There is no way to jump to the last stone as 
 the gap between the 5th and 6th stone is too large.
 ```
--->
+
 
 ### Sep 8, 2019 \[Medium\] Evaluate Expression in Reverse Polish Notation
 ---
