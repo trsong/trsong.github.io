@@ -91,6 +91,51 @@ Return false. There is no way to jump to the last stone as
 the gap between the 5th and 6th stone is too large.
 ```
 
+**My thoughts:** This is a typical graph seaching problem (DAG to be specific), except that we not only need to store current stone, but the previous step as well. Besides that, so as not to exceed the time limit, we have to do tree pruning, i.e. do not visit same node with same step twice. e.g. `[0, 1, 2, 3, 4]` has path `0, 1, 2, 3, 4` and `0, 1, 1, 1, 2, 2, 2, 3, 3, 3, 4`.
+
+**Solution with BFS and Pruning:** [https://repl.it/@trsong/Frog-Jump](https://repl.it/@trsong/Frog-Jump)
+```py
+import unittest
+
+def can_cross(stones):
+    stone_set = set(stones)
+    stack = [(0, 0)]
+    goal = stones[-1]
+    visited = set()
+    while stack:
+        stone, step = stack.pop()
+        if stone == goal:
+            return True
+        visited.add((stone, step))
+        
+        for next_jump_delta in [-1, 0, 1]:
+            next_jump = step + next_jump_delta
+            next_stone = stone + next_jump
+            if next_stone >= stone and next_stone in stone_set and (next_stone, next_jump) not in visited:
+                # check if next step is always forward, accessible and unvisited
+                stack.append((next_stone, next_jump))
+    return False
+
+class CanCrossSpec(unittest.TestCase):
+    def test_example1(self):
+        self.assertTrue(can_cross([0, 1, 3, 5, 6, 8, 12, 17])) # step: 1(1), 2(3), 2(5), 3(8), 4(12), 5(17)
+
+    def test_example2(self):
+        self.assertFalse(can_cross([0, 1, 2, 3, 4, 8, 9, 11]))
+
+    def test_unreachable_last_stone(self):
+        self.assertFalse(can_cross([0, 1, 3, 6, 11]))
+
+    def test_reachable_last_stone(self):
+        self.assertTrue(can_cross([0, 1, 3, 6, 10]))
+
+    def test_fall_into_water_in_the_middle(self):
+        self.assertFalse(can_cross([0, 1, 10, 1000, 1000]))
+    
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
+```
 
 ### Sep 8, 2019 \[Medium\] Evaluate Expression in Reverse Polish Notation
 ---
