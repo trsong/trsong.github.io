@@ -37,6 +37,27 @@ The path does not have to pass through the root, and each node can have any amou
 
 -->
 
+### Sep 10, 2019 \[Medium\] Matrix Rotation
+---
+> **Question:** Given an N by N matrix, rotate it by 90 degrees clockwise.
+>
+> For example, given the following matrix:
+
+```py
+[[1, 2, 3],
+ [4, 5, 6],
+ [7, 8, 9]]
+ ```
+
+> you should return:
+```py
+[[7, 4, 1],
+ [8, 5, 2],
+ [9, 6, 3]]
+ ```
+
+> Follow-up: What if you couldn't use any extra space?
+
 ### Sep 9, 2019 LC 403 \[Hard\] Frog Jump
 ---
 > **Question:** A frog is crossing a river. The river is divided into x units and at each unit there may or may not exist a stone. The frog can jump on a stone, but it must not jump into the water.
