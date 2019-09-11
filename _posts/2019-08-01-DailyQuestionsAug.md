@@ -15,14 +15,16 @@ categories: Python/Java
 **Python 2.7 Playground:** [https://repl.it/languages/python](https://repl.it/languages/python)
 
 
-<!--
-Hard
+<!-- 
 
-This problem was asked by Uber.
+### Sep 11, 2019 \[Hard\] Longest Path in the Tree
+---
+> **Question:**  Given a tree where each edge has a weight, compute the length of the longest path in the tree.
 
-Given a tree where each edge has a weight, compute the length of the longest path in the tree.
+**Example:**
 
-For example, given the following tree:
+```py
+Given the following tree:
 
    a
   /|\
@@ -34,8 +36,21 @@ For example, given the following tree:
 and the weights: a-b: 3, a-c: 5, a-d: 8, d-e: 2, d-f: 4, e-g: 1, e-h: 1, the longest path would be c -> a -> d -> f, with a length of 17.
 
 The path does not have to pass through the root, and each node can have any amount of children.
+``` 
 
 -->
+
+### Sep 11, 2019 LC 89 \[Medium\] Generate Gray Code
+---
+> **Question:**  Gray code is a binary code where each successive value differ in only one bit, as well as when wrapping around. Gray code is common in hardware so that we don't see temporary spurious values during transitions.
+>
+> Given a number of bits n, generate a possible gray code for it.
+
+**Example:**
+
+```py
+For n = 2, one gray code would be [00, 01, 11, 10].
+```
 
 ### Sep 10, 2019 \[Medium\] Matrix Rotation
 ---
@@ -58,6 +73,8 @@ The path does not have to pass through the root, and each node can have any amou
  ```
 
 > Follow-up: What if you couldn't use any extra space?
+
+**My thoughts:** There are two ways to solve this problem without using any extra space. First one is to flip matrix diagonally and vertically. Second one is to move element one by one in spiral order: `left->top, bottom->left, right->bottom, top->right`. 
 
 **Solution with Matrix Flip:** [https://repl.it/@trsong/Matrix-Rotation](https://repl.it/@trsong/Matrix-Rotation)
 ```py
@@ -139,6 +156,28 @@ class MatrixRotationSpec(unittest.TestCase):
 
 if __name__ == '__main__':
     unittest.main(exit=False)
+```
+
+**Solution with Spiral Element Swap:** [https://repl.it/@trsong/Matrix-Rotation-Spiral](https://repl.it/@trsong/Matrix-Rotation-Spiral)
+```py
+def matrix_rotation(matrix):
+    n = len(matrix)
+    lo = 0
+    hi = n - 1
+    while lo < hi:
+        for i in xrange(hi - lo):
+            tmp = matrix[lo][lo+i]
+            # left -> top
+            matrix[lo][lo+i] = matrix[hi-i][lo]
+            # bottom -> left
+            matrix[hi-i][lo] = matrix[hi][hi-i]
+            # right -> bottom
+            matrix[hi][hi-i] = matrix[lo+i][hi]
+            # top -> right
+            matrix[lo+i][hi] = tmp
+        lo += 1
+        hi -= 1
+    return matrix
 ```
 
 ### Sep 9, 2019 LC 403 \[Hard\] Frog Jump
