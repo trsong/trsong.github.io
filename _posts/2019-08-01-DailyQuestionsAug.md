@@ -59,6 +59,88 @@ The path does not have to pass through the root, and each node can have any amou
 
 > Follow-up: What if you couldn't use any extra space?
 
+**Solution with Matrix Flip:** [https://repl.it/@trsong/Matrix-Rotation](https://repl.it/@trsong/Matrix-Rotation)
+```py
+import unittest
+
+def matrix_rotation(matrix):
+    """
+    Step1: Flip Diagonally: (r, c) -> (c, r)
+    [[1, 2],
+     [3, 4]]
+    =>
+    [[1, 3],
+     [2, 4]]
+     
+    Step2: Flip Vertically: (r, c) -> (r, n-1-c)
+    [[1, 3],
+     [2, 4]]
+    =>
+    [[3, 1],
+     [4, 2]]
+    """
+    n = len(matrix)
+    for r in xrange(n):
+        for c in xrange(r):
+            matrix[r][c], matrix[c][r] = matrix[c][r], matrix[r][c]
+
+    for row in matrix:
+        for c in xrange(n/2):
+            row[c], row[n-1-c] = row[n-1-c], row[c]
+
+    return matrix
+
+class MatrixRotationSpec(unittest.TestCase):
+    def test_empty_matrix(self):
+        self.assertEqual(matrix_rotation([]), [])
+
+    def test_size_one_matrix(self):
+        self.assertEqual(matrix_rotation([[1]]), [[1]])
+
+    def test_size_two_matrix(self):
+        input_matrix = [
+            [1, 2],
+            [3, 4]
+        ]
+        expected_matrix = [
+            [3, 1],
+            [4, 2]
+        ]
+        self.assertEqual(matrix_rotation(input_matrix), expected_matrix)
+
+    def test_size_three_matrix(self):
+        input_matrix = [
+            [1, 2, 3],
+            [4, 5, 6],
+            [7, 8, 9]
+        ]
+        expected_matrix = [
+            [7, 4, 1],
+            [8, 5, 2],
+            [9, 6, 3]
+        ]
+        self.assertEqual(matrix_rotation(input_matrix), expected_matrix)
+
+    def test_size_four_matrix(self):
+        input_matrix = [
+            [1, 2, 3, 4],
+            [5, 6, 7, 8],
+            [9, 10, 11, 12],
+            [13, 14, 15, 16]
+        ]
+        expected_matrix = [
+            [13, 9, 5, 1],
+            [14, 10, 6, 2],
+            [15, 11, 7, 3],
+            [16, 12, 8, 4]
+        ]
+        self.assertEqual(matrix_rotation(input_matrix), expected_matrix)
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
+```
+
 ### Sep 9, 2019 LC 403 \[Hard\] Frog Jump
 ---
 > **Question:** A frog is crossing a river. The river is divided into x units and at each unit there may or may not exist a stone. The frog can jump on a stone, but it must not jump into the water.
