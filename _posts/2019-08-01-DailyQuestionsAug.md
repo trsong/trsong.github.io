@@ -40,6 +40,34 @@ The path does not have to pass through the root, and each node can have any amou
 
 -->
 
+### Sep 13, 2019 \[Medium\] Tree Isomorphism Problem
+---
+> **Question:** Write a function to detect if two trees are isomorphic. Two trees are called isomorphic if one of them can be obtained from other by a series of flips, i.e. by swapping left and right children of a number of nodes. Any number of nodes at any level can have their children swapped. Two empty trees are isomorphic.
+
+
+**Example:** 
+
+```py
+The following two trees are isomorphic with following sub-trees flipped: 2 and 3, NULL and 6, 7 and 8.
+
+Tree1:
+     1
+   /   \
+  2     3
+ / \   /
+4   5 6
+   / \
+  7   8
+
+Tree2:
+   1
+ /   \
+3     2
+ \   / \
+  6 4   5
+       / \
+      8   7
+```
 
 ### Sep 12, 2019 \[Medium\] Favorite Genres
 ---
@@ -85,6 +113,97 @@ Output: {
    "David": [],
    "Emma":  []
 }
+```
+
+**Solution:** [https://repl.it/@trsong/Favorite-Genres](https://repl.it/@trsong/Favorite-Genres)
+```py
+import unittest
+
+def favorite_genre(user_map, genre_map):
+    song_to_genre_map = {}
+    for genre, songs in genre_map.items():
+        for song in songs:
+            if song not in song_to_genre_map:
+                song_to_genre_map[song] = []
+            song_to_genre_map[song].append(genre)
+
+    res = {}
+    for user, songs in user_map.items():
+        genere_histogram = {}
+        for song in songs:
+            if song in song_to_genre_map:
+                for genre in song_to_genre_map[song]:
+                    genere_histogram[genre] = genere_histogram.get(genre, 0) + 1
+        fav_genres = []
+        max_count = 0
+        for genre, count in genere_histogram.items():
+            if count > max_count:
+                fav_genres = [genre]
+                max_count = count
+            elif count == max_count:
+                fav_genres.append(genre)
+        res[user] = fav_genres
+
+    return res
+
+
+class FavoriteGenreSpec(unittest.TestCase):
+    def assert_map(self, map1, map2):
+        for _, values in map1.items():
+            values.sort()
+        for _, values in map2.items():
+            values.sort()
+        self.assertEqual(map1, map2)
+
+
+    def test_example1(self):
+        user_map = {
+            "David": ["song1", "song2", "song3", "song4", "song8"],
+            "Emma": ["song5", "song6", "song7"]
+            }
+        genre_map = {
+            "Rock": ["song1", "song3"],
+            "Dubstep": ["song7"],
+            "Techno": ["song2", "song4"],
+            "Pop": ["song5", "song6"],
+            "Jazz": ["song8", "song9"]
+        }
+        expected = {
+            "David": ["Rock", "Techno"],
+            "Emma": ["Pop"]
+        }
+        self.assert_map(favorite_genre(user_map, genre_map), expected)
+
+    def test_example2(self):
+        user_map = {
+            "David": ["song1", "song2"],
+            "Emma": ["song3", "song4"]
+        }
+        genre_map = {}
+        expected = {
+            "David": [],
+            "Emma": []
+        }
+        self.assert_map(favorite_genre(user_map, genre_map), expected)
+
+    def test_same_song_with_multiple_genres(self):
+        user_map = {
+            "David": ["song1", "song2"],
+            "Emma": ["song3", "song4"]
+        }
+        genre_map = {
+            "Rock": ["song1", "song3"],
+            "Dubstep": ["song1"],
+        }
+        expected = {
+            "David": ["Rock", "Dubstep"],
+            "Emma": ["Rock"]
+        }
+        self.assert_map(favorite_genre(user_map, genre_map), expected)
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
 ```
 
 ### Sep 11, 2019 LC 89 \[Medium\] Generate Gray Code
