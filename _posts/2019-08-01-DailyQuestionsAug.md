@@ -40,7 +40,28 @@ The path does not have to pass through the root, and each node can have any amou
 
 -->
 
-### Sep 13, 2019 \[Medium\] Tree Isomorphism Problem
+### Sep 14, 2019 \[Medium\] Unique Prefix
+---
+> **Question:** Given a list of words, return the shortest unique prefix of each word. 
+
+**Example:**
+```py
+Given the list:
+dog
+cat
+apple
+apricot
+fish
+
+Return the list:
+d
+c
+app
+apr
+f
+```
+
+### Sep 13, 2019 \[Easy\] Tree Isomorphism Problem
 ---
 > **Question:** Write a function to detect if two trees are isomorphic. Two trees are called isomorphic if one of them can be obtained from other by a series of flips, i.e. by swapping left and right children of a number of nodes. Any number of nodes at any level can have their children swapped. Two empty trees are isomorphic.
 
@@ -67,6 +88,114 @@ Tree2:
   6 4   5
        / \
       8   7
+```
+
+**My thoughts:** If current tree value match  , only two situations would occur:
+1. T1.left match T2.left and T1.right match T2.right
+2. T1.left match T2.right and T1.right match T2.left 
+
+**Solution with Recursion:** [https://repl.it/@trsong/Tree-Isomorphism-Problem](https://repl.it/@trsong/Tree-Isomorphism-Problem)
+```py
+import unittest
+
+class TreeNode(object):
+    def __init__(self, val, left=None, right=None):
+        self.val = val
+        self.left = left
+        self.right = right
+
+
+def is_isomorphic(t1, t2):
+    if not t1 and not t2: return True
+    if not t1 or not t2: return False
+    if t1.val != t2.val: return False
+    if is_isomorphic(t1.left, t2.left) and is_isomorphic(t1.right, t2.right): return True
+    if is_isomorphic(t1.left, t2.right) and is_isomorphic(t1.right, t2.left): return True
+    return False
+
+class IsIsomorphicSpec(unittest.TestCase):
+    def test_example(self):
+        """
+        Tree1:
+             1
+           /   \
+          2     3
+         / \   /
+        4   5 6
+           / \
+          7   8
+
+        Tree2:
+           1
+         /   \
+        3     2
+         \   / \
+          6 4   5
+               / \
+              8   7
+        """
+        p5 = TreeNode(5, TreeNode(7), TreeNode(8))
+        p2 = TreeNode(2, TreeNode(4), p5)
+        p3 = TreeNode(3, TreeNode(6))
+        p1 = TreeNode(1, p2, p3)
+
+        q5 = TreeNode(5, TreeNode(8), TreeNode(7))
+        q2 = TreeNode(2, TreeNode(4), q5)
+        q3 = TreeNode(3, right=TreeNode(6))
+        q1 = TreeNode(1, q3, q2)
+
+        self.assertTrue(is_isomorphic(p1, q1))
+
+    def test_empty_trees(self):
+        self.assertTrue(is_isomorphic(None, None))
+
+    def test_empty_vs_nonempty_trees(self):
+        self.assertFalse(is_isomorphic(None, TreeNode(1)))
+
+    def test_same_tree_val(self):
+        """
+        Tree1:
+        1
+         \
+          1
+         /
+        1 
+
+        Tree2:
+            1
+           /
+          1
+           \
+            1
+        """
+        t1 = TreeNode(1, right=TreeNode(1, TreeNode(1)))
+        t2 = TreeNode(1, TreeNode(1, right=TreeNode(1)))
+        self.assertTrue(is_isomorphic(t1, t2))
+
+
+    def test_same_val_yet_not_isomorphic(self):
+        """
+        Tree1:
+          1
+         / \
+        1   1
+           / \
+          1   1
+
+        Tree2:
+            1
+           / \
+          1   1
+         /     \
+        1       1
+        """
+        t1 = TreeNode(1, TreeNode(1, TreeNode(1), TreeNode(1)))
+        t2 = TreeNode(1, TreeNode(1, TreeNode(1)), TreeNode(1, right=TreeNode(1)))
+        self.assertFalse(is_isomorphic(t1, t2))       
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
 ```
 
 ### Sep 12, 2019 \[Medium\] Favorite Genres
