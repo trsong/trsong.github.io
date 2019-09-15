@@ -6829,7 +6829,7 @@ if __name__ == '__main__':
 ```
 
 
-### May 21, 2019 \[Hard\] Random Elements from Infinite Stream
+### May 21, 2019 \[Hard\] Random Elements from Infinite Stream (Reservoir Sampling)
 ---
 > **Question:** Randomly choosing a sample of k items from a list S containing n items, where n is either a very large or unknown number. Typically, n is too large to fit the whole list into main memory.
 
@@ -6842,6 +6842,8 @@ When consume the i-th element:
 - Either choose the i-th element with 1/(i+1) chance. 
 - Or, keep the last chosen element with 1 - 1/(i+1) chance.
 ```
+
+Above is also called ***Reservoir Sampling***.
 
 **Proof by Induction:**
 - Base case: when there is 1 element, then the 0th element is chosen by `1/(0+1) = 100%` chance.
