@@ -38,7 +38,48 @@ and the weights: a-b: 3, a-c: 5, a-d: 8, d-e: 2, d-f: 4, e-g: 1, e-h: 1, the lon
 The path does not have to pass through the root, and each node can have any amount of children.
 ``` 
 
+317.Shortest Distance from All Buildings
+You want to build a house on an empty land which reaches all buildings in the shortest amount of distance. You can only move up, down, left and right. You are given a 2D grid of values 0, 1 or 2, where:
+
+- Each 0 marks an empty land which you can pass by freely.
+- Each 1 marks a building which you cannot pass through.
+- Each 2 marks an obstacle which you cannot pass through.
+Example:
+
+```py
+Input: [[1,0,2,0,1],[0,0,0,0,0],[0,0,1,0,0]]
+
+1 - 0 - 2 - 0 - 1
+|   |   |   |   |
+0 - 0 - 0 - 0 - 0
+|   |   |   |   |
+0 - 0 - 1 - 0 - 0
+
+Output: 7 
+
+Explanation: Given three buildings at (0,0), (0,4), (2,2), and an obstacle at (0,2),
+             the point (1,2) is an ideal empty land to build a house, as the total 
+             travel distance of 3+3+1=7 is minimal. So return 7.
+```
+Note:
+There will be at least one building. If it is not possible to build such house according to the above rules, return -1.
 -->
+
+### Sep 15, 2019 LC 1014 \[Medium\] Best Sightseeing Pair
+---
+> **Question:** Given an array `A` of positive integers, `A[i]` represents the value of the i-th sightseeing spot, and two sightseeing spots `i` and `j` have distance `j - i` between them.
+>
+> The score of a pair (`i < j`) of sightseeing spots is (`A[i] + A[j] + i - j`) : the sum of the values of the sightseeing spots, minus the distance between them.
+>
+> Return the maximum score of a pair of sightseeing spots.
+
+**Example:**
+
+```py
+Input: [8,1,5,2,6]
+Output: 11
+Explanation: i = 0, j = 2, A[i] + A[j] + i - j = 8 + 5 + 0 - 2 = 11
+```
 
 ### Sep 14, 2019 \[Medium\] Unique Prefix
 ---
@@ -59,6 +100,117 @@ c
 app
 apr
 f
+```
+
+**My thoughts:** Most string prefix searching problem can be solved using Trie (Prefix Tree). A trie is a N-nary tree with each edge represent a char. Each node will have two attribues: is_end and count, representing if a word is end at this node and how many words share same prefix so far separately. 
+
+The given example will generate the following trie:
+```py
+The number inside each parenthsis represents how many words share the same prefix underneath.
+
+             ""(4)
+         /  |    |   \  
+      d(1) c(1) a(2) f(1)
+     /      |    |      \
+   o(1)    a(1) p(2)   i(1)
+  /         |    |  \     \
+g(1)       t(1) p(1) r(1) s(1)
+                 |    |    |
+                l(1) i(1) h(1)
+                 |    |
+                e(1) c(1)
+                 |
+                o(1)
+                 |
+                t(1)
+```
+Our goal is to find a path for each word from root to the first node that has count equals 1, above example gives: `d, c, app, apr, f`
+
+**Solution with Trie:** [https://repl.it/@trsong/Unique-Prefix](https://repl.it/@trsong/Unique-Prefix)
+```py
+import unittest
+
+class Trie(object):
+    TRIE_SIZE = 26
+    def __init__(self):
+        self.is_end = False
+        self.count = 0
+        self.children = None
+
+    def has_word(self, word):
+        t = self
+        for char in word:
+            ord_char = ord(char) - ord('a')
+            if not t or not t.children:
+                return False
+            t = t.children[ord_char]
+        return t and t.is_end
+    
+    def insert(self, word):
+        if self.has_word(word): return
+        t = self
+        for char in word:
+            ord_char = ord(char) - ord('a')
+            if not t.children:
+                t.children = [None] * Trie.TRIE_SIZE
+            
+            if not t.children[ord_char]:
+                t.children[ord_char] = Trie()
+            t.count += 1 # <-- Make sure to set the last node's count to be 1
+            t = t.children[ord_char]
+        t.count = 1
+        t.is_end = True
+
+    def find_prefix(self, word):
+        t = self
+        end = 0
+        for char in word:
+            ord_char = ord(char) - ord('a')
+            if t.count == 1:
+                break
+            t = t.children[ord_char]
+            end += 1
+        return word[:end]
+
+
+def unique_prefix(words):
+    trie = Trie()
+    for word in words:
+        trie.insert(word)
+    return map(lambda w: trie.find_prefix(w), words)
+
+
+class UniquePrefixSpec(unittest.TestCase):
+    """
+    Assumption I made for this question:
+    1. It's possible to have words being prefix of another; If that's the case, then the prefix is itself
+    2. Empty word's prefix is empty word itself
+    3. Duplicated words are treated as one and should have same unique prefix
+    4. All letters in a word are in lower case with no whitespaces
+    """
+    def test_example(self):
+        words = ['dog', 'cat', 'apple', 'apricot', 'fish']
+        expected = ['d', 'c', 'app', 'apr', 'f']
+        self.assertEqual(unique_prefix(words), expected)
+    
+    def test_prefix_word_of_another(self):
+        words = ['greed', 'greedis', 'greedisgood', 'greeting']
+        expected = ['greed', 'greedis', 'greedisg', 'greet']
+        self.assertEqual(unique_prefix(words), expected)
+
+    def test_empty_word(self):
+        words = ['', 'a', 'alpha', 'aztec']
+        expected = ['', 'a', 'al', 'az']
+        self.assertEqual(unique_prefix(words), expected)
+
+    def test_duplicated_words(self):
+        words = ['a', 'a', 'applies', 'apt', 'apt', 'applies', 'apple', 'apple']
+        expected = ['a', 'a', 'appli', 'apt', 'apt', 'appli', 'apple', 'apple']
+        self.assertEqual(unique_prefix(words), expected)
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
 ```
 
 ### Sep 13, 2019 \[Easy\] Tree Isomorphism Problem
