@@ -119,10 +119,10 @@ g(1)       t(1) p(1) r(1) s(1)
                 l(1) i(1) h(1)
                  |    |
                 e(1) c(1)
-                 |
-                o(1)
-                 |
-                t(1)
+                      |
+                     o(1)
+                      |
+                     t(1)
 ```
 Our goal is to find a path for each word from root to the first node that has count equals 1, above example gives: `d, c, app, apr, f`
 
