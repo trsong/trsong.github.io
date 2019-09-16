@@ -37,14 +37,20 @@ and the weights: a-b: 3, a-c: 5, a-d: 8, d-e: 2, d-f: 4, e-g: 1, e-h: 1, the lon
 
 The path does not have to pass through the root, and each node can have any amount of children.
 ``` 
+-->
 
-317.Shortest Distance from All Buildings
-You want to build a house on an empty land which reaches all buildings in the shortest amount of distance. You can only move up, down, left and right. You are given a 2D grid of values 0, 1 or 2, where:
+### Sep 16, 2019 LC 317 \[Hard\] Shortest Distance from All Buildings
+---
+> **Question:** You want to build a house on an empty land which reaches all buildings in the shortest amount of distance. You can only move up, down, left and right. You are given a 2D grid of values 0, 1 or 2, where:
+>
+> - Each 0 marks an empty land which you can pass by freely.
+> - Each 1 marks a building which you cannot pass through.
+> - Each 2 marks an obstacle which you cannot pass through.
+> 
+> **Note:**
+There will be at least one building. If it is not possible to build such house according to the above rules, return -1.
 
-- Each 0 marks an empty land which you can pass by freely.
-- Each 1 marks a building which you cannot pass through.
-- Each 2 marks an obstacle which you cannot pass through.
-Example:
+**Example:**
 
 ```py
 Input: [[1,0,2,0,1],[0,0,0,0,0],[0,0,1,0,0]]
@@ -61,9 +67,8 @@ Explanation: Given three buildings at (0,0), (0,4), (2,2), and an obstacle at (0
              the point (1,2) is an ideal empty land to build a house, as the total 
              travel distance of 3+3+1=7 is minimal. So return 7.
 ```
-Note:
-There will be at least one building. If it is not possible to build such house according to the above rules, return -1.
--->
+
+
 
 ### Sep 15, 2019 LC 1014 \[Medium\] Best Sightseeing Pair
 ---
@@ -79,6 +84,45 @@ There will be at least one building. If it is not possible to build such house a
 Input: [8,1,5,2,6]
 Output: 11
 Explanation: i = 0, j = 2, A[i] + A[j] + i - j = 8 + 5 + 0 - 2 = 11
+```
+
+**My thoughts:** You probably don't even notice, but the problem already presents a hint in the question. So to say, `A[i] + A[j] - (j - i) = A[i] + A[j] + i - j`, if we re-arrange the terms even further, we can get `(A[i] + i) + (A[j] - j)`. Remember we want to maximize `(A[i] + i) + (A[j] - j)`. Notice that when we iterate throught the list along the way, before process `A[j]` we should've seen `A[i]` and `i` already. Thus we can store the max of `(A[i] + i)` so far and plus `(A[j] - j)` to get max along the way. This question is just a variant of selling stock problem. [https://trsong.github.io/python/java/2019/05/01/DailyQuestions/#june-4-2019-easy-sell-stock](https://trsong.github.io/python/java/2019/05/01/DailyQuestions/#june-4-2019-easy-sell-stock)
+
+**Solution:** [https://repl.it/@trsong/Best-Sightseeing-Pair](https://repl.it/@trsong/Best-Sightseeing-Pair)
+```py
+import unittest
+
+def max_score_sightseeing_pair(A):
+    max_so_far = A[0] + 0
+    res = 0
+    for j in xrange(1, len(A)):
+        res = max(res, max_so_far + A[j] - j)
+        max_so_far = max(max_so_far, A[j] + j)
+    return res
+
+
+class MaxScoreSightseeingPairSpec(unittest.TestCase):
+    def test_example(self):
+        self.assertEqual(max_score_sightseeing_pair([8, 1, 5, 2, 6]), 11) # i = 0, j = 2, A[i] + A[j] + i - j = 8 + 5 + 0 - 2 = 11
+
+    def test_two_high_value_spots(self):
+        self.assertEqual(max_score_sightseeing_pair([1, 9, 1, 10]), 17) # i = 1, j = 3, 9 + 10 + 1 - 3 = 17
+
+    def test_decreasing_value(self):
+        self.assertEqual(max_score_sightseeing_pair([3, 1, 1, 1]), 3) # i = 0, j = 1, 3 + 1 + 0 - 1 = 3
+
+    def test_increasing_value(self):
+        self.assertEqual(max_score_sightseeing_pair([1, 2, 4, 8]), 11) # i = 2, j = 3, 4 + 8 + 2 - 3 = 11
+
+    def test_tie(self):
+        self.assertEqual(max_score_sightseeing_pair([2, 2, 2, 2]), 3) # i = 0, j = 1, 2 + 2 + 0 - 1 = 3
+
+    def test_two_elements(self):
+        self.assertEqual(max_score_sightseeing_pair([5, 4]), 8) # i = 0, j = 1, 5 + 4 + 0 - 1 = 8
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
 ```
 
 ### Sep 14, 2019 \[Medium\] Unique Prefix
