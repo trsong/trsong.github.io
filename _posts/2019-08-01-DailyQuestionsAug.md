@@ -39,6 +39,31 @@ The path does not have to pass through the root, and each node can have any amou
 ``` 
 -->
 
+### Sep 17, 2019 LC 296 \[Hard\] Best Meeting Point
+---
+> **Question:** A group of two or more people wants to meet and minimize the total travel distance. You are given a 2D grid of values 0 or 1, where each 1 marks the home of someone in the group. The distance is calculated using *Manhattan Distance*, where `distance(p1, p2) = |p2.x - p1.x| + |p2.y - p1.y|`.
+> 
+> Hint: Try to solve it in one dimension first. How can this solution apply to the two dimension case?
+
+**Example:**
+
+```py
+Input: 
+
+1 - 0 - 0 - 0 - 1
+|   |   |   |   |
+0 - 0 - 0 - 0 - 0
+|   |   |   |   |
+0 - 0 - 1 - 0 - 0
+
+Output: 6 
+
+Explanation: Given three people living at (0,0), (0,4), and (2,2):
+             The point (0,2) is an ideal meeting point, as the total travel distance 
+             of 2+2+2=6 is minimal. So return 6.
+```
+
+
 ### Sep 16, 2019 LC 317 \[Hard\] Shortest Distance from All Buildings
 ---
 > **Question:** You want to build a house on an empty land which reaches all buildings in the shortest amount of distance. You can only move up, down, left and right. You are given a 2D grid of values 0, 1 or 2, where:
@@ -68,6 +93,106 @@ Explanation: Given three buildings at (0,0), (0,4), (2,2), and an obstacle at (0
              travel distance of 3+3+1=7 is minimal. So return 7.
 ```
 
+**My thoughts:** There is no easy way to find the shortest distance to all building. Due to the fact that obstacle is unpredictable. There could be exponentially many different situations that obstacle can affect our shortest path. And sometimes it might simply just block the way to some building which cause the problem to short-circuit and return -1. 
+
+Thus, what we can do for this problem is to run BFS on each building and calculate the accumulated/aggregated distance to current building for EACH empty land. And once done that, simple iterate through the aggregated distance array to find mimimum distance which will be the answer.
+
+**Solution with BFS:** [https://repl.it/@trsong/Shortest-Distance-from-All-Buildings](https://repl.it/@trsong/Shortest-Distance-from-All-Buildings)
+```py
+import unittest
+import sys
+
+
+def shortest_distance(grid):
+    if not grid or not grid[0]:
+        return -1
+
+    n, m = len(grid), len(grid[0])
+    buildings = [(r, c) for r in xrange(n) for c in xrange(m) if grid[r][c] == 1]
+
+    if not buildings:
+        return -1
+
+    num_building = len(buildings)
+    accu_distance = [[0 for _ in xrange(m)] for _ in xrange(n)]
+    directions = [(0, 1), (1, 0), (0, -1), (-1, 0)]
+    for building in buildings:
+        reached_building = 0
+        distance = 0
+        queue = [building]
+        visited = [[False for _ in xrange(m)] for _ in xrange(n)]
+        while queue:
+            for _ in xrange(len(queue)):
+                r, c = queue.pop(0)
+                if visited[r][c]:
+                    continue
+
+                accu_distance[r][c] += distance
+                visited[r][c] = True
+                if grid[r][c] == 1:
+                    reached_building += 1
+
+                for d in directions:
+                    nbr_r, nbr_c = r + d[0], c + d[1]
+                    if 0 <= nbr_r < n and 0 <= nbr_c < m and not visited[nbr_r][nbr_c] and grid[nbr_r][nbr_c] != 2:
+                        queue.append((nbr_r, nbr_c))
+            distance += 1
+
+        if reached_building != num_building:
+            # Check if all building are connected
+            return -1
+
+
+    min_dist = sys.maxint
+    for r in xrange(n):
+        for c in xrange(m):
+            if grid[r][c] == 0:
+                min_dist = min(min_dist, accu_distance[r][c])
+
+    return min_dist
+
+
+class ShortestDistanceSpec(unittest.TestCase):
+    def test_example(self):
+        self.assertEqual(shortest_distance([
+            [1, 0, 2, 0, 1],
+            [0, 0, 0, 0, 0],
+            [0, 0, 1, 0, 0]
+        ]), 7)  # target location is [1, 2] which has distance 3 + 3 + 1 = 7
+
+    def test_inaccessible_buildings(self):
+        self.assertEqual(shortest_distance([
+            [1, 0, 0],
+            [1, 2, 2],
+            [2, 1, 1]
+        ]), -1)
+
+    def test_no_building_at_all(self):
+        self.assertEqual(shortest_distance([
+            [0, 2, 0],
+            [0, 0, 0],
+            [0, 0, 0]
+        ]), -1)
+
+    def test_empty_grid(self):
+        self.assertEqual(shortest_distance([]), -1)
+
+    def test_building_on_same_line(self):
+        self.assertEqual(shortest_distance([
+            [2, 1, 0, 1, 0, 0, 1]  # target is at index 2, which has distance = 1 + 1 + 4
+        ]), 6)
+
+    def test_multiple_road_same_distance(self):
+        self.assertEqual(shortest_distance([
+            [0, 1, 0],
+            [1, 2, 0],
+            [2, 1, 0]
+        ]), 7)  # either top-left or top-right will give 7
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
+```
 
 
 ### Sep 15, 2019 LC 1014 \[Medium\] Best Sightseeing Pair
