@@ -37,6 +37,24 @@ and the weights: a-b: 3, a-c: 5, a-d: 8, d-e: 2, d-f: 4, e-g: 1, e-h: 1, the lon
 
 The path does not have to pass through the root, and each node can have any amount of children.
 ``` 
+
+### Sep 20, 2019 
+
+Find the smallest positive number missing from an unsorted array
+
+You are given an unsorted array with both positive and negative elements. You have to find the smallest positive number missing from the array in O(n) time using constant extra space. You can modify the original array.
+
+Examples
+
+ Input:  {2, 3, 7, 6, 8, -1, -10, 15}
+ Output: 1
+
+ Input:  { 2, 3, -7, 6, 8, 1, -10, 15 }
+ Output: 4
+
+ Input: {1, 1, 0, -1, -2}
+ Output: 2 
+ 
 -->
 
 ### Sep 19, 2019 LC 987 \[Medium\] Vertical Order Traversal of a Binary Tree
@@ -99,6 +117,70 @@ Given below matrix:
 1 5 3 1
 
 The most we can collect is 0 + 2 + 1 + 5 + 3 + 1 = 12 coins.
+```
+
+**My thoughts:** This problem gives you a strong feeling that this must be a DP question. 'coz for each step you can either move right or down, that is, max number of coins you can collect so far at current cell depends on top and left solution gives the following recurrence formula: 
+
+```py
+Let dp[i][j] be the max coin value collect when reach cell (i, j) in grid.
+dp[i][j] = grid[i][j] + max(dp[i-1][j], dp[i][j-1])
+```
+
+You can also do it in-place using original grid. However, mutating input params in general is a bad habit as those parameters may be used in other place and might be immutable.
+
+**Solution with DP:** [https://repl.it/@trsong/Max-Value-of-Coins-to-Collect-in-a-Matrix](https://repl.it/@trsong/Max-Value-of-Coins-to-Collect-in-a-Matrix)
+```py
+import unittest
+
+def max_coins(grid):
+    if not grid or not grid[0]:
+        return 0
+    n, m = len(grid), len(grid[0])
+
+    for r in xrange(n):
+        for c in xrange(m):
+            left = grid[r][c-1] if c > 0 else 0
+            top = grid[r-1][c] if r > 0 else 0
+            grid[r][c] += max(left, top)
+
+    return grid[n-1][m-1]
+
+
+class MaxCoinSpec(unittest.TestCase):
+    def test_example(self):
+        self.assertEqual(max_coins([
+            [0, 3, 1, 1],
+            [2, 0, 0, 4],
+            [1, 5, 3, 1]
+        ]), 12)
+
+    def test_empty_grid(self):
+        self.assertEqual(max_coins([]), 0)
+        self.assertEqual(max_coins([[]]), 0)
+
+    def test_one_way_or_the_other(self):
+        self.assertEqual(max_coins([
+            [0, 3],
+            [2, 0]
+        ]), 3)
+
+    def test_until_the_last_moment_knows(self):
+        self.assertEqual(max_coins([
+            [0, 1, 0, 1],
+            [0, 0, 0, 1],
+            [2, 0, 3, 0]
+        ]), 5)
+
+    def test_try_to_get_most_coins(self):
+        self.assertEqual(max_coins([
+            [1, 1, 1],
+            [2, 3, 1],
+            [1, 4, 5]
+        ]), 15)
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
 ```
 
 ### Sep 17, 2019 LC 296 \[Hard\] Best Meeting Point
