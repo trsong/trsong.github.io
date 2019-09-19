@@ -39,6 +39,52 @@ The path does not have to pass through the root, and each node can have any amou
 ``` 
 -->
 
+### Sep 19, 2019 LC 987 \[Medium\] Vertical Order Traversal of a Binary Tree
+> **Question:** Given a binary tree, return the vertical order traversal of its nodes' values. (ie, from top to bottom, column by column).
+>
+> If two nodes are in the same row and column, the order should be from left to right.
+
+**Example 1:**
+```py
+Given binary tree:
+
+    3
+   / \
+  9  20
+    /  \
+   15   7
+
+return its vertical order traversal as:
+
+[
+  [9],
+  [3,15],
+  [20],
+  [7]
+]
+```
+
+**Example 2:**
+```py
+Given binary tree:
+
+    _3_
+   /   \
+  9    20
+ / \   / \
+4   5 2   7
+
+return its vertical order traversal as:
+
+[
+  [4],
+  [9],
+  [3,5,2],
+  [20],
+  [7]
+]
+```
+
 ### Sep 18, 2019 \[Medium\] Max Value of Coins to Collect in a Matrix
 ---
 > **Question:** You are given a 2-d matrix where each cell represents number of coins in that cell. Assuming we start at `matrix[0][0]`, and can only move right or down, find the maximum number of coins you can collect by the bottom right corner.
