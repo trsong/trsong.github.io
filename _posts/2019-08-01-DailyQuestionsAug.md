@@ -41,6 +41,7 @@ The path does not have to pass through the root, and each node can have any amou
 --->
 
 ### Sep 20, 2019 \[Medium\] Smallest Missing Positive Number from an Unsorted Array
+---
 > **Question:** You are given an unsorted array with both positive and negative elements. You have to find the smallest positive number missing from the array in O(n) time using constant extra space. You can modify the original array.
 
 **Example 1:**
@@ -62,6 +63,7 @@ Output: 2
 ```
 
 ### Sep 19, 2019 LC 987 \[Medium\] Vertical Order Traversal of a Binary Tree
+---
 > **Question:** Given a binary tree, return the vertical order traversal of its nodes' values. (ie, from top to bottom, column by column).
 >
 > If two nodes are in the same row and column, the order should be from left to right.
