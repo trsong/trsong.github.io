@@ -109,7 +109,7 @@ return its vertical order traversal as:
 
 **My thoughts:** Treat root node as postion 0, when move to left child positon - 1, or position + 1 for right child. Then use BFS to scan node from top to bottom to enforce vertical order of traversal.
 
-**Solution with BFS:** [https://repl.it/@trsong/UnsightlyCompleteScriptinglanguages](https://repl.it/@trsong/UnsightlyCompleteScriptinglanguages)
+**Solution with BFS:** [https://repl.it/@trsong/Vertical-Order-Traversal-of-a-Binary-Tree](https://repl.it/@trsong/Vertical-Order-Traversal-of-a-Binary-Tree)
 ```py
 import unittest
 
