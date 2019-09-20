@@ -38,24 +38,28 @@ and the weights: a-b: 3, a-c: 5, a-d: 8, d-e: 2, d-f: 4, e-g: 1, e-h: 1, the lon
 The path does not have to pass through the root, and each node can have any amount of children.
 ``` 
 
-### Sep 20, 2019 
+--->
 
-Find the smallest positive number missing from an unsorted array
+### Sep 20, 2019 \[Medium\] Smallest Missing Positive Number from an Unsorted Array
+> **Question:** You are given an unsorted array with both positive and negative elements. You have to find the smallest positive number missing from the array in O(n) time using constant extra space. You can modify the original array.
 
-You are given an unsorted array with both positive and negative elements. You have to find the smallest positive number missing from the array in O(n) time using constant extra space. You can modify the original array.
+**Example 1:**
+```py
+Input: {2, 3, 7, 6, 8, -1, -10, 15}
+Output: 1
+```
 
-Examples
+**Example 2:**
+```py
+Input: { 2, 3, -7, 6, 8, 1, -10, 15 }
+Output: 4
+```
 
- Input:  {2, 3, 7, 6, 8, -1, -10, 15}
- Output: 1
-
- Input:  { 2, 3, -7, 6, 8, 1, -10, 15 }
- Output: 4
-
- Input: {1, 1, 0, -1, -2}
- Output: 2 
- 
--->
+**Example 3:**
+```py
+Input: {1, 1, 0, -1, -2}
+Output: 2 
+```
 
 ### Sep 19, 2019 LC 987 \[Medium\] Vertical Order Traversal of a Binary Tree
 > **Question:** Given a binary tree, return the vertical order traversal of its nodes' values. (ie, from top to bottom, column by column).
@@ -101,6 +105,113 @@ return its vertical order traversal as:
   [20],
   [7]
 ]
+```
+
+**My thoughts:** Treat root node as postion 0, when move to left child positon - 1, or position + 1 for right child. Then use BFS to scan node from top to bottom to enforce vertical order of traversal.
+
+**Solution with BFS:** [https://repl.it/@trsong/UnsightlyCompleteScriptinglanguages](https://repl.it/@trsong/UnsightlyCompleteScriptinglanguages)
+```py
+import unittest
+
+class Node(object):
+    def __init__(self, val, left=None, right=None):
+        self.val = val
+        self.left = left
+        self.right = right
+
+
+def vertical_traversal(tree):
+    if not tree:
+        return []
+    lo = hi = 0
+    position_map = {}
+    queue = [(tree, 0)]
+    while queue:
+        for _ in xrange(len(queue)):
+            node, pos = queue.pop(0)
+            lo = min(lo, pos)
+            hi = max(hi, pos)
+
+            if pos not in position_map:
+                position_map[pos] = []
+
+            position_map[pos].append(node.val)
+
+            if node.left:
+                queue.append((node.left, pos - 1))
+
+            if node.right:
+                queue.append((node.right, pos + 1))
+
+    res = []
+    for pos in xrange(lo, hi + 1):
+        res.append(position_map[pos])
+
+    return res
+
+
+class VerticalTraversalSpec(unittest.TestCase):
+    def test_example1(self):
+        """
+         3
+        / \
+       9  20
+         /  \
+        15   7
+        """
+        t = Node(3, Node(9), Node(20, Node(15), Node(7)))
+        self.assertEqual(vertical_traversal(t), [
+            [9],
+            [3,15],
+            [20],
+            [7]
+        ])
+    
+    def test_example2(self):
+        """
+            _3_
+           /   \
+          9    20
+         / \   / \
+        4   5 2   7
+        """
+        t9 = Node(9, Node(4), Node(5))
+        t20 = Node(20, Node(2), Node(7))
+        t = Node(3, t9, t20)
+
+        self.assertEqual(vertical_traversal(t), [
+            [4],
+            [9],
+            [3,5,2],
+            [20],
+            [7]
+        ])
+
+    def test_empty_tree(self):
+        self.assertEqual(vertical_traversal(None), [])
+
+    def test_left_heavy_tree(self):
+        """
+            1
+           / \
+          2   3
+         / \   \
+        4   5   6
+        """
+        t2 = Node(2, Node(4), Node(5))
+        t3 = Node(3, right=Node(6))
+        t = Node(1, t2, t3)
+        self.assertEqual(vertical_traversal(t), [
+            [4],
+            [2],
+            [1,5],
+            [3],
+            [6]
+        ])
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
 ```
 
 ### Sep 18, 2019 \[Medium\] Max Value of Coins to Collect in a Matrix
