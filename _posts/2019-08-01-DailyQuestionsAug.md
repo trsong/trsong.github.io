@@ -50,11 +50,11 @@ The path does not have to pass through the root, and each node can have any amou
 
 ```py
 Input:
-		 20
-	   /   \
-	 12     18
-  /  |  \   / \
-11   2   3 15  8
+     _20_
+    /    \
+   12    18
+ / | \   / \
+11 2  3 15  8
 
 Output: 18
 Explanation:
