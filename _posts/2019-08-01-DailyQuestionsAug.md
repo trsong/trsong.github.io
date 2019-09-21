@@ -40,6 +40,32 @@ The path does not have to pass through the root, and each node can have any amou
 
 --->
 
+### Sep 21, 2019 \[Medium\] Subtree with Maximum Average
+---
+> **Question:** Given an N-ary tree, find the subtree with the maximum average. Return the root of the subtree.
+> 
+> A subtree of a tree is the node which have at least 1 child plus all its descendants. The average value of a subtree is the sum of its values, divided by the number of nodes.
+
+**Example:**
+
+```py
+Input:
+		 20
+	   /   \
+	 12     18
+  /  |  \   / \
+11   2   3 15  8
+
+Output: 18
+Explanation:
+There are 3 nodes which have children in this tree:
+12 => (11 + 2 + 3 + 12) / 4 = 7
+18 => (18 + 15 + 8) / 3 = 13.67
+20 => (12 + 11 + 2 + 3 + 18 + 15 + 8 + 20) / 8 = 11.125
+
+18 has the maximum average so output 18.
+```
+
 ### Sep 20, 2019 \[Medium\] Smallest Missing Positive Number from an Unsorted Array
 ---
 > **Question:** You are given an unsorted array with both positive and negative elements. You have to find the smallest positive number missing from the array in O(n) time using constant extra space. You can modify the original array.
@@ -60,6 +86,90 @@ Output: 4
 ```py
 Input: {1, 1, 0, -1, -2}
 Output: 2 
+```
+
+**My thoughts:** The main idea is to focus on all postive numbers and use its value as index. By marking the corresponding value as negative will allow us to find which number is covered already. Then the first positive number not being covered is what we are looking for.
+
+For example, 
+
+- Step 1: `[2, 3, 7, 6, 8, 1, -10, 15]` will be partitioned into `[2, 3, 7, 6, 8, 15, 1, -10]` and we ignore the negative part: `[2, 3, 7, 6, 8, 15, 1]`. 
+- Step 2: ignore number that is too large, and mark corresponding value as negative `[2, 3, 7, 6, 8, 15, 1]`. Suitable values are `[1, 2, 3, 6, 7]` will map to index `[0, 1, 2, 5, 6]`. After that we mark corresponding val as negative: `[-2, -3, -7, 6, 8, -15, -1]`
+- Step 3: the first positive's index is 3, which means 4 is missing.
+
+
+**Solution:** [https://repl.it/@trsong/Smallest-Missing-Positive-Number-from-an-Unsorted-Array](https://repl.it/@trsong/Smallest-Missing-Positive-Number-from-an-Unsorted-Array)
+```py
+import unittest
+
+def find_missing_positive(nums):
+    if not nums:
+        return 1
+
+    # Step 1: Partition the array into positive part + non-positive part
+    n = len(nums)
+    i = 0 
+    j = n - 1
+    while i <= j:
+        if nums[i] > 0:
+            i += 1
+        elif nums[j] <= 0:
+            j -= 1
+        else:
+            nums[i], nums[j] = nums[j], nums[i]
+            i += 1
+            j -= 1
+
+    # Step 2: Treat the first positive part as an array, and use val as index
+    # val is between 0 and new_len - 1 which represents 1 to new_len, we turn corresponding number into negative
+    new_len = i
+    for i in xrange(new_len):
+        val_as_index = abs(nums[i])
+        if val_as_index - 1 < new_len and nums[val_as_index - 1] > 0:
+            nums[val_as_index - 1] *= -1
+
+    # Step 3: Find first index that is positive. Then + 1 will give the missing number
+    for i in xrange(new_len):
+        if nums[i] > 0:
+            return i+1
+    
+    # if numbers are consecutive, meaning all number between 1 and new_len is covered, 
+    # then new_len + 1 should be the missing number
+    return new_len + 1
+
+
+class FindMissingPositiveSpec(unittest.TestCase):
+    def test_example1(self):
+        self.assertEqual(find_missing_positive([2, 3, 7, 6, 8, -1, -10, 15]), 1)
+    
+    def test_example2(self):
+        self.assertEqual(find_missing_positive([2, 3, -7, 6, 8, 1, -10, 15]), 4)
+
+    def test_example3(self):
+        self.assertEqual(find_missing_positive([1, 1, 0, -1, -2]), 2)
+
+    def test_consecutive_array1(self):
+        self.assertEqual(find_missing_positive([1, 2, 3]), 4)
+
+    def test_consecutive_array2(self):
+        self.assertEqual(find_missing_positive([-1, 0, 1]), 2)
+
+    def test_non_positive_array(self):
+        self.assertEqual(find_missing_positive([-5, -3, -1]), 1)
+
+    def test_missing_multiple_positive_numbers(self):
+        self.assertEqual(find_missing_positive([ 7, 8, 9, 10,-4, 1, 2, 3, 5,]), 4)
+
+    def test_empty_array(self):
+        self.assertEqual(find_missing_positive([]), 1)
+
+    def test_negative_array(self):
+        self.assertEqual(find_missing_positive([-1, -2, -3]), 1)
+
+    def test_array_with_duplicated_number(self):
+        self.assertEqual(find_missing_positive([1, 1, 2, 2, 3, 3, 5, 5, 6, -1, -1]), 4)
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
 ```
 
 ### Sep 19, 2019 LC 987 \[Medium\] Vertical Order Traversal of a Binary Tree
