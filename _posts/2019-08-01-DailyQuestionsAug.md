@@ -40,6 +40,14 @@ The path does not have to pass through the root, and each node can have any amou
 
 --->
 
+### Sep 22, 2019 \[Medium\] Minimum Number of Squares Sum to N
+---
+> **Question:** Given a positive integer n, find the smallest number of squared integers which sum to n.
+>
+> For example, given `n = 13`, return `2` since `13 = 32 + 22 = 9 + 4`.
+> 
+> Given `n = 27`, return `3` since `27 = 32 + 32 + 32 = 9 + 9 + 9`.
+
 ### Sep 21, 2019 \[Medium\] Subtree with Maximum Average
 ---
 > **Question:** Given an N-ary tree, find the subtree with the maximum average. Return the root of the subtree.
@@ -64,6 +72,124 @@ There are 3 nodes which have children in this tree:
 20 => (12 + 11 + 2 + 3 + 18 + 15 + 8 + 20) / 8 = 11.125
 
 18 has the maximum average so output 18.
+```
+
+**Solution:** [https://repl.it/@trsong/Subtree-with-Maximum-Average](https://repl.it/@trsong/Subtree-with-Maximum-Average)
+
+```py
+import unittest
+
+class Node(object):
+    def __init__(self, val, *children):
+        self.val = val
+        self.children = children
+
+def max_avg_subtree(tree):
+    def max_avg_and_n(tree):
+        if not tree.children:
+            # (child_max_avg, child_node), sum, size
+            return (float('-inf'), tree), tree.val, 1
+
+        child_res = map(max_avg_and_n, tree.children)
+        child_max_avg_and_nodes = map(lambda x: x[0], child_res)
+        child_max_avgs = map(lambda x: x[0], child_max_avg_and_nodes)
+        child_max_avg = max(child_max_avgs)
+        sum_children = sum(map(lambda x: x[1], child_res))
+        num_children = sum(map(lambda x: x[2], child_res))
+        node_sum = sum_children + tree.val
+        current_max_avg = float(node_sum) / (1 + num_children)
+        res = (current_max_avg, tree)
+        if child_max_avg > current_max_avg:
+            index = child_max_avgs.index(child_max_avg)
+            target_child = child_max_avg_and_nodes[index][1]
+            res = (child_max_avg, target_child)
+        return res, node_sum, num_children + 1
+
+    return max_avg_and_n(tree)[0][1].val
+
+
+class MaxAvgSubtreeSpec(unittest.TestCase):
+    def test_example(self):
+        """
+             _20_
+            /    \
+           12    18
+         / | \   / \
+        11 2  3 15  8
+
+        12 => (11 + 2 + 3 + 12) / 4 = 7
+        18 => (18 + 15 + 8) / 3 = 13.67
+        20 => (12 + 11 + 2 + 3 + 18 + 15 + 8 + 20) / 8 = 11.125
+        """
+        n12 = Node(12, Node(12), Node(2), Node(3))
+        n18 = Node(18, Node(15), Node(8))
+        n20 = Node(20, n12, n18)
+        self.assertEqual(max_avg_subtree(n20), 18) 
+
+    def test_tree_with_negative_node(self):
+        """
+             1
+           /   \
+         -5     11
+         / \   /  \
+        1   2 4   -2
+
+        -5 => (-5 + 1 + 2) / 3 = -0.67
+        11 => (11 + 4 - 2) / 3 = 4.333
+        1 => (1 -5 + 11 + 1 + 2 + 4 - 2) / 7 = 1
+        """
+        n5 = Node(-5, Node(1), Node(2))
+        n11 = Node(11, Node(4), Node(-2))
+        n1 = Node(1, n5, n11)
+        self.assertEqual(max_avg_subtree(n1), 11)
+
+    def test_right_heavy_tree(self):
+        """
+          0
+         / \
+        10  1
+          / | \
+         0  4  3
+         1 => (0 + 4 + 3 + 1) / 4 = 2
+         0 => (10 + 1 + 4 + 3) / 6 = 3
+        """
+        n1 = Node(1, Node(0), Node(4), Node(3))
+        n0 = Node(0, Node(10), n1)
+        self.assertEqual(max_avg_subtree(n0), 0)
+
+    def test_multiple_level_tree(self):
+        """
+         0
+          \ 
+           0
+            \
+             2
+              \
+               4
+
+        0 => (0 + 2 + 4) / 4 = 1.5
+        2 => (2 + 4) / 2 = 3       
+        """
+        t = Node(2, Node(0, Node(2, Node(4))))
+        self.assertEqual(max_avg_subtree(t), 2)
+
+    def test_all_negative_value(self):
+        """
+        -4
+          \
+          -2
+            \
+             0
+
+        -2 => -2 / 2 = -1
+        -4 => (-4 + -2) / 2 = -3
+        """
+        t = Node(-4, Node(-2, Node(0)))
+        self.assertEqual(max_avg_subtree(t), -2)
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
 ```
 
 ### Sep 20, 2019 \[Medium\] Smallest Missing Positive Number from an Unsorted Array
