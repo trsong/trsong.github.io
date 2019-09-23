@@ -40,13 +40,79 @@ The path does not have to pass through the root, and each node can have any amou
 
 --->
 
-### Sep 22, 2019 \[Medium\] Minimum Number of Squares Sum to N
+### Sep 23, 2019 \[Easy\] BST Nodes Sum up to K
+---
+> **Question:** Given the root of a binary search tree, and a target K, return two nodes in the tree whose sum equals K.
+
+**Example:** 
+```py
+Given the following tree and K of 20
+
+    10
+   /   \
+ 5      15
+       /  \
+     11    15
+Return the nodes 5 and 15.
+```
+
+### Sep 22, 2019 LC 279 \[Medium\] Minimum Number of Squares Sum to N
 ---
 > **Question:** Given a positive integer n, find the smallest number of squared integers which sum to n.
 >
-> For example, given `n = 13`, return `2` since `13 = 32 + 22 = 9 + 4`.
+> For example, given `n = 13`, return `2` since `13 = 3^2 + 2^2 = 9 + 4`.
 > 
-> Given `n = 27`, return `3` since `27 = 32 + 32 + 32 = 9 + 9 + 9`.
+> Given `n = 27`, return `3` since `27 = 3^2 + 3^2 + 3^2 = 9 + 9 + 9`.
+
+**Solution with DP:** [https://repl.it/@trsong/Minimum-Number-of-Squares-Sum-to-N](https://repl.it/@trsong/Minimum-Number-of-Squares-Sum-to-N)
+```py
+import unittest
+import math
+import sys
+
+def is_perfect_square(num):
+    sqr_root = math.sqrt(num)
+    return sqr_root - math.floor(sqr_root) == 0
+
+
+def perfect_squres(N):
+    if is_perfect_square(N):
+        return 1
+    
+    # Let dp[n] represents smallest number of perfect squares that add up to n
+    # Then dp[n] = 1 + min(dp[n - perfect_squares]) for all suitable perfect_squares
+    dp = [sys.maxint] * (N + 1)
+    dp[0] = 0
+
+    for num in xrange(1, N + 1):
+        for i in xrange(1, int(math.sqrt(num) + 1)):
+            dp[num] = min(dp[num - i * i] + 1, dp[num])
+    return dp[N]
+
+
+class PerfectSqureSpec(unittest.TestCase):
+    def test_example(self):
+        self.assertEqual(perfect_squres(13), 2) # n = 13, return 2 since 13 = 3^2 + 2^2 = 9 + 4.
+
+    def test_example2(self):
+        self.assertEqual(perfect_squres(27), 3) # n = 27, return 3 since 27 = 3^2 + 3^2 + 3^2 = 9 + 9 + 9
+
+    def test_perfect_square(self):
+        self.assertEqual(perfect_squres(100), 1) # 10^2 = 100
+
+    def test_random_number(self):
+        self.assertEqual(perfect_squres(63), 4) # n = 63, return 4 since 63 = 7^2+ 3^2 + 2^2 + 1^2
+
+    def test_random_number2(self):
+        self.assertEqual(perfect_squres(12), 3) # n = 12, return 3, 12 = 4 + 4 + 4
+
+    def test_random_number3(self):
+        self.assertEqual(perfect_squres(6), 3) # 6 = 2 + 2 + 2
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
+```
 
 ### Sep 21, 2019 \[Medium\] Subtree with Maximum Average
 ---
