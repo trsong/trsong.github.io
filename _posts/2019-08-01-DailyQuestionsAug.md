@@ -40,6 +40,16 @@ The path does not have to pass through the root, and each node can have any amou
 
 --->
 
+### Sep 24, 2019 \[Medium\] Interleave Stacks
+---
+> **Question:** Given a stack of N elements, interleave the first half of the stack with the second half reversed using only one other queue. This should be done in-place.
+>
+> Recall that you can only push or pop from a stack, and enqueue or dequeue from a queue.
+>
+> For example, if the stack is `[1, 2, 3, 4, 5]`, it should become `[1, 5, 2, 4, 3]`. If the stack is `[1, 2, 3, 4]`, it should become `[1, 4, 2, 3]`.
+>
+> Hint: Try working backwards from the end state.
+
 ### Sep 23, 2019 \[Easy\] BST Nodes Sum up to K
 ---
 > **Question:** Given the root of a binary search tree, and a target K, return two nodes in the tree whose sum equals K.
@@ -54,6 +64,125 @@ Given the following tree and K of 20
        /  \
      11    15
 Return the nodes 5 and 15.
+```
+
+**My thoughts:** BST in-order traversal is equivalent to sorted list. Therefore the question can be converted to 2-sum with sorted input. 
+
+**Solution with In-order Traversal:** [https://repl.it/@trsong/BST-Nodes-Sum-up-to-K](https://repl.it/@trsong/BST-Nodes-Sum-up-to-K)
+```py
+import unittest
+
+class Node(object):
+    def __init__(self, val, left=None, right=None):
+        self.val = val
+        self.left = left
+        self.right = right
+
+
+def in_order_traversal(tree):
+    if tree:
+        for left_tree in in_order_traversal(tree.left):
+            yield left_tree
+        yield tree
+        for right_tree in in_order_traversal(tree.right):
+            yield right_tree
+
+
+def reverse_in_order_traversal(tree):
+    if tree:
+        for right_tree in reverse_in_order_traversal(tree.right):
+            yield right_tree
+        yield tree
+        for left_tree in reverse_in_order_traversal(tree.left):
+            yield left_tree
+
+
+def find_pair(tree, k):
+    if not tree:
+        return None
+    
+    traversal = in_order_traversal(tree)
+    reverse_traversal = reverse_in_order_traversal(tree)
+
+    left = next(traversal)
+    right = next(reverse_traversal)
+    while left != right:
+        sum = left.val + right.val
+        if sum == k:
+            return [left.val, right.val]
+        elif sum < k:
+            left = next(traversal)
+        else:
+            # sum > k
+            right = next(reverse_traversal)
+    return None
+
+
+class FindPairSpec(unittest.TestCase):
+    def test_example(self):
+        """
+            10
+           /   \
+         5      15
+               /  \
+             11    15
+        """
+        n15 = Node(15, Node(11), Node(15))
+        n10 = Node(10, Node(5), n15)
+        self.assertEqual(find_pair(n10, 20), [5, 15])
+
+    def test_empty_tree(self):
+        self.assertIsNone(find_pair(None, 0), None)
+
+    def test_full_tree(self):
+        """
+             7
+           /   \
+          3     13
+         / \   /  \
+        2   5 11   17
+        """
+        n3 = Node(3, Node(2), Node(5))
+        n13 = Node(13, Node(11), Node(17))
+        n7 = Node(7, n3, n13)
+        self.assertEqual(find_pair(n7, 7), [2, 5])
+        self.assertEqual(find_pair(n7, 18), [5, 13])
+        self.assertEqual(find_pair(n7, 24), [7, 17])
+        self.assertEqual(find_pair(n7, 28), [11, 17])
+        self.assertIsNone(find_pair(n7, 4))
+
+    def test_tree_with_same_value(self):
+        """
+        42
+          \
+           42
+        """
+        tree = Node(42, right=Node(42))
+        self.assertEqual(find_pair(tree, 84), [42, 42])
+        self.assertIsNone(find_pair(tree, 42))
+
+    def test_sparse_tree(self):
+        """
+           7
+         /   \
+        2     17
+         \   /
+          5 11
+         /   \
+        3     13
+        """
+        n2 = Node(2, right=Node(5, Node(3)))
+        n17 = Node(17, Node(11, right=Node(13)))
+        n7 = Node(7, n2, n17)
+        self.assertEqual(find_pair(n7, 7), [2, 5])
+        self.assertEqual(find_pair(n7, 18), [5, 13])
+        self.assertEqual(find_pair(n7, 24), [7, 17])
+        self.assertEqual(find_pair(n7, 28), [11, 17])
+        self.assertIsNone(find_pair(n7, 4))
+
+
+if __name__ == '__main__':
+   unittest.main(exit=False)
 ```
 
 ### Sep 22, 2019 LC 279 \[Medium\] Minimum Number of Squares Sum to N
