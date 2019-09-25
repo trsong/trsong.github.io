@@ -39,6 +39,32 @@ The path does not have to pass through the root, and each node can have any amou
 ``` 
 
 --->
+### Sep 25, 2019 \[Easy\] Flatten a Nested Dictionary
+---
+> **Question:** Write a function to flatten a nested dictionary. Namespace the keys with a period.
+
+**Example:**
+```py
+Given the following dictionary:
+{
+    "key": 3,
+    "foo": {
+        "a": 5,
+        "bar": {
+            "baz": 8
+        }
+    }
+}
+
+it should become:
+{
+    "key": 3,
+    "foo.a": 5,
+    "foo.bar.baz": 8
+}
+
+You can assume keys do not contain dots in them, i.e. no clobbering will occur.
+```
 
 ### Sep 24, 2019 \[Medium\] Interleave Stacks
 ---
@@ -49,6 +75,105 @@ The path does not have to pass through the root, and each node can have any amou
 > For example, if the stack is `[1, 2, 3, 4, 5]`, it should become `[1, 5, 2, 4, 3]`. If the stack is `[1, 2, 3, 4]`, it should become `[1, 4, 2, 3]`.
 >
 > Hint: Try working backwards from the end state.
+
+**Solution:** [https://repl.it/@trsong/Interleave-Stacks](https://repl.it/@trsong/Interleave-Stacks)
+```py
+import unittest
+
+def interleave_stack(stack):
+    if not stack:
+        return 
+
+    # stack = [1, 2, 3, 4, 5, 6, 7], queue = []
+    queue = []
+    size = len(stack)
+    half_size = size / 2
+    for _ in xrange(half_size):
+        queue.append(stack.pop())
+
+    # stack = [1, 2, 3, 4], queue = [7, 6, 5]
+    for _ in xrange(half_size):
+        stack.append(queue.pop(0))
+
+    # stack = [1, 2, 3, 4, 7, 6, 5], queue = []
+    for _ in xrange(half_size):
+        queue.append(stack.pop())
+
+    # stack = [1, 2, 3, 4], queue = [5, 6, 7]
+    last = None
+    if len(stack) != len(queue):
+        last = stack.pop()
+
+    # stack = [1, 2, 3], queue = [5, 6, 7]
+    for _ in xrange(half_size):
+        queue.append(queue.pop(0))
+        queue.append(stack.pop())
+
+    # stack = [], queue = [5, 3, 6, 2, 7, 1]
+    while queue:
+        stack.append(queue.pop(0))
+
+    # stack = [5, 3, 6, 2, 7, 1], queue = []
+    while stack:
+         queue.append(stack.pop())
+
+    # stack = [], queue = [1, 7, 2, 6, 3, 5]
+    while queue:
+        stack.append(queue.pop(0))
+
+    # stack = [1, 7, 2, 6, 3, 5], queue = []
+    if last is not None:
+        stack.append(last)
+    # stack = [1, 7, 2, 6, 3, 5, 4], queue = []
+
+
+class InterleaveStackSpec(unittest.TestCase):
+    def test_example1(self):
+        stack = [1, 2, 3, 4, 5]
+        expected = [1, 5, 2, 4, 3]
+        interleave_stack(stack)
+        self.assertEqual(stack, expected)
+
+    def test_example2(self):
+        stack = [1, 2, 3, 4]
+        expected = [1, 4, 2, 3]
+        interleave_stack(stack)
+        self.assertEqual(stack, expected)
+
+    def test_empty_stack(self):
+        stack = []
+        expected = []
+        interleave_stack(stack)
+        self.assertEqual(stack, expected)
+
+    def test_size_one_stack(self):
+        stack = [1]
+        expected = [1]
+        interleave_stack(stack)
+        self.assertEqual(stack, expected)
+
+    def test_size_two_stack(self):
+        stack = [1, 2]
+        expected = [1, 2]
+        interleave_stack(stack)
+        self.assertEqual(stack, expected)
+
+    def test_size_three_stack(self):
+        stack = [1, 2, 3]
+        expected = [1, 3, 2]
+        interleave_stack(stack)
+        self.assertEqual(stack, expected)
+
+    def test_size_seven_stack(self):
+        stack = [1, 2, 3, 4, 5, 6, 7]
+        expected = [1, 7, 2, 6, 3, 5, 4]
+        interleave_stack(stack)
+        self.assertEqual(stack, expected)
+    
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
+```
 
 ### Sep 23, 2019 \[Easy\] BST Nodes Sum up to K
 ---
