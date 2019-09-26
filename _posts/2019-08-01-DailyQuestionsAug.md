@@ -39,6 +39,21 @@ The path does not have to pass through the root, and each node can have any amou
 ``` 
 
 --->
+
+### Sep 26, 2019 \[Hard\] Ordered Minimum Window Subsequence
+---
+> **Question:** Given an array nums and a subsequence sub, find the shortest subarray of nums that contains sub.
+> 
+> * If such subarray does not exist, return -1, -1.
+> * Note that the subarray must contain the elements of sub in the correct order.
+
+**Example:**
+
+```py
+Input: nums = [1, 2, 3, 5, 8, 7, 6, 9, 5, 7, 3, 0, 5, 2, 3, 4, 4, 7], sub = [5, 7]
+Output: start = 8, size = 2
+```
+
 ### Sep 25, 2019 \[Easy\] Flatten a Nested Dictionary
 ---
 > **Question:** Write a function to flatten a nested dictionary. Namespace the keys with a period.
@@ -64,6 +79,62 @@ it should become:
 }
 
 You can assume keys do not contain dots in them, i.e. no clobbering will occur.
+```
+
+**Solution with Iterator:** [https://repl.it/@trsong/Flatten-a-Nested-Dictionary](https://repl.it/@trsong/Flatten-a-Nested-Dictionary)
+```py
+import unittest
+
+def create_dictionary_iterator(dictionary):
+    for k, v in dictionary.items():
+        if type(v) is dict:
+            for sub_k, sub_v in create_dictionary_iterator(v):
+                yield '{}.{}'.format(k, sub_k), sub_v
+        else:
+            yield k, v
+
+
+def flatten_dictionary(dictionary):
+    iterator = create_dictionary_iterator(dictionary)
+    return {k: v for k,v in iterator}
+
+
+class FlattenDictionarySpec(unittest.TestCase):
+    def test_example(self):
+        self.assertEqual({
+            "key": 3,
+            "foo.a": 5,
+            "foo.bar.baz": 8
+        }, flatten_dictionary({
+            "key": 3,
+            "foo": {
+                "a": 5,
+                "bar": {
+                    "baz": 8}}}))
+
+    def test_empty_dictionary(self):
+        self.assertEqual({}, flatten_dictionary({}))
+
+    def test_simple_dictionary(self):
+        d = {
+            'a': 1,
+            'b': 2
+        }
+        self.assertEqual(d, flatten_dictionary(d))
+    
+    def test_multi_level_dictionary(self):
+        d_e = {'e': 0}
+        d_d = {'d': d_e}
+        d_c = {'c': d_d}
+        d_b = {'b': d_c}
+        d_a = {'a': d_b}
+        self.assertEqual({
+            'a.b.c.d.e': 0
+        }, flatten_dictionary(d_a))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
 ```
 
 ### Sep 24, 2019 \[Medium\] Interleave Stacks
