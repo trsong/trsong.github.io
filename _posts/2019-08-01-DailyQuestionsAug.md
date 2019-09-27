@@ -39,6 +39,20 @@ The path does not have to pass through the root, and each node can have any amou
 ``` 
 
 --->
+### Sep 27, 2019 \[Medium\] Construct BST from Post-order Traversal
+---
+> **Question:** Given the sequence of keys visited by a postorder traversal of a binary search tree, reconstruct the tree.
+
+**Example:**
+```py
+Given the sequence 2, 4, 3, 8, 7, 5, you should construct the following tree:
+
+    5
+   / \
+  3   7
+ / \   \
+2   4   8
+```
 
 ### Sep 26, 2019 \[Hard\] Ordered Minimum Window Subsequence
 ---
@@ -52,6 +66,103 @@ The path does not have to pass through the root, and each node can have any amou
 ```py
 Input: nums = [1, 2, 3, 5, 8, 7, 6, 9, 5, 7, 3, 0, 5, 2, 3, 4, 4, 7], sub = [5, 7]
 Output: start = 8, size = 2
+```
+
+**Solution with DP:** [https://repl.it/@trsong/Ordered-Minimum-Window-Subsequence](https://repl.it/@trsong/Ordered-Minimum-Window-Subsequence)
+```py
+import unittest
+import sys
+
+def min_window(nums, sub):
+    if not nums:
+        return -1, -1
+    n, m = len(nums), len(sub)
+    # dp[i][j] represents the largest index between [0, i) such that nums[:i] contains subsequence sub[:j]
+    # then dp[i][0] = i.
+    # and dp[i][j] = dp[i-1][j-1] if nums[i-1] matches sub[j-1]
+    #              = dp[i-1][j]   otherwise
+    # dp[i][m] will be the largest index that contains subsequence sub
+    dp = [[-1 for _ in xrange(m+1)] for _ in xrange(n+1)]
+    min_size = sys.maxint
+    for i in xrange(n+1):
+        dp[i][0] = i
+    
+    for i in xrange(1, n+1):
+        # we cannot have j > i as we want to check if  nums[:i] contains sub[:j] or not
+        for j in xrange(1, min(m, i)+1):
+            if nums[i-1] == sub[j-1]:
+                dp[i][j] = dp[i-1][j-1]
+            else:
+                dp[i][j] = dp[i-1][j]
+
+    for i in xrange(n+1):
+        if dp[i][m] != -1:
+            size = i - dp[i][m]
+            if size < min_size:
+                start = dp[i][m]
+                min_size = size
+
+    if min_size == sys.maxint or min_size < m:
+        return -1, -1
+    else:
+        return start, min_size
+
+
+class MinWindowSpec(unittest.TestCase):
+    def test_example(self):
+        nums = [1, 2, 3, 5, 8, 7, 6, 9, 5, 7, 3, 0, 5, 2, 3, 4, 4, 7]
+        sub = [5, 7]
+        self.assertEqual((8, 2), min_window(nums, sub))
+
+    def test_sub_not_exits(self):
+        nums = [0, 1, 0, 2, 0, 0, 3, 4]
+        sub = [2, 1, 3]
+        self.assertEqual((-1, -1), min_window(nums, sub))
+
+    def test_nums_is_empty(self):
+        self.assertEqual((-1, -1), min_window([], [42]))
+    
+    def test_sub_is_empty(self):
+        self.assertEqual((0, 0), min_window([1, 4, 3, 2], []))
+
+    def test_both_nums_and_sub_are_empty(self):
+        self.assertEqual((-1, -1), min_window([], []))
+
+    def test_duplicated_numbers(self):
+        nums = [1, 1, 1, 1]
+        sub = [1, 1, 1, 1]
+        self.assertEqual((0, 4), min_window(nums, sub))
+
+    def test_duplicated_numbers2(self):
+        nums = [1, 1, 1]
+        sub = [1, 1, 1, 1]
+        self.assertEqual((-1, -1), min_window(nums, sub))
+
+    def test_duplicated_numbers3(self):
+        nums = [1, 1]
+        sub = [1, 0]
+        self.assertEqual((-1, -1), min_window(nums, sub))
+
+    def test_min_window(self):
+        nums = [1, 0, 2, 0, 0, 1, 0, 2, 1, 1, 2]
+        sub = [1, 2, 1]
+        self.assertEqual((5, 4), min_window(nums, sub))
+        sub2 = [1, 2, 2, 2, 1]
+        self.assertEqual((-1, -1), min_window(nums, sub2))
+
+    def test_moving_window(self):
+        nums = [1, 1, 2, 1, 2, 3, 1, 2]
+        sub = [1, 2, 3]
+        self.assertEqual((3, 3), min_window(nums, sub))
+
+    def test_min_window2(self):
+        nums = [1, 1, 1, 0, 2, 2, 1, 1, 2, 2, 2, 2]
+        sub = [1, 2]
+        self.assertEqual((7, 2), min_window(nums, sub))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
 ```
 
 ### Sep 25, 2019 \[Easy\] Flatten a Nested Dictionary
