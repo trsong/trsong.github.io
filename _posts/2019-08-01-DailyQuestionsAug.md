@@ -39,6 +39,34 @@ The path does not have to pass through the root, and each node can have any amou
 ``` 
 
 --->
+### Sep 28, 2019 LC 286 \[Medium\] Walls and Gates
+---
+> **Question:** You are given a m x n 2D grid initialized with these three possible values.
+> * -1 - A wall or an obstacle.
+> * 0 - A gate.
+> * INF - Infinity means an empty room. We use the value `2^31 - 1 = 2147483647` to represent INF as you may assume that the distance to a gate is less than 2147483647.
+> 
+> Fill each empty room with the distance to its nearest gate. If it is impossible to reach a gate, it should be filled with INF.
+
+**Example:**
+
+```py
+Given the 2D grid:
+
+INF  -1  0  INF
+INF INF INF  -1
+INF  -1 INF  -1
+  0  -1 INF INF
+
+After running your function, the 2D grid should be:
+
+  3  -1   0   1
+  2   2   1  -1
+  1  -1   2  -1
+  0  -1   3   4
+  ```
+
+
 ### Sep 27, 2019 \[Medium\] Construct BST from Post-order Traversal
 ---
 > **Question:** Given the sequence of keys visited by a postorder traversal of a binary search tree, reconstruct the tree.
@@ -52,6 +80,136 @@ Given the sequence 2, 4, 3, 8, 7, 5, you should construct the following tree:
   3   7
  / \   \
 2   4   8
+```
+
+**Solution:** [https://repl.it/@trsong/Construct-BST-from-Post-order-Traversal](https://repl.it/@trsong/Construct-BST-from-Post-order-Traversal)
+```py
+import unittest
+import sys
+
+class Node(object):
+    def __init__(self, val, left=None, right=None):
+        self.val = val
+        self.left = left
+        self.right = right
+
+    def __eq__(self, other):
+        return other and other.val == self.val and other.left == self.left and other.right == self.right
+
+
+def construct_bst(post_order_traversal):
+    if not post_order_traversal:
+        return None
+    reverse_order = post_order_traversal[::-1]
+    class Context:
+        index = 0
+
+    def construct_bst_recur(min_val, max_val):
+        if Context.index >= len(reverse_order):
+            return None
+            
+        current_val = reverse_order[Context.index]
+        if current_val < min_val or current_val > max_val:
+            return None
+        Context.index += 1
+        current = Node(current_val)
+        current.right = construct_bst_recur(current_val, max_val)
+        current.left = construct_bst_recur(min_val, current_val)
+        return current
+
+    return construct_bst_recur(-sys.maxint, sys.maxint)
+
+
+class ConstructBSTSpec(unittest.TestCase):
+    def test_example(self):
+        """
+            5
+           / \
+          3   7
+         / \   \
+        2   4   8
+        """
+        post_order_traversal = [2, 4, 3, 8, 7, 5]
+        n3 = Node(3, Node(2), Node(4))
+        n7 = Node(7, right=Node(8))
+        n5 = Node(5, n3, n7)
+        self.assertEqual(n5, construct_bst(post_order_traversal))
+
+    def test_empty_bst(self):
+        self.assertIsNone(construct_bst([]))
+
+    def test_left_heavy_bst(self):
+        """
+            3
+           /
+          2
+         /
+        1
+        """
+        self.assertEqual(Node(3, Node(2, Node(1))), construct_bst([1, 2, 3]))
+
+    def test_right_heavy_bst(self):
+        """
+          1
+         / \
+        0   3
+           / \
+          2   4
+               \
+                5
+        """
+        post_order_traversal = [0, 2, 5, 4, 3, 1]
+        n3 = Node(3, Node(2), Node(4, right=Node(5)))
+        n1 = Node(1, Node(0), n3)
+        self.assertEqual(n1, construct_bst(post_order_traversal))
+
+    def test_complete_binary_tree(self):
+        """
+             3
+           /   \
+          1     5
+         / \   / 
+        0   2 4
+        """
+        post_order_traversal = [0, 2, 1, 4, 5, 3]
+        n1 = Node(1, Node(0), Node(2))
+        n5 = Node(5, Node(4))
+        n3 = Node(3, n1, n5)
+        self.assertEqual(n3, construct_bst(post_order_traversal))
+
+    def test_right_left_left(self):
+        """
+          1
+         / \
+        0   4
+           /
+          3
+         /
+        2
+        """
+        post_order_traversal = [0, 2, 3, 4, 1]
+        n4 = Node(4, Node(3, Node(2)))
+        n1 = Node(1, Node(0), n4)
+        self.assertEqual(n1, construct_bst(post_order_traversal))
+
+    def test_left_right_right(self):
+        """
+          4
+         / \
+        1   5
+         \
+          2
+           \
+            3
+        """
+        post_order_traversal = [3, 2, 1, 5, 4]
+        n1 = Node(1, right=Node(2, right=Node(3)))
+        n4 = Node(4, n1, Node(5))
+        self.assertEqual(n4, construct_bst(post_order_traversal))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
 ```
 
 ### Sep 26, 2019 \[Hard\] Ordered Minimum Window Subsequence
