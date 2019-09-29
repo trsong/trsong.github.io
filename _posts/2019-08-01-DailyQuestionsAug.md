@@ -111,6 +111,119 @@ Input: board = [
 ]
 Output: 14
 ```
+
+**My thoughts:** This is a typical solution searching problem. BFS/DFS/A* will work. Probably BFS easier to implement than others: just figure out how to encode intial board state, goal state and state transition function. However this reason why I choose this problem is to demonstrate A* search. 
+
+**2 x 3 Puzzle BFS Solution:** [https://repl.it/@trsong/Sliding-Puzzle](https://repl.it/@trsong/Sliding-Puzzle)
+```py
+import unittest
+from Queue import Queue
+
+
+def hash_state(board):
+    res = 0
+    for row in board:
+        for cell in row:
+            res = res * 10 + cell
+    return res
+
+
+def state_to_board_and_start(state, n, m):
+    grid = [[0 for _ in range(m)] for _ in range(n)]
+    start = None
+    for r in range(n - 1, -1, -1):
+        for c in range(m - 1, -1, -1):
+            grid[r][c] = state % 10
+            if grid[r][c] == 0:
+                start = (r, c)
+            state //= 10
+    return grid, start
+
+
+def next_move_states(state, n, m):
+    grid, start = state_to_board_and_start(state, n, m)
+    r, c = start
+    directions = [(1, 0), (0, -1), (-1, 0), (0, 1)]
+    res = []
+    for dr, dc in directions:
+        new_r, new_c = r + dr, c + dc
+        if 0 <= new_r < n and 0 <= new_c < m:
+            grid[r][c], grid[new_r][new_c] = grid[new_r][new_c], grid[r][c]
+            res.append(hash_state(grid))
+            grid[r][c], grid[new_r][new_c] = grid[new_r][new_c], grid[r][c]
+    return res
+
+
+def solve_puzzle(board):
+    if not board or not board[0]:
+        return -1
+
+    n, m = len(board), len(board[0])
+    goal_state = hash_state([list(range(1, n*m)) + [0]])
+    queue = Queue()
+    visited = set()
+    initial_state = hash_state(board)
+    queue.put(initial_state)
+    depth = 0
+    while not queue.empty():
+        for _ in range(queue.qsize()):
+            current_state = queue.get()
+            if current_state in visited:
+                continue
+            elif current_state == goal_state:
+                return depth
+
+            visited.add(current_state)
+            for next_state in next_move_states(current_state, n, m):
+                if next_state in visited:
+                    continue
+                queue.put(next_state)
+        depth += 1
+    return -1
+
+
+class SolvePuzzleSpec(unittest.TestCase):
+    def test_example(self):
+        self.assertEqual(1, solve_puzzle([
+            [1, 2, 3],
+            [4, 0, 5]
+        ]))  # 0 -> 5
+
+    def test_example2(self):
+        self.assertEqual(-1, solve_puzzle([
+            [1, 2, 3],
+            [5, 4, 0]
+        ]))
+
+    def test_example3(self):
+        self.assertEqual(5, solve_puzzle([
+            [4, 1, 2],
+            [5, 0, 3]
+        ]))  # 0 -> 5 -> 4 -> 1 -> 2 -> 3
+
+    def test_example4(self):
+        self.assertEqual(14, solve_puzzle([
+            [3, 2, 4],
+            [1, 5, 0]
+        ]))
+
+    def test_back_tracking_3(self):
+        self.assertEqual(3, solve_puzzle([
+            [0, 1, 3],
+            [4, 2, 5]
+        ]))  # 0 -> 1 -> 2 -> 5
+
+    def test_back_tacking_4(self):
+        self.assertEqual(4, solve_puzzle([
+            [1, 5, 2],
+            [0, 4, 3]
+        ]))  # 0 -> 4 -> 5 -> 2 -> 3
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
+```
+
 ### Sep 28, 2019 LC 286 \[Medium\] Walls and Gates
 ---
 > **Question:** You are given a m x n 2D grid initialized with these three possible values.
