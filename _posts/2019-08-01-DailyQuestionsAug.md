@@ -39,6 +39,78 @@ The path does not have to pass through the root, and each node can have any amou
 ``` 
 
 --->
+
+### Sep 29, 2019 LC 773 \[Hard\] Sliding Puzzle
+---
+> **Question:** On a 2x3 board, there are 5 tiles represented by the integers 1 through 5, and an empty square represented by 0. Given a puzzle board, return the least number of moves required so that the state of the board is solved. If it is impossible for the state of the board to be solved, return -1.
+>
+> **Note:**
+> * A move consists of choosing 0 and a 4-directionally adjacent number and swapping it.
+> * The state of the board is solved if and only if the board is `[[1,2,3],[4,5,0]]`.
+
+**Example 1:**
+```py
+Input: board = [
+    [1, 2, 3],
+    [4, 0, 5]
+]
+Output: 1
+Explanation: Swap the 0 and the 5 in one move.
+```
+
+**Example 2:**
+```py
+Input: board = [
+    [1, 2, 3],
+    [5, 4, 0]
+]
+Output: -1
+Explanation: No number of moves will make the board solved.
+```
+
+**Example 3:**
+```py
+Input: board = [
+    [4, 1, 2],
+    [5, 0, 3]
+]
+Output: 5
+Explanation: 5 is the smallest number of moves that solves the board.
+An example path:
+After move 0: [
+    [4, 1, 2],
+    [5, 0, 3]
+]
+After move 1: [
+    [4, 1, 2],
+    [0, 5, 3]
+]
+After move 2: [
+    [0, 1, 2],
+    [4, 5, 3]
+]
+After move 3: [
+    [1, 0, 2],
+    [4, 5, 3]
+]
+After move 4: [
+    [1, 2, 0],
+    [4, 5, 3]
+]
+After move 5: [
+    [1, 2, 3],
+    [4, 5, 0]
+]
+```
+
+**Example 4:**
+```py
+Input: board = [
+    [3, 2, 4],
+    [1, 5, 0]
+]
+Output: 14
+```
 ### Sep 28, 2019 LC 286 \[Medium\] Walls and Gates
 ---
 > **Question:** You are given a m x n 2D grid initialized with these three possible values.
@@ -66,6 +138,142 @@ After running your function, the 2D grid should be:
   0  -1   3   4
   ```
 
+**My thoughts:** Most of time, the BFS you are familiar with has only one starting point and searching from that point onward will produce the shortest path from start to visited points. For multi-starting points, it works exactly as single starting point. All you need to do is to imagine a single vitual starting point connecting to all starting points. Moreover, the way we achieve that is to put all starting point into the queue before doing BFS. 
+
+**Solution with BFS:** [https://repl.it/@trsong/Walls-and-Gates](https://repl.it/@trsong/Walls-and-Gates)
+```py
+import unittest
+import sys
+from Queue import Queue
+
+INF = sys.maxint
+
+def nearest_gate(grid):
+    if not grid or not grid[0]:
+        return
+    
+    n, m = len(grid), len(grid[0])
+    queue = Queue()
+    for r in xrange(n):
+        for c in xrange(m):
+            if grid[r][c] == 0:
+                queue.put((r, c))
+
+    depth = 0
+    direction = [[1, 0], [0, -1], [-1, 0], [0, 1]]
+    while not queue.empty():
+        for _ in xrange(queue.qsize()):
+            r, c = queue.get()
+            if 0 < grid[r][c] < INF:
+                continue
+            grid[r][c] = depth
+            for dr, dc in direction:
+                new_r, new_c = r + dr, c + dc
+                if 0 <= new_r < n and 0 <= new_c < m and grid[new_r][new_c] == INF:
+                    queue.put((new_r, new_c))
+        depth += 1
+
+
+class NearestGateSpec(unittest.TestCase):
+    def test_example(self):
+        grid = [
+            [INF,  -1,   0, INF],
+            [INF, INF, INF,  -1],
+            [INF,  -1, INF,  -1],
+            [  0,  -1, INF, INF]
+        ]
+        expected_grid = [
+            [  3,  -1,   0,   1],
+            [  2,   2,   1,  -1],
+            [  1,  -1,   2,  -1],
+            [  0,  -1,   3,   4]
+        ]
+        nearest_gate(grid)
+        self.assertEqual(expected_grid, grid)
+
+    def test_unreachable_room(self):
+        grid = [
+            [INF, -1],
+            [ -1,  0]
+        ]
+        expected_grid = [
+            [INF, -1],
+            [ -1,  0]
+        ]
+        nearest_gate(grid)
+        self.assertEqual(expected_grid, grid)
+
+    def test_no_gate_exists(self):
+        grid = [
+            [-1,   -1],
+            [INF, INF]
+        ]
+        expected_grid = [
+            [-1,   -1],
+            [INF, INF]
+        ]
+        nearest_gate(grid)
+        self.assertEqual(expected_grid, grid)
+
+    def test_all_gates_no_room(self):
+        grid = [
+            [0, 0, 0],
+            [0, 0, 0]
+        ]
+        expected_grid = [
+            [0, 0, 0],
+            [0, 0, 0]
+        ]
+        nearest_gate(grid)
+        self.assertEqual(expected_grid, grid)
+
+    def test_empty_grid(self):
+        grid = []
+        nearest_gate(grid)
+        self.assertEqual([], grid)
+
+    def test_1D_grid(self):
+        grid = [[INF, 0, INF, INF, INF, 0, INF, 0, 0, -1, INF]]
+        expected_grid = [[1, 0, 1, 2, 1, 0, 1, 0, 0, -1, INF]]
+        nearest_gate(grid)
+        self.assertEqual(expected_grid, grid)
+
+    def test_multi_gates(self):
+        grid = [
+            [INF, INF,  -1,   0, INF],
+            [INF, INF, INF, INF, INF],
+            [  0, INF, INF, INF,   0],
+            [INF, INF,  -1, INF, INF]
+        ]
+        expected_grid = [
+            [  2,   3,  -1,   0,   1],
+            [  1,   2,   2,   1,   1],
+            [  0,   1,   2,   1,   0],
+            [  1,   2,  -1,   2,   1]
+        ]
+        nearest_gate(grid)
+        self.assertEqual(expected_grid, grid)
+
+    def test_at_center(self):
+        grid = [
+            [INF, INF, INF, INF, INF],
+            [INF, INF, INF, INF, INF],
+            [INF, INF,   0, INF, INF],
+            [INF, INF, INF, INF, INF]
+        ]
+        expected_grid = [
+            [  4,   3,   2,   3,   4],
+            [  3,   2,   1,   2,   3],
+            [  2,   1,   0,   1,   2],
+            [  3,   2,   1,   2,   3]
+        ]
+        nearest_gate(grid)
+        self.assertEqual(expected_grid, grid)
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
+```
 
 ### Sep 27, 2019 \[Medium\] Construct BST from Post-order Traversal
 ---
