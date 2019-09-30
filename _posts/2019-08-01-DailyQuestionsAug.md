@@ -39,6 +39,35 @@ The path does not have to pass through the root, and each node can have any amou
 ``` 
 
 --->
+### Sep 30, 2019 LC 139 \[Medium\] Word Break
+---
+> **Question:** Given a non-empty string s and a dictionary wordDict containing a list of non-empty words, determine if s can be segmented into a space-separated sequence of one or more dictionary words.
+>
+> **Note:**
+> * The same word in the dictionary may be reused multiple times in the segmentation.
+> * You may assume the dictionary does not contain duplicate words.
+
+**Example 1:**
+```py
+Input: s = "Pseudocode", wordDict = ["Pseudo", "code"]
+Output: True
+Explanation: Return true because "Pseudocode" can be segmented as "Pseudo code".
+```
+
+**Example 2:**
+```py
+Input: s = "applepenapple", wordDict = ["apple", "pen"]
+Output: True
+Explanation: Return true because "applepenapple" can be segmented as "apple pen apple".
+             Note that you are allowed to reuse a dictionary word.
+```
+
+**Example 3:**
+```py
+Input: s = "catsandog", wordDict = ["cats", "dog", "sand", "and", "cat"]
+Output: False
+```
+
 
 ### Sep 29, 2019 LC 773 \[Hard\] Sliding Puzzle
 ---
@@ -114,7 +143,7 @@ Output: 14
 
 **My thoughts:** This is a typical solution searching problem. BFS/DFS/A* will work. Probably BFS easier to implement than others: just figure out how to encode intial board state, goal state and state transition function. However this reason why I choose this problem is to demonstrate A* search. 
 
-**2 x 3 Puzzle BFS Solution:** [https://repl.it/@trsong/Sliding-Puzzle](https://repl.it/@trsong/Sliding-Puzzle)
+**Approach 1: 2 x 3 Puzzle BFS Solution** [https://repl.it/@trsong/Sliding-Puzzle](https://repl.it/@trsong/Sliding-Puzzle)
 ```py
 import unittest
 from Queue import Queue
@@ -218,6 +247,133 @@ class SolvePuzzleSpec(unittest.TestCase):
             [1, 5, 2],
             [0, 4, 3]
         ]))  # 0 -> 4 -> 5 -> 2 -> 3
+
+   def test_finish_state(self):
+        self.assertEqual(0, solve_puzzle([
+            [1, 2, 3],
+            [4, 5, 0]
+        ]))
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
+```
+
+**Approach 2: n x m Puzzle AStar Search Solution** [https://repl.it/@trsong/Sliding-Puzzle-AStar-Search](https://repl.it/@trsong/Sliding-Puzzle-AStar-Search)
+```py
+import unittest
+from Queue import PriorityQueue
+
+# Suppose puzzle size < 23
+p = 23
+
+
+def hash_state(board):
+    res = 0
+    for row in board:
+        for cell in row:
+            res = res * p + cell
+    return res
+
+
+def state_to_board_and_start(state, n, m):
+    grid = [[0 for _ in range(m)] for _ in range(n)]
+    start = None
+    for r in range(n - 1, -1, -1):
+        for c in range(m - 1, -1, -1):
+            grid[r][c] = state % p
+            if grid[r][c] == 0:
+                start = (r, c)
+            state //= p
+    return grid, start
+
+
+def heuristic_cost(board):
+    # Define the heuristic cost to be the total manhattan distance of each misplaced puzzle piece
+    res = 0
+    n, m = len(board), len(board[0])
+    for r in range(n):
+        for c in range(m):
+            val = board[r][c]
+            if val == 0:
+                continue
+            target_r, target_c = val // m, val % m
+            if target_c == 0:
+                target_c = m - 1
+                target_r -= 1
+            else:
+                target_r - 1
+            distance = abs(r - target_r) + abs(c - target_c)
+            res += distance
+    return res
+
+
+def next_move_states_and_cost(state, n, m):
+    grid, start = state_to_board_and_start(state, n, m)
+    r, c = start
+    directions = [(1, 0), (0, -1), (-1, 0), (0, 1)]
+    res = []
+    edge_cost = 1
+    for dr, dc in directions:
+        new_r, new_c = r + dr, c + dc
+        if 0 <= new_r < n and 0 <= new_c < m:
+            # apply move to grid
+            grid[r][c], grid[new_r][new_c] = grid[new_r][new_c], grid[r][c]
+
+            # calculate next move
+            remaining_cost_estimate = heuristic_cost(grid)
+            res.append((hash_state(grid), edge_cost + remaining_cost_estimate))
+
+            # restore previous state
+            grid[r][c], grid[new_r][new_c] = grid[new_r][new_c], grid[r][c]
+    return res
+
+
+def solve_puzzle(board):
+    if not board or not board[0]:
+        return -1
+
+    n, m = len(board), len(board[0])
+    goal_state = hash_state([list(range(1, n * m)) + [0]])
+    pq = PriorityQueue()
+    initial_state = hash_state(board)
+    pq.put((0, initial_state))
+    visited = set()
+    state_cost = {initial_state: 0}
+    edge_cost = 1
+
+    while not pq.empty():
+        _, current_state = pq.get()
+        if current_state in visited:
+            continue
+
+        visited.add(current_state)
+        cost_so_far = state_cost[current_state]
+        for next_state, remaining_cost in next_move_states_and_cost(current_state, n, m):
+            is_visited = next_state in visited
+            is_a_larger_path = next_state in state_cost and cost_so_far + edge_cost > state_cost[next_state]
+            if is_visited or is_a_larger_path:
+                continue
+            state_cost[next_state] = cost_so_far + edge_cost
+            pq.put((cost_so_far + remaining_cost, next_state))
+
+    return state_cost[goal_state] if goal_state in state_cost else -1
+
+
+class SolvePuzzleSpec(unittest.TestCase):
+    def test_heuristic_function_should_not_overestimate(self):
+        self.assertEqual(8, solve_puzzle([
+            [0, 1, 2],
+            [5, 6, 3],
+            [4, 7, 8],
+        ]))  # 0 -> 1 -> 2 -> 3 -> 6 -> 5 -> 4 -> 7 -> 8
+
+    ## Time Consuming Test!
+    # def test_not_solvable_puzzle(self):
+    #     self.assertEqual(-1, solve_puzzle([
+    #         [8, 1, 2],
+    #         [0, 4, 3],
+    #         [7, 6, 5],
+    #     ]))
 
 
 if __name__ == '__main__':
