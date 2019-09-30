@@ -297,6 +297,8 @@ def heuristic_cost(board):
             if val == 0:
                 continue
             target_r, target_c = val // m, val % m
+
+            # The original co-ordinates start from 0, shift left by 1
             if target_c == 0:
                 target_c = m - 1
                 target_r -= 1
