@@ -39,6 +39,38 @@ The path does not have to pass through the root, and each node can have any amou
 ``` 
 
 --->
+
+### Oct 1, 2019 LC 1171 \[Medium\] Remove Consecutive Nodes that Sum to 0
+---
+> **Question:** Given a linked list of integers, remove all consecutive nodes that sum up to 0.
+
+**Example 1:**
+```py
+Input: 10 -> 5 -> -3 -> -3 -> 1 -> 4 -> -4
+Output: 10
+Explanation: The consecutive nodes 5 -> -3 -> -3 -> 1 sums up to 0 so that sequence should be removed. 4 -> -4 also sums up to 0 too so that sequence should also be removed.
+```
+
+**Example 2:**
+
+```py
+Input: 1 -> 2 -> -3 -> 3 -> 1
+Output: 3 -> 1
+Note: 1 -> 2 -> 1 would also be accepted.
+```
+
+**Example 3:**
+```py
+Input: 1 -> 2 -> 3 -> -3 -> 4
+Output: 1 -> 2 -> 4
+```
+
+**Example 4:**
+```py
+Input: 1 -> 2 -> 3 -> -3 -> -2
+Output: 1
+```
+
 ### Sep 30, 2019 LC 139 \[Medium\] Word Break
 ---
 > **Question:** Given a non-empty string s and a dictionary wordDict containing a list of non-empty words, determine if s can be segmented into a space-separated sequence of one or more dictionary words.
@@ -66,6 +98,66 @@ Explanation: Return true because "applepenapple" can be segmented as "apple pen 
 ```py
 Input: s = "catsandog", wordDict = ["cats", "dog", "sand", "and", "cat"]
 Output: False
+```
+
+**My thoughts:** This question feels almost the same as [LC 279 Minimum Number of Squares Sum to N](https://trsong.github.io/python/java/2019/08/02/DailyQuestionsAug/#sep-22-2019-lc-279-medium-minimum-number-of-squares-sum-to-n). The idea is to think about the problem backwards and you may want to ask yourself: what makes `s[:n]` to be `True`? There must exist some word with length `m` where `m < n` such that `s[:n-m]` is `True` and string `s[n-m:n]` is in the dictionary. Therefore, the problem size shrinks from `n` to  `m` and it will go all the way to empty string which definitely is `True`.
+
+**Solution with DP:** [https://repl.it/@trsong/Word-Break](https://repl.it/@trsong/Word-Break)
+```py
+import unittest
+
+def word_break(s, word_dict):
+    if not s:
+        return True
+    
+    n = len(s)
+    # dp[n] represents where s[:n] can be word break
+    # dp[k] = True only if dp[i] = True and s[i:k] is in the dictionary
+    dp = [False] * (n + 1)
+    dp[0] = True
+    for k in xrange(1, n+1):
+        for word in word_dict:
+            word_len = len(word)
+            if word_len <= k and dp[k-word_len] and word == s[k-word_len:k]:
+                # Once make sure s[:k] satisfied, just short circuit and move to next k
+                dp[k] = True
+                break
+    return dp[n]
+
+
+class WordBreakSpec(unittest.TestCase):
+    def test_example1(self):
+        self.assertTrue(word_break("Pseudocode", ["Pseudo", "code"]))
+
+    def test_example2(self):
+        self.assertTrue(word_break("applepenapple", ["apple", "pen"]))
+
+    def test_example3(self):
+        self.assertFalse(word_break("catsandog", ["cats", "dog", "sand", "and", "cat"]))
+
+    def test_word_in_dict_is_a_prefix(self):
+        self.assertTrue(word_break("123456", ["12", "123", "456"]))
+    
+    def test_word_in_dict_is_a_prefix2(self):
+        self.assertTrue(word_break("123456", ["12", "123", "456"]))
+
+    def test_word_in_dict_is_a_prefix3(self):
+        self.assertFalse(word_break("123456", ["12", "12345", "456"]))
+
+    def test_empty_word(self):
+        self.assertTrue(word_break("", ['a']))
+        self.assertTrue(word_break("", []))
+        self.assertFalse(word_break("a", []))
+
+    def test_use_same_word_twice(self):
+        self.assertTrue(word_break("aaabaaa", ["aaa", "b"]))
+
+    def test_impossible_word_combination(self):
+        self.assertFalse(word_break("aaaaa", ["aaa", "aaaa"]))
+        
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
 ```
 
 
