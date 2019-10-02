@@ -39,6 +39,41 @@ The path does not have to pass through the root, and each node can have any amou
 ``` 
 
 --->
+### Oct 2, 2019 \[Medium\] Numbers With Equal Digit Sum
+---
+> **Question:** Given an array containing integers, find two integers a, b such that sum of digits of a and b is equal. Return maximum sum of a and b. Return -1 if no such numbers exist.
+
+**Example 1:**
+```py
+Input: [51, 71, 17, 42, 33, 44, 24, 62]
+Output: 133
+Explanation: Max sum can be formed by 71 + 62 which has same digit sum of 8
+```
+
+
+**Example 2:**
+```py
+Input: [51, 71, 17, 42]
+Output: 93
+Explanation: Max sum can be formed by 51 + 42 which has same digit sum of 6
+```
+
+
+**Example 3:**
+```py
+Input: [42, 33, 60]
+Output: 102
+Explanation: Max sum can be formed by 42 + 60 which has same digit sum of 6
+```
+
+
+**Example 4:**
+```py
+Input: [51, 32, 43]
+Output: -1
+Explanation: There are no 2 numbers with same digit sum
+```
+
 
 ### Oct 1, 2019 LC 1171 \[Medium\] Remove Consecutive Nodes that Sum to 0
 ---
@@ -69,6 +104,96 @@ Output: 1 -> 2 -> 4
 ```py
 Input: 1 -> 2 -> 3 -> -3 -> -2
 Output: 1
+```
+
+**My thoughts:** This question is just the list version of [Contiguous Sum to K](https://trsong.github.io/python/java/2019/05/01/DailyQuestions/#jul-24-2019-medium-contiguous-sum-to-k). The idea is exactly the same, in previous question: `sum[i:j]` can be achieved use `prefix[j] - prefix[i-1] where i <= j`, whereas for this question, we can use map to store the "prefix" sum: the sum from the head node all the way to current node. And by checking the prefix so far, we can easily tell if there is a node we should have seen before that has "prefix" sum with same value. i.e. There are consecutive nodes that sum to 0 between these two nodes.
+
+**Solution:** [https://repl.it/@trsong/Remove-Consecutive-Nodes-that-Sum-to-0](https://repl.it/@trsong/Remove-Consecutive-Nodes-that-Sum-to-0)
+```py
+import unittest
+
+class ListNode(object):
+    def __init__(self, val, next=None):
+        self.val = val
+        self.next = next
+
+    def __eq__(self, other):
+        res = str(self) == str(other)
+        if not res:
+            print str(self), '!=' , str(other)
+        return res
+
+    def __str__(self):
+        current_node = self
+        result = []
+        while current_node:
+            result.append(current_node.val)
+            current_node = current_node.next
+        return str(result)
+
+    @staticmethod  
+    def List(*vals):
+        dummy = ListNode(-1)
+        p = dummy
+        for elem in vals:
+            p.next = ListNode(elem)
+            p = p.next
+        return dummy.next  
+
+
+def remove_zero_sum_sublists(head):
+    if not head:
+        return None
+    
+    dummy = ListNode(-1, head)
+    node_with_prefix = {0: dummy}
+    p = head
+    sum_so_far = 0
+    while p:
+        sum_so_far += p.val
+        if sum_so_far in node_with_prefix:
+            sum_to_remove = sum_so_far
+            t = node_with_prefix[sum_so_far].next
+            while t != p:
+                sum_to_remove += t.val
+                del node_with_prefix[sum_to_remove]
+                t = t.next
+                    
+            node_with_prefix[sum_so_far].next = p.next
+        else:
+            node_with_prefix[sum_so_far] = p
+        p = p.next
+    return dummy.next
+
+
+class RemoveZeroSumSublistSpec(unittest.TestCase):
+    def test_example1(self):
+        self.assertEqual(ListNode.List(10), remove_zero_sum_sublists(ListNode.List(10, 5, -3, -3, 1, 4, -4)))
+
+    def test_example2(self):
+        self.assertEqual(ListNode.List(3, 1), remove_zero_sum_sublists(ListNode.List(1, 2, -3, 3, 1)))
+
+    def test_example3(self):
+        self.assertEqual(ListNode.List(1, 2, 4), remove_zero_sum_sublists(ListNode.List(1, 2, 3, -3, 4)))
+
+    def test_example4(self):
+        self.assertEqual(ListNode.List(1), remove_zero_sum_sublists(ListNode.List(1, 2, 3, -3, -2)))
+
+    def test_empty_list(self):
+        self.assertEqual(ListNode.List(), remove_zero_sum_sublists(ListNode.List()))
+
+    def test_all_zero_list(self):
+        self.assertEqual(ListNode.List(), remove_zero_sum_sublists(ListNode.List(0, 0, 0)))
+
+    def test_add_up_to_zero_list(self):
+        self.assertEqual(ListNode.List(), remove_zero_sum_sublists(ListNode.List(1, -1, 0, -1, 1)))
+
+    def test_overlap_section_add_to_zero(self):
+        self.assertEqual(ListNode.List(1, 5, -1, -2, 99), remove_zero_sum_sublists(ListNode.List(1, -1, 2, 3, 0, -3, -2, 1, 5, -1, -2, 99)))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
 ```
 
 ### Sep 30, 2019 LC 139 \[Medium\] Word Break
