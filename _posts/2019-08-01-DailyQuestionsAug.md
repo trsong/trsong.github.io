@@ -39,6 +39,15 @@ The path does not have to pass through the root, and each node can have any amou
 ``` 
 
 --->
+
+
+### Oct 3, 2019 \[Easy\] Shift-Equivalent Strings
+---
+> **Question:** Given two strings A and B, return whether or not A can be shifted some number of times to get B.
+>
+> For example, if A is `'abcde'` and B is `'cdeab'`, return `True`. If A is `'abc'` and B is `'acb'`, return `False`.
+
+
 ### Oct 2, 2019 \[Medium\] Numbers With Equal Digit Sum
 ---
 > **Question:** Given an array containing integers, find two integers a, b such that sum of digits of a and b is equal. Return maximum sum of a and b. Return -1 if no such numbers exist.
@@ -74,6 +83,69 @@ Output: -1
 Explanation: There are no 2 numbers with same digit sum
 ```
 
+**Solution:** [https://repl.it/@trsong/Numbers-With-Equal-Digit-Sum](https://repl.it/@trsong/Numbers-With-Equal-Digit-Sum)
+
+```py
+import unittest
+
+def calc_digit_sum(num):
+    res = 0
+    while num > 0:
+        res += num % 10
+        num //= 10
+    return res
+
+
+def find_max_digit_sum(nums):
+    nums_groupby_digit_sum = {}
+    for num in nums:
+        digit_sum = calc_digit_sum(num)
+        if digit_sum not in nums_groupby_digit_sum:
+            nums_groupby_digit_sum[digit_sum] = []
+        
+        same_digit_sum_nums = nums_groupby_digit_sum[digit_sum]
+        if len(same_digit_sum_nums) > 1:
+            max_num, min_num = same_digit_sum_nums
+            same_digit_sum_nums[0] = max(max_num, num)
+            same_digit_sum_nums[1] = max_num + min_num + num - same_digit_sum_nums[0] - min(min_num, num)
+        else:
+            same_digit_sum_nums.append(num)
+
+    max_digit_sum = -1
+    for same_digit_sum_nums in nums_groupby_digit_sum.values():
+        if len(same_digit_sum_nums) < 2:
+            continue
+        max_digit_sum = max(max_digit_sum, sum(same_digit_sum_nums))
+    
+    return max_digit_sum
+
+
+class FindMaxDigitSumSpec(unittest.TestCase):
+    def test_example1(self):
+        self.assertEqual(133, find_max_digit_sum([51, 71, 17, 42, 33, 44, 24, 62]))  # 71 + 62
+
+    def test_example2(self):
+        self.assertEqual(93, find_max_digit_sum([51, 71, 17, 42]))  # 51 + 42
+
+    def test_example3(self):
+        self.assertEqual(102, find_max_digit_sum([42, 33, 60]))  # 63 + 60
+
+    def test_example4(self):
+        self.assertEqual(-1, find_max_digit_sum([51, 32, 43]))
+
+    def test_empty_array(self):
+        self.assertEqual(-1, find_max_digit_sum([]))
+
+    def test_same_digit_sum_yet_different_digits(self):
+        self.assertEqual(11000, find_max_digit_sum([0, 1, 10, 100, 1000, 10000]))  # 10000 + 1000
+
+    def test_special_edge_case(self):
+        self.assertEqual(22, find_max_digit_sum([11, 11, 22, 33]))  # 11 + 11
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
+```
 
 ### Oct 1, 2019 LC 1171 \[Medium\] Remove Consecutive Nodes that Sum to 0
 ---
