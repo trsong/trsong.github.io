@@ -132,8 +132,9 @@ class IsShiftEqSpec(unittest.TestCase):
         self.assertTrue(is_shift_eq("567890", "890567"))
 
     def test_large_string_performance_test(self):
-        source = str(range(100000))
-        target = source[:1024] + source[1024:]
+        N = 100000
+        source = str(range(N))
+        target = source[:N//2] + source[N//2:]
         self.assertTrue(is_shift_eq(source, target))
 
 
