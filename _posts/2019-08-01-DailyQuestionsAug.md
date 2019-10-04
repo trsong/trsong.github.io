@@ -40,12 +40,106 @@ The path does not have to pass through the root, and each node can have any amou
 
 --->
 
+### Oct 4, 2019 \[Medium\] Maximum Circular Subarray Sum
+---
+> **Question:** Given a circular array, compute its maximum subarray sum in O(n) time. A subarray can be empty, and in this case the sum is 0.
+
+**Example 1:**
+```py
+Input: [8, -1, 3, 4]
+Output: 15 
+Explanation: we choose the numbers 3, 4, and 8 where the 8 is obtained from wrapping around.
+```
+
+**Example 2:**
+```py
+Input: [-4, 5, 1, 0]
+Output: 6 
+Explanation: we choose the numbers 5 and 1.
+```
 
 ### Oct 3, 2019 \[Easy\] Shift-Equivalent Strings
 ---
 > **Question:** Given two strings A and B, return whether or not A can be shifted some number of times to get B.
 >
 > For example, if A is `'abcde'` and B is `'cdeab'`, return `True`. If A is `'abc'` and B is `'acb'`, return `False`.
+
+**My thoughts:** It should be pretty easy to come up with non-linear time complexity solution. But for linear, I can only come up w/ rolling hash solution. The idea is to treat each digit as a number. For example, `"1234"` is really `1234`, each time we move the most significant bit to right by `(1234 - 1 * 10^3) * 10 + 1 = 2341`. In general, we can treat `'abc'` as numeric value of `abc` base `p0` ie. `a * p0^2 + b * p0^1 + c * p0^0` and in order to prevent overflow, we use a larger prime number which I personally prefer 666667 (easy to remember), `'abc' =>  (a * p0^2 + b * p0^1 + c * p0^0) % p1 where p0 and p1 are both prime and p0 is much smaller than p1`.
+
+**Solution with Rolling Hash:** [https://repl.it/@trsong/Shift-Equivalent-Strings](https://repl.it/@trsong/Shift-Equivalent-Strings)
+```py
+import unittest
+
+P0 = 23  # small prime number
+P1 = 666667 # larger prime number
+
+def hash(s):
+    res = 0
+    for char in s:
+        ord_char = ord(char)
+        res = (res * P0 % P1 + ord_char) % P1
+    return res
+
+
+def base_at(n):
+    res = 1
+    for _ in xrange(n-1):
+        res = (res * P0) % P1
+    return res
+
+
+def is_shift_eq(source, target):
+    if len(source) != len(target):
+        return False    
+    if source == target:
+        return True
+
+    n = len(target)
+    most_significant_base = base_at(n)
+    target_hash = hash(target)
+    source_hash = hash(source)
+
+    for shift_char in source:
+        ord_shift_char = ord(shift_char)
+        most_significant_value = (ord_shift_char * most_significant_base) % P1
+        source_hash = ((source_hash - most_significant_value) * P0 + ord_shift_char) % P1
+        if source_hash == target_hash:
+            return True
+    
+    return False
+
+
+class IsShiftEqSpec(unittest.TestCase):
+    def test_example1(self):
+        self.assertTrue(is_shift_eq('abcde', 'cdeab'))
+
+    def test_example2(self):
+        self.assertFalse(is_shift_eq('abc', 'acb'))
+
+    def test_different_length_strings(self):
+        self.assertFalse(is_shift_eq(' a ', ' a'))
+
+    def test_empty_strings(self):
+        self.assertTrue(is_shift_eq('', ''))
+
+    def test_string_with_unique_word(self):
+        self.assertTrue(is_shift_eq('aaaaa', 'aaaaa'))
+
+    def test_string_with_multiple_spaces(self):
+        self.assertFalse(is_shift_eq('aa aa aa', 'aaaa  aa'))
+
+    def test_number_strins(self):
+        self.assertTrue(is_shift_eq("567890", "890567"))
+
+    def test_large_string_performance_test(self):
+        source = str(range(100000))
+        target = source[:1024] + source[1024:]
+        self.assertTrue(is_shift_eq(source, target))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
+```
 
 
 ### Oct 2, 2019 \[Medium\] Numbers With Equal Digit Sum
