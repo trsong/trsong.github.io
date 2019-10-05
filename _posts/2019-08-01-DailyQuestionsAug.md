@@ -40,6 +40,31 @@ The path does not have to pass through the root, and each node can have any amou
 
 --->
 
+### Oct 5, 2019 LC 375 \[Medium\] Guess Number Higher or Lower II
+---
+> **Question:**  We are playing the Guess Game. The game is as follows:
+>
+> * I pick a number from 1 to n. You have to guess which number I picked.
+> * Every time you guess wrong, I'll tell you whether the number I picked is higher or lower.
+> * However, when you guess a particular number x, and you guess wrong, you pay $x. You win the game when you guess the number I picked.
+>
+> Given a particular n ≥ 1, find out how much money you need to have to guarantee a win.
+
+**Example:**
+
+```
+n = 10, I pick 8.
+
+First round:  You guess 5, I tell you that it's higher. You pay $5.
+Second round: You guess 7, I tell you that it's higher. You pay $7.
+Third round:  You guess 9, I tell you that it's lower. You pay $9.
+
+Game over. 8 is the number I picked.
+
+You end up paying $5 + $7 + $9 = $21.
+```
+
+
 ### Oct 4, 2019 \[Medium\] Maximum Circular Subarray Sum
 ---
 > **Question:** Given a circular array, compute its maximum subarray sum in O(n) time. A subarray can be empty, and in this case the sum is 0.
@@ -56,6 +81,92 @@ Explanation: we choose the numbers 3, 4, and 8 where the 8 is obtained from wrap
 Input: [-4, 5, 1, 0]
 Output: 6 
 Explanation: we choose the numbers 5 and 1.
+```
+
+**My thoughts:** The max circular subarray sum can be divied into sub-problems: max non-circular subarray sum and max circular-only subarray sum. 
+
+For max non-circular subarray sum problem, we can use `dp[i]` to represent max subarray sum end at index `i` and `max(dp)` will be the answer.
+
+For max circular-only subarray sum problem, we want to find `i`, `j` where `i < j` such that `nums[0] + nums[1] + ... + nums[i] + nums[j] + .... + nums[n-1]` reaches maximum. The way we can handle it is to calculate prefix sum and suffix sum array and find max accumulated sum on the left and on the right. The max circular-only subarray sum equals the sum of those two accumulated sum. 
+
+Finally, the answer to the original problem is the larger one between answers to above two sub-problems. And one thing worth to notice is that if all elements are negative, then the answer should be `0`.
+
+**Solution with DP and Prefix Sum:** [https://repl.it/@trsong/Maximum-Circular-Subarray-Sum](https://repl.it/@trsong/Maximum-Circular-Subarray-Sum)
+```py
+import unittest
+
+def max_subarray_sum_helper(nums):
+    n = len(nums)
+    # let dp[i] represents max subarray sum ends at index i - 1
+    dp = [0] * (n + 1)
+    for i in xrange(1, n+1):
+        dp[i] = max(dp[i-1] + nums[i-1], nums[i-1])
+    return max(dp)
+
+
+def max_circular_subarray_sum_helper(nums):
+    n = len(nums)
+    left_accu_sum = 0
+    max_left_accu_sum = float('-inf')
+    left_max_sum = [0] * n
+
+    right_accu_sum = 0
+    max_right_accu_sum = float('-inf')
+    right_max_sum = [0] * n
+
+    for i in xrange(n):
+        left_accu_sum += nums[i]
+        max_left_accu_sum = max(max_left_accu_sum, left_accu_sum)
+        left_max_sum[i] = max_left_accu_sum
+
+    for i in xrange(n-1, -1, -1):
+        right_accu_sum += nums[i]
+        max_right_accu_sum = max(max_right_accu_sum, right_accu_sum)
+        right_max_sum[i] = max_right_accu_sum
+
+    max_sum = 0
+    for i in xrange(n):
+        l_sum = left_max_sum[i-1] if i > 0 else 0
+        r_sum = right_max_sum[i+1] if i < n - 1 else 0
+        max_sum = max(max_sum, l_sum + r_sum)
+
+    return max_sum
+
+
+def max_circular_sum(nums):
+    if not nums:
+        return 0
+    return max(0, max_subarray_sum_helper(nums), max_circular_subarray_sum_helper(nums))
+
+
+class MaxCircularSumSpec(unittest.TestCase):
+    def test_example1(self):
+        self.assertEqual(15, max_circular_sum([8, -1, 3, 4]))  # 3 + 4 + 8
+    
+    def test_example2(self):
+        self.assertEqual(6, max_circular_sum([-4, 5, 1, 0]))  # 5 + 1
+
+    def test_empty_array(self):
+        self.assertEqual(0, max_circular_sum([]))
+
+    def test_negative_array(self):
+        self.assertEqual(0, max_circular_sum([-1, -2, -3]))
+
+    def test_circular_array1(self):
+        self.assertEqual(22, max_circular_sum([8, -8, 9, -9, 10, -11, 12]))  # 12 + 8 - 8 + 9 - 9 + 10
+
+    def test_circular_array2(self):
+        self.assertEqual(23, max_circular_sum([10, -3, -4, 7, 6, 5, -4, -1]))  # 7 + 6 + 5 - 4 -1 + 10
+
+    def test_circular_array3(self):
+        self.assertEqual(52, max_circular_sum([-1, 40, -14, 7, 6, 5, -4, -1]))  # 7 + 6 + 5 - 4 - 1 - 1 + 40
+
+    def test_all_positive_array(self):
+        self.assertEqual(10, max_circular_sum([1, 2, 3, 4]))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
 ```
 
 ### Oct 3, 2019 \[Easy\] Shift-Equivalent Strings
