@@ -77,13 +77,13 @@ Game over. 8 is the number I picked.
 You end up paying $5 + $7 + $9 = $21.
 ```
 
-**My thoughts:** The guarantee amount is the maximum amount of money you have to pay no matter how unlucky you were. i.e. the best move given the worest luck. 
+**My thoughts:** The guarantee amount is the maximum amount of money you have to pay no matter how unlucky you are. i.e. the strategy is to take the best move given the worest luck. 
 
-Suppose `n = 4`. The best garentee to lose minimum strategy is to first guess 1, if not work guess 3. If you are just unlucky, the target number is 2 or 4, then you only need to pay `$1 + $3 = $4` whereas other strategy like choose 1 to 4 one by one will `$1 + $2 + $3 = $6` in worest case when the target is `$4`.
+Suppose `n = 4`. The best garentee to lose minimum strategy is to first guess 1, if not work, then guess 3. If you are just unlucky, the target number is 2 or 4, then you only need to pay at most `$1 + $3 = $4` in worest case scenario whereas other strategies like choosing 1 through 4 one by one will yield `$1 + $2 + $3 = $6` in worest case when the target is `$4`.
 
-The game play strategy is called Minimax, which is basically choose the maximum among the minimum gain.
+The game play strategy is called ***Minimax***, which is basically choose the maximum among the minimum gain.
 
-**Solution with MiniMax Algorithm:** [https://repl.it/@trsong/Guess-Number-Game-2](https://repl.it/@trsong/Guess-Number-Game-2)
+**Solution with Minimax Algorithm:** [https://repl.it/@trsong/Guess-Number-Game-2](https://repl.it/@trsong/Guess-Number-Game-2)
 ```py
 import unittest
 
