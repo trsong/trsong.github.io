@@ -40,6 +40,19 @@ The path does not have to pass through the root, and each node can have any amou
 
 --->
 
+### Oct 6, 2019 \[Medium\] Number of Smaller Elements to the Right
+---
+> **Question:** Given an array of integers, return a new array where each element in the new array is the number of smaller elements to the right of that element in the original input array.
+>
+> For example, given the array `[3, 4, 9, 6, 1]`, return `[1, 1, 2, 1, 0]`, since:
+>
+> * There is 1 smaller element to the right of 3
+> * There is 1 smaller element to the right of 4
+> * There are 2 smaller elements to the right of 9
+> * There is 1 smaller element to the right of 6
+> * There are no smaller elements to the right of 1
+
+
 ### Oct 5, 2019 LC 375 \[Medium\] Guess Number Higher or Lower II
 ---
 > **Question:**  We are playing the Guess Game. The game is as follows:
@@ -64,6 +77,68 @@ Game over. 8 is the number I picked.
 You end up paying $5 + $7 + $9 = $21.
 ```
 
+**My thoughts:** The guarantee amount is the maximum amount of money you have to pay no matter how unlucky you were. i.e. the best move given the worest luck. 
+
+Suppose `n = 4`. The best garentee to lose minimum strategy is to first guess 1, if not work guess 3. If you are just unlucky, the target number is 2 or 4, then you only need to pay `$1 + $3 = $4` whereas other strategy like choose 1 to 4 one by one will `$1 + $2 + $3 = $6` in worest case when the target is `$4`.
+
+The game play strategy is called Minimax, which is basically choose the maximum among the minimum gain.
+
+**Solution with MiniMax Algorithm:** [https://repl.it/@trsong/Guess-Number-Game-2](https://repl.it/@trsong/Guess-Number-Game-2)
+```py
+import unittest
+
+def guess_number_between(lo, hi, cache):
+    if lo >= hi:
+        return 0
+    elif cache[lo][hi] is not None:
+        return cache[lo][hi]
+    
+    res = float('-inf')
+    for i in xrange(lo, hi+1):
+        # Assuming we are just so unlucky.
+        # The guarantee amount should always be the best among those worest choices
+        res = max(res, -i + min(guess_number_between(lo, i-1, cache), guess_number_between(i+1, hi, cache)))
+    cache[lo][hi] = res
+    return res
+    
+
+def guess_number(n):
+    cache = [[None for _ in range(n+1)] for _ in range(n+1)]
+    return -guess_number_between(1, n, cache)
+
+
+class GuessNumberSpec(unittest.TestCase):
+    def test_n_equals_3(self):
+        # Worest case target=3
+        # choose 2, target is higher, pay $2
+        # total = $2
+        self.assertEqual(2, guess_number(3)) # choose 2, pay $2
+
+    def test_n_equals_4(self):
+        # Worest case target=4
+        # choose 1, target is higher, pay $1
+        # choose 3, target is higher, pay $3
+        # total = $4
+        self.assertEqual(4, guess_number(4)) 
+
+    def test_n_equals_5(self):
+        # Worest case target=5
+        # choose 2, target is higher, pay $2
+        # choose 4, target is higher, pay $4
+        # total = $6
+        self.assertEqual(6, guess_number(5))
+
+    def test_n_equals_10(self):
+        # Worest case target=10
+        # choose 7, target is higher, pay $7
+        # choose 9, target is higher, pay $9
+        # total = $16
+        self.assertEqual(16, guess_number(10))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
+```
 
 ### Oct 4, 2019 \[Medium\] Maximum Circular Subarray Sum
 ---
