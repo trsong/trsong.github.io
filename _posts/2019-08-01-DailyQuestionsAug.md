@@ -140,6 +140,38 @@ if __name__ == '__main__':
     unittest.main(exit=False)
 ```
 
+**Note:** Minimax can be further optimized through ***Alpha-Beta Pruning***: a technique to eliminate choices that cannot make current situation better. 
+
+**Solution with Minimax Algorithm with Alpha-Beta Pruning:** [https://repl.it/@trsong/Guess-Number-Game-2-with-Alpha-Beta-Pruning](https://repl.it/@trsong/Guess-Number-Game-2-with-Alpha-Beta-Pruning)
+```py
+def best_max_move(lo, hi, cache, alpha, beta):
+    if lo >= hi:
+        return 0
+    elif cache[lo][hi] is not None:
+        return cache[lo][hi]
+
+    res = float('-inf')
+    for i in xrange(lo, hi+1):
+        res = max(res, best_min_move(lo, hi, i, cache, alpha, beta))
+        if beta <= res:
+            break
+        alpha = max(alpha, res)    
+    cache[lo][hi] = res
+    return res
+
+def best_min_move(lo, hi, i, cache, alpha, beta):
+    res = -i + best_max_move(lo, i-1, cache, alpha, beta)
+    if res <= alpha:
+        return res
+    res = min(res, -i + best_max_move(i+1, hi, cache, alpha, beta))
+    return res
+
+def guess_number(n):
+    cache = [[None for _ in range(n+1)] for _ in range(n+1)]
+    return -best_max_move(1, n, cache, float('-inf'), float('inf'))
+
+```
+
 ### Oct 4, 2019 \[Medium\] Maximum Circular Subarray Sum
 ---
 > **Question:** Given a circular array, compute its maximum subarray sum in O(n) time. A subarray can be empty, and in this case the sum is 0.
