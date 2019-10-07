@@ -40,6 +40,27 @@ The path does not have to pass through the root, and each node can have any amou
 
 --->
 
+### Oct 8, 2019 \[Hard\] Number of Ways to Divide an Array into K Equal Sum Sub-arrays
+---
+> **Question:** Number of ways to divide an array into K equal sum sub-arrays
+Given an integer K and an array arr[] of N integers, the task is to find the number of ways to split the array into K equal sum sub-arrays of non-zero lengths.
+
+**Example 1:**
+```py
+Input: arr[] = {0, 0, 0, 0}, K = 3
+Output: 3
+All possible ways are:
+{{0}, {0}, {0, 0}}
+{{0}, {0, 0}, {0}}
+{{0, 0}, {0}, {0}}
+```
+
+**Example 2:**
+```py
+Input: arr[] = {1, -1, 1, -1}, K = 2
+Output: 1
+```
+
 ### Oct 7, 2019 \[Easy\] One-to-one Character Mapping
 ---
 > **Question:** Determine whether there exists a one-to-one character mapping from one string s1 to another s2.
