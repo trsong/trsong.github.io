@@ -40,6 +40,14 @@ The path does not have to pass through the root, and each node can have any amou
 
 --->
 
+### Oct 7, 2019 \[Easy\] One-to-one Character Mapping
+---
+> **Question:** Determine whether there exists a one-to-one character mapping from one string s1 to another s2.
+>
+> For example, given s1 = 'abc' and s2 = 'bcd', return True since we can map a to b, b to c, and c to d.
+>
+> Given s1 = 'foo' and s2 = 'bar', return False since the o cannot map to two characters.
+
 ### Oct 6, 2019 \[Medium\] Number of Smaller Elements to the Right
 ---
 > **Question:** Given an array of integers, return a new array where each element in the new array is the number of smaller elements to the right of that element in the original input array.
@@ -51,6 +59,115 @@ The path does not have to pass through the root, and each node can have any amou
 > * There are 2 smaller elements to the right of 9
 > * There is 1 smaller element to the right of 6
 > * There are no smaller elements to the right of 1
+
+**My thoughts:** Binary-indexed Tree a.k.a BIT or Fenwick Tree is used for dynamic range query. Basically, it allows efficiently query for sum of a continous interval of values. 
+
+**BIT Usage:**
+```py
+bit = BIT(4)
+bit.query(3) # => 0
+bit.update(index=0, delta=1) # => [1, 0, 0, 0]
+bit.update(index=0, delta=1) # => [2, 0, 0, 0]
+bit.update(index=2, delta=3) # => [2, 0, 3, 0]
+bit.query(2) # => 2 + 0 + 3 = 5
+bit.update(index=1, delta=-1) # => [2, -1, 3, 0]
+bit.query(1) # => 2 + -1 = 1
+```
+
+So the way we can solve this problem is to treat each number in array as an index. By BIT querying for sum, we can quickly count how many numbers are less than current number.
+
+
+**Solution with BIT:** [https://repl.it/@trsong/Number-of-Smaller-Elements-to-the-Right](https://repl.it/@trsong/Number-of-Smaller-Elements-to-the-Right)
+```py
+import unittest
+
+class BIT(object):
+    @staticmethod
+    def LSB(num):
+        return num & -num
+
+    def __init__(self, n):
+        self.arr = [0] * (n+1)
+
+    def query(self, k):
+        k = k + 1
+        sum = 0 
+        while k > 0:
+            sum += self.arr[k]
+            k -= BIT.LSB(k)
+        return sum
+
+    def increment(self, i):
+        i = i + 1
+        while i < len(self.arr):
+            self.arr[i] += 1
+            i += BIT.LSB(i)
+
+
+def count_right_smaller_numbers(nums):
+    if not nums:
+        return []
+    max_val = max(nums)
+    min_val = min(nums)
+    bit = BIT(max_val - min_val + 1)
+    n = len(nums)
+    nums_count = [0] * n
+    for i in xrange(n-1, -1, -1):
+        shifted_value = nums[i] - min_val
+        # query for number of elements smaller than nums[i]
+        nums_count[i] = bit.query(shifted_value - 1)
+        bit.increment(shifted_value)
+    return nums_count 
+ 
+
+class CountRightSmallerNuberSpec(unittest.TestCase):
+    def test_example(self):
+        nums = [3, 4, 9, 6, 1]
+        expected_result = [1, 1, 2, 1, 0]
+        self.assertEqual(expected_result, count_right_smaller_numbers(nums))
+
+    def test_empty_array(self):
+        self.assertEqual([], count_right_smaller_numbers([]))
+
+    def test_ascending_array(self):
+        nums = [0, 1, 2, 3, 4]
+        expected_result = [0, 0, 0, 0, 0]
+        self.assertEqual(expected_result, count_right_smaller_numbers(nums))
+
+    def test_array_with_unique_value(self):
+        nums = [1, 1, 1]
+        expected_result = [0, 0, 0]
+        self.assertEqual(expected_result, count_right_smaller_numbers(nums))
+
+    def test_descending_array(self):
+        nums = [4, 3, 2, 1]
+        expected_result = [3, 2, 1, 0]
+        self.assertEqual(expected_result, count_right_smaller_numbers(nums))
+
+    def test_increase_decrease_increase(self):
+        nums = [1, 4, 2, 5, 0, 4]
+        expected_result = [1, 2, 1, 2, 0, 0]
+        self.assertEqual(expected_result, count_right_smaller_numbers(nums))
+
+    def test_decrease_increase_decrease(self):
+        nums = [3, 1, 2, 0]
+        expected_result = [3, 1, 1, 0]
+        self.assertEqual(expected_result, count_right_smaller_numbers(nums))
+
+    def test_decrease_increase_decrease2(self):
+        nums = [12, 1, 2, 3, 0, 11, 4]
+        expected_result = [6, 1, 1, 1, 0, 1, 0]
+        self.assertEqual(expected_result, count_right_smaller_numbers(nums))
+
+    def test_negative_values(self):
+        nums = [8, -2, -1, -2, -1, 3]
+        expected_result = [5, 0, 1, 0, 0, 0]
+        self.assertEqual(expected_result, count_right_smaller_numbers(nums))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
+```
 
 
 ### Oct 5, 2019 LC 375 \[Medium\] Guess Number Higher or Lower II
