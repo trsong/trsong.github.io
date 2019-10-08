@@ -119,6 +119,58 @@ There are five subtrees with single values.
 >
 > Given s1 = 'foo' and s2 = 'bar', return False since the o cannot map to two characters.
 
+**Solution:** [https://repl.it/@trsong/One-to-one-Character-Mapping](https://repl.it/@trsong/One-to-one-Character-Mapping)
+```py
+import unittest
+
+CHAR_SPACE_SIZE = 256
+
+def is_one_to_one_mapping(s1, s2):
+    n1, n2 = len(s1), len(s2)
+
+    if n1 != n2:
+        return False
+
+    char_mapping = [None] * CHAR_SPACE_SIZE
+    for c1, c2 in zip(s1, s2):
+        ord_c1, ord_c2 = ord(c1), ord(c2)
+        if char_mapping[ord_c1] is None:
+            char_mapping[ord_c1] = ord_c2
+        elif char_mapping[ord_c1] != ord_c2:
+            return False
+
+    return True
+
+
+class IsOneToOneMappingSpec(unittest.TestCase):
+    def test_example1(self):
+        self.assertTrue(is_one_to_one_mapping('abc', 'bcd'))
+
+    def test_example2(self):
+        self.assertFalse(is_one_to_one_mapping('foo', 'bar'))
+
+    def test_empty_mapping(self):
+        self.assertTrue(is_one_to_one_mapping('', ''))
+        self.assertFalse(is_one_to_one_mapping('', ' '))
+        self.assertFalse(is_one_to_one_mapping(' ', ''))
+
+    def test_map_strings_with_different_lengths(self):
+        self.assertFalse(is_one_to_one_mapping('abc', 'abcd'))
+        self.assertFalse(is_one_to_one_mapping('abcd', 'abc'))
+    
+    def test_duplicated_chars(self):
+        self.assertTrue(is_one_to_one_mapping('aabbcc', '112233'))
+        self.assertTrue(is_one_to_one_mapping('abccba', '123321'))
+
+    def test_same_domain(self):
+        self.assertTrue(is_one_to_one_mapping('abca', 'bcab'))
+        self.assertFalse(is_one_to_one_mapping('abca', 'bcaa'))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
+```
+
 ### Oct 6, 2019 \[Medium\] Number of Smaller Elements to the Right
 ---
 > **Question:** Given an array of integers, return a new array where each element in the new array is the number of smaller elements to the right of that element in the original input array.
