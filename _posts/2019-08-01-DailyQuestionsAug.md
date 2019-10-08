@@ -38,7 +38,6 @@ and the weights: a-b: 3, a-c: 5, a-d: 8, d-e: 2, d-f: 4, e-g: 1, e-h: 1, the lon
 The path does not have to pass through the root, and each node can have any amount of children.
 ``` 
 
---->
 
 ### Oct 8, 2019 \[Hard\] Number of Ways to Divide an Array into K Equal Sum Sub-arrays
 ---
@@ -62,6 +61,55 @@ All possible ways are:
 Input: arr[] = [1, -1, 1, -1], K = 2
 Output: 1
 ```
+
+--->
+
+### Oct 8, 2019 \[Easy\] Count Number of Unival Subtrees
+---
+> **Question:** A unival tree is a tree where all the nodes have the same value. Given a binary tree, return the number of unival subtrees in the tree.
+
+**Example 1:**
+```py
+The following tree should return 5:
+
+   0
+  / \
+ 1   0
+    / \
+   1   0
+  / \
+ 1   1
+
+The 5 trees are:
+- The three single '1' leaf nodes. (+3)
+- The single '0' leaf node. (+1)
+- The [1, 1, 1] tree at the bottom. (+1)
+```
+
+**Example 2:**
+```py
+Input: root of below tree
+              5
+             / \
+            1   5
+           / \   \
+          5   5   5
+Output: 4
+There are 4 subtrees with single values.
+```
+
+**Example 3:**
+```py
+Input: root of below tree
+              5
+             / \
+            4   5
+           / \   \
+          4   4   5                
+Output: 5
+There are five subtrees with single values.
+```
+
 
 ### Oct 7, 2019 \[Easy\] One-to-one Character Mapping
 ---
