@@ -122,15 +122,15 @@ class TreeNode(object):
 def count_subtree_helper(tree):
     if not tree:
         return 0, True
-    left_count, is_left_valid = count_subtree_helper(tree.left)
-    right_count, is_right_valid = count_subtree_helper(tree.right)
-    is_valid = is_left_valid and is_right_valid
-    if is_valid and tree.left and tree.left.val != tree.val:
-        is_valid = False
-    if is_valid and tree.right and tree.right.val != tree.val:
-        is_valid = False
-    count = left_count + right_count + (1 if is_valid else 0)
-    return count, is_valid
+    left_count, is_left_unival = count_subtree_helper(tree.left)
+    right_count, is_right_unival = count_subtree_helper(tree.right)
+    is_current_unival = is_left_unival and is_right_unival
+    if is_current_unival and tree.left and tree.left.val != tree.val:
+        is_current_unival = False
+    if is_current_unival and tree.right and tree.right.val != tree.val:
+        is_current_unival = False
+    count = left_count + right_count + (1 if is_current_unival else 0)
+    return count, is_current_unival
 
 
 def count_unival_subtrees(tree):
