@@ -38,8 +38,9 @@ and the weights: a-b: 3, a-c: 5, a-d: 8, d-e: 2, d-f: 4, e-g: 1, e-h: 1, the lon
 The path does not have to pass through the root, and each node can have any amount of children.
 ``` 
 
+--->
 
-### Oct 8, 2019 \[Hard\] Number of Ways to Divide an Array into K Equal Sum Sub-arrays
+### Oct 9, 2019 \[Hard\] Number of Ways to Divide an Array into K Equal Sum Sub-arrays
 ---
 > **Question:** Number of ways to divide an array into K equal sum sub-arrays
 > 
@@ -61,8 +62,6 @@ All possible ways are:
 Input: arr[] = [1, -1, 1, -1], K = 2
 Output: 1
 ```
-
---->
 
 ### Oct 8, 2019 \[Easy\] Count Number of Unival Subtrees
 ---
@@ -110,6 +109,136 @@ Output: 5
 There are five subtrees with single values.
 ```
 
+**Solution:** [https://repl.it/@trsong/Count-Number-of-Unival-Subtrees](https://repl.it/@trsong/Count-Number-of-Unival-Subtrees)
+```py
+import unittest
+
+class TreeNode(object):
+    def __init__(self, val, left=None, right=None):
+        self.val = val
+        self.left = left
+        self.right = right
+
+def count_subtree_helper(tree):
+    if not tree:
+        return 0, True
+    left_count, is_left_valid = count_subtree_helper(tree.left)
+    right_count, is_right_valid = count_subtree_helper(tree.right)
+    is_valid = is_left_valid and is_right_valid
+    if is_valid and tree.left and tree.left.val != tree.val:
+        is_valid = False
+    if is_valid and tree.right and tree.right.val != tree.val:
+        is_valid = False
+    count = left_count + right_count + (1 if is_valid else 0)
+    return count, is_valid
+
+
+def count_unival_subtrees(tree):
+    return count_subtree_helper(tree)[0]
+
+
+class CountUnivalSubTreeSpec(unittest.TestCase):
+    def test_example1(self):
+        """
+           0
+          / \
+         1   0
+            / \
+           1   0
+          / \
+         1   1
+        """
+        rl = TreeNode(1, TreeNode(1), TreeNode(1))
+        r = TreeNode(0, rl, TreeNode(0))
+        root = TreeNode(0, TreeNode(1), r)
+        self.assertEqual(5, count_unival_subtrees(root))
+
+    def test_example2(self):
+        """
+              5
+             / \
+            1   5
+           / \   \
+          5   5   5
+        """
+        l = TreeNode(1, TreeNode(5), TreeNode(5))
+        r = TreeNode(5, right=TreeNode(5))
+        root = TreeNode(5, l, r)
+        self.assertEqual(4, count_unival_subtrees(root))
+
+    def test_example3(self):
+        """
+              5
+             / \
+            4   5
+           / \   \
+          4   4   5  
+        """
+        l = TreeNode(4, TreeNode(4), TreeNode(4))
+        r = TreeNode(5, right=TreeNode(5))
+        root = TreeNode(5, l, r)
+        self.assertEqual(5, count_unival_subtrees(root))
+
+    def test_empty_tree(self):
+        self.assertEqual(0, count_unival_subtrees(None))
+
+    def test_left_heavy_tree(self):
+        """
+            1
+           /
+          1
+         / \ 
+        1   0
+        """
+        root = TreeNode(1, TreeNode(1, TreeNode(1), TreeNode(0)))
+        self.assertEqual(2, count_unival_subtrees(root))
+
+    def test_right_heavy_tree(self):
+        """
+          0
+         / \
+        1   0
+             \
+              0
+               \
+                0
+        """
+        rr = TreeNode(0, right=TreeNode(0))
+        r = TreeNode(0, right=rr)
+        root = TreeNode(0, TreeNode(1), r)
+        self.assertEqual(4, count_unival_subtrees(root))
+
+    def test_unival_tree(self):
+        """
+            0
+           / \
+          0   0
+         /   /
+        0   0          
+        """
+        l = TreeNode(0, TreeNode(0))
+        r = TreeNode(0, TreeNode(0))
+        root = TreeNode(0, l, r)
+        self.assertEqual(5, count_unival_subtrees(root))
+
+    def test_distinct_value_trees(self):
+        """
+               _0_
+              /   \
+             1     2
+            / \   / \
+           3   4 5   6
+          /
+         7
+        """
+        n1 = TreeNode(1, TreeNode(3, TreeNode(7)), TreeNode(4))
+        n2 = TreeNode(2, TreeNode(5), TreeNode(6))
+        n0 = TreeNode(0, n1, n2)
+        self.assertEqual(4, count_unival_subtrees(n0))
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
+```
 
 ### Oct 7, 2019 \[Easy\] One-to-one Character Mapping
 ---
