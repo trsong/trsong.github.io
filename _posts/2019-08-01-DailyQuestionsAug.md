@@ -42,9 +42,7 @@ The path does not have to pass through the root, and each node can have any amou
 
 ### Oct 9, 2019 \[Hard\] Number of Ways to Divide an Array into K Equal Sum Sub-arrays
 ---
-> **Question:** Number of ways to divide an array into K equal sum sub-arrays
-> 
-> Given an integer K and an array arr[] of N integers, the task is to find the number of ways to split the array into K equal sum sub-arrays of non-zero lengths.
+> **Question:** Given an integer K and an array arr[] of N integers, the task is to find the number of ways to split the array into K equal sum sub-arrays of non-zero lengths.
 
 **Example 1:**
 
