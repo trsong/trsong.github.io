@@ -39,13 +39,19 @@ The path does not have to pass through the root, and each node can have any amou
 ``` 
 
 --->
+### Oct 11, 2019 \[Medium\] Largest Divisible Pairs Subset
+---
+> **Question:** Given a set of distinct positive integers, find the largest subset such that every pair of elements in the subset `(i, j)` satisfies either `i % j = 0` or `j % i = 0`.
+>
+> For example, given the set `[3, 5, 10, 20, 21]`, you should return `[5, 10, 20]`. Given `[1, 3, 6, 24]`, return `[1, 3, 6, 24]`.
+
 ### Oct 10, 2019 LC 134 \[Medium\] Gas Station
 ---
-> **Question:** There are N gas stations along a circular route, where the amount of gas at station i is `gas[i]`.
+> **Question:** There are `N` gas stations along a circular route, where the amount of gas at station `i` is `gas[i]`.
 > 
-> You have a car with an unlimited gas tank and it costs `cost[i]` of gas to travel from station i to its next station `(i+1)`. You begin the journey with an empty tank at one of the gas stations.
+> You have a car with an unlimited gas tank and it costs `cost[i]` of gas to travel from station `i` to its next station `(i+1)`. You begin the journey with an empty tank at one of the gas stations.
 >
-> Return the starting gas station's index if you can travel around the circuit once in the clockwise direction, otherwise return -1.
+> Return the starting gas station's index if you can travel around the circuit once in the clockwise direction, otherwise return `-1`.
 >
 > **Note:**
 > - If there exists a solution, it is guaranteed to be unique.
