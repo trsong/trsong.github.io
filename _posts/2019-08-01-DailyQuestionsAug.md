@@ -108,6 +108,116 @@ Input: arr[] = [1, -1, 1, -1], K = 2
 Output: 1
 ```
 
+**My thoughts:** This problem is so hard to think and even harder to deal with bugs related to index. I ended up w/ wasting lots of time figuring out the correct index. 
+
+The idea is to first figure out what is the target subarray sum. This can be achieved by sum of all element divide by K. But what if K is zero? So we need special handling for that.
+
+After we figure out the target subarray sum, it's still hard to come up w/ dp solution because one of the coordinate acctually represents spot to insert splitter. 
+
+Imagining the following: in order to break an array in to K parts, we can have K - 1 splitters fit into spots between each element. Like `0 | 0 0 | 0`. And we can pre-compute the prefix_sum at index i. Therefore we can quickly tell if the i-th spot can put a split or not. e.g. `0 | 1 0 1` cannot put split here as the prefix_sum does not satisfy the target subarray sum.
+
+One dp solution is to let `dp[i][k]` represents problem size i and k remaining spliters. We know in the end `dp[n][k+1]` represents array size `n` and `k+1` spliter will be the goal. So we compute backward and figure out `dp[0][1]` as the prefix_sum for index 0 is 0 and always qualify target subarray sum so we put 1 splitter there.
+
+The dp recursive relation is like the following: `dp[i][k] = dp[i+1][k]` when we cannot split at i due to the `prefix_sum[i]` not qualified. Or  `dp[i][k] = dp[i-1][k] + dp[i+1][k+1]` if `prefix_sum[i]` qualified.
+
+ Qualified means if we split at i, then the prefix_sum[i] can be broken into remaining k subarrays and each of them has target subarray sum. e.g.  `0 1 0 1 | 0 1` If K == 3 and we know that `0 1 0 1` sum to 2 and is `(k-1) * target_sub_array_sum = 2` which means it can be break into k-1 subarray with suitable subarray sum. And we can do that again for `0 1 | 0 1`. 
+
+
+**Solution with DP:** [https://repl.it/@trsong/Number-of-Ways-to-Divide-an-Array-into-K-Equal-Sum-Sub-array](https://repl.it/@trsong/Number-of-Ways-to-Divide-an-Array-into-K-Equal-Sum-Sub-array)
+```py
+import unittest
+
+def num_k_subarray(nums, K):
+    if K <= 0 or not nums or K > len(nums):
+        return 0
+    nums_sum = sum(nums)
+    if nums_sum % K > 0:
+        return 0
+    n = len(nums)
+    subarray_sum = nums_sum // K
+    prefix_sum = nums[:]
+    for i in xrange(1, n):
+        prefix_sum[i] += prefix_sum[i-1]
+    
+    # Let dp[i][k] represents number of qualified subarray for remaining array size i and remaining splitter k
+    # Remember in order to break into K parts, we will need K+1 splitters
+    # dp[i][k] = dp[i+1][k]                if we can cannot split at i as prefix_sum not qualified 
+    #          = dp[i+1][k] + dp[i+1][k+1] if we can split as the prefix_sum[i] is qualified
+    dp = [[0 for _ in xrange(K+2)] for _ in xrange(n+1)]
+    dp[n][K+1] = 1
+    for i in xrange(n-1, -1, -1):
+        for k in xrange(K, 0, -1):
+            dp[i][k] = dp[i+1][k]
+            if subarray_sum == 0 and prefix_sum[i] == 0 or subarray_sum != 0 and prefix_sum[i] == subarray_sum * k:
+                dp[i][k] += dp[i+1][k+1]
+    
+    # If remaining array has size 0 and there is one splitter
+    return dp[0][1]
+
+
+class NumKSubarraySpec(unittest.TestCase):
+    def test_example1(self):
+        """
+        0 0|0|0
+        0|0 0|0
+        0|0|0 0
+        """
+        self.assertEqual(3, num_k_subarray([0, 0, 0, 0], 3))
+
+    def test_exampl2(self):
+        """
+        1 -1|1 -1
+        """
+        self.assertEqual(1, num_k_subarray([1, -1, 1, -1], 2))
+
+    def test_contains_negative_numbers(self):
+        """
+        1 1|-2 2 1 1
+        1 1 -2 2|1 1
+        """
+        self.assertEqual(2, num_k_subarray([1, 1, -2, 2, 1, 1], 2))
+
+    def test_array_with_unique_number(self):
+        """
+        1|1|1|1|1|1
+        """
+        self.assertEqual(1, num_k_subarray([1, 1, 1, 1, 1, 1], 6))
+
+    def test_K_equals_4(self):
+        """
+        0 0 1|0 1 0|0 0 1|0 1 0
+        0 0 1 0|1 0|0 0 1|0 1 0
+        0 0 1 0|1|0 0 0 1|0 1 0
+        0 0 1 0|1 0 0|0 1|0 1 0
+        0 0 1 0|1 0 0 0|1|0 1 0
+        ...
+        0 0 1|0 1 0|0 0 1|0 1 0
+        Subarray Sum: 4 / 4 = 1
+        Number of ways to place Splitters: 2 * 4 * 2 = 16
+        """
+        self.assertEqual(16, num_k_subarray([0, 0, 1, 0, 1, 0, 0, 0, 1, 0, 1, 0], 4))
+
+    def test_K_equals_0(self):
+        self.assertEqual(0, num_k_subarray([1, 2], 0))
+        self.assertEqual(0, num_k_subarray([], 0))
+
+    def test_empty_array(self):
+        self.assertEqual(0, num_k_subarray([], 3))
+
+    def test_K_too_big(self):
+        self.assertEqual(0, num_k_subarray([1, 1, 1], 4))
+
+    def test_K_equals_1(self):
+        self.assertEqual(0, num_k_subarray([], 1)) # subarray must be non-zero length
+        self.assertEqual(1, num_k_subarray([1, 2, 3], 1))
+
+    def test_sum_not_multiple_or_K(self):
+        self.assertEqual(0, num_k_subarray([1, 1, 1], 2))
+
+        
+if __name__ == '__main__':
+    unittest.main(exit=False)
+```
 ### Oct 8, 2019 \[Easy\] Count Number of Unival Subtrees
 ---
 > **Question:** A unival tree is a tree where all the nodes have the same value. Given a binary tree, return the number of unival subtrees in the tree.
