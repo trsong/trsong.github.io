@@ -93,6 +93,84 @@ You cannot travel back to station 2, as it requires 4 unit of gas but you only h
 Therefore, you can't travel around the circuit once no matter where you start.
 ```
 
+**My thougths:** If there exists such a gas station at index `i` then for all stop we will have `gas_level >= 0` when we reach `k` for `all k`. However if starts `i`, `i+1`, ..., `k`  and at `k`,  `gas_level < 0`. Then instead of starting again from `i+1`, we starts from `k+1` as without `i` sum from `i+1` to `k` can only go lower. 
+
+**Solution:** [https://repl.it/@trsong/Gas-Station](https://repl.it/@trsong/Gas-Station)
+```py
+import unittest
+
+def valid_starting_station(gas, cost):
+    gas_level = 0
+    # gross_net_gas_gain is the sum of all gas gain or loss from index 0
+    # actually it is also the total gas gain or less when starts from any indices = all gas gain - all gas loss. 
+    gross_net_gas_gain = 0
+    i = 0
+    for increase, decrease, k in zip(gas, cost, xrange(len(gas))):
+        net_gas_gain = increase - decrease
+        gross_net_gas_gain += net_gas_gain
+        gas_level += net_gas_gain
+        if gas_level < 0:
+            # if sum of net gas gain from last i all the way to k < 0
+            # instead of start a new i form i + 1, we jump to k + 1
+            # Even with gas gain at i i, sum to k < 0, then without gas gain at i, it will be even smaller. The same case happens for all index from i to k, so we jump to k + 1
+            gas_level = 0
+            i = (k + 1) % len(gas)
+    return i if gross_net_gas_gain >= 0 else -1
+
+
+class ValidStartingStationSpec(unittest.TestCase):
+    def assert_valid_starting_station(self, gas, cost, start):
+        gas_level = 0
+        n = len(gas)
+        for i in range(n):
+            shifted_index = (start + i) % n
+            gas_level += gas[shifted_index] - cost[shifted_index]
+            self.assertTrue(gas_level >= 0)
+
+    def test_example1(self):
+        gas  = [1, 2, 3, 4, 5]
+        cost = [3, 4, 5, 1, 2]
+        start = valid_starting_station(gas, cost)
+        self.assert_valid_starting_station(gas, cost, start)
+
+    def test_example2(self):
+        gas  = [2, 3, 4]
+        cost = [3, 4, 3]
+        self.assertEqual(-1, valid_starting_station(gas, cost))
+
+    def test_decreasing_gas_level(self):
+        gas = [1, 1, 1]
+        cost = [2, 2, 2]
+        self.assertEqual(-1, valid_starting_station(gas, cost))
+
+    def test_increasing_gas_level(self):
+        gas = [2, 1, 0]
+        cost = [1, 1, 0]
+        start = valid_starting_station(gas, cost)
+        self.assert_valid_starting_station(gas, cost, start)
+
+    def test_decreasing_increasing_decreasing_increasing(self):
+        gas = [0, 1, 0, 13]
+        cost = [3, 0, 10, 1]
+        start = valid_starting_station(gas, cost)
+        print start
+        self.assert_valid_starting_station(gas, cost, start)
+
+    def test_total_gas_level_decrease(self):
+        gas = [3, 2, 1, 0, 0]
+        cost = [2, 3, 1, 1, 0]
+        self.assertEqual(-1, valid_starting_station(gas, cost))
+
+    def test_total_gas_level_increase(self):
+        gas = [1, 1, 0, 2]
+        cost = [0, 0, -3, 0]
+        start = valid_starting_station(gas, cost)
+        self.assert_valid_starting_station(gas, cost, start)
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
+```
 ### Oct 9, 2019 \[Hard\] Number of Ways to Divide an Array into K Equal Sum Sub-arrays
 ---
 > **Question:** Given an integer K and an array arr[] of N integers, the task is to find the number of ways to split the array into K equal sum sub-arrays of non-zero lengths.
