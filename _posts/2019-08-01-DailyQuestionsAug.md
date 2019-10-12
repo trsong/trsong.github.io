@@ -39,11 +39,95 @@ The path does not have to pass through the root, and each node can have any amou
 ``` 
 
 --->
-### Oct 11, 2019 \[Medium\] Largest Divisible Pairs Subset
+
+### Oct 12, 2019 \[Easy\] Most Frequent Subtree Sum
+---
+> **Question:** Given the root of a binary tree, find the most frequent subtree sum. The subtree sum of a node is the sum of all values under a node, including the node itself.
+
+**Example:**
+```py
+Given the following tree:
+
+  5
+ / \
+2  -5
+
+Return 2 as it occurs twice: once as the left leaf, and once as the sum of 2 + 5 - 5.
+```
+
+### Oct 11, 2019 \[Hard\] Largest Divisible Pairs Subset
 ---
 > **Question:** Given a set of distinct positive integers, find the largest subset such that every pair of elements in the subset `(i, j)` satisfies either `i % j = 0` or `j % i = 0`.
 >
 > For example, given the set `[3, 5, 10, 20, 21]`, you should return `[5, 10, 20]`. Given `[1, 3, 6, 24]`, return `[1, 3, 6, 24]`.
+
+
+**My thoughts:** Notice that smaller number mod large number can never be zero, but the other way around might be True. e.g.  `2 % 4 == 2`.  `9 % 3 == 0`. Thus we can eliminate the condition `i % j = 0 or j % i = 0` to just `j % i = 0 where j is larger`. This can be done by sorting into descending order.
+
+After that we can use dp to solve this problem. Define `dp[i]` to be the largest number of divisible pairs ends at `i`. And `max(dp)` will give the largest number of division pairs among all i. By backtracking from the index, we can find what are these numbers.
+
+**Solution with DP:** [https://repl.it/@trsong/Largest-Divisible-Pairs-Subset](https://repl.it/@trsong/Largest-Divisible-Pairs-Subset)
+```py
+import unittest
+
+def largest_divisible_pairs_subset(nums):
+    n = len(nums)
+    if n < 2:
+        return []
+    descending_nums = sorted(nums, reverse=True)
+
+    # Let dp[i] be the largest number of divisible pairs ends at i
+    dp = [0] * n
+    dp[0] = 1
+    parent = [None] * n
+    for i in xrange(1, n):
+        max_num_pairs = 0
+        cur_num = descending_nums[i]
+        for j in xrange(i):
+            # Check among all multiple of cur_num, find max number of pairs among them
+            if descending_nums[j] % cur_num == 0 and dp[j] > max_num_pairs:
+                max_num_pairs = dp[j]
+                parent[i] = j
+        dp[i] = max_num_pairs + 1
+    
+    # Backtracking from the start position of largest number of divisible pairs
+    i = dp.index(max(dp))
+    res = []
+    while i is not None:
+        res.append(descending_nums[i])
+        i = parent[i]
+    return res if len(res) > 1 else []
+
+class LargestDivisiblePairsSubsetSpec(unittest.TestCase):
+    def test_example1(self):
+        self.assertEqual(set([5, 10, 20]), set(largest_divisible_pairs_subset([3, 5, 10, 20, 21])))
+
+    def test_example2(self):
+        self.assertEqual(set([1, 3, 6, 24]), set(largest_divisible_pairs_subset([1, 3, 6, 24])))
+
+    def test_multiple_of_3_and_5(self):
+        self.assertEqual(set([10, 5, 20]), set(largest_divisible_pairs_subset([10, 5, 3, 15, 20])))
+
+    def test_prime_and_multiple_of_3(self):
+        self.assertEqual(set([18, 1, 3, 6]), set(largest_divisible_pairs_subset([18, 1, 3, 6, 13, 17])))
+
+    def test_decrease_array(self):
+        self.assertEqual(set([8, 4, 2, 1]), set(largest_divisible_pairs_subset([8, 7, 6, 5, 4, 2, 1])))
+
+    def test_array_with_duplicated_values(self):
+        self.assertEqual(set([3, 3, 3, 1]), set(largest_divisible_pairs_subset([2, 2, 3, 3, 3, 1])))
+
+    def test_no_divisible_pairs(self):
+        self.assertEqual([], largest_divisible_pairs_subset([2, 3, 5, 7, 11, 13, 17, 19]))
+
+    def test_no_divisible_pairs2(self):
+        self.assertEqual([], largest_divisible_pairs_subset([1]))
+        self.assertEqual([], largest_divisible_pairs_subset([]))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
+```
 
 ### Oct 10, 2019 LC 134 \[Medium\] Gas Station
 ---
