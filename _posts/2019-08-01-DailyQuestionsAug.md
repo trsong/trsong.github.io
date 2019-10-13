@@ -40,7 +40,7 @@ The path does not have to pass through the root, and each node can have any amou
 
 --->
 
-### Oct 13, 2019 \[Medium\] Most Frequent Subtree Sum
+### Oct 13, 2019 \[Medium\] Largest Subarray with Equal Number of 0s and 1s
 ---
 > **Question:** Largest subarray with equal number of 0s and 1s
 Given an array containing only 0s and 1s, find the largest subarray which contain equal no of 0s and 1s. Expected time complexity is O(n).
