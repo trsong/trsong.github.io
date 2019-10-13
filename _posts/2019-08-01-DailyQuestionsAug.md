@@ -40,6 +40,30 @@ The path does not have to pass through the root, and each node can have any amou
 
 --->
 
+### Oct 13, 2019 \[Medium\] Most Frequent Subtree Sum
+---
+> **Question:** Largest subarray with equal number of 0s and 1s
+Given an array containing only 0s and 1s, find the largest subarray which contain equal no of 0s and 1s. Expected time complexity is O(n).
+
+
+**Example 1:**
+```py
+Input: arr[] = [1, 0, 1, 1, 1, 0, 0]
+Output: 1 to 6 (Starting and Ending indexes of output subarray)
+```
+
+**Example 2:**
+```py
+Input: arr[] = [1, 1, 1, 1]
+Output: No such subarray
+```
+
+**Example 3:**
+```py
+Input: arr[] = [0, 0, 1, 1, 0]
+Output: 0 to 3 Or 1 to 4
+```
+
 ### Oct 12, 2019 \[Easy\] Most Frequent Subtree Sum
 ---
 > **Question:** Given the root of a binary tree, find the most frequent subtree sum. The subtree sum of a node is the sum of all values under a node, including the node itself.
@@ -53,6 +77,84 @@ Given the following tree:
 2  -5
 
 Return 2 as it occurs twice: once as the left leaf, and once as the sum of 2 + 5 - 5.
+```
+
+**Solution:** [https://repl.it/@trsong/Most-Frequent-Subtree-Sum](https://repl.it/@trsong/Most-Frequent-Subtree-Sum)
+```py
+import unittest
+
+class TreeNode(object):
+    def __init__(self, val, left=None, right=None):
+        self.val = val
+        self.left = left
+        self.right = right
+
+
+def calculate_tree_sum_recur(t, tree_sum_histogram):
+    if t is None:
+        return 0
+    tree_sum = t.val + calculate_tree_sum_recur(t.left, tree_sum_histogram) + calculate_tree_sum_recur(t.right, tree_sum_histogram)
+    tree_sum_histogram[tree_sum] = tree_sum_histogram.get(tree_sum, 0) + 1
+    return tree_sum
+
+
+def most_freq_tree_sum(tree):
+    if tree is None:
+        return None
+
+    tree_sum_histogram = {}
+    calculate_tree_sum_recur(tree, tree_sum_histogram)
+    max_sum_count = 0
+    max_sum = None
+    for tree_sum, freq in tree_sum_histogram.items():
+        if freq > max_sum_count:
+            max_sum = tree_sum
+            max_sum_count = freq
+
+    return max_sum
+
+
+class MostFreqTreeSumSpec(unittest.TestCase):
+    def test_example1(self):
+        """
+           5
+          / \
+         2  -5
+        """
+        t = TreeNode(5, TreeNode(2), TreeNode(-5))
+        self.assertEqual(2, most_freq_tree_sum(t))
+
+    def test_empty_tree(self):
+        self.assertIsNone(most_freq_tree_sum(None))
+
+    def test_tree_with_unique_value(self):
+        """
+          0
+         / \
+        0   0
+         \
+          0
+        """
+        l = TreeNode(0, right=TreeNode(0))
+        t = TreeNode(0, l, TreeNode(0))
+        self.assertEqual(0, most_freq_tree_sum(t))
+
+    def test_depth_3_tree(self):
+        """
+           _0_ 
+          /   \
+         0     -3  
+        / \   /  \   
+       1  -1 3   -1  
+        """
+        l = TreeNode(0, TreeNode(1), TreeNode(-1))
+        r = TreeNode(-3, TreeNode(3), TreeNode(-1))
+        t = TreeNode(0, l, r)
+        self.assertEqual(-1, most_freq_tree_sum(t))
+        
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
 ```
 
 ### Oct 11, 2019 \[Hard\] Largest Divisible Pairs Subset
