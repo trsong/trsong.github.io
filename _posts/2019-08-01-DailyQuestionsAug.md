@@ -40,10 +40,33 @@ The path does not have to pass through the root, and each node can have any amou
 
 --->
 
-### Oct 13, 2019 \[Medium\] Largest Subarray with Equal Number of 0s and 1s
+### Oct 14, 2019 \[Easy\] Word Ordering in a Different Alphabetical Order
 ---
-> **Question:** Largest subarray with equal number of 0s and 1s
-Given an array containing only 0s and 1s, find the largest subarray which contain equal no of 0s and 1s. Expected time complexity is O(n).
+> **Question:** Given a list of words, and an arbitrary alphabetical order, verify that the words are in order of the alphabetical order.
+
+**Example:**
+```py
+Input:
+words = ["abcd", "efgh"],
+order="zyxwvutsrqponmlkjihgfedcba"
+
+Output: False
+Explanation: 'e' comes before 'a' so 'efgh' should come before 'abcd'
+```
+
+**Example 2:**
+```py
+Input:
+words = ["zyx", "zyxw", "zyxwy"],
+order="zyxwvutsrqponmlkjihgfedcba"
+
+Output: True
+Explanation: The words are in increasing alphabetical order
+```
+
+### Oct 13, 2019 LC 525 \[Medium\] Largest Subarray with Equal Number of 0s and 1s
+---
+> **Question:** Given an array containing only 0s and 1s, find the largest subarray which contain equal number of 0s and 1s. Expected time complexity is O(n).
 
 
 **Example 1:**
@@ -62,6 +85,65 @@ Output: No such subarray
 ```py
 Input: arr[] = [0, 0, 1, 1, 0]
 Output: 0 to 3 Or 1 to 4
+```
+
+**Solution:** [https://repl.it/@trsong/Largest-Subarray-with-Equal-Number-of-0s-and-1s](https://repl.it/@trsong/Largest-Subarray-with-Equal-Number-of-0s-and-1s)
+```py
+import unittest
+
+def largest_even_subarray(nums):
+    if not nums:
+        return None
+
+    count_map = {0:-1}
+    count = 0
+    max_length = 0
+    max_start_location = None
+    for i, num in enumerate(nums):
+        if num == 1:
+            count += 1
+        else:
+            count -= 1
+
+        if count not in count_map:
+            count_map[count] = i
+        elif i - count_map[count] > max_length:
+            max_length = i - count_map[count]
+            max_start_location = count_map[count]
+
+    if max_start_location is not None:
+        return max_start_location + 1, max_start_location + max_length
+    else:
+        None
+
+
+class LargestEvenSubarraySpec(unittest.TestCase):
+    def test_example1(self):
+        self.assertEqual((1, 6), largest_even_subarray([1, 0, 1, 1, 1, 0, 0]))
+
+    def test_example2(self):
+        self.assertTrue(largest_even_subarray([0, 0, 1, 1, 0]) in [(0, 3), (1, 4)])
+
+    def test_entire_array_is_even(self):
+        self.assertEqual((0, 1), largest_even_subarray([0, 1]))
+
+    def test_no_even_subarray(self):
+        self.assertIsNone(largest_even_subarray([0, 0, 0, 0, 0]))
+        self.assertIsNone(largest_even_subarray([1]))
+        self.assertIsNone(largest_even_subarray([]))
+
+    def test_larger_array(self):
+        self.assertEqual((0, 9), largest_even_subarray([0, 1, 0, 1, 1, 0, 1, 0, 0, 1, 1, 1, 1, 1]))
+
+    def test_larger_array2(self):
+        self.assertEqual((3, 8), largest_even_subarray([1, 1, 1, 0, 0, 1, 1, 1, 0, 1, 1]))
+
+    def test_larger_array3(self):
+        self.assertEqual((0, 13), largest_even_subarray([1, 0, 1, 1, 0, 0, 0, 1, 1, 0, 0, 0, 1, 1])) 
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
 ```
 
 ### Oct 12, 2019 \[Easy\] Most Frequent Subtree Sum
