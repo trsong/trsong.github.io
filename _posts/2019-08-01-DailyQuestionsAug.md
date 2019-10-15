@@ -40,6 +40,11 @@ The path does not have to pass through the root, and each node can have any amou
 
 --->
 
+### Oct 15, 2019 \[Medium\] Insert into Sorted Circular Linked List
+---
+> **Question:** Insert a new value in a sorted Circular Linked List. 
+
+
 ### Oct 14, 2019 \[Easy\] Word Ordering in a Different Alphabetical Order
 ---
 > **Question:** Given a list of words, and an arbitrary alphabetical order, verify that the words are in order of the alphabetical order.
@@ -62,6 +67,72 @@ order="zyxwvutsrqponmlkjihgfedcba"
 
 Output: True
 Explanation: The words are in increasing alphabetical order
+```
+
+**Solution:** [https://repl.it/@trsong/Word-Ordering-in-a-Different-Alphabetical-Order](https://repl.it/@trsong/Word-Ordering-in-a-Different-Alphabetical-Order)
+```py
+import unittest
+
+
+def is_sorted(words, order):
+    if not words or len(words) <= 1:
+        return True
+
+    score = dict(zip(order, xrange(len(order))))
+    for i in xrange(1, len(words)):
+        cur_word = words[i]
+        prev_word = words[i-1]
+        is_short_circuit = False
+        for prev_char, cur_char in zip(prev_word, cur_word):
+            if score[prev_char] < score[cur_char]:
+                is_short_circuit = True
+                break
+            if score[prev_char] > score[cur_char]:
+                return False
+        if not is_short_circuit and len(prev_word) > len(cur_word):
+            return False
+    return True
+    
+
+class IsSortedSpec(unittest.TestCase):
+    def test_example1(self):
+        words = ["abcd", "efgh"]
+        order = "zyxwvutsrqponmlkjihgfedcba"
+        self.assertFalse(is_sorted(words, order))
+
+    def test_example2(self):
+        words = ["zyx", "zyxw", "zyxwy"]
+        order = "zyxwvutsrqponmlkjihgfedcba"
+        self.assertTrue(is_sorted(words, order))
+
+    def test_empty_list(self):
+        self.assertTrue(is_sorted([], ""))
+        self.assertTrue(is_sorted([], "abc"))
+
+    def test_one_elem_list(self):
+        self.assertTrue(is_sorted(["z"], "xyz"))
+
+    def test_empty_words(self):
+        self.assertTrue(is_sorted(["", "", ""], ""))
+
+    def test_word_of_different_length(self):
+        words = ["", "1", "11", "111", "1111"]
+        order = "4321"
+        self.assertTrue(is_sorted(words, order))
+
+    def test_word_of_different_length2(self):
+        words = ["", "11", "", "111", "1111"]
+        order = "1"
+        self.assertFalse(is_sorted(words, order))
+
+    def test_large_word_dictionary(self):
+        words = ["123", "1a1b1A2ca", "ABC", "Aaa", "aaa", "bbb", "c11", "cCa"]
+        order = "".join(map(chr, range(256)))
+        self.assertTrue(is_sorted(words, order))
+    
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
 ```
 
 ### Oct 13, 2019 LC 525 \[Medium\] Largest Subarray with Equal Number of 0s and 1s
