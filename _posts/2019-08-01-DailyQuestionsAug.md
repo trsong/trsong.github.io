@@ -42,7 +42,7 @@ The path does not have to pass through the root, and each node can have any amou
 
 ### Oct 15, 2019 \[Medium\] Insert into Sorted Circular Linked List
 ---
-> **Question:** Insert a new value in a sorted Circular Linked List. 
+> **Question:** Insert a new value into a sorted circular linked list (last element points to head). Return the node with smallest value.  
 
 
 ### Oct 14, 2019 \[Easy\] Word Ordering in a Different Alphabetical Order
