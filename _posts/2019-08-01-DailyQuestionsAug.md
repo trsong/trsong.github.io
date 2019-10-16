@@ -40,10 +40,169 @@ The path does not have to pass through the root, and each node can have any amou
 
 --->
 
+### Oct 16, 2019 \[Medium\] Count Arithmetic Subsequences
+---
+> **Question:** Given an array of n positive integers. The task is to count the number of Arithmetic Subsequence in the array. Note: Empty sequence or single element sequence is also Arithmetic Sequence. 
+
+**Example 1:**
+```py
+Input : arr[] = [1, 2, 3]
+Output : 8
+Arithmetic Subsequence from the given array are:
+[], [1], [2], [3], [1, 2], [2, 3], [1, 3], [1, 2, 3].
+```
+
+**Example 2:**
+```py
+Input : arr[] = [10, 20, 30, 45]
+Output : 12
+```
+
+**Example 3:**
+```py
+Input : arr[] = [1, 2, 3, 4, 5]
+Output : 23
+```
+
+**Similar Question:** LC 413 Arithmetic Slices
+
 ### Oct 15, 2019 \[Medium\] Insert into Sorted Circular Linked List
 ---
 > **Question:** Insert a new value into a sorted circular linked list (last element points to head). Return the node with smallest value.  
 
+**My thoughts:** This question isn't hard. It's just it has so many edge case we need to cover:
+
+* original list is empty
+* original list contains duplicate numbers
+* the first element of original list is not the smallest
+* the insert elem is the smallest
+* the insert elem is the largest
+* etc.
+
+**Solution:** [https://repl.it/@trsong/Insert-into-Sorted-Circular-Linked-List](https://repl.it/@trsong/Insert-into-Sorted-Circular-Linked-List)
+```py
+import unittest
+
+def insert(lst, val):
+    target_node = Node(val)
+    if lst is None:
+        target_node.next = target_node
+        return target_node
+    
+    root = lst
+    while root.next != lst and root.val <= root.next.val:
+        root = root.next
+
+    # root is max, root.next is min
+    if val < root.next.val:
+        # the inserted node is the new min
+        target_node.next = root.next
+        root.next = target_node
+        return target_node
+    elif val > root.val:
+        # the inserted node is the new max
+        target_node.next = root.next
+        root.next = target_node
+        return target_node.next
+
+    last = root
+    # proceed max, now root is the min
+    root = root.next
+    lst = root
+
+    while lst != last and lst.next.val < val:
+        lst = lst.next
+  
+    target_node.next = lst.next
+    lst.next = target_node
+    return root
+    
+
+##############################
+# Below are testing utilities
+##############################
+class Node(object):
+    def __init__(self, val, next=None):
+        self.val = val
+        self.next = next
+
+ 
+    def __eq__(self, other):
+        l1 = Node.flatten(self)
+        l2 = Node.flatten(other)
+        if l1 != l2:
+            print str(l1), '!=', str(l2)
+        return l1 == l2
+
+    def __str__(self):
+        return str(Node.flatten(self))
+
+    @staticmethod
+    def flatten(lst):
+        if not lst:
+            return []
+        root = lst
+        res = [root.val]
+        lst = lst.next
+        while lst != root:
+            res.append(lst.val)
+            lst = lst.next
+        return res
+
+    @staticmethod
+    def create(*vals):
+        dummy = Node(-1)
+        t = dummy
+        for v in vals:
+            t.next = Node(v)
+            t = t.next
+        t.next = dummy.next
+        return dummy.next
+
+class InsertSpec(unittest.TestCase):
+    def test_empty_list(self):
+        self.assertEqual(Node.create(1), insert(None, 1))
+
+    def test_prepend_list(self):
+        self.assertEqual(Node.create(0, 1), insert(Node.create(1), 0))
+
+    def test_append_list(self):
+        self.assertEqual(Node.create(1, 2, 3), insert(Node.create(1, 2), 3))
+
+    def test_insert_into_correct_position(self):
+        self.assertEqual(Node.create(1, 2, 3, 4, 5), insert(Node.create(1, 2, 4, 5), 3))
+
+    def test_duplicated_elements(self):
+        self.assertEqual(Node.create(0, 0, 1, 2), insert(Node.create(0, 0, 2), 1))
+    
+    def test_duplicated_elements2(self):
+        self.assertEqual(Node.create(0, 0, 1), insert(Node.create(0, 0), 1))
+
+    def test_duplicated_elements3(self):
+        self.assertEqual(Node.create(0, 0, 0, 0), insert(Node.create(0, 0, 0), 0))
+
+    def test_first_element_is_not_smallest(self):
+        self.assertEqual(Node.create(0, 1, 2, 3), insert(Node.create(2, 3, 0), 1))
+
+    def test_first_element_is_not_smallest2(self):
+        self.assertEqual(Node.create(0, 1, 2, 3), insert(Node.create(3, 0, 2), 1))
+
+    def test_first_element_is_not_smallest3(self):
+        self.assertEqual(Node.create(0, 1, 2, 3), insert(Node.create(2, 0, 1), 3))
+
+    def test_first_element_is_not_smallest4(self):
+        self.assertEqual(Node.create(0, 1, 2, 3), insert(Node.create(2, 3, 1), 0))
+
+    def test_first_element_is_not_smallest5(self):
+        self.assertEqual(Node.create(0, 0, 1, 2, 2), insert(Node.create(2, 0, 0, 2), 1))
+
+    def test_first_element_is_not_smallest6(self):
+        self.assertEqual(Node.create(-1, 0, 0, 2, 2), insert(Node.create(2, 0, 0, 2), -1))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
+```
 
 ### Oct 14, 2019 \[Easy\] Word Ordering in a Different Alphabetical Order
 ---
