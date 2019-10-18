@@ -40,7 +40,7 @@ The path does not have to pass through the root, and each node can have any amou
 
 --->
 
-### Oct 18, 2019 LC 47 \[Medium\] Permutations II
+### Oct 18, 2019 LC 47 \[Medium\] All Distinct Permutations
 ---
 > **Question:** Print all distinct permutations of a given string with duplicates
 Given a string that may contain duplicates, write a function to return all permutations of given string such that no permutation is repeated in output.
