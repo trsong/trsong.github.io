@@ -39,6 +39,36 @@ The path does not have to pass through the root, and each node can have any amou
 ``` 
 
 --->
+
+### Oct 18, 2019 LC 47 \[Medium\] Permutations II
+---
+> **Question:** Print all distinct permutations of a given string with duplicates
+Given a string that may contain duplicates, write a function to return all permutations of given string such that no permutation is repeated in output.
+
+**Example 1:**
+```py
+Input: "112"
+Output: ["112", "121", "211"]
+```
+
+**Example 2:**
+```py
+Input: "AB"
+Output: ["AB", "BA"]
+```
+
+**Example 3:**
+```py
+Input: "ABC"
+Output: ["ABC", "ACB", "BAC", "BCA", "CBA", "CAB"]
+```
+
+**Example 4:**
+```py
+Input: "ABA"
+Output: ["ABA", "AAB", "BAA"]
+```
+
 ### Oct 17, 2019 LC 722 \[Medium\] Remove Comments
 ---
 > **Question:** Given a C/C++ program, remove comments from it.
@@ -59,6 +89,74 @@ source = ["a/*comment", "line", "more_comment*/b"]
 Output: ["ab"]
 ```
 
+**Solution:** [https://repl.it/@trsong/Remove-Comments](https://repl.it/@trsong/Remove-Comments)
+```py
+import unittest
+
+def remove_comments(source):
+    is_in_comment = False
+    res = []
+    sub_lines = []
+    for line in source:
+        i = j = 0
+        n = len(line)
+        if not is_in_comment:
+            sub_lines = []
+        while j < n:
+            if is_in_comment and line[j] == "*" and j + 1 < n and line[j+1] == "/":
+                is_in_comment = False
+                j += 2
+                i = j
+            elif not is_in_comment and line[j] == "/" and j + 1 < n and line[j+1] == "*":
+                sub_lines.append(line[i:j])   
+                j += 2
+                is_in_comment = True          
+            elif not is_in_comment and line[j:j+2] == "//":
+                sub_lines.append(line[i:j])
+                break
+            else:
+                j += 1
+                
+        if not is_in_comment and j == n:
+            sub_lines.append(line[i:j])
+                
+        filtered_sub_lines = filter(lambda line: len(line) > 0, sub_lines)
+        if not is_in_comment and len(filtered_sub_lines) > 0:
+            res.append(''.join(filtered_sub_lines))
+            
+    return res
+
+
+class RemoveCommentSpec(unittest.TestCase):
+    def test_example1(self):
+        source = ["/*Test program */", "int main()", "{ ", "  // variable declaration ", "int a, b, c;", "/* This is a test", "   multiline  ", "   comment for ", "   testing */", "a = b + c;", "}"]
+        output = ["int main()","{ ","  ","int a, b, c;","a = b + c;","}"]
+        self.assertEqual(output, remove_comments(source))
+
+    def test_example2(self):
+        source = ["a/*comment", "line", "more_comment*/b"]
+        output = ["ab"]
+        self.assertEqual(output, remove_comments(source))
+
+    def test_empty_source(self):
+        self.assertEqual([], remove_comments([]))
+        self.assertEqual([], remove_comments(["//"]))
+        self.assertEqual([], remove_comments(["/*","","*/"]))
+
+    def test_block_comments_has_line_comment(self):
+        source = ["return 1;", "/*", "function // ", "*/"]
+        output = ["return 1;"]
+        self.assertEqual(output, remove_comments(source))
+
+    def test_multiple_block_comment_on_same_line(self):
+        source = ["return 1 /*don't*/+ 2/*don't*//*don't*/ - 1; "]
+        output = ["return 1 + 2 - 1; "]
+        self.assertEqual(output, remove_comments(source))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
+```
 
 ### Oct 16, 2019 \[Medium\] Count Arithmetic Subsequences
 ---
