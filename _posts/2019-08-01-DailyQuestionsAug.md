@@ -39,6 +39,29 @@ The path does not have to pass through the root, and each node can have any amou
 ``` 
 
 --->
+### Oct 19, 2019 \[Medium\] Min Range Needed to Sort
+---
+> **Question:** Given a list of integers, return the bounds of the minimum range that must be sorted so that the whole list would be sorted.
+
+**Example 1:**
+```py
+Input: [1, 7, 9, 5, 7, 8, 10]
+Output: (1, 5)
+Explanation:
+The numbers between index 1 and 5 are out of order and need to be sorted.
+```
+
+**Example 2:**
+```py
+Input: [10, 12, 20, 30, 25, 40, 32, 31, 35, 50, 60]
+Output: (3, 8)
+```
+
+**Example 3:**
+```py
+Input: [0, 1, 15, 25, 6, 7, 30, 40, 50]
+Output: (2, 5)
+```
 
 ### Oct 18, 2019 LC 47 \[Medium\] All Distinct Permutations
 ---
@@ -67,6 +90,72 @@ Output: ["ABC", "ACB", "BAC", "BCA", "CBA", "CAB"]
 ```py
 Input: "ABA"
 Output: ["ABA", "AAB", "BAA"]
+```
+
+**Solution with Backtrack:** [https://repl.it/@trsong/All-Distinct-Permutation](https://repl.it/@trsong/All-Distinct-Permutation)
+```py
+import unittest
+
+def distinct_permutation(s):
+    def backtrack(res, path, arr):
+        if not arr:
+            res.append(''.join(path))
+        else:
+            # Each level of recursion, take one char out
+            for i in xrange(len(arr)):
+                if i > 0 and arr[i] == arr[i-1]:
+                    # skip duplicated chars
+                    continue
+                backtrack(res, path + [arr[i]], arr[:i] + arr[i+1:])
+    
+    res = []
+    arr = sorted(list(s))
+    backtrack(res, [], arr)
+    return res
+
+
+class DistinctPermutationSpec(unittest.TestCase):
+    def assert_result(self, los1, los2):
+        self.assertEqual(sorted(los1), sorted(los2))
+
+    def test_example1(self):
+        input = "112"
+        output = ["112", "121", "211"]
+        self.assert_result(output, distinct_permutation(input))
+
+    def test_example2(self):
+        input = "AB"
+        output = ["AB", "BA"]
+        self.assert_result(output, distinct_permutation(input))
+
+    def test_example3(self):
+        input = "ABC"
+        output =  ["ABC", "ACB", "BAC", "BCA", "CBA", "CAB"]
+        self.assert_result(output, distinct_permutation(input))
+
+    def test_example4(self):
+        input = "ABA"
+        output = ["ABA", "AAB", "BAA"]
+        self.assert_result(output, distinct_permutation(input))
+
+    def test_empty_input(self):
+        input = ""
+        output = [""]
+        self.assert_result(output, distinct_permutation(input))
+
+    def test_input_with_unique_char(self):
+        input = "FFF"
+        output = ["FFF"]
+        self.assert_result(output, distinct_permutation(input))
+
+    def test_unsorted_string(self):
+        input = "1212"
+        output = ["1122", "2112", "2211", "1212", "2121", "1221"]
+        self.assert_result(output, distinct_permutation(input))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
 ```
 
 ### Oct 17, 2019 LC 722 \[Medium\] Remove Comments
