@@ -40,11 +40,17 @@ The path does not have to pass through the root, and each node can have any amou
 
 --->
 
-### Oct 20, 2019 \[Medium\] Partitioning Linked List
+### Oct 20, 2019 LC 86 \[Medium\] Partitioning Linked List
 ---
-> **Question:** Given a linked list of numbers and a pivot k, partition the linked list so that all nodes less than k come before nodes greater than or equal to k.
+> **Question:** Given a linked list and a value x, partition it such that all nodes less than x come before nodes greater than or equal to x.
 >
-> For example, given the linked list `5 -> 1 -> 8 -> 0 -> 3` and `k = 3`, the solution could be `1 -> 0 -> 5 -> 8 -> 3`.
+> You should preserve the original relative order of the nodes in each of the two partitions.
+
+**Example:**
+```py
+Input: head = 1->4->3->2->5->2, x = 3
+Output: 1->2->2->4->3->5
+```
 
 
 ### Oct 19, 2019 \[Medium\] Min Range Needed to Sort
@@ -71,7 +77,7 @@ Input: [0, 1, 15, 25, 6, 7, 30, 40, 50]
 Output: (2, 5)
 ```
 
-**My thoughts:** A sorted array has no min range to sort. So we want first identity the range (i, j) that goes wrong, that is, we want to identify first `i` and last `j` that makes array not sorted. ie. smallest `i` such that `nums[i] > nums[i+1]`, largest `j` such that `nums[j] < nums[j-1]`. 
+**My thoughts:** A sorted array has no min range to sort. So we want first identity the range `(i, j)` that goes wrong, that is, we want to identify first `i` and last `j` that makes array not sorted. ie. smallest `i` such that `nums[i] > nums[i+1]`, largest `j` such that `nums[j] < nums[j-1]`. 
 
 Secondly, range `(i, j)` inclusive is where we should start. And there could be number smaller than `nums[i+1]` and bigger than `nums[j-1]`, therefore we need to figure out how we can release the boundary of `(i, j)` to get `(i', j')` where `i' <= i` and `j' <= j` so that `i'`, `j'` covers those smallest and largest number within `(i, j)`. 
 
