@@ -71,6 +71,94 @@ Input: [0, 1, 15, 25, 6, 7, 30, 40, 50]
 Output: (2, 5)
 ```
 
+**My thoughts:** A sorted array has no min range to sort. So we want first identity the range (i, j) that goes wrong, that is, we want to identify first `i` and last `j` that makes array not sorted. ie. smallest `i` such that `nums[i] > nums[i+1]`, largest `j` such that `nums[j] < nums[j-1]`. 
+
+Secondly, range `(i, j)` inclusive is where we should start. And there could be number smaller than `nums[i+1]` and bigger than `nums[j-1]`, therefore we need to figure out how we can release the boundary of `(i, j)` to get `(i', j')` where `i' <= i` and `j' <= j` so that `i'`, `j'` covers those smallest and largest number within `(i, j)`. 
+
+After doing that, we will get smallest range to make original array sorted, the range is `i'` through `j'` inclusive.
+
+**Solution with Two Pointers:** [https://repl.it/@trsong/Min-Range-Needed-to-Sort](https://repl.it/@trsong/Min-Range-Needed-to-Sort)
+```py
+import unittest
+
+def min_range_to_sort(nums):
+    if len(nums) <= 1:
+        return None
+
+    n = len(nums)
+    i = 0
+    while i < n-1 and nums[i] <= nums[i+1]:
+        i += 1
+    
+    if i == n-1:
+        # array is sorted
+        return None
+    
+    j = n - 1
+    while j > i and nums[j-1] <= nums[j]:
+        j -= 1
+
+    sub_nums = nums[i:j+1]
+    min_val = min(sub_nums)
+    max_val = max(sub_nums)
+
+    while i > 0 and nums[i-1] > min_val:
+        i -= 1
+
+    while j < n - 1 and nums[j+1] < max_val:
+        j += 1
+
+    return i, j
+
+
+class MinRangeToSortSpec(unittest.TestCase):
+    def test_example1(self):
+        self.assertEqual((1, 5), min_range_to_sort([1, 7, 9, 5, 7, 8, 10]))
+        
+    def test_example2(self):
+        self.assertEqual((3, 8), min_range_to_sort([10, 12, 20, 30, 25, 40, 32, 31, 35, 50, 60]))
+
+    def test_example3(self):
+        self.assertEqual((2, 5), min_range_to_sort([0, 1, 15, 25, 6, 7, 30, 40, 50]))
+
+    def test_empty_array(self):
+        self.assertIsNone(min_range_to_sort([]))
+
+    def test_already_sorted_array(self):
+        self.assertIsNone(min_range_to_sort([1, 2, 3, 4]))
+
+    def test_array_contains_one_elem(self):
+        self.assertIsNone(min_range_to_sort([42]))
+
+    def test_reverse_sorted_array(self):
+        self.assertEqual((0, 3), min_range_to_sort([4, 3, 2, 1]))
+
+    def test_table_shape_array(self):
+        self.assertEqual((2, 5), min_range_to_sort([1, 2, 3, 3, 3, 2]))
+
+    def test_increase_decrease_then_increase(self):
+        self.assertEqual((2, 6), min_range_to_sort([1, 2, 3, 4, 3, 2, 3, 4, 5, 6]))
+
+    def test_increase_decrease_then_increase2(self):
+        self.assertEqual((0, 4), min_range_to_sort([0, 1, 2, -1, 1, 2]))
+
+    def test_increase_decrease_then_increase3(self):
+        self.assertEqual((0, 6), min_range_to_sort([0, 1, 2, 99, -99, 1, 2]))
+        self.assertEqual((0, 6), min_range_to_sort([0, 1, 2, -99, 99, 1, 2]))
+    
+    def test_array_contains_duplicated_numbers(self):
+        self.assertEqual((0, 5), min_range_to_sort([1, 1, 1, 0, -1, -1, 1, 1, 1]))
+
+    def test_array_contains_one_outlier(self):
+        self.assertEqual((3, 6), min_range_to_sort([0, 0, 0, 1, 0, 0, 0]))
+        self.assertEqual((0, 3), min_range_to_sort([0, 0, 0, -1, 0, 0, 0]))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
+```
+
+
 ### Oct 18, 2019 LC 47 \[Medium\] All Distinct Permutations
 ---
 > **Question:** Print all distinct permutations of a given string with duplicates
