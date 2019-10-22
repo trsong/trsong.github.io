@@ -40,6 +40,41 @@ The path does not have to pass through the root, and each node can have any amou
 
 --->
 
+### Oct 22, 2019 \[Medium\] Max Number of Edges Added to Tree to Stay Bipartite
+---
+> **Question:** Maximum number of edges to be added to a tree so that it stays a Bipartite graph
+>
+> A tree is always a Bipartite Graph as we can always break into two disjoint sets with alternate levels. In other words we always color it with two colors such that alternate levels have same color. The task is to compute the maximum no. of edges that can be added to the tree so that it remains Bipartite Graph.
+
+**Example 1:**
+```py
+Input : Tree edges as vertex pairs 
+        1 2
+        1 3
+Output : 0
+Explanation :
+The only edge we can add is from node 2 to 3.
+But edge 2, 3 will result in odd cycle, hence 
+violation of Bipartite Graph property.
+```
+
+**Example 2:**
+```py
+Input : Tree edges as vertex pairs 
+        1 2
+        1 3
+        2 4
+        3 5
+Output : 2
+Explanation : On colouring the graph, {1, 4, 5} 
+and {2, 3} form two different sets. Since, 1 is 
+connected from both 2 and 3, we are left with 
+edges 4 and 5. Since, 4 is already connected to
+2 and 5 to 3, only options remain {4, 3} and 
+{5, 2}.
+```
+
+
 ### Oct 21, 2019 \[Medium\] Is Bipartite
 ---
 > **Question:** Given an undirected graph G, check whether it is bipartite. Recall that a graph is bipartite if its vertices can be divided into two independent sets, U and V, such that no edge connects vertices of the same set.
@@ -48,6 +83,92 @@ The path does not have to pass through the root, and each node can have any amou
 ```py
 is_bipartite(vertices=3, edges=[(0, 1), (1, 2), (2, 0)])  # returns False 
 is_bipartite(vertices=2, edges=[(0, 1), (1, 0)])  # returns True. U = {0}. V = {1}. 
+```
+
+**My thoughts:** A graph is a bipartite if we can just use 2 colors to cover all nodes and each neighbor has different color. This can be implemented use BFS and we change color between layers. However, BFS from one single node cannot search entire graph if such graph is disconnected. Therefore we need to run BFS on all unvisited nodes and assign or check colors for nodes on each layer.
+
+**Solution with BFS:** [https://repl.it/@trsong/Is-Bipartite](https://repl.it/@trsong/Is-Bipartite)
+```py
+from Queue import Queue
+import unittest
+
+class NodeState:
+    UNVISITED = 0
+    BLACK = 1
+    WHITE = 2
+
+
+def is_bipartite(vertices, edges):
+    if vertices <= 1:
+        return True
+
+    node_states = [NodeState.UNVISITED] * vertices
+    neighbor = {}
+    for u, v in edges:
+        if u not in neighbor:
+            neighbor[u] = []
+        neighbor[u].append(v)
+
+    current_color = NodeState.BLACK
+    for u in xrange(vertices):
+        # We need to BFS on each nodes to avoid disconnected graph
+        if node_states[u] != NodeState.UNVISITED:
+            continue
+        queue = Queue()
+        queue.put(u)
+        while not queue.empty():
+            for _ in xrange(queue.qsize()):
+                cur = queue.get()
+                # For nodes on each layer during BFS search, their colors should be different from previous layer
+                if node_states[cur] != NodeState.UNVISITED and node_states[cur] != current_color:
+                    return False
+                elif node_states[cur] != NodeState.UNVISITED:
+                    continue
+                node_states[cur] = current_color
+                for v in neighbor.get(cur, []):
+                    queue.put(v)
+            current_color = 3 - current_color  # Flip color
+    return True
+                    
+                    
+class IsBipartiteSpec(unittest.TestCase):
+    def test_example1(self):
+        self.assertFalse(is_bipartite(vertices=3, edges=[(0, 1), (1, 2), (2, 0)]))
+
+    def test_example2(self):
+        self.assertTrue(is_bipartite(vertices=2, edges=[(0, 1), (1, 0)]))
+
+    def test_empty_graph(self):
+        self.assertTrue(is_bipartite(vertices=0, edges=[]))
+
+    def test_one_node_graph(self):
+        self.assertTrue(is_bipartite(vertices=1, edges=[]))
+    
+    def test_disconnect_graph1(self):
+        self.assertTrue(is_bipartite(vertices=10, edges=[(0, 1), (1, 0)]))
+
+    def test_disconnect_graph2(self):
+        self.assertTrue(is_bipartite(vertices=10, edges=[(0, 1), (1, 0), (2, 3), (3, 4), (4, 5), (5, 2)]))
+
+    def test_disconnect_graph3(self):
+        self.assertFalse(is_bipartite(vertices=10, edges=[(0, 1), (1, 0), (2, 3), (3, 4), (4, 2)])) 
+
+    def test_square(self):
+        self.assertTrue(is_bipartite(vertices=4, edges=[(0, 1), (1, 2), (2, 3), (3, 0)]))
+
+    def test_k5(self):
+        vertices = 5
+        edges = [
+            (0, 1), (0, 2), (0, 3), (0, 4),
+            (1, 2), (1, 3), (1, 4),
+            (2, 3), (2, 4), 
+            (3, 4)
+        ]
+        self.assertFalse(is_bipartite(vertices, edges))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
 ```
 
 ### Oct 20, 2019 LC 86 \[Medium\] Partitioning Linked List
