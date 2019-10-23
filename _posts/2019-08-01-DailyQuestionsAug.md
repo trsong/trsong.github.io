@@ -39,6 +39,29 @@ The path does not have to pass through the root, and each node can have any amou
 ``` 
 
 --->
+### Oct 23, 2019 LC 227 \[Medium\] Basic Calculator II
+---
+> **Question:** Implement a basic calculator to evaluate a simple expression string.
+>
+> The expression string contains only non-negative integers, +, -, *, / operators and empty spaces. The integer division should truncate toward zero.
+
+**Example 1:**
+```py
+Input: "3+2*2"
+Output: 7
+```
+
+**Example 2:**
+```py
+Input: " 3/2 "
+Output: 1
+```
+
+**Example 3:**
+```py
+Input: " 3+5 / 2 "
+Output: 5
+```
 
 ### Oct 22, 2019 \[Medium\] Max Number of Edges Added to Tree to Stay Bipartite
 ---
@@ -73,6 +96,107 @@ edges 4 and 5. Since, 4 is already connected to
 2 and 5 to 3, only options remain {4, 3} and 
 {5, 2}.
 ```
+
+My thoughts: The maximum number of edges between set Black and set White equals `size(Black) * size(White)`. And we know the total number of edges in a tree. Thus, we can run BFS to color each node and then the remaining edges is just `size(Black) * size(White) - #TreeEdges`.
+
+**Solution with BFS:** [https://repl.it/@trsong/Max-Number-of-Edges-Added-to-Tree-to-Stay-Bipartite](https://repl.it/@trsong/Max-Number-of-Edges-Added-to-Tree-to-Stay-Bipartite)
+```py
+import unittest
+from Queue import Queue
+
+def max_edges_to_add(edges):
+    if not edges:
+        return 0
+
+    neighbor = {}
+    for u, v in edges:
+        if u not in neighbor:
+            neighbor[u] = []
+        neighbor[u].append(v)
+
+        if v not in neighbor:
+            neighbor[v] = []
+        neighbor[v].append(u)
+    
+    num_color = [0, 0]
+    color = 0
+    queue = Queue()
+    queue.put(edges[0][0])
+    visited = set()
+
+    while not queue.empty():
+        for _ in xrange(queue.qsize()):
+            u = queue.get()
+            if u in visited:
+                continue
+            visited.add(u)
+            for v in neighbor[u]:
+                queue.put(v)
+            num_color[color] += 1
+        color = 1 - color
+    
+    return num_color[0] * num_color[1] - len(edges)
+
+
+class MaxEdgesToAddSpec(unittest.TestCase):
+    def test_example(self):
+        """
+          1
+         / \
+        2   3
+        """
+        edges = [(1, 2), (1, 3)]
+        self.assertEqual(0, max_edges_to_add(edges))
+
+    def test_example2(self):
+        """
+            1
+           / \
+          2   3
+         /     \
+        4       5
+        """
+        edges = [(1, 2), (1, 3), (2, 4), (3, 5)]
+        self.assertEqual(2, max_edges_to_add(edges)) # (3, 4), (2, 5)
+
+    def test_empty_tree(self):
+        self.assertEqual(0, max_edges_to_add([]))
+
+    def test_right_heavy_tree(self):
+        """
+         1
+          \ 
+           2
+            \
+             3
+              \
+               4
+                \
+                 5
+        """
+        edges = [(1, 2), (4, 5), (2, 3), (3, 4)]
+        # White=[1, 3, 5]. Black=[2, 4]. #TreeEdge = 4. Max = #W * #B - #T = 3 * 2 - 4 = 2
+        self.assertEqual(2, max_edges_to_add(edges))  # (1, 4), (2, 5)
+
+    def test_general_tree(self):
+        """
+             1
+           / | \ 
+          2  3  4
+         / \   /|\
+        5   6 7 8 9 
+         \     /   \
+         10   11    12
+        """
+        edges = [(1, 2), (1, 3), (1, 4), (2, 5), (2, 6), (4, 7), (4, 8), (4, 9), (5, 10), (8, 11), (9, 12)]
+        # White=[1, 5, 6, 7, 8, 9]. Black=[2, 3, 4, 10, 11, 12]. #TreeEdge=11. Max = #W * #B - #T = 6 * 6 - 11 = 25
+        self.assertEqual(25, max_edges_to_add(edges))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
+```
+
 
 
 ### Oct 21, 2019 \[Medium\] Is Bipartite
