@@ -39,6 +39,21 @@ The path does not have to pass through the root, and each node can have any amou
 ``` 
 
 --->
+
+### Oct 24, 2019 \[Medium\] Circle of Chained Words
+---
+> **Question:** Two words can be 'chained' if the last character of the first word is the same as the first character of the second word.
+>
+> Given a list of words, determine if there is a way to 'chain' all the words in a circle.
+
+**Example:**
+```py
+Input: ['eggs', 'karat', 'apple', 'snack', 'tuna']
+Output: True
+Explanation:
+The words in the order of ['apple', 'eggs', 'snack', 'karat', 'tuna'] creates a circle of chained words.
+```
+
 ### Oct 23, 2019 LC 227 \[Medium\] Basic Calculator II
 ---
 > **Question:** Implement a basic calculator to evaluate a simple expression string.
@@ -61,6 +76,107 @@ Output: 1
 ```py
 Input: " 3+5 / 2 "
 Output: 5
+```
+
+**My thoughts:** A complicated expression can be broken into multiple normal terms. `Expr = term1 + term2 - term3 ...`. Between each consecutive term we only allow `+` and `-`. Whereas within each term we only allow `*` and `/`. So we will have the following definition of an expression. e.g. `1 + 2 - 1*2*1 - 3/4*4 + 5*6 - 7*8 + 9/10 = (1) + (2) - (1*2*1) - (3/4*4) + (5*6) - (7*8) + (9/10)` 
+
+```
+Expression is one of the following:
+- Empty or 0
+- Term - Expression
+- Term + Expression
+
+Term is one of the following:
+- 1
+- A number * Term
+- A number / Term
+```
+
+Thus, we can comupte each term value and sum them together.
+
+
+**Solution:** [https://repl.it/@trsong/Basic-Calculator-II](https://repl.it/@trsong/Basic-Calculator-II)
+```py
+import unittest
+
+def calculate(s):
+    if not s:
+        return 0
+        
+    total_sum = 0
+    term_sum = 0
+    num = 0
+    op = '+'
+    op_set = {'+', '-', '*', '/'}
+     
+    for index, char in enumerate(s):
+        if char.isspace() and index < len(s) - 1:
+            continue
+        elif char.isdigit():
+            num = 10 * num + int(char)
+            
+        if char in op_set or index == len(s) - 1:
+            if op == '+':
+                total_sum += term_sum
+                term_sum = num
+            elif op == '-':
+                total_sum += term_sum
+                term_sum = -num
+            elif op == '*':
+                term_sum *= num
+            elif op == '/':
+                sign = 1 if term_sum > 0 else -1
+                term_sum = abs(term_sum) / num * sign
+            op = char
+            num = 0
+            
+    total_sum += term_sum
+    return total_sum
+
+
+class CalculateSpec(unittest.TestCase):
+    def test_empty_string(self):
+        self.assertEqual(0, calculate(""))
+
+    def test_example1(self):
+        self.assertEqual(7, calculate("3+2*2"))
+
+    def test_example2(self):
+        self.assertEqual(1, calculate(" 3/2 "))
+
+    def test_example3(self):
+        self.assertEqual(5, calculate(" 3+5 / 2 "))
+
+    def test_negative1(self):
+        self.assertEqual(-1, calculate("-1"))
+
+    def test_negative2(self):
+        self.assertEqual(0, calculate(" -1/2 "))
+
+    def test_negative3(self):
+        self.assertEqual(-1, calculate(" -7 / 4 "))
+
+    def test_minus(self):
+        self.assertEqual(-5, calculate("-2-3"))
+    
+    def test_positive1(self):
+        self.assertEqual(10, calculate("100/ 10"))
+    
+    def test_positive2(self):
+        self.assertEqual(4, calculate("9 /2"))
+
+    def test_complicated_operations(self):
+        self.assertEqual(-24, calculate("1*2-3/4+5*6-7*8+9/10"))
+
+    def test_complicated_operations2(self):
+        self.assertEqual(10000, calculate("10000-1000/10+100*1"))
+
+    def test_complicated_operations3(self):
+        self.assertEqual(13, calculate("14-3/2"))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
 ```
 
 ### Oct 22, 2019 \[Medium\] Max Number of Edges Added to Tree to Stay Bipartite
