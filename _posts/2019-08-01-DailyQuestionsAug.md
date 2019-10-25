@@ -40,6 +40,19 @@ The path does not have to pass through the root, and each node can have any amou
 
 --->
 
+### Oct 25, 2019 \[Medium\] Jump to the End
+---
+> **Question:** Starting at index 0, for an element n at index i, you are allowed to jump at most n indexes ahead. Given a list of numbers, find the minimum number of jumps to reach the end of the list.
+
+**Example:**
+```py
+Input: [3, 2, 5, 1, 1, 9, 3, 4]
+Output: 2
+Explanation:
+The minimum number of jumps to get to the end of the list is 2:
+3 -> 5 -> 4
+```
+
 ### Oct 24, 2019 \[Medium\] Circle of Chained Words
 ---
 > **Question:** Two words can be 'chained' if the last character of the first word is the same as the first character of the second word.
@@ -52,6 +65,98 @@ Input: ['eggs', 'karat', 'apple', 'snack', 'tuna']
 Output: True
 Explanation:
 The words in the order of ['apple', 'eggs', 'snack', 'karat', 'tuna'] creates a circle of chained words.
+```
+
+**My thoughts:** Treat each non-empty word as an edge in a directed graph with vertices being the first and last letter of the word. Now, pick up any letter as a starting point. Perform DFS and remove any edge we visited from the graph. Check if all edges are used. And make sure the vertex we stop at is indeed the starting point. If all above statisfied, then there exists a cycle that chains all words. 
+
+**Solution with DFS:** [https://repl.it/@trsong/Circle-of-Chained-Words](https://repl.it/@trsong/Circle-of-Chained-Words)
+```py
+import unittest
+
+def exists_cycle(words):
+    if not words:
+        return False
+
+    neighbor = {}
+    for word in words:
+        if not word:
+            continue
+        u, v = word[0], word[-1]
+        if u not in neighbor:
+            neighbor[u] = {}
+        if v not in neighbor[u]:
+            neighbor[u][v] = 0
+        neighbor[u][v] += 1
+
+    if len(neighbor) == 0:
+        return True
+    
+    begin = neighbor.keys()[0];
+    stack = [begin]
+    while stack and len(neighbor) > 0:
+        cur = stack.pop()
+        if cur not in neighbor:
+            return False
+        if len(neighbor[cur]) == 0:
+            continue
+        
+        next = neighbor[cur].keys()[0]
+        neighbor[cur][next] -= 1
+        if neighbor[cur][next] <= 0:
+            del neighbor[cur][next]
+            if len(neighbor[cur]) == 0:
+                del neighbor[cur]
+        stack.append(next)
+    
+    return len(neighbor) == 0 and len(stack) == 1 and stack[0] == begin
+        
+
+class FindCycleSpec(unittest.TestCase):
+    def test_example(self):
+        words = ['eggs', 'karat', 'apple', 'snack', 'tuna']
+        self.assertTrue(exists_cycle(words)) # ['apple', 'eggs', 'snack', 'karat', 'tuna']
+
+    def test_empty_words(self):
+        words = []
+        self.assertFalse(exists_cycle(words))
+    
+    def test_not_contains_cycle(self):
+        words = ['ab']
+        self.assertFalse(exists_cycle(words))
+
+    def test_not_exist_cycle(self):
+        words = ['ab', 'c', 'c', 'def', 'gh']
+        self.assertFalse(exists_cycle(words))
+
+    def test_exist_cycle_but_not_chaining_all_words(self):
+        words = ['ab', 'be', 'bf', 'bc', 'ca']
+        self.assertFalse(exists_cycle(words))
+    
+    def test_exist_cycle_but_not_chaining_all_words2(self):
+        words = ['ab', 'ba', 'bc', 'ca']
+        self.assertFalse(exists_cycle(words))
+
+    def test_duplicate_words_with_cycle(self):
+        words = ['ab', 'bc', 'ca', 'ab', 'bd', 'da' ]
+        self.assertTrue(exists_cycle(words))
+
+    def test_contains_mutiple_cycles(self):
+        words = ['ab', 'ba', 'ac', 'ca']
+        self.assertTrue(exists_cycle(words))
+
+    def test_disconnect_graph(self):
+        words = ['ab', 'ba', 'cd', 'de', 'ec']
+        self.assertFalse(exists_cycle(words))
+
+    def test_conains_empty_string(self):
+        words = ['']
+        self.assertTrue(exists_cycle(words))
+        words2 = ['', 'a', '', '', 'a']
+        self.assertTrue(exists_cycle(words2))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
 ```
 
 ### Oct 23, 2019 LC 227 \[Medium\] Basic Calculator II
