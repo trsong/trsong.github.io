@@ -111,7 +111,7 @@ def exists_cycle(words):
     return len(neighbor) == 0 and len(stack) == 1 and stack[0] == begin
         
 
-class FindCycleSpec(unittest.TestCase):
+class ExistsCycleSpec(unittest.TestCase):
     def test_example(self):
         words = ['eggs', 'karat', 'apple', 'snack', 'tuna']
         self.assertTrue(exists_cycle(words)) # ['apple', 'eggs', 'snack', 'karat', 'tuna']
