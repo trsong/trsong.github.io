@@ -42,7 +42,7 @@ The path does not have to pass through the root, and each node can have any amou
 
 ### Oct 25, 2019 \[Medium\] Jump to the End
 ---
-> **Question:** Starting at index 0, for an element n at index i, you are allowed to jump at most n indexes ahead. Given a list of numbers, find the minimum number of jumps to reach the end of the list.
+> **Question:** Starting at index `0`, for an element `n` at index `i`, you are allowed to jump at most `n` indexes ahead. Given a list of numbers, find the minimum number of jumps to reach the end of the list.
 
 **Example:**
 ```py
