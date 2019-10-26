@@ -40,6 +40,10 @@ The path does not have to pass through the root, and each node can have any amou
 
 --->
 
+### Oct 26, 2019 \[Easy\] Decode String
+---
+> **Question:** Given a string with a certain rule: `k[string]` should be expanded to string `k` times. So for example, `3[abc]` should be expanded to `abcabcabc`. Nested expansions can happen, so `2[a2[b]c]` should be expanded to `abbcabbc`.
+
 ### Oct 25, 2019 \[Medium\] Jump to the End
 ---
 > **Question:** Starting at index `0`, for an element `n` at index `i`, you are allowed to jump at most `n` indexes ahead. Given a list of numbers, find the minimum number of jumps to reach the end of the list.
@@ -51,6 +55,57 @@ Output: 2
 Explanation:
 The minimum number of jumps to get to the end of the list is 2:
 3 -> 5 -> 4
+```
+
+**Solution with DP:** [https://repl.it/@trsong/Jump-to-the-End](https://repl.it/@trsong/Jump-to-the-End)
+```py
+import unittest
+import sys
+
+
+def min_jump(nums):
+    if not nums or len(nums) <= 1:
+        return 0
+
+    n = len(nums)
+    # dp[i] represents min jump to reach index i
+    # dp[i] = min(dp[j]) + 1 for all j < i
+    dp = [sys.maxint] * n
+    dp[0] = 0
+    for i in xrange(1, n):
+        for j in xrange(i):
+            if nums[j] > 0 and j + nums[j] >= i:
+                dp[i] = min(dp[i], dp[j] + 1)
+
+    return dp[n-1] if dp[n-1] != sys.maxint else -1
+
+
+class MinJumpSpec(unittest.TestCase):
+    def test_example(self):
+        self.assertEqual(2, min_jump([3, 2, 5, 1, 1, 9, 3, 4]))  # 3 -> 5 -> 4
+
+    def test_empty_array(self):
+        self.assertEqual(0, min_jump([]))
+
+    def test_one_elem_array(self):
+        self.assertEqual(0, min_jump([1]))
+        self.assertEqual(0, min_jump([-1])) # no need to jump, already reach end
+
+    def test_end_is_unreachable(self):
+        self.assertEqual(-1, min_jump([1, 1, 1, 0, 2]))
+
+    def test_end_is_unreachable2(self): 
+        self.assertEqual(-1, min_jump([2, 3, -1, -2, -3, 0]))
+
+    def test_multiple_routes(self):
+        self.assertEqual(3, min_jump([1, 3, 5, 8, 9, 2, 6, 7, 6, 8, 9]))  # 1-> 3 -> 8 -> 9
+
+    def test_multiple_routes2(self):
+        self.assertEqual(4, min_jump([2, 2, 1, 2, 3, 4, 1, 1, 3, -1]))  # 2 -> 1 -> 2 -> 4 -> -1
+    
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
 ```
 
 ### Oct 24, 2019 \[Medium\] Circle of Chained Words
