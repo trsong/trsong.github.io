@@ -39,7 +39,24 @@ The path does not have to pass through the root, and each node can have any amou
 ``` 
 
 --->
-### Oct 27, 2019 \[Easy\] Group Words that are Anagrams
+
+### Oct 28, 2019 \[Medium\] Symmetric K-ary Tree
+---
+> **Question:** Given a k-ary tree, figure out if the tree is symmetrical.
+> 
+> A k-ary tree is a tree with k-children, and a tree is symmetrical if the data of the left side of the tree is the same as the right side of the tree. 
+>
+> Here's an example of a symmetrical k-ary tree.
+
+```py
+        4
+     /     \
+    3        3
+  / | \    / | \
+9   4  1  1  4  9
+```
+
+### Oct 27, 2019 \[Medium\] Group Words that are Anagrams
 ---
 > **Question:** Given a list of words, group the words that are anagrams of each other. (An anagram are words made up of the same letters).
 
@@ -47,6 +64,96 @@ The path does not have to pass through the root, and each node can have any amou
 ```py
 Input: ['abc', 'bcd', 'cba', 'cbd', 'efg']
 Output: [['abc', 'cba'], ['bcd', 'cbd'], ['efg']]
+```
+
+**My thoughts:** Notice that two words are anagrams of each other if both of them be equal after sort and should have same prefix. eg. `'bcda' => 'abcd'` and `'cadb' => 'abcd'`. We can sort each word in the list and then insert those sorted words into a trie. Finally, we can perform a tree traversal to get all words with same prefix and those words will be words that are anagrams of each other.
+
+**Solution with Trie:** [https://repl.it/@trsong/Group-Words-that-are-Anagrams](https://repl.it/@trsong/Group-Words-that-are-Anagrams)
+```py
+import unittest
+
+class Trie(object):
+    def __init__(self):
+        self.anagram_indices = None
+        self.children = None
+
+    def _insert(self, word, word_index):
+        t = self
+        for char in word:
+            if t.children is None:
+                t.children = {}
+            if char not in t.children:
+                t.children[char] = Trie()
+            t = t.children[char]
+        if t.anagram_indices is None:
+            t.anagram_indices = []
+        t.anagram_indices.append(word_index)
+    
+    def insert_words(self, words):
+        for i, word in enumerate(words):
+            sorted_word = sorted(word)
+            self._insert(sorted_word, i)
+    
+    def query_words_groupby_anagram(self, words):
+        res = []
+        stack = [self]
+        while stack:
+            cur = stack.pop()
+            if cur.anagram_indices is not None:
+                res.append(map(lambda i: words[i], cur.anagram_indices))
+
+            if cur.children is not None:
+                stack.extend(cur.children.values())
+        return res
+
+
+def group_by_anagram(words):
+    t = Trie()
+    t.insert_words(words)
+    return t.query_words_groupby_anagram(words)
+
+
+class GroupyByAnagramSpec(unittest.TestCase):
+    def assert_result(self, expected, result):
+        for l in result:
+            l.sort()
+        result.sort()
+        for l in expected:
+            l.sort()
+        expected.sort()
+        self.assertEqual(expected, result)
+
+    def test_example(self):
+        input = ['abc', 'bcd', 'cba', 'cbd', 'efg']
+        output = [['abc', 'cba'], ['bcd', 'cbd'], ['efg']]
+        self.assert_result(output, group_by_anagram(input))
+
+    def test_empty_word_list(self):
+        self.assert_result([], group_by_anagram([]))
+
+    def test_contains_duplicated_words(self):
+        input = ['a', 'aa', 'aaa', 'a', 'aaa', 'aa', 'aaa']
+        output = [['a', 'a'], ['aa', 'aa'], ['aaa', 'aaa', 'aaa']]
+        self.assert_result(output, group_by_anagram(input))
+
+    def test_contains_duplicated_words2(self):
+        input = ['abc', 'acb', 'abcd', 'dcba', 'abc', 'abcd', 'a']
+        output = [['a'], ['abc', 'acb', 'abc'], ['abcd', 'dcba', 'abcd']]
+        self.assert_result(output, group_by_anagram(input))
+
+    def test_contains_empty_word(self):
+        input = ['', 'a', 'b', 'c', '', 'bc', 'ca', '', 'ab']
+        output = [['', '', ''], ['a'], ['b'], ['c'], ['ab'], ['ca'], ['bc']]
+        self.assert_result(output, group_by_anagram(input))
+
+    def test_word_with_duplicated_letters(self):
+        input = ['aabcde', 'abbcde', 'abccde', 'abcdde', 'abcdee', 'abcdea']
+        output = [['aabcde', 'abcdea'], ['abbcde'], ['abccde'], ['abcdde'], ['abcdee']]
+        self.assert_result(output, group_by_anagram(input))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
 ```
 
 ### Oct 26, 2019 \[Hard\] Decode String
