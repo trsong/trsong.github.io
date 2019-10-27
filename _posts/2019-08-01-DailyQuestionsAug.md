@@ -39,10 +39,152 @@ The path does not have to pass through the root, and each node can have any amou
 ``` 
 
 --->
+### Oct 27, 2019 \[Easy\] Group Words that are Anagrams
+---
+> **Question:** Given a list of words, group the words that are anagrams of each other. (An anagram are words made up of the same letters).
 
-### Oct 26, 2019 \[Easy\] Decode String
+**Example:**
+```py
+Input: ['abc', 'bcd', 'cba', 'cbd', 'efg']
+Output: [['abc', 'cba'], ['bcd', 'cbd'], ['efg']]
+```
+
+### Oct 26, 2019 \[Hard\] Decode String
 ---
 > **Question:** Given a string with a certain rule: `k[string]` should be expanded to string `k` times. So for example, `3[abc]` should be expanded to `abcabcabc`. Nested expansions can happen, so `2[a2[b]c]` should be expanded to `abbcabbc`.
+
+**My thoughts:** This question can be easy and hard depend on if `"string"` in `"k[string]"` contains special character `'['` and `']'` or not. Let's just assume the worst case, it does contain then here comes another issue: what if there is no corresponding close parenthsis eg. `32[ab4[a]`? We have to assume `"32["` by design and the correct outcome is `"32[abaaaa"`. 
+
+**Solution with Recursion:** [https://repl.it/@trsong/Decode-String](https://repl.it/@trsong/Decode-String)
+```py
+import unittest
+
+def decode_string(encoded_string):
+    res = []
+    decode_string_recur(encoded_string, res, 0, len(encoded_string)-1, 1)
+    return ''.join(res)
+
+def decode_string_recur(encoded_string, res, start, end, repeat):
+    if repeat <= 0 or start > end:
+        return
+    
+    counter = 0
+    i = start
+    while i <= end:
+        if not encoded_string[i].isdigit():
+            res.append(encoded_string[i])
+            i += 1
+        else:
+            # In order to handle k[str] 
+            # Step 1: Figure out the multiplier k
+            multiplier = 0
+            j = i
+            while j <= end and encoded_string[j].isdigit():
+                multiplier = 10 * multiplier + int(encoded_string[j])
+                j += 1
+            
+            if j > end or encoded_string[j] != '[':
+                # number is purely str not multiplier. eg. 123ab
+                res.append(str(multiplier))
+                i = j
+                continue
+
+            # Step 2: Figure out the range of '[' and ']'
+            counter = 1
+            k = j + 1
+            while k <= end and counter > 0:
+                if encoded_string[k] == '[':
+                    counter += 1
+                elif encoded_string[k] == ']':
+                    counter -= 1
+                k += 1
+
+            if counter == 0:
+                # Parenthesis closes. eg. 32[ab4[a]]
+                # Recursion on inner part based on multiplier. eg. 32 * f(ab4[a])   
+                decode_string_recur(encoded_string, res, j+1, k-2, multiplier)
+            else:
+                # Parenthesis never close. eg. 32[ab4[a]
+                # Append first part.(eg. 32[). And then process the inner part. eg. 1 * f(ab4[a]). The final outcome is 32[ +  f(ab4[a])
+                res.append(encoded_string[i:j+1])
+                decode_string_recur(encoded_string, res, j+1, k-1, 1)
+            i = k
+    decode_string_recur(encoded_string, res, start, end, repeat-1)
+        
+
+class DecodeStringSpec(unittest.TestCase):
+    def test_example1(self):
+        input = "3[abc]"
+        expected = 3 * "abc"
+        self.assertEqual(expected, decode_string(input))
+
+    def test_example2(self):
+        input = "2[a2[b]c]"
+        expected = 2 * ('a' + 2 * 'b' + 'c')
+        self.assertEqual(expected, decode_string(input)) 
+
+    def test_empty_string(self):
+        self.assertEqual("", decode_string(""))
+        self.assertEqual("", decode_string("42[]"))
+
+    def test_duplicate_zero_times(self):
+        self.assertEqual("", decode_string("0[magic string]"))
+        self.assertEqual("", decode_string("0[0[magic string]]"))
+
+    def test_not_decode_negative_number_of_strings(self):
+        input = "-3[abc]"
+        expected = "-abcabcabc"
+        self.assertEqual(expected, decode_string(input))
+
+    def test_duplicate_more_than_10_times(self):
+        input = "233[ab]"
+        expected =  233 * "ab"
+        self.assertEqual(expected, decode_string(input))
+
+    def test_2Level_nested_encoded_string(self):
+        input = "2[3[a]3[bc]2[d]]4[2[e]]"
+        expected = 2 * (3*"a" + 3*"bc" + 2*"d") + 4*2*"e"
+        self.assertEqual(expected, decode_string(input))
+
+    def test_3Level_nested_encoded_string(self):
+        input = "2[a2[b3[c]d4[ef]g]h]"
+        expected = 2*('a' + 2*('b' + 3*'c' + 'd' + 4 * 'ef' + 'g' ) + 'h')
+        self.assertEqual(expected, decode_string(input))
+
+    ####################################################################
+    # If we allow special characters, the follow will be the test case.
+    # Comment out if you program cannot handle special charactors.
+    ####################################################################
+
+    def test_encoded_string_contains_special_charactor(self):
+        input = "1[3][abc]"
+        expected = "3[abc]"
+        self.assertEqual(expected, decode_string(input))
+
+    def test_encoded_string_contains_special_charactor2(self):
+        input = "1[2][a1[3][b]c]"
+        expected = "2[a3[b]c]"
+        self.assertEqual(expected, decode_string(input))
+    
+    def test_encoded_string_contains_special_charactor3(self):
+        input = "]1[2[a]2["
+        expected = "]1[aa2["
+        self.assertEqual(expected, decode_string(input))
+    
+    def test_encoded_string_contains_special_charactor4(self):
+        input = "3[[[2[a]]]"
+        expected = "3[[[" + 2*'a' + "]]"
+        self.assertEqual(expected, decode_string(input))
+
+    def test_encoded_string_contains_special_charactor5(self):
+        input = "[]1]"
+        expected = "[]1]"
+        self.assertEqual(expected, decode_string(input))
+
+
+if __name__ == "__main__":
+    unittest.main(exit=False)
+```
 
 ### Oct 25, 2019 \[Medium\] Jump to the End
 ---
