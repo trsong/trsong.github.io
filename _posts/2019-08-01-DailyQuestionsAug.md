@@ -40,6 +40,11 @@ The path does not have to pass through the root, and each node can have any amou
 
 --->
 
+### Oct 29, 2019 \[Easy\] Max and Min with Limited Comparisons
+---
+> **Question:** Given a list of numbers of size `n`, where `n` is greater than `3`, find the maximum and minimum of the list using less than `2 * (n - 1)` comparisons.
+
+
 ### Oct 28, 2019 \[Medium\] Symmetric K-ary Tree
 ---
 > **Question:** Given a k-ary tree, figure out if the tree is symmetrical.
@@ -54,6 +59,149 @@ The path does not have to pass through the root, and each node can have any amou
     3        3
   / | \    / | \
 9   4  1  1  4  9
+```
+
+**My thoughts:** If you are thinking about comparing in-order or pre-order traversal, then you are on the wrong track. Only one traversal cannot guarantee same tree structure. Thus, we still need to use recursion. The idea is that if two trees are symmetric to each other, then one tree's mirror should be equal to the other. So we make a mirror copy of the input tree and check if it is equal to the input tree which will tell if a tree itself is symmetric or not.
+
+**Solution:** [https://repl.it/@trsong/Symmetric-K-ary-Tree](https://repl.it/@trsong/Symmetric-K-ary-Tree)
+```py
+import unittest
+
+class TreeNode(object):
+    def __init__(self, val, children=None):
+        self.val = val
+        self.children = children
+
+
+def is_mirror_between(t1, t2):
+    if t1 is None and t2 is None:
+        return True
+
+    if t1 and t2 and t1.val == t2.val:
+        if t1.children is None and t2.children is None:
+            return True
+        if t1.children is None or t2.children is None:
+            return False
+
+        for t1_child, t2_child in zip(t1.children, reversed(t2.children)):
+            if not is_mirror_between(t1_child, t2_child):
+                return False
+        return True
+    else:
+        return False
+    
+
+def is_symmetric(tree):
+    return is_mirror_between(tree, tree)
+
+
+class IsSymmetricSpec(unittest.TestCase):
+    def test_example(self):
+        """
+                4
+             /     \
+            3        3
+          / | \    / | \
+        9   4  1  1  4  9
+        """
+        left_tree = TreeNode(3, [TreeNode(9), TreeNode(4), TreeNode(1)])
+        right_tree = TreeNode(3, [TreeNode(1), TreeNode(4), TreeNode(9)])
+        root = TreeNode(4, [left_tree, right_tree])
+        self.assertTrue(is_symmetric(root))
+
+    def test_empty_tree(self):
+        self.assertTrue(is_symmetric(None))
+
+    def test_node_with_odd_number_of_children(self):
+        """
+                8
+            /   |   \
+          4     5     4
+         / \   / \   / \
+        1   2 3   3 2   1
+        """
+        left_tree = TreeNode(4, [TreeNode(1), TreeNode(2)])
+        mid_tree = TreeNode(5, [TreeNode(3), TreeNode(3)])
+        right_tree= TreeNode(4, [TreeNode(2), TreeNode(1)])
+        root = TreeNode(8, [left_tree, mid_tree, right_tree])
+        self.assertTrue(is_symmetric(root))
+
+    def test_binary_tree(self):
+        """
+             6
+           /   \
+          4     4 
+         / \   / \
+        1   2 2   1
+         \       / 
+          3     3 
+        """
+        left_tree = TreeNode(4, [TreeNode(1, [TreeNode(3)]), TreeNode(2)])
+        right_tree = TreeNode(4, [TreeNode(2), TreeNode(1, [TreeNode(3)])])
+        root = TreeNode(6, [left_tree, right_tree])
+        self.assertTrue(is_symmetric(root))
+
+    def test_unsymmetric_tree(self):
+        """
+             6
+           / | \
+          4  5  4 
+         /  /  / \
+        1  2  2   1
+        """
+        left_tree = TreeNode(4, [TreeNode(1)])
+        mid_tree = TreeNode(5, [TreeNode(2)])
+        right_tree = TreeNode(4, [TreeNode(2), TreeNode(1)])
+        root = TreeNode(6, [left_tree, mid_tree, right_tree])
+        self.assertFalse(is_symmetric(root))
+
+    def test_unsymmetric_tree2(self):
+        """
+             6
+           / | \
+          4  5  4 
+           / | \
+          2  2  1
+        """
+        left_tree = TreeNode(4)
+        mid_tree = TreeNode(5, [TreeNode(2), TreeNode(2), TreeNode(1)])
+        right_tree = TreeNode(4)
+        root = TreeNode(6, [left_tree, mid_tree, right_tree])
+        self.assertFalse(is_symmetric(root))
+
+    def test_unsymmetric_tree3(self):
+        """
+              6
+           / | | \
+          4  5 5  4 
+          |  | |  |
+          2  2 2  3
+        """
+        left_tree = TreeNode(4, [TreeNode(2)])
+        mid_left_tree = TreeNode(5, [TreeNode(2)])
+        mid_right_tree = TreeNode(5, [TreeNode(2)])
+        right_tree = TreeNode(4, [TreeNode(3)])
+        root = TreeNode(6, [left_tree, mid_left_tree, mid_right_tree, right_tree])
+        self.assertFalse(is_symmetric(root))
+
+    def test_unsymmetric_tree4(self):
+        """
+              1
+            /    \
+           2      2
+          / \   / | \
+         4   5 6  5  4
+             |
+             6
+        """
+        left_tree = TreeNode(2, [TreeNode(4), TreeNode(5, [TreeNode(6)])])
+        right_tree = TreeNode(2, [TreeNode(6), TreeNode(5), TreeNode(4)])
+        root = TreeNode(1, [left_tree, right_tree])
+        self.assertFalse(is_symmetric(root))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
 ```
 
 ### Oct 27, 2019 \[Medium\] Group Words that are Anagrams
