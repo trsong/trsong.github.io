@@ -14,6 +14,9 @@ categories: Python/Java
 
 **Python 2.7 Playground:** [https://repl.it/languages/python](https://repl.it/languages/python)
 
+**Python 3 Playground:** [https://repl.it/languages/python3](https://repl.it/languages/python3) 
+
+**Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java) 
 
 <!-- 
 
@@ -40,10 +43,125 @@ The path does not have to pass through the root, and each node can have any amou
 
 --->
 
+### Oct 30, 2019 \[Medium\] All Possible Valid IP Address Combinations
+---
+> **Question:** Given a string of digits, generate all possible valid IP address combinations.
+>
+> IP addresses must follow the format A.B.C.D, where A, B, C, and D are numbers between `0` and `255`. Zero-prefixed numbers, such as `01` and `065`, are not allowed, except for `0` itself.
+>
+> For example, given `"2542540123"`, you should return `['254.25.40.123', '254.254.0.123']`
+> 
+
 ### Oct 29, 2019 \[Easy\] Max and Min with Limited Comparisons
 ---
 > **Question:** Given a list of numbers of size `n`, where `n` is greater than `3`, find the maximum and minimum of the list using less than `2 * (n - 1)` comparisons.
 
+**My thoughts:** The idea is to use Tournament Method. Think about each number as a team in the tournament. One team, zero matches. Two team, one match. N team, let's break them into half and use two matches to get best of best and worest of worest:
+
+```
+T(n) = 2 * T(n/2) + 2
+T(1) = 0
+T(2) = 1
+
+=>
+T(n) = 3n/2 - 2 
+```
+
+**Solution with Recursion:** [https://repl.it/@trsong/Max-and-Min-with-Limited-Comparisons](https://repl.it/@trsong/Max-and-Min-with-Limited-Comparisons)
+```py
+import unittest
+
+
+class MinMaxPair(object):
+    def __init__(self, min_val, max_val):
+        self.min_val = min_val
+        self.max_val = max_val
+
+
+def get_min_max_recur(nums, lo, hi):
+    if lo > hi:
+        return None
+    elif lo == hi:
+        return MinMaxPair(nums[lo], nums[lo])
+    elif lo == hi - 1:
+        if nums[lo] < nums[hi]:
+            return MinMaxPair(nums[lo], nums[hi])
+        else:
+            return MinMaxPair(nums[hi], nums[lo])
+
+    mid = lo + (hi - lo) // 2
+    left_res = get_min_max_recur(nums, lo, mid)
+    right_res = get_min_max_recur(nums, mid + 1, hi)
+    if left_res is not None and right_res is not None:
+        min_val = left_res.min_val
+        max_val = left_res.max_val
+        if min_val > right_res.min_val:
+            min_val = right_res.min_val
+        if max_val < right_res.max_val:
+            max_val = right_res.max_val
+        return MinMaxPair(min_val, max_val)
+
+    elif left_res is None:
+        return right_res
+    else:
+        return left_res
+
+
+def get_min_max(nums):
+    return get_min_max_recur(nums, 0, len(nums) - 1)
+
+
+#######################################
+# Testing Utilities
+#######################################
+class Number(int):
+    def __new__(self, value):
+        self.num_comparison = 0
+        return int.__new__(self, value)
+
+    def __cmp__(self, other):
+        self.num_comparison += 1
+        return int.__cmp__(self, other)
+
+    def count_comparison(self):
+        return self.num_comparison
+
+
+class GetMinMaxSpec(unittest.TestCase):
+    def assert_get_min_max(self, nums):
+        min_val = min(nums)
+        max_val = max(nums)
+        n = len(nums)
+        mapped_nums = list(map(Number, nums))
+        res = get_min_max(mapped_nums)
+        self.assertEqual(min_val, res.min_val)
+        self.assertEqual(max_val, res.max_val)
+        total_num_comparisons = sum(map(lambda num: num.count_comparison(), mapped_nums))
+        if total_num_comparisons > 0:
+            self.assertLess(total_num_comparisons, 2 * (n - 1))
+
+    def test_empty_list(self):
+        self.assertIsNone(get_min_max([]))
+
+    def test_list_with_one_element(self):
+        self.assert_get_min_max([-1])
+
+    def test_list_with_two_elements(self):
+        self.assert_get_min_max([1, 2])
+
+    def test_increasing_list(self):
+        self.assert_get_min_max([1, 2, 3, 4])
+
+    def test_list_with_duplicated_element(self):
+        self.assert_get_min_max([-1, 1, -1, 1])
+
+    def test_long_list(self):
+        self.assert_get_min_max([1, 2, 3, 4, 5, 6, 7, 7, 6, 5, 4, 3, 2, 1])
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
+```
 
 ### Oct 28, 2019 \[Medium\] Symmetric K-ary Tree
 ---
