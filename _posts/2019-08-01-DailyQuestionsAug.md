@@ -43,14 +43,121 @@ The path does not have to pass through the root, and each node can have any amou
 
 --->
 
-### Oct 30, 2019 \[Medium\] All Possible Valid IP Address Combinations
+### Oct 31, 2019 LC 274 \[Medium\] H-Index
+---
+> **Question:** The h-index is a metric that attempts to measure the productivity and citation impact of the publication of a scholar. The definition of the h-index is if a scholar has at least h of their papers cited h times.
+>
+> Given a list of publications of the number of citations a scholar has, find their h-index.
+
+**Example:**
+```py
+Input: [3, 5, 0, 1, 3]
+Output: 3
+Explanation:
+There are 3 publications with 3 or more citations, hence the h-index is 3.
+```
+
+### Oct 30, 2019 LC 93 \[Medium\] All Possible Valid IP Address Combinations
 ---
 > **Question:** Given a string of digits, generate all possible valid IP address combinations.
 >
 > IP addresses must follow the format A.B.C.D, where A, B, C, and D are numbers between `0` and `255`. Zero-prefixed numbers, such as `01` and `065`, are not allowed, except for `0` itself.
 >
 > For example, given `"2542540123"`, you should return `['254.25.40.123', '254.254.0.123']`
-> 
+
+**My thoughts:** This problem can be solved with backtracking. We starts from empty string and choose substring with length from 1 to 3. Note that a valid solution should have 4 parts and for each part ranges from 0 to 255. Pay attention to the following constraints:
+
+Each substring is one of the following:
+- `[0-9]`
+- `[1-9][0-9]`
+- `[1-2][0-9][0-9]` and int(substring) <= 255
+
+If any of above constaint is violated, we prune this branch and move to next recursion. 
+
+**Solution with Backtrack:** [https://repl.it/@trsong/All-Possible-Valid-IP-Address-Combinations](https://repl.it/@trsong/All-Possible-Valid-IP-Address-Combinations)
+```py
+import unittest
+
+AVAILABLE_LENGTH = [1, 2, 3]
+NUM_SUB_PARTS = 4
+
+def backtrack(raw_str, res, accu, pos):
+    if pos == len(raw_str) and len(accu) == NUM_SUB_PARTS:
+        ip_str = '.'.join(accu)
+        res.append(ip_str)
+    elif pos < len(raw_str):
+        for length in AVAILABLE_LENGTH:
+            next_pos = pos + length
+            remaining_parts = NUM_SUB_PARTS - len(accu) - 1
+            if next_pos > len(raw_str) or remaining_parts < 0:
+                continue
+            elif raw_str[pos] == '0' and length > 1:
+                continue
+            elif length == 3 and int(raw_str[pos: next_pos]) > 255:
+                continue
+            else:
+                accu.append(raw_str[pos: next_pos])
+                backtrack(raw_str, res, accu, next_pos)
+                accu.pop()
+
+
+def all_ip_combinations(raw_str):
+    res = []
+    backtrack(raw_str, res, [], 0)
+    return res
+
+
+class AllIpCombinationSpec(unittest.TestCase):
+    def assert_result(self, expected, result):
+        self.assertEqual(sorted(expected), sorted(result))
+
+    def test_example(self):
+        raw_str = '2542540123'
+        expected = ['254.25.40.123', '254.254.0.123']
+        self.assert_result(expected, all_ip_combinations(raw_str))
+
+    def test_empty_string(self):
+        self.assert_result([], all_ip_combinations(''))
+
+    def test_no_valid_ips(self):
+        raw_str = '25505011535'
+        expected = []
+        self.assert_result(expected, all_ip_combinations(raw_str))
+
+    def test_multiple_outcomes(self):
+        raw_str = '25525511135'
+        expected = ['255.255.11.135', '255.255.111.35']
+        self.assert_result(expected, all_ip_combinations(raw_str))
+
+    def test_multiple_outcomes2(self):
+        raw_str = '25011255255'
+        expected = ['250.112.55.255', '250.11.255.255']
+        self.assert_result(expected, all_ip_combinations(raw_str))
+
+    def test_multiple_outcomes3(self):
+        raw_str = '10101010'
+        expected = ['10.10.10.10', '10.10.101.0', '10.101.0.10', '101.0.10.10', '101.0.101.0']
+        self.assert_result(expected, all_ip_combinations(raw_str))
+    
+    def test_multiple_outcomes4(self):
+        raw_str = '01010101'
+        expected = ['0.10.10.101', '0.101.0.101']
+        self.assert_result(expected, all_ip_combinations(raw_str))
+
+    def test_unique_outcome(self):
+        raw_str = '111111111111'
+        expected = ['111.111.111.111']
+        self.assert_result(expected, all_ip_combinations(raw_str))
+
+    def test_unique_outcome2(self):
+        raw_str = '0000'
+        expected = ['0.0.0.0']
+        self.assert_result(expected, all_ip_combinations(raw_str))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
+```
 
 ### Oct 29, 2019 \[Easy\] Max and Min with Limited Comparisons
 ---
