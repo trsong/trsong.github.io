@@ -42,6 +42,12 @@ The path does not have to pass through the root, and each node can have any amou
 ``` 
 
 --->
+### Nov 1, 2019 \[Hard\] Partition Array to Reach Mininum Difference
+---
+> **Question:** Given an array of positive integers, divide the array into two subsets such that the difference between the sum of the subsets is as small as possible.
+>
+> For example, given `[5, 10, 15, 20, 25]`, return the sets `[10, 25]` and `[5, 15, 20]`, which has a difference of `5`, which is the smallest possible difference.
+
 
 ### Oct 31, 2019 LC 274 \[Medium\] H-Index
 ---
@@ -55,6 +61,64 @@ Input: [3, 5, 0, 1, 3]
 Output: 3
 Explanation:
 There are 3 publications with 3 or more citations, hence the h-index is 3.
+```
+
+**My thoughts:** The question requires finding a special cut-off number `h` so that we can find at least h number publications with citation number >= h. The solution is quite simple, just sort the citation in reverse order and go over the list from high to low to find the cut-off citation number less than number of publication we iterate through so far. 
+
+The best case running time requires at least `O(n logn)` time due to sorting. We can improve that by leveraging max-heap to achieve `O(n)` as heapify an array with size `n` can be done within `O(n)` time. Altough both implementations have `O(n logn)` worst case running time, still using priority queue can improve the best case running time and average case running time.
+
+**Solution with Priority Queue:** [https://repl.it/@trsong/H-Index](https://repl.it/@trsong/H-Index)
+```py
+import unittest
+from Queue import PriorityQueue
+
+def calculate_h_index(citations):
+    max_heap = PriorityQueue()
+    for num in citations:
+        if num > 0:
+            max_heap.put(-num)
+    
+    count = 0
+    while not max_heap.empty():
+        num = -max_heap.get()
+        if count >= num:
+            return count
+        count += 1
+
+    # count is at least number of publications with non-zero citation 
+    return count
+
+
+class CalculateHIndexSpec(unittest.TestCase):
+    def test_example(self):
+        self.assertEqual(3, calculate_h_index([3, 5, 0, 1, 3]))
+
+    def test_another_citation_array(self):
+        self.assertEqual(3, calculate_h_index([3, 0, 6, 1, 5]))
+
+    def test_empty_citations(self):
+        self.assertEqual(0, calculate_h_index([]))
+
+    def test_only_one_publications(self):
+        self.assertEqual(1, calculate_h_index([42]))
+
+    def test_balanced_citation_counts(self):
+        self.assertEqual(5, calculate_h_index([9, 8, 7, 6, 5, 4, 3, 2, 1]))
+
+    def test_duplicated_citations(self):
+        self.assertEqual(3, calculate_h_index([3, 3, 3, 2, 2, 2, 2, 2]))
+    
+    def test_zero_citations_not_count(self):
+        self.assertEqual(2, calculate_h_index([10, 0, 0, 0, 0, 10]))
+    
+    def test_citations_number_greater_than_publications(self):
+        self.assertEqual(4, calculate_h_index([9, 8, 7, 6]))
+
+    def test_citations_number_greater_than_publications2(self):
+        self.assertEqual(3, calculate_h_index([1, 7, 9, 4]))   
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
 ```
 
 ### Oct 30, 2019 LC 93 \[Medium\] All Possible Valid IP Address Combinations
