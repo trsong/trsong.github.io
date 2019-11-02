@@ -42,12 +42,106 @@ The path does not have to pass through the root, and each node can have any amou
 ``` 
 
 --->
+
+### Nov 2, 2019 \[Easy\] String Compression
+---
+> **Question:** Given an array of characters with repeats, compress it in place. The length after compression should be less than or equal to the original array.
+
+**Example:**
+```py
+Input: ['a', 'a', 'b', 'c', 'c', 'c']
+Output: ['a', '2', 'b', 'c', '3']
+```
+
 ### Nov 1, 2019 \[Hard\] Partition Array to Reach Mininum Difference
 ---
 > **Question:** Given an array of positive integers, divide the array into two subsets such that the difference between the sum of the subsets is as small as possible.
 >
 > For example, given `[5, 10, 15, 20, 25]`, return the sets `[10, 25]` and `[5, 15, 20]`, which has a difference of `5`, which is the smallest possible difference.
 
+
+**Solution with DP:** [https://repl.it/@trsong/Partition-Array-to-Reach-Mininum-Difference](https://repl.it/@trsong/Partition-Array-to-Reach-Mininum-Difference)
+```py
+import unittest
+
+def min_partition_difference(nums):
+    if not nums:
+        return 0
+
+    sum_nums = sum(nums)
+    n = len(nums)
+
+    # Let dp[i][s] represents whether subset of nums[0:i] can sum up to s
+    # dp[i][s] = dp[i-1][s]               if exclude current element
+    # dp[i][s] = dp[i-1][s - nums[i-1]]   if incldue current element
+    dp = [[False for _ in xrange(sum_nums + 1)] for _ in xrange(n+1)]
+
+    for i in xrange(n+1):
+        # Any subsets can sum up to 0
+        dp[i][0] = True
+
+    for i in xrange(1, n+1):
+        for s in xrange(1, sum_nums+1):
+            if dp[i-1][s]:
+                # Exclude current element, as we can already reach sum s
+                dp[i][s] = True
+            elif nums[i-1] <= s:
+                # As all number are positive, include current elem cannot exceed current sum
+                dp[i][s] = dp[i-1][s - nums[i-1]]
+
+    """
+     Let's do some math here:
+     Let s1, s2 be the size to two subsets after partition and assume s1 >= s2
+     We can have s1 + s2 = sum_nums and we want to get min{s1 - s2} where s1 >= s2:
+
+     min{s1 - s2}
+     = min{s1 + s2 - s2 - s2}
+     = min{sum_nums - 2 * s2}  in this step sum_nums - 2 * s2 >=0, gives s2 <= sum_nums/ 2
+     = sum_nums - 2 * max{s2}  where s2 <= sum_nums/2
+    """
+    s2 = 0
+    for s in xrange(sum_nums/2, 0, -1):
+        if dp[n][s]:
+            s2 = s
+            break
+
+    return sum_nums - 2 * s2
+
+
+class MinPartitionDifferenceSpec(unittest.TestCase):
+    def test_example(self):
+        # Partition: [10, 25] and [5, 15, 20]
+        self.assertEqual(5, min_partition_difference([5, 10, 15, 20, 25]))
+
+    def test_empty_array(self):
+        self.assertEqual(0, min_partition_difference([]))
+
+    def test_array_with_one_element(self):
+        self.assertEqual(42, min_partition_difference([42]))
+
+    def test_array_with_two_elements(self):
+        self.assertEqual(0, min_partition_difference([42, 42]))
+
+    def test_unsorted_array_with_duplicated_numbers(self):
+        # Partition: [3, 4] and [1, 2, 2, 1]
+        self.assertEqual(1, min_partition_difference([3, 1, 4, 2, 2, 1]))
+
+    def test_unsorted_array_with_unique_numbers(self):
+        # Partition: [11] and [1, 5, 6]
+        self.assertEqual(1, min_partition_difference([1, 6, 11, 5]))
+
+    def test_sorted_array_with_duplicated_numbers(self):
+        # Partition: [1, 2, 2] and [4]
+        self.assertEqual(1, min_partition_difference([1, 2, 2, 4]))
+
+    def test_min_partition_difference_is_zero(self):
+        # Partition: [1, 8, 2, 7] and [3, 6, 4, 5]
+        self.assertEqual(0, min_partition_difference([1, 2, 3, 4, 5, 6, 7, 8]))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
+```
 
 ### Oct 31, 2019 LC 274 \[Medium\] H-Index
 ---
