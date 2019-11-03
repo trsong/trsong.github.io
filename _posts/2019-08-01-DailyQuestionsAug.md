@@ -43,6 +43,17 @@ The path does not have to pass through the root, and each node can have any amou
 
 --->
 
+### Nov 3, 2019 \[Medium\] Find Unique Element among Array of Duplicates
+---
+> **Question:** Given an array of integers, arr, where all numbers occur twice except one number which occurs once, find the number. Your solution should ideally be O(n) time and use constant extra space.
+> 
+**Example:**
+```py
+Input: arr = [7, 3, 5, 5, 4, 3, 4, 8, 8]
+Output: 7
+```
+
+
 ### Nov 2, 2019 \[Easy\] String Compression
 ---
 > **Question:** Given an array of characters with repeats, compress it in place. The length after compression should be less than or equal to the original array.
@@ -51,6 +62,87 @@ The path does not have to pass through the root, and each node can have any amou
 ```py
 Input: ['a', 'a', 'b', 'c', 'c', 'c']
 Output: ['a', '2', 'b', 'c', '3']
+```
+
+**Solution with Two-Pointers:** [https://repl.it/@trsong/String-Compression](https://repl.it/@trsong/String-Compression)
+```py
+import unittest
+
+def string_compression(msg):
+    if not msg:
+        return
+
+    n = len(msg)
+    count = 1
+    j = 0
+    for i in xrange(1, len(msg)+1):
+        if i < n and msg[i] == msg[i-1]:
+            count += 1
+        else:
+            msg[j] = msg[i-1]
+            j += 1
+            if count > 1:    
+                for char in str(count):
+                    msg[j] = char
+                    j += 1
+            count = 1
+    
+    for _ in xrange(j, n):
+        msg.pop()
+
+
+class StringCompressionSpec(unittest.TestCase):
+    def test_example(self):
+        msg = ['a', 'a', 'b', 'c', 'c', 'c']
+        expected = ['a', '2', 'b', 'c', '3']
+        string_compression(msg)
+        self.assertEqual(expected, msg)
+
+    def test_empty_msg(self):
+        msg = []
+        expected = []
+        string_compression(msg)
+        self.assertEqual(expected, msg)
+
+    def test_msg_with_one_char(self):
+        msg = ['a']
+        expected = ['a']
+        string_compression(msg)
+        self.assertEqual(expected, msg)
+
+    def test_msg_with_distinct_chars(self):
+        msg = ['a', 'b', 'c', 'd']
+        expected = ['a', 'b', 'c', 'd']
+        string_compression(msg)
+        self.assertEqual(expected, msg)
+
+    def test_msg_with_repeated_chars(self):
+        msg = ['a'] * 12
+        expected = ['a', '1', '2']
+        string_compression(msg)
+        self.assertEqual(expected, msg)
+
+    def test_msg_with_repeated_chars2(self):
+        msg = ['a', 'b', 'b']
+        expected = ['a', 'b', '2']
+        string_compression(msg)
+        self.assertEqual(expected, msg)
+
+    def test_msg_with_repeated_chars3(self):
+        msg = ['a'] * 10 + ['b'] * 21 + ['c'] * 198
+        expected = ['a', '1', '0', 'b', '2', '1', 'c', '1', '9', '8']
+        string_compression(msg)
+        self.assertEqual(expected, msg)
+
+    def test_msg_contains_digits(self):
+        msg = ['a', '2', 'a', '3', '3']
+        expected = ['a', '2', 'a', '3', '2']
+        string_compression(msg)
+        self.assertEqual(expected, msg)
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
 ```
 
 ### Nov 1, 2019 \[Hard\] Partition Array to Reach Mininum Difference
