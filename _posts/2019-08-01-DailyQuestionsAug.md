@@ -43,7 +43,17 @@ The path does not have to pass through the root, and each node can have any amou
 
 --->
 
-### Nov 3, 2019 \[Medium\] Find Unique Element among Array of Duplicates
+### Nov 4, 2019 \[Easy\] Make the Largest Number
+---
+> **Question:** Given a number of integers, combine them so it would create the largest number.
+
+**Example:**
+```py
+Input:  [17, 7, 2, 45, 72]
+Output:  77245217
+```
+
+### Nov 3, 2019 \[Easy\] Find Unique Element among Array of Duplicates
 ---
 > **Question:** Given an array of integers, arr, where all numbers occur twice except one number which occurs once, find the number. Your solution should ideally be O(n) time and use constant extra space.
 > 
@@ -51,6 +61,54 @@ The path does not have to pass through the root, and each node can have any amou
 ```py
 Input: arr = [7, 3, 5, 5, 4, 3, 4, 8, 8]
 Output: 7
+```
+
+**My thoughts:** XOR has many pretty useful properties:
+
+* 0 ^ x = x
+* x ^ x = 0
+* x ^ y = y ^ x 
+
+For example: 
+```py
+7 ^ 3 ^ 5 ^ 5 ^ 4 ^ 3 ^ 4 ^ 8 ^ 8
+= 7 ^ 3 ^ (5 ^ 5) ^ 4 ^ 3 ^ 4 ^ (8 ^ 8)
+= 7 ^ 3 ^ 4 ^ 3 ^ 4 
+= 7 ^ 3 ^ 3 ^ 4 ^ 4
+= 7 ^ (3 ^ 3) ^ (4 ^ 4)
+= 7
+```
+
+**Solution with XOR:** [https://repl.it/@trsong/Find-Unique-Element-among-Array-of-Duplicates](https://repl.it/@trsong/Find-Unique-Element-among-Array-of-Duplicates)
+```py
+import unittest
+
+def find_unique_element(nums):
+    res = 0
+    for num in nums:
+        res ^= num
+    return res
+
+
+class FindUniqueElementSpec(unittest.TestCase):
+    def test_example(self):
+        self.assertEqual(7, find_unique_element([7, 3, 5, 5, 4, 3, 4, 8, 8]))
+
+    def test_array_with_one_element(self):
+        self.assertEqual(42, find_unique_element([42]))
+
+    def test_same_duplicated_number_not_consecutive(self):
+        self.assertEqual(5, find_unique_element([1, 2, 1, 5, 3, 2, 3]))
+
+    def test_array_with_negative_elements(self):
+        self.assertEqual(-1, find_unique_element([-1, 1, 0, 0, 1]))
+
+    def test_array_with_negative_elements2(self):
+        self.assertEqual(0, find_unique_element([-1, 0, 1, -2, 2, -1, 1, -2, 2]))
+    
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
 ```
 
 
