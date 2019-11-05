@@ -43,12 +43,6 @@ The path does not have to pass through the root, and each node can have any amou
 
 --->
 
-### Nov 5, 2019 \[Medium\] Normalize Pathname
----
-> **Question:** Given an absolute pathname that may have . or .. as part of it, return the shortest standardized path.
->
-> For example, given `"/usr/bin/../bin/./scripts/../"`, return `"/usr/bin/"`.
-
 ### Nov 4, 2019 \[Easy\] Make the Largest Number
 ---
 > **Question:** Given a number of integers, combine them so it would create the largest number.
