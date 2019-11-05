@@ -42,6 +42,11 @@ The path does not have to pass through the root, and each node can have any amou
 ``` 
 
 --->
+### Nov 5, 2019 \[Medium\] Normalize Pathname
+---
+> **Question:** Given an absolute pathname that may have . or .. as part of it, return the shortest standardized path.
+>
+> For example, given `"/usr/bin/../bin/./scripts/../"`, return `"/usr/bin/"`.
 
 ### Nov 4, 2019 \[Easy\] Make the Largest Number
 ---
@@ -51,6 +56,72 @@ The path does not have to pass through the root, and each node can have any amou
 ```py
 Input:  [17, 7, 2, 45, 72]
 Output:  77245217
+```
+
+**Solution with Customized Sort:** [https://repl.it/@trsong/Make-the-Largest-Number](https://repl.it/@trsong/Make-the-Largest-Number)
+```py
+import unittest
+
+def construct_largest_number(nums):
+    if not nums:
+        return 0
+
+    def string_cmp(s1, s2):
+        s12 = s1 + s2
+        s21 = s2 + s1
+        if s12 < s21:
+            return -1
+        elif s12 == s21:
+            return 0
+        else:
+            return 1
+    
+    negative_nums = filter(lambda x: x < 0, nums)
+    filtered_nums = filter(lambda x: x >= 0, nums)
+    str_nums = map(str, filtered_nums)
+
+    if negative_nums:
+        str_nums.sort(string_cmp)
+        return int(str(negative_nums[0]) + "".join(str_nums))
+    else:
+        str_nums.sort(string_cmp, reverse=True)
+        return int("".join(str_nums))
+
+
+class ConstructLargestNumberSpec(unittest.TestCase):
+    def test_example(self):
+        self.assertEqual(77245217, construct_largest_number([17, 7, 2, 45, 72]))
+
+    def test_empty_array(self):
+        self.assertEqual(0, construct_largest_number([]))
+
+    def test_array_with_one_element(self):
+        self.assertEqual(-42, construct_largest_number([-42]))
+
+    def test_array_with_duplicated_zeros(self):
+        self.assertEqual(4321000, construct_largest_number([4, 1, 3, 2, 0, 0, 0]))
+
+    def test_array_with_unaligned_digits(self):
+        self.assertEqual(123451234123121, construct_largest_number([1, 12, 123, 1234, 12345]))
+
+    def test_array_with_unaligned_digits2(self):
+        self.assertEqual(4434324321, construct_largest_number([4321, 432, 43, 4]))
+    
+    def test_array_with_unaligned_digits3(self):
+        self.assertEqual(6054854654, construct_largest_number([54, 546, 548, 60]))
+    
+    def test_array_with_unaligned_digits4(self):
+        self.assertEqual(998764543431, construct_largest_number([1, 34, 3, 98, 9, 76, 45, 4]))
+
+    def test_array_with_negative_numbers(self):
+        self.assertEqual(-101234, construct_largest_number([-1, 0, 1, 2, 3, 4]))
+    
+    def test_array_with_negative_numbers2(self):
+        self.assertEqual(-99990101202123442, construct_largest_number([0, 1, 10, 2, 21, 20, 34, 42, -9999]))
+        
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
 ```
 
 ### Nov 3, 2019 \[Easy\] Find Unique Element among Array of Duplicates
