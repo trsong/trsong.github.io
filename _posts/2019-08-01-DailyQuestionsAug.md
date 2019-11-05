@@ -42,6 +42,7 @@ The path does not have to pass through the root, and each node can have any amou
 ``` 
 
 --->
+
 ### Nov 5, 2019 \[Medium\] Normalize Pathname
 ---
 > **Question:** Given an absolute pathname that may have . or .. as part of it, return the shortest standardized path.
