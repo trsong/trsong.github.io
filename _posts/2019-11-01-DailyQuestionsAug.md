@@ -18,30 +18,6 @@ categories: Python/Java
 
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java) 
 
-<!-- 
-
-### Sep 11, 2019 \[Hard\] Longest Path in the Tree
----
-> **Question:**  Given a tree where each edge has a weight, compute the length of the longest path in the tree.
-
-**Example:**
-
-```py
-Given the following tree:
-
-   a
-  /|\
- b c d
-    / \
-   e   f
-  / \
- g   h
-and the weights: a-b: 3, a-c: 5, a-d: 8, d-e: 2, d-f: 4, e-g: 1, e-h: 1, the longest path would be c -> a -> d -> f, with a length of 17.
-
-The path does not have to pass through the root, and each node can have any amount of children.
-``` 
-
---->
 ### Nov 5, 2019 \[Medium\] Normalize Pathname
 ---
 > **Question:** Given an absolute pathname that may have . or .. as part of it, return the shortest standardized path.
