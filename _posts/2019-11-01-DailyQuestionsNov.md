@@ -18,11 +18,162 @@ categories: Python/Java
 
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java) 
 
+### Nov 6, 2019 \[Easy\] Zombie in Matrix
+---
+> **Question:** Given a 2D grid, each cell is either a zombie 1 or a human 0. Zombies can turn adjacent (up/down/left/right) human beings into zombies every hour. Find out how many hours does it take to infect all humans?
+
+**Example:**
+```py
+Input:
+[[0, 1, 1, 0, 1],
+ [0, 1, 0, 1, 0],
+ [0, 0, 0, 0, 1],
+ [0, 1, 0, 0, 0]]
+
+Output: 2
+
+Explanation:
+At the end of the 1st hour, the status of the grid:
+[[1, 1, 1, 1, 1],
+ [1, 1, 1, 1, 1],
+ [0, 1, 0, 1, 1],
+ [1, 1, 1, 0, 1]]
+
+At the end of the 2nd hour, the status of the grid:
+[[1, 1, 1, 1, 1],
+ [1, 1, 1, 1, 1],
+ [1, 1, 1, 1, 1],
+ [1, 1, 1, 1, 1]]
+ ```
+
+
 ### Nov 5, 2019 \[Medium\] Normalize Pathname
 ---
 > **Question:** Given an absolute pathname that may have . or .. as part of it, return the shortest standardized path.
 >
-> For example, given `"/usr/bin/../bin/./scripts/../"`, return `"/usr/bin/"`.
+> For example, given `"/usr/bin/../bin/./scripts/../"`, return `"/usr/bin"`.
+
+**Solution with Stack:** [https://repl.it/@trsong/Normalize-Pathname](https://repl.it/@trsong/Normalize-Pathname)
+```py
+import unittest
+
+def normalize_pathname(path):
+    stack = []
+    pathname = []
+    prev = None
+    for c in path:
+        if c == '/' and prev != c and pathname:
+            stack.append(''.join(pathname))
+            pathname = []
+        elif c == '.' and prev == c and stack:
+            stack.pop()
+        elif c.isalnum():
+            if prev == '.':
+                pathname.append('.')
+            pathname.append(c)
+        prev = c
+    
+    if pathname:
+        stack.append(''.join(pathname))
+
+    return '/' + '/'.join(stack)
+
+
+class NormalizePathnameSpec(unittest.TestCase):
+    def test_example(self):
+        original_path = 'usr/bin/../bin/./scripts/../'
+        normalized_path = '/usr/bin'
+        self.assertEqual(normalized_path, normalize_pathname(original_path))
+
+    def test_empty_path(self):
+        original_path = ''
+        normalized_path = '/'
+        self.assertEqual(normalized_path, normalize_pathname(original_path))
+    
+    def test_file_in_root_directory(self):
+        original_path = 'bin'
+        normalized_path = '/bin'
+        self.assertEqual(normalized_path, normalize_pathname(original_path))
+
+    def test_parent_of_root_dirctory(self):
+        original_path = '/a/b/..'
+        normalized_path = '/a'
+        self.assertEqual(normalized_path, normalize_pathname(original_path))
+
+    def test_parent_of_root_dirctory2(self):
+        original_path = '../../'
+        normalized_path = '/'
+        self.assertEqual(normalized_path, normalize_pathname(original_path))
+
+    def test_parent_of_root_dirctory3(self):
+        original_path = '../../../../a/'
+        normalized_path = '/a'
+        self.assertEqual(normalized_path, normalize_pathname(original_path))
+    
+    def test_current_directory(self):
+        original_path = '.'
+        normalized_path = '/'
+        self.assertEqual(normalized_path, normalize_pathname(original_path))
+    
+    def test_current_directory2(self):
+        original_path = './a/./b/c/././d/e/.'
+        normalized_path = '/a/b/c/d/e'
+        self.assertEqual(normalized_path, normalize_pathname(original_path))
+
+    def test_parent_of_current_directory(self):
+        original_path = 'a/b/c/././.././../'
+        normalized_path = '/a'
+        self.assertEqual(normalized_path, normalize_pathname(original_path))
+
+    def test_hidden_file(self):
+        original_path = './home/.bashrc'
+        normalized_path = '/home/.bashrc'
+        self.assertEqual(normalized_path, normalize_pathname(original_path))
+
+    def test_file_with_extention(self):
+        original_path = 'home/autorun.inf'
+        normalized_path = '/home/autorun.inf'
+        self.assertEqual(normalized_path, normalize_pathname(original_path))
+
+    def test_directory_with_dots(self):
+        original_path = 'home/work/com.myPythonProj.ui/src/../.git/'
+        normalized_path = '/home/work/com.myPythonProj.ui/.git'
+        self.assertEqual(normalized_path, normalize_pathname(original_path))
+
+    def test_parent_of_directory_with_dots(self):
+        original_path = 'home/work/com.myPythonProj.db.server.test/./.././com.myPythonProj.db.server/./src/./.git/../.git/.gitignore'
+        normalized_path = '/home/work/com.myPythonProj.db.server/src/.git/.gitignore'
+        self.assertEqual(normalized_path, normalize_pathname(original_path))
+
+    """
+    A unix file system support consecutive slashes. 
+    Consecutive slashes is equivalent to single slash. 
+    eg. 'a//////b////c//' is equivalent to '/a/b/c'
+    """
+    def test_consecutive_slashes(self):
+        original_path = 'a/.//////b///..//c//'
+        normalized_path = '/a/c'
+        self.assertEqual(normalized_path, normalize_pathname(original_path))
+
+    def test_consecutive_slashes2(self):
+        original_path = '///////'
+        normalized_path = '/'
+        self.assertEqual(normalized_path, normalize_pathname(original_path))
+
+    def test_consecutive_slashes3(self):
+        original_path = '/../..////..//././//.//../a/////'
+        normalized_path = '/a'
+        self.assertEqual(normalized_path, normalize_pathname(original_path))
+        
+    def test_consecutive_slashes4(self):
+        original_path = '//////.a//////'
+        normalized_path = '/.a'
+        self.assertEqual(normalized_path, normalize_pathname(original_path))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
+```
 
 ### Nov 4, 2019 \[Easy\] Make the Largest Number
 ---
