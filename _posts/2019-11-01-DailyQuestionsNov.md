@@ -49,7 +49,7 @@ At the end of the 2nd hour, the status of the grid:
 
 ### Nov 5, 2019 \[Medium\] Normalize Pathname
 ---
-> **Question:** Given an absolute pathname that may have . or .. as part of it, return the shortest standardized path.
+> **Question:** Given an absolute pathname that may have `"."` or `".."` as part of it, return the shortest standardized path.
 >
 > For example, given `"/usr/bin/../bin/./scripts/../"`, return `"/usr/bin"`.
 
