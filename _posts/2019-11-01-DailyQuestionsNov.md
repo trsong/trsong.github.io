@@ -19,6 +19,10 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java) 
 
 
+### Nov 8, 2019 \[Hard\] Longest Common Subsequence of Three Strings
+--- 
+> **Question:** Write a program that computes the length of the longest common subsequence of three given strings. For example, given `"epidemiologist"`, `"refrigeration"`, and `"supercalifragilisticexpialodocious"`, it should return `5`, since the longest common subsequence is `"eieio"`.
+
 
 ### Nov 7, 2019 \[Medium\] No Adjacent Repeating Characters
 --- 
@@ -28,6 +32,103 @@ categories: Python/Java
 ```py
 Input: abbccc
 Output: cbcbca
+```
+
+**My thougths:** This problem is basically ["LC 358 Rearrange String K Distance Apart"](https://trsong.github.io/python/java/2019/08/02/DailyQuestionsAug/#aug-24-2019-lc-358-hard-rearrange-string-k-distance-apart) with `k = 2`. The idea is to apply greedy approach, with a window of 2, choose the safest two remaining charactors until either all characters are picked, or just mulitple copy of one character left.
+
+For example, for input string: `"aaaabc"`
+1. Pick `a`, `b`. Remaining `"aaac"`. Result: `"ab"`
+2. Pick `a`, `c`. Remaining `"aa"`. Result: `"abac"`
+3. We can no longer proceed as we cannot pick same character as it violate adjacency requirement
+
+Another Example, for input string: `"abbccc"`
+1. Pick `c`, `b`. Remaining `"abcc"`. Result: `"ab"`
+2. Pick `c`, `a`. Remaining `"bc"`. Result: `"abca"`
+3. Pick `b`, `c`. Result: `"abcabc"`
+
+
+**Solution with Greedy Algorithm:** [https://repl.it/@trsong/No-Adjacent-Repeating-Characters](https://repl.it/@trsong/No-Adjacent-Repeating-Characters)
+```py
+import unittest
+from Queue import PriorityQueue
+
+def rearrange_string(original_string):
+    histogram = {}
+    for c in original_string:
+        histogram[c] = histogram.get(c, 0) + 1
+        
+    max_heap = PriorityQueue()
+    for c, count in histogram.items():
+        # Max heap is implemented with PriorityQueue (small element goes first), therefore use negative key to achieve max heap
+        max_heap.put((-count, c))
+
+    res = []
+    while not max_heap.empty():
+        neg_first_count, first_char = max_heap.get()
+        remaining_first_count = -neg_first_count - 1
+        res.append(first_char)
+
+        if remaining_first_count > 0 and max_heap.empty():
+            return None
+        elif max_heap.empty():
+            break
+
+        neg_second_count, second_char = max_heap.get()
+        remainging_second_count = -neg_second_count - 1
+        res.append(second_char)
+
+        if remaining_first_count > 0:
+            max_heap.put((-remaining_first_count, first_char))
+        if remainging_second_count > 0:
+            max_heap.put((-remainging_second_count, second_char))
+
+    return ''.join(res)
+
+
+class RearrangeStringSpec(unittest.TestCase):
+    def assert_not_adjacent(self, rearranged_string, original_string):
+        # Test same length
+        self.assertTrue(len(original_string) == len(rearranged_string))
+
+        # Test containing all characters
+        self.assertTrue(sorted(original_string) == sorted(rearranged_string))
+
+        # Test not adjacent
+        last_occur_map = {}
+        for i, c in enumerate(rearranged_string):
+            last_occur = last_occur_map.get(c, float('-inf'))
+            self.assertTrue(i - last_occur >= 2)
+            last_occur_map[c] = i
+    
+    def test_empty_string(self):
+        self.assertEqual("", rearrange_string(""))
+
+    def test_example(self):
+        original_string = "abbccc"
+        rearranged_string = rearrange_string(original_string)
+        self.assert_not_adjacent(rearranged_string, original_string)
+
+    def test_original_string_contains_duplicated_characters(self):
+        original_string = "aaabb"
+        rearranged_string = rearrange_string(original_string)
+        self.assert_not_adjacent(rearranged_string, original_string)
+
+    def test_original_string_contains_duplicated_characters2(self):
+        original_string = "aaabc"
+        rearranged_string = rearrange_string(original_string)
+        self.assert_not_adjacent(rearranged_string, original_string)
+
+    def test_impossible_to_rearrange_string(self):
+        original_string = "aa"
+        self.assertIsNone(rearrange_string(original_string))
+
+    def test_impossible_to_rearrange_string2(self):
+        original_string = "aaaabc"
+        self.assertIsNone(rearrange_string(original_string))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
 ```
 
 ### Nov 6, 2019 \[Easy\] Zombie in Matrix
