@@ -19,10 +19,125 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java) 
 
 
+
+### Nov 9, 2019 \[Hard\] Order of Alien Dictionary
+--- 
+> **Question:** You come across a dictionary of sorted words in a language you've never seen before. Write a program that returns the correct order of letters in this language.
+>
+> For example, given `['xww', 'wxyz', 'wxyw', 'ywx', 'ywz']`, you should return `['x', 'z', 'w', 'y']`.
+
 ### Nov 8, 2019 \[Hard\] Longest Common Subsequence of Three Strings
 --- 
 > **Question:** Write a program that computes the length of the longest common subsequence of three given strings. For example, given `"epidemiologist"`, `"refrigeration"`, and `"supercalifragilisticexpialodocious"`, it should return `5`, since the longest common subsequence is `"eieio"`.
 
+**My thoughts:** The way to tackle 3 lcs of 3 strings is exactly the same as 2 strings. 
+
+For 2 string case, we start from empty strings `s1 = ""` and `s2 = ""` and for each char we append we will need to decide whether or not we want to keep that char that gives the following 2 situations:
+
+- `lcs(s1 + c, s2 + c)` if the new char to append in each string matches each other, then `lcs(s1 + c, s2 + c) = 1 + lcs(s1, s2)`
+- `lcs(s1 + c1, s2 + c2)` if not match, we either append to s1 or s2, `lcs(s1 + c, s2 + c) = max(lcs(s1, s2 + c), lcs(s1 + c, s2))`
+
+If we generalize it to 3 string case, we will have 
+- `lcs(s1 + c, s2 + c, s3 + c) = 1 + lcs(s1, s2, s3)`
+- `lcs(s1 + c, s2 + c, s3 + c) = max(lcs(s1 + c, s2, s3), lcs(s1, s2 + c, s3), lcs(s1, s2, s3 + c))`
+
+One thing worth mentioning: 
+
+`lcs(s1, s2, s2) != lcs(find_lcs(s1, s2), s3)` where find_cls returns string and lcs returns number. The reason we may run into this is that the local max of two strings isn't global max of three strings. 
+eg. `s1 = 'abcde'`, `s2 = 'cdeabcd'`, `s3 = 'e'`. `find_lcs(s1, s2) = 'abcd'`. `lcs('abcd', 'e') = 0`. However `lcs(s1, s2, s3) = 1`
+
+
+
+**Solution with DP:** [https://repl.it/@trsong/Longest-Common-Subsequence-of-Three-Strings](https://repl.it/@trsong/Longest-Common-Subsequence-of-Three-Strings)
+```py
+import unittest
+
+def longest_common_subsequence(seq1, seq2, seq3):
+    if not seq1 or not seq2 or not seq3:
+        return 0
+    
+    m, n, p = len(seq1), len(seq2), len(seq3)
+    # Let dp[m][n][p] represents lcs for seq with len m, n, p
+    # dp[m][n][p] = dp[m-1][n-1][p-1] if last char is a match
+    # dp[m][n][p] = max(dp[m-1][n][p], dp[m][n-1][p], dp[m][n][p-1])
+    dp = [[[0 for _ in xrange(p+1)] for _ in xrange(n+1)] for _ in xrange(m+1)]
+    for i in xrange(1, m+1):
+        for j in xrange(1, n+1):
+            for k in xrange(1, p+1):
+                if seq1[i-1] == seq2[j-1] == seq3[k-1]:
+                    dp[i][j][k] = dp[i-1][j-1][k-1] + 1
+                else:
+                    dp[i][j][k] = max(dp[i-1][j][k], dp[i][j-1][k], dp[i][j][k-1])
+    return dp[m][n][p]
+                    
+                    
+class LongestCommonSubsequenceSpec(unittest.TestCase):
+    def test_example(self):
+        seq1 = "epidemiologist"
+        seq2 = "refrigeration"
+        seq3 = "supercalifragilisticexpialodocious"
+        self.assertEqual(5, longest_common_subsequence(seq1, seq2, seq3)) # eieio
+
+    def test_empty_inputs(self):
+        self.assertEqual(0, longest_common_subsequence("", "", ""))
+        self.assertEqual(0, longest_common_subsequence("", "", "a"))
+        self.assertEqual(0, longest_common_subsequence("", "a", "a"))
+        self.assertEqual(0, longest_common_subsequence("a", "a", ""))
+
+    def test_contains_common_subsequences(self):
+        seq1 = "abcd1e2"  
+        seq2 = "bc12ea"  
+        seq3 = "bd1ea"
+        self.assertEqual(3, longest_common_subsequence(seq1, seq2, seq3)) # b1e
+
+    def test_contains_same_prefix(self):
+        seq1 = "abc"  
+        seq2 = "abcd"  
+        seq3 = "abcde"
+        self.assertEqual(3, longest_common_subsequence(seq1, seq2, seq3)) # abc
+
+    def test_contains_same_subfix(self):
+        seq1 = "5678"  
+        seq2 = "345678"  
+        seq3 = "12345678"
+        self.assertEqual(4, longest_common_subsequence(seq1, seq2, seq3)) # 5678
+
+    def test_lcs3_not_subset_of_lcs2(self):
+        seq1 = "abedcf"
+        seq2 = "ibdcfe"
+        seq3 = "beklm"
+        """
+        LCS(seq1, seq2) = bdcf
+        LCS(LCS(seq1, seq2), seq3) = b
+        LCS(seq1, seq2, seq3) = be
+        """
+        self.assertEqual(2, longest_common_subsequence(seq1, seq2, seq3)) # be
+
+    def test_lcs3_not_subset_of_lcs2_example2(self):
+        seq1 = "abedcf"
+        seq2 = "ibdcfe"
+        seq3 = "eklm"
+        """
+        LCS(seq1, seq2) = bdcf
+        LCS(LCS(seq1, seq2), seq3) = None
+        LCS(seq1, seq2, seq3) = e
+        """
+        self.assertEqual(1, longest_common_subsequence(seq1, seq2, seq3)) # e
+
+    def test_multiple_candidates_of_lcs(self):
+        s1 = "abcd"
+        s2 = "123"
+        s3 = "456"
+        s4 = "efgh"
+        seq1 = s1 + s3 + s4 + s2
+        seq2 = s3 + s4 + s2 + s1
+        seq3 = s4 + s3 + s2 + s1
+        self.assertEqual(len(s4) + len(s2), longest_common_subsequence(seq1, seq2, seq3))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
+```
 
 ### Nov 7, 2019 \[Medium\] No Adjacent Repeating Characters
 --- 
