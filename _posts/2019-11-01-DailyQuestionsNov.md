@@ -42,6 +42,143 @@ Given the following binary tree, the result should be 42 = 20 + 2 + 10 + 10.
 >
 > For example, given `['xww', 'wxyz', 'wxyw', 'ywx', 'ywz']`, you should return `['x', 'z', 'w', 'y']`.
 
+**My thoughts:** As the alien letters are topologically sorted, we can just mimic what topological sort with numbers and try to find pattern.
+
+Suppose the dictionary contains: `01234`. Then the words can be `023, 024, 12, 133, 2433`. Notice that we can only find the relative order by finding first unequal letters between consecutive words. eg.  `023, 024 => 3 < 4`.  `024, 12 => 0 < 1`.  `12, 133 => 2 < 3`
+
+With relative relation, we can build a graph with each occurring letters being veteces and edge `(u, v)` represents `u < v`. If there exists a loop that means we have something like `a < b < c < a` and total order not exists. Otherwise we preform a topological sort to generate the total order which reveals the alien dictionary. 
+
+**Solution with Topological Sort:** [https://repl.it/@trsong/Order-of-Alien-Dictionary](https://repl.it/@trsong/Order-of-Alien-Dictionary)
+```py
+import unittest
+
+class NodeState:
+    UNVISITED = 0
+    VISITING = 1
+    VISITED = 2
+
+def dictionary_order(sorted_words):
+    if not sorted_words:
+        return []
+
+    char_order = {}
+    for i in xrange(1, len(sorted_words)):
+        prev_word = sorted_words[i-1]
+        cur_word = sorted_words[i]
+        for prev_char, cur_char in zip(prev_word, cur_word):
+            if prev_char == cur_char:
+                continue
+            if prev_char not in char_order:
+                char_order[prev_char] = set()
+            char_order[prev_char].add(cur_char)
+            break
+
+    char_states = {}
+    for word in sorted_words:
+        for c in word:
+            char_states[c] = NodeState.UNVISITED
+
+    # Performe DFS on all unvisited nodes
+    topo_order = []
+    for char in char_states:
+        if char_states[char] == NodeState.VISITED:
+            continue
+        
+        stack = [char]
+        while stack:
+            cur_char = stack[-1]
+            if char_states[cur_char] == NodeState.VISITED:
+                topo_order.append(stack.pop())
+                continue
+            elif char_states[cur_char] == NodeState.VISITING:
+                char_states[cur_char] = NodeState.VISITED
+            else:
+                char_states[cur_char] = NodeState.VISITING
+
+            if cur_char not in char_order:
+                continue
+            
+            for next_char in char_order[cur_char]:
+                if char_states[next_char] == NodeState.UNVISITED:
+                    stack.append(next_char)
+                elif char_states[next_char] == NodeState.VISITING:
+                    return None
+
+    topo_order.reverse()
+    return topo_order
+
+
+class DictionaryOrderSpec(unittest.TestCase):
+    def test_example(self):
+        # 0123
+        # xzwy
+        # Decode Array: 022, 2031, 2032, 320, 321
+        self.assertEqual(['x', 'z', 'w', 'y'], dictionary_order(['xww', 'wxyz', 'wxyw', 'ywx', 'ywz']))
+
+    def test_empty_dictionary(self):
+        self.assertEqual([], dictionary_order([]))
+
+    def test_unique_characters(self):
+        self.assertEqual(['z', 'x'], dictionary_order(["z", "x"]), )
+
+    def test_invalid_order(self):
+        self.assertIsNone(dictionary_order(["a", "b", "a"]))
+
+    def test_invalid_order2(self):
+        # 012
+        # abc
+        # decode array result become 210, 211, 212, 012
+        self.assertIsNone(dictionary_order(["cba", "cbb", "cbc", "abc"]))
+
+    def test_invalid_order3(self):
+        # 012
+        # abc
+        # decode array result become 10, 11, 211, 22, 20 
+        self.assertIsNone(dictionary_order(["ba", "bb", "cbb", "cc", "ca"]))
+    
+    def test_valid_order(self):
+        # 01234
+        # wertf
+        # decode array result become 023, 024, 12, 133, 2433
+        self.assertEqual(['w', 'e', 'r', 't', 'f'], dictionary_order(["wrt", "wrf", "er", "ett", "rftt"]))
+
+    def test_valid_order2(self):
+        # 012
+        # abc
+        # decode array result become 01111, 122, 20
+        self.assertEqual(['a', 'b', 'c'], dictionary_order(["abbbb", "bcc", "ca"]))
+
+    def test_valid_order3(self):
+        # 0123
+        # bdac
+        # decode array result become 022, 2031, 2032, 320, 321
+        self.assertEqual(['b', 'd', 'a', 'c'], dictionary_order(["baa", "abcd", "abca", "cab", "cad"]))
+
+    def test_multiple_valid_result(self):
+        self.assertEqual(['a', 'b', 'c', 'd', 'e'], sorted(dictionary_order(["edcba"])))
+
+    def test_multiple_valid_result2(self):
+        # 01
+        # ab
+        # cd
+        res = dictionary_order(["aa", "ab", "cc", "cd"])
+        expected_set = [['a', 'b', 'c', 'd'], ['a', 'c', 'b', 'd'], ['a', 'd', 'c', 'b'], ['a', 'c', 'd', 'b']]
+        self.assertTrue(res in expected_set)
+
+    def test_multiple_valid_result3(self):
+        # 01
+        # ab
+        #  c
+        #  d
+        res = dictionary_order(["aaaaa", "aaad", "aab", "ac"])
+        one_res = ['a', 'b', 'c', 'd']
+        self.assertTrue(len(res) == len(one_res) and res[0] == one_res[0] and sorted(res) == one_res)
+        
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
+```
+
 ### Nov 8, 2019 \[Hard\] Longest Common Subsequence of Three Strings
 --- 
 > **Question:** Write a program that computes the length of the longest common subsequence of three given strings. For example, given `"epidemiologist"`, `"refrigeration"`, and `"supercalifragilisticexpialodocious"`, it should return `5`, since the longest common subsequence is `"eieio"`.
