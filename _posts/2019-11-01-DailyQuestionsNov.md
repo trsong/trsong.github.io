@@ -19,6 +19,22 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java) 
 
 
+### Nov 10, 2019 \[Medium\] Maximum Path Sum in Binary Tree
+--- 
+> **Question:** You are given the root of a binary tree. Find the path between 2 nodes that maximizes the sum of all the nodes in the path, and return the sum. The path does not necessarily need to go through the root.
+
+**Example:**
+```py
+Given the following binary tree, the result should be 42 = 20 + 2 + 10 + 10.
+       *10
+       /  \
+     *2   *10
+     / \     \
+   *20  1    -25
+             /  \
+            3    4
+(* denotes the max path)
+```
 
 ### Nov 9, 2019 \[Hard\] Order of Alien Dictionary
 --- 
