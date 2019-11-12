@@ -18,6 +18,32 @@ categories: Python/Java
 
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java) 
 
+
+
+### Nov 12, 2019 \[Easy\] Busiest Period in the Building
+--- 
+> **Question:** You are given a list of data entries that represent entries and exits of groups of people into a building. 
+> 
+> Find the busiest period in the building, that is, the time with the most people in the building. Return it as a pair of (start, end) timestamps. 
+> 
+> You can assume the building always starts off and ends up empty, i.e. with 0 people inside.
+>
+> An entry looks like this:
+
+```py
+{"timestamp": 1526579928, count: 3, "type": "enter"}
+
+This means 3 people entered the building. An exit looks like this:
+
+{"timestamp": 1526580382, count: 2, "type": "exit"}
+
+This means that 2 people exited the building. timestamp is in Unix time.
+```
+
+
+
+
+
 ### Nov 11, 2019 \[Easy\] Full Binary Tree
 --- 
 > **Question:** Given a binary tree, remove the nodes in which there is only 1 child, so that the binary tree is a full binary tree.
@@ -39,6 +65,138 @@ We want a tree like:
    0   3
       / \
      9   4
+```
+
+**Solution:** [https://repl.it/@trsong/Full-Binary-Tree](https://repl.it/@trsong/Full-Binary-Tree)
+```py
+import unittest
+import copy
+
+def remove_partial_nodes(root):
+    if root is None:
+        return None
+
+    root.left = remove_partial_nodes(root.left)
+    root.right = remove_partial_nodes(root.right)
+    
+    if root.left is None and root.right is not None:
+        right_child = root.right
+        root.right = None
+        return right_child
+    elif root.right is None and root.left is not None:
+        left_child = root.left
+        root.left = None
+        return left_child
+    else:
+        return root
+
+
+class TreeNode(object):
+    def __init__(self, val, left=None, right=None):
+        self.val = val
+        self.left = left
+        self.right = right
+
+    def __eq__(self, other):
+        return other and other.val == self.val and other.left == self.left and other.right == self.right
+
+class RemovePartialNodeSpec(unittest.TestCase):
+    def test_example(self):
+        """
+             1
+            / \ 
+          *2   3
+          /   / \
+         0   9   4
+        """
+        n3 = TreeNode(3, TreeNode(9), TreeNode(4))
+        n2 = TreeNode(2, TreeNode(0))
+        original_tree = TreeNode(1, n2, n3)
+        
+        """
+             1
+            / \ 
+           0   3
+              / \
+             9   4
+        """
+        t3 = TreeNode(3, TreeNode(9), TreeNode(4))
+        expected_tree = TreeNode(1, TreeNode(0), t3)
+        self.assertEqual(expected_tree, remove_partial_nodes(original_tree))
+
+    def test_empty_tree(self):        
+        self.assertIsNone(None, remove_partial_nodes(None))
+
+    def test_both_parent_and_child_node_is_not_full(self):
+        """
+             2
+           /   \
+         *7    *5
+           \     \
+            6    *9
+           / \   /
+          1  11 4
+        """
+        n7 = TreeNode(7, right=TreeNode(6, TreeNode(1), TreeNode(11)))
+        n5 = TreeNode(5, right=TreeNode(9, TreeNode(4)))
+        original_tree = TreeNode(2, n7, n5)
+
+        """
+            2
+           / \
+          6   4
+         / \
+        1  11 
+        """
+        t6 = TreeNode(6, TreeNode(1), TreeNode(11))
+        expected_tree = TreeNode(2, t6, TreeNode(4))
+        self.assertEqual(expected_tree, remove_partial_nodes(original_tree))
+
+    def test_root_is_partial(self):
+        """
+           *1
+           /
+         *2
+         /
+        3
+        """
+        original_tree = TreeNode(1, TreeNode(2, TreeNode(3)))
+        expected_tree = TreeNode(3)
+        self.assertEqual(expected_tree, remove_partial_nodes(original_tree))
+
+    def test_root_is_partial2(self):
+        """
+           *1
+             \
+             *2
+             /
+            3
+        """
+        original_tree = TreeNode(1, right=TreeNode(2, TreeNode(3)))
+        expected_tree = TreeNode(3)
+        self.assertEqual(expected_tree, remove_partial_nodes(original_tree))
+
+    def test_tree_is_full(self):
+        """
+              1
+            /   \
+           4     5
+          / \   / \
+         2   3 6   7 
+        / \       / \
+       8   9    10  11
+        """
+        n2 = TreeNode(2, TreeNode(8), TreeNode(9))
+        n7 = TreeNode(7, TreeNode(10), TreeNode(11))
+        n4 = TreeNode(4, n2, TreeNode(3))
+        n5 = TreeNode(5, TreeNode(6), n7)
+        original_tree = TreeNode(1, n4, n5)
+        expected_tree = copy.deepcopy(original_tree)
+        self.assertEqual(expected_tree, remove_partial_nodes(original_tree))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
 ```
 
 
