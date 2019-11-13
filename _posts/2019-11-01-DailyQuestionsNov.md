@@ -19,6 +19,29 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java) 
 
 
+### Nov 13, 2019 LC 301 \[Hard\] Remove Invalid Parentheses
+--- 
+> **Question:** Remove the minimum number of invalid parentheses in order to make the input string valid. Return all possible results.
+>
+> **Note:** The input string may contain letters other than the parentheses ( and ).
+
+**Example 1:**
+```py
+Input: "()())()"
+Output: ["()()()", "(())()"]
+```
+
+**Example 2:**
+```py
+Input: "(a)())()"
+Output: ["(a)()()", "(a())()"]
+```
+
+**Example 3:**
+```py
+Input: ")("
+Output: [""]
+```
 
 ### Nov 12, 2019 \[Easy\] Busiest Period in the Building
 --- 
@@ -41,7 +64,75 @@ This means that 2 people exited the building. timestamp is in Unix time.
 ```
 
 
+**Solution:** [https://repl.it/@trsong/Busiest-Period-in-the-Building](https://repl.it/@trsong/Busiest-Period-in-the-Building) 
+```py
+import unittest
 
+def busiest_period(event_entries):
+    sorted_events = sorted(event_entries, key=lambda e: e.get("timestamp"))
+    accu = 0
+    max_index = 0
+    max_accu = 0
+    for i, event in enumerate(sorted_events):
+        count = event.get("count")
+        accu += count if event.get("type") == "enter" else -count
+        if accu > max_accu:
+            max_accu = accu
+            max_index = i
+            
+    start = sorted_events[max_index].get("timestamp")
+    end = sorted_events[max_index+1].get("timestamp")
+    return start, end
+
+
+class BusiestPeriodSpec(unittest.TestCase):
+    def test_example(self):
+        # Number of people: 0, 3, 1, 0
+        events = [
+            {"timestamp": 1526579928, "count": 3, "type": "enter"},
+            {"timestamp": 1526580382, "count": 2, "type": "exit"},
+            {"timestamp": 1526600382, "count": 1, "type": "exit"}
+        ]
+        self.assertEqual((1526579928, 1526580382), busiest_period(events))
+
+    def test_multiple_entering_and_exiting(self):
+        # Number of people: 0, 3, 1, 7, 8, 3, 2
+        events = [
+            {"timestamp": 1526579928, "count": 3, "type": "enter"},
+            {"timestamp": 1526580382, "count": 2, "type": "exit"},
+            {"timestamp": 1526579938, "count": 6, "type": "enter"},
+            {"timestamp": 1526579943, "count": 1, "type": "enter"},
+            {"timestamp": 1526579944, "count": 0, "type": "enter"},
+            {"timestamp": 1526580345, "count": 5, "type": "exit"},
+            {"timestamp": 1526580351, "count": 3, "type": "exit"}
+        ]
+        self.assertEqual((1526579943, 1526579944), busiest_period(events))
+
+    def test_timestamp_not_sorted(self):
+        # Number of people: 0, 1, 3, 0
+        events = [
+            {"timestamp": 2, "count": 2, "type": "enter"},
+            {"timestamp": 3, "count": 3, "type": "exit"},
+            {"timestamp": 1, "count": 1, "type": "enter"}
+        ]
+        self.assertEqual((2, 3), busiest_period(events))
+
+    def test_max_period_reach_a_tie(self):
+        # Number of people: 0, 1, 10, 1, 10, 1, 0
+        events = [
+            {"timestamp": 5, "count": 9, "type": "exit"},
+            {"timestamp": 3, "count": 9, "type": "exit"},
+            {"timestamp": 6, "count": 1, "type": "exit"},
+            {"timestamp": 1, "count": 1, "type": "enter"},
+            {"timestamp": 4, "count": 9, "type": "enter"},
+            {"timestamp": 2, "count": 9, "type": "enter"}
+        ]
+        self.assertEqual((2, 3), busiest_period(events))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
+```
 
 
 ### Nov 11, 2019 \[Easy\] Full Binary Tree
