@@ -18,13 +18,19 @@ categories: Python/Java
 
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java) 
 
-
+<!--
 ### Nov 14, 2019 \[Hard\] Maximum Spanning Tree
 --- 
 > **Question:** Recall that the minimum spanning tree is the subset of edges of a tree that connect all its vertices with the smallest possible total edge weight. 
 > 
 > Given an undirected graph with weighted edges, compute the maximum weight spanning tree.
+-->
 
+### Nov 14, 2019 \[Easy\] Smallest Number that is not a Sum of a Subset of List
+--- 
+> **Question:** Given a sorted array, find the smallest positive integer that is not the sum of a subset of the array.
+>
+> For example, for the input `[1, 2, 3, 10]`, you should return `7`.
 
 ### Nov 13, 2019 LC 301 \[Hard\] Remove Invalid Parentheses
 --- 
