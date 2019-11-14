@@ -56,13 +56,13 @@ Input: ")("
 Output: [""]
 ```
 
-**My thoughts:** What makes an invalid string with parenthese? There must be an index such that number of open parentheses is less than close parentheses and in the end all open and close parentheses are equal. Now we can count how many parentheses are invalid so that we can remove those invalid ones during backtracking.
+**My thoughts:** What makes a string with parenthese invalid? There must be an index such that number of open parentheses is less than close parentheses or in the end all open and close parentheses are not equal. Now we can count how many parentheses are invalid so that we can remove those invalid ones during backtracking.
 
 We can define:
 Number of invalid open is equal to total open - total close.
 Number of invalid close is equal to number of close exceed previous open. 
 
-During backtracking, each open and close could be invalid one, so give a try to remove those and decrese the invalid count and hope all the best that our solution works. If it works, ie. the final string is valid, then add to result, else backtrack.
+During backtracking, each open and close could be invalid one, so give a try to remove those and that will decrese the invalid count and we can hope all the best that our solution works. If it works, ie. the final string is valid, then add to result, else backtrack.
 
 
 How to avoid duplicates? For each candidate of invalid ones, we only remove the first one and skip the duplicates.
