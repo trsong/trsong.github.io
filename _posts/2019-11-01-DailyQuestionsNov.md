@@ -32,7 +32,7 @@ categories: Python/Java
 >
 > For example, for the input `[1, 2, 3, 10]`, you should return `7`.
 
-**My thoughts:** The idea of solving this problem comes from mathematical induction. As the number list is sorted in ascending order, we take element from list one by one. Can consider with the help of the such element, we can we push the max possible sum. eg, Let's walk through `[1, 2, 3, 10]`
+**My thoughts:** The idea of solving this problem comes from mathematical induction. As the number list is sorted in ascending order, we take element from list one by one. Can consider with the help of the such element, how does it help to push the max possible sum? eg, Let's walk through `[1, 2, 3, 10]`
 
 - `n = 0`. our goal is to check if there is any subset added up to `1`. That's easy, check `nums[0]` to see if it equals `1`.
 - `n = 1`. Now we move to next element say `2`. Currently we can from `1`. Now with the help of `2`, additionally we can form `2` and `2 + 1`. It seems we can form all number from 1 to 3.
