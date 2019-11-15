@@ -18,19 +18,83 @@ categories: Python/Java
 
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java) 
 
-<!--
-### Nov 14, 2019 \[Hard\] Maximum Spanning Tree
+
+### Nov 15, 2019 \[Hard\] Maximum Spanning Tree
 --- 
 > **Question:** Recall that the minimum spanning tree is the subset of edges of a tree that connect all its vertices with the smallest possible total edge weight. 
 > 
 > Given an undirected graph with weighted edges, compute the maximum weight spanning tree.
--->
+
 
 ### Nov 14, 2019 \[Easy\] Smallest Number that is not a Sum of a Subset of List
 --- 
 > **Question:** Given a sorted array, find the smallest positive integer that is not the sum of a subset of the array.
 >
 > For example, for the input `[1, 2, 3, 10]`, you should return `7`.
+
+**My thoughts:** The idea of solving this problem comes from mathematical induction. As the number list is sorted in ascending order, we take element from list one by one. Can consider with the help of the such element, we can we push the max possible sum. eg, Let's walk through `[1, 2, 3, 10]`
+
+- `n = 0`. our goal is to check if there is any subset added up to `1`. That's easy, check `nums[0]` to see if it equals `1`.
+- `n = 1`. Now we move to next element say `2`. Currently we can from `1`. Now with the help of `2`, additionally we can form `2` and `2 + 1`. It seems we can form all number from 1 to 3.
+- `n = 2`. As we can form any number from `1` to `3`. The current element is `3`. With help of this element, additionally we can form `3`, `3 + 1`, `3 + 2`, `3 + 3`. It seems we can form all number from `1` to `6`.
+- `n = 3`. As we can form any number from `1` to `6`. The current element is `10`. With the help of this element, additionally we can only get `10`, `10 + 1`, ..., `10 + 6`. However, last round we expand the possible sum to `6`. Now the smallest we can get is `10`, gives a gap. Therefore we return `6 + 1`. 
+
+
+**Solution by Math Induction:**[https://repl.it/@trsong/Smallest-Number-that-is-not-a-Sum-of-a-Subset-of-List](https://repl.it/@trsong/Smallest-Number-that-is-not-a-Sum-of-a-Subset-of-List)
+```py
+import unittest
+
+def smallest_subset_sum(nums):
+    if not nums:
+        return 1
+
+    max_sum_ = 0
+    for num in nums:
+        if num > max_sum + 1:
+            break
+        max_sum += num
+    return max_sum + 1
+
+
+class SmallestSubsetSumSpec(unittest.TestCase):
+    def test_example(self):
+        self.assertEqual(7, smallest_subset_sum([1, 2, 3, 10]))
+
+    def test_empty_array(self):
+        self.assertEqual(1, smallest_subset_sum([]))
+
+    def test_subset_sum_has_gap1(self):
+        self.assertEqual(2, smallest_subset_sum([1, 3, 6, 10, 11, 15]))
+
+    def test_subset_sum_has_gap2(self):
+        self.assertEqual(4, smallest_subset_sum([1, 2, 5, 10, 20, 40]))
+
+    def test_subset_sum_has_gap3(self):
+        self.assertEqual(1, smallest_subset_sum([101, 102, 104]))
+
+    def test_subset_sum_covers_all1(self):
+        self.assertEqual(5, smallest_subset_sum([1, 1, 1, 1]))
+
+    def test_subset_sum_covers_all2(self):
+        self.assertEqual(26, smallest_subset_sum([1, 2, 4, 8, 10]))
+
+    def test_subset_sum_covers_all3(self):
+        self.assertEqual(16, smallest_subset_sum([1, 2, 4, 8]))
+        
+    def test_subset_sum_covers_all4(self):
+        self.assertEqual(10, smallest_subset_sum([1, 1, 3, 4]))
+
+    def test_subset_sum_covers_all5(self):
+        self.assertEqual(22, smallest_subset_sum([1, 2, 3, 4, 5, 6]))
+ 
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
+```
+
+
+
+
 
 ### Nov 13, 2019 LC 301 \[Hard\] Remove Invalid Parentheses
 --- 
