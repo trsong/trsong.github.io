@@ -19,12 +19,231 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java) 
 
 
+### Nov 16, 2019 \[Easy\] Exists Overlap Rectangle
+--- 
+> **Question:** You are given given a list of rectangles represented by min and max x- and y-coordinates. Compute whether or not a pair of rectangles overlap each other. If one rectangle completely covers another, it is considered overlapping.
+>
+> For example, given the following rectangles:
+```py
+{
+    "top_left": (1, 4),
+    "dimensions": (3, 3) # width, height
+},
+{
+    "top_left": (-1, 3),
+    "dimensions": (2, 1)
+},
+{
+    "top_left": (0, 5),
+    "dimensions": (4, 3)
+}
+```
+> return true as the first and third rectangle overlap each other.
+
+
 ### Nov 15, 2019 \[Hard\] Maximum Spanning Tree
 --- 
 > **Question:** Recall that the minimum spanning tree is the subset of edges of a tree that connect all its vertices with the smallest possible total edge weight. 
 > 
 > Given an undirected graph with weighted edges, compute the maximum weight spanning tree.
 
+**My thoughts:** Both Kruskal's and Prim's Algorithm works for this question. The idea is to flip all edge weight into negative and then apply either of previous algorithm until find a spanning tree. Check [this question](https://trsong.github.io/python/java/2019/05/01/DailyQuestions/#jul-6-2019-hard-power-supply-to-all-cities) for solution with Kruskal's Algorithm.
+
+**Solution with Prim's Algorithm:** [https://repl.it/@trsong/Maximum-Spanning-Tree](https://repl.it/@trsong/Maximum-Spanning-Tree)
+```py
+import unittest
+from Queue import PriorityQueue
+import sys
+
+
+def max_spanning_tree(vertices, edges):
+    if not edges:
+        return []
+
+    neighbor = [None] * vertices
+    for u, v, w in edges:
+        if not neighbor[u]:
+            neighbor[u] = []
+        neighbor[u].append((v, w))
+
+        if not neighbor[v]:
+            neighbor[v] = []
+        neighbor[v].append((u, w))
+    
+    visited = [False] * vertices
+    pq = PriorityQueue()
+    pq.put((0, 0, None))
+    res = []
+
+    while not pq.empty():
+        _, dst, src = pq.get()
+        if visited[dst]:
+            continue
+
+        visited[dst] = True
+        if src is not None:
+            res.append((src, dst))
+        
+        if len(res) == vertices - 1:
+            break
+        
+        u = dst
+        for v, w in neighbor[u]:
+            if visited[v]:
+                continue
+            pq.put((-w, v, u))
+
+    return res
+
+
+class MaxSpanningTreeSpec(unittest.TestCase):
+    def assert_spanning_tree(self, vertices, edges, spanning_tree_edges, expected_weight):
+        # check if it's a tree
+        self.assertEqual(vertices-1, len(spanning_tree_edges))
+
+        neighbor = [[sys.maxint for _ in xrange(vertices)] for _ in xrange(vertices)]
+        for u, v, w in edges:
+            neighbor[u][v] = w
+            neighbor[v][u] = w
+
+        visited = [0] * vertices
+        total_weight = 0
+        for u, v in spanning_tree_edges:
+            total_weight += neighbor[u][v]
+            visited[u] = 1
+            visited[v] = 1
+        
+        # check if all vertices are visited
+        self.assertEqual(vertices, sum(visited))
+        
+        # check if sum of all weight satisfied
+        self.assertEqual(expected_weight, total_weight)
+
+    
+    def test_empty_graph(self):
+        self.assertEqual([], max_spanning_tree(0, []))
+
+    def test_simple_graph1(self):
+        """
+        Input:
+            1
+          / | \
+         0  |  2
+          \ | /
+            3
+        
+        Output:
+            1
+            |  
+         0  |  2
+          \ | /
+            3
+        """
+        vertices = 4
+        edges = [(0, 1, 1), (1, 2, 2), (2, 3, 3), (3, 0, 4), (1, 3, 5)]
+        expected_weight = 3 + 4 + 5
+        res = max_spanning_tree(vertices, edges)
+        self.assert_spanning_tree(vertices, edges, res, expected_weight)
+
+    def test_simple_graph2(self):
+        """
+        Input:
+            1
+          / | \
+         0  |  2
+          \ | /
+            3
+        
+        Output:
+            1
+            | \
+         0  |  2
+          \ |  
+            3
+        """
+        vertices = 4
+        edges = [(0, 1, 0), (1, 2, 1), (2, 3, 0), (3, 0, 1), (1, 3, 1)]
+        expected_weight = 1 + 1 + 1
+        res = max_spanning_tree(vertices, edges)
+        self.assert_spanning_tree(vertices, edges, res, expected_weight)
+
+    def test_k3_graph(self):
+        """
+        Input:
+           1
+          / \
+         0---2
+
+        Output:
+           1
+            \
+         0---2         
+        """
+        vertices = 3
+        edges = [(0, 1, 1), (1, 2, 1), (0, 2, 2)]
+        expected_weight = 1 + 2
+        res = max_spanning_tree(vertices, edges)
+        self.assert_spanning_tree(vertices, edges, res, expected_weight)
+
+    def test_k4_graph(self):
+        """
+        Input:
+        0 - 1
+        | x |
+        3 - 2
+
+        Output:
+        0   1
+        | / 
+        3 - 2
+        """
+        vertices = 4
+        edges = [(0, 1, 10), (0, 2, 11), (0, 3, 12), (1, 2, 13), (1, 3, 14), (2, 3, 15)]
+        expected_weight = 12 + 14 + 15
+        res = max_spanning_tree(vertices, edges)
+        self.assert_spanning_tree(vertices, edges, res, expected_weight)
+
+    def test_complicated_graph(self):
+        """
+        Input:
+        0 - 1 - 2
+        | / | / |
+        3 - 4 - 5 
+
+        Output:
+        0   1 - 2
+        | /   / 
+        3   4 - 5 
+        """
+        vertices = 6
+        edges = [(0, 1, 1), (1, 2, 6), (0, 5, 3), (5, 1, 5), (4, 1, 1), (4, 2, 5), (3, 2, 2), (5, 4, 1), (4, 3, 4)]
+        expected_weight = 3 + 5 + 6 + 5 + 4
+        res = max_spanning_tree(vertices, edges)
+        self.assert_spanning_tree(vertices, edges, res, expected_weight)
+
+    def test_graph_with_all_negative_weight(self):
+        # Note only all negative weight can use greedy approach. Mixed postive and negative graph is NP-Hard
+        """
+        Input:
+        0 - 1 - 2
+        | / | / |
+        3 - 4 - 5 
+
+        Output:
+        0 - 1   2
+            |   |
+        3 - 4 - 5 
+        """
+        vertices = 6
+        edges = [(0, 1, -1), (1, 2, -6), (0, 5, -3), (5, 1, -5), (4, 1, -1), (4, 2, -5), (3, 2, -2), (5, 4, -1), (4, 3, -4)]
+        expected_weight = -1 -1 -1 -4 -2
+        res = max_spanning_tree(vertices, edges)
+        self.assert_spanning_tree(vertices, edges, res, expected_weight)
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
+```
 
 ### Nov 14, 2019 \[Easy\] Smallest Number that is not a Sum of a Subset of List
 --- 
