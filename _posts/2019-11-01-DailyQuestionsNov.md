@@ -19,6 +19,28 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java) 
 
 
+
+### Nov 18, 2019 \[Medium\] Intersection of Two Unsorted Arrays
+--- 
+> **Question:** Given two arrays, write a function to compute their intersection - the intersection means the numbers that are in both arrays.
+> 
+> **Note:**
+> - Each element in the result must be unique.
+> - The result can be in any order.
+
+**Example 1:**
+```py
+Input: nums1 = [1, 2, 2, 1], nums2 = [2, 2]
+Output: [2]
+```
+
+**Example 2:**
+```py
+Input: nums1 = [4, 9, 5], nums2 = [9, 4, 9, 8, 4]
+Output: [9, 4]
+```
+
+
 ### Nov 17, 2019 \[Easy\] Plus One
 --- 
 > **Question:** Given a non-empty array where each element represents a digit of a non-negative integer, add one to the integer. The most significant digit is at the front of the array and each element in the array contains only one digit. Furthermore, the integer does not have leading zeros, except in the case of the number '0'.
@@ -27,6 +49,50 @@ categories: Python/Java
 ```py
 Input: [2,3,4]
 Output: [2,3,5]
+```
+
+**Solution:** [https://repl.it/@trsong/Plus-One](https://repl.it/@trsong/Plus-One)
+```py
+import unittest
+
+def add1(digits):
+    carryover = 1
+    for i in xrange(len(digits)-1, -1, -1):
+        digits[i] += carryover
+        if digits[i] >= 10:
+            carryover = 1
+            digits[i] %= 10
+        else:
+            break
+    
+    if digits[0] == 0:
+        digits.insert(0, 1)
+    
+    return digits
+
+
+class Add1Spec(unittest.TestCase):
+    def test_example(self):
+        self.assertEqual([2, 3, 5], add1([2, 3, 4]))
+
+    def test_zero(self):
+        self.assertEqual([1], add1([0]))
+
+    def test_carryover(self):
+        self.assertEqual([1, 0], add1([9]))
+
+    def test_carryover_and_early_break(self):
+        self.assertEqual([2, 8, 3, 0, 0], add1([2, 8, 2, 9, 9]))
+
+    def test_early_break(self):
+        self.assertEqual([1, 0, 0, 1], add1([1, 0, 0, 0]))
+
+    def test_carryover2(self):
+        self.assertEqual([1, 0, 0, 0, 0], add1([9, 9, 9, 9]))
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
+
 ```
 
 ### Nov 16, 2019 \[Easy\] Exists Overlap Rectangle
