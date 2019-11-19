@@ -19,6 +19,26 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java) 
 
 
+### Nov 19, 2019 LC 692 \[Medium\] Top K Frequent words
+--- 
+> **Question:** Given a non-empty list of words, return the k most frequent words. The output should be sorted from highest to lowest frequency, and if two words have the same frequency, the word with lower alphabetical order comes first. Input will contain only lower-case letters.
+
+**Example 1:**
+```py
+Input: ["i", "love", "leapcode", "i", "love", "coding"], k = 2
+Output: ["i", "love"]
+Explanation: "i" and "love" are the two most frequent words.
+    Note that "i" comes before "love" due to a lower alphabetical order.
+```
+
+**Example 2:**
+```py
+Input: ["the", "day", "is", "sunny", "the", "the", "the", "sunny", "is", "is"], k = 4
+Output: ["the", "is", "sunny", "day"]
+Explanation: "the", "is", "sunny" and "day" are the four most frequent words,
+    with the number of occurrence being 4, 3, 2 and 1 respectively.
+```
+
 
 ### Nov 18, 2019 \[Medium\] Intersection of Two Unsorted Arrays
 --- 
@@ -38,6 +58,101 @@ Output: [2]
 ```py
 Input: nums1 = [4, 9, 5], nums2 = [9, 4, 9, 8, 4]
 Output: [9, 4]
+```
+
+**Solution:** [https://repl.it/@trsong/Intersection-of-Two-Unsorted-Arrays](https://repl.it/@trsong/Intersection-of-Two-Unsorted-Arrays)
+```py
+import unittest
+
+def binary_search(nums, target):
+    lo = 0
+    hi = len(nums) - 1
+    while lo <= hi:
+        mid = lo + (hi - lo) // 2
+        if nums[mid] == target:
+            return True
+        elif nums[mid] < target:
+            lo = mid + 1
+        else:
+            hi = mid - 1
+    return False
+
+
+def remove_duplicates(nums):
+    nums.sort()
+    j = 0
+    for i in xrange(len(nums)):
+        if i > 0 and nums[i] == nums[i-1]:
+            continue
+        nums[j] = nums[i]
+        j += 1
+    
+    for _ in xrange(j, len(nums)):
+        nums.pop()
+    
+    return nums
+
+
+def intersection(nums1, nums2):
+    if not nums1 or not nums2:
+        return []
+
+    if len(nums1) > len(nums2):
+        nums1, nums2 = nums2, nums1
+    
+    nums1.sort()
+    res = []
+    for i, num in enumerate(nums2):
+        if binary_search(nums1, num):
+            res.append(num)
+    return remove_duplicates(res)
+
+
+class IntersectionSpec(unittest.TestCase):
+    def assert_array(self, arr1, arr2):
+        self.assertEqual(sorted(arr1), sorted(arr2))
+
+    def test_example1(self):
+        nums1 = [1, 2, 2, 1]
+        nums2 = [2, 2]
+        expected = [2]
+        self.assert_array(expected, intersection(nums1, nums2))
+        self.assert_array(expected, intersection(nums2, nums1))
+
+    def test_example2(self):
+        nums1 = [4, 9, 5]
+        nums2 = [9, 4, 9, 8, 4]
+        expected = [9, 4]
+        self.assert_array(expected, intersection(nums1, nums2))
+
+    def test_empty_array(self):
+        self.assertEqual([], intersection([], []))
+
+    def test_empty_array2(self):
+        self.assertEqual([], intersection([1, 1, 1], []))
+        self.assertEqual([], intersection([], [1, 2, 3]))
+
+    def test_array_with_duplicated_elements(self):
+        nums1 = [1, 1, 1]
+        nums2 = [1, 2, 3, 4]
+        expected = [1]
+        self.assert_array(expected, intersection(nums1, nums2))
+
+    def test_array_with_duplicated_elements2(self):
+        nums1 = [1, 2, 3]
+        nums2 = [1, 1, 1, 2, 2, 2, 4, 4, 4, 4]
+        expected = [1, 2]
+        self.assert_array(expected, intersection(nums1, nums2))
+
+    def test_array_with_not_overlapping_elements(self):
+        nums1 = [1, 2, 3]
+        nums2 = [4, 5, 6]
+        expected = []
+        self.assert_array(expected, intersection(nums1, nums2))
+
+    
+if __name__ == '__main__':
+    unittest.main(exit=False)
 ```
 
 
