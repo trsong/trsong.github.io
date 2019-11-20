@@ -19,6 +19,22 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java) 
 
 
+### Nov 20, 2019 LC 138 \[Medium\] Copy List with Random Pointer
+--- 
+> **Question:** A linked list is given such that each node contains an additional random pointer which could point to any node in the list or null.
+>
+> Return a deep copy of the list.
+
+ **Example:**
+```py
+Input:
+{"$id":"1","next":{"$id":"2","next":null,"random":{"$ref":"2"},"val":2},"random":{"$ref":"2"},"val":1}
+
+Explanation:
+Node 1's value is 1, both of its next and random pointer points to Node 2.
+Node 2's value is 2, its next pointer points to null and its random pointer points to itself.
+```
+
 ### Nov 19, 2019 LC 692 \[Medium\] Top K Frequent words
 --- 
 > **Question:** Given a non-empty list of words, return the k most frequent words. The output should be sorted from highest to lowest frequency, and if two words have the same frequency, the word with lower alphabetical order comes first. Input will contain only lower-case letters.
@@ -39,6 +55,58 @@ Explanation: "the", "is", "sunny" and "day" are the four most frequent words,
     with the number of occurrence being 4, 3, 2 and 1 respectively.
 ```
 
+**My thoughts:** Record the frequence of each word, put them into a max heap, finally the final result is the top k element from the max heap. 
+
+**Solution with PriorityQueue:** [https://repl.it/@trsong/Top-K-Frequent-words](https://repl.it/@trsong/Top-K-Frequent-words)
+```py
+import unittest
+from Queue import PriorityQueue
+
+def top_k_freq_words(words, k):
+    histogram = {}
+    for word in words:
+        histogram[word] = histogram.get(word, 0) + 1
+        
+    pq = PriorityQueue()
+    for word, count in histogram.items():
+        pq.put((-count, word))
+    
+    res = []
+    for _ in xrange(k):
+        _, word = pq.get()
+        res.append(word)
+    
+    return res
+
+
+class TopKFreqWordSpec(unittest.TestCase):
+    def test_example1(self):
+        input = ["i", "love", "leapcode", "i", "love", "coding"]
+        k = 2
+        expected = ["i", "love"]
+        self.assertEqual(expected, top_k_freq_words(input, k))
+
+    def test_example2(self):
+        input =  ["the", "day", "is", "sunny", "the", "the", "the", "sunny", "is", "is"]
+        k = 4
+        expected = ["the", "is", "sunny", "day"]
+        self.assertEqual(expected, top_k_freq_words(input, k))
+
+    def test_same_count_words(self):
+        input =  ["c", "cb", "cba", "cdbaa"]
+        k = 3
+        expected = ["c", "cb", "cba"]
+        self.assertEqual(expected, top_k_freq_words(input, k))
+
+    def test_same_count_words2(self):
+        input =  ["a", "c", "b", "d"]
+        k = 3
+        expected = ["a", "b", "c"]
+        self.assertEqual(expected, top_k_freq_words(input, k))
+    
+if __name__ == '__main__':
+    unittest.main(exit=False)
+```
 
 ### Nov 18, 2019 \[Medium\] Intersection of Two Unsorted Arrays
 --- 
