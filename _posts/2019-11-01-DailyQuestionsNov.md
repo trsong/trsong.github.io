@@ -19,6 +19,13 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java) 
 
 
+
+### Nov 21, 2019 \[Easy\] GCD of N Numbers
+--- 
+> **Question:** Given `n` numbers, find the greatest common denominator between them.
+>
+> For example, given the numbers `[42, 56, 14]`, return `14`.
+
 ### Nov 20, 2019 LC 138 \[Medium\] Copy List with Random Pointer
 --- 
 > **Question:** A linked list is given such that each node contains an additional random pointer which could point to any node in the list or null.
@@ -33,6 +40,183 @@ Input:
 Explanation:
 Node 1's value is 1, both of its next and random pointer points to Node 2.
 Node 2's value is 2, its next pointer points to null and its random pointer points to itself.
+```
+
+**Solution:** [https://repl.it/@trsong/Copy-List-with-Random-Pointer](https://repl.it/@trsong/Copy-List-with-Random-Pointer)
+```py
+import unittest
+
+
+def deep_copy(head):
+    if not head:
+        return None
+
+    # Step1: Duplicate each node and insert them in every other place: n1 -> copy_n1 -> n2 -> copy_n2 ... -> nk -> copy_nk
+    p = head
+    while p:
+        p.next = ListNode(p.val, p.next)
+        p = p.next.next
+    
+    # Step2: Connect random pointer of duplicated node to the duplicated node of random pointer. ie.  copy_node(n1).random = copy_node(n1.random). Note in Step1: copy_node(n1) == n1.next
+    p = head
+    while p:
+        if p.random:
+            p.next.random = p.random.next
+        p = p.next.next
+    
+    # Step3: Partition list into even sub-list and odd sub-list. And the odd sub-list is the deep-copy list
+    p = head
+    new_head = p.next
+    while p:
+        new_p = p.next
+        p.next = p.next.next
+        if p.next:
+            new_p.next = p.next.next
+        else:
+            new_p.next = None
+        p = p.next
+    
+    return new_head
+    
+
+### Testing Utiltities
+class ListNode(object):
+    def __init__(self, val, next=None, random=None):
+        self.val = val
+        self.next = next
+        self.random = random
+    
+    def __eq__(self, other):
+        if not self.equal(other):
+            print "List1 != List2 where"
+            print "List1:"
+            print str(self)
+            print "List2:"
+            print str(other)
+            print "\n"
+            return False
+        else:
+            return True
+
+    def equal(self, other):
+        if other is not None:
+            is_random_valid = self.random is None and other.random is None or self.random is not None and other.random is not None and self.random.val == other.random.val
+            return is_random_valid and self.val == other.val and self.next == other.next
+        else:
+            return False
+        
+
+    def __repr__(self):
+        lst = []
+        random = []
+        p = self
+        while p:
+            lst.append(str(p.val))
+            if p.random:
+                random.append(str(p.random.val))
+            else:
+                random.append("N")
+            p = p.next
+        
+        return "List: [{}].\nRandom[{}]".format(','.join(lst), ','.join(random))
+            
+
+
+class DeepCopySpec(unittest.TestCase):
+    def test_empty_list(self):
+        self.assertIsNone(deep_copy(None))
+    
+    def test_list_with_random_point_to_itself(self):
+        n = ListNode(1)
+        n.random = n
+        self.assertEqual(deep_copy(n), n)
+
+    def test_random_pointer_is_None(self):
+        # 1 -> 2 -> 3 -> 4
+        n4 = ListNode(4)
+        n3 = ListNode(3, n4)
+        n2 = ListNode(2, n3)
+        n1 = ListNode(1, n2)
+        self.assertEqual(deep_copy(n1), n1)
+
+    def test_list_with_forward_random_pointers(self):
+        # 1 -> 2 -> 3 -> 4
+        n4 = ListNode(4)
+        n3 = ListNode(3, n4)
+        n2 = ListNode(2, n3)
+        n1 = ListNode(1, n2)
+
+        # random pointer:
+        # 1 -> 3
+        # 2 -> 3
+        # 3 -> 4
+        n1.random = n3
+        n2.random = n3
+        n3.random = n4
+        self.assertEqual(deep_copy(n1), n1)
+
+    def test_list_with_backward_random_pointers(self):
+        # 1 -> 2 -> 3 -> 4
+        n4 = ListNode(4)
+        n3 = ListNode(3, n4)
+        n2 = ListNode(2, n3)
+        n1 = ListNode(1, n2)
+
+        # random pointer:
+        # 1 -> 1
+        # 2 -> 1
+        # 3 -> 2
+        # 4 -> 1
+        n1.random = n1
+        n2.random = n1
+        n3.random = n2
+        n4.random = n1
+        self.assertEqual(deep_copy(n1), n1)
+
+    def test_list_with_both_forward_and_backward_pointers(self):
+        # 1 -> 2 -> 3 -> 4
+        n4 = ListNode(4)
+        n3 = ListNode(3, n4)
+        n2 = ListNode(2, n3)
+        n1 = ListNode(1, n2)
+
+        # random pointer:
+        # 1 -> 3
+        # 2 -> 1
+        # 3 -> 4
+        # 4 -> 3
+        n1.random = n3
+        n2.random = n2
+        n3.random = n4
+        n4.random = n3
+        self.assertEqual(deep_copy(n1), n1)
+
+    def test_list_with_both_forward_and_backward_pointers2(self):
+        # 1 -> 2 -> 3 -> 4 -> 5 -> 6
+        n6 = ListNode(6)
+        n5 = ListNode(5, n6)
+        n4 = ListNode(4, n5)
+        n3 = ListNode(3, n4)
+        n2 = ListNode(2, n3)
+        n1 = ListNode(1, n2)
+
+        # random pointer:
+        # 1 -> 1
+        # 2 -> 1
+        # 3 -> 4
+        # 4 -> 5
+        # 5 -> 3
+        # 6 -> None
+        n1.random = n1
+        n2.random = n1
+        n3.random = n4
+        n4.random = n5
+        n5.random = n3
+        self.assertEqual(deep_copy(n1), n1)
+        
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
 ```
 
 ### Nov 19, 2019 LC 692 \[Medium\] Top K Frequent words
