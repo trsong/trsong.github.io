@@ -20,11 +20,100 @@ categories: Python/Java
 
 
 
+### Nov 22, 2019 \[Easy\] Compare Version Numbers
+--- 
+> **Question:** Version numbers are strings that are used to identify unique states of software products. A version number is in the format a.b.c.d. and so on where a, b, etc. are numeric strings separated by dots. These generally represent a hierarchy from major to minor changes. 
+> 
+> Given two version numbers version1 and version2, conclude which is the latest version number. Your code should do the following:
+> - If version1 > version2 return 1.
+> - If version1 < version2 return -1.
+> - Otherwise return 0.
+>
+> Note that the numeric strings such as a, b, c, d, etc. may have leading zeroes, and that the version strings do not start or end with dots. Unspecified level revision numbers default to 0.
+
+**Example 1:**
+```py
+Input: 
+version1 = "1.0.33"
+version2 = "1.0.27"
+Output: 1 
+#version1 > version2
+```
+
+**Example 2:**
+```py
+Input:
+version1 = "0.1"
+version2 = "1.1"
+Output: -1
+#version1 < version2
+```
+
+**Example 3:**
+```py
+Input: 
+version1 = "1.01"
+version2 = "1.001"
+Output: 0
+#ignore leading zeroes, 01 and 001 represent the same number. 
+```
+
+**Example 4:**
+```py
+Input:
+version1 = "1.0"
+version2 = "1.0.0"
+Output: 0
+#version1 does not have a 3rd level revision number, which
+defaults to "0"
+```
+
 ### Nov 21, 2019 \[Easy\] GCD of N Numbers
 --- 
 > **Question:** Given `n` numbers, find the greatest common denominator between them.
 >
 > For example, given the numbers `[42, 56, 14]`, return `14`.
+
+
+**Solution:** [https://repl.it/@trsong/GCD-of-N-Numbers](https://repl.it/@trsong/GCD-of-N-Numbers)
+```py
+import unittest
+
+def gcd(a, b):
+    while b:
+        a, b = b, a % b
+    return a 
+
+
+def gcd_n_numbers(nums):
+    res = nums[0]
+    for num in nums:
+        # gcd(a, b, c) = gcd(a, gcd(b, c))
+        res = gcd(res, num)
+    return res
+
+
+class GCDNNumberSpec(unittest.TestCase):
+    def test_example(self):
+        self.assertEqual(14, gcd_n_numbers([42, 56, 14]))
+
+    def test_co_prime_numbers(self):
+        self.assertEqual(1, gcd_n_numbers([6, 5, 7, 11]))
+
+    def test_composite_numbers(self):
+        self.assertEqual(11, gcd_n_numbers([11 * 3, 11 * 5, 11 * 7]))
+
+    def test_even_numbers(self):
+        self.assertEqual(2, gcd_n_numbers([2, 8, 6, 4]))
+    
+    def test_odd_numbers(self):
+        self.assertEqual(5, gcd_n_numbers([3 * 5, 3 * 2 * 5, 5 * 2 * 2]))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
+
+```
 
 ### Nov 20, 2019 LC 138 \[Medium\] Copy List with Random Pointer
 --- 
