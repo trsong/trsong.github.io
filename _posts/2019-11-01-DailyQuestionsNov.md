@@ -20,6 +20,16 @@ categories: Python/Java
 
 
 
+### Nov 23, 2019 \[Hard\] Number of Subscribers during a Given Interval
+--- 
+> **Question:** You are given an array of length 24, where each element represents the number of new subscribers during the corresponding hour. Implement a data structure that efficiently supports the following:
+>
+- `update(hour: int, value: int)`: Increment the element at index hour by value.
+- `query(start: int, end: int)`: Retrieve the number of subscribers that have signed up between start and end (inclusive).
+>
+> You can assume that all values get cleared at the end of the day, and that you will not be asked for start and end values that wrap around midnight.
+
+
 ### Nov 22, 2019 \[Easy\] Compare Version Numbers
 --- 
 > **Question:** Version numbers are strings that are used to identify unique states of software products. A version number is in the format a.b.c.d. and so on where a, b, etc. are numeric strings separated by dots. These generally represent a hierarchy from major to minor changes. 
@@ -66,6 +76,95 @@ version2 = "1.0.0"
 Output: 0
 #version1 does not have a 3rd level revision number, which
 defaults to "0"
+```
+
+**Solution with Two Pointers:** [https://repl.it/@trsong/Compare-Version-Numbers](https://repl.it/@trsong/Compare-Version-Numbers)
+```py
+import unittest
+
+def version_number_compare(v1, v2):
+    i = j = 0
+    n, m = len(v1), len(v2)
+
+    while i < n or j < m:
+        sub_v1 = 0
+        sub_v2 = 0
+        while i < n and v1[i].isdigit():
+            sub_v1 = 10 * sub_v1 + int(v1[i])
+            i += 1
+
+        while j < m and v2[j].isdigit():
+            sub_v2 = 10 * sub_v2 + int(v2[j])
+            j += 1
+
+        i += 1
+        j += 1
+        if sub_v1 < sub_v2:
+            return -1
+        elif sub_v1 > sub_v2:
+            return 1
+    return 0
+
+
+class VersionNumberCompareSpec(unittest.TestCase):
+    def test_example1(self):
+        version1 = "1.0.33"
+        version2 = "1.0.27"
+        self.assertEqual(1, version_number_compare(version1, version2))
+
+    def test_example2(self):
+        version1 = "0.1"
+        version2 = "1.1"
+        self.assertEqual(-1, version_number_compare(version1, version2))
+
+    def test_example3(self):
+        version1 = "1.01"
+        version2 = "1.001"
+        self.assertEqual(0, version_number_compare(version1, version2))
+
+    def test_example4(self):
+        version1 = "1.0"
+        version2 = "1.0.0"
+        self.assertEqual(0, version_number_compare(version1, version2))
+
+    def test_unspecified_version_numbers(self):
+        self.assertEqual(0, version_number_compare("", ""))
+        self.assertEqual(-1, version_number_compare("", "1"))
+        self.assertEqual(1, version_number_compare("2", ""))
+
+    def test_unaligned_zeros(self):
+        version1 = "00000.00000.00000.0"
+        version2 = "0.00000.000.00.00000.000.000.0"
+        self.assertEqual(0, version_number_compare(version1, version2))
+
+    def test_same_version_yet_unaligned(self):
+        version1 = "00001.001"
+        version2 = "1.000001.0000000.0000"
+        self.assertEqual(0, version_number_compare(version1, version2))
+
+    def test_different_version_numbers(self):
+        version1 = "1.2.3.4"
+        version2 = "1.2.3.4.5"
+        self.assertEqual(-1, version_number_compare(version1, version2))
+
+    def test_different_version_numbers2(self):
+        version1 = "3.2.1"
+        version2 = "3.1.2.3"
+        self.assertEqual(1, version_number_compare(version1, version2))
+
+    def test_different_version_numbers3(self):
+        version1 = "00001.001.0.1"
+        version2 = "1.000001.0000000.0000"
+        self.assertEqual(1, version_number_compare(version1, version2))
+
+    def test_without_dots(self):
+        version1 = "32123"
+        version2 = "3144444"
+        self.assertEqual(-1, version_number_compare(version1, version2))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
 ```
 
 ### Nov 21, 2019 \[Easy\] GCD of N Numbers
