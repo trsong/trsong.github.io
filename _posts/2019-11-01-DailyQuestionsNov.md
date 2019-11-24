@@ -20,6 +20,27 @@ categories: Python/Java
 
 
 
+### Nov 24, 2019 \[Easy\] Markov Chain
+--- 
+> **Question:**You are given a starting state start, a list of transition probabilities for a Markov chain, and a number of steps num_steps. Run the Markov chain starting from start for num_steps and compute the number of times we visited each state.
+>
+> For example, given the starting state a, number of steps 5000, and the following transition probabilities:
+
+```py
+[
+  ('a', 'a', 0.9),
+  ('a', 'b', 0.075),
+  ('a', 'c', 0.025),
+  ('b', 'a', 0.15),
+  ('b', 'b', 0.8),
+  ('b', 'c', 0.05),
+  ('c', 'a', 0.25),
+  ('c', 'b', 0.25),
+  ('c', 'c', 0.5)
+]
+One instance of running this Markov chain might produce { 'a': 3012, 'b': 1656, 'c': 332 }.
+```
+
 ### Nov 23, 2019 \[Hard\] Number of Subscribers during a Given Interval
 --- 
 > **Question:** You are given an array of length 24, where each element represents the number of new subscribers during the corresponding hour. Implement a data structure that efficiently supports the following:
@@ -29,6 +50,89 @@ categories: Python/Java
 >
 > You can assume that all values get cleared at the end of the day, and that you will not be asked for start and end values that wrap around midnight.
 
+**My thoughts:** Binary-indexed Tree a.k.a BIT or Fenwick Tree is used for dynamic range query. Basically, it allows efficiently query for sum of a continous interval of values.
+
+BIT Usage:
+```py
+bit = BIT(4)
+bit.query(3) # => 0
+bit.update(index=0, delta=1) # => [1, 0, 0, 0]
+bit.update(index=0, delta=1) # => [2, 0, 0, 0]
+bit.update(index=2, delta=3) # => [2, 0, 3, 0]
+bit.query(2) # => 2 + 0 + 3 = 5
+bit.update(index=1, delta=-1) # => [2, -1, 3, 0]
+bit.query(1) # => 2 + -1 = 1
+```
+
+Here all we need to do is to refactor the interface to adapt to SubscriberTracker.
+
+**Solution with BIT:** [https://repl.it/@trsong/Number-of-Subscribers-during-a-Given-Interval](https://repl.it/@trsong/Number-of-Subscribers-during-a-Given-Interval)
+```py
+import unittest
+
+class SubscriberTracker(object):
+    def __init__(self, n=24):
+        self.bit_tree = [0] * (n+1)
+
+    @staticmethod
+    def least_significant_bit(num):
+        return num & -num
+
+    def update(self, hour, value):
+        bit_index = hour + 1
+        while bit_index < len(self.bit_tree):
+            self.bit_tree[bit_index] += value
+            bit_index += SubscriberTracker.least_significant_bit(bit_index)
+
+    def query_from_begining(self, hour):
+        bit_index = hour + 1
+        res = 0
+        while bit_index > 0:
+            res += self.bit_tree[bit_index]
+            bit_index -= SubscriberTracker.least_significant_bit(bit_index)
+        return res
+
+    def query(self, start, end):
+        return self.query_from_begining(end) - self.query_from_begining(start-1)
+
+
+class SubscriberTrackerSpec(unittest.TestCase):
+    def test_query_without_update(self):
+        st = SubscriberTracker()
+        self.assertEqual(0, st.query(0, 23))
+        self.assertEqual(0, st.query(3, 5))
+    
+    def test_update_should_affect_query_value(self):
+        st = SubscriberTracker()
+        st.update(5, 10)
+        st.update(10, 15)
+        st.update(12, 20)
+        self.assertEqual(0, st.query(0, 4))
+        self.assertEqual(10, st.query(0, 5))
+        self.assertEqual(10, st.query(0, 9))
+        self.assertEqual(25, st.query(0, 10))
+        self.assertEqual(45, st.query(0, 13))
+        st.update(3, 2)
+        self.assertEqual(2, st.query(0, 4))
+        self.assertEqual(12, st.query(0, 5))
+        self.assertEqual(12, st.query(0, 9))
+        self.assertEqual(27, st.query(0, 10))
+        self.assertEqual(47, st.query(0, 13))
+
+    def test_number_of_subscribers_can_decrease(self):
+        st = SubscriberTracker()
+        st.update(10, 5)
+        st.update(20, 10)
+        self.assertEqual(10, st.query(15, 23))
+        st.update(12, -3)
+        self.assertEqual(10, st.query(15, 23))
+        st.update(17, -7)
+        self.assertEqual(3, st.query(15, 23))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
+```
 
 ### Nov 22, 2019 \[Easy\] Compare Version Numbers
 --- 
