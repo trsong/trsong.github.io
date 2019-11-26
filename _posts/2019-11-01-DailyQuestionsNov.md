@@ -19,6 +19,10 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java) 
 
 
+### Nov 26, 2019 \[Easy\] Rotate Array to Right K Elements In-place
+--- 
+> **Question:** Given an array and a number k that's smaller than the length of the array, rotate the array to the right k elements in-place.
+
 ### Nov 25, 2019 \[Medium\] Maximum Amount of Money from a Game
 --- 
 > **Question:** In front of you is a row of N coins, with values v1, v1, ..., vn.
@@ -26,6 +30,89 @@ categories: Python/Java
 > You are asked to play the following game. You and an opponent take turns choosing either the first or last coin from the row, removing it from the row, and receiving the value of the coin.
 >
 > Write a program that returns the maximum amount of money you can win with certainty, if you move first, assuming your opponent plays optimally.
+
+**My thoughts:** In a zero-sum game, one's lose is the other's gain. Therefore, the move you make is the best move among the worest situations. 
+
+There are 2 scenarios at each step, assume the current coin array ranges from i's position to j's position of original array:
+
+- Scenario 1: if I choose the i-th coin, opponent must choose either i+1 or j
+- Scenario 2: if I choose the j-th coin, opponent must choose either i or j-1
+
+In any of the two scenarios, assume the opponent always makes best move for him which leaves the worst situation for me. 
+
+Note that the greedy solution might not work. Because the best move in the short-run (local maximum) might not be the best move in the long-run (global maximum).
+
+Example of greedy approach not produces optimal solution:
+```
+Coins: [8, 15, 3, 7]
+
+Greedy approach:
+Round1 - If I choose 8, then Opponent will choose 15
+Round2 - If I choose 7, then Opponent will choose 3
+Leaves 15 for me and 18 for opponent in total
+
+Optimal approach:
+Round1 - If I choose 7, then Opponent will choose 8
+Round2 - If I choose 15, then Opponent will choose 3
+Leaves 22 for me and 11 for opponent in total
+
+In round1, if I choose 8 the greedy approach I can only get 15 assuming the opponent is always smart. But the opitimal is to choose 7.
+```
+
+**MiniMax Solution:** [https://repl.it/@trsong/Maximum-Amount-of-Money-from-a-Game](https://repl.it/@trsong/Maximum-Amount-of-Money-from-a-Game)
+```py
+import unittest
+
+def best_strategy(coins):
+    n = len(coins)
+    cache = [[None for _ in xrange(n)] for _ in xrange(n)]
+    return max_money_within_range(coins, 0, n - 1, cache)
+
+
+def max_money_within_range(coins, i, j, cache):
+    if i == j:
+        return coins[i]
+    elif i + 1 == j:
+        return coins[i] if coins[1] > coins[i+1] else coins[i+1]
+    elif i > j:
+        return 0
+    elif cache[i][j] is not None:
+        return cache[i][j]
+    
+    # Scenario 1: User choose first coin within range i to j
+    # Opponent choose either i + 1 or j whichever works best for him
+    res1 = coins[i] + min(max_money_within_range(coins, i+2, j, cache), max_money_within_range(coins, i+1, j-1, cache))
+
+    # Scenario 2: User choose last coin within range i to j
+    # Oppopnet choose either i or j-1 whichever works best for him
+    res2 = coins[j] + min(max_money_within_range(coins, i+1, j-1, cache), max_money_within_range(coins, i, j-2, cache))
+
+    cache[i][j] = max(res1, res2)
+    return cache[i][j]
+
+
+class BestStrategySpec(unittest.TestCase):
+    def test_trival_game(self):
+        self.assertEqual(0, best_strategy([]))
+        self.assertEqual(1, best_strategy([1]))
+        self.assertEqual(2, best_strategy([1, 2]))
+        self.assertEqual(1 + 3, best_strategy([1, 2, 3]))
+
+    def test_simple_game(self):
+        self.assertEqual(3 + 9, best_strategy([1, 9, 1, 3]))
+
+    def test_greedy_is_not_optimal(self):
+        self.assertEqual(7 + 15, best_strategy([8, 15, 3, 7]))
+
+    def test_same_value_of_coins(self):
+        self.assertEqual(2 + 2, best_strategy([2, 2, 2, 2]))
+
+    def test_greedy_is_not_optimal2(self):
+        self.assertEqual(10 + 30 + 2, best_strategy([20, 30, 2, 2, 2, 10]))
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
+```
 
 ### Nov 24, 2019 \[Easy\] Markov Chain
 --- 
