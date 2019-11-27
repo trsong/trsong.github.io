@@ -21,7 +21,7 @@ categories: Python/Java
 
 ### Nov 27, 2019 \[Easy\] Palindrome Integers
 --- 
-> **Question:** Write a program that checks whether an integer is a palindrome. For example, `121` is a palindrome, as well as `888`. `678` and `80` is not a palindrome. Do not convert the integer into a string.
+> **Question:** Write a program that checks whether an integer is a palindrome. For example, `121` is a palindrome, as well as `888`. But neither `678` nor `80` is a palindrome. Do not convert the integer into a string.
 
 ### Nov 26, 2019 LC 189 \[Easy\] Rotate Array to Right K Elements In-place
 --- 
