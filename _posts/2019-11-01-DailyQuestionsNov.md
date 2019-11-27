@@ -19,9 +19,63 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java) 
 
 
-### Nov 26, 2019 \[Easy\] Rotate Array to Right K Elements In-place
+### Nov 27, 2019 \[Easy\] Palindrome Integers
+--- 
+> **Question:** Write a program that checks whether an integer is a palindrome. For example, `121` is a palindrome, as well as `888`. `678` and `80` is not a palindrome. Do not convert the integer into a string.
+
+### Nov 26, 2019 LC 189 \[Easy\] Rotate Array to Right K Elements In-place
 --- 
 > **Question:** Given an array and a number k that's smaller than the length of the array, rotate the array to the right k elements in-place.
+
+**Solution:** [https://repl.it/@trsong/Rotate-Array-to-Right-K-Elements-In-place](https://repl.it/@trsong/Rotate-Array-to-Right-K-Elements-In-place)
+```py
+import unittest
+
+def reverse_array_in_range(array, start, end):
+    while start < end:
+        array[start], array[end] = array[end], array[start]
+        start += 1
+        end -= 1
+
+
+def rotate_array(nums, k):
+    if not nums:
+        return nums
+
+    n = len(nums)
+    k = k % n
+    reverse_array_in_range(nums, 0, n-1)
+    reverse_array_in_range(nums, 0, n-k-1)
+    reverse_array_in_range(nums, n-k, n-1)
+    return nums
+
+
+class RotateArraySpec(unittest.TestCase):
+    def test_simple_array(self):
+        self.assertEqual([3, 4, 5, 6, 1, 2], rotate_array([1, 2, 3, 4, 5, 6], k=2))
+
+    def test_rotate_0_position(self):
+        self.assertEqual([0, 1, 2, 3], rotate_array([0, 1, 2, 3], k=0))
+
+    def test_empty_array(self):
+        self.assertEqual([], rotate_array([], k=10))
+
+    def test_shift_negative_position(self):
+        self.assertEqual([3, 0, 1, 2], rotate_array([0, 1, 2, 3], k=-1))
+
+    def test_shift_more_than_array_size(self):
+        self.assertEqual([3, 4, 5, 6, 1, 2], rotate_array([1, 2, 3, 4, 5, 6], k=8))
+
+    def test_multiple_round_of_forward_and_backward_shift(self):
+        nums = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
+        k = 5
+        expected = [5, 6, 7, 8, 9, 10, 11, 12, 0, 1, 2, 3, 4]
+        self.assertEqual(rotate_array(nums, k), expected)
+        
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
+```
 
 ### Nov 25, 2019 \[Medium\] Maximum Amount of Money from a Game
 --- 
