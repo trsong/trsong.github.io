@@ -19,9 +19,87 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java) 
 
 
+### Nov 28, 2019 \[Medium\] Maximize Sum of the Minimum of K Subarrays
+--- 
+> **Question:** Given an array a of size N and an integer K, the task is to divide the array into K segments such that sum of the minimum of K segments is maximized.
+
+**Example1:**
+```py
+Input: [5, 7, 4, 2, 8, 1, 6], K = 3
+Output: 7
+Divide the array at indexes 0 and 1. Then the segments are [5], [7], [4, 2, 8, 1, 6] Sum of the minimus is 5 + 7 + 1 = 13
+```
+
+**Example2:**
+```py
+Input: [6, 5, 3, 8, 9, 10, 4, 7, 10], K = 4
+Output: 27
+[6, 5, 3, 8, 9], [10], [4, 7], [10] => 3 + 10 + 4 + 10 = 27
+```
+
 ### Nov 27, 2019 \[Easy\] Palindrome Integers
 --- 
 > **Question:** Write a program that checks whether an integer is a palindrome. For example, `121` is a palindrome, as well as `888`. But neither `678` nor `80` is a palindrome. Do not convert the integer into a string.
+
+**Solution:** [https://repl.it/@trsong/Palindrome-Integers](https://repl.it/@trsong/Palindrome-Integers)
+```py
+import unittest
+import math
+
+def is_palindrome_integer(num):
+    if num < 0:
+        return False
+    if num == 0:
+        return True
+    n = int(math.log10(num)) + 1
+    i = 0
+    j = n - 1
+    while i < j:
+        first_digit = num / 10 ** j
+        last_digit = num % 10
+        if first_digit != last_digit:
+            return False
+        num /= 10
+        i += 1
+        j -= 1
+    return True
+
+
+class IsPalindromeIntegerSpec(unittest.TestCase):
+    def test_example1(self):
+        self.assertTrue(is_palindrome_integer(121))
+
+    def test_example2(self):
+        self.assertTrue(is_palindrome_integer(88))
+
+    def test_example3(self):
+        self.assertFalse(is_palindrome_integer(678))
+
+    def test_example4(self):
+        self.assertFalse(is_palindrome_integer(80))
+
+    def test_zero(self):
+        self.assertTrue(is_palindrome_integer(0))
+
+    def test_single_digit_number(self):
+        self.assertTrue(is_palindrome_integer(7))
+
+    def test_non_palindrome1(self):
+        self.assertFalse(is_palindrome_integer(123421))
+
+    def test_non_palindrome2(self):
+        self.assertFalse(is_palindrome_integer(21010112))
+
+    def test_negative_number1(self):
+        self.assertFalse(is_palindrome_integer(-1))
+
+    def test_negative_number2(self):
+        self.assertFalse(is_palindrome_integer(-222))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
+```
 
 ### Nov 26, 2019 LC 189 \[Easy\] Rotate Array to Right K Elements In-place
 --- 
