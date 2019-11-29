@@ -19,14 +19,14 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java) 
 
 
-### Nov 28, 2019 \[Medium\] Maximize Sum of the Minimum of K Subarrays
+### Nov 28, 2019 \[Hard\] Maximize Sum of the Minimum of K Subarrays
 --- 
 > **Question:** Given an array a of size N and an integer K, the task is to divide the array into K segments such that sum of the minimum of K segments is maximized.
 
 **Example1:**
 ```py
 Input: [5, 7, 4, 2, 8, 1, 6], K = 3
-Output: 7
+Output: 13
 Divide the array at indexes 0 and 1. Then the segments are [5], [7], [4, 2, 8, 1, 6] Sum of the minimus is 5 + 7 + 1 = 13
 ```
 
