@@ -19,6 +19,78 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java) 
 
 
+### Nov 29, 2019 \[Easy\] Spreadsheet Columns
+--- 
+> **Question:** In many spreadsheet applications, the columns are marked with letters. From the 1st to the 26th column the letters are A to Z. Then starting from the 27th column it uses AA, AB, ..., ZZ, AAA, etc.
+>
+> Given a number n, find the n-th column name.
+
+**Examples:**
+```py
+Input          Output
+ 26             Z
+ 51             AY
+ 52             AZ
+ 80             CB
+ 676            YZ
+ 702            ZZ
+ 705            AAC
+```
+
+**My thoughts:** Map each digit to letter with value of digit - 1 won't work. E.g. `1 - 1 = 0 -> 'A'`. But `27 - 1 = 26 -> "AB" != 'AA'`. The treat is to treat `'Z'` as `0` while doing calculations.
+
+**Solution:** [https://repl.it/@trsong/Spreadsheet-Columns](https://repl.it/@trsong/Spreadsheet-Columns)
+```py
+import unittest
+
+def digit_to_letter(num):
+    ord_A = ord('A')
+    return chr(ord_A + num)
+
+
+def spreadsheet_columns(n):
+    base = 26
+    res = []
+    while n > 0:
+        remainder = n % base
+        res.append(digit_to_letter((remainder - 1) % base))
+        n //= base
+        if remainder == 0:
+            n -= 1
+    return ''.join(reversed(res))
+
+
+class SpreadsheetColumnSpec(unittest.TestCase):
+    def test_trivial_example(self):
+        self.assertEqual("A", spreadsheet_columns(1))
+    
+    def test_example1(self):
+        self.assertEqual("Z", spreadsheet_columns(26))
+    
+    def test_example2(self):
+        self.assertEqual("AY", spreadsheet_columns(51))
+    
+    def test_example3(self):
+        self.assertEqual("AZ", spreadsheet_columns(52))
+    
+    def test_example4(self):
+        self.assertEqual("CB", spreadsheet_columns(80))
+    
+    def test_example5(self):
+        self.assertEqual("YZ", spreadsheet_columns(676))
+    
+    def test_example6(self):
+        self.assertEqual("ZZ", spreadsheet_columns(702))
+    
+    def test_example7(self):
+        self.assertEqual("AAC", spreadsheet_columns(705))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
+```
+
+
 ### Nov 28, 2019 \[Hard\] Maximize Sum of the Minimum of K Subarrays
 --- 
 > **Question:** Given an array a of size N and an integer K, the task is to divide the array into K segments such that sum of the minimum of K segments is maximized.
