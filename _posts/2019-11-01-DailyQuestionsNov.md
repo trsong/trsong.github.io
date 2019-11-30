@@ -47,7 +47,7 @@ Input          Output
  705            AAC
 ```
 
-**My thoughts:** Map each digit to letter with value of digit - 1 won't work. E.g. `1 - 1 = 0 -> 'A'`. But `27 - 1 = 26 -> "AB" != 'AA'`. The treat is to treat `'Z'` as `0` while doing calculations.
+**My thoughts:** Map each digit to letter with value of digit - 1 won't work. E.g. `1 - 1 = 0 -> 'A'`. But `27 - 1 = 26 -> "AB" != 'AA'`. The trick is to treat `'Z'` as zero while printing and treat it as 26 while doing calculations. e.g. 1 -> A. 2 -> B. 25 -> Y. 0 -> Z.  
 
 **Solution:** [https://repl.it/@trsong/Spreadsheet-Columns](https://repl.it/@trsong/Spreadsheet-Columns)
 ```py
