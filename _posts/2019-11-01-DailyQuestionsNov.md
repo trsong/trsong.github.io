@@ -18,6 +18,16 @@ categories: Python/Java
 
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java) 
 
+### Nov 30, 2019 \[Medium\] Longest Increasing Subsequence
+--- 
+> **Question:** You are given an array of integers. Return the length of the longest increasing subsequence (not necessarily contiguous) in the array.
+
+**Example:**
+```py
+Input: [0, 8, 4, 12, 2, 10, 6, 14, 1, 9, 5, 13, 3, 11, 7, 15]
+Output: 6
+Explanation: since the longest increasing subsequence is 0, 2, 6, 9 , 11, 15.
+```
 
 ### Nov 29, 2019 \[Easy\] Spreadsheet Columns
 --- 
