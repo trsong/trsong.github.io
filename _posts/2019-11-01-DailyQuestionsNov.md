@@ -37,6 +37,99 @@ Output: 27
 [6, 5, 3, 8, 9], [10], [4, 7], [10] => 3 + 10 + 4 + 10 = 27
 ```
 
+**My thoughts:** Think about the problem in a recursive manner. Suppose we know the solution `dp[n][k]` that is the solution (max sum of all min) for all subarray number, ie. `num_subarray = 1, 2, ..., k`. Then with the introduction of the `n+1` element, what can we say about the solution? ie. `dp[n+1][k+1]`.
+
+What we can do is to create the k+1 th subarray, and try to absorb all previous elements one by one and find the maximum.
+
+Example for introduction of new element and the process of absorbing previous elements:
+- `[1, 2, 3, 1, 2], [6]` => `f([1, 2, 3, 1, 2]) + min(6)`
+- `[1, 2, 3, 1], [2, 6]` => `f([1, 2, 3, 1]) + min(6, 2)`
+- `[1, 2], [1, 2, 6]`    => `f([1, 2]) + min(6, 2, 1)`
+- `[1], [2, 1, 2, 6]`    => `f([1]) + min(6, 2, 1, 2)`
+
+Of course, the min value of last array will change, but we can calculate that along the way when we absorb more elements, and we can use `dp[n-p][k] for all p <= n` to calculate the answer. Thus `dp[n][k] = max{dp[n-p][k-1] + min_value of last_subarray} for all p < n, ie. num[p] is in last subarray`.
+
+**Solution with DP:** [https://repl.it/@trsong/Maximize-Sum-of-the-Minimum-of-K-Subarrays](https://repl.it/@trsong/Maximize-Sum-of-the-Minimum-of-K-Subarrays)
+```py
+import unittest
+import sys
+
+def max_aggregate_subarray_min(nums, k):
+    n = len(nums)
+    dp = [[-sys.maxint for _ in xrange(k+1)] for _ in xrange(n+1)]
+
+    # Let dp[n][k] represents the max aggregate subarray sum with problem size n and number of splits k
+    #     dp[n][k] = max{dp[n-p][k-1] + min_value of last_subarray} for all p < n, ie. num[p] is in last subarray
+    dp[0][0] = 0
+    for num_subarray in xrange(1, k+1):
+        for problem_size in xrange(num_subarray, n+1):
+            # last_subarray_min is the smallest element in last subarray
+            last_subarray_min = nums[problem_size-1]
+            for s in xrange(problem_size, 0, -1):
+                # With the introduction of the current element to last subarray, the min value of last subarray might change 
+                last_subarray_min = min(last_subarray_min, nums[s-1])
+                dp[problem_size][num_subarray] = max(dp[problem_size][num_subarray], dp[s-1][num_subarray-1] + last_subarray_min)
+
+    return dp[n][k]
+
+
+class MaxAggregateSubarrayMinSpec(unittest.TestCase):
+    def test_example1(self):
+        nums = [5, 7, 4, 2, 8, 1, 6]
+        k = 3
+        expected = 13  #  [5], [7], [4, 2, 8, 1, 6] => 5 + 7 + 1 = 13
+        self.assertEqual(expected, max_aggregate_subarray_min(nums, k))
+
+    def test_example2(self):
+        nums =  [6, 5, 3, 8, 9, 10, 4, 7, 10]
+        k = 4
+        expected = 27  # [6, 5, 3, 8, 9], [10], [4, 7], [10] => 3 + 10 + 4 + 10 = 27
+        self.assertEqual(expected, max_aggregate_subarray_min(nums, k))
+
+    def test_empty_array(self):
+        self.assertEqual(0, max_aggregate_subarray_min([], 0))
+
+    def test_not_split_array(self):
+        self.assertEqual(1, max_aggregate_subarray_min([1, 2, 3], 1))
+
+    def test_not_allow_split_into_empty_subarray(self):
+        self.assertEqual(-1, max_aggregate_subarray_min([5, -3, 0, 3, -6], 5))
+
+    def test_local_max_vs_global_max(self):
+        nums =  [1, 2, 3, 1, 2, 3, 1, 2, 3]
+        k = 3
+        expected = 6  # [1, 2, 3, 1, 2, 3, 1], [2], [3] => 1 + 2 + 3 = 6
+        self.assertEqual(expected, max_aggregate_subarray_min(nums, k))
+
+    def test_local_max_vs_global_max2(self):
+        nums =  [3, 2, 1, 3, 2, 1, 3, 2, 1]
+        k = 4
+        expected = 8  # [3], [2, 1], [3], [2, 1, 3, 2, 1] => 3 + 1 + 3 + 1 = 8
+        self.assertEqual(expected, max_aggregate_subarray_min(nums, k))
+
+    def test_array_contains_negative_elements(self):
+        nums =  [6, 3, -2, -4, 2, -1, 3, 2, 1, -5, 3, 5]
+        k = 3
+        expected = 6  # [6], [3, -2, -4, 2, -1, 3, 2, 1, -5, 3], [5] => 6 - 5 + 5 = 6
+        self.assertEqual(expected, max_aggregate_subarray_min(nums, k))
+
+    def test_array_contains_negative_elements2(self):
+        nums =  [1, -2, 3, -3, 0]
+        k = 3
+        expected = -2  # [1, -2], [3], [-3, 0] => -2 + 3 - 3 = -2
+        self.assertEqual(expected, max_aggregate_subarray_min(nums, k))
+
+    def test_array_with_all_negative_numbers(self):
+        nums =  [-1, -2, -3, -1, -2, -3]
+        k = 2
+        expected = -4  # [-1], [-2, -3, -1, -2, -3] => - 1 - 3 = -4
+        self.assertEqual(expected, max_aggregate_subarray_min(nums, k))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
+```
+
 ### Nov 27, 2019 \[Easy\] Palindrome Integers
 --- 
 > **Question:** Write a program that checks whether an integer is a palindrome. For example, `121` is a palindrome, as well as `888`. But neither `678` nor `80` is a palindrome. Do not convert the integer into a string.
