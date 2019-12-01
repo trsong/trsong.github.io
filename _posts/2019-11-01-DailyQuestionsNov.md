@@ -18,6 +18,21 @@ categories: Python/Java
 
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java) 
 
+### Dec 1, 2019 LC 508 \[Medium\] Most Frequent Subtree Sum
+--- 
+> **Question:** Given a binary tree, find the most frequent subtree sum.
+> 
+> If there is a tie between the most frequent sum, return the smaller one.
+
+**Example:**
+```
+   3
+  / \
+ 1   -3
+
+The above tree has 3 subtrees. The root node with 3, and the 2 leaf nodes, which gives us a total of 3 subtree sums. The root node has a sum of 1 (3 + 1 + -3), the left leaf node has a sum of 1, and the right leaf node has a sum of -3. Therefore the most frequent subtree sum is 1.
+```
+
 ### Nov 30, 2019 \[Medium\] Longest Increasing Subsequence
 --- 
 > **Question:** You are given an array of integers. Return the length of the longest increasing subsequence (not necessarily contiguous) in the array.
@@ -29,6 +44,78 @@ Output: 6
 Explanation: since the longest increasing subsequence is 0, 2, 6, 9 , 11, 15.
 ```
 
+**My thoughts:** Try different examples until find a pattern to break problem into smaller subproblems. I tried `[1, 2, 3, 0, 2]`, `[1, 2, 3, 0, 6]`, `[4, 5, 6, 7, 1, 2, 3]` and notice the pattern that the longest increasing subsequence ends at index i equals 1 + max of all previous longest increasing subsequence ends before i if that elem is smaller than sequence[i].
+
+Example, suppose f represents the longest increasing subsequence ends at last element 
+
+```py
+f([1, 2, 3, 0, 2]) = 1 + max(f([1]), f([1, 2, 3, 0])) # as 2 > 1 and 2 > 0, gives [1, 2], [0, 2] and max len is 2
+f([1, 2, 3, 0, 6]) = 1 + max(f[1], f([1, 2]), f([1, 2, 3]), f([1, 2, 3, 0])) # as 6 > all. gives [1, 6], [1, 2, 6] or [1, 2, 3, 6] and max len is 4
+```
+
+And finally once we get an array of all the longest increasing subsequence ends at i. We can take the maximum to find the global longest increasing subsequence among all i.
+
+**Solution with DP:** [https://repl.it/@trsong/Longest-Increasing-Subsequence](https://repl.it/@trsong/Longest-Increasing-Subsequence)
+```py
+import unittest
+
+def longest_increasing_subsequence(sequence):
+    if not sequence:
+        return 0
+    
+    # Let dp[i] represents the length of longest sequence ends at index i
+    #     dp[i] = max{dp[j]} + 1 for all j < i where sequnece[j] < sequence[i]
+    n = len(sequence)
+    dp = [1] * n
+    for i in range(1, n):
+        for j in range(i):
+            if sequence[j] < sequence[i]:
+                dp[i] = max(dp[i], dp[j] + 1)
+    res = max(dp)
+    return res if res > 1 else 0
+
+
+class LongestIncreasingSubsequnceSpec(unittest.TestCase):
+    def test_example(self):
+        self.assertEqual(6, longest_increasing_subsequence([0, 8, 4, 12, 2, 10, 6, 14, 1, 9, 5, 13, 3, 11, 7, 15]))  # 0, 2, 6, 9 , 11, 15
+
+    def test_empty_sequence(self):
+        self.assertEqual(0, longest_increasing_subsequence([]))
+
+    def test_last_elem_is_local_max(self):
+        self.assertEqual(3, longest_increasing_subsequence([1, 2, 3, 0, 2]))  # 1, 2, 3
+
+    def test_last_elem_is_global_max(self):
+        self.assertEqual(4, longest_increasing_subsequence([1, 2, 3, 0, 6]))  # 1, 2, 3, 6
+
+    def test_longest_increasing_subsequence_in_first_half_sequence(self):
+        self.assertEqual(4, longest_increasing_subsequence([4, 5, 6, 7, 1, 2, 3]))  # 4, 5, 6, 7
+
+    def test_longest_increasing_subsequence_in_second_half_sequence(self):
+        self.assertEqual(4, longest_increasing_subsequence([1, 2, 3, -2, -1, 0, 1]))  # -2, -1, 0, 1
+
+    def test_sequence_in_up_down_up_pattern(self):
+        self.assertEqual(4, longest_increasing_subsequence([1, 2, 3, 2, 4]))  # 1, 2, 3, 4
+
+    def test_sequence_in_up_down_up_pattern2(self):
+        self.assertEqual(3, longest_increasing_subsequence([1, 2, 3, -1, 0]))  # 1, 2, 3
+
+    def test_sequence_in_down_up_down_pattern(self):
+        self.assertEqual(2, longest_increasing_subsequence([4, 3, 5])) # 4, 5
+    
+    def test_sequence_in_down_up_down_pattern2(self):
+        self.assertEqual(2, longest_increasing_subsequence([4, 0, 1]))  # 0, 1
+
+    def test_array_with_unique_value(self):
+        self.assertEqual(0, longest_increasing_subsequence([1, 1, 1, 1, 1]))
+
+    def test_decreasing_array(self):
+        self.assertEqual(0, longest_increasing_subsequence([3, 2, 1, 0]))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
+```
 ### Nov 29, 2019 \[Easy\] Spreadsheet Columns
 --- 
 > **Question:** In many spreadsheet applications, the columns are marked with letters. From the 1st to the 26th column the letters are A to Z. Then starting from the 27th column it uses AA, AB, ..., ZZ, AAA, etc.
