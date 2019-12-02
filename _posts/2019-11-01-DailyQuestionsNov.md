@@ -18,6 +18,18 @@ categories: Python/Java
 
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java) 
 
+
+### Dec 2, 2019 \[Medium\] Sort a Partially Sorted List
+--- 
+> **Question:** You are given a list of n numbers, where every number is at most k indexes away from its properly sorted index. Write a sorting algorithm (that will be given the number k) for this list that can solve this in O(n log k)
+
+**Example:**
+```py
+Input: [3, 2, 6, 5, 4], k=2
+Output: [2, 3, 4, 5, 6]
+As seen above, every number is at most 2 indexes away from its proper sorted index.
+```
+
 ### Dec 1, 2019 LC 508 \[Medium\] Most Frequent Subtree Sum
 --- 
 > **Question:** Given a binary tree, find the most frequent subtree sum.
@@ -35,6 +47,104 @@ The root node with 3, and the 2 leaf nodes, which gives us a total of 3 subtree 
 The root node has a sum of 1 (3 + 1 + -3).
 The left leaf node has a sum of 1, and the right leaf node has a sum of -3. 
 Therefore the most frequent subtree sum is 1.
+```
+
+**Solution:** [https://repl.it/@trsong/Most-Frequent-SubTree-Sum](https://repl.it/@trsong/Most-Frequent-SubTree-Sum)
+```py
+import unittest
+
+class TreeNode(object):
+    def __init__(self, val, left=None, right=None):
+        self.val = val
+        self.left = left
+        self.right = right
+
+
+def most_freq_tree_sum(tree):
+    freq_map = {}
+    node_sum(tree, freq_map)
+
+    max_sum = None
+    max_sum_freq = float("-inf")
+    for sum, freq in freq_map.items():
+        if freq > max_sum_freq or freq == max_sum_freq and sum < max_sum:
+            max_sum_freq = freq
+            max_sum = sum
+    return max_sum 
+
+def node_sum(node, freq_map):
+    if not node:
+        return 0
+    left_sum = node_sum(node.left, freq_map)
+    right_sum = node_sum(node.right, freq_map)
+    current_sum = node.val + left_sum + right_sum
+    freq_map[current_sum] = freq_map.get(current_sum, 0) + 1
+    return current_sum
+
+
+class MostFreqTreeSumSpec(unittest.TestCase):
+    def test_example1(self):
+        """
+           3
+          / \
+         2  -3
+        """
+        t = TreeNode(3, TreeNode(2), TreeNode(-3))
+        self.assertEqual(2, most_freq_tree_sum(t))
+
+    def test_empty_tree(self):
+        self.assertIsNone(most_freq_tree_sum(None))
+
+    def test_tree_with_unique_value(self):
+        """
+          0
+         / \
+        0   0
+         \
+          0
+        """
+        l = TreeNode(0, right=TreeNode(0))
+        t = TreeNode(0, l, TreeNode(0))
+        self.assertEqual(0, most_freq_tree_sum(t))
+
+    def test_depth_3_tree(self):
+        """
+           _0_ 
+          /   \
+         0     -3  
+        / \   /  \   
+       1  -1 3   -1  
+        """
+        l = TreeNode(0, TreeNode(1), TreeNode(-1))
+        r = TreeNode(-3, TreeNode(3), TreeNode(-1))
+        t = TreeNode(0, l, r)
+        self.assertEqual(-1, most_freq_tree_sum(t))
+
+    def test_return_smaller_freq_when_there_is_a_tie(self):
+        """
+            -2
+           /   \
+          0     1
+         / \   / \
+        0   0 1   1
+        """
+        l = TreeNode(0, TreeNode(0), TreeNode(0))
+        r = TreeNode(1, TreeNode(1), TreeNode(1))
+        t = TreeNode(-2, l, r)
+        self.assertEqual(0, most_freq_tree_sum(t))
+
+    def test_return_smaller_freq_when_there_is_a_tie2(self):
+        """
+           3
+          / \
+         2   -1
+        """
+        t = TreeNode(3, TreeNode(2), TreeNode(-1))
+        self.assertEqual(-1, most_freq_tree_sum(t))
+        
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
 ```
 
 ### Nov 30, 2019 \[Medium\] Longest Increasing Subsequence
