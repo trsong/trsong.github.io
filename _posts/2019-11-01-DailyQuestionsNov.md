@@ -18,6 +18,18 @@ categories: Python/Java
 
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java) 
 
+### Dec 3, 2019 \[Medium\] Multitasking
+--- 
+> **Question:** We have a list of tasks to perform, with a cooldown period. We can do multiple of these at the same time, but we cannot run the same task simultaneously.
+>
+> Given a list of tasks, find how long it will take to complete the tasks in the order they are input.
+
+**Example:**
+```py
+tasks = [1, 1, 2, 1]
+cooldown = 2
+output: 7 (order is 1 _ _ 1 2 _ 1)
+```
 
 ### Dec 2, 2019 \[Medium\] Sort a Partially Sorted List
 --- 
@@ -28,8 +40,64 @@ categories: Python/Java
 Input: [3, 2, 6, 5, 4], k=2
 Output: [2, 3, 4, 5, 6]
 As seen above, every number is at most 2 indexes away from its proper sorted index.
-```
+``` 
 
+**Solution with PriorityQueue:** [https://repl.it/@trsong/Sort-a-Partially-Sorted-List](https://repl.it/@trsong/Sort-a-Partially-Sorted-List)
+```py
+import unittest
+from Queue import PriorityQueue
+
+
+def sort_partial_list(nums, k):
+    n = len(nums)
+    pq = PriorityQueue()
+    res = []
+    for i in xrange(min(n, k+1)):
+        pq.put(nums[i])
+
+    for i in xrange(k+1, n):
+        res.append(pq.get())
+        pq.put(nums[i])
+
+    while not pq.empty():
+        res.append(pq.get())
+
+    return res
+
+
+class SortPartialListSpec(unittest.TestCase):
+    def test_example(self):
+        k, nums = 2, [3, 2, 6, 5, 4]
+        self.assertEqual(sorted(nums), sort_partial_list(nums, k))
+
+    def test_empty_list(self):
+        self.assertEqual([], sort_partial_list([], 0))
+        self.assertEqual([], sort_partial_list([], 3))
+    
+    def test_unsorted_list(self):
+        k, nums = 10, [8, 7, 6, 5, 3, 1, 2, 4]
+        self.assertEqual(sorted(nums), sort_partial_list(nums, k))
+
+    def test_k_is_3(self):
+        k, nums = 3, [6, 5, 3, 2, 8, 10, 9]
+        self.assertEqual(sorted(nums), sort_partial_list(nums, k))
+
+    def test_another_example_k_is_3(self):
+        k, nums = 3, [2, 6, 3, 12, 56, 8]
+        self.assertEqual(sorted(nums), sort_partial_list(nums, k))
+
+    def test_k_is_4(self):
+        k, nums = 4, [10, 9, 8, 7, 4, 70, 60, 50]
+        self.assertEqual(sorted(nums), sort_partial_list(nums, k))
+
+    def test_list_with_duplicated_values(self):
+        k, nums = 3, [3, 2, 2, 4, 4, 3]
+        self.assertEqual(sorted(nums), sort_partial_list(nums, k))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
+```
 ### Dec 1, 2019 LC 508 \[Medium\] Most Frequent Subtree Sum
 --- 
 > **Question:** Given a binary tree, find the most frequent subtree sum.
