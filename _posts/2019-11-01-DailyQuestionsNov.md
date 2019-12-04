@@ -18,6 +18,20 @@ categories: Python/Java
 
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java) 
 
+
+### Dec 4, 2019 \[Medium\] Zig-Zag String
+--- 
+> **Question:** Given a string and a number of lines k, print the string in zigzag form. In zigzag, characters are printed out diagonally from top left to bottom right until reaching the kth line, then back up to top right, and so on.
+
+**Example:**
+```py
+Given the sentence "thisisazigzag" and k = 4, you should print:
+t     a     g
+ h   s z   a
+  i i   i z
+   s     g
+```
+
 ### Dec 3, 2019 \[Medium\] Multitasking
 --- 
 > **Question:** We have a list of tasks to perform, with a cooldown period. We can do multiple of these at the same time, but we cannot run the same task simultaneously.
@@ -29,6 +43,79 @@ categories: Python/Java
 tasks = [1, 1, 2, 1]
 cooldown = 2
 output: 7 (order is 1 _ _ 1 2 _ 1)
+```
+
+**My thoughts:** Since we have to execute the task with specific order and each task has a cooldown time, we can use a map to record the last occurence of the same task and set up a threshold in order to make sure we will always wait at least the cooldown amount of time before proceed.
+
+**Solution:**  [https://repl.it/@trsong/Multitasking](https://repl.it/@trsong/Multitasking)
+```py
+import unittest
+
+def multitasking_time(task_seq, cooldown):
+    n = len(task_seq)
+    if cooldown <= 0:
+        return n
+
+    last_occur_log = {}
+    total_time = 0
+    for task in task_seq:
+        current_time = total_time + 1
+        last_occur = last_occur_log.get(task, -1)
+        delta = current_time - last_occur
+        if last_occur < 0 or delta > cooldown:
+            idle_time = 0 
+        else:
+            idle_time = cooldown - delta + 1
+        total_time += 1 + idle_time
+        last_occur_log[task] = total_time
+    return total_time
+
+
+class MultitaskingTimeSpec(unittest.TestCase):
+    def test_example(self):
+        tasks = [1, 1, 2, 1]
+        cooldown = 2
+        # order is 1 _ _ 1 2 _ 1
+        self.assertEqual(7, multitasking_time(tasks, cooldown))
+
+    def test_example2(self):
+        tasks = [1, 1, 2, 1, 2]
+        cooldown = 2
+        # order is 1 _ _ 1 2 _ 1 2
+        self.assertEqual(8, multitasking_time(tasks, cooldown))
+    
+    def test_zero_cool_down_time(self):
+        tasks = [1, 1, 1]
+        cooldown = 0
+        # order is 1 1 1 
+        self.assertEqual(3, multitasking_time(tasks, cooldown))
+    
+    def test_task_queue_is_empty(self):
+        tasks = []
+        cooldown = 100
+        self.assertEqual(0, multitasking_time(tasks, cooldown))
+
+    def test_cooldown_is_three(self):
+        tasks = [1, 2, 1, 2, 1, 1, 2, 2]
+        cooldown = 3
+        # order is 1 2 _ _ 1 2 _ _ 1 _ _ _ 1 2 _ _ _ 2
+        self.assertEqual(18, multitasking_time(tasks, cooldown))
+    
+    def test_multiple_takes(self):
+        tasks = [1, 2, 3, 1, 3, 2, 1, 2]
+        cooldown = 2
+        # order is 1 2 3 1 _ 3 2 1 _ 2
+        self.assertEqual(10, multitasking_time(tasks, cooldown))
+
+    def test_when_cool_down_is_huge(self):
+        tasks = [1, 2, 2, 1, 2]
+        cooldown = 100
+        # order is 1 2 [_ * 100] 2 1 [_ * 99] 2
+        self.assertEqual(204, multitasking_time(tasks, cooldown))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
 ```
 
 ### Dec 2, 2019 \[Medium\] Sort a Partially Sorted List
