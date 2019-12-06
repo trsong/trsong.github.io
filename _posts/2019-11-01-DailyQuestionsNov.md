@@ -18,10 +18,144 @@ categories: Python/Java
 
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java) 
 
+
+### Dec 6, 2019 \[Easy\] Convert Roman Numerals to Decimal
+--- 
+> **Question:** Given a Roman numeral, find the corresponding decimal value. Inputs will be between 1 and 3999.
+>
+**Example:**
+```py
+Input: IX
+Output: 9
+
+Input: VII
+Output: 7
+
+Input: MCMIV
+Output: 1904
+
+Roman numerals are based on the following symbols:
+I     1
+IV    4
+V     5
+IX    9 
+X     10
+XL    40
+L     50
+XC    90
+C     100
+CD    400
+D     500
+CM    900
+M     1000
+```
+
+> Numbers are strings of these symbols in descending order. In some cases, subtractive notation is used to avoid repeated characters. The rules are as follows:
+> 1. I placed before V or X is one less, so 4 = IV (one less than 5), and 9 is IX (one less than 10)
+> 2. X placed before L or C indicates ten less, so 40 is XL (10 less than 50) and 90 is XC (10 less than 100).
+> 3. C placed before D or M indicates 100 less, so 400 is CD (100 less than 500), and 900 is CM (100 less than 1000).
+
 ### Dec 5, 2019 LC 222 \[Medium\] Count Complete Tree Nodes
 --- 
 > **Question:** Given a complete binary tree, count the number of nodes in faster than O(n) time. Recall that a complete binary tree has every level filled except the last, and the nodes in the last level are filled starting from the left.
 
+**My thoughts:** For any complete binary tree, the max height of left tree vs the max height of right tree differ at most by one. We can take advantage of this property to quickly identify either left or right is full binary tree.
+
+The trick is to check the left max height of left tree vs the left max height of right tree. If they are equal, that means left tree is full binaray tree. ie 2^height - 1 number of nodes. Otherwise, we can say the right tree must be full.
+
+**Solution:** [https://repl.it/@trsong/Count-Complete-Tree-Nodes](https://repl.it/@trsong/Count-Complete-Tree-Nodes)
+```py
+import unittest
+
+class TreeNode(object):
+    def __init__(self, val, left=None, right=None):
+        self.val = val
+        self.left = left
+        self.right = right
+
+
+def left_height(tree):
+    height = 0
+    while tree:
+        height += 1
+        tree = tree.left
+    return height
+
+
+def count_complete_tree(root):
+    if not root:
+        return 0
+
+    left_height1 = left_height(root.left)
+    left_height2 = left_height(root.right)
+
+    if left_height1 == left_height2:
+        # left child guarantee to be full
+        return 2 ** left_height1 + count_complete_tree(root.right)
+    else:
+        # right child guarantee to be full
+        return 2 ** left_height2 + count_complete_tree(root.left)
+
+
+class CountCompleteTreeSpec(unittest.TestCase):
+    def test_empty_tree(self):
+        self.assertEqual(0, count_complete_tree(None))
+
+    def test_full_tree_with_depth_1(self):
+        """
+          1
+         / \
+        2   3
+        """
+        root = TreeNode(1, TreeNode(2), TreeNode(3))
+        self.assertEqual(3, count_complete_tree(root))
+
+    def test_depth_2_complete_tree(self):
+        """
+             1
+           /   \
+          2     3
+         / \   /
+        4   5 6
+        """
+        left_tree = TreeNode(2, TreeNode(4), TreeNode(5))
+        right_tree = TreeNode(3, TreeNode(6))
+        root = TreeNode(1, left_tree, right_tree)
+        self.assertEqual(6, count_complete_tree(root))
+
+    def test_last_level_with_one_element(self):
+        """
+             1
+           /   \
+          2     3
+         /
+        4
+        """
+        root = TreeNode(1, TreeNode(2, TreeNode(4)), TreeNode(3))
+        self.assertEqual(4, count_complete_tree(root))
+
+    def test_last_level_missing_2_elements(self):
+        """
+            __ 1 __
+           /       \
+          2         3
+         / \       / \
+        4    5    6   7
+       / \  / \  / \
+      8  9 10 11 12 13
+        """
+        n4 = TreeNode(4, TreeNode(8), TreeNode(9))
+        n5 = TreeNode(5, TreeNode(10), TreeNode(11))
+        n2 = TreeNode(2, n4, n5)
+        n6 = TreeNode(6, TreeNode(12), TreeNode(13))
+        n3 = TreeNode(3, n6, TreeNode(7))
+        root = TreeNode(1, n2, n3)
+        self.assertEqual(13, count_complete_tree(root))
+        
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
+```
 ### Dec 4, 2019 \[Medium\] Zig-Zag String
 --- 
 > **Question:** Given a string and a number of lines k, print the string in zigzag form. In zigzag, characters are printed out diagonally from top left to bottom right until reaching the kth line, then back up to top right, and so on.
