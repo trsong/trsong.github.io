@@ -19,6 +19,11 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java) 
 
 
+### Dec 7, 2019 \[Medium\] Zig-Zag LinkedList
+--- 
+> **Question:** Given a linked list, rearrange the node values such that they appear in alternating `low -> high -> low -> high ...` form. For example, given `1 -> 2 -> 3 -> 4 -> 5`, you should return `1 -> 3 -> 2 -> 5 -> 4`.
+
+
 ### Dec 6, 2019 \[Easy\] Convert Roman Numerals to Decimal
 --- 
 > **Question:** Given a Roman numeral, find the corresponding decimal value. Inputs will be between 1 and 3999.
@@ -55,6 +60,61 @@ CM    900
 M     1000
 ```
 
+**Solution:** [https://repl.it/@trsong/Convert-Roman-Numerals-to-Decimal](https://repl.it/@trsong/Convert-Roman-Numerals-to-Decimal)
+```py
+import unittest
+
+roman_unit = {'I': 1, 'V': 5, 'X': 10, 'L': 50, 'C': 100, 'D': 500,'M': 1000}
+
+def roman_to_decimal(roman_str):
+    prev = None
+    decimal = 0
+    for letter in roman_str:
+        if prev and roman_unit[prev] < roman_unit[letter]:
+            decimal -= 2 * roman_unit[prev]
+        decimal += roman_unit[letter]
+        prev = letter
+    return decimal
+
+
+class RomanToDecimalSpec(unittest.TestCase):
+    def test_example1(self):
+        self.assertEqual(9, roman_to_decimal("IX"))
+
+    def test_example2(self):
+        self.assertEqual(7, roman_to_decimal("VII"))
+
+    def test_example3(self):
+        self.assertEqual(1904, roman_to_decimal("MCMIV"))
+
+    def test_boundary(self):
+        self.assertEqual(3999, roman_to_decimal("MMMCMXCIX"))
+
+    def test_descending_order_rule1(self):
+        self.assertEqual(34, roman_to_decimal("XXXIV"))
+
+    def test_descending_order_rule2(self):
+        self.assertEqual(640, roman_to_decimal("DCXL"))
+
+    def test_descending_order_rule3(self):
+        self.assertEqual(912, roman_to_decimal("CMXII"))
+
+    def test_all_decending_rules_applied(self):
+        self.assertEqual(3949, roman_to_decimal("MMMCMXLIX"))
+
+    def test_all_decending_rules_applied2(self):
+        self.assertEqual(2994, roman_to_decimal("MMCMXCIV"))
+
+    def test_all_in_normal_order(self):
+        self.assertEqual(1666, roman_to_decimal("MDCLXVI"))
+
+    def test_all_in_normal_order2(self):
+        self.assertEqual(3888, roman_to_decimal("MMMDCCCLXXXVIII"))
+        
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
+```
 ### Dec 5, 2019 LC 222 \[Medium\] Count Complete Tree Nodes
 --- 
 > **Question:** Given a complete binary tree, count the number of nodes in faster than O(n) time. Recall that a complete binary tree has every level filled except the last, and the nodes in the last level are filled starting from the left.
