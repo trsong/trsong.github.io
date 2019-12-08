@@ -19,10 +19,120 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java) 
 
 
-### Dec 7, 2019 \[Medium\] Zig-Zag LinkedList
+### Dec 8, 2019 LC 393 \[Medium\] UTF-8 Validator
 --- 
-> **Question:** Given a linked list, rearrange the node values such that they appear in alternating `low -> high -> low -> high ...` form. For example, given `1 -> 2 -> 3 -> 4 -> 5`, you should return `1 -> 3 -> 2 -> 5 -> 4`.
+> **Question:** Given a list of integers where each integer represents 1 byte, return whether or not the list of integers is a valid UTF-8 encoding.
+> 
+> A UTF-8 character encoding is a variable width character encoding that can vary from 1 to 4 bytes depending on the character. The structure of the encoding is as follows:
 
+```py
+1 byte:  0xxxxxxx
+2 bytes: 110xxxxx 10xxxxxx
+3 bytes: 1110xxxx 10xxxxxx 10xxxxxx
+4 bytes: 11110xxx 10xxxxxx 10xxxxxx 10xxxxxx
+```
+
+### Dec 7, 2019 \[Easy\] Zig-Zag Distinct LinkedList
+--- 
+> **Question:** Given a linked list with DISTINCT value, rearrange the node values such that they appear in alternating `low -> high -> low -> high ...` form. For example, given `1 -> 2 -> 3 -> 4 -> 5`, you should return `1 -> 3 -> 2 -> 5 -> 4`.
+
+
+**Solution:** [https://repl.it/@trsong/Zig-Zag-LinkedList](https://repl.it/@trsong/Zig-Zag-LinkedList)
+```py
+import unittest
+
+def zig_zag_order(lst):
+    if not lst:
+        return
+        
+    p = lst
+    isLessThan = True
+    while p.next:
+        if isLessThan and p.val > p.next.val or not isLessThan and p.val < p.next.val:
+            p.val, p.next.val = p.next.val, p.val
+        p = p.next
+        isLessThan = not isLessThan
+
+
+###################
+# Testing Utilities
+###################
+class ListNode(object):
+    def __init__(self, val, next=None):
+        self.val = val
+        self.next = next
+    
+    @staticmethod  
+    def List(*vals):
+        dummy = ListNode(-1)
+        p = dummy
+        for elem in vals:
+            p.next = ListNode(elem)
+            p = p.next
+        return dummy.next  
+
+
+class ZigZagOrderSpec(unittest.TestCase):
+    def verify_order(self, lst):
+        isLessThanPrevious = False
+        if not lst:
+            return
+        p = lst.next
+        prev = lst
+        while p:
+            if isLessThanPrevious:
+                self.assertLess(p.val, prev.val)
+            else:
+                self.assertGreater(p.val, prev.val)
+
+            isLessThanPrevious = not isLessThanPrevious
+            prev = p
+            p = p.next
+
+    def test_example(self):
+        lst = ListNode.List(1, 2, 3, 4, 5)
+        zig_zag_order(lst)
+        self.verify_order(lst)
+
+    def test_empty_array(self):
+        lst = ListNode.List()
+        zig_zag_order(lst)
+        self.verify_order(lst)
+
+    def test_unsorted_list1(self):
+        lst = ListNode.List(10, 5, 6, 3, 2, 20, 100, 80)
+        zig_zag_order(lst)
+        self.verify_order(lst)
+
+    def test_unsorted_list2(self):
+        lst = ListNode.List(2, 4, 6, 8, 10, 20)
+        zig_zag_order(lst)
+        self.verify_order(lst)
+
+    def test_unsorted_list3(self):
+        lst = ListNode.List(3, 6, 5, 10, 7, 20)
+        zig_zag_order(lst)
+        self.verify_order(lst)
+
+    def test_unsorted_list4(self):
+        lst = ListNode.List(20, 10, 8, 6, 4, 2)
+        zig_zag_order(lst)
+        self.verify_order(lst)
+
+    def test_unsorted_list5(self):
+        lst = ListNode.List(6, 4, 2, 1, 8, 3)
+        zig_zag_order(lst)
+        self.verify_order(lst)
+
+    def test_sorted_list(self):
+        lst = ListNode.List(6, 5, 4, 3, 2, 1)
+        zig_zag_order(lst)
+        self.verify_order(lst)
+    
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
+```
 
 ### Dec 6, 2019 \[Easy\] Convert Roman Numerals to Decimal
 --- 
