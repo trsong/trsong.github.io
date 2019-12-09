@@ -19,6 +19,30 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java) 
 
 
+<!-- 
+### Dec 9, 2019 \[Hard\] The Most Efficient Way to Sort a Million 32-bit Integers
+--- 
+> **Question:** Given an array of a million integers between zero and a billion, out of order, how can you efficiently sort it?
+-->
+
+### Dec 9, 2019 LC 448 \[Easy\] Find Missing Numbers in an Array
+--- 
+> **Question:** Given an array of integers of size n, where all elements are between 1 and n inclusive, find all of the elements of [1, n] that do not appear in the array. Some numbers may appear more than once.
+> 
+> Follow-up: Could you do it without extra space and in O(n) runtime?
+
+**Example1:**
+```py
+Input: [4, 3, 2, 7, 8, 2, 3, 1]
+Output: [5, 6]
+```
+
+**Example2:**
+```py
+Input: [4, 5, 2, 6, 8, 2, 1, 5]
+Output: [3, 7]
+```
+
 ### Dec 8, 2019 LC 393 \[Medium\] UTF-8 Validator
 --- 
 > **Question:** Given a list of integers where each integer represents 1 byte, return whether or not the list of integers is a valid UTF-8 encoding.
@@ -30,6 +54,81 @@ categories: Python/Java
 2 bytes: 110xxxxx 10xxxxxx
 3 bytes: 1110xxxx 10xxxxxx 10xxxxxx
 4 bytes: 11110xxx 10xxxxxx 10xxxxxx 10xxxxxx
+```
+
+**My thoughts:** The trick is to break the array into multiple groups and tackle them one by one. For each group, count the leading 1's of initial byte and use that to validate the remaining bytes. A helper function to count leading 1's will be super useful. Make sure to watch out for the edge case test that consumes more than 4 bytes. Remember that a valid utf-8 string has at most 4 bytes. 
+
+**Solution:** [https://repl.it/@trsong/UTF-8-Validator](https://repl.it/@trsong/UTF-8-Validator)
+```py
+import unittest
+
+def count_leading_ones(byte):
+    num_ones = 0
+    for shift_amout in xrange(7, -1, -1):
+        if byte & (1 << shift_amout) == 0:
+            break
+        num_ones += 1
+    return num_ones
+
+
+def utf8_validate(data):
+    if not data:
+        return True
+    
+    n = len(data)
+    i = 0
+    while i < n:
+        initial_byte = data[i]
+        i += 1
+        num_bytes = count_leading_ones(initial_byte)
+        if num_bytes == 1 or num_bytes > 4:
+            return False
+        for remaining_num_bytes in xrange(num_bytes - 1, 0, -1):
+            if i >= n or count_leading_ones(data[i]) != 1:
+                return False
+            i += 1
+    return True
+
+
+class UTF8ValidateSpec(unittest.TestCase):
+    def test_example1(self):
+        data = [0b11000101, 0b10000010, 0b00000001]
+        self.assertTrue(utf8_validate(data))
+
+    def test_example2(self):
+        data = [0b11101011, 0b10001100, 0b00000100]
+        self.assertFalse(utf8_validate(data))
+
+    def test_empty_data(self):
+        self.assertTrue(utf8_validate([]))
+    
+    def test_sequence_of_one_byte_string(self):
+        data = [0b00000000, 0b01000000, 0b00100000, 0b00010000, 0b01111111]
+        self.assertTrue(utf8_validate(data))
+
+    def test_should_be_no_more_than_4_byte(self):
+        data = [0b11111010, 0b10010001, 0b10010001, 0b10010001, 0b10010001]
+        self.assertFalse(utf8_validate(data))
+
+    def test_can_not_start_with_10(self):
+        data = [0b10010001]
+        self.assertFalse(utf8_validate(data))
+
+    def test_various_length_strings(self):
+        one_byte = [0b00010000]
+        two_byte = [0b11010000, 0b10010000]
+        three_byte = [0b11101000, 0b10010000, 0b10010000]
+        four_byte = [0b11110100, 0b10010000, 0b10010000, 0b10010000]
+        data = one_byte + two_byte + one_byte + three_byte + two_byte + four_byte + one_byte
+        self.assertTrue(utf8_validate(data))
+
+    def test_mix_various_length(self):
+        data = [0b11110100, 0b10010000, 0b00010000, 0b10010000, 0b10010000]
+        self.assertFalse(utf8_validate(data))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
 ```
 
 ### Dec 7, 2019 \[Easy\] Zig-Zag Distinct LinkedList
