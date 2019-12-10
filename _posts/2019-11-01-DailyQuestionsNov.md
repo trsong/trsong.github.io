@@ -25,6 +25,17 @@ categories: Python/Java
 > **Question:** Given an array of a million integers between zero and a billion, out of order, how can you efficiently sort it?
 -->
 
+### Dec 10, 2019 \[Medium\] Point in Polygon
+--- 
+> **Question:** You are given a list of N points (x1, y1), (x2, y2), ..., (xN, yN) representing a polygon. You can assume these points are given in order; that is, you can construct the polygon by connecting point 1 to point 2, point 2 to point 3, and so on, finally looping around to connect point N to point 1.
+>
+> Determine if a new point p lies inside this polygon. (If p is on the boundary of the polygon, you should return False).
+
+
+**Hint:** Cast a ray from left to right and count intersections
+
+<img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c9/RecursiveEvenPolygon.svg/2560px-RecursiveEvenPolygon.svg.png" width="220" height="99">
+
 ### Dec 9, 2019 LC 448 \[Easy\] Find Missing Numbers in an Array
 --- 
 > **Question:** Given an array of integers of size n, where all elements are between 1 and n inclusive, find all of the elements of [1, n] that do not appear in the array. Some numbers may appear more than once.
@@ -41,6 +52,79 @@ Output: [5, 6]
 ```py
 Input: [4, 5, 2, 6, 8, 2, 1, 5]
 Output: [3, 7]
+```
+
+**Solution:** [https://repl.it/@trsong/Find-Missing-Numbers-in-an-Array](https://repl.it/@trsong/Find-Missing-Numbers-in-an-Array)
+```py
+import unittest
+
+def find_missing_numbers(nums):
+    # Mark existing value as negative
+    for num in nums:
+        index = abs(num) - 1
+        if nums[index] > 0:
+            nums[index] *= -1
+    
+    # Find missing numbers as well as restore original values
+    res = []
+    for i in xrange(len(nums)):
+        if nums[i] > 0:
+            res.append(i+1)
+        else:
+            nums[i] *= -1
+    return res
+    
+
+class FindMissingNumberSpec(unittest.TestCase):
+    def assert_result(self, expected, result):
+        self.assertEqual(sorted(expected), sorted(result))
+
+    def test_example1(self):
+        input = [4, 3, 2, 7, 8, 2, 3, 1]
+        expected = [5, 6]
+        self.assert_result(expected, find_missing_numbers(input))
+
+    def test_example2(self):
+        input = [4, 5, 2, 6, 8, 2, 1, 5]
+        expected = [3, 7]
+        self.assert_result(expected, find_missing_numbers(input))
+
+    def test_empty_array(self):
+        self.assertEqual([], find_missing_numbers([]))
+
+    def test_no_missing_numbers(self):
+        input = [6, 1, 4, 3, 2, 5]
+        expected = []
+        self.assert_result(expected, find_missing_numbers(input))
+
+    def test_duplicated_number1(self):
+        input = [1, 1, 2]
+        expected = [3]
+        self.assert_result(expected, find_missing_numbers(input))
+
+    def test_duplicated_number2(self):
+        input = [1, 1, 3, 5, 6, 8, 8, 1, 1]
+        expected = [2, 4, 7, 9]
+        self.assert_result(expected, find_missing_numbers(input))
+    
+    def test_missing_first_number(self):
+        input = [2, 2]
+        expected = [1]
+        self.assert_result(expected, find_missing_numbers(input))
+    
+    def test_missing_multiple_numbers1(self):
+        input = [1, 3, 3]
+        expected = [2]
+        self.assert_result(expected, find_missing_numbers(input))
+    
+    def test_missing_multiple_numbers2(self):
+        input = [3, 2, 3, 2, 3, 2, 7]
+        expected = [1, 4, 5, 6]
+        self.assert_result(expected, find_missing_numbers(input))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
 ```
 
 ### Dec 8, 2019 LC 393 \[Medium\] UTF-8 Validator
