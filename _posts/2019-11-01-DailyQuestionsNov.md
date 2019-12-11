@@ -25,6 +25,13 @@ categories: Python/Java
 > **Question:** Given an array of a million integers between zero and a billion, out of order, how can you efficiently sort it?
 -->
 
+
+
+### Dec 11, 2019 \[Easy\] Jumbled Sequence
+--- 
+> **Question:** The sequence [0, 1, ..., N] has been jumbled, and the only clue you have for its order is an array representing whether each number is larger or smaller than the last. Given this information, reconstruct an array that is consistent with it. For example, given [None, +, +, -, +], you could return [1, 2, 3, 0, 4]
+
+
 ### Dec 10, 2019 \[Medium\] Point in Polygon
 --- 
 > **Question:** You are given a list of N points (x1, y1), (x2, y2), ..., (xN, yN) representing a polygon. You can assume these points are given in order; that is, you can construct the polygon by connecting point 1 to point 2, point 2 to point 3, and so on, finally looping around to connect point N to point 1.
@@ -32,9 +39,118 @@ categories: Python/Java
 > Determine if a new point p lies inside this polygon. (If p is on the boundary of the polygon, you should return False).
 
 
-**Hint:** Cast a ray from left to right and count intersections
+**Hint:** Cast a ray from left to right and count intersections. Odd number means inside. Even means outside.
 
 <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c9/RecursiveEvenPolygon.svg/2560px-RecursiveEvenPolygon.svg.png" width="220" height="99">
+
+
+**Solution:** [https://repl.it/@trsong/Point-in-Polygon](https://repl.it/@trsong/Point-in-Polygon)
+```py
+import unittest
+import math
+
+def distance(p1, p2):
+    dx = p1[0] - p2[0]
+    dy = p1[1] - p2[1]
+    return math.sqrt(dx * dx + dy * dy)
+
+
+def is_on_sigment(line, p):
+    # A point is on line segment iff d1 + d2 = d3 
+    d1 = distance(p, line[0])
+    d2 = distance(p, line[1])
+    d3 = distance(line[0], line[1])
+    return abs(d1 + d2 - d3) <= 10 ** -6
+
+
+def cross(p1, p2, p3):
+    x1 = p2[0] - p1[0]
+    y1 = p2[1] - p1[1]
+    x2 = p3[0] - p1[0]
+    y2 = p3[1] - p1[1]
+    return x1 * y2 - x2 * y1     
+
+
+def has_intersection(line1, line2):
+    p1, p2 = line1
+    p3, p4 = line2
+    if max(p1[0], p2[0]) <= min(p3[0], p4[0]): return False  # line1 left line2
+    if min(p1[0], p2[0]) >= max(p3[0], p4[0]): return False  # line1 right line2
+    if max(p1[1], p2[1]) <= min(p3[1], p4[1]): return False  # line1 below line2
+    if min(p1[1], p2[1]) >= max(p3[1], p4[1]): return False  # line1 above line2
+    if cross(p1, p2, p3) * cross(p1, p2, p4) > 0: return False  # both line2 ends are on same side of line1
+    if cross(p3, p4, p1) * cross(p3, p4, p2) > 0: return False  # both line1 ends are on same side of line2
+    return True
+
+
+def is_point_in_polygon(polygon, point):
+    right_end = (float('inf'), point[1])
+    ray = (point, right_end)
+    num_intersection = 0
+    start = polygon[-1]
+    for end in polygon:
+        segment = (start, end)
+        if is_on_sigment(segment, point):
+            return False
+        if has_intersection(segment, ray):
+            num_intersection += 1
+        start = end
+
+    # Cast a ray from a point inside polygon should have odd number of intersection with boundary
+    return num_intersection % 2 > 0
+
+
+class IsPointInPolygonSpec(unittest.TestCase):
+    def test_square(self):
+        polygon = [(-1, 1), (-1, -1), (1, -1), (1, 1)]
+        self.assertFalse(is_point_in_polygon(polygon, (0, 2))) # Above
+        self.assertFalse(is_point_in_polygon(polygon, (0, -2))) # Below
+        self.assertFalse(is_point_in_polygon(polygon, (-2, 0))) # Left
+        self.assertFalse(is_point_in_polygon(polygon, (2, 0))) # Right
+        self.assertTrue(is_point_in_polygon(polygon, (0, 0))) # Inside
+        self.assertFalse(is_point_in_polygon(polygon, (-1, 0))) # Boundary1 
+        self.assertFalse(is_point_in_polygon(polygon, (1, 1))) # Boundary2 
+        self.assertFalse(is_point_in_polygon(polygon, (0, -1))) # Boundary3 
+
+    def test_triangle(self):
+        polygon = [(0, 1), (-1, 0), (1, 0)]
+        self.assertFalse(is_point_in_polygon(polygon, (0, 2))) # Above
+        self.assertFalse(is_point_in_polygon(polygon, (0, -1))) # Below
+        self.assertFalse(is_point_in_polygon(polygon, (-0.5, 1))) # Left
+        self.assertFalse(is_point_in_polygon(polygon, (2, 0))) # Right
+        self.assertTrue(is_point_in_polygon(polygon, (0, 0.5))) # Inside
+        self.assertFalse(is_point_in_polygon(polygon, (-0.5, 0.5))) # Boundary1 
+        self.assertFalse(is_point_in_polygon(polygon, (-1, 0))) # Boundary2 
+        self.assertFalse(is_point_in_polygon(polygon, (1, 0))) # Boundary3 
+
+    def test_convex_polygon(self):
+        polygon = [(0, 2), (-2, 0), (-1, -2), (1, -2), (2, 0)]
+        self.assertFalse(is_point_in_polygon(polygon, (0, 3))) # Above
+        self.assertFalse(is_point_in_polygon(polygon, (0, -3))) # Below
+        self.assertFalse(is_point_in_polygon(polygon, (-0.5, 2))) # Left
+        self.assertFalse(is_point_in_polygon(polygon, (2, 0.5))) # Right
+        self.assertTrue(is_point_in_polygon(polygon, (0.5, 0.5))) # Inside
+        self.assertFalse(is_point_in_polygon(polygon, (-2, 0))) # Boundary1 
+        self.assertFalse(is_point_in_polygon(polygon, (2, 0))) # Boundary2 
+        self.assertFalse(is_point_in_polygon(polygon, (0, -2))) # Boundary3 
+
+    def test_concave_polygon(self):
+        polygon = [(1, 3), (-3, 0), (0, -3), (3, 0), (-1, -1)]
+        self.assertFalse(is_point_in_polygon(polygon, (0, 4))) # Above
+        self.assertFalse(is_point_in_polygon(polygon, (0, -4))) # Below
+        self.assertFalse(is_point_in_polygon(polygon, (-2, 2))) # Left
+        self.assertFalse(is_point_in_polygon(polygon, (1, 0))) # Right
+        self.assertTrue(is_point_in_polygon(polygon, (-0.5, 0.5))) # Inside1
+        self.assertTrue(is_point_in_polygon(polygon, (-1, -0.5))) # Inside2
+        self.assertTrue(is_point_in_polygon(polygon, (1, -1))) # Inside3
+        self.assertFalse(is_point_in_polygon(polygon, (-2, -1))) # Boundary1 
+        self.assertFalse(is_point_in_polygon(polygon, (-1, -1))) # Boundary2 
+        self.assertFalse(is_point_in_polygon(polygon, (1, -2))) # Boundary3 
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
+```
 
 ### Dec 9, 2019 LC 448 \[Easy\] Find Missing Numbers in an Array
 --- 
