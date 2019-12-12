@@ -25,12 +25,97 @@ categories: Python/Java
 > **Question:** Given an array of a million integers between zero and a billion, out of order, how can you efficiently sort it?
 -->
 
+### Dec 12, 2019 \[Easy\] Sorting Window Range
+--- 
+> **Question:** Given a list of numbers, find the smallest window to sort such that the whole list will be sorted. If the list is already sorted return (0, 0). You can assume there will be no duplicate numbers.
 
+**Example:**
+```py
+Input: [2, 4, 7, 5, 6, 8, 9]
+Output: (2, 4)
+Explanation: Sorting the window (2, 4) which is [7, 5, 6] will also means that the whole list is sorted.
+```
 
 ### Dec 11, 2019 \[Easy\] Jumbled Sequence
 --- 
 > **Question:** The sequence [0, 1, ..., N] has been jumbled, and the only clue you have for its order is an array representing whether each number is larger or smaller than the last. Given this information, reconstruct an array that is consistent with it. For example, given [None, +, +, -, +], you could return [1, 2, 3, 0, 4]
 
+**Solution:** [https://repl.it/@trsong/Jumbled-Sequence](https://repl.it/@trsong/Jumbled-Sequence)
+```py
+import unittest
+
+def generate_sequence(jumbled_seq):
+    if not jumbled_seq:
+        return []
+    num_increment = jumbled_seq.count('+')
+    n = len(jumbled_seq)
+    pivot = n - 1 - num_increment
+    larger = smaller = pivot
+    
+    res = [None] * n
+    res[0] = pivot
+    for i in xrange(1, n):
+        if jumbled_seq[i] == '+':
+            larger += 1
+            res[i] = larger
+        else:
+            smaller -= 1
+            res[i] = smaller
+    return res
+
+
+class GenerateSequenceSpec(unittest.TestCase):
+    def validate_result(self, jumbled_seq, result_seq):
+        self.assertEqual(len(jumbled_seq), len(result_seq))
+        self.assertEqual(sorted(result_seq), range(len(jumbled_seq)))
+        for i in xrange(1, len(result_seq)):
+            if jumbled_seq[i] == '+':
+                self.assertLess(result_seq[i-1], result_seq[i])
+            else:
+                self.assertGreater(result_seq[i-1], result_seq[i])
+
+    def test_example(self):
+        # possible result: [1, 2, 3, 0, 4]
+        input = [None, '+', '+', '-', '+']
+        self.validate_result(input, generate_sequence(input))
+    
+    def test_exampty_array(self):
+        self.validate_result([], generate_sequence([]))
+
+    def test_array_with_one_elem(self):
+        # possible result: [0]
+        input = [None]
+        self.validate_result(input, generate_sequence(input))
+
+    def test_descending_array(self):
+        # possible result: [3, 2, 1, 0]
+        input = [None, '-', '-', '-']
+        self.validate_result(input, generate_sequence(input))
+
+    def test_ascending_array(self):
+        # possible result: [0, 1, 2, 3, 4]
+        input = [None, '+', '+', '+', '+']
+        self.validate_result(input, generate_sequence(input))
+
+    def test_zigzag_array(self):
+        # possible result: [0, 5, 1, 4, 2, 3]
+        input = [None, '+', '-', '+', '-', '+']
+        self.validate_result(input, generate_sequence(input))
+
+    def test_zigzag_array2(self):
+        # possible result: [5, 0, 4, 1, 3, 2]
+        input = [None,  '-', '+', '-', '+', '-']
+        self.validate_result(input, generate_sequence(input))
+
+    def test_decrease_then_increase(self):
+        # possible result: [5, 4, 0, 1, 2, 3]
+        input = [None,  '-', '-', '+', '+', '+']
+        self.validate_result(input, generate_sequence(input))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
+```
 
 ### Dec 10, 2019 \[Medium\] Point in Polygon
 --- 
