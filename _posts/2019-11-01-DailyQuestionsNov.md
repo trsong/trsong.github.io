@@ -25,7 +25,7 @@ categories: Python/Java
 > **Question:** Given an array of a million integers between zero and a billion, out of order, how can you efficiently sort it?
 -->
 
-### Dec 12, 2019 \[Easy\] Sorting Window Range
+### Dec 12, 2019 \[Medium\] Sorting Window Range
 --- 
 > **Question:** Given a list of numbers, find the smallest window to sort such that the whole list will be sorted. If the list is already sorted return (0, 0). You can assume there will be no duplicate numbers.
 
