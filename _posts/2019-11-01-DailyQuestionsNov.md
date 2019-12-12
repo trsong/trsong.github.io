@@ -19,11 +19,11 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java) 
 
 
-<!-- 
-### Dec 9, 2019 \[Hard\] The Most Efficient Way to Sort a Million 32-bit Integers
+
+### Dec 13, 2019 \[Hard\] The Most Efficient Way to Sort a Million 32-bit Integers
 --- 
 > **Question:** Given an array of a million integers between zero and a billion, out of order, how can you efficiently sort it?
--->
+
 
 ### Dec 12, 2019 \[Medium\] Sorting Window Range
 --- 
@@ -36,13 +36,51 @@ Output: (2, 4)
 Explanation: Sorting the window (2, 4) which is [7, 5, 6] will also means that the whole list is sorted.
 ```
 
+**My thoughts:** A sorted array has no min range to sort. So we want first identity the range `(i, j)` that goes wrong, that is, we want to identify first `i` and last `j` that makes array not sorted. ie. smallest `i` such that `nums[i] > nums[i+1]`, largest `j` such that `nums[j] < nums[j-1]`. 
+
+Secondly, range `(i, j)` inclusive is where we should start. And there could be number smaller than `nums[i+1]` and bigger than `nums[j-1]`, therefore we need to figure out how we can release the boundary of `(i, j)` to get `(i', j')` where `i' <= i` and `j' <= j` so that `i'`, `j'` covers those smallest and largest number within `(i, j)`. 
+
+After doing that, we will get smallest range to make original array sorted, the range is `i'` through `j'` inclusive.
+
 **Solution:** [https://repl.it/@trsong/Sorting-Window-Range](https://repl.it/@trsong/Sorting-Window-Range)
+
 ```py
 import unittest
 
 def sort_window_range(nums):
-    # TODO
-    pass
+    if len(nums) <= 1:
+        return 0, 0
+
+    n = len(nums)
+    left = 0
+    right = n - 1
+    while left < n - 1 and nums[left] <= nums[left+1]:
+        left += 1
+
+    
+    if left == n - 1:
+        # nums is already sorted
+        return 0, 0
+
+    while right > left and nums[right-1] <= nums[right]:
+        right -= 1
+    
+    min_val = float('inf')
+    max_val = float('-inf')
+    for i in xrange(left, right+1):
+        num = nums[i]
+        if num < min_val:
+            min_val = num
+        if num > max_val:
+            max_val = num
+    
+    while left > 0 and nums[left-1] > min_val:
+        left -= 1
+    
+    while right < n - 1 and nums[right+1] < max_val:
+        right += 1
+
+    return left, right
 
 
 class SortWindowRangeSpec(unittest.TestCase):
