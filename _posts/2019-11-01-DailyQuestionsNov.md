@@ -342,7 +342,7 @@ def distance(p1, p2):
     return math.sqrt(dx * dx + dy * dy)
 
 
-def is_on_sigment(line, p):
+def is_on_segment(line, p):
     # A point is on line segment iff d1 + d2 = d3 
     d1 = distance(p, line[0])
     d2 = distance(p, line[1])
@@ -377,7 +377,7 @@ def is_point_in_polygon(polygon, point):
     start = polygon[-1]
     for end in polygon:
         segment = (start, end)
-        if is_on_sigment(segment, point):
+        if is_on_segment(segment, point):
             return False
         if has_intersection(segment, ray):
             num_intersection += 1
