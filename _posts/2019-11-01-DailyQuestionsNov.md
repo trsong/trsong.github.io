@@ -94,8 +94,6 @@ def radix_sort_by_digits(nums, num_digit):
             shifted_num = (nums[i] - min_val) >> shift_amount
             bucket_index = shifted_num % radix
             bucket[bucket_index] -= 1
-            if bucket[bucket_index] >= len(sorted_nums):
-                print shift_amount, nums[i], i, bucket_index, iteration
             sorted_nums[bucket[bucket_index]] = nums[i]
         
         iteration += 1
