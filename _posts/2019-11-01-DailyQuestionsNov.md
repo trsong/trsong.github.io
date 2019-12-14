@@ -24,7 +24,7 @@ categories: Python/Java
 --- 
 > **Question:** Given a number n, generate all binary search trees that can be constructed with nodes 1 to n.
  
-Example:
+**Example:**
 ```py
 Pre-order traversals of binary trees from 1 to n:
 - 123
@@ -44,6 +44,93 @@ Pre-order traversals of binary trees from 1 to n:
 --- 
 > **Question:** Given an array of a million integers between zero and a billion, out of order, how can you efficiently sort it?
 
+**My thoughts:** Inspired by this article [What is the most efficient way to sort a million 32-bit integers?](https://www.quora.com/What-is-the-most-efficient-way-to-sort-a-million-32-bit-integers).
+
+We all know that comparison-based takes `O(n*logn)` time is worse than radix sort `O(n)`. But sometime we cannot neglect the size of data. The complexity of sorting 32bit number is `O(lg(domainSize)∗n)` in this case `O(32∗n)` or `o(32n)`. But `O(n∗lg(n))` is better than `O(n)`. `O(n∗lg(n))=O(n∗lg(1M)) = o(20n)`. 
+
+Can we do better for radix sort to achieve better than `o(20n)`? Yes, we can! It turns out with 1 digit bucket we can achieve `o(32(n+2)) = o(32n) + merge overhead`. 2 digit bucket, `o(16n) + merge overhead`. 3 digit, `o(8n) + merge overhead`. We cannot go beyond that as the merge cost is increasing dramatically. After some experiment, it seems 3 digit bucket is optimal.
+
+**Solution by Radix Sort:** [https://repl.it/@trsong/Sort-a-Million-32-bit-Integers](https://repl.it/@trsong/Sort-a-Million-32-bit-Integers)
+```py
+import unittest
+import random
+
+MAX_32_BIT_INT = 2 ** 33 - 1
+
+def radix_sort_by_digits(nums, num_digit):
+    if not nums:
+        return []
+
+    min_val = float('inf')
+    max_val = float('-inf')
+    for num in nums:
+        if num < min_val:
+            min_val = num
+        elif num > max_val:
+            max_val = num
+    
+    bucket = [0] * (1 << num_digit)
+    radix = 1 << num_digit
+    sorted_nums = [None] * len(nums)
+    iteration = 0
+    while (max_val - min_val) >> (num_digit * iteration) > 0:
+        shift_amount = num_digit * iteration
+
+        for i in xrange(len(bucket)):
+            bucket[i] = 0
+
+        # Count occurance
+        for num in nums:
+            shifted_num = (num - min_val) >> shift_amount
+            bucket_index = shifted_num % radix
+            bucket[bucket_index] += 1
+
+        # Accumulate occurance to get actual index mappping
+        for i in xrange(1, len(bucket)):
+            bucket[i] += bucket[i-1]
+
+        # Copy back record
+        for i in xrange(len(nums)-1, -1, -1):
+            shifted_num = (nums[i] - min_val) >> shift_amount
+            bucket_index = shifted_num % radix
+            bucket[bucket_index] -= 1
+            if bucket[bucket_index] >= len(sorted_nums):
+                print shift_amount, nums[i], i, bucket_index, iteration
+            sorted_nums[bucket[bucket_index]] = nums[i]
+        
+        iteration += 1
+        nums, sorted_nums = sorted_nums, nums
+    return nums
+
+
+def sort_32bit(nums):
+    # 3 digit bucket is optimal for 1M 32bit integers
+    return radix_sort_by_digits(nums, 3)
+
+
+class Sort32BitSpec(unittest.TestCase):
+    random.seed(42)
+
+    def test_sort_empty_array(self):
+        self.assertEqual([], sort_32bit([]))
+
+    def test_small_array(self):
+        self.assertEqual([1, 1, 2, 3, 4, 5, 6], sort_32bit([6, 2, 3, 1, 4, 1, 5]))
+
+    def test_larger_array(self):
+        nums = [random.randint(0, MAX_32_BIT_INT) for _ in xrange(1000)]
+        sorted_result = sorted(nums)
+        self.assertEqual(sorted_result, sort_32bit(nums))
+
+    def test_sort_1m_numbers(self):
+        nums = [random.randint(0, MAX_32_BIT_INT) for _ in xrange(1000000)]
+        sorted_result = sorted(nums)
+        self.assertEqual(sorted_result, sort_32bit(nums))
+
+
+if __name__ == '__main__':    
+    unittest.main(exit=False)
+```
 
 ### Dec 12, 2019 \[Medium\] Sorting Window Range
 --- 
