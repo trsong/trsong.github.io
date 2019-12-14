@@ -20,6 +20,26 @@ categories: Python/Java
 
 
 
+### Dec 14, 2019 \[Medium\] Generate Binary Search Trees
+--- 
+> **Question:** Given a number n, generate all binary search trees that can be constructed with nodes 1 to n.
+ 
+Example:
+```py
+Pre-order traversals of binary trees from 1 to n:
+- 123
+- 132
+- 213
+- 312
+- 321
+
+   1      1      2      3      3
+    \      \    / \    /      /
+     2      3  1   3  1      2
+      \    /           \    /
+       3  2             2  1
+``` 
+
 ### Dec 13, 2019 \[Hard\] The Most Efficient Way to Sort a Million 32-bit Integers
 --- 
 > **Question:** Given an array of a million integers between zero and a billion, out of order, how can you efficiently sort it?
