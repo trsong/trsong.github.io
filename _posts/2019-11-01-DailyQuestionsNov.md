@@ -20,7 +20,7 @@ categories: Python/Java
 
 ### Dec 16, 2019 \[Medium\] Bridges in a Graph
 --- 
-> **Background:** A bridge in a connected (undirected) graph is an edge that, if removed, causes the graph to become disconnected. Find all the bridges in a graph.
+> **Question:** A bridge in a connected (undirected) graph is an edge that, if removed, causes the graph to become disconnected. Find all the bridges in a graph.
 
 ### Dec 15, 2019 \[Hard\] De Bruijn Sequence 
 --- 
