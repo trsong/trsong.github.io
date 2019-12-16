@@ -18,6 +18,10 @@ categories: Python/Java
 
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java) 
 
+### Dec 16, 2019 \[Medium\] Bridges in a Graph
+--- 
+> **Background:** A bridge in a connected (undirected) graph is an edge that, if removed, causes the graph to become disconnected. Find all the bridges in a graph.
+
 ### Dec 15, 2019 \[Hard\] De Bruijn Sequence 
 --- 
 > **Question:** Given a set of characters C and an integer k, a De Bruijn Sequence is a cyclic sequence in which every possible k-length string of characters in C occurs exactly once.
@@ -35,6 +39,91 @@ All possible strings of length three (000, 001, 010, 011, 100, 101, 110 and 111)
 ```py
 Input: C = [0, 1], k = 2
 Output: 01100
+```
+
+**My thoughts:** Treat all substring as nodes, substr1 connect to substr2 if substr1 shift 1 become substr2. Eg.  `123 -> 234 -> 345`. In order to only include each substring only once, we traverse entire graph using DFS and mark visited nodes and avoid visit same node over and over again.  
+
+**Solution with DFS:** [https://repl.it/@trsong/De-Bruijn-Sequence](https://repl.it/@trsong/De-Bruijn-Sequence)
+```py
+import unittest
+
+def de_bruijn_sequence(char_set, k):
+    char_set = map(str, char_set)
+    begin_state = char_set[0] * k
+    visited = set()
+    stack = [(begin_state, begin_state)]
+    res = []
+    
+    while stack:
+        cur_state, appended_char = stack.pop()
+        if cur_state in visited:
+            continue
+        visited.add(cur_state)
+        res.append(appended_char)
+
+        for char in char_set:
+            next_state = cur_state[1:] + char
+            if next_state not in visited:
+                stack.append((next_state, char))
+    
+    return "".join(res)
+
+
+class DeBruijnSequenceSpec(unittest.TestCase):
+    @staticmethod
+    def cartesian_product(char_set, k):
+        def cartesian_product_recur(char_set, k):
+            if k == 1:
+                return [[str(c)] for c in char_set]
+            res = []
+            for accu_list in cartesian_product_recur(char_set, k-1):
+                for char in char_set:
+                    res.append(accu_list + [str(char)])
+            return res
+        
+        return map(lambda lst: ''.join(lst), cartesian_product_recur(char_set, k))
+
+    def validate_de_bruijn_seq(self, char_set, k, seq_res):
+        n = len(char_set)
+        expected_substr_set = set(DeBruijnSequenceSpec.cartesian_product(char_set, k))
+        result_substr_set = set()
+        for i in xrange(n**k):
+            result_substr_set.add(seq_res[i:i+k])
+        # Check if all substr are covered
+        self.assertEqual(expected_substr_set, result_substr_set)
+        
+    def test_example1(self):
+        k, char_set = 3, [0, 1]
+        res = de_bruijn_sequence(char_set, k)
+        # Possible Solution: "0011101000"
+        self.validate_de_bruijn_seq(char_set, k, res)
+
+    def test_example2(self):
+        k, char_set = 2, [0, 1]
+        res = de_bruijn_sequence(char_set, k)
+        # Possible Solution: "01100"
+        self.validate_de_bruijn_seq(char_set, k, res)
+
+    def test_multi_charset(self):
+        k, char_set = 2, [0, 1, 2]
+        res = de_bruijn_sequence(char_set, k)
+        # Possible Solution : "0022120110"
+        self.validate_de_bruijn_seq(char_set, k, res)
+
+    def test_multi_charset2(self):
+        k, char_set = 3, [0, 1, 2]
+        res = de_bruijn_sequence(char_set, k)
+        # Possible Solution : "00022212202112102012001110100"
+        self.validate_de_bruijn_seq(char_set, k, res)
+        
+    def test_larger_k(self):
+        k, char_set = 5, [0, 1, 2]
+        res = de_bruijn_sequence(char_set, k)
+        self.validate_de_bruijn_seq(char_set, k, res)
+
+        
+if __name__ == '__main__':
+    unittest.main(exit=False)
 ```
 
 ### Dec 14, 2019 \[Medium\] Generate Binary Search Trees
