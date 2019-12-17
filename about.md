@@ -4,7 +4,7 @@ title: About
 permalink: /about/
 ---
 
-Java/Scala Developer | 4 Years WorkEx | Visier Inc | Master of Computer Science (USC)
+Java/Scala Developer \| 4 Years WorkEx \| Visier Inc \| Master of Computer Science (USC)
 
 My name is Tangrui Song. Linkedin: [https://www.linkedin.com/in/tangruisong/](https://www.linkedin.com/in/tangruisong/). I am a software engineer with 4 years of experience in software application development.
 Previously gradated from University of Waterloo Computer Science with GPA 3.7. Presently, I am working at University of Southern California for Master Degree.
@@ -19,6 +19,7 @@ Particularly interested in product development/enhancement. Always interested in
 Objective: To obtain challenging technical position, for using my problem solving, analytical, leadership and communication skills, and to achieve professional excellence. 
 
 My email: trsong.cs@gmail.com
+Seeking for fulltime opportunity as SDE in Sep 2020 after graduation from USC.
 
 <!-- 
 This is the base Jekyll theme. You can find out more info about customizing your Jekyll theme, as well as basic Jekyll usage documentation at [jekyllrb.com](http://jekyllrb.com/)
