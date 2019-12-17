@@ -18,10 +18,163 @@ categories: Python/Java
 
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java) 
 
-### Dec 16, 2019 \[Medium\] Bridges in a Graph
+
+### Dec 17, 2019 \[Hard\] Critical Routers (Articulation Point)
+--- 
+> **Question:** You are given an undirected connected graph. An articulation point (or cut vertex) is defined as a vertex which, when removed along with associated edges, makes the graph disconnected (or more precisely, increases the number of connected components in the graph). The task is to find all articulation points in the given graph.
+
+**Example1:**
+```py
+Input: vertices = 4, edges = [[0, 1], [1, 2], [2, 3]]
+Output: [1, 2]
+Explanation: Removing either vertex 0 or 3 along with edges [0, 1] or [2, 3] does not increase number of connected components. But removing 1, 2 breaks graph into two components.
+```
+
+**Example2:**
+```py
+Input: vertices = 5, edges = [[0, 1], [0, 2], [1, 2], [0, 3], [3, 4]]
+Output: [0, 3]
+```
+
+### Dec 16, 2019 \[Hard\] Bridges in a Graph
 --- 
 > **Question:** A bridge in a connected (undirected) graph is an edge that, if removed, causes the graph to become disconnected. Find all the bridges in a graph.
 
+**Example1:**
+```py
+Input: vertices = 5, edges = [[0, 1], [0, 2], [2, 3], [0, 3], [3, 4]]
+Output: [[0, 1], [3, 4]]
+Explanation:
+There are 2 bridges:
+1. Between node 0 and 1
+2. Between node 3 and 4
+If we remove these edges, then the graph will be disconnected.
+If we remove any of the remaining edges, the graph will remain connected.
+```
+
+**Example2:**
+```py
+Input: vertices = 6, edges = [[0, 1], [0, 2], [1, 2], [1, 3], [1, 4], [3, 5], [4, 5]]
+Output: []
+Explanation:
+We can remove any edge, the graph will remain connected.
+```
+
+**Example3:**
+```py
+Input: vertices = 9, edges = [[0, 1], [0, 2], [1, 2], [2, 3], [2, 5], [3, 4], [5, 6], [5, 8], [6, 7], [7, 8]]
+Output: [[2, 3], [2, 5], [3, 4]]
+```
+
+**My thoughts:** By definition, a bridge is an edge without which the graph become disconnected. So a straightforward approach is to temporarily remove this edge (u, v) and run either BFS and DFS to check if u, v are still connected. That leads to `O(V+E)` for each edge, that is, `O(E*(V+E))` total running time as we have `E` edges.
+
+Can we do better? Of course, we can. The idea is still the same, we want to find if without such edge, u, v are still connected. But we achieve the same goal using time stamp. First we run DFS from any vertex (as the graph is undirected and connected). During the traversal, we mark vertex as UNVISITED, VISITING, VISITED. The difference between VISITING and VISITED is whether we finish processed all children or not. We also record node discover time. If there is a back edge, ie. edge connect to non-UNVISITED nodes which are ancestor nodes, and we store the earliest ancestor discover time among all ancestor nodes. 
+
+So, in order to tell if an edge u, v is a bridge, after finishing processed all childen of u, we check if v ever connect to any ancestor of u. That can be done by compare the discover time of u against the earliest ancestor discover time of v (while propagate to v, v might connect to some ancestor, we just store the ealiest discover of among those ancestors). If v's earliest ancestor discover time is greater than discover time of u, ie. v doesn't have access to u's ancestor, then edge u,v must be a bridge, 'coz it seems there is not way for v to connect to u other than edge u,v. By definition that edge is a bridge.
+
+Such algorithm has running time `O(V+E)`. 
+
+**Solition with DFS:** [https://repl.it/@trsong/Bridges-in-a-Graph](https://repl.it/@trsong/Bridges-in-a-Graph)
+```py
+import unittest
+
+class NodeState(object):
+    UNVISITED = 0
+    VISITING = 1
+    VISITED = 2
+
+def find_bridge(vertices, edges):
+    if not vertices or not edges:
+        return []
+
+    neighbors = [[] for _ in xrange(vertices)]
+    for u, v in edges:
+        neighbors[u].append(v)
+        neighbors[v].append(u)
+
+    node_states = [NodeState.UNVISITED] * vertices
+    time = 0
+    discover_time = [float('inf')] * vertices
+    earliest_ancestor_time = [float('inf')] * vertices  # the earliest discover time of connected non-parent ancenstor
+    stack = [(0, None)]
+    res = []
+
+    while stack:
+        u, parent_u = stack[-1]
+
+        if node_states[u] == NodeState.VISITED:
+            stack.pop()
+        elif node_states[u] == NodeState.UNVISITED:
+            discover_time[u] = earliest_ancestor_time[u] = time
+            time += 1
+            node_states[u] = NodeState.VISITING
+            for v in neighbors[u]:
+                if node_states[v] == NodeState.UNVISITED: 
+                    stack.append((v, u))
+                elif v != parent_u:
+                    earliest_ancestor_time[u] = min(earliest_ancestor_time[u], discover_time[v])
+        else:
+            # node_states[u] == NodeState.VISITING
+            node_states[u] = NodeState.VISITED
+            for v in neighbors[u]:
+                if node_states[v] == NodeState.VISITED:
+                    earliest_ancestor_time[u] = min(earliest_ancestor_time[u], earliest_ancestor_time[v])
+                    if earliest_ancestor_time[v] > discover_time[u]:
+                        res.append([u, v])
+    
+    return res
+        
+
+class FindBridgeSpec(unittest.TestCase):
+    def validate_result(self, expected, result):
+        sorted_expected = sorted(map(sorted, expected))
+        sorted_result = sorted(map(sorted, result))
+        self.assertEqual(sorted_expected, sorted_result)
+
+    def test_example1(self):
+        vertices, edges = 5, [[0, 1], [0, 2], [2, 3], [0, 3], [3, 4]]
+        expected = [[0, 1], [3, 4]]
+        self.validate_result(expected, find_bridge(vertices, edges))
+
+    def test_example2(self):
+        vertices, edges = 6, [[0, 1], [0, 2], [1, 2], [1, 3], [1, 4], [3, 5], [4, 5]]
+        expected = []
+        self.validate_result(expected, find_bridge(vertices, edges))
+
+    def test_example3(self):
+        vertices, edges = 9, [[0, 1], [0, 2], [1, 2], [2, 3], [2, 5], [3, 4], [5, 6], [5, 8], [6, 7], [7, 8]]
+        expected = [[2, 3], [2, 5], [3, 4]]
+        self.validate_result(expected, find_bridge(vertices, edges))
+
+    def test_empty_graph(self):
+        vertices, edges = 0, []
+        expected = []
+        self.validate_result(expected, find_bridge(vertices, edges))
+
+    def test_k3(self):
+        vertices, edges = 3, [[0, 1], [1, 2], [2, 0]]
+        expected = []
+        self.validate_result(expected, find_bridge(vertices, edges))
+
+    def test_connected_graph1(self):
+        vertices, edges = 4, [[0, 1], [0, 2], [0, 3], [1, 2], [2, 3]]
+        expected = []
+        self.validate_result(expected, find_bridge(vertices, edges))
+
+    def test_connected_graph2(self):
+        vertices, edges = 7, [[0, 1], [1, 2], [2, 0], [3, 4], [4, 5], [5, 3], [5, 0]]
+        expected = [[5, 0]]
+        self.validate_result(expected, find_bridge(vertices, edges))
+    
+    def test_connected_graph3(self):
+        vertices, edges = 5, [[0, 1], [1, 2], [2, 0], [0, 3], [3, 4]]
+        expected = [[0, 3], [3, 4]]
+        self.validate_result(expected, find_bridge(vertices, edges))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
+```
 ### Dec 15, 2019 \[Hard\] De Bruijn Sequence 
 --- 
 > **Question:** Given a set of characters C and an integer k, a De Bruijn Sequence is a cyclic sequence in which every possible k-length string of characters in C occurs exactly once.
