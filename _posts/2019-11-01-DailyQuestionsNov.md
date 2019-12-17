@@ -27,7 +27,9 @@ categories: Python/Java
 ```py
 Input: vertices = 4, edges = [[0, 1], [1, 2], [2, 3]]
 Output: [1, 2]
-Explanation: Removing either vertex 0 or 3 along with edges [0, 1] or [2, 3] does not increase number of connected components. But removing 1, 2 breaks graph into two components.
+Explanation: 
+Removing either vertex 0 or 3 along with edges [0, 1] or [2, 3] does not increase number of connected components. 
+But removing 1, 2 breaks graph into two components.
 ```
 
 **Example2:**
