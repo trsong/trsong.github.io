@@ -19,6 +19,18 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java) 
 
 
+### Dec 18, 2019 \[Medium\] Sentence Checker
+--- 
+> **Question:** Create a basic sentence checker that takes in a stream of characters and determines whether they form valid sentences. If a sentence is valid, the program should print it out.
+>
+> We can consider a sentence valid if it conforms to the following rules:
+>
+> 1. The sentence must start with a capital letter, followed by a lowercase letter or a space.
+> 2. All other characters must be lowercase letters, separators (`','`,`';'`,`':'`) or terminal marks (`'.'`,`'?'`,`'!'`,`'‽'`).
+> 3. There must be a single space between each word.
+> 4. The sentence must end with a terminal mark immediately following a word.
+
+
 ### Dec 17, 2019 \[Hard\] Critical Routers (Articulation Point)
 --- 
 > **Question:** You are given an undirected connected graph. An articulation point (or cut vertex) is defined as a vertex which, when removed along with associated edges, makes the graph disconnected (or more precisely, increases the number of connected components in the graph). The task is to find all articulation points in the given graph.
@@ -36,6 +48,121 @@ But removing 1, 2 breaks graph into two components.
 ```py
 Input: vertices = 5, edges = [[0, 1], [0, 2], [1, 2], [0, 3], [3, 4]]
 Output: [0, 3]
+```
+
+**My thoughts:** In yesterday's question [Dec 16, 2019 Bridges in a Graph](https://trsong.github.io/python/java/2019/11/02/DailyQuestionsNov/#dec-16-2019-hard-bridges-in-a-graph), we have already discussed how to find bridges in an undirected connected graph. 
+
+So basically, a bridge is an edge without which the graph will cease to be connected. Recall that the way to detect if an edge `(u, v)` is a bridge is to find if there is alternative path from v to u without going through `(u, v)`. Record time stamp of discover time as well as earliest discover time among all ancestor will do the trick. 
+
+As we already know how to find a bridge, an articulation pointer (cut vertex) is just one end (or both ends) of such bridge that is not a leaf (has more than 1 child). Why is that? A leaf can never be an articulation point as without that point, the total connected component in a graph won't change. 
+
+For example, in graph `0 - 1 - 2 - 3`, all edges are bridge edges. Yet, only vertex 1 and 2 qualify for articulation point, beacuse neither 1 and 2 is leaf node.
+
+**Solution with DFS:** [https://repl.it/@trsong/Critical-Routers-Articulation-Point](https://repl.it/@trsong/Critical-Routers-Articulation-Point)
+```py
+import unittest
+
+class NodeState(object):
+    VISITED = 0
+    VISITING = 1
+    UNVISITED = 2
+
+def critial_rounters(vertices, edges):
+    if not vertices or not edges:
+        return []
+    
+    neighbors = [[] for _ in xrange(vertices)]
+    for u, v in edges:
+        neighbors[u].append(v)
+        neighbors[v].append(u)
+
+    node_states = [NodeState.UNVISITED] * vertices
+    discover_time = [float('inf')] * vertices
+    earliest_ancestor_time = [float('inf')] * vertices
+    time = 0
+    critial_router_table = [False] * vertices
+    stack = [(0, None)]
+
+    while stack:
+        u, parent_u = stack[-1]
+
+        if node_states[u] == NodeState.VISITED:
+            stack.pop()
+        elif node_states[u] == NodeState.VISITING:
+            node_states[u] = NodeState.VISITED
+            is_u_nonleaf = len(neighbors[u]) > 1
+            for v in neighbors[u]:
+                if node_states[v] == NodeState.VISITED:
+                    earliest_ancestor_time[u] = min(earliest_ancestor_time[u], earliest_ancestor_time[v])
+                    if earliest_ancestor_time[v] > discover_time[u]:
+                        # edge u,v is a bridge
+                        if is_u_nonleaf:
+                            critial_router_table[u] = True
+                        if len(neighbors[v]) > 1:
+                            critial_router_table[v] = True
+        else:
+            # now node_states[u] is NodeState.UNVISITED
+            discover_time[u] = earliest_ancestor_time[u] = time
+            time += 1
+            node_states[u] = NodeState.VISITING
+            for v in neighbors[u]:
+                if node_states[v] == NodeState.UNVISITED:
+                    stack.append((v, u))
+                elif v != parent_u:
+                    earliest_ancestor_time[u] = min(earliest_ancestor_time[u], discover_time[v])
+    res = []
+    for i in xrange(vertices):
+        if critial_router_table[i]:
+            res.append(i)
+    return res
+                    
+
+class CritialRouterSpec(unittest.TestCase):
+    def validate_routers(self, expected, result):
+        self.assertEqual(sorted(expected), sorted(result))
+
+    def test_example1(self):
+        vertices, edges = 4, [[0, 1], [1, 2], [2, 3]]
+        expected = [1, 2]
+        self.validate_routers(expected, critial_rounters(vertices, edges))
+
+    def test_example2(self):
+        vertices, edges = 5, [[0, 1], [0, 2], [1, 2], [0, 3], [3, 4]]
+        expected = [0, 3]
+        self.validate_routers(expected, critial_rounters(vertices, edges))
+
+    def test_single_point_of_failure(self):
+        vertices, edges = 6, [[0, 1], [0, 2], [0, 3], [0, 4], [0, 5]]
+        expected = [0]
+        self.validate_routers(expected, critial_rounters(vertices, edges))       
+    
+    def test_k3(self):
+        vertices, edges = 3, [[0, 1], [1, 2], [2, 0]]
+        expected = []
+        self.validate_routers(expected, critial_rounters(vertices, edges))  
+    
+    def test_empty_graph(self):
+        vertices, edges = 0, []
+        expected = []
+        self.validate_routers(expected, critial_rounters(vertices, edges))  
+
+    def test_connected_graph1(self):
+        vertices, edges = 4, [[0, 1], [0, 2], [0, 3], [1, 2], [2, 3]]
+        expected = []
+        self.validate_routers(expected, critial_rounters(vertices, edges))  
+
+    def test_connected_graph2(self):
+        vertices, edges = 7, [[0, 1], [1, 2], [2, 0], [3, 4], [4, 5], [5, 3], [5, 0]]
+        expected = [0, 5]
+        self.validate_routers(expected, critial_rounters(vertices, edges))  
+    
+    def test_connected_graph3(self):
+        vertices, edges = 5, [[0, 1], [1, 2], [2, 0], [0, 3], [3, 4]]
+        expected = [0, 3]
+        self.validate_routers(expected, critial_rounters(vertices, edges))  
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
 ```
 
 ### Dec 16, 2019 \[Hard\] Bridges in a Graph
