@@ -19,6 +19,18 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java) 
 
 
+### Dec 19, 2019 \[Hard\] Tic-Tac-Toe Game AI
+---
+> **Questions:** Implementation of Tic-Tac-Toe game. Rules of the Game:
+> 
+> - The game is to be played between two people.
+One of the player chooses ‘O’ and the other ‘X’ to mark their respective cells.
+> - The game starts with one of the players and the game ends when one of the players has one whole row/ column/ diagonal filled with his/her respective character (‘O’ or ‘X’).
+> - If no one wins, then the game is said to be draw.
+>
+> Follow-up: create a method that makes the next optimal move such that the person should never lose if make that move.
+
+
 ### Dec 18, 2019 \[Medium\] Sentence Checker
 --- 
 > **Question:** Create a basic sentence checker that takes in a stream of characters and determines whether they form valid sentences. If a sentence is valid, the program should print it out.
@@ -30,6 +42,109 @@ categories: Python/Java
 > 3. There must be a single space between each word.
 > 4. The sentence must end with a terminal mark immediately following a word.
 
+**Solution with Finite State Machine:** [https://repl.it/@trsong/Sentence-Checker](https://repl.it/@trsong/Sentence-Checker)
+```py
+import unittest
+
+class SentenceState(object):
+    ERROR = -1
+    UPPER_CASE = 0
+    LOWER_CASE_OR_SAPARATOR = 1
+    WHITE_SPACE = 2
+    TERMINAL = 3
+    TERMINAL_WHITE_SPACE = 4
+
+class SentenceValidator(object):
+    def __init__(self):
+        self.cur_state = SentenceState.TERMINAL_WHITE_SPACE
+
+    def transition(self, action):
+        if self.cur_state == SentenceState.LOWER_CASE_OR_SAPARATOR and action == " ":
+            self.cur_state = SentenceState.WHITE_SPACE
+        elif self.cur_state == SentenceState.WHITE_SPACE and action.islower():
+            self.cur_state = SentenceState.LOWER_CASE_OR_SAPARATOR
+        elif self.cur_state == SentenceState.TERMINAL and action == " ":
+            self.cur_state = SentenceState.TERMINAL_WHITE_SPACE
+        elif self.cur_state == SentenceState.TERMINAL_WHITE_SPACE and action.isupper():
+            self.cur_state = SentenceState.UPPER_CASE
+        elif self.cur_state in [SentenceState.UPPER_CASE, SentenceState.LOWER_CASE_OR_SAPARATOR]:
+            if action in ['!', '.', '?']:
+                self.cur_state = SentenceState.TERMINAL
+            elif action.islower() or action in [',', ';', ':']:
+                self.cur_state = SentenceState.LOWER_CASE_OR_SAPARATOR
+            else:
+                self.cur_state = SentenceState.ERROR
+        else:
+            self.cur_state = SentenceState.ERROR
+    
+    def is_valid(self):
+        return self.cur_state != SentenceState.ERROR
+
+    def is_terminal(self):
+        return self.cur_state == SentenceState.TERMINAL
+        
+
+def sentence_checker(sentence):
+    validator = SentenceValidator()
+    for char in sentence:
+        if not validator.is_valid():
+            return False
+        validator.transition(char)
+    return validator.is_terminal()
+
+
+class SentenceCheckerSpec(unittest.TestCase):
+    def test_not_end_with_terminal_mark(self):
+        sentence = "Hello world"
+        self.assertFalse(sentence_checker(sentence))
+
+    def test_valid_sentence(self):
+        sentence = "Talk is cheap."
+        self.assertTrue(sentence_checker(sentence))
+
+    def test_empty_sentence(self):
+        self.assertFalse(sentence_checker(""))
+
+    def test_sentence_with_only_terminal_mark(self):
+        for mark in ['!', '.', '?']:
+            self.assertFalse(sentence_checker(mark))
+
+    def test_too_many_spaces_between_words(self):
+        sentence = "I  robot."
+        self.assertFalse(sentence_checker(sentence))
+
+    def test_invalid_character(self):
+        sentence = "Answer can only be true/false."
+        self.assertFalse(sentence_checker(sentence))
+
+    def test_invalid_character2(self):
+        sentence = "An ."
+        self.assertFalse(sentence_checker(sentence))
+
+    def test_sentence_end_with_separator(self):
+        sentence = "Yet,"
+        self.assertFalse(sentence_checker(sentence))
+
+    def test_valid_sentence2(self):
+        sentence = "What is the difficulty of this question: easy, medium, or hard?"
+        self.assertTrue(sentence_checker(sentence))
+
+    def test_valid_sentence3(self):
+        sentence = "I!"
+        self.assertTrue(sentence_checker(sentence))
+    
+    def test_sentence_with_invalid_leading_white_space(self):
+        sentence = " This is sentence."
+        self.assertFalse(sentence_checker(sentence))
+    
+    def test_multiple_sentences(self):
+        sentence = "To be, or not to be, that is the question. To be, or not to be, is that the question? To be, or not to be, that is the question!"
+        self.assertTrue(sentence_checker(sentence))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
+```
 
 ### Dec 17, 2019 \[Hard\] Critical Routers (Articulation Point)
 --- 
