@@ -19,6 +19,23 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java) 
 
 
+### Dec 20, 2019 \[Easy\] ZigZag Binary Tree
+---
+> **Questions:** In Ancient Greece, it was common to write text with the first line going left to right, the second line going right to left, and continuing to go back and forth. This style was called "boustrophedon".
+>
+> Given a binary tree, write an algorithm to print the nodes in boustrophedon order.
+
+**Example:**
+```py
+Given the following tree:
+       1
+    /     \
+  2         3
+ / \       / \
+4   5     6   7
+You should return [1, 3, 2, 4, 5, 6, 7].
+```
+
 ### Dec 19, 2019 \[Hard\] Tic-Tac-Toe Game AI
 ---
 > **Questions:** Implementation of Tic-Tac-Toe game. Rules of the Game:
@@ -29,6 +46,285 @@ One of the player chooses ‘O’ and the other ‘X’ to mark their respective
 > - If no one wins, then the game is said to be draw.
 >
 > Follow-up: create a method that makes the next optimal move such that the person should never lose if make that move.
+
+
+**Solution with Minimax:** [https://repl.it/@trsong/Tic-Tac-Toe-Game-AI](https://repl.it/@trsong/Tic-Tac-Toe-Game-AI)
+```py
+import unittest
+
+class TicTacToe(object):
+    SIZE = 3
+    X = 'X'
+    O = 'O'
+    DRAW = 'DRAW'
+    def __init__(self):
+        self.grid = [[None for _ in xrange(TicTacToe.SIZE)] for _ in xrange(TicTacToe.SIZE)]
+        self.player = TicTacToe.X
+        self.count = 0
+        
+    def move(self, r, c):
+        if self.grid[r][c] is not None:
+            raise Exception('Invalid Move ({},{})'.format(str(r), str(c)))
+        self.grid[r][c] = self.player
+        self.player = TicTacToe.X if self.player == TicTacToe.O else TicTacToe.O
+        self.count += 1
+
+    def undo_move(self, r, c):
+        self.grid[r][c] = None
+        self.count -= 1
+        self.player = TicTacToe.X if self.player == TicTacToe.O else TicTacToe.O
+
+    def result(self):
+        for r in xrange(TicTacToe.SIZE):
+            if self.grid[r][0] is not None and self.grid[r][0] == self.grid[r][1] == self.grid[r][2]:
+                return self.grid[r][0]
+
+        for c in xrange(TicTacToe.SIZE):
+            if self.grid[0][c] is not None and self.grid[0][c] == self.grid[1][c] == self.grid[2][c]:
+                return self.grid[0][c]
+
+        if self.grid[0][0] is not None and self.grid[0][0] == self.grid[1][1] == self.grid[2][2]:
+            return self.grid[0][0]
+
+        if self.grid[0][2] is not None and self.grid[0][2] == self.grid[1][1] == self.grid[2][0]:
+            return self.grid[0][2]
+
+        if self.has_no_moves():
+            return TicTacToe.DRAW
+        else:
+            return None
+    
+    def has_no_moves(self):
+        return self.count == TicTacToe.SIZE * TicTacToe.SIZE
+
+    def __repr__(self):
+        res = []
+        for row in self.grid:
+            for char in row:
+                if not char:
+                    res.append('_')
+                else:
+                    res.append(char)
+            res.append('\n')
+        return ''.join(res)
+
+
+class TicTacToeAgent(object):
+    def __init__(self, game, player):
+        self.game = game
+        self.player = player
+
+    def all_available_moves(self):
+        res = []
+        for r in xrange(TicTacToe.SIZE):
+            for c in xrange(TicTacToe.SIZE):
+                if self.game.grid[r][c] is None:
+                    res.append((r, c))
+        return res
+
+    def evaluate(self):
+        result = self.game.result()
+        if result is None:
+            return 0
+        elif result == self.player:
+            return 10
+        else:
+            return -10
+
+    def minimax(self, depth, is_max):
+        score = self.evaluate()
+        if score > 0:
+            return score - depth
+        elif score < 0:
+            return score + depth
+        elif self.game.has_no_moves():
+            return 0
+        
+        if is_max:
+            highest_score = float('-inf')
+            for move in self.all_available_moves():
+                self.game.move(*move)
+                highest_score = max(highest_score, self.minimax(depth+1, not is_max))
+                self.game.undo_move(*move)
+            return highest_score
+        else:
+            lowest_score = float('inf')
+            for move in self.all_available_moves():
+                self.game.move(*move)
+                lowest_score = min(lowest_score, self.minimax(depth+1, not is_max))
+                self.game.undo_move(*move)
+            return lowest_score
+
+    def best_move(self):
+        highest_score = float('-inf')
+        best_move = None
+        for move in self.all_available_moves():
+            self.game.move(*move)
+            score = self.minimax(depth=0, is_max=False)
+            self.game.undo_move(*move)
+            if score > highest_score:
+                highest_score = score
+                best_move = move
+        return best_move
+
+
+class TicTacToeSpec(unittest.TestCase):
+    def test_dominate_row(self):
+        """
+        ___
+        OO_
+        XXX
+        """
+        game = TicTacToe()
+        game.move(2, 0)
+        game.move(1, 0)
+        game.move(2, 1)
+        game.move(1, 1)        
+        game.move(2, 2)
+        self.assertEqual(TicTacToe.X, game.result())
+
+    def test_dominate_col(self):
+        """
+        _XO
+        _XO
+        X_O
+        """
+        game = TicTacToe()
+        game.move(0, 1)
+        game.move(0, 2)
+        game.move(1, 1)
+        game.move(1, 2)        
+        game.move(2, 0)
+        game.move(2, 2)
+        self.assertEqual(TicTacToe.O, game.result())
+
+    def test_dominate_diagonal(self):
+        """
+        _OX
+        _XO
+        X__
+        """
+        game = TicTacToe()
+        game.move(0, 2)
+        game.move(0, 1)
+        game.move(1, 1)
+        game.move(1, 2)        
+        game.move(2, 0)
+        self.assertEqual(TicTacToe.X, game.result())
+
+    def test_last_step_win(self):
+        """
+        XOX
+        OXO
+        XXO
+        """
+        game = TicTacToe()
+        game.move(0, 0)
+        game.move(0, 1)
+        game.move(0, 2)
+        game.move(1, 0)        
+        game.move(1, 1)
+        game.move(1, 2)
+        game.move(2, 1)
+        game.move(2, 2)
+        game.move(2, 0)
+        self.assertEqual(TicTacToe.X, game.result())
+
+    def test_invalid_move(self):
+        game = TicTacToe()
+        game.move(0, 0)
+        game.move(1, 0)
+        with self.assertRaises(Exception) as context:
+            game.move(1, 0)
+        self.assertTrue('Invalid Move (1,0)' in context.exception)
+
+    def test_ongoing_game(self):
+        game = TicTacToe()
+        self.assertIsNone(game.result())
+        game.move(1, 1)
+        self.assertIsNone(game.result())
+    
+    def test_draw_match(self):
+        """
+        XOX
+        OXX
+        OXO
+        """
+        game = TicTacToe()
+        game.move(0, 0)
+        game.move(0, 1)
+        game.move(0, 2)
+        game.move(1, 0)        
+        game.move(1, 1)
+        game.move(2, 0)
+        game.move(1, 2)
+        game.move(2, 2)
+        game.move(2, 1)
+        self.assertEqual(TicTacToe.DRAW, game.result())
+
+
+class TicTacToeAgentSpec(unittest.TestCase):
+    def test_next_move_win_the_game(self):
+        """
+        XX_
+        ___
+        OO_
+        """
+        game = TicTacToe()
+        game.move(0, 0)
+        game.move(2, 0)
+        game.move(0, 1)
+        game.move(2, 1)
+        agent = TicTacToeAgent(game, game.player)
+        best_move = agent.best_move()
+        game.move(*best_move)
+        self.assertEqual(TicTacToe.X, game.result())
+
+    def test_choose_best_move(self):
+        """
+        OO_
+        _X_
+        __X
+
+        Best move should be either 0,2 or 2,0:
+
+        OOX
+        _X_
+        __X
+        """
+        game = TicTacToe()
+        game.move(1, 1)
+        game.move(0, 1)
+        game.move(2, 2)
+        game.move(0, 0)
+        agent = TicTacToeAgent(game, game.player)
+        best_move = agent.best_move()
+        game.move(*best_move)
+        self.assertTrue(best_move in [(0, 2), (2, 0)])
+
+    def test_best_result_is_draw(self):
+        """
+        ___
+        _X_
+        ___
+
+        Best move should be any of four corners:
+
+        O__
+        _X_
+        ___
+        """
+        game = TicTacToe()
+        game.move(1, 1)
+        agent = TicTacToeAgent(game, game.player)
+        best_move = agent.best_move()
+        game.move(*best_move)
+        self.assertTrue(best_move in [(0,0), (0,2), (2,0), (2,2)])
+
+
+if __name__ == "__main__":
+    unittest.main(exit=False)
+```
 
 
 ### Dec 18, 2019 \[Medium\] Sentence Checker
