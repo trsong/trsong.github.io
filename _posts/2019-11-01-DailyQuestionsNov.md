@@ -19,6 +19,18 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java) 
 
 
+### Dec 22, 2019 \[Easy\] Reverse Bits
+---
+> **Questions:** Given a 32 bit integer, reverse the bits and return that number.
+
+**Example:**
+```py
+Input: 1234 
+# In bits this would be 0000 0000 0000 0000 0000 0100 1101 0010
+Output: 1260388352
+# Reversed bits is 0100 1011 0010 0000 0000 0000 0000 0000
+```
+
 ### Dec 21, 2019 \[Medium\] Power of 4
 ---
 > **Questions:** Given a 32-bit positive integer N, determine whether it is a power of four in faster than `O(log N)` time.
@@ -33,6 +45,69 @@ Output: 16 is a power of 4
 ```py
 Input: 20
 Output: 20 is not a power of 4
+```
+
+**My thoughts:** A power-of-4 number must be power-of-2. Thus `n & (n-1)` holds. The only different between pow-4 and pow-2 is the number of trailing zeros. pow-4 must have even number of trailing zeros. So we can either check that through `n & 0xAAAAAAAA` or just use binary search to count zeros.
+
+**Solution with Binary Search:** [https://repl.it/@trsong/Power-of-4](https://repl.it/@trsong/Power-of-4)
+```py
+import unittest
+
+def is_power_of_four(num):
+    if num < 0:
+        return False
+    elif num & (num - 1):
+        # a powr of 4 number must be a power of 2
+        return False
+    else:
+        # binary search number of zeros
+        lo = 0
+        hi = 32
+        while lo <= hi:
+            mid = lo + (hi - lo) // 2
+            if num == (1 << mid):
+                return mid % 2 == 0
+            elif num < (1 << mid):
+                hi = mid - 1
+            else:
+                lo = mid + 1
+        return False
+
+
+class IsPowerOfFourSpec(unittest.TestCase):
+    def test_example1(self):
+        self.assertTrue(is_power_of_four(16))
+
+    def test_example2(self):
+        self.assertFalse(is_power_of_four(20))
+
+    def test_zero(self):
+        self.assertFalse(is_power_of_four(0))
+    
+    def test_one(self):
+        self.assertTrue(is_power_of_four(1))
+
+    def test_number_smaller_than_four(self):
+        self.assertFalse(is_power_of_four(3))
+
+    def test_negative_number(self):
+        self.assertFalse(is_power_of_four(-4))
+    
+    def test_all_bit_being_one(self):
+        self.assertFalse(is_power_of_four(4**8 - 1))
+
+    def test_power_of_two_not_four(self):
+        self.assertFalse(is_power_of_four(2 ** 5))
+
+    def test_all_power_4_bit_being_one(self):
+        self.assertFalse(is_power_of_four(4**0 + 4**1 + 4**2 + 4**3 + 4**4))
+    
+    def test_larger_number(self):
+        self.assertTrue(is_power_of_four(2 ** 32))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
 ```
 
 ### Dec 20, 2019 \[Easy\] ZigZag Binary Tree
