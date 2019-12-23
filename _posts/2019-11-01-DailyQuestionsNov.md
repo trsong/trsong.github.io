@@ -19,6 +19,26 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java) 
 
 
+### Dec 23, 2019 \[Medium\] Egg Dropping Puzzle
+---
+> **Questions:** You are given N identical eggs and access to a building with k floors. Your task is to find the lowest floor that will cause an egg to break, if dropped from that floor. Once an egg breaks, it cannot be dropped again. If an egg breaks when dropped from the xth floor, you can assume it will also break when dropped from any floor greater than x.
+>
+> Write an algorithm that finds the minimum number of trial drops it will take, in the worst case, to identify this floor.
+
+**Example1:**
+```py
+Input: N = 1, k = 5, 
+Output: 5
+we will need to try dropping the egg at every floor, beginning with the first, until we reach the fifth floor, so our solution will be 5.
+```
+
+**Example2:**
+```py
+Input: N = 2, k = 36
+Minimum number of trials in worst case with 2 eggs and 36 floors is 8
+```
+
+
 ### Dec 22, 2019 \[Easy\] Reverse Bits
 ---
 > **Questions:** Given a 32 bit integer, reverse the bits and return that number.
@@ -29,6 +49,55 @@ Input: 1234
 # In bits this would be 0000 0000 0000 0000 0000 0100 1101 0010
 Output: 1260388352
 # Reversed bits is 0100 1011 0010 0000 0000 0000 0000 0000
+```
+
+**Solution:** [https://repl.it/@trsong/Reverse-Bits](https://repl.it/@trsong/Reverse-Bits)
+```py
+import unittest
+
+INT_BIT_SIZE = 32
+
+def reverse_bits(num):
+    res = 0
+    for i in xrange(INT_BIT_SIZE):
+        res <<= 1
+        if num & (1 << i):
+            res += 1
+    return res
+
+
+class ReverseBitSpec(unittest.TestCase):
+    def test_example(self):
+        input =    0b00000000000000000000010011010010
+        expected = 0b01001011001000000000000000000000
+        self.assertEqual(expected, reverse_bits(input))
+
+    def test_zero(self):
+        self.assertEqual(0, reverse_bits(0))
+
+    def test_one(self):
+        input = 1
+        expected = 1 << (INT_BIT_SIZE - 1)
+        self.assertEqual(expected, reverse_bits(input))
+
+    def test_number_with_every_other_bits(self):
+        input = 0b10101010101010101010101010101010
+        expected = 0b01010101010101010101010101010101
+        self.assertEqual(expected, reverse_bits(input))
+
+    def test_random_number1(self):
+        input = 0b00100100101001000011000111000101
+        expected = 0b10100011100011000010010100100100
+        self.assertEqual(expected, reverse_bits(input))
+
+    def test_random_number2(self):
+        input = 0b00111001101110011110000100101100
+        expected = 0b00110100100001111001110110011100
+        self.assertEqual(expected, reverse_bits(input))
+    
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
 ```
 
 ### Dec 21, 2019 \[Medium\] Power of 4
