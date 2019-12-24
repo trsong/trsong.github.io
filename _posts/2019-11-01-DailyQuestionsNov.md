@@ -19,6 +19,13 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java) 
 
 
+### Dec 24, 2019 \[Easy\] Fixed Point
+---
+> **Questions:** A fixed point in an array is an element whose value is equal to its index. Given a sorted array of distinct elements, return a fixed point, if one exists. Otherwise, return False.
+>
+> For example, given [-6, 0, 2, 40], you should return 2. Given [1, 5, 7, 8], you should return False.
+
+
 ### Dec 23, 2019 \[Medium\] Egg Dropping Puzzle
 ---
 > **Questions:** You are given N identical eggs and access to a building with k floors. Your task is to find the lowest floor that will cause an egg to break, if dropped from that floor. Once an egg breaks, it cannot be dropped again. If an egg breaks when dropped from the xth floor, you can assume it will also break when dropped from any floor greater than x.
@@ -38,7 +45,97 @@ Input: N = 2, k = 36
 Minimum number of trials in worst case with 2 eggs and 36 floors is 8
 ```
 
+**My thoughts:** You might be confused about what this question is asking, take a look at the following walkthrough with 2 eggs and 10 floors:
+```py
+# Test Plan for 2 eggs and 10 floors:
+# 1.Test floor 4, on failure floor 1 to 3, worst case total = 1 + 3 = 4. 
+# 2.Test floor 4+3=7, on failure floor 5 to 6, worst case total = 2 + 2 = 4
+# 3.Test floor 4+3+2=9, on failure floor 8, worst case total = 1 + 3 = 4
+# 4.Test floor 4+3+2=10. Total = 4
+# So, if we try floor, 4, 7, 9, 10 with 1st egg and on failure use 2nd egg to test floors in the middle, we can use as few as 2 eggs and mimium 4 trials.
+# Thus the answer should be 4. 
 
+# Note: we cannot skip floor 10 given that we have only 10 floors and floor 1 to 9 are already tested because we cannot make sure egg won't break at floor 10 until we actually drop the egg at that floor
+```
+
+The idea is to use dp to iterate through all possible scenarios. Notice the recursion relationship: 
+```py
+solve_egg_drop_puzzle(eggs, floors) = 1 + min(max(solve_egg_drop_puzzle(eggs-1, i-1), solve_egg_drop_puzzle(eggs, floors-i))) for all i ranges from 1 to floors inclusive.
+```
+There are two different outcomes if we drop egg at level i: break or not break. Either way we waste 1 trail. 
+
+- If egg break, we end up solving `solve_egg_drop_puzzle(eggs-1, i-1)`, as we waste 1 egg to test floor i, the remaining egg reduce and floors reduce.
+- Otherwise, we try to solve `solve_egg_drop_puzzle(eggs, floors-i)`, as we keep the last egg and test remainging floors upstairs.
+
+In above two cases, floor `i` can be any floor, and we want to find the result of the best i such that no matter which siutation is the worse, we end up with minimum trails.
+
+
+**Solution with DP:** [https://repl.it/@trsong/Egg-Dropping-Puzzle](https://repl.it/@trsong/Egg-Dropping-Puzzle)
+```py
+import unittest
+
+def solve_egg_drop_puzzle(eggs, floors):
+    return solve_puzzle_with_cache(eggs, floors, {})
+
+def solve_puzzle_with_cache(eggs, floors, cache):
+    if eggs == 1:
+        return floors
+    elif floors == 0 or floors == 1:
+        return floors
+    elif (eggs, floors) in cache:
+        return cache[(eggs, floors)]
+    else:
+        res = float('inf')
+        for i in xrange(1, floors+1):
+            egg_break_scenario = solve_puzzle_with_cache(eggs-1, i-1, cache)
+            egg_not_break_scenario = solve_puzzle_with_cache(eggs, floors-i, cache)
+            worst_case_scenario = 1 + max(egg_break_scenario, egg_not_break_scenario)
+            res = min(res, worst_case_scenario)
+        cache[(eggs, floors)] = res
+        return res
+            
+
+class SolveEggDropPuzzleSpec(unittest.TestCase):
+    def test_example1(self):
+        # worst case floor = 5
+        # test from floor 1 to 5
+        self.assertEqual(5, solve_egg_drop_puzzle(eggs=1, floors=5))
+
+    def test_example2(self):
+        # Possible Testing Plan with minimum trials(solution is not unique):
+        # 1. Test floor 8, on failure test floor 1 to 7, worst case total = 8
+        # 2. Test floor 8+7=15, on failure test floor 9 to 14, worst case total = 2 + 6 = 8
+        # 3. Test floor 8+7+6=21, on failure test floor 16 to 20, worst case total = 3 + 5 = 8
+        # 4. Test floor 8+7+6+5=26, on failure test floor 22 to 25, worst case total = 4 + 4 = 8
+        # 5. Test floor 8+7+6+5+4=30, on failure test floor 27 to 29, worst case total = 5 + 3 = 8
+        # 6. Test floor 8+7+6+5+4+3=33, on failure test floor 31 to 32, worst case total = 6 + 2 = 8
+        # 7. Test floor 8+7+6+5+4+3+2=35, on failure test floor 34, worst case total = 7 + 1 = 8
+        # 8. Test floor 36. total = 8
+        self.assertEqual(8, solve_egg_drop_puzzle(eggs=2, floors=36))
+
+    def test_num_eggs_greater_than_floors(self):
+        self.assertEqual(3, solve_egg_drop_puzzle(eggs=3, floors=4))
+
+    def test_num_eggs_greater_than_floors2(self):
+        self.assertEqual(4, solve_egg_drop_puzzle(eggs=20, floors=10))
+
+    def test_zero_floors(self):
+        self.assertEqual(0, solve_egg_drop_puzzle(eggs=10, floors=0))
+    
+    def test_one_floor(self):
+        self.assertEqual(1, solve_egg_drop_puzzle(eggs=1, floors=1))
+    
+    def test_unique_solution(self):
+        # 1.Test floor 4, on failure floor 1 to 3, worst case total = 1 + 3 = 4. 
+        # 2.Test floor 4+3=7, on failure floor 5 to 6, worst case total = 2 + 2 = 4
+        # 3.Test floor 4+3+2=9, on failure floor 8, worst case total = 1 + 3 = 4
+        # 4.Test floor 4+3+2=10. Total = 4
+        self.assertEqual(4, solve_egg_drop_puzzle(eggs=2, floors=10))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
+```
 ### Dec 22, 2019 \[Easy\] Reverse Bits
 ---
 > **Questions:** Given a 32 bit integer, reverse the bits and return that number.
