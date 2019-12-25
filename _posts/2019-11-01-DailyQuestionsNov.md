@@ -18,6 +18,14 @@ categories: Python/Java
 
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java) 
 
+### Dec 25, 2019 \[Hard\] Expression Evaluation
+---
+> **Questions:** Given a string consisting of parentheses, single digits, and positive and negative signs, convert the string into a mathematical expression to obtain the answer.
+>
+> Don't use eval or a similar built-in parser.
+>
+> For example, given `'-1 + (2 + 3)'`, you should return 4.
+
 
 ### Dec 24, 2019 \[Easy\] Fixed Point
 ---
@@ -25,6 +33,59 @@ categories: Python/Java
 >
 > For example, given [-6, 0, 2, 40], you should return 2. Given [1, 5, 7, 8], you should return False.
 
+**Solution with Binary Search:** [https://repl.it/@trsong/Fixed-Point](https://repl.it/@trsong/Fixed-Point)
+```py
+import unittest
+
+def fixed_point(nums):
+    if not nums:
+        return False
+    
+    lo = 0
+    hi = len(nums) - 1
+    while lo <= hi:
+        mid = lo + (hi - lo)//2
+        if nums[mid] == mid:
+            return mid
+        elif nums[mid] < mid:
+            lo = mid + 1
+        else:
+            hi = mid - 1
+    return False
+
+
+class FixedPointSpec(unittest.TestCase):
+    def test_example1(self):
+        self.assertEqual(2, fixed_point([-6, 0, 2, 40]))
+
+    def test_example2(self):
+        self.assertFalse(fixed_point([1, 5, 7, 8]))
+
+    def test_empty_array(self):
+        self.assertFalse(fixed_point([]))
+    
+    def test_array_without_fixed_point(self):
+        self.assertFalse(fixed_point([10, 10, 10, 10]))
+    
+    def test_array_without_fixed_point2(self):
+        self.assertFalse(fixed_point([1, 2, 3, 4]))
+    
+    def test_array_without_fixed_point3(self):
+        self.assertFalse(fixed_point([-1, 0, 1]))
+
+    def test_sorted_array_with_duplicate_elements1(self):
+        self.assertEqual(4, fixed_point([-10, 0, 1, 2, 4, 10, 10, 10, 20, 30]))
+
+    def test_sorted_array_with_duplicate_elements2(self):
+        self.assertEqual(3, fixed_point([-1, 3, 3, 3, 3, 3, 4]))
+
+    def test_sorted_array_with_duplicate_elements3(self):
+        self.assertEqual(6, fixed_point([-3, 0, 0, 1, 3, 4, 6, 8, 10]))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
+```
 
 ### Dec 23, 2019 \[Medium\] Egg Dropping Puzzle
 ---
