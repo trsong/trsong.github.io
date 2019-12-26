@@ -18,6 +18,31 @@ categories: Python/Java
 
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java) 
 
+
+### Dec 26, 2019 \[Easy\] Filter Binary Tree Leaves
+---
+> **Questions:** Given a binary tree and an integer k, filter the binary tree such that its leaves don't contain the value k. Here are the rules:
+>
+> - If a leaf node has a value of k, remove it.
+> - If a parent node has a value of k, and all of its children are removed, remove it.
+
+**Example:**
+```py
+Given the tree to be the following and k = 1:
+     1
+    / \
+   1   1
+  /   /
+ 2   1
+
+After filtering the result should be:
+     1
+    /
+   1
+  /
+ 2
+```
+
 ### Dec 25, 2019 \[Hard\] Expression Evaluation
 ---
 > **Questions:** Given a string consisting of parentheses, single digits, and positive and negative signs, convert the string into a mathematical expression to obtain the answer.
@@ -26,6 +51,128 @@ categories: Python/Java
 >
 > For example, given `'-1 + (2 + 3)'`, you should return 4.
 
+**My thoughts:** Treat `(expr)` as a single number which later on can be solved by recursion. 
+
+Now we can deal with expresion without parentheses:
+
+A complicated expression can be broken into multiple normal terms. `Expr = term1 + term2 - term3 ...`. Between each consecutive term we only allow `+` and `-`. Whereas within each term we only allow `*` and `/`. So we will have the following definition of an expression. e.g. `1 + 2 - 1*2*1 - 3/4*4 + 5*6 - 7*8 + 9/10 = (1) + (2) - (1*2*1) - (3/4*4) + (5*6) - (7*8) + (9/10)` 
+
+```
+Expression is one of the following:
+- Empty or 0
+- Term - Expression
+- Term + Expression
+
+Term is one of the following:
+- 1
+- A number * Term
+- A number / Term
+```
+
+Thus, we can comupte each term value and sum them together.
+
+**Solution:** [https://repl.it/@trsong/Expression-Evaluation](https://repl.it/@trsong/Expression-Evaluation)
+```py
+import unittest
+
+def evaluate_expression(expr):
+    if not expr:
+        return 0
+
+    total_sum = term_sum = num = 0
+    op = '+'
+    op_set = {'+', '-', '*', '/'}
+    index = 0
+    n = len(expr)
+    
+    while index < n:
+        char = expr[index]
+        if char == ' ' and index < n - 1:
+            index += 1
+            continue
+        elif char.isdigit():
+            num = num * 10 + int(char)
+        elif char == '(':
+            left_parenthsis_index = index
+            balance = 0
+            while index < n:
+                if expr[index] == '(':
+                    balance += 1
+                elif expr[index] == ')':
+                    balance -= 1
+                if balance == 0:
+                    break
+                index += 1
+            num = evaluate_expression(expr[left_parenthsis_index+1:index])
+        if char in op_set or index == n - 1:
+            if op == '+':
+                total_sum += term_sum
+                term_sum = num
+            elif op == '-':
+                total_sum += term_sum
+                term_sum = -num
+            elif op == '*':
+                term_sum *= num
+            elif op == '/':
+                sign = 1 if term_sum > 0 else -1
+                term_sum = abs(term_sum) / num * sign
+            op = char
+            num = 0
+        index += 1
+    total_sum += term_sum
+    return total_sum
+                
+
+class EvaluateExpressionSpec(unittest.TestCase):
+    def example(self):
+        self.assertEqual(4, evaluate_expression("-1 + (2 + 3)"))
+
+    def test_empty_string(self):
+        self.assertEqual(0, evaluate_expression(""))
+
+    def test_basic_expression1(self):
+        self.assertEqual(7, evaluate_expression("3+2*2"))
+
+    def test_basic_expression2(self):
+        self.assertEqual(1, evaluate_expression(" 3/2 "))
+
+    def test_basic_expression3(self):
+        self.assertEqual(5, evaluate_expression(" 3+5 / 2 "))
+    
+    def test_basic_expression4(self):
+        self.assertEqual(-24, evaluate_expression("1*2-3/4+5*6-7*8+9/10"))
+
+    def test_basic_expression5(self):
+        self.assertEqual(10000, evaluate_expression("10000-1000/10+100*1"))
+
+    def test_basic_expression6(self):
+        self.assertEqual(13, evaluate_expression("14-3/2"))
+
+    def test_negative(self):
+        self.assertEqual(-1, evaluate_expression(" -7 / 4 "))
+
+    def test_minus(self):
+        self.assertEqual(-5, evaluate_expression("-2-3"))
+
+    def test_expression_with_parentheses(self):
+        self.assertEqual(42, evaluate_expression("  -(-42)"))
+    
+    def test_expression_with_parentheses2(self):
+        self.assertEqual(3, evaluate_expression("(-1 + 2) * 3"))
+
+    def test_complicated_operations(self):
+        self.assertEqual(2, evaluate_expression("-2 - (-2) * ( ((-2) - 3) * 2 + (-3) * (-4))"))
+
+    def test_complicated_operations2(self):
+        self.assertEqual(-2600, evaluate_expression("-3*(10000-1000)/10-100*(-1)"))
+
+    def test_complicated_operations3(self):
+        self.assertEqual(100, evaluate_expression("100 * ( 2 + 12 ) / 14"))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
+```
 
 ### Dec 24, 2019 \[Easy\] Fixed Point
 ---
