@@ -18,6 +18,23 @@ categories: Python/Java
 
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java) 
 
+### Dec 27, 2019 LC 38 \[Easy\] Look-and-Say Sequence
+---
+> **Questions:** The "look and say" sequence is defined as follows: beginning with the term 1, each subsequent term visually describes the digits appearing in the previous term.
+> 
+>  The first few terms are as follows:
+>
+> ```py
+> 1
+> 11
+> 21
+> 1211
+> 111221
+> ```
+> 
+> As an example, the fourth term is 1211, since the third term consists of one 2 and one 1.
+>
+> Given an integer N, print the Nth term of this sequence.
 
 ### Dec 26, 2019 \[Easy\] Filter Binary Tree Leaves
 ---
@@ -41,6 +58,113 @@ After filtering the result should be:
    1
   /
  2
+```
+
+**Solution:** [https://repl.it/@trsong/Filter-Binary-Tree-Leaves](https://repl.it/@trsong/Filter-Binary-Tree-Leaves)
+```py
+import unittest
+
+def filter_tree_leaves(tree, k):
+    if not tree:
+        return None
+    
+    filtered_left_tree = filter_tree_leaves(tree.left, k)
+    filtered_right_tree = filter_tree_leaves(tree.right, k)
+    
+    if tree.val == k and not filtered_left_tree and not filtered_right_tree:
+        return None
+    else:
+        tree.left = filtered_left_tree
+        tree.right = filtered_right_tree
+        return tree
+
+
+class TreeNode(object):
+    def __init__(self, val, left=None, right=None):
+        self.val = val
+        self.left = left
+        self.right = right
+    
+    def __eq__(self, other):
+        return other and other.val == self.val and self.left == other.left and self.right == other.right
+
+
+class FilterTreeLeaveSpec(unittest.TestCase):
+    def test_example(self):
+        """
+        Input:
+             1
+            / \
+           1   1
+          /   /
+         2   1
+
+        Result:
+             1
+            /
+           1
+          /
+         2
+        """
+        left_tree = TreeNode(1, TreeNode(2))
+        right_tree = TreeNode(1, TreeNode(1))
+        root = TreeNode(1, left_tree, right_tree)
+        expected_tree = TreeNode(1, TreeNode(1, TreeNode(2)))
+        self.assertEqual(expected_tree, filter_tree_leaves(root, k=1))
+
+    def test_remove_empty_tree(self):
+        self.assertIsNone(filter_tree_leaves(None, 1))
+
+    def test_remove_the_last_node(self):
+        self.assertIsNone(filter_tree_leaves(TreeNode(2), 2))
+
+    def test_filter_cause_all_nodes_to_be_removed(self):
+        k = 42
+        left_tree = TreeNode(k, right=TreeNode(k))
+        right_tree = TreeNode(k, TreeNode(k), TreeNode(k))
+        tree = TreeNode(k, left_tree, right_tree)
+        self.assertIsNone(filter_tree_leaves(tree, k))
+
+    def test_filter_not_internal_nodes(self):
+        from copy import deepcopy
+        """
+             1
+           /   \
+          1     1
+         / \   /
+        2   2 2
+        """
+        left_tree = TreeNode(1, TreeNode(2), TreeNode(2))
+        right_tree = TreeNode(1, TreeNode(2))
+        root = TreeNode(1, left_tree, right_tree)
+        expected = deepcopy(root)
+        self.assertEqual(expected, filter_tree_leaves(root, k=1))
+    
+    def test_filter_only_leaves(self):
+        """
+        Input :    
+               4
+            /     \
+           5       5
+         /  \    /
+        3    1  5 
+      
+        Output :  
+            4
+           /     
+          5       
+         /  \    
+        3    1  
+        """
+        left_tree = TreeNode(5, TreeNode(3), TreeNode(1))
+        right_tree = TreeNode(5, TreeNode(5))
+        root = TreeNode(4, left_tree, right_tree)
+        expected = TreeNode(4, TreeNode(5, TreeNode(3), TreeNode(1)))
+        self.assertEqual(expected, filter_tree_leaves(root, 5))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
 ```
 
 ### Dec 25, 2019 \[Hard\] Expression Evaluation
