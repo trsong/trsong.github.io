@@ -18,6 +18,13 @@ categories: Python/Java
 
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java) 
 
+
+### Dec 28, 2019 \[Medium\] Dice Throw
+---
+> **Questions:** Write a function, `throw_dice(N, faces, total)`, that determines how many ways it is possible to throw N dice with some number of faces each to get a specific total.
+>
+> For example, `throw_dice(3, 6, 7)` should equal 15.
+
 ### Dec 27, 2019 LC 38 \[Easy\] Look-and-Say Sequence
 ---
 > **Questions:** The "look and say" sequence is defined as follows: beginning with the term 1, each subsequent term visually describes the digits appearing in the previous term.
@@ -35,6 +42,59 @@ categories: Python/Java
 > As an example, the fourth term is 1211, since the third term consists of one 2 and one 1.
 >
 > Given an integer N, print the Nth term of this sequence.
+
+
+**Solution:** [https://repl.it/@trsong/Look-and-Say-Sequence](https://repl.it/@trsong/Look-and-Say-Sequence)
+```py
+import unittest
+
+def look_and_say(n):
+    res = "1"
+    for _ in xrange(n-1):
+        prev = res[0]
+        count = 0
+        buffer = []
+        for digit in res:
+            if digit != prev:
+                buffer.append(str(count)+str(prev))
+                count = 1
+                prev = digit
+            else:
+                count += 1
+        if count > 0:
+            buffer.append(str(count)+str(prev))
+        res = "".join(buffer)
+    return res
+                
+                
+class LookAndSaySpec(unittest.TestCase):
+    def test_1st_term(self):
+        self.assertEqual("1", look_and_say(1))
+        
+    def test_2nd_term(self):
+        self.assertEqual("11", look_and_say(2))
+        
+    def test_3rd_term(self):
+        self.assertEqual("21", look_and_say(3))
+        
+    def test_4th_term(self):
+        self.assertEqual("1211", look_and_say(4))
+        
+    def test_5th_term(self):
+        self.assertEqual("111221", look_and_say(5))
+        
+    def test_6th_term(self):
+        self.assertEqual("312211", look_and_say(6))
+        
+    def test_7th_term(self):
+        self.assertEqual("13112221", look_and_say(7))
+
+    def test_10th_term(self):
+        self.assertEqual("13211311123113112211", look_and_say(10))
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
+```
 
 ### Dec 26, 2019 \[Easy\] Filter Binary Tree Leaves
 ---
