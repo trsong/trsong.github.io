@@ -19,11 +19,94 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java) 
 
 
+### Dec 29, 2019 LC 230 \[Medium\] Kth Smallest Element in a BST
+---
+> **Question:** Given a binary search tree, write a function kthSmallest to find the kth smallest element in it.
+
+**Example 1:**
+
+```py
+Input: 
+   3
+  / \
+ 1   4
+  \
+   2
+
+k = 1
+Output: 1
+```
+
+
+**Example 2:**
+
+```py
+Input: 
+       5
+      / \
+     3   6
+    / \
+   2   4
+  /
+ 1
+
+k = 3
+Output: 3
+```
+
 ### Dec 28, 2019 \[Medium\] Dice Throw
 ---
 > **Questions:** Write a function, `throw_dice(N, faces, total)`, that determines how many ways it is possible to throw N dice with some number of faces each to get a specific total.
 >
 > For example, `throw_dice(3, 6, 7)` should equal 15.
+
+**Solution with DP:** [https://repl.it/@trsong/Dice-Throw](https://repl.it/@trsong/Dice-Throw)
+```py
+import unittest
+
+def throw_dice(N, faces, total):
+    cache = {}
+    return throw_dice_with_cache(N, faces, total, cache)
+
+def throw_dice_with_cache(N, faces, total, cache):
+    if N == 0 and total == 0:
+        return 1
+    elif (N == 0) ^ (total == 0):
+        return 0
+    elif (N, total) in cache:
+        return cache[(N, total)]
+    else:
+        res = 0
+        for dice in xrange(1, faces+1):
+            res += throw_dice_with_cache(N-1, faces, total-dice, cache)
+        return res
+
+
+class ThrowDiceSpec(unittest.TestCase):
+    def test_example(self):
+        self.assertEqual(15, throw_dice(3, 6, 7))
+
+    def test_target_total_too_large(self):
+        self.assertEqual(0, throw_dice(1, 6, 12))
+    
+    def test_target_total_too_small(self):
+        self.assertEqual(0, throw_dice(4, 2, 1))
+    
+    def test_throw_dice1(self):
+        self.assertEqual(2, throw_dice(2, 2, 3))
+    
+    def test_throw_dice2(self):
+        self.assertEqual(21, throw_dice(6, 3, 8))
+    
+    def test_throw_dice3(self):
+        self.assertEqual(4, throw_dice(4, 2, 5))
+    
+    def test_throw_dice4(self):
+        self.assertEqual(6, throw_dice(3, 4, 5))
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
+```
 
 ### Dec 27, 2019 LC 38 \[Easy\] Look-and-Say Sequence
 ---
