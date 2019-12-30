@@ -18,6 +18,16 @@ categories: Python/Java
 
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java) 
 
+### Dec 30, 2019 \[Easy\] Swap Even and Odd Nodes
+---
+> **Question:** Given the head of a singly linked list, swap every two nodes and return its head.
+>
+> **Note:** Make sure it’s acutally nodes that get swapped not value.
+
+**Example:**
+```py
+Given 1 -> 2 -> 3 -> 4, return 2 -> 1 -> 4 -> 3.
+```
 
 ### Dec 29, 2019 LC 230 \[Medium\] Kth Smallest Element in a BST
 ---
@@ -52,6 +62,134 @@ Input:
 
 k = 3
 Output: 3
+```
+
+**My thoughts:** Unless we explicitedly store number of children underneath each node, we cannot go without iterating through the inorder traversal of BST. 
+
+Besides the traditional way of generating inorder traversal with recursion, there are two other ways to achieve the same goal:
+- **Iterative Inorder Traversal with Stack:** Time Complexity - `O(n)`. Space Complexity - `O(n)`;
+- **Morris Traversal:** Time Complexity - `O(2n) = O(n)`. Space Complexity: `O(1)`.
+
+**Iterative Inorder Traversal with Stack Template:**
+```py
+def inorder_traversal(root):
+    p = root
+    stack = []
+    while True:
+        if p:
+            stack.append(p)
+            p = p.left
+        elif stack:
+            p = stack.pop()
+            yield p
+            p = p.right
+        else:
+            break
+```
+
+**Inorder Traversal with Constant Memory (*Morris Traversal*):** 
+```py
+def morris_traveral(root):
+    p = root
+    while p:
+        if p.left:
+            # prev is predecessor of original tree
+            prev = p.left
+            while prev.right and p != prev.right:
+                prev = prev.right
+            
+            if prev.right:
+                # undo append to predecessor's right child
+                prev.right = None
+                yield p
+                p = p.right
+            else:
+                # append current to predecessor's right child
+                prev.right = p
+                p = p.left
+        else:
+            yield p
+            p = p.right
+```
+
+**Solution with Inorder Traversal:** [https://repl.it/@trsong/k-smallest-in-BST](https://repl.it/@trsong/k-smallest-in-BST)
+```py
+import unittest
+
+def kth_smallest(root, k):
+    p = root
+    stack = []
+    while True:
+        if p:
+            stack.append(p)
+            p = p.left
+        elif stack:
+            p = stack.pop()
+            if k == 1:
+                return p.val
+            k -= 1
+            p = p.right
+        else:
+            break
+    return None
+
+
+class TreeNode(object):
+    def __init__(self, val, left=None, right=None):
+        self.val = val
+        self.left = left
+        self.right = right
+
+class KthSmallestSpec(unittest.TestCase):
+    def test_example1(self):
+        """
+           3
+          / \
+         1   4
+          \
+           2
+        """
+        n1 = TreeNode(1, right=TreeNode(2))
+        tree = TreeNode(3, n1, TreeNode(4))
+        check_expected = [1, 2, 3, 4]
+        for e in check_expected:
+            self.assertEqual(e, kth_smallest(tree, e))
+
+    def test_example2(self):
+        """
+              5
+             / \
+            3   6
+           / \
+          2   4
+         /
+        1
+        """
+        n2 = TreeNode(2, TreeNode(1))
+        n3 = TreeNode(3, n2, TreeNode(4))
+        tree = TreeNode(5, n3, TreeNode(6))
+        check_expected = [1, 2, 3, 4, 5, 6]
+        for e in check_expected:
+            self.assertEqual(e, kth_smallest(tree, e))
+
+    def test_full_BST(self):
+        """
+             4
+           /   \
+          2     6
+         / \   / \
+        1   3 5   7
+        """
+        n2 = TreeNode(2, TreeNode(1), TreeNode(3))
+        n6 = TreeNode(6, TreeNode(5), TreeNode(7))
+        tree = TreeNode(4, n2, n6)
+        check_expected = [1, 2, 3, 4, 5, 6, 7]
+        for e in check_expected:
+            self.assertEqual(e, kth_smallest(tree, e))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
 ```
 
 ### Dec 28, 2019 \[Medium\] Dice Throw
