@@ -18,6 +18,19 @@ categories: Python/Java
 
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java) 
 
+### Dec 31, 2019 \[Medium\] Number of Android Lock Patterns
+---
+> **Question:** One way to unlock an Android phone is through a pattern of swipes across a 1-9 keypad.
+>
+> For a pattern to be valid, it must satisfy the following:
+>
+> - All of its keys must be distinct.
+> - It must not connect two keys by jumping over a third key, unless that key has already been used.
+>
+> For example, 4 - 2 - 1 - 7 is a valid pattern, whereas 2 - 1 - 7 is not.
+>
+> Find the total number of valid unlock patterns of length N, where 1 <= N <= 9.
+
 ### Dec 30, 2019 \[Easy\] Swap Even and Odd Nodes
 ---
 > **Question:** Given the head of a singly linked list, swap every two nodes and return its head.
@@ -27,6 +40,82 @@ categories: Python/Java
 **Example:**
 ```py
 Given 1 -> 2 -> 3 -> 4, return 2 -> 1 -> 4 -> 3.
+```
+ 
+**Solution:** [https://repl.it/@trsong/Swap-every-two-nodes](https://repl.it/@trsong/Swap-every-two-nodes) 
+```py
+import unittest
+
+# Solution with Recursion:
+def swap_list(lst):
+    if not lst or not lst.next:
+        return lst
+    first, second, rest = lst, lst.next, lst.next.next
+    second.next = first
+    first.next = swap_list(rest)
+    return second
+
+# Solution with Iteration:
+def swap_list2(lst):
+    if not lst or not lst.next:
+        return lst
+    prev = dummy = ListNode(-1, lst)
+    while prev and prev.next:
+        first, second = prev.next, prev.next.next
+        if second:
+            first.next = second.next
+            second.next = first
+            prev.next = second
+        prev = first
+    return dummy.next
+
+
+class ListNode(object):
+    def __init__(self, val, next=None):
+        self.val = val
+        self.next = next
+
+
+class SwapListSpec(unittest.TestCase):
+    def assert_lists(self, lst, node_seq):
+        p = lst
+        for node in node_seq:
+            if p != node: print (p.data if p else "None"), (node.data if node else "None")
+            self.assertTrue(p == node)
+            p = p.next
+        self.assertTrue(p is None)
+
+    def test_empty(self):
+        self.assert_lists(swap_list(None), [])
+
+    def test_one_elem_list(self):
+        n1 = ListNode(1)
+        self.assert_lists(swap_list(n1), [n1])
+
+    def test_two_elems_list(self):
+        # 1 -> 2
+        n2 = ListNode(2)
+        n1 = ListNode(1, n2)
+        self.assert_lists(swap_list(n1), [n2, n1])
+
+    def test_three_elems_list(self):
+        # 1 -> 2 -> 3
+        n3 = ListNode(3)
+        n2 = ListNode(2, n3)
+        n1 = ListNode(1, n2)
+        self.assert_lists(swap_list(n1), [n2, n1, n3])
+
+    def test_four_elems_list(self):
+        # 1 -> 2 -> 3 -> 4
+        n4 = ListNode(4)
+        n3 = ListNode(3, n4)
+        n2 = ListNode(2, n3)
+        n1 = ListNode(1, n2)
+        self.assert_lists(swap_list(n1), [n2, n1, n4, n3])
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
 ```
 
 ### Dec 29, 2019 LC 230 \[Medium\] Kth Smallest Element in a BST
