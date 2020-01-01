@@ -16,7 +16,14 @@ categories: Python/Java
 
 **Python 3 Playground:** [https://repl.it/languages/python3](https://repl.it/languages/python3) 
 
-**Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java) 
+**Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
+
+
+### Jan 1, 2020 \[Hard\] K-Palindrome
+---
+> **Question:** Given a string which we can delete at most k, return whether you can make a palindrome.
+>
+> For example, given `'waterrfetawx'` and a k of 2, you could delete f and x to get `'waterretaw'`.
 
 ### Dec 31, 2019 \[Medium\] Number of Android Lock Patterns
 ---
@@ -30,6 +37,92 @@ categories: Python/Java
 > For example, 4 - 2 - 1 - 7 is a valid pattern, whereas 2 - 1 - 7 is not.
 >
 > Find the total number of valid unlock patterns of length N, where 1 <= N <= 9.
+
+**My thoughts:** By symmetricity, code starts with 1, 3, 7, 9 has same number of total combination and same as 2, 4, 6, 8. Thus we only need to figure out total combinations starts from 1, 2 and 5. We can count that number through DFS with Backtracking and make sure to check if there is no illegal jump between recursive calls.
+
+**Solution with Backtracking:** [https://repl.it/@trsong/Number-of-Android-Lock-Patterns](https://repl.it/@trsong/Number-of-Android-Lock-Patterns)
+```py
+import unittest
+
+def android_lock_combinations(code_len):
+    """
+    1 2 3
+    4 5 6
+    7 8 9
+    """
+    jump_over = {}
+    jump_over[(1, 3)] = jump_over[(3, 1)] = 2
+    jump_over[(1, 7)] = jump_over[(7, 1)] = 4
+    jump_over[(3, 9)] = jump_over[(9, 3)] = 6
+    jump_over[(7, 9)] = jump_over[(9, 7)] = 8
+    jump_over[(1, 9)] = jump_over[(9, 1)] = 5
+    jump_over[(2, 8)] = jump_over[(8, 2)] = 5
+    jump_over[(3, 7)] = jump_over[(7, 3)] = 5
+    jump_over[(4, 6)] = jump_over[(6, 4)] = 5
+    visited = [False] * 10
+
+    def backtrack(start, remaining_len):
+        if remaining_len == 0:
+            return 1
+        else:
+            res = 0
+            visited[start] = True
+            for i in xrange(1, 10):
+                if visited[i]:
+                    continue
+                elif (start, i) in jump_over and not visited[jump_over[(start, i)]]:
+                    continue
+                else:
+                    res += backtrack(i, remaining_len-1)
+            visited[start] = False
+            return res
+
+    start_from_1 = backtrack(1, code_len-1)
+    start_from_2 = backtrack(2, code_len-1)
+    start_from_5 = backtrack(5, code_len-1)
+    # Due to symmetricity, code starts with 3, 7, 9 has same number as 1
+    #                      code starts with 4, 6, 8 has same number as 2
+    return 4 * (start_from_1 + start_from_2) + start_from_5
+
+
+class AndroidLockCombinationSpec(unittest.TestCase):
+    def test_length_1_code(self):
+        self.assertEqual(9, android_lock_combinations(1))
+
+    def test_length_2_code(self):
+        # 1-2, 1-4, 1-5, 1-6, 1-8 
+        # 2-1, 2-3, 2-4, 2-5, 2-6, 2-7, 2-9
+        # 5-1, 5-2, 5-3, 5-4, 5-6, 5-7, 5-8, 5-9
+        # Due to symmetricity, code starts with 3, 7, 9 has same number as 1
+        #                      code starts with 4, 6, 8 has same number as 2
+        # Total = 5*4 + 7*4 + 8 = 56
+        self.assertEqual(56, android_lock_combinations(2))
+        
+    def test_length_3_code(self):
+        self.assertEqual(320, android_lock_combinations(3))
+        
+    def test_length_4_code(self):
+        self.assertEqual(1624, android_lock_combinations(4))
+        
+    def test_length_5_code(self):
+        self.assertEqual(7152, android_lock_combinations(5))
+        
+    def test_length_6_code(self):
+        self.assertEqual(26016, android_lock_combinations(6))
+        
+    def test_length_7_code(self):
+        self.assertEqual(72912, android_lock_combinations(7))
+        
+    def test_length_8_code(self):
+        self.assertEqual(140704, android_lock_combinations(8))
+        
+    def test_length_9_code(self):
+        self.assertEqual(140704, android_lock_combinations(9))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
+```
 
 ### Dec 30, 2019 \[Easy\] Swap Even and Odd Nodes
 ---
