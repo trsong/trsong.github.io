@@ -19,11 +19,81 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
 
+
+### Jan 2, 2020 \[Easy\] Pythagorean Triplet in an Array
+---
+> **Question:** Given an array of integers, determine whether it contains a Pythagorean triplet. Recall that a Pythogorean triplet `(a, b, c)` is defined by the equation `a*a + b*b = c*c`.
+
+
 ### Jan 1, 2020 \[Hard\] K-Palindrome
 ---
 > **Question:** Given a string which we can delete at most k, return whether you can make a palindrome.
 >
 > For example, given `'waterrfetawx'` and a k of 2, you could delete f and x to get `'waterretaw'`.
+
+**My thoughts:** We can either solve this problem by modifying the edit distance function or taking advantage of longest common subsequnce. Here we choose the later method.
+
+We can first calculate the minimum deletion needed to make a palindrome and the way we do it is to compare the original string vs the reversed string in order to calculate the LCS - longest common subsequence. Thus the minimum deletion equals length of original string minus LCS.
+
+To calculate LCS, we use DP and will encounter the following situations:
+1. If the last digit of each string matches each other, i.e. lcs(seq1 + s, seq2 + s) then result = 1 + lcs(seq1, seq2).
+2. If the last digit not matches, i.e. lcs(seq1 + s, seq2 + p), then res is either ignore s or ignore q. Just like insert a whitespace or remove a letter from edit distance, which gives max(lcs(seq1, seq2 + p), lcs(seq1 + s, seq2))
+
+
+**Solution with DP:** [https://repl.it/@trsong/K-Palindrome](https://repl.it/@trsong/K-Palindrome)
+```py
+import unittest
+
+def is_k_palindrome(s, k):
+    reversed_str = s[::-1]
+    lcs = longest_common_subsequence(s, reversed_str)
+    min_char_to_remove = len(s) - lcs
+    return min_char_to_remove <= k
+
+
+def longest_common_subsequence(s1, s2):
+    m, n = len(s1), len(s2)
+    # Let dp[i][j] represents longest common subsequnce for substr s1[i] and s2[j]
+    dp = [[0 for _ in xrange(n+1)] for _ in xrange(m+1)]
+    for i in xrange(1, m+1):
+        for j in xrange(1, n+1):
+            if s1[i-1] == s2[j-1]:
+                dp[i][j] = dp[i-1][j-1] + 1
+            else:
+                dp[i][j] = max(dp[i-1][j], dp[i][j-1])
+    return dp[m][n]
+
+
+class IsKPalindromeSpec(unittest.TestCase):
+    def test_example(self):
+        # waterrfetawx => waterretaw
+        self.assertTrue(is_k_palindrome('waterrfetawx', k=2))
+
+    def test_empty_string(self):
+        self.assertTrue(is_k_palindrome('', k=2))
+    
+    def test_palindrome_string(self):
+        self.assertTrue(is_k_palindrome('abcddcba', k=1))
+
+    def test_removing_exact_k_characters(self):
+        # abcdecba => abcecba
+        self.assertTrue(is_k_palindrome('abcdecba', k=1))
+
+    def test_removing_exact_k_characters2(self):
+        # abcdeca => acdca
+        self.assertTrue(is_k_palindrome('abcdeca', k=2))
+
+    def test_removing_exact_k_characters3(self):
+        # acdcb => cdc
+        self.assertTrue(is_k_palindrome('acdcb', k=2))
+
+    def test_not_k_palindrome(self):
+        self.assertFalse(is_k_palindrome('acdcb', k=1))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
+```
 
 ### Dec 31, 2019 \[Medium\] Number of Android Lock Patterns
 ---
