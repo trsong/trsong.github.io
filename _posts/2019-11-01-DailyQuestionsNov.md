@@ -19,6 +19,12 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
 
+### Jan 5, 2020 \[Hard\] Find Arbitrage Opportunities
+---
+> **Question:** Suppose you are given a table of currency exchange rates, represented as a 2D array. Determine whether there is a possible arbitrage: that is, whether there is some sequence of trades you can make, starting with some amount A of any currency, so that you can end up with some amount greater than A of that currency.
+>
+> There are no transaction costs and you can trade fractional quantities.
+
 ### Jan 4, 2020 LC 554 \[Medium\] Brick Wall
 ---
 > **Question:** A wall consists of several rows of bricks of various integer lengths and uniform height. Your goal is to find a vertical line going from the top to the bottom of the wall that cuts through the fewest number of bricks. If the line goes through the edge between two bricks, this does not count as a cut.
@@ -37,6 +43,79 @@ categories: Python/Java
 > The best we can we do here is to draw a line after the eighth brick, which will only require cutting through the bricks in the third and fifth row.
 >
 > Given an input consisting of brick lengths for each row such as the one above, return the fewest number of bricks that must be cut to create a vertical line.
+
+**Solution:** [https://repl.it/@trsong/Brick-Wall](https://repl.it/@trsong/Brick-Wall)
+```py
+import unittest
+
+def least_cut_bricks(wall):
+    if not wall:
+        return 0
+    
+    brick_end_map = {}
+    max_cross = 0
+    for row in wall:
+        col = 0
+        for i in xrange(len(row)-1):
+            col += row[i]
+            brick_end_map[col] = brick_end_map.get(col, 0) + 1
+            max_cross = max(max_cross, brick_end_map[col])
+    
+    total_row = len(wall)
+    return total_row - max_cross
+    
+
+class LeastCutBrickSpec(unittest.TestCase):
+    def test_example(self):
+        wall = [
+            [3, 5, 1, 1],
+            [2, 3, 3, 2],
+            [5, 5],
+            [4, 4, 2],
+            [1, 3, 3, 3],
+            [1, 1, 6, 1, 1]]
+        self.assertEqual(2, least_cut_bricks(wall))  # cut at col 8
+    
+    def test_empty_wall(self):
+        self.assertEqual(0, least_cut_bricks([]))
+    
+    def test_properly_align_all_bricks(self):
+        wall = [
+            [1],
+            [1],
+            [1]
+        ]
+        self.assertEqual(3, least_cut_bricks(wall))
+    
+    def test_properly_align_all_bricks2(self):
+        wall = [
+            [1, 2, 3],
+            [1, 2, 3],
+            [1, 2, 3]
+        ]
+        self.assertEqual(0, least_cut_bricks(wall))
+
+    def test_one_column_properly_aligned(self):
+        wall = [
+            [1, 1, 1, 1],
+            [2, 2],
+            [1, 1, 2],
+            [2, 1, 1]
+        ]
+        self.assertEqual(0, least_cut_bricks(wall))  # cut at col 2
+
+    def test_local_answer_is_not_optimal(self):
+        wall = [
+            [1, 1, 2, 1],
+            [3, 2],
+            [2, 3]
+        ]
+        self.assertEqual(1, least_cut_bricks(wall))  # cut at col 2
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
+```
 
 ### Jan 3, 2020 \[Easy\] Inorder Successor in BST
 ---
