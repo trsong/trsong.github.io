@@ -19,11 +19,148 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
 
+
+### Jan 6, 2020 \[Easy\] Largest Product of 3 Elements
+---
+> **Question:** You are given an array of integers. Return the largest product that can be made by multiplying any 3 integers in the array.
+
+**Example:**
+```py
+[-4, -4, 2, 8] should return 128 as the largest product can be made by multiplying -4 * -4 * 8 = 128.
+```
+
 ### Jan 5, 2020 \[Hard\] Find Arbitrage Opportunities
 ---
 > **Question:** Suppose you are given a table of currency exchange rates, represented as a 2D array. Determine whether there is a possible arbitrage: that is, whether there is some sequence of trades you can make, starting with some amount A of any currency, so that you can end up with some amount greater than A of that currency.
 >
 > There are no transaction costs and you can trade fractional quantities.
+
+**My thoughts:** The question ask if there exists a cycle that has edge weight multiplication > 1. 
+
+For example, given the following matrix:
+```py
+#       RMB,   USD,  CAD
+# RMB     1, 0.14, 0.19
+# USD  6.97,    1,  1.3
+# CAD  5.37, 0.77,    1
+
+# Since RMB -> CAD -> RMB:  1 Yuan * 0.19 * 5.37 = 1.02 Yuan
+# If we keep exchange RMB to CAD and exchange back, we can make a profit eventually.
+```
+
+But how to efficiently find such a cycle? 
+
+The trick is to take advantage of the property of log function: `log(a*b) = log(a) + log(b)`. We can convert edge weights into negative log of original edge weights. As `a * b * c > 1 <=> -log(a*b*c) < 0 <=> -log(a) * -log(b) * -log(c) < 0`. We can use Bellman-ford Algorithm to detect if negative cycle exists or not. If so, there must be a cycle whose weight multiplication > 1.
+
+
+**Solution with Bellman-Ford Algorithm:** [https://repl.it/@trsong/Find-Arbitrage-Opportunities](https://repl.it/@trsong/Find-Arbitrage-Opportunities)
+```py
+import unittest
+import math
+
+def has_arbitrage_opportunities(currency_exchange_matrix):
+    if not currency_exchange_matrix:
+        return False
+    n = len(currency_exchange_matrix)
+    neg_log = lambda x: -math.log(x) if x > 0 else float('inf')
+    # Convert edge weights into negative log of original edge weights. 
+    # Because a * b * c > 1 <=> -log(a*b*c) < 0 <=> -log(a) * -log(b) * -log(c) < 0
+    transformed_matrix = [[neg_log(currency_exchange_matrix[i][j]) for j in xrange(n)] for i in xrange(n)]
+
+    # Run Bellman-Ford algoritm to detect negative cycle 
+    distance = [float('inf')] * n
+    distance[0] = 0
+    for _ in xrange(n-1):
+        # Find min distance after |v| - 1 iteration
+        for u in xrange(n):
+            for v in xrange(n):
+                w = transformed_matrix[u][v]
+                distance[v] = min(distance[v], distance[u] + w)
+    
+    # Calculate distance one more time, if negative cycle exists, the distance can still be updated
+    for u in xrange(n):
+        for v in xrange(n):
+            w = transformed_matrix[u][v]
+            if distance[v] > distance[u] + w:
+                return True
+    
+    return False
+
+
+class HasArbitrageOpportunitiesSpec(unittest.TestCase):
+    def test_empty_matrix(self):
+        self.assertFalse(has_arbitrage_opportunities([]))
+
+    def test_cannot_exchange_currencies(self):
+        currency_exchange_matrix = [
+        #    A, B
+            [1, 0], # A 
+            [0, 1]  # B
+        ]
+        self.assertFalse(has_arbitrage_opportunities(currency_exchange_matrix))
+
+    def test_benefit_from_any_exchange_action(self):
+        currency_exchange_matrix = [
+        #    A, B
+            [1, 2], # A 
+            [2, 1]  # B
+        ]
+        # A -> B -> A:  $1 * 2 * 2 = $4
+        self.assertTrue(has_arbitrage_opportunities(currency_exchange_matrix))
+
+    def test_benefit_from_one_exchange_action(self):
+        currency_exchange_matrix = [
+        #    A,   B
+            [1, 0.5], # A 
+            [4,   1]  # B
+        ]
+        # A -> B -> A:  $1 * 0.5 * 4 = $2
+        self.assertTrue(has_arbitrage_opportunities(currency_exchange_matrix))
+    
+    def test_system_glitch(self):
+        currency_exchange_matrix = [
+        #    A
+            [2]
+        ]
+        # A -> A':  $1 * 2 = $2
+        self.assertTrue(has_arbitrage_opportunities(currency_exchange_matrix))
+
+    def test_multi_currency_system(self):
+        currency_exchange_matrix = [
+        #    RMB,   USD,  CAD
+            [   1, 0.14, 0.19],  # RMB
+            [6.97,    1,  1.3],  # USD
+            [5.37, 0.77,    1]   # CAD
+        ]
+        # RMB -> CAD -> RMB:  1 Yuan * 0.19 * 5.37 = 1.02 Yuan
+        self.assertTrue(has_arbitrage_opportunities(currency_exchange_matrix))
+    
+    def test_multi_currency_system2(self):
+        currency_exchange_matrix = [
+        #     RMB,   USD,    JPY
+            [1   ,  0.14,  15.49],  # RMB
+            [6.97,     1, 108.02],  # USD
+            [0.06, 0.009,      1]   # JPY
+        ]
+        self.assertFalse(has_arbitrage_opportunities(currency_exchange_matrix))
+
+    def test_exists_a_glitch_path_involves_all_currencies(self):
+        currency_exchange_matrix = [
+            #  A, B,   C,   D
+            [  1, 1,   0,   0], # A
+            [0.9, 1, 0.7,   0], # B
+            [1.1, 0,   1, 0.2], # C
+            [10,  0,   0,   1]  # D
+        ]
+        # A -> B -> C -> D -> A:  $1 * 1 * 0.7 * 0.2 * 10 = $1.4 
+        # A -> B -> A: $1 * 1 * 0.9 = $0.9
+        # A -> B -> C -> A: $1 * 1 * 0.7 * 1.1 = $0.77
+        self.assertTrue(has_arbitrage_opportunities(currency_exchange_matrix))
+    
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
+```
 
 ### Jan 4, 2020 LC 554 \[Medium\] Brick Wall
 ---
