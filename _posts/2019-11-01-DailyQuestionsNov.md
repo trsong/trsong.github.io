@@ -19,6 +19,15 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
 
+### Jan 7, 2020 \[Easy\] Sorted Square Numbers
+---
+> **Question:** Given a list of sorted numbers (can be both negative or positive), return the list of numbers squared in sorted order.
+
+**Example:**
+```py
+sort_square_numbers([-5, -3, -1, 0, 1, 4, 5]) # [0, 1, 1, 9, 16, 25, 25]
+```
+
 
 ### Jan 6, 2020 \[Easy\] Largest Product of 3 Elements
 ---
@@ -27,6 +36,80 @@ categories: Python/Java
 **Example:**
 ```py
 [-4, -4, 2, 8] should return 128 as the largest product can be made by multiplying -4 * -4 * 8 = 128.
+```
+
+**My thoughts:** The largest product of three comes from either `max1 * max2 * max3` or `min1 * min2 * max1` where `min1` is 1st min, `max1` is 1st max, vice versa for `max2`, `max3` and `min2`.
+
+**Solution:** [https://repl.it/@trsong/Largest-Product-of-3-Elements](https://repl.it/@trsong/Largest-Product-of-3-Elements)
+```py
+import unittest
+from Queue import PriorityQueue
+
+def max_3product(nums):
+    min_heap = PriorityQueue()
+    max_heap = PriorityQueue()
+    for i in xrange(3):
+        min_heap.put(nums[i])
+        max_heap.put(-nums[i])
+    
+    for i in xrange(3, len(nums)):
+        num = nums[i]
+        if num > min_heap.queue[0]:
+            min_heap.get()
+            min_heap.put(num)
+        elif num < -max_heap.queue[0]:
+            max_heap.get()
+            max_heap.put(-num)
+
+    max3 = min_heap.get()
+    max2 = min_heap.get()
+    max1 = min_heap.get()
+    max_heap.get()
+    min2 = -max_heap.get()
+    min1 = -max_heap.get()
+    return max(max1 * max2 * max3, min1 * min2 * max1)
+        
+
+class Max3ProductSpec(unittest.TestCase):
+    def test_all_positive(self):
+        # Max1 * Max2 * Max3 = 5 * 4 * 3 = 60
+        self.assertEqual(60, max_3product([1, 2, 3, 4, 5]))
+    
+    def test_all_positive2(self):
+        # Max1 * Max2 * Max3 = 6 * 6 * 6 = 216
+        self.assertEqual(216, max_3product([2, 3, 6, 1, 1, 6, 3, 2, 1, 6]))
+
+    def test_all_negative(self):
+        # Max1 * Max2 * Max3 = -1 * -2 * -3 = -6
+        self.assertEqual(-6, max_3product([-5, -4, -3, -2, -1]))
+    
+    def test_all_negative2(self):
+        # Max1 * Max2 * Max3 = -1 * -2 * -3 = -6
+        self.assertEqual(-6, max_3product([-1, -5, -2, -4, -3]))
+    
+    def test_all_negative3(self):
+        # Max1 * Max2 * Max3 = -3 * -5 * -6 = -90
+        self.assertEqual(-90, max_3product([-10, -3, -5, -6, -20]))
+
+    def test_mixed(self):
+        # Min1 * Min2 * Max1 =  -1 * -1 * 3 = 3
+        self.assertEqual(3, max_3product([-1, -1, -1, 0, 2, 3]))
+    
+    def test_mixed2(self):
+        # Max1 * Max2 * Max3 = 0 * 0 * -1 = 0
+        self.assertEqual(0, max_3product([0, -1, -2, -3, 0]))
+    
+    def test_mixed3(self):
+        # Min1 * Min2 * Max1 =  -6 * -4 * 7 = 168
+        self.assertEqual(168, max_3product([1, -4, 3, -6, 7, 0]))
+    
+    def test_mixed4(self):
+        # Max1 * Max2 * Max3 = 3 * 2 * 1 = 6
+        self.assertEqual(6, max_3product([-3, 1, 2, 3]))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
 ```
 
 ### Jan 5, 2020 \[Hard\] Find Arbitrage Opportunities
