@@ -18,6 +18,16 @@ categories: Python/Java
 
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
+### Jan 8, 2020 LC 209 \[Medium\] Minimum Size Subarray Sum
+---
+> **Question:** Given an array of n positive integers and a positive integer s, find the minimal length of a contiguous subarray of which the sum ≥ s. If there isn't one, return 0 instead.
+
+**Example:**
+```py
+Input: s = 7, nums = [2,3,1,2,4,3]
+Output: 2
+Explanation: the subarray [4,3] has the minimal length under the problem constraint.
+```
 
 ### Jan 7, 2020 \[Easy\] Sorted Square Numbers
 ---
@@ -28,6 +38,79 @@ categories: Python/Java
 sort_square_numbers([-5, -3, -1, 0, 1, 4, 5]) # [0, 1, 1, 9, 16, 25, 25]
 ```
 
+**Solution:** [https://repl.it/@trsong/Sorted-Square-Numbers](https://repl.it/@trsong/Sorted-Square-Numbers)
+```py
+import unittest
+
+def sort_square_numbers(nums):
+    if not nums:
+        return []
+    pivot_index = find_non_negative_index(nums)
+    return map_and_merge_squared_numbers(nums, pivot_index)
+
+
+def find_non_negative_index(nums):
+    lo = 0
+    hi = len(nums)
+    while lo < hi:
+        mid = lo + (hi - lo) // 2
+        if nums[mid] < 0:
+            lo = mid + 1
+        else:
+            hi = mid
+    return lo
+
+
+def map_and_merge_squared_numbers(nums, pivot_index):
+    n = len(nums)
+    res = [0] * n
+    i = pivot_index - 1
+    j = pivot_index
+    for k in xrange(n):
+        if j < n and nums[i] * nums[i] > nums[j] * nums[j]:
+            res[k] = nums[j] * nums[j]
+            j += 1
+        else:
+            res[k] = nums[i] * nums[i]
+            i -= 1
+    return res
+
+
+class SortSquareNumberSpec(unittest.TestCase):
+    def test_example(self):
+        nums = [-5, -3, -1, 0, 1, 4, 5]
+        expected = [0, 1, 1, 9, 16, 25, 25]
+        self.assertEqual(expected, sort_square_numbers(nums))
+
+    def test_array_with_duplicate_elements(self):
+        nums = [-1, -1, -1, 0, 0, 0, 1, 1, 1]
+        expected = [0, 0, 0, 1, 1, 1, 1, 1, 1]
+        self.assertEqual(expected, sort_square_numbers(nums))
+
+    def test_array_with_all_negative_elements(self):
+        nums = [-3, -2, -1]
+        expected = [1, 4, 9]
+        self.assertEqual(expected, sort_square_numbers(nums))
+
+    def test_array_with_positive_and_negative_numbers(self):
+        nums = [-9, -2, 0, 2, 3]
+        expected = [0, 4, 4, 9, 81]
+        self.assertEqual(expected, sort_square_numbers(nums))
+
+    def test_array_with_positive_elements(self):
+        nums = [1, 2, 3]
+        expected = [1, 4, 9]
+        self.assertEqual(expected, sort_square_numbers(nums))
+
+    def test_array_with_positive_elements2(self):
+        nums = [-7, -6, 1, 2, 3, 9]
+        expected = [1, 4, 9, 36, 49, 81]
+        self.assertEqual(expected, sort_square_numbers(nums))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
+```
 
 ### Jan 6, 2020 \[Easy\] Largest Product of 3 Elements
 ---
