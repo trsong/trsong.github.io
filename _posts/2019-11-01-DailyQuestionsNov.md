@@ -18,6 +18,16 @@ categories: Python/Java
 
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
+
+
+### Jan 9, 2020 \[Hard\] Find Next Sparse Number
+---
+> **Question:** We say a number is sparse if there are no adjacent ones in its binary representation. For example, `21 (10101)` is sparse, but `22 (10110)` is not. 
+> 
+> For a given input `N`, find the smallest sparse number greater than or equal to `N`.
+>
+> Do this in faster than O(N log N) time.
+
 ### Jan 8, 2020 LC 209 \[Medium\] Minimum Size Subarray Sum
 ---
 > **Question:** Given an array of n positive integers and a positive integer s, find the minimal length of a contiguous subarray of which the sum ≥ s. If there isn't one, return 0 instead.
@@ -27,6 +37,73 @@ categories: Python/Java
 Input: s = 7, nums = [2,3,1,2,4,3]
 Output: 2
 Explanation: the subarray [4,3] has the minimal length under the problem constraint.
+```
+
+**My thoughts:** Naive solution is to iterate through all possible `(start, end)` intervals to calculate min size of qualified subarrays. However, there is a way to optimize such process. Notice that if `(start, end1)` already has `sum > s`, there is not need to go to another interval `(start, end2)` where `end2 > end1`. That is iterating through the rest of list won't improve the result. Therefore we shortcut start once figure out the qualified end index. 
+
+During iteration, with s fixed, once we figure out the minimum interval `(s, e)` that has `sum < s`. Since `(s, e)` is minimum for all e and some s. If we proceed s, interval `(s+1, e)` won't have `sum > s`.
+
+Thus we can move start and end index during the iteration that will form a sliding window.
+
+**Solution with Sliding Window:** [https://repl.it/@trsong/Minimum-Size-Subarray-Sum](https://repl.it/@trsong/Minimum-Size-Subarray-Sum)
+```py
+import unittest
+import sys
+
+def min_size_subarray_sum(s, nums):
+    if not nums:
+        return 0
+    min_size = sys.maxint
+    accu_sum = 0
+    end = 0
+    n = len(nums)
+    for start in xrange(n):
+        while end < n and accu_sum < s:
+            accu_sum += nums[end]
+            end += 1
+        if accu_sum >= s:
+            min_size = min(min_size, end-start)
+        accu_sum -= nums[start]
+    return min_size if min_size != sys.maxint else 0
+
+
+class MinSizeSubarraySumSpec(unittest.TestCase):
+    def test_example(self):
+        s, nums = 7, [2, 3, 1, 2, 4, 3]
+        expected = 2  # [4, 3]
+        self.assertEqual(expected, min_size_subarray_sum(s, nums))
+
+    def test_empty_array(self):
+        self.assertEqual(0,  min_size_subarray_sum(0, []))
+
+    def test_no_such_subarray_exists(self):
+        s, nums = 3, [1, 1]
+        expected = 0
+        self.assertEqual(expected, min_size_subarray_sum(s, nums))
+
+    def test_no_such_subarray_exists2(self):
+        s, nums = 8, [1, 2, 4]
+        expected = 0
+        self.assertEqual(expected, min_size_subarray_sum(s, nums))
+    
+    def test_target_subarray_size_greater_than_one(self):
+        s, nums = 51, [1, 4, 45, 6, 0, 19]
+        expected = 2  # [45, 6]
+        self.assertEqual(expected, min_size_subarray_sum(s, nums))
+
+    def test_target_subarray_size_one(self):
+        s, nums = 9, [1, 10, 5, 2, 7]
+        expected = 1  # [10]
+        self.assertEqual(expected, min_size_subarray_sum(s, nums))
+
+    def test_return_min_size_of_such_subarray(self):
+        s, nums = 200, [1, 11, 100, 1, 0, 200, 3, 2, 1, 250]
+        expected = 1   # [200]
+        self.assertEqual(expected, min_size_subarray_sum(s, nums))
+   
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
 ```
 
 ### Jan 7, 2020 \[Easy\] Sorted Square Numbers
