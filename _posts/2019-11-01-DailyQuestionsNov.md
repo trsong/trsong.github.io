@@ -18,7 +18,21 @@ categories: Python/Java
 
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
+### Jan 10, 2020 \[Easy\] Quxes Transformation
+---
+> **Question:** On a mysterious island there are creatures known as Quxes which come in three colors: red, green, and blue. One power of the Qux is that if two of them are standing next to each other, they can transform into a single creature of the third color.
+>
+>Given N Quxes standing in a line, determine the smallest number of them remaining after any possible sequence of such transformations.
+>
+> For example, given the input ['R', 'G', 'B', 'G', 'B'], it is possible to end up with a single Qux through the following steps:
 
+|       Arrangement         |   Change    |
+|---------------------------|-------------|
+| ['R', 'G', 'B', 'G', 'B'] | (R, G) -> B |
+| ['B', 'B', 'G', 'B']      | (B, G) -> R |
+| ['B', 'R', 'B']           | (R, B) -> G |
+| ['B', 'G']                | (B, G) -> R |
+| ['R']                     |             |
 
 ### Jan 9, 2020 \[Hard\] Find Next Sparse Number
 ---
@@ -26,7 +40,70 @@ categories: Python/Java
 > 
 > For a given input `N`, find the smallest sparse number greater than or equal to `N`.
 >
-> Do this in faster than O(N log N) time.
+> Do this in faster than `O(N log N)` time.
+
+**My thoughts:** Whenever we see sub-binary string `011` mark it as `100` and set all bit on the right to 0. eg. `100110` => `101000`, `101101` => `1000000`
+
+**Solution:** [https://repl.it/@trsong/Find-Next-Sparse-Number](https://repl.it/@trsong/Find-Next-Sparse-Number)
+```py
+import unittest
+import math
+
+def next_sparse_number(num):
+    final_bit = None
+    num_bits = 0 if num == 0 else int(math.log(num, 2)) + 1
+    
+    for i in xrange(1, num_bits):
+        is_prev_bit_set = num & (1 << i-1)
+        is_current_bit_set = num & (1 << i)
+        is_next_bit_set = num & (1 << i+1)
+        if not is_next_bit_set and is_current_bit_set and is_prev_bit_set:
+            # next, cur, pre bit equals 011
+            # set it as 100
+            final_bit = i+1
+            num |= (1 << i+1)
+            num &= ~(1 << i)
+            num &= ~(1 << i-1)
+
+    if final_bit is None:
+        return num
+
+    for i in xrange(final_bit):
+        # mark all bit on the right of final bit as 0
+        num &= ~(1 << i)
+    
+    return num
+
+
+class NextSparseNumberSpec(unittest.TestCase):
+    def test_example(self):
+        self.assertEqual(0b10101, next_sparse_number(0b10101))
+
+    def test_no_bit_is_set(self):
+        self.assertEqual(0, next_sparse_number(0))
+
+    def test_next_sparse_is_itself(self):
+        self.assertEqual(0b100, next_sparse_number(0b100))
+
+    def test_adjacent_bit_is_set(self):
+        self.assertEqual(0b1000, next_sparse_number(0b110))
+    
+    def test_adjacent_bit_is_set2(self):
+        self.assertEqual(0b101000, next_sparse_number(0b100110))
+
+    def test_bit_shift_cause_another_bit_shift(self):
+        self.assertEqual(0b1000000, next_sparse_number(0b101101))
+    
+    def test_complicated_number(self):
+        self.assertEqual(0b1010010000000, next_sparse_number(0b1010001011101))
+
+    def test_all_bit_is_one(self):
+        self.assertEqual(0b1000, next_sparse_number(0b111))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
+```
 
 ### Jan 8, 2020 LC 209 \[Medium\] Minimum Size Subarray Sum
 ---
