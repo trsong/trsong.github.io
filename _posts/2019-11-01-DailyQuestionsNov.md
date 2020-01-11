@@ -18,6 +18,14 @@ categories: Python/Java
 
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
+
+### Jan 11, 2020 \[Medium\] Rescue Boat Problem
+---
+> **Question:** An imminent hurricane threatens the coastal town of Codeville. If at most two people can fit in a rescue boat, and the maximum weight limit for a given boat is `k`, determine how many boats will be needed to save everyone.
+>
+> For example, given a population with weights `[100, 200, 150, 80]` and a boat limit of `200`, the smallest number of boats required will be three.
+
+
 ### Jan 10, 2020 \[Easy\] Quxes Transformation
 ---
 > **Question:** On a mysterious island there are creatures known as Quxes which come in three colors: red, green, and blue. One power of the Qux is that if two of them are standing next to each other, they can transform into a single creature of the third color.
@@ -33,6 +41,110 @@ categories: Python/Java
 | ['B', 'R', 'B']           | (R, B) -> G |
 | ['B', 'G']                | (B, G) -> R |
 | ['R']                     |             |
+
+
+**My thoughts:** After testing some input I found the following three rules:
+
+Suppose A, B, C are different colors
+- Rule1: Transform
+    - AB => C
+- Rule2: Left Elimination
+    - AAB => AC => B
+- Rule3: Right Elimination
+    - ABB => CB => A
+
+The algorithm works as the following:
+1. Step1: If we keep applying rule2 and rule3, we can guarantee no consecutive colors are the same.
+2. Step2: Then we apply rule1 to break the balance.
+3. Step3: Repeat step1 and step until not possible.
+4. Finally we will reduce to one single color that is the result
+
+However, we don't need to acutally implement above algorithm and if we take one step further we can see that rule1 is just reduce the count of two color and increase the other color. And Rule2, Rule3 are just both reduce one color by 2.
+
+For example, suppose the count of R, G, B is (r, g, b):
+```py
+rule1(r, g, b) = (r-1, g-1, b+1)
+rule2(r, g, b) = (r-2, g, b)
+```
+
+We can keep using greedy approach to reduce the color with maximum count, we will end up with either 2 or 1 e.g AA or A. We cannot have 3 (AAA) because if we end up with 3, we can only reduce from 4 which is case1) AABC, ABAC, ABCA if all A, B, C are differnt. Or case2) BAAA, ABAA, AABA, AAAB. In both cases, We can always reduce to 2.
+
+It turns out that if all of colors have eiter even or odd count, we will end up with 2 (AA). Otherwise we will end up with one (A).
+
+**Solution:** [https://repl.it/@trsong/Quxes-Transformation](https://repl.it/@trsong/Quxes-Transformation)
+```py
+import unittest
+R, G, B = 'R', 'G', 'B'
+
+def quxes_transformation(quxes):
+    if not quxes:
+        return 0
+
+    occurrence = {}
+    for color in quxes:
+        occurrence[color] = occurrence.get(color, 0) + 1
+    
+    if len(occurrence) == 1:
+        return len(quxes)
+    
+    occurrence_is_even = map(lambda count: count % 2, occurrence.values())
+    if all(occurrence_is_even) or not any(occurrence_is_even):
+        # Either all counts are even, or odd
+        return 2
+    else:
+        return 1
+
+
+class QuxesTransformationSpec(unittest.TestCase):
+    def test_example(self):
+        # (R, G), B, G, B
+        # B, (B, G), B
+        # (B, R), B
+        # (G, B)
+        # R
+        self.assertEqual(1, quxes_transformation([R, G, B, G, B]))
+
+    def test_empty_list(self):
+        self.assertEqual(0, quxes_transformation([]))
+    
+    def test_unique_color(self):
+        self.assertEqual(6, quxes_transformation([G, G, G, G, G, G]))
+    
+    def test_unique_color2(self):
+        self.assertEqual(2, quxes_transformation([R, R]))
+    
+    def test_unique_color3(self):
+        self.assertEqual(3, quxes_transformation([B, B, B]))
+
+    def test_all_even_count(self):
+        # (R, G), (B, R), (G, B)
+        # (B, G), R
+        # R, R
+        self.assertEqual(2, quxes_transformation([R, G, B, R, G, B]))
+
+    def test_all_odd_count(self):
+        # R, R, R, (G, B), B, B, B, B
+        # R, R, R, (R, B), B, B, B
+        # R, R, R, (G, B), B, B
+        # R, R, (R, B), B, B
+        # R, (G, B), B, B
+        # R, (R, B), B
+        # R, (G, B)
+        # R, R
+        self.assertEqual(2, quxes_transformation([R, R, R, G, B, B, B, B, B]))
+    
+    def test_two_even_one_odd_count(self):
+        # R, R, G, (G, B)
+        # R, R, (G, R)
+        # R, (R, B)
+        # R, G
+        # B
+        self.assertEqual(1, quxes_transformation([R, R, G, G, B]))
+    
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
+```
 
 ### Jan 9, 2020 \[Hard\] Find Next Sparse Number
 ---
