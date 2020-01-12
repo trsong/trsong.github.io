@@ -18,13 +18,67 @@ categories: Python/Java
 
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
+### Jan 12, 2020 LC 438 \[Medium\] Anagrams in a String
+---
+> **Question:** Given 2 strings s and t, find and return all indexes in string s where t is an anagram.
+
+**Example:** 
+```py
+find_anagrams('acdbacdacb', 'abc')  # gives [3, 7], anagrams: bac, acb
+```
 
 ### Jan 11, 2020 \[Medium\] Rescue Boat Problem
 ---
-> **Question:** An imminent hurricane threatens the coastal town of Codeville. If at most two people can fit in a rescue boat, and the maximum weight limit for a given boat is `k`, determine how many boats will be needed to save everyone.
+> **Question:** An imminent hurricane threatens the coastal town of Codeville. If at most 2 people can fit in a rescue boat, and the maximum weight limit for a given boat is `k`, determine how many boats will be needed to save everyone.
 >
 > For example, given a population with weights `[100, 200, 150, 80]` and a boat limit of `200`, the smallest number of boats required will be three.
 
+**My thougths:** try to save boat room greedily: pair heaviest w/ lightest if it works, otherwise let heaviest be his own boat. 
+
+**Greedy Solution with Two Pointers:** [https://repl.it/@trsong/Rescue-Boat-Problem](https://repl.it/@trsong/Rescue-Boat-Problem)
+```py
+import unittest
+
+def minimum_rescue_boats(weights, limit):
+    sorted_weight = sorted(weights)
+    i, j = 0, len(sorted_weight) - 1
+    res = 0
+    while i <= j:
+        res += 1
+        if sorted_weight[i] + sorted_weight[j] <= limit:
+            i += 1
+        j -= 1
+    return res
+
+
+class MinimumRescueBoatSpec(unittest.TestCase):
+    def test_example(self):
+        limit, weights = 200, [100, 200, 150, 80]
+        expected_min_boats = 3  # Boats: [100, 80], [200], [150]
+        self.assertEqual(expected_min_boats, minimum_rescue_boats(weights, limit))
+
+    def test_empty_weights(self):
+        self.assertEqual(0, minimum_rescue_boats([], 100))
+
+    def test_a_boat_can_fit_in_two_people(self):
+        limit, weights = 300, [100, 200]
+        expected_min_boats = 1  # Boats: [100, 200]
+        self.assertEqual(expected_min_boats, minimum_rescue_boats(weights, limit))
+    
+    def test_make_max_and_min_weight_same_boat_is_not_correct(self):
+        limit, weights = 3, [3, 2, 2, 1]
+        expected_min_boats = 3  # Boats: [3], [2], [2, 1]
+        self.assertEqual(expected_min_boats, minimum_rescue_boats(weights, limit))
+
+    def test_no_two_can_fit_in_same_boat(self):
+        limit, weights = 5, [3, 5, 4, 5]
+        expected_min_boats = 4  # Boats: [3], [5], [4], [5]
+        self.assertEqual(expected_min_boats, minimum_rescue_boats(weights, limit))
+    
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
+```
 
 ### Jan 10, 2020 \[Easy\] Quxes Transformation
 ---
