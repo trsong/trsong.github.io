@@ -20,7 +20,9 @@ categories: Python/Java
 
 ### Jan 13, 2020 LT 386 \[Medium\] Longest Substring with At Most K Distinct Characters
 ---
-> **Question:** Given a string, find the longest substring that contains at most k unique characters. For example, given `"abcbbbbcccbdddadacb"`, the longest substring that contains 2 unique character is `"bcbbbbcccb"`.
+> **Question:** Given a string, find the longest substring that contains at most k unique characters. 
+> 
+> For example, given `"abcbbbbcccbdddadacb"`, the longest substring that contains 2 unique character is `"bcbbbbcccb"`.
 
 
 ### Jan 12, 2020 LC 438 \[Medium\] Anagrams in a String
