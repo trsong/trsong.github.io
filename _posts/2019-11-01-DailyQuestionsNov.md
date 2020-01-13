@@ -18,6 +18,11 @@ categories: Python/Java
 
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
+### Jan 13, 2020 LT 386 \[Medium\] Longest Substring with At Most K Distinct Characters
+---
+> **Question:** Given a string, find the longest substring that contains at most k unique characters. For example, given `"abcbbbbcccbdddadacb"`, the longest substring that contains 2 unique character is `"bcbbbbcccb"`.
+
+
 ### Jan 12, 2020 LC 438 \[Medium\] Anagrams in a String
 ---
 > **Question:** Given 2 strings s and t, find and return all indexes in string s where t is an anagram.
@@ -26,6 +31,118 @@ categories: Python/Java
 ```py
 find_anagrams('acdbacdacb', 'abc')  # gives [3, 7], anagrams: bac, acb
 ```
+
+**Solution1 with Sliding Window:** [https://repl.it/@trsong/Anagrams-in-a-String-Sol1](https://repl.it/@trsong/Anagrams-in-a-String-Sol1) 
+```py
+def find_anagrams(s, t):
+    if len(t) > len(s):
+        return []
+        
+    pattern_dict = {}
+    for char in t:
+        pattern_dict[char] = pattern_dict.get(char, 0) + 1
+
+    start = 0
+    source_dict = {}
+    res = []
+    for end, char in enumerate(s):
+        if char not in pattern_dict:
+            start = end + 1
+            source_dict = {}
+        else:
+            source_dict[char] = source_dict.get(char, 0) + 1
+            while source_dict[char] > pattern_dict[char]:
+                source_dict[s[start]] -= 1
+                start += 1
+            if end - start + 1 == len(t):
+                res.append(start)
+    return res
+```
+
+**Solution2 with Sliding Window:** [https://repl.it/@trsong/Anagrams-in-a-String-Sol2](https://repl.it/@trsong/Anagrams-in-a-String-Sol2) 
+```py
+import unittest
+
+def find_anagrams(s, t):
+    if not t or len(t) > len(s):
+        return []
+        
+    pattern_dict = {}
+    for char in t:
+        pattern_dict[char] = pattern_dict.get(char, 0) + 1
+
+    start = 0
+    char_balance = len(pattern_dict)
+    res = []
+
+    for end in xrange(len(s)):
+        if s[end] in pattern_dict:
+            pattern_dict[s[end]] -= 1
+            if pattern_dict[s[end]] == 0:
+                char_balance -=1
+        
+        while char_balance == 0:
+            if end - start + 1 == len(t):
+                res.append(start)
+            
+            if s[start] in pattern_dict:
+                pattern_dict[s[start]] += 1
+                if pattern_dict[s[start]] > 0:
+                    char_balance += 1
+            
+            start += 1
+       
+    return res
+
+
+class FindAnagramSpec(unittest.TestCase):
+    def test_example(self):
+        s = 'acdbacdacb'
+        t = 'abc'
+        self.assertEqual([3, 7], find_anagrams(s, t))
+    
+    def test_empty_source(self):
+        self.assertEqual([], find_anagrams('', 'a'))
+    
+    def test_empty_pattern(self):
+        self.assertEqual([], find_anagrams('a', ''))
+
+    def test_pattern_contains_unseen_characters_in_source(self):
+        s = "abcdef"
+        t = "123"
+        self.assertEqual([], find_anagrams(s, t))
+    
+    def test_pattern_not_in_source(self):
+        s = 'ab9cd9abc9d'
+        t = 'abcd'
+        self.assertEqual([], find_anagrams(s, t))
+    
+    def test_matching_strings_have_overlapping_positions_in_source(self):
+        s = 'abab'
+        t = 'ab'
+        self.assertEqual([0, 1, 2], find_anagrams(s, t))
+    
+    def test_find_all_matching_positions(self):
+        s = 'cbaebabacd'
+        t = 'abc'
+        self.assertEqual([0, 6], find_anagrams(s, t))
+    
+    def test_find_all_matching_positions2(self):
+        s = 'BACDGABCDA'
+        t = 'ABCD'
+        self.assertEqual([0, 5, 6], find_anagrams(s, t))
+    
+    def test_find_all_matching_positions3(self):
+        s = 'AAABABAA'
+        t = 'AABA'
+        self.assertEqual([0, 1, 4], find_anagrams(s, t))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
+```
+
+
 
 ### Jan 11, 2020 \[Medium\] Rescue Boat Problem
 ---
