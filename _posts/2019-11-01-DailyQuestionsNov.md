@@ -18,12 +18,93 @@ categories: Python/Java
 
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
+
+### Jan 14, 2020 \[Medium\] Making Change
+---
+> **Question:**  Given a list of possible coins in cents, and an amount (in cents) `n`, return the minimum number of coins needed to create the amount n. If it is not possible to create the amount using the given coin denomination, return `None`.
+
+Example:
+```py
+make_change([1, 5, 10, 25], 36)  # gives 3 coins (25 + 10 + 1) 
+```
+
+
 ### Jan 13, 2020 LT 386 \[Medium\] Longest Substring with At Most K Distinct Characters
 ---
 > **Question:** Given a string, find the longest substring that contains at most k unique characters. 
 > 
 > For example, given `"abcbbbbcccbdddadacb"`, the longest substring that contains 2 unique character is `"bcbbbbcccb"`.
 
+**Solution with Sliding Window:** [https://repl.it/@trsong/Longest-Substring-with-At-Most-K-Distinct-Characters](https://repl.it/@trsong/Longest-Substring-with-At-Most-K-Distinct-Characters)
+```py
+import unittest
+
+def longest_substr_with_k_distinct_chars(s, k):
+    if not s:
+        return ""
+    
+    max_length = 0
+    max_length_start = 0
+    start = 0
+    char_freq = {}
+
+    for end, char in enumerate(s):
+        char_freq[char] = char_freq.get(char, 0) + 1
+
+        while len(char_freq) > k:
+            if char_freq[s[start]] == 1:
+                del char_freq[s[start]]
+            else:
+                char_freq[s[start]] -= 1
+            start += 1
+        
+        length = end - start + 1
+        if length > max_length:
+            max_length = length
+            max_length_start = start
+    
+    return s[max_length_start: max_length_start + max_length]
+
+
+class LongestSubstrWithKDistinctCharSpec(unittest.TestCase):
+    def test_example(self):
+        k, s = 2, "abcbbbbcccbdddadacb"
+        expected = "bcbbbbcccb"
+        self.assertEqual(expected, longest_substr_with_k_distinct_chars(s, k))
+
+    def test_empty_string(self):
+        self.assertEqual("", longest_substr_with_k_distinct_chars("", 3))
+
+    def test_substr_with_3_distinct_chars(self):
+        k, s = 3, "abcadcacacaca"
+        expected = "cadcacacaca"
+        self.assertEqual(expected, longest_substr_with_k_distinct_chars(s, k))
+
+    def test_substr_with_3_distinct_chars2(self):
+        k, s = 3, "eceba"
+        expected = "eceb"
+        self.assertEqual(expected, longest_substr_with_k_distinct_chars(s, k))
+
+    def test_multiple_solutions(self):
+        k, s = 4, "WORLD" 
+        res = longest_substr_with_k_distinct_chars(s, k)
+        sol1 = "WORL"
+        sol2 = "ORLD"
+        self.assertTrue(sol1 == res or sol2 == res)
+
+    def test_complicated_input(self):
+        s = "abcbdbdbbdcdabd"
+        k2, sol2 = 2, "bdbdbbd"
+        k3, sol3 = 3, "bcbdbdbbdcd"
+        k5, sol5 = 5, "abcbdbdbbdcdabd"
+        self.assertEqual(sol2, longest_substr_with_k_distinct_chars(s, k2))
+        self.assertEqual(sol3, longest_substr_with_k_distinct_chars(s, k3))
+        self.assertEqual(sol5, longest_substr_with_k_distinct_chars(s, k5))
+    
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
+```
 
 ### Jan 12, 2020 LC 438 \[Medium\] Anagrams in a String
 ---
