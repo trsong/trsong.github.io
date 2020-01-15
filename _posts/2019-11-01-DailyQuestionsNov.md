@@ -19,6 +19,26 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
 
+### Jan 15, 2020 \[Easy\] Rotate Matrix
+---
+> **Question:**  Given a square 2D matrix (n x n), rotate the matrix by 90 degrees clockwise.
+>
+> For example, given the following matrix:
+
+```py
+[[1, 2, 3],
+ [4, 5, 6],
+ [7, 8, 9]]
+```
+
+> you should return:
+
+```py
+[[7, 4, 1],
+ [8, 5, 2],
+ [9, 6, 3]]
+```
+
 ### Jan 14, 2020 \[Medium\] Making Change
 ---
 > **Question:**  Given a list of possible coins in cents, and an amount (in cents) `n`, return the minimum number of coins needed to create the amount n. If it is not possible to create the amount using the given coin denomination, return `None`.
@@ -28,6 +48,73 @@ Example:
 make_change([1, 5, 10, 25], 36)  # gives 3 coins (25 + 10 + 1) 
 ```
 
+**Solution with DP:** [https://repl.it/@trsong/Making-Change](https://repl.it/@trsong/Making-Change)
+```py
+import unittest
+import sys
+
+def make_change(coins, target):
+    if target < 0:
+        return None
+    
+    n = len(coins)
+    # Let dp[i][j] represents min coins for coins[1:i] and target=j
+    # dp[i][j] = min(dp[i-1][j], 1 + dp[i][j-coins[i-1]]) meaning that we can either not take the current coin or not take this coin. 
+    # whichever gives the min solution works
+    dp = [[sys.maxint for _ in xrange(target+1)] for _ in xrange(n+1)]
+    for i in xrange(n+1):
+        dp[i][0] = 0
+    
+    for i in xrange(1, n+1):
+        for j in xrange(1, target+1):
+            dp[i][j] = dp[i-1][j]
+            if coins[i-1] <= j:
+                dp[i][j] = min(dp[i][j], 1 + dp[i][j-coins[i-1]])
+
+    return None if dp[n][target] == sys.maxint else dp[n][target]
+            
+
+class MakeChangeSpec(unittest.TestCase):
+    def test_example(self):
+        target, coins = 36, [1, 5, 10, 25]
+        expected = 3  # 25 + 10 + 1
+        self.assertEqual(expected, make_change(coins, target))
+    
+    def test_target_is_zero(self):
+        self.assertEqual(0, make_change([1, 2, 3], 0))
+        self.assertEqual(0, make_change([], 0))
+
+    def test_unable_to_reach_target(self):
+        target, coins = -1, [1, 2, 3]
+        self.assertIsNone(make_change(coins, target))
+
+    def test_unable_to_reach_target2(self):
+        target, coins = 10, []
+        self.assertIsNone(make_change(coins, target))
+
+    def test_greedy_approach_fails(self):
+        target, coins = 11, [9, 6, 5, 1]
+        expected = 2  # 5 + 6
+        self.assertEqual(expected, make_change(coins, target))
+
+    def test_use_same_coin_multiple_times(self):
+        target, coins = 12, [1, 2, 3]
+        expected = 4  # 3 + 3 + 3 + 3
+        self.assertEqual(expected, make_change(coins, target))
+
+    def test_should_produce_minimum_number_of_changes(self):
+        target, coins = 30, [25, 10, 5]
+        expected = 2  # 25 + 5
+        self.assertEqual(expected, make_change(coins, target))
+    
+    def test_impossible_get_answer(self):
+        target, coins = 4, [3, 5, 7]
+        self.assertIsNone(make_change(coins, target))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
+```
 
 ### Jan 13, 2020 LT 386 \[Medium\] Longest Substring with At Most K Distinct Characters
 ---
