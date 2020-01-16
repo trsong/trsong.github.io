@@ -18,7 +18,14 @@ categories: Python/Java
 
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
-
+### Jan 16, 2020 \[Medium\] Minimum Number of Jumps to Reach End
+---
+> **Question:** You are given an array of integers, where each element represents the maximum number of steps that can be jumped going forward from that element. 
+> 
+> Write a function to return the minimum number of jumps you must take in order to get from the start to the end of the array.
+>
+> For example, given `[6, 2, 4, 0, 5, 1, 1, 4, 2, 9]`, you should return `2`, as the optimal solution involves jumping from `6 to 5`, and then from `5 to 9`.
+ 
 ### Jan 15, 2020 \[Easy\] Rotate Matrix
 ---
 > **Question:**  Given a square 2D matrix (n x n), rotate the matrix by 90 degrees clockwise.
@@ -37,6 +44,81 @@ categories: Python/Java
 [[7, 4, 1],
  [8, 5, 2],
  [9, 6, 3]]
+```
+
+**Solution:** [https://repl.it/@trsong/Rotate-Matrix](https://repl.it/@trsong/Rotate-Matrix)
+```py
+import unittest
+
+def matrix_rotation(matrix):
+    lo = 0
+    hi = len(matrix) - 1
+
+    while lo < hi:
+        for i in xrange(hi-lo):
+            top = matrix[lo][lo+i]
+            # left -> top
+            matrix[lo][lo+i] = matrix[hi-i][lo]
+            # bottom -> left
+            matrix[hi-i][lo] = matrix[hi][hi-i]
+            # right -> bottom
+            matrix[hi][hi-i] = matrix[lo+i][hi]
+            # top -> right
+            matrix[lo+i][hi] = top
+        lo += 1
+        hi -= 1
+    return matrix
+
+
+class MatrixRotationSpec(unittest.TestCase):
+    def test_empty_matrix(self):
+        self.assertEqual([], matrix_rotation([]))
+
+    def test_size_one_matrix(self):
+        self.assertEqual([[1]], matrix_rotation([[1]]))
+
+    def test_size_two_matrix(self):
+        input_matrix = [
+            [1, 2],
+            [3, 4]
+        ]
+        expected_matrix = [
+            [3, 1],
+            [4, 2]
+        ]
+        self.assertEqual(expected_matrix, matrix_rotation(input_matrix))
+
+    def test_size_three_matrix(self):
+        input_matrix = [
+            [1, 2, 3],
+            [4, 5, 6],
+            [7, 8, 9]
+        ]
+        expected_matrix = [
+            [7, 4, 1],
+            [8, 5, 2],
+            [9, 6, 3]
+        ]
+        self.assertEqual(expected_matrix, matrix_rotation(input_matrix))
+
+    def test_size_four_matrix(self):
+        input_matrix = [
+            [1, 2, 3, 4],
+            [5, 6, 7, 8],
+            [9, 10, 11, 12],
+            [13, 14, 15, 16]
+        ]
+        expected_matrix = [
+            [13, 9, 5, 1],
+            [14, 10, 6, 2],
+            [15, 11, 7, 3],
+            [16, 12, 8, 4]
+        ]
+        self.assertEqual(expected_matrix, matrix_rotation(input_matrix))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
 ```
 
 ### Jan 14, 2020 \[Medium\] Making Change
