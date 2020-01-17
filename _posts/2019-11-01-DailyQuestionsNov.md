@@ -18,6 +18,26 @@ categories: Python/Java
 
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
+### Jan 17, 2020 \[Medium\] Lazy Bartender
+---
+> **Question:** At a popular bar, each customer has a set of favorite drinks, and will happily accept any drink among this set. 
+>
+> For example, in the following situation, customer 0 will be satisfied with drinks 0, 1, 3, or 6.
+
+```py
+preferences = {
+    0: [0, 1, 3, 6],
+    1: [1, 4, 7],
+    2: [2, 4, 7, 5],
+    3: [3, 2, 5],
+    4: [5, 8]
+}
+```
+
+> A lazy bartender working at this bar is trying to reduce his effort by limiting the drink recipes he must memorize. Given a dictionary input such as the one above, return the fewest number of drinks he must learn in order to satisfy all customers.
+>
+> For the input above, the answer would be 2, as drinks 1 and 5 will satisfy everyone.
+
 ### Jan 16, 2020 \[Medium\] Minimum Number of Jumps to Reach End
 ---
 > **Question:** You are given an array of integers, where each element represents the maximum number of steps that can be jumped going forward from that element. 
@@ -26,6 +46,135 @@ categories: Python/Java
 >
 > For example, given `[6, 2, 4, 0, 5, 1, 1, 4, 2, 9]`, you should return `2`, as the optimal solution involves jumping from `6 to 5`, and then from `5 to 9`.
  
+**my thoughts:** Altought DP solution is acceptable during interview with `O(n^2)` worst case complexity, there is a better solution with just `O(n)` complexity. The idea is to imagine each index as floors and each `floor + step` as a ladder. So we keep tracking of max ladder found so far and only switch to max ladder when we completely consume previous max ladder. 
+
+**Acceptable DP Solution** [https://repl.it/@trsong/DP-Sol-Minimum-Number-of-Jumps-to-Reach-End](https://repl.it/@trsong/DP-Sol-Minimum-Number-of-Jumps-to-Reach-End)
+```py
+import sys
+
+def min_jump_to_reach_end(steps):
+    if not steps:
+        return None
+
+    n = len(steps)
+    # let dp[i] represents min step required to reach index i
+    # then dp[i] = min(dp[j]+1) for all j reachable from j to i.
+    dp = [sys.maxint] * n
+    dp[0] = 0
+    for i in xrange(1, n):
+        for j in xrange(i):
+            if j + steps[j] >= i:
+                dp[i] = min(dp[i], dp[j]+1)
+    return dp[n-1] if dp[n-1] != sys.maxint else None
+
+```
+
+**Optimal Solution:** [https://repl.it/@trsong/Minimum-Number-of-Jumps-to-Reach-End](https://repl.it/@trsong/Minimum-Number-of-Jumps-to-Reach-End)
+```py
+import unittest
+
+def min_jump_to_reach_end(steps):
+    if not steps:
+        return None
+
+    n = len(steps)
+    num_used_ladder = 0      # total number of ladder used
+    max_ladder = 1           # the longest ladder we are able to hold
+    remain_steps = 1         # the remaining step the ladder has
+
+    for current_floor in xrange(n):
+        if max_ladder < current_floor:
+            # current floor is not reachable
+            return None
+
+        if current_floor == n - 1:
+            # we reached top floor
+            return num_used_ladder
+
+        # a new ladder is found on each floor
+        new_ladder = current_floor + steps[current_floor]
+        if new_ladder > max_ladder:
+            # we take the max ladder found so far
+            max_ladder = new_ladder
+
+        # consume one step from the ladder to reach current floor
+        remain_steps -= 1
+        if remain_steps == 0:
+            # we had used one ladder somewhere, let's switch to next ladder
+            num_used_ladder += 1
+            remain_steps = max_ladder - current_floor
+    
+    return None
+
+
+class MinJumpToReachEndSpec(unittest.TestCase):
+    def test_example(self):
+        steps = [6, 2, 4, 0, 5, 1, 1, 4, 2, 9]
+        expected = 2  # 6 -> 5 -> 9
+        self.assertEqual(expected, min_jump_to_reach_end(steps))
+
+    def test_empty_steps(self):
+        self.assertIsNone(min_jump_to_reach_end([]))
+    
+    def test_trivial_case(self):
+        self.assertEqual(0, min_jump_to_reach_end([0]))
+
+    def test_multiple_ways_to_reach_end(self):
+        steps = [1, 3, 5, 6, 8, 12, 17]
+        expected = 3  # 1 -> 3 -> 5 -> 17
+        self.assertEqual(expected, min_jump_to_reach_end(steps)) 
+
+    def test_should_return_min_step_to_reach_end(self):
+        steps = [1, 3, 5, 8, 9, 2, 6, 7, 6, 8, 9]
+        expected = 3  # 1 -> 3 -> 9 -> 9
+        self.assertEqual(expected, min_jump_to_reach_end(steps))
+
+    def test_should_return_min_step_to_reach_end2(self):
+        steps = [15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16]
+        expected = 4
+        self.assertEqual(expected, min_jump_to_reach_end(steps))
+
+    def test_should_return_min_step_to_reach_end3(self):
+        steps = [1, 3, 6, 3, 2, 3, 6, 8, 9, 5]
+        expected = 4  # 1 -> 3 -> 6 -> 9 -> 5
+        self.assertEqual(expected, min_jump_to_reach_end(steps))
+
+    def test_should_return_min_step_to_reach_end4(self):
+        steps = [1, 3, 6, 1, 0, 9]
+        expected = 3  # 1 -> 3 -> 6 -> 9
+        self.assertEqual(expected, min_jump_to_reach_end(steps))
+
+    def test_unreachable_end(self):
+        steps = [1, -2, -3, 4, 8, 9, 11]
+        self.assertIsNone(min_jump_to_reach_end(steps))
+
+    def test_unreachable_end2(self):
+        steps = [1, 3, 2, -11, 0, 1, 0, 0, -1]
+        self.assertIsNone(min_jump_to_reach_end(steps))
+
+    def test_reachable_end(self):
+        steps = [1, 3, 6, 10]
+        expected = 2  # 1 -> 3 -> 10
+        self.assertEqual(expected, min_jump_to_reach_end(steps))
+
+    def test_stop_in_the_middle(self):
+        steps = [1, 2, 0, 0, 0, 1000, 1000]
+        self.assertIsNone(min_jump_to_reach_end(steps))
+
+    def test_stop_in_the_middle2(self):
+        steps = [2, 1, 0, 9]
+        self.assertIsNone(min_jump_to_reach_end(steps))
+
+    def test_greedy_solution_fails(self):
+        steps = [5, 3, 3, 3, 4, 2, 1, 1, 1]
+        expected = 2  # 5 -> 4 -> 1
+        self.assertEqual(expected, min_jump_to_reach_end(steps))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
+```
+
 ### Jan 15, 2020 \[Easy\] Rotate Matrix
 ---
 > **Question:**  Given a square 2D matrix (n x n), rotate the matrix by 90 degrees clockwise.
