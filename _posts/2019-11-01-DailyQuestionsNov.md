@@ -34,7 +34,9 @@ preferences = {
 }
 ```
 
-> A lazy bartender working at this bar is trying to reduce his effort by limiting the drink recipes he must memorize. Given a dictionary input such as the one above, return the fewest number of drinks he must learn in order to satisfy all customers.
+> A lazy bartender working at this bar is trying to reduce his effort by limiting the drink recipes he must memorize. 
+>
+> Given a dictionary input such as the one above, return the fewest number of drinks he must learn in order to satisfy all customers.
 >
 > For the input above, the answer would be 2, as drinks 1 and 5 will satisfy everyone.
 
@@ -46,7 +48,7 @@ preferences = {
 >
 > For example, given `[6, 2, 4, 0, 5, 1, 1, 4, 2, 9]`, you should return `2`, as the optimal solution involves jumping from `6 to 5`, and then from `5 to 9`.
  
-**my thoughts:** Altought DP solution is acceptable during interview with `O(n^2)` worst case complexity, there is a better solution with just `O(n)` complexity. The idea is to imagine each index as floors and each `floor + step` as a ladder. So we keep tracking of max ladder found so far and only switch to max ladder when we completely consume previous max ladder. 
+**My thoughts:** Altought DP solution is acceptable during interview with `O(n^2)` worst case complexity, there is a better solution with just `O(n)` complexity. The idea is to imagine each index as floors and each `floor + step` as a ladder. So we keep tracking of max ladder found so far and only switch to max ladder when we completely consume previous max ladder. 
 
 **Acceptable DP Solution** [https://repl.it/@trsong/DP-Sol-Minimum-Number-of-Jumps-to-Reach-End](https://repl.it/@trsong/DP-Sol-Minimum-Number-of-Jumps-to-Reach-End)
 ```py
