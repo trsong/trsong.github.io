@@ -18,6 +18,10 @@ categories: Python/Java
 
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
+### Jan 18, 2020 \[Medium\] Sum of Squares
+---
+> **Question:** Given a number n, find the least number of squares needed to sum up to the number. For example, `13 = 3^2 + 2^2`, thus the least number of squares requried is 2. 
+
 ### Jan 17, 2020 \[Medium\] Lazy Bartender
 ---
 > **Question:** At a popular bar, each customer has a set of favorite drinks, and will happily accept any drink among this set. 
@@ -39,6 +43,113 @@ preferences = {
 > Given a dictionary input such as the one above, return the fewest number of drinks he must learn in order to satisfy all customers.
 >
 > For the input above, the answer would be 2, as drinks 1 and 5 will satisfy everyone.
+
+**My thoughts:** This problem is a famous NP-Complete problem: SET-COVER. Therefore no better solution except brutal-force can be applied. Although there exists a log-n approximation algorithm, still that is not optimal.
+
+**Solution with Backtracking:** [https://repl.it/@trsong/Lazy-Bartender](https://repl.it/@trsong/Lazy-Bartender)
+```py
+import unittest
+import sys
+
+def solve_lazy_bartender(preferences):
+    drink_map = {}
+    customer_set = set()
+    for customer, drinks in preferences.items():
+        if drinks:
+            customer_set.add(customer)
+        for drink in drinks:
+            if drink not in drink_map:
+                drink_map[drink] = set()
+            drink_map[drink].add(customer)
+    
+    class Conext:
+        min_drinks = sys.maxint
+
+    def backtrack(selected_drinks, remain_drinks): 
+        target_customers = set()
+        for drink in selected_drinks:
+            for customer in drink_map[drink]:
+                target_customers.add(customer)
+
+        if target_customers == customer_set:
+            Conext.min_drinks = min(Conext.min_drinks, len(selected_drinks))
+        else:
+            for i, drink in enumerate(remain_drinks):
+                new_customers = drink_map[drink]
+                if new_customers.issubset(target_customers):
+                    continue
+                updated_selected_drinks = selected_drinks + [drink]
+                updated_remain_drinks = remain_drinks[:i] + remain_drinks[i+1:]
+                backtrack(updated_selected_drinks, updated_remain_drinks)
+
+    backtrack([], list(drink_map.keys()))
+    return Conext.min_drinks
+    
+
+class SolveLazyBartenderSpec(unittest.TestCase):
+    def test_example(self):
+        preferences = {
+            0: [0, 1, 3, 6],
+            1: [1, 4, 7],
+            2: [2, 4, 7, 5],
+            3: [3, 2, 5],
+            4: [5, 8]
+        }
+        self.assertEqual(2, solve_lazy_bartender(preferences))  # drink 1 and 5 
+
+    def test_empty_preference(self):
+        self.assertEqual(0, solve_lazy_bartender({}))
+    
+    def test_non_alcoholic(self):
+        preferences = {
+            2: [],
+            5: [],
+            7: [10, 100]
+        }
+        self.assertEqual(1, solve_lazy_bartender(preferences))  # 10
+
+    def test_has_duplicated_drinks_in_preference(self):
+        preferences = {
+            0: [3, 7, 5, 2, 9],
+            1: [5],
+            2: [2, 3],
+            3: [4],
+            4: [3, 4, 3, 5, 7, 9]
+        }
+        self.assertEqual(3, solve_lazy_bartender(preferences))  # drink 3, 4 and 5
+
+    def test_should_return_optimal_solution(self):
+        preferences = {
+            1: [1, 3],
+            2: [2, 3],
+            3: [1, 3],
+            4: [1, 3],
+            5: [2]
+        }
+        self.assertEqual(2, solve_lazy_bartender(preferences))  # drink 2, 3
+
+    def test_greedy_solution_not_work(self):
+        preferences = {
+            1: [1, 4],
+            2: [1, 2, 5],
+            3: [2, 4],
+            4: [2, 5],
+            5: [2, 4],
+            6: [3, 5],
+            7: [3, 4],
+            8: [3, 5],
+            9: [3, 4],
+            10: [3, 5],
+            11: [3, 4],
+            12: [3, 5],
+            13: [3, 4, 5]
+        }
+        self.assertEqual(2, solve_lazy_bartender(preferences))  # drink 4, 5
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
+```
 
 ### Jan 16, 2020 \[Medium\] Minimum Number of Jumps to Reach End
 ---
