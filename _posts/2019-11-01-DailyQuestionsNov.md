@@ -18,9 +18,86 @@ categories: Python/Java
 
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
+
+### Jan 19, 2020 \[Medium\] Maze Paths
+---
+> **Question:**  A maze is a matrix where each cell can either be a 0 or 1. A 0 represents that the cell is empty, and a 1 represents a wall that cannot be walked through. You can also only travel either right or down.
+>
+> Given a nxm matrix, find the number of ways someone can go from the top left corner to the bottom right corner. You can assume the two corners will always be 0.
+
+**Example:**
+```py
+Input: [[0, 1, 0], [0, 0, 1], [0, 0, 0]]
+# 0 1 0
+# 0 0 1
+# 0 0 0
+Output: 2
+The two paths that can only be taken in the above example are: down -> right -> down -> right, and down -> down -> right -> right.
+```
+
 ### Jan 18, 2020 \[Medium\] Sum of Squares
 ---
 > **Question:** Given a number n, find the least number of squares needed to sum up to the number. For example, `13 = 3^2 + 2^2`, thus the least number of squares requried is 2. 
+
+**My thoughts:** This problem is equivalent to given a list of sorted square number of 0 to n, find the minimum number of chosen elements st. their sum equal to target. Note that we only need to check 1 to square root of n. 
+
+**Solution with DP:** [https://repl.it/@trsong/Sum-of-Squares](https://repl.it/@trsong/Sum-of-Squares)
+```py
+import unittest
+import math
+import sys
+
+def is_square_number(num):
+    sqrt_num = int(math.sqrt(num))
+    return sqrt_num * sqrt_num == num
+
+
+def sum_of_squares(target):
+    if is_square_number(target):
+        return 1
+
+    sqrt_target = int(math.sqrt(target))
+    # let dp[sum][i] represent min number choosen from 0, ..., i  to square sum to sum
+    # dp[sum][i] = min(dp[sum][i-1], 1 + dp[sum - i*i][i])
+    dp = [[sys.maxint for _ in xrange(sqrt_target+1)] for _ in xrange(target+1)]
+    for i in xrange(sqrt_target+1):
+        dp[0][i] = 0
+
+    for sum in xrange(1, target+1):
+        for i in xrange(1, sqrt_target+1):
+            dp[sum][i] = dp[sum][i-1]
+            if sum >= i*i:
+                dp[sum][i] = min(dp[sum][i], dp[sum - i*i][i] + 1)
+    
+    return dp[target][sqrt_target]
+
+
+class SumOfSquareSpec(unittest.TestCase):        
+    def test_example(self):
+        self.assertEqual(2, sum_of_squares(13))  # return 2 since 13 = 3^2 + 2^2 = 9 + 4.
+
+    def test_example2(self):
+        self.assertEqual(3, sum_of_squares(27))  # return 3 since 27 = 3^2 + 3^2 + 3^2 = 9 + 9 + 9
+
+    def test_zero(self):
+        self.assertEqual(1, sum_of_squares(0)) # 0 = 0^2
+
+    def test_perfect_square(self):
+        self.assertEqual(1, sum_of_squares(100))  # 10^2 = 100
+
+    def test_random_number(self):
+        self.assertEqual(4, sum_of_squares(63))  # return 4 since 63 = 7^2+ 3^2 + 2^2 + 1^2
+
+    def test_random_number2(self):
+        self.assertEqual(3, sum_of_squares(12))  # return 3 since 12 = 4 + 4 + 4
+
+    def test_random_number3(self):
+        self.assertEqual(3, sum_of_squares(6))  # 6 = 2 + 2 + 2
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
+```
 
 ### Jan 17, 2020 \[Medium\] Lazy Bartender
 ---
