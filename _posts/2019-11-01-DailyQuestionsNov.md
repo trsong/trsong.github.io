@@ -18,6 +18,19 @@ categories: Python/Java
 
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
+### Jan 20, 2020 \[Medium\] Fix Brackets
+---
+> **Question:** Given a string with only `(` and `)`, find the minimum number of characters to add or subtract to fix the string such that the brackets are balanced.
+
+**Example:**
+```py
+Input: '(()()'
+Output: 1
+Explanation:
+
+The fixed string could either be ()() by deleting the first bracket, or (()()) by adding a bracket. These are not the only ways of fixing the string, there are many other ways by adding it in different positions!
+```
+
 
 ### Jan 19, 2020 \[Medium\] Maze Paths
 ---
@@ -33,6 +46,108 @@ Input: [[0, 1, 0], [0, 0, 1], [0, 0, 0]]
 # 0 0 0
 Output: 2
 The two paths that can only be taken in the above example are: down -> right -> down -> right, and down -> down -> right -> right.
+```
+
+**Solution with DP:** [https://repl.it/@trsong/Maze-Paths](https://repl.it/@trsong/Maze-Paths)
+```py
+import unittest
+
+def count_maze_path(grid):
+    if not grid or not grid[0]:
+        return 0
+    
+    n, m = len(grid), len(grid[0])
+    # Let dp[r][c] represents number of ways to reach cell (r, c)
+    # then dp[r][c] = dp[r-1][c] + dp[r][c-1]
+    dp = [[0 for _ in xrange(m)] for _ in xrange(n)]
+    for c in xrange(m):
+        if grid[0][c] == 1:
+            break
+        dp[0][c] = 1
+    
+    for r in xrange(n):
+        if grid[r][0] == 1:
+            break
+        dp[r][0] = 1
+    
+    for r in xrange(1, n):
+        for c in xrange(1, m):
+            if grid[r][c] != 1:
+                dp[r][c] = dp[r-1][c] + dp[r][c-1]
+
+    return dp[n-1][m-1]
+
+
+class CountMazePathSpec(unittest.TestCase):
+    def test_example(self):
+        grid = [
+            [0, 1, 0],
+            [0, 0, 1],
+            [0, 0, 0]
+        ]
+        self.assertEqual(2, count_maze_path(grid))
+    
+    def test_one_cell_grid(self):
+        self.assertEqual(1, count_maze_path([[0]]))
+
+    def test_4x4_grid(self):
+        grid = [
+            [0, 0, 0, 0],
+            [0, 1, 0, 0],
+            [1, 0, 0, 0],
+            [0, 0, 0, 0]
+        ]
+        self.assertEqual(4, count_maze_path(grid))
+
+    def test_4x4_grid2(self):
+        grid = [
+            [0, 0, 0, 0],
+            [0, 0, 0, 0],
+            [1, 0, 0, 0],
+            [1, 0, 0, 0]
+        ]
+        self.assertEqual(16, count_maze_path(grid))
+    
+    def test_non_square_grid(self):
+        grid = [
+            [0, 0],
+            [1, 0],
+            [0, 0],
+            [0, 0]
+        ]
+        self.assertEqual(1, count_maze_path(grid))
+
+    def test_alternative_path_exists(self):
+        grid = [
+            [0, 0, 0, 0, 0],
+            [0, 0, 0, 1, 0],
+            [1, 0, 0, 0, 0],
+            [0, 0, 1, 0, 0],
+            [0, 0, 0, 0, 0]
+        ]
+        self.assertEqual(18, count_maze_path(grid))
+    
+    def test_all_paths_are_blocked(self):
+        grid = [
+            [0, 0, 0, 0, 0],
+            [0, 0, 0, 1, 0],
+            [1, 0, 0, 1, 0],
+            [0, 1, 1, 0, 1],
+            [0, 0, 0, 0, 0]
+        ]
+        self.assertEqual(0, count_maze_path(grid))
+
+    def test_no_obstacles(self):
+        grid = [
+            [0, 0, 0],
+            [0, 0, 0],
+            [0, 0, 0]
+        ]
+        self.assertEqual(6, count_maze_path(grid))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
 ```
 
 ### Jan 18, 2020 \[Medium\] Sum of Squares
