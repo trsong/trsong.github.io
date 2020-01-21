@@ -18,6 +18,18 @@ categories: Python/Java
 
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
+### Jan 21, 2020 \[Medium\] Bloom Filter
+---
+> **Question:**  Implement a data structure which carries out the following operations without resizing the underlying array:
+>
+> - `add(value)`: Add a value to the set of values.
+> - `check(value)`: Check whether a value is in the set.
+>
+> **Note:** The check method may return occasional false positives (in other words, incorrectly identifying an element as part of the set), but should always correctly identify a true element. In other words, a query returns either "possibly in set" or "definitely not in set."
+>
+> **Background:** Suppose you are creating an account on a website, you want to enter a cool username, you entered it and got a message, “Username is already taken”. You added your birth date along username, still no luck. Now you have added your university roll number also, still got “Username is already taken”. It’s really frustrating, isn’t it?
+But have you ever thought how quickly the website check availability of username by searching millions of username registered with it. That is exactly when above data structure comes into play.
+
 ### Jan 20, 2020 \[Medium\] Fix Brackets
 ---
 > **Question:** Given a string with only `(` and `)`, find the minimum number of characters to add or subtract to fix the string such that the brackets are balanced.
@@ -31,6 +43,68 @@ Explanation:
 The fixed string could either be ()() by deleting the first bracket, or (()()) by adding a bracket. These are not the only ways of fixing the string, there are many other ways by adding it in different positions!
 ```
 
+**Solution:** [https://repl.it/@trsong/Fix-Brackets](https://repl.it/@trsong/Fix-Brackets)
+```py
+import unittest
+
+def fix_brackets(brackets):
+    balance = 0
+    invalid = 0
+    for c in brackets:
+        if c == '(':
+            balance += 1
+        else:
+            balance -= 1
+        
+        if balance < 0:
+            balance = 0
+            invalid += 1
+    return balance + invalid
+
+
+class FixBracketSpec(unittest.TestCase):
+    def test_example(self):
+        brackets = '(()()'
+        expected = 1  # (()())
+        self.assertEqual(expected, fix_brackets(brackets))
+
+    def test_empty_string(self):
+        self.assertEqual(0, fix_brackets(''))
+
+    def test_balanced_brackets(self):
+        brackets = '()(())'
+        expected = 0
+        self.assertEqual(expected, fix_brackets(brackets))
+
+    def test_balanced_brackets2(self):
+        brackets = '((()())())(())()'
+        expected = 0
+        self.assertEqual(expected, fix_brackets(brackets))
+    
+    def test_remove_brackets_to_balance(self):
+        brackets = '((())))'
+        expected = 1  # (((())))
+        self.assertEqual(expected, fix_brackets(brackets))
+    
+    def test_remove_brackets_to_balance2(self):
+        brackets = '()())()'
+        expected = 1  # (((())))
+        self.assertEqual(expected, fix_brackets(brackets))        
+
+    def test_remove_and_append(self):
+        brackets = ')()('
+        expected = 2  # ()()
+        self.assertEqual(expected, fix_brackets(brackets))        
+
+    def test_without_close_brackets(self):
+        brackets = '((('
+        expected = 3  # ((()))
+        self.assertEqual(expected, fix_brackets(brackets))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
+```
 
 ### Jan 19, 2020 \[Medium\] Maze Paths
 ---
