@@ -18,6 +18,10 @@ categories: Python/Java
 
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
+### Jan 22, 2020 \[Hard\] Queens on a chessboard 
+---
+> **Question:**  You have an N by N board. Write a function that, given N, returns the number of possible arrangements of the board where N queens can be placed on the board without threatening each other, i.e. no two queens share the same row, column, or diagonal.
+
 ### Jan 21, 2020 \[Medium\] Bloom Filter
 ---
 > **Question:**  Implement a data structure which carries out the following operations without resizing the underlying array:
@@ -29,6 +33,68 @@ categories: Python/Java
 >
 > **Background:** Suppose you are creating an account on a website, you want to enter a cool username, you entered it and got a message, “Username is already taken”. You added your birth date along username, still no luck. Now you have added your university roll number also, still got “Username is already taken”. It’s really frustrating, isn’t it?
 But have you ever thought how quickly the website check availability of username by searching millions of username registered with it. That is exactly when above data structure comes into play.
+
+**My thoughts:** ***Bloom Filter*** is a data structure features fast and space-efficient element checking. Basically what it does is to take advantage of multiple hash functions and use result to set corresponding bit to 1. The reason it might work is because same input will generate exactlly same hash result, however that is not the case for input we haven't seen before. So each time when we test whether an element was previously set or not, we use need to test if all the bit set by hash functions are set. 
+
+**Solution:** [https://repl.it/@trsong/Bloom-Filter](https://repl.it/@trsong/Bloom-Filter)
+```py
+import unittest
+
+class BloomFilter(object):
+    def __init__(self, capacity, hash_functions):
+        self.vector = 0
+        self.capacity = capacity
+        self.hash_functions = hash_functions
+    
+    def __repr__(self):
+        return bin(self.vector)
+    
+    def add(self, value):
+        for func in self.hash_functions:
+            hash_index = func(value) % self.capacity
+            flag = 1 << hash_index
+            self.vector |= flag
+    
+    def check(self, value):
+        for func in self.hash_functions:
+            hash_index = func(value) % self.capacity
+            flag = 1 << hash_index
+            if not self.vector & flag:
+                return False
+        return True
+
+
+class BloomFilterSpec(unittest.TestCase):
+    @staticmethod
+    def hash_f(x):
+        import hashlib
+        h = hashlib.sha256(x) # we'll use sha256 for hash function
+        return int(h.hexdigest(),base=16)
+
+    def test_construct_object(self):
+        self.assertIsNotNone(BloomFilter(0, [lambda x: x]))
+
+    def test_add_and_check_value(self):
+        p2, p3 = 17, 29
+        hash_func = lambda x: BloomFilterSpec.hash_f(str(x))
+        hash_func2 = lambda x: hash_func(x) * p2
+        hash_func3 = lambda x: hash_func(x) * p3 * p3
+        hash_funcs = [hash_func, hash_func2, hash_func3]
+        bf = BloomFilter(256, hash_funcs)
+        s1 = "spam1@gmail.com"
+        s2 = "spam2@gmail.com"
+        s3 = "valid@validemail.com"
+        self.assertFalse(bf.check(s1))
+        bf.add(s1)
+        bf.add(s2)
+        self.assertTrue(bf.check(s1))
+        self.assertTrue(bf.check(s2))
+        self.assertFalse(bf.check(s3))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
+````
 
 ### Jan 20, 2020 \[Medium\] Fix Brackets
 ---
