@@ -65,19 +65,22 @@ def solve_n_queen(n):
     
     
 class SolveNQueenSpec(unittest.TestCase):
-	def test_one_queen(self):
-		self.assertEqual(solve_n_queen(1), 1)
-		
-	def test_two_three_queen(self):
-		self.assertEqual(solve_n_queen(2), 0)
-		self.assertEqual(solve_n_queen(3), 0)
-		
-	def test_four_queen(self):
-		self.assertEqual(solve_n_queen(4), 2)
-		
-	def test_eight_queen(self):
-		self.assertEqual(solve_n_queen(8), 92)
-		
+    def test_one_queen(self):
+        self.assertEqual(1, solve_n_queen(1))
+    
+    def test_two_three_queen(self):
+        self.assertEqual(0, solve_n_queen(2))
+
+    def test_three_queens(self):
+        self.assertEqual(0, solve_n_queen(3))
+        
+    def test_four_queen(self):
+        self.assertEqual(2, solve_n_queen(4))
+        
+    def test_eight_queen(self):
+		self.assertEqual(92, solve_n_queen(8))
+
+
 if __name__ == "__main__":
 	unittest.main(exit=False)
 ```
