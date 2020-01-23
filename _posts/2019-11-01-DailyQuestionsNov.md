@@ -18,9 +18,69 @@ categories: Python/Java
 
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
-### Jan 22, 2020 \[Hard\] Queens on a chessboard 
+### Jan 23, 2020 \[Easy\] Remove Duplicate from Linked List
+---
+> **Question:** Given a sorted linked list of integers, remove all the duplicate elements in the linked list so that all elements in the linked list are unique.
+
+
+### Jan 22, 2020 \[Hard\] Queens on A Chessboard 
 ---
 > **Question:**  You have an N by N board. Write a function that, given N, returns the number of possible arrangements of the board where N queens can be placed on the board without threatening each other, i.e. no two queens share the same row, column, or diagonal.
+
+**My thoughts:** Solve the N Queen Problem with Backtracking: place each queen on different columns one by one and test different rows. Mark previous chosen rows and diagonals.
+
+**Solution with Backtracking:** [https://repl.it/@trsong/N-Queens-Problem](https://repl.it/@trsong/N-Queens-Problem)
+```py
+import unittest
+
+def solve_n_queen(n):
+    class Context:
+        result = 0
+        visited_row = [False] * n
+        # row_plus_col and row_minus_col are used to mark chosen diagnoal
+        visited_row_plus_col = [False] * (2*n)
+        visited_row_minus_col = [False] * (2*n)
+
+    def backtrack(col):
+        if col >= n:
+            Context.result += 1
+        else:
+            for row in xrange(n):
+                row_plus_col = row + col
+                row_minus_col = row - col
+                is_visited_row = Context.visited_row[row]
+                is_visited_minor_diagonal = Context.visited_row_plus_col[row_plus_col]
+                is_visited_major_diagonal = Context.visited_row_minus_col[row_minus_col]
+                if not is_visited_row and not is_visited_major_diagonal and not is_visited_minor_diagonal:
+                    Context.visited_row[row] = True
+                    Context.visited_row_plus_col[row_plus_col] = True
+                    Context.visited_row_minus_col[row_minus_col] = True
+                    backtrack(col+1)
+                    Context.visited_row[row] = False
+                    Context.visited_row_plus_col[row_plus_col] = False
+                    Context.visited_row_minus_col[row_minus_col] = False
+
+    backtrack(0)
+    return Context.result
+    
+    
+class SolveNQueenSpec(unittest.TestCase):
+	def test_one_queen(self):
+		self.assertEqual(solve_n_queen(1), 1)
+		
+	def test_two_three_queen(self):
+		self.assertEqual(solve_n_queen(2), 0)
+		self.assertEqual(solve_n_queen(3), 0)
+		
+	def test_four_queen(self):
+		self.assertEqual(solve_n_queen(4), 2)
+		
+	def test_eight_queen(self):
+		self.assertEqual(solve_n_queen(8), 92)
+		
+if __name__ == "__main__":
+	unittest.main(exit=False)
+```
 
 ### Jan 21, 2020 \[Medium\] Bloom Filter
 ---
