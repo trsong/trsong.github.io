@@ -76,9 +76,9 @@ class SolveNQueenSpec(unittest.TestCase):
         
     def test_four_queen(self):
         self.assertEqual(2, solve_n_queen(4))
-        
+    
     def test_eight_queen(self):
-		self.assertEqual(92, solve_n_queen(8))
+        self.assertEqual(92, solve_n_queen(8))
 
 
 if __name__ == "__main__":
