@@ -18,7 +18,7 @@ categories: Python/Java
 
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
-### Jan 26, 2020 \[Medium\] Shortest Unique Prefix
+### Jan 26, 2020 \[Medium\] Remove List Nodes Sum to Zero
 ---
 > **Question:** Given a linked list, remove all consecutive nodes that sum to zero. Return the remaining nodes.
 >
