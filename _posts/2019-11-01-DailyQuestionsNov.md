@@ -18,15 +18,130 @@ categories: Python/Java
 
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
+### Jan 26, 2020 \[Medium\] Shortest Unique Prefix
+---
+> **Question:** Given a linked list, remove all consecutive nodes that sum to zero. Return the remaining nodes.
+>
+> For example, suppose you are given the input `3 -> 4 -> -7 -> 5 -> -6 -> 6`. In this case, you should first remove `3 -> 4 -> -7`, then `-6 -> 6`, leaving only `5`.
+
 ### Jan 25, 2020 \[Medium\] Shortest Unique Prefix
 ---
 > **Question:** Given an array of words, find all shortest unique prefixes to represent each word in the given array. Assume that no word is prefix of another.
 
 **Example:**
 ```py
-Input: ['joma', 'john', 'jack', 'techlead']
-Output: ['jom', 'joh', 'ja', 't']
+Input: ['zebra', 'dog', 'duck', 'dove']
+Output: ['z', 'dog', 'du', 'dov']
+Explanation: dog => dog
+             dove = dov 
+             duck = du
+             z   => zebra 
 ```
+
+**My thoughts:** Most string prefix searching problem can be solved using Trie (Prefix Tree). A trie is a N-nary tree with each edge represent a char. Each node will have two attribues: is_end and count, representing if a word is end at this node and how many words share same prefix so far separately. 
+
+The given example will generate the following trie:
+```py
+The number inside each parenthsis represents how many words share the same prefix underneath.
+
+             ""(4)
+         /  |    |   \  
+      d(1) c(1) a(2) f(1)
+     /      |    |      \
+   o(1)    a(1) p(2)   i(1)
+  /         |    |  \     \
+g(1)       t(1) p(1) r(1) s(1)
+                 |    |    |
+                l(1) i(1) h(1)
+                 |    |
+                e(1) c(1)
+                      |
+                     o(1)
+                      |
+                     t(1)
+```
+Our goal is to find a path for each word from root to the first node that has count equals 1, above example gives: `d, c, app, apr, f`
+
+**Solution with Trie:** [https://repl.it/@trsong/Shortest-Unique-Prefix](https://repl.it/@trsong/Shortest-Unique-Prefix)
+```py
+import unittest
+
+class Trie(object):
+    TRIE_SIZE = 26
+
+    def __init__(self):
+        self.children = []
+        self.count = 0
+    
+    def insert(self, word):
+        if not word: return
+        t = self
+        for ch in word:
+            ord_ch = ord(ch) - ord('a')
+            if not t.children:
+                t.children = [None] * Trie.TRIE_SIZE
+            
+            if not t.children[ord_ch]:
+                t.children[ord_ch] = Trie()
+
+            t = t.children[ord_ch]
+            t.count += 1
+
+    def find_prefix(self, word):
+        prefix_end = 0
+        t = self
+        for ch in word:
+            ord_ch =  ord(ch) - ord('a')
+            prefix_end += 1
+            t = t.children[ord_ch]
+            if t.count == 1:
+                break
+        return word[:prefix_end]
+
+
+def shortest_unique_prefix(words):
+    trie = Trie()
+    for word in words:
+        trie.insert(word)
+    return map(trie.find_prefix, words)
+
+
+class UniquePrefixSpec(unittest.TestCase):
+    def test_example(self):
+        words = ['zebra', 'dog', 'duck', 'dove']
+        expected = ['z', 'dog', 'du', 'dov']
+        self.assertEqual(expected, shortest_unique_prefix(words))
+    
+    def test_example2(self):
+        words = ['dog', 'cat', 'apple', 'apricot', 'fish']
+        expected = ['d', 'c', 'app', 'apr', 'f']
+        self.assertEqual(expected, shortest_unique_prefix(words))
+    
+    def test_empty_word(self):
+        words = ['', 'alpha', 'aztec']
+        expected = ['', 'al', 'az']
+        self.assertEqual(expected, shortest_unique_prefix(words))
+
+    def test_prefix_overlapp_with_each_other(self):
+        words = ['abc', 'abd', 'abe', 'abf', 'abg']
+        expected = ['abc', 'abd', 'abe', 'abf', 'abg']
+        self.assertEqual(expected, shortest_unique_prefix(words))
+    
+    def test_only_entire_word_is_shortest_unique_prefix(self):
+        words = ['greek', 'greedisbad', 'greedisgood', 'greeting']
+        expected = ['greek', 'greedisb', 'greedisg', 'greet']
+        self.assertEqual(expected, shortest_unique_prefix(words))
+
+    def test_unique_prefix_is_not_empty_string(self):
+        words = ['naturalwonders']
+        expected = ['n']
+        self.assertEqual(expected, shortest_unique_prefix(words))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
+```
+
 
 ### Jan 24, 2020 \[Easy\] Level of tree with Maximum Sum
 ---
