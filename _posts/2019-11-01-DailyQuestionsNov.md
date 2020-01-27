@@ -18,11 +18,129 @@ categories: Python/Java
 
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
+
+### Jan 27, 2020 \[Medium\] Split a Binary Search Tree
+---
+> **Question:** Given a binary search tree (BST) and a value s, split the BST into 2 trees, where one tree has all values less than or equal to s, and the other tree has all values greater than s while maintaining the tree structure of the original BST. You can assume that s will be one of the node's value in the BST. Return both tree's root node as a tuple.
+
+**Example:**
+```py
+Given the following tree, and s = 2
+     3
+   /   \
+  1     4
+   \     \
+    2     5
+
+Split into two trees:
+ 1    And   3
+  \          \
+   2          4
+               \
+                5
+```
+
 ### Jan 26, 2020 \[Medium\] Remove List Nodes Sum to Zero
 ---
 > **Question:** Given a linked list, remove all consecutive nodes that sum to zero. Return the remaining nodes.
 >
 > For example, suppose you are given the input `3 -> 4 -> -7 -> 5 -> -6 -> 6`. In this case, you should first remove `3 -> 4 -> -7`, then `-6 -> 6`, leaving only `5`.
+
+**My thoughts:** This question is just the list version of [Contiguous Sum to K](https://trsong.github.io/python/java/2019/05/01/DailyQuestions/#jul-24-2019-medium-contiguous-sum-to-k). The idea is exactly the same, in previous question: `sum[i:j]` can be achieved use `prefix[j] - prefix[i-1] where i <= j`, whereas for this question, we can use map to store the "prefix" sum: the sum from the head node all the way to current node. And by checking the prefix so far, we can easily tell if there is a node we should have seen before that has "prefix" sum with same value. i.e. There are consecutive nodes that sum to 0 between these two nodes.
+
+**Solution with Prefix Sum:** [https://repl.it/@trsong/Remove-List-Nodes-Sum-to-Zero](https://repl.it/@trsong/Remove-List-Nodes-Sum-to-Zero)
+```py
+import unittest
+
+def remove_zero_sum_sublists(head):
+    if not head:
+        return None
+    
+    dummy = ListNode(-1, head)
+    prefix_sum = {0: dummy}
+    sum_so_far = 0
+    p = head
+    while p:
+        sum_so_far += p.val
+        if sum_so_far not in prefix_sum:
+            prefix_sum[sum_so_far] = p
+        else:
+            t = prefix_sum[sum_so_far].next
+            sum_to_remove = sum_so_far
+            while t != p:
+                sum_to_remove += t.val
+                del prefix_sum[sum_to_remove]
+                t = t.next
+            prefix_sum[sum_so_far].next = p.next
+        p = p.next
+    return dummy.next
+
+
+###################
+# Testing Utilities
+###################
+class ListNode(object):
+    def __init__(self, val, next=None):
+        self.val = val
+        self.next = next
+
+    def __eq__(self, other):
+        res = str(self) == str(other)
+        if not res:
+            print str(self), '!=' , str(other)
+        return res
+
+    def __str__(self):
+        current_node = self
+        result = []
+        while current_node:
+            result.append(current_node.val)
+            current_node = current_node.next
+        return str(result)
+
+    @staticmethod  
+    def List(*vals):
+        dummy = ListNode(-1)
+        p = dummy
+        for elem in vals:
+            p.next = ListNode(elem)
+            p = p.next
+        return dummy.next  
+
+
+class RemoveZeroSumSublistSpec(unittest.TestCase):
+    def test_example(self):
+        self.assertEqual(ListNode.List(5), remove_zero_sum_sublists(ListNode.List(3, 4, -7, 5, -6, 6)))
+
+    def test_example1(self):
+        self.assertEqual(ListNode.List(10), remove_zero_sum_sublists(ListNode.List(10, 5, -3, -3, 1, 4, -4)))
+
+    def test_example2(self):
+        self.assertEqual(ListNode.List(3, 1), remove_zero_sum_sublists(ListNode.List(1, 2, -3, 3, 1)))
+
+    def test_example3(self):
+        self.assertEqual(ListNode.List(1, 2, 4), remove_zero_sum_sublists(ListNode.List(1, 2, 3, -3, 4)))
+
+    def test_example4(self):
+        self.assertEqual(ListNode.List(1), remove_zero_sum_sublists(ListNode.List(1, 2, 3, -3, -2)))
+
+    def test_empty_list(self):
+        self.assertEqual(ListNode.List(), remove_zero_sum_sublists(ListNode.List()))
+
+    def test_all_zero_list(self):
+        self.assertEqual(ListNode.List(), remove_zero_sum_sublists(ListNode.List(0, 0, 0)))
+
+    def test_add_up_to_zero_list(self):
+        self.assertEqual(ListNode.List(), remove_zero_sum_sublists(ListNode.List(1, -1, 0, -1, 1)))
+
+    def test_overlap_section_add_to_zero(self):
+        self.assertEqual(ListNode.List(1, 5, -1, -2, 99), remove_zero_sum_sublists(ListNode.List(1, -1, 2, 3, 0, -3, -2, 1, 5, -1, -2, 99)))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
+```
+
 
 ### Jan 25, 2020 \[Medium\] Shortest Unique Prefix
 ---
