@@ -19,6 +19,42 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
 
+### Jan 28, 2020 LC 652 \[Medium\] Find Duplicate Subtrees
+---
+> **Question:** Given a binary tree, find all duplicate subtrees (subtrees with the same value and same structure) and return them as a list of list `[subtree1, subtree2, ...]` where `subtree1` is a duplicate of `subtree2` etc.
+
+**Example1:**
+```py
+Given the following tree:
+     1
+    / \
+   2   2
+  /   /
+ 3   3
+
+The duplicate subtrees are 
+  2
+ /    And  3
+3
+```
+
+**Example2:**
+```py
+Given the following tree:
+        1
+       / \
+      2   3
+     /   / \
+    4   2   4
+       /
+      4
+      
+The duplicate subtrees are 
+      2
+     /  And  4
+    4
+```
+
 ### Jan 27, 2020 \[Medium\] Split a Binary Search Tree
 ---
 > **Question:** Given a binary search tree (BST) and a value s, split the BST into 2 trees, where one tree has all values less than or equal to s, and the other tree has all values greater than s while maintaining the tree structure of the original BST. You can assume that s will be one of the node's value in the BST. Return both tree's root node as a tuple.
@@ -38,6 +74,138 @@ Split into two trees:
    2          4
                \
                 5
+```
+
+
+**Solution with Recursion:** [https://repl.it/@trsong/Split-a-Binary-Search-Tree](https://repl.it/@trsong/Split-a-Binary-Search-Tree)
+```py
+import unittest
+
+def split_bst(tree, s):
+    if not tree:
+        return None, None
+    
+    if tree.val <= s:
+        left_res, right_res = split_bst(tree.right, s)
+        tree.right = left_res
+        return tree, right_res
+    else:
+        left_res, right_res = split_bst(tree.left, s)
+        tree.left = right_res
+        return left_res, tree
+
+
+###################
+# Testing Utilities
+###################
+class TreeNode(object):
+    def __init__(self, val, left=None, right=None):
+        self.val = val
+        self.left = left
+        self.right = right
+
+    def __eq__(self, other):
+        return (other and
+         other.val == self.val and
+         other.left == self.left and
+         other.right == self.right)
+
+
+class SplitTreeSpec(unittest.TestCase):
+    def test_example(self):
+        """
+             3
+           /   \
+          1     4
+           \     \
+            2     5
+
+        Split into:
+         1    And   3
+          \          \
+           2          4
+                       \
+                        5
+        """
+        original_left = TreeNode(1, right=TreeNode(2))
+        original_right = TreeNode(4, right=TreeNode(5))
+        original_tree = TreeNode(3, original_left, original_right)
+
+        split_tree1 = TreeNode(1, right=TreeNode(2))
+        split_tree2 = TreeNode(3, right=TreeNode(4, right=TreeNode(5)))
+        expected = (split_tree1, split_tree2)
+        self.assertEqual(expected, split_bst(original_tree, s=2)) 
+
+    def test_empty_tree(self):
+        self.assertEqual((None, None), split_bst(None, 42))
+
+    def test_split_one_tree_into_empty(self):
+        """
+          2
+         / \
+        1   3 
+        """
+        
+        original_tree = TreeNode(2, TreeNode(1), TreeNode(3))
+        split_tree = TreeNode(2, TreeNode(1), TreeNode(3))
+        self.assertEqual((split_tree, None), split_bst(original_tree, s=3)) 
+        self.assertEqual((None, split_tree), split_bst(original_tree, s=0))
+
+    def test_split_tree_change_original_tree_layout(self):
+        """
+             4
+           /  \
+          2     6
+         / \   / \
+        1   3 5   7
+        
+        Split into:
+                 4
+                /  \
+          2    3    6
+         /         / \
+        1         5   7      
+        """
+
+        original_left = TreeNode(2, TreeNode(1), TreeNode(3))
+        original_right = TreeNode(6, TreeNode(5), TreeNode(7))
+        original_tree = TreeNode(4, original_left, original_right)
+
+        split_tree1 = TreeNode(2, TreeNode(1))
+        split_tree2_right = TreeNode(6, TreeNode(5), TreeNode(7))
+        split_tree2 = TreeNode(4, TreeNode(3), split_tree2_right)
+        expected = (split_tree1, split_tree2)
+        self.assertEqual(expected, split_bst(original_tree, s=2)) 
+
+    def test_split_tree_change_original_tree_layout2(self):
+        """
+             4
+           /  \
+          2     6
+         / \   / \
+        1   3 5   7
+        
+        Split into:
+             4
+           /  \
+          2    5    6
+         / \         \
+        1   3         7     
+        """
+
+        original_left = TreeNode(2, TreeNode(1), TreeNode(3))
+        original_right = TreeNode(6, TreeNode(5), TreeNode(7))
+        original_tree = TreeNode(4, original_left, original_right)
+
+        split_tree1_left = TreeNode(2, TreeNode(1), TreeNode(3))
+        split_tree1 = TreeNode(4, split_tree1_left, TreeNode(5))
+        split_tree2 = TreeNode(6, right=TreeNode(7))
+        expected = (split_tree1, split_tree2)
+        self.assertEqual(expected, split_bst(original_tree, s=5)) 
+        
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
 ```
 
 ### Jan 26, 2020 \[Medium\] Remove List Nodes Sum to Zero
