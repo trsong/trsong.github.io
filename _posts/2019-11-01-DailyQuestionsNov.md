@@ -18,6 +18,14 @@ categories: Python/Java
 
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
+### Jan 29, 2020 \[Medium\] K Closest Elements
+---
+> **Question:** Given a list of sorted numbers, and two integers `k` and `x`, find `k` closest numbers to the pivot `x`.
+
+**Example:**
+```py
+closest_nums([1, 3, 7, 8, 9], 3, 5)  # gives [7, 3, 8]
+```
 
 ### Jan 28, 2020 LC 652 \[Medium\] Find Duplicate Subtrees
 ---
