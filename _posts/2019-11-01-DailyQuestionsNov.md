@@ -63,6 +63,145 @@ The duplicate subtrees are
     4
 ```
 
+**Solution with Hash Post-order Traversal:** [https://repl.it/@trsong/Find-Duplicate-Subtrees](https://repl.it/@trsong/Find-Duplicate-Subtrees)
+```py
+import unittest
+import hashlib 
+
+def hash(msg):
+    result = hashlib.sha256(msg.encode())
+    return result.hexdigest()
+
+def find_duplicate_subtree(tree):
+    frequency_map = {}
+    res = []
+    
+    def traverse(node):
+        if not node:
+            return hash('#')
+        left_hash = traverse(node.left)
+        right_hash = traverse(node.right)
+        hash_key = hash(left_hash + hash(str(node.val)) + right_hash)
+        frequency_map[hash_key] = frequency_map.get(hash_key, 0) + 1
+        if frequency_map[hash_key] == 2:
+            res.append(node)
+        return hash_key
+    
+    traverse(tree)
+    return res
+
+
+###################
+# Testing Utilities
+###################
+class TreeNode(object):
+    def __init__(self, val, left=None, right=None):
+        self.val = val
+        self.left = left
+        self.right = right
+
+    def __eq__(self, other):
+        return (other and
+         other.val == self.val and
+         other.left == self.left and
+         other.right == self.right)
+
+
+class FindDuplicateSubtreeSpec(unittest.TestCase):
+    def assert_result(self, expected, result):
+        self.assertEqual(len(expected), len(result))
+        for item in expected:
+            self.assertIn(item, result)
+
+    def test_example(self):
+        """
+        Given the following tree:
+             1
+            / \
+           2   2
+          /   /
+         3   3
+
+        The duplicate subtrees are 
+          2
+         /    And  3
+        3
+        """
+        left_tree = TreeNode(2, TreeNode(3))
+        right_tree = TreeNode(2, TreeNode(3))
+        tree = TreeNode(1, left_tree, right_tree)
+
+        duplicate_tree1 = TreeNode(2, TreeNode(3))
+        duplicate_tree2 = TreeNode(3)
+        expected = [duplicate_tree1, duplicate_tree2]
+        self.assert_result(expected, find_duplicate_subtree(tree))
+
+    def test_example2(self):
+        """
+        Given the following tree:
+                1
+               / \
+              2   3
+             /   / \
+            4   2   4
+               /
+              4
+        The duplicate subtrees are 
+          2
+         /    And  4
+        4
+        """
+        left_tree = TreeNode(2, TreeNode(4))
+        right_tree = TreeNode(3, TreeNode(2, TreeNode(4)), TreeNode(4))
+        tree = TreeNode(1, left_tree, right_tree)
+
+        duplicate_tree1 = TreeNode(2, TreeNode(4))
+        duplicate_tree2 = TreeNode(4)
+        expected = [duplicate_tree1, duplicate_tree2]
+        self.assert_result(expected, find_duplicate_subtree(tree))
+
+    def test_empty_tree(self):
+        self.assertEqual([], find_duplicate_subtree(None))
+
+    def test_all_value_are_equal1(self):
+        """
+             1
+           /   \
+          1     1
+         / \   / \
+        1   1 1   1
+        """
+        left_tree = TreeNode(1, TreeNode(1), TreeNode(1))
+        right_tree = TreeNode(1, TreeNode(1), TreeNode(1))
+        tree = TreeNode(1, left_tree, right_tree)
+
+        duplicate_tree1 = TreeNode(1, TreeNode(1), TreeNode(1))
+        duplicate_tree2 = TreeNode(1)
+        expected = [duplicate_tree1, duplicate_tree2]
+        self.assert_result(expected, find_duplicate_subtree(tree))
+
+    def test_all_value_are_equal2(self):
+        """
+           1
+          / \
+         1   1
+              \
+               1
+              /
+             1
+        """
+        right_tree = TreeNode(1, right=TreeNode(1, TreeNode(1)))
+        tree = TreeNode(1, TreeNode(1), right_tree)
+
+        duplicate_tree = TreeNode(1)
+        expected = [duplicate_tree]
+        self.assert_result(expected, find_duplicate_subtree(tree))
+        
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
+```
+
 ### Jan 27, 2020 \[Medium\] Split a Binary Search Tree
 ---
 > **Question:** Given a binary search tree (BST) and a value s, split the BST into 2 trees, where one tree has all values less than or equal to s, and the other tree has all values greater than s while maintaining the tree structure of the original BST. You can assume that s will be one of the node's value in the BST. Return both tree's root node as a tuple.
