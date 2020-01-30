@@ -18,6 +18,27 @@ categories: Python/Java
 
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
+### Jan 30, 2020 \[Easy\] Count Total Set Bits from 1 to n
+---
+> **Question:** Write an algorithm that finds the total number of set bits in all integers between 1 and N.
+
+**Examples:**
+```py
+Input: n = 3  
+Output:  4
+Explanation: The binary representation (01, 10, 11) contains 4 1's.
+
+Input: n = 6
+Output: 9
+Explanation: The binary representation (01, 10, 11, 100, 101, 110) contains 9 1's.
+
+Input: n = 7
+Output: 12
+
+Input: n = 8
+Output: 13
+```
+
 ### Jan 29, 2020 \[Medium\] K Closest Elements
 ---
 > **Question:** Given a list of sorted numbers, and two integers `k` and `x`, find `k` closest numbers to the pivot `x`.
@@ -25,6 +46,81 @@ categories: Python/Java
 **Example:**
 ```py
 closest_nums([1, 3, 7, 8, 9], 3, 5)  # gives [7, 3, 8]
+```
+
+**My thoughts:** As the given list is sorted, we can use binary search to find the break even point where we can then further retrieve number from either side until get k numbers.
+
+**Solution with Binary Search:** [https://repl.it/@trsong/K-Closest-Elements](https://repl.it/@trsong/K-Closest-Elements)
+```py
+import unittest
+
+def closest_nums(nums, k, x):
+    if k >= len(nums):
+        return nums
+    
+    end = binary_search(nums, x)
+    start = end - 1
+    res = []
+    n = len(nums)
+    for _ in xrange(k):
+        if start < 0 or end < n and nums[end] - x < x - nums[start]:
+            res.append(nums[end])
+            end += 1
+        else:
+            res.append(nums[start])
+            start -= 1
+    return res
+
+
+def binary_search(nums, target):
+    lo = 0
+    hi = len(nums)
+    while lo < hi:
+        mid = lo + (hi - lo) // 2
+        if nums[mid] < target:
+            lo = mid + 1
+        else:
+            hi = mid
+    return lo
+   
+
+class ClosestNumSpec(unittest.TestCase):
+    def test_example(self):
+        k, x, nums = 3, 5, [1, 3, 7, 8, 9]
+        expected = [7, 3, 8]
+        self.assertEqual(set(expected), set(closest_nums(nums, k, x)))
+
+    def test_example2(self):
+        k, x, nums = 5, 35, [12, 16, 22, 30, 35, 39, 42, 45, 48, 50, 53, 55, 56]
+        expected = [30, 39, 35, 42, 45]
+        self.assertEqual(set(expected), set(closest_nums(nums, k, x)))
+
+    def test_empty_list(self):
+        self.assertEqual([], closest_nums([], 0, 42))
+    
+    def test_entire_list_qualify(self):
+        k, x, nums = 6, -1000, [0, 1, 2, 3, 4, 5]
+        expected = [0, 1, 2, 3, 4, 5]
+        self.assertEqual(set(expected), set(closest_nums(nums, k, x)))
+    
+    def test_entire_list_qualify2(self):
+        k, x, nums = 2, 1000, [0, 1]
+        expected = [0, 1]
+        self.assertEqual(set(expected), set(closest_nums(nums, k, x)))
+
+    def test_closest_number_on_both_sides(self):
+        k, x, nums = 3, 5, [1, 5, 6, 10, 20]
+        expected = [1, 5, 6]
+        self.assertEqual(set(expected), set(closest_nums(nums, k, x)))
+
+    def test_contains_duplicate_numbers(self):
+        k, x, nums = 5, 3, [1, 1, 1, 1, 3, 3, 3, 4, 4]
+        expected = [3, 3, 3, 4, 4]
+        self.assertEqual(set(expected), set(closest_nums(nums, k, x)))
+   
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
 ```
 
 ### Jan 28, 2020 LC 652 \[Medium\] Find Duplicate Subtrees
