@@ -60,11 +60,8 @@ Input: n = 8
 Output: 13
 ```
 
-**Solution:** [https://repl.it/@trsong/Count-Total-Set-Bits-from-1-to-n](https://repl.it/@trsong/Count-Total-Set-Bits-from-1-to-n)
+**Naive Solution:** [https://repl.it/@trsong/Count-Total-Set-Bits-from-1-to-n-Naive-Solution](https://repl.it/@trsong/Count-Total-Set-Bits-from-1-to-n-Naive-Solution)
 ```py
-import unittest
-
-
 def count_single_num(num):
     res = 0
     i = 0
@@ -78,6 +75,32 @@ def count_bits(nums):
     res = 0
     for i in xrange(1, nums+1):
         res += count_single_num(i)
+    return res
+``` 
+
+**Solution with DP:** [https://repl.it/@trsong/Count-Total-Set-Bits-from-1-to-n](https://repl.it/@trsong/Count-Total-Set-Bits-from-1-to-n)
+```py
+import unittest
+
+def count_bits(nums):
+    if nums == 0:
+        return 0
+
+    # Let dp[i] represents number of bit set for integer i
+    # If i is even, then it has exact number of bit as shift right by 1 (ie i/2)
+    # If i is odd, then it has 1 more bit than i-1
+    dp = [0] * (nums + 1)
+    dp[1] = 1
+    for i in xrange(2, nums+1):
+        if i % 2 == 0:
+            dp[i] = dp[i // 2]
+        else:
+            dp[i] = dp[i-1] + 1
+
+    res = 0
+    for i in xrange(nums+1):
+        res += dp[i]
+
     return res
 
 
