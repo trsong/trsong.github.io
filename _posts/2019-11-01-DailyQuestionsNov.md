@@ -18,6 +18,27 @@ categories: Python/Java
 
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
+
+### Jan 31, 2020 \[Medium\]  Determine if number
+---
+> **Question:** Given a string that may represent a number, determine if it is a number. Here's some of examples of how the number may be presented:
+```py
+"123" # Integer
+"12.3" # Floating point
+"-123" # Negative numbers
+"-.3" # Negative floating point
+"1.5e5" # Scientific notation
+```
+
+> Here's some examples of what isn't a proper number:
+```py
+"12a" # No letters
+"1 2" # No space between numbers
+"1e1.2" # Exponent can only be an integer (positive or negative or 0)
+```
+> Scientific notation requires the first number to be less than 10, however to simplify the solution assume the first number can be greater than 10. Do not parse the string with int() or any other python functions.
+
+
 ### Jan 30, 2020 \[Easy\] Count Total Set Bits from 1 to n
 ---
 > **Question:** Write an algorithm that finds the total number of set bits in all integers between 1 and N.
@@ -26,17 +47,74 @@ categories: Python/Java
 ```py
 Input: n = 3  
 Output:  4
-Explanation: The binary representation (01, 10, 11) contains 4 1's.
+Explanation: The binary representation (01, 10, 11) contains 4 1s.
 
 Input: n = 6
 Output: 9
-Explanation: The binary representation (01, 10, 11, 100, 101, 110) contains 9 1's.
+Explanation: The binary representation (01, 10, 11, 100, 101, 110) contains 9 1s.
 
 Input: n = 7
 Output: 12
 
 Input: n = 8
 Output: 13
+```
+
+**Solution:** [https://repl.it/@trsong/Count-Total-Set-Bits-from-1-to-n](https://repl.it/@trsong/Count-Total-Set-Bits-from-1-to-n)
+```py
+import unittest
+
+
+def count_single_num(num):
+    res = 0
+    i = 0
+    while num >= (1 << i):
+        if num & (1 << i):
+            res += 1
+        i += 1
+    return res
+
+def count_bits(nums):
+    res = 0
+    for i in xrange(1, nums+1):
+        res += count_single_num(i)
+    return res
+
+
+class CountBitSpec(unittest.TestCase):
+    def test_example1(self):
+        self.assertEqual(4, count_bits(3))  # 1, 10, 11
+
+    def test_example2(self):
+        self.assertEqual(9, count_bits(6))  # 1, 10, 11, 100, 101, 110
+
+    def test_example3(self):
+        self.assertEqual(12, count_bits(7))
+
+    def test_example4(self):
+        self.assertEqual(13, count_bits(8))
+
+    def test_example5(self):
+        self.assertEqual(35, count_bits(17))
+
+    def test_zero(self):
+        self.assertEqual(0, count_bits(0))
+
+    def test_one(self):
+        self.assertEqual(1, count_bits(1))
+
+    def test_power_of_two(self):
+        self.assertEqual(5121, count_bits(1024))
+
+    def test_all_ones(self):
+        self.assertEqual(1024, count_bits(0b11111111))
+
+    def test_mixed_digits(self):
+        self.assertEqual(515, count_bits(0b10010101))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
 ```
 
 ### Jan 29, 2020 \[Medium\] K Closest Elements
