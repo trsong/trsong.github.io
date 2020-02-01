@@ -32,9 +32,7 @@ Input:
  /  \
 1    3
 
-Output: 3 
-The following subtree is the 
-maximum size BST subtree 
+Output:
    2  
  /  \
 1    3
@@ -50,9 +48,8 @@ Input:
 5   20   45    70
               /  \
             65    80
-Output: 5
-The following subtree is the
-maximum size BST subtree 
+            
+Output: 
       60
      /  \ 
    45    70
