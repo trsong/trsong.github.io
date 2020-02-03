@@ -18,6 +18,18 @@ categories: Python/Java
 
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
+
+### Feb 3, 2020 \[Easy\] Design a Hit Counter
+---
+> **Question:**  Design and implement a HitCounter class that keeps track of requests (or hits). It should support the following operations:
+>
+> - `record(timestamp)`: records a hit that happened at timestamp
+> - `total()`: returns the total number of hits recorded
+> - `range(lower, upper)`: returns the number of hits that occurred between timestamps lower and upper (inclusive)
+>
+> **Follow-up:** What if our system has limited memory?
+
+
 ### Feb 2, 2020 LC 166 \[Medium\] Fraction to Recurring Decimal
 ---
 > **Question:** Given two integers representing the numerator and denominator of a fraction, return the fraction in string format.
@@ -40,6 +52,84 @@ Output: "2"
 ```py
 Input: numerator = 2, denominator = 3
 Output: "0.(6)"
+```
+
+**My thoughts:** There are three different outcomes when convert fraction to recurring decimals mentioned exactly in above examples: integers, repeat decimals, non-repeat decimals. For integer, it's simple, just make sure numerator is divisible by denominator (ie. remainder is 0). However, for repeat vs non-repeat, in each iteration we time remainder by 10 and perform division again, if the quotient repeats then we have a repeat decimal, otherwise we have a non-repeat decimal. 
+
+**Solution:** [https://repl.it/@trsong/Fraction-to-Recurring-Decimal](https://repl.it/@trsong/Fraction-to-Recurring-Decimal)
+```py
+import unittest
+
+def fraction_to_decimal(numerator, denominator):
+    if numerator == 0:
+        return "0"
+    
+    sign = ""
+    if numerator * denominator < 0:
+        sign = "-"
+    
+    numerator = abs(numerator)
+    denominator = abs(denominator)
+
+    quotient, remainder = numerator // denominator, numerator % denominator
+    if remainder == 0:
+        return sign + str(quotient)
+
+    decimals = []
+    index = 0
+    seen_remainder_position = {}
+    while remainder > 0:
+        if remainder in seen_remainder_position:
+            break
+        
+        seen_remainder_position[remainder] = index
+        remainder *= 10
+        decimals.append(str(remainder / denominator))
+        remainder %= denominator
+        index += 1
+
+    if remainder > 0:
+        pivot_index = seen_remainder_position[remainder]
+        non_repeat_part, repeat_part = "".join(decimals[:pivot_index]), "".join(decimals[pivot_index:])
+        return "{}{}.{}({})".format(sign, str(quotient), non_repeat_part, repeat_part)
+    else:
+        return "{}{}.{}".format(sign, str(quotient), "".join(decimals))
+    
+
+class FractionToDecimalSpec(unittest.TestCase):
+    def test_example(self):
+        self.assertEqual("0.5", fraction_to_decimal(1, 2))
+
+    def test_example2(self):
+        self.assertEqual("2", fraction_to_decimal(2, 1))
+
+    def test_example3(self):
+        self.assertEqual("0.(6)", fraction_to_decimal(2, 3))
+    
+    def test_decimal_has_duplicate_digits(self):
+        self.assertEqual("1011.(1011)", fraction_to_decimal(3370000, 3333))
+
+    def test_result_is_zero(self):
+        self.assertEqual("0", fraction_to_decimal(0, -42))
+
+    def test_negative_numerator_and_denominator(self):
+        self.assertEqual("1.75", fraction_to_decimal(-7, -4))
+
+    def test_negative_numerator(self):
+        self.assertEqual("-1.7(5)", fraction_to_decimal(-79, 45))
+
+    def test_negative_denominator(self):
+        self.assertEqual("-3", fraction_to_decimal(3, -1))
+
+    def test_non_recurring_decimal(self):
+        self.assertEqual("0.1234123", fraction_to_decimal(1234123, 10000000))
+
+    def test_recurring_decimal(self):
+        self.assertEqual("-0.03(571428)", fraction_to_decimal(-1, 28))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
 ```
 
 ### Feb 1, 2020 \[Medium\] Largest BST in a Binary Tree
