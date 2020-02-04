@@ -18,8 +18,41 @@ categories: Python/Java
 
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
+### Feb 4, 2020 \[Hard\] Teams without Enemies
+---
+> **Question:** A teacher must divide a class of students into two teams to play dodgeball. Unfortunately, not all the kids get along, and several refuse to be put on the same team as that of their enemies.
+>
+> Given an adjacency list of students and their enemies, write an algorithm that finds a satisfactory pair of teams, or returns False if none exists.
 
-### Feb 3, 2020 \[Easy\] Design a Hit Counter
+**Example 1:**
+```py
+Given the following enemy graph you should return the teams {0, 1, 4, 5} and {2, 3}.
+
+students = {
+    0: [3],
+    1: [2],
+    2: [1, 4],
+    3: [0, 4, 5],
+    4: [2, 3],
+    5: [3]
+}
+```
+
+**Example 2:**
+```py
+On the other hand, given the input below, you should return False.
+
+students = {
+    0: [3],
+    1: [2],
+    2: [1, 3, 4],
+    3: [0, 2, 4, 5],
+    4: [2, 3],
+    5: [3]
+}
+```
+
+### Feb 3, 2020 \[Hard\] Design a Hit Counter
 ---
 > **Question:**  Design and implement a HitCounter class that keeps track of requests (or hits). It should support the following operations:
 >
@@ -29,6 +62,166 @@ categories: Python/Java
 >
 > **Follow-up:** What if our system has limited memory?
 
+**My thoughts:** Based on the nature of timestamp, it will only increase, so we should append timestamp to an flexible-length array and perform binary search to query for elements. However, as the total number of timestamp might be arbitrarily large, re-allocate space once array is full is not so memory efficient. And also another concern is that keeping so many entries in memory without any persistence logic is dangerous and hard to scale in the future. 
+
+A common way to tackle this problem is to create a fixed bucket of record and gradually add more buckets based on demand. And inactive bucket can be persistent and evict from memory, which makes it so easy to scale in the future.
+
+**Solution:** [https://repl.it/@trsong/Design-a-Hit-Counter](https://repl.it/@trsong/Design-a-Hit-Counter)
+```py
+import unittest
+
+def binary_search(sequence, low_bound):
+    """
+    Return index of first element that is greater than or equal low_bound
+    """
+    lo = 0
+    hi = len(sequence)
+    while lo < hi:
+        mid = lo + (hi - lo) // 2
+        if sequence[mid] < low_bound:
+            lo = mid + 1
+        else:
+            hi = mid
+    return lo
+
+
+class PersistentHitRecord(object):
+    RECORD_CAPACITY = 100
+
+    def __init__(self):
+        self.start_timestamp = None
+        self.end_timestamp = None
+        self.timestamp_records = []
+
+    def size(self):
+        return len(self.timestamp_records)
+
+    def is_full(self):
+        return self.size() == PersistentHitRecord.RECORD_CAPACITY
+    
+    def add(self, timestamp):
+        if self.start_timestamp is None:
+            self.start_timestamp = timestamp
+        self.end_timestamp = timestamp
+        self.timestamp_records.append(timestamp)
+
+
+class HitCounter(object):
+    def __init__(self):
+        self.current_record = PersistentHitRecord()
+        self.history_records = []
+
+    def record(self, timestamp):
+        """
+        Records a hit that happened at timestamp
+        """
+        if self.current_record.is_full():
+            self.history_records.append(self.current_record)
+            self.current_record = PersistentHitRecord()
+        self.current_record.add(timestamp)
+
+    def total(self):
+        """
+        Returns the total number of hits recorded
+        """
+        num_current_record_entries = self.current_record.size()
+        num_history_record_entries = len(self.history_records) * PersistentHitRecord.RECORD_CAPACITY
+        return num_current_record_entries + num_history_record_entries
+
+    def range(self, lower, upper):
+        """
+        Returns the number of hits that occurred between timestamps lower and upper (inclusive)
+        """
+        if lower > upper: 
+            return 0
+        if self.current_record.size() > 0:
+            all_records = self.history_records + [self.current_record]
+        else:
+            all_records = self.history_records
+        if not all_records:
+            return 0
+
+        start_timestamps = map(lambda entry: entry.start_timestamp, all_records)
+        end_timestamps = map(lambda entry: entry.end_timestamp, all_records)
+
+        first_bucket_index = binary_search(end_timestamps, lower)
+        first_bucket = all_records[first_bucket_index].timestamp_records
+        last_bucket_index = binary_search(start_timestamps, upper+1) - 1
+        last_bucket = all_records[last_bucket_index].timestamp_records
+        
+        first_entry_index = binary_search(first_bucket, lower)
+        last_entry_index = binary_search(last_bucket, upper+1)
+        if first_bucket_index == last_bucket_index:
+            return last_entry_index - first_entry_index
+        else:
+            capacity = PersistentHitRecord.RECORD_CAPACITY
+            num_full_record_entires = (last_bucket_index - first_bucket_index - 1) * capacity
+            num_first_record_entries = capacity - first_entry_index
+            num_last_record_entires = last_entry_index
+            return num_first_record_entries + num_full_record_entires + num_last_record_entires
+
+
+class HitCounterSpec(unittest.TestCase):
+    def test_no_record_exists(self):
+        hc = HitCounter()
+        self.assertEqual(0, hc.total())
+        self.assertEqual(0, hc.range(float('-inf'), float('inf')))
+    
+    def test_return_correct_number_of_records(self):
+        hc = HitCounter()
+        query_number = 10000
+        for i in xrange(10000):
+            hc.record(i)
+        self.assertEqual(query_number, hc.total())
+        self.assertEqual(5000, hc.range(1, 5000))
+        self.assertEqual(query_number, hc.range(float('-inf'), float('inf')))
+    
+    def test_return_correct_number_of_records2(self):
+        hc = HitCounter()
+        hc.record(1)
+        self.assertEqual(1, hc.total())
+        self.assertEqual(1, hc.range(-10, 10))
+        hc.record(2)
+        hc.record(5)
+        hc.record(8)
+        self.assertEqual(4, hc.total())
+        self.assertEqual(3, hc.range(0, 6))
+    
+    def test_query_range_is_inclusive(self):
+        hc = HitCounter()
+        hc.record(1)
+        hc.record(3)
+        hc.record(5)
+        hc.record(5)
+        self.assertEqual(3, hc.range(3, 5))
+
+    def test_invalid_range(self):
+        hc = HitCounter()
+        hc.record(1)
+        self.assertEqual(0, hc.range(1, 0))
+
+    def test_duplicated_timestamps(self):
+        hc = HitCounter()
+        hc.record(1)
+        hc.record(1)
+        hc.record(2)
+        hc.record(5)
+        hc.record(5)
+        self.assertEqual(5, hc.total())
+        self.assertEqual(3, hc.range(0, 4))
+
+    def test_duplicated_timestamps2(self):
+        hc = HitCounter()
+        for i in xrange(5):
+            for _ in xrange(200):
+                hc.record(i)
+        self.assertEqual(1000, hc.total())
+        self.assertEqual(600, hc.range(2, 4))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
+```
 
 ### Feb 2, 2020 LC 166 \[Medium\] Fraction to Recurring Decimal
 ---
