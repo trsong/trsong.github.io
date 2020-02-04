@@ -155,10 +155,10 @@ class HitCounter(object):
             return last_entry_index - first_entry_index
         else:
             capacity = PersistentHitRecord.RECORD_CAPACITY
-            num_full_record_entires = (last_bucket_index - first_bucket_index - 1) * capacity
-            num_first_record_entries = capacity - first_entry_index
-            num_last_record_entires = last_entry_index
-            return num_first_record_entries + num_full_record_entires + num_last_record_entires
+            num_full_bucket_entires = (last_bucket_index - first_bucket_index - 1) * capacity
+            num_first_bucket_entries = capacity - first_entry_index
+            num_last_bucket_entires = last_entry_index
+            return num_first_bucket_entries + num_full_bucket_entires + num_last_bucket_entires
 
 
 class HitCounterSpec(unittest.TestCase):
