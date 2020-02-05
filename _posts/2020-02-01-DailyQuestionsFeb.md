@@ -18,6 +18,21 @@ categories: Python/Java
 
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
+### Feb 5, 2020 \[Easy\] Largest Path Sum from Root To Leaf
+---
+> **Question:** Given a binary tree, find and return the largest path from root to leaf.
+
+**Example:**
+```py
+Input:
+    1
+  /   \
+ 3     2
+  \   /
+   5 4
+Output: [1, 3, 5]
+```
+
 ### Feb 4, 2020 \[Hard\] Teams without Enemies
 ---
 > **Question:** A teacher must divide a class of students into two teams to play dodgeball. Unfortunately, not all the kids get along, and several refuse to be put on the same team as that of their enemies.
@@ -50,6 +65,105 @@ students = {
     4: [2, 3],
     5: [3]
 }
+```
+
+**My thoughts:** This question is basically checking if the graph is a bipartite. In previous question I used BFS by color every other nodes. [https://trsong.github.io/python/java/2019/08/02/DailyQuestionsAug/#oct-21-2019-medium-is-bipartite](https://trsong.github.io/python/java/2019/08/02/DailyQuestionsAug/#oct-21-2019-medium-is-bipartite). But in this question, I'd like to use something different like use sets to check if a graph is a bipartite. 
+
+**Solution:** [https://repl.it/@trsong/Teams-without-Enemies](https://repl.it/@trsong/Teams-without-Enemies)
+```py
+import unittest
+
+def team_without_enemies(enemy_map):
+    group1, enemy1, group2, enemy2 = set(), set(), set(), set()
+    for student, enemies in enemy_map.items():
+        enemy_set = set(enemies)
+        if not group1 or not group1.intersection(enemy_set) and student not in enemy1:
+            group1.add(student)
+            enemy1 |= enemy_set
+        elif not group2 or not group2.intersection(enemy_set) and student not in enemy2:
+            group2.add(student)
+            enemy2 |= enemy_set
+    
+    if len(group1) + len(group2) == len(enemy_map):
+        return list(group1), list(group2)
+    else:
+        return False
+
+
+class TeamWithoutEnemiesSpec(unittest.TestCase):
+    def assert_result(self, expected, result):
+        expected_group1_set, expected_group2_set = set(expected[0]), set(expected[1])
+        result_group1_set, result_group2_set = set(result[0]), set(result[1])
+        outcome1 = (expected_group1_set == result_group1_set) and (expected_group2_set == result_group2_set)
+        outcome2 = (expected_group2_set == result_group1_set) and (expected_group1_set == result_group2_set)
+        self.assertTrue(outcome1 or outcome2)
+
+    def test_example(self):
+        enemy_map = {
+            0: [3],
+            1: [2],
+            2: [1, 4],
+            3: [0, 4, 5],
+            4: [2, 3],
+            5: [3]
+        }
+        expected = ([0, 1, 4, 5], [2, 3])
+        self.assert_result(expected, team_without_enemies(enemy_map))
+
+    def test_example2(self):
+        enemy_map = {
+            0: [3],
+            1: [2],
+            2: [1, 3, 4],
+            3: [0, 2, 4, 5],
+            4: [2, 3],
+            5: [3]
+        }
+        self.assertFalse(team_without_enemies(enemy_map))
+
+    def test_empty_graph(self):
+        enemy_map = {}
+        expected = ([], [])
+        self.assert_result(expected, team_without_enemies(enemy_map))
+
+    def test_one_node_graph(self):
+        enemy_map = {1: []}
+        expected = ([1], [])
+        self.assert_result(expected, team_without_enemies(enemy_map))
+
+    def test_disconnect_graph(self):
+        enemy_map = {
+            0: [],
+            1: [0],
+            2: [3],
+            3: [4],
+            4: [2]
+        }
+        self.assertFalse(team_without_enemies(enemy_map))
+
+    def test_square(self):
+        enemy_map = {
+            0: [1],
+            1: [2],
+            2: [3],
+            3: [0]
+        }
+        expected = ([0, 2], [1, 3])
+        self.assert_result(expected, team_without_enemies(enemy_map))
+
+    def test_k5(self):
+        enemy_map = {
+            0: [1, 2, 3, 4],
+            1: [2, 3, 4],
+            2: [3, 4],
+            3: [3],
+            4: []
+        }
+        self.assertFalse(team_without_enemies(enemy_map))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
 ```
 
 ### Feb 3, 2020 \[Hard\] Design a Hit Counter
