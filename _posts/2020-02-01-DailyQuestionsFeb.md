@@ -18,6 +18,14 @@ categories: Python/Java
 
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
+
+### Feb 6, 2020 \[Medium\] Implement a Bit Array.
+---
+> **Question:** A bit array is a space efficient array that holds a value of 1 or 0 at each index.
+> - `init(size)`: initialize the array with size
+> - `set(i, val)`: updates index at i with val where val is either 1 or 0.
+> - `get(i)`: gets the value at index i.
+
 ### Feb 5, 2020 \[Easy\] Largest Path Sum from Root To Leaf
 ---
 > **Question:** Given a binary tree, find and return the largest path from root to leaf.
@@ -31,6 +39,116 @@ Input:
   \   /
    5 4
 Output: [1, 3, 5]
+```
+
+**Solution with DFS:** [https://repl.it/@trsong/Largest-Path-Sum-from-Root-To-Leaf](https://repl.it/@trsong/Largest-Path-Sum-from-Root-To-Leaf)
+```py
+import unittest
+
+class TreeNode(object):
+    def __init__(self, val, left=None, right=None):
+        self.val = val
+        self.left = left
+        self.right = right
+
+
+def largest_sum_path(root):
+    if not root:
+        return []
+
+    max_path_sum = float('-inf')
+    max_path_leaf = root
+    parent_map = {root: None}
+    stack = [(root, root.val)]
+
+    while stack:
+        current, path_sum = stack.pop()
+
+        if not current.left and not current.right and path_sum > max_path_sum:
+            max_path_sum = path_sum
+            max_path_leaf = current
+        else:
+            for child in [current.left, current.right]:
+                if child is not None:
+                    parent_map[child] = current
+                    stack.append((child, path_sum + child.val))
+
+    node = max_path_leaf
+    leaf_to_root_path = []
+    while node is not None:
+        leaf_to_root_path.append(node.val)
+        node = parent_map[node]
+    
+    root_to_leaf_path = leaf_to_root_path[::-1]
+    return root_to_leaf_path
+
+
+class LargestSumPathSpec(unittest.TestCase):
+    def test_example(self):
+        """
+            1
+          /   \
+         3     2
+          \   /
+           5 4
+        """
+        left_tree = TreeNode(3, right=TreeNode(5))
+        right_tree = TreeNode(2, TreeNode(4))
+        root = TreeNode(1, left_tree, right_tree)
+        expected_path = [1, 3, 5]
+        self.assertEqual(expected_path, largest_sum_path(root))
+
+    def test_negative_nodes(self):
+        """
+             10
+            /  \
+          -2    7
+         /  \     
+        8   -4    
+        """
+        left_tree = TreeNode(-2, TreeNode(8), TreeNode(-4))
+        root = TreeNode(10, left_tree, TreeNode(7))
+        expected_path = [10, 7]
+        self.assertEqual(expected_path, largest_sum_path(root))
+
+    def test_empty_tree(self):
+        self.assertEqual([], largest_sum_path(None))
+
+    def test_heavy_right_tree(self):
+        """
+          1
+         / \
+        2   3
+       /   / \
+      8   4   5
+         / \   \
+        6   7   9
+        """
+        n5 = TreeNode(5, right=TreeNode(9))
+        n4 = TreeNode(4, TreeNode(6), TreeNode(7))
+        n3 = TreeNode(3, n4, n5)
+        n2 = TreeNode(2, TreeNode(8))
+        n1 = TreeNode(1, n2, n3)
+        expected_path = [1, 3, 5, 9]
+        self.assertEqual(expected_path, largest_sum_path(n1))
+
+    def test_all_paths_are_negative(self):
+        """
+              -1
+            /     \
+          -2      -3
+          / \    /  \
+        -4  -5 -6   -7
+        """
+        left_tree = TreeNode(-2, TreeNode(-4), TreeNode(-5))
+        right_tree = TreeNode(-3, TreeNode(-6), TreeNode(-7))
+        root = TreeNode(-1, left_tree, right_tree)
+        expected_path = [-1, -2, -4]
+        self.assertEqual(expected_path, largest_sum_path(root))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
 ```
 
 ### Feb 4, 2020 \[Hard\] Teams without Enemies
