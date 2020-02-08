@@ -18,6 +18,14 @@ categories: Python/Java
 
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
+### Feb 8, 2020 \[Easy\] Intersection of Lists
+---
+> **Question:** Given 3 sorted lists, find the intersection of those 3 lists.
+
+**Example:**
+```py
+intersection([1, 2, 3, 4], [2, 4, 6, 8], [3, 4, 5])  # returns [4]
+```
 
 ### Feb 7, 2020 \[Medium\] Similar Websites
 ---
@@ -35,6 +43,122 @@ Suppose k = 1, and the list of tuples is:
  
 Then a reasonable similarity metric would most likely conclude that a and e are the most similar, so your program should return [('a', 'e')].
 ```
+
+**My thoughts:** The similarity metric bewtween two sets equals intersection / union. However, as duplicate entry might occur, we have to convert normal set to multiset. So, the way to get top k similar website is first calculate the similarity score between any two websites and after that use a priority queue to mantain top k similarity pairs.
+
+**Solution:** [https://repl.it/@trsong/Similar-Websites](https://repl.it/@trsong/Similar-Websites)
+```py
+import unittest
+from Queue import PriorityQueue
+
+def to_multiset(lst):
+    frequency_map = {}
+    for num in lst:
+        frequency_map[num] = frequency_map.get(num, 0) + 1
+    
+    res = set()
+    for k, count in frequency_map.items():
+        for i in xrange(count):
+            res.add((k, i))
+    return res
+
+
+def set_similarity(set_a, set_b):
+    intersection = len(set_a & set_b)
+    union = len(set_a) + len(set_b) - intersection
+    return float(intersection) / union           
+
+
+def top_similar_websites(website_log, k):
+    website_userlist_map = {}
+    for website, user in website_log:
+        if website not in website_userlist_map:
+            website_userlist_map[website] = []
+        website_userlist_map[website].append(user)
+    
+    website_userset_map = {}
+    for website, userlist in website_userlist_map.items():
+        website_userset_map[website] = to_multiset(userlist)
+
+    websites = website_userset_map.keys()
+    n = len(websites)
+    min_heap = PriorityQueue()
+    for i in xrange(n):
+        w1 = websites[i]
+        w1_userset = website_userset_map[w1]
+
+        for j in xrange(i+1, n):
+            w2 = websites[j]
+            w2_userset = website_userset_map[w2]
+
+            score = set_similarity(w1_userset, w2_userset)
+            if min_heap.qsize() >= k and min_heap.queue[0][0] < score:
+                min_heap.get()
+            if min_heap.qsize() < k:
+                min_heap.put((score, (w1, w2)))
+
+    reverse_ranking = []
+    while not min_heap.empty():
+        score, website = min_heap.get()
+        reverse_ranking.append(website)
+
+    ranking = reverse_ranking[::-1]
+    return ranking
+
+
+class TopSimilarWebsiteSpec(unittest.TestCase):
+    def assert_result(self, expected, result):
+        # same length
+        self.assertEqual(len(expected), len(result))
+        for e, r in zip(expected, result):
+            # pair must be the same, order doesn't matter
+            self.assertEqual(set(e), set(r))
+
+    def test_example(self):
+        website_log = [
+            ('a', 1), ('a', 3), ('a', 5),
+            ('b', 2), ('b', 6),
+            ('c', 1), ('c', 2), ('c', 3), ('c', 4), ('c', 5),
+            ('d', 4), ('d', 5), ('d', 6), ('d', 7),
+            ('e', 1), ('e', 3), ('e', 5), ('e', 6)]
+        # Similarity: (a,e)=3/4, (a,c)=3/5
+        expected = [('a', 'e'), ('a', 'c')]
+        self.assert_result(expected, top_similar_websites(website_log, len(expected)))
+
+    def test_no_overlapping(self):
+        website_log = [('a', 1), ('b', 2)]
+        expected = [('a', 'b')]
+        self.assert_result(expected, top_similar_websites(website_log, len(expected)))
+    
+    def test_should_return_correct_order(self):
+        website_log = [
+            ('a', 1),
+            ('b', 1), ('b', 2),
+            ('c', 1), ('c', 2), ('c', 3), 
+            ('d', 1), ('d', 2), ('d', 3), ('d', 4),
+            ('e', 1), ('e', 2), ('e', 3), ('e', 4), ('e', 5)]
+        # Similarity: (d,e)=4/5, (c,d)=3/4, (b,c)=2/3, (c,e)=3/5
+        expected = [('d', 'e'), ('c', 'd'), ('b', 'c'), ('c', 'e')]
+        self.assert_result(expected, top_similar_websites(website_log, len(expected)))
+        
+    def test_duplicated_entries(self):
+        website_log = [
+            ('a', 1), ('a', 1),
+            ('b', 1),
+            ('c', 1), ('c', 1), ('c', 2),
+            ('d', 1), ('d', 3), ('d', 3), ('d', 4),
+            ('e', 1), ('e', 1), ('e', 5), ('e', 6),
+            ('f', 1), ('f', 7), ('f', 8), ('f', 8)
+        ]
+        # Similarity: (a,c)=2/3
+        expected = [('a', 'c')]
+        self.assert_result(expected, top_similar_websites(website_log, len(expected)))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
+```
+
 
 ### Feb 6, 2020 \[Easy\] Implement a Bit Array
 ---
