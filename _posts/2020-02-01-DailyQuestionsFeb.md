@@ -19,12 +19,114 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
 
-### Feb 6, 2020 \[Medium\] Implement a Bit Array.
+### Feb 7, 2020 \[Medium\] Similar Websites
+---
+> **Question:** You are given a list of (website, user) pairs that represent users visiting websites. Come up with a program that identifies the top k pairs of websites with the greatest similarity.
+
+**Example:**
+```py
+Suppose k = 1, and the list of tuples is:
+
+[('a', 1), ('a', 3), ('a', 5),
+ ('b', 2), ('b', 6),
+ ('c', 1), ('c', 2), ('c', 3), ('c', 4), ('c', 5)
+ ('d', 4), ('d', 5), ('d', 6), ('d', 7),
+ ('e', 1), ('e', 3), ('e': 5), ('e', 6)]
+ 
+Then a reasonable similarity metric would most likely conclude that a and e are the most similar, so your program should return [('a', 'e')].
+```
+
+### Feb 6, 2020 \[Easy\] Implement a Bit Array
 ---
 > **Question:** A bit array is a space efficient array that holds a value of 1 or 0 at each index.
 > - `init(size)`: initialize the array with size
 > - `set(i, val)`: updates index at i with val where val is either 1 or 0.
 > - `get(i)`: gets the value at index i.
+
+
+**Solution:** [https://repl.it/@trsong/Implement-a-Bit-Array](https://repl.it/@trsong/Implement-a-Bit-Array)
+```py
+import unittest
+
+class BitArray(object):
+    BYTE_SIZE = 8
+
+    def __init__(self, size): 
+        # initialize the array with size
+        self.size = size
+        self.data = [0] * (size // BitArray.BYTE_SIZE + 1)
+
+    def set(self, i, val):
+        # updates index at i with val where val is either 1 or 0.
+        bucket, index = i // BitArray.BYTE_SIZE, i % BitArray.BYTE_SIZE
+        mask = 1 << index
+        if val:
+            self.data[bucket] |= mask
+        else:
+            self.data[bucket] &= ~mask
+    
+    def get(self, i):
+        # gets the value at index i.
+        bucket, index = i // BitArray.BYTE_SIZE, i % BitArray.BYTE_SIZE
+        mask = 1 << index
+        res = self.data[bucket] & mask > 0
+        return 1 if res > 0 else 0 
+
+
+class BitArraySpec(unittest.TestCase):
+    def test_init_an_empty_array(self):
+        bit_array = BitArray(0)
+        self.assertIsNotNone(bit_array)
+
+    def test_get_unset_value(self):
+        bit_array = BitArray(1)
+        self.assertEqual(0, bit_array.get(0))
+
+    def test_get_set_value(self):
+        bit_array = BitArray(2)
+        bit_array.set(0, 1)
+        self.assertEqual(1, bit_array.get(0))
+
+    def test_get_latest_set_value(self):
+        bit_array = BitArray(3)
+        bit_array.set(1, 1)
+        self.assertEqual(1, bit_array.get(1))
+        bit_array.set(1, 0)
+        self.assertEqual(0, bit_array.get(1))
+    
+    def test_double_set_value(self):
+        bit_array = BitArray(3)
+        bit_array.set(1, 1)
+        bit_array.set(1, 1)
+        self.assertEqual(1, bit_array.get(1))
+
+    def test_check_set_the_correct_bits(self):
+        indices = set([0, 1, 4, 6, 7])
+        bit_array = BitArray(8)
+        for i in indices:
+            bit_array.set(i, 1)
+
+        for i in xrange(8):
+            if i in indices:
+                self.assertEqual(1, bit_array.get(i))
+            else:
+                self.assertEqual(0, bit_array.get(i))
+
+    def test_check_set_the_correct_bits2(self):
+        indices = set([5, 10, 15, 20, 25, 30, 35])
+        bit_array = BitArray(100)
+        for i in indices:
+            bit_array.set(i, 1)
+
+        for i in xrange(100):
+            if i in indices:
+                self.assertEqual(1, bit_array.get(i))
+            else:
+                self.assertEqual(0, bit_array.get(i))
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
+```
 
 ### Feb 5, 2020 \[Easy\] Largest Path Sum from Root To Leaf
 ---
