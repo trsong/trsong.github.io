@@ -217,6 +217,23 @@ def count_bits(nums):
     return res
 ``` 
 
+**Brian Kernighan’s Algorithm:** [https://repl.it/@trsong/Count-Total-Set-Bits-Brian-Kernighans-Algorithm](https://repl.it/@trsong/Count-Total-Set-Bits-Brian-Kernighans-Algorithm)
+```py
+def count_single_num(num):
+    count = 0
+    while num:
+        num &= num - 1   # remove last set bit
+        count += 1
+    return count
+
+def count_bits(nums):
+    res = 0
+    for i in xrange(1, nums+1):
+        res += count_single_num(i)
+    return res
+```
+
+
 **Solution with DP:** [https://repl.it/@trsong/Count-Total-Set-Bits-from-1-to-n](https://repl.it/@trsong/Count-Total-Set-Bits-from-1-to-n)
 ```py
 import unittest
