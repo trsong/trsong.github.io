@@ -411,27 +411,85 @@ students = {
 }
 ```
 
-**My thoughts:** This question is basically checking if the graph is a bipartite. In previous question I used BFS by color every other nodes. [https://trsong.github.io/python/java/2019/08/02/DailyQuestionsAug/#oct-21-2019-medium-is-bipartite](https://trsong.github.io/python/java/2019/08/02/DailyQuestionsAug/#oct-21-2019-medium-is-bipartite). But in this question, I'd like to use something different like use sets to check if a graph is a bipartite. 
+**My thoughts:** This question is basically checking if the graph is a bipartite. In previous question I used BFS by color every other nodes. [https://trsong.github.io/python/java/2019/08/02/DailyQuestionsAug/#oct-21-2019-medium-is-bipartite](https://trsong.github.io/python/java/2019/08/02/DailyQuestionsAug/#oct-21-2019-medium-is-bipartite). 
+
+But in this question, I'd like to use something different like use union-find to check if a graph is a bipartite. The idea is based on "The enemy of my enemy is my friend". So for any student, its enemies should be friends ie. connected by union-find. If for any reason, one become a friend of enemy, then we cannot have a bipartite.
 
 **Solution:** [https://repl.it/@trsong/Teams-without-Enemies](https://repl.it/@trsong/Teams-without-Enemies)
 ```py
 import unittest
+from collections import defaultdict
+
+class DisjointSet(object):
+    def __init__(self, size):
+        self.parent = list(range(size))
+
+    def find(self, elem):
+        p = elem
+        if self.parent[p] == p:
+            return p
+        else:
+            root = self.find(self.parent[p])
+            self.parent[p] = root
+            return root
+
+    def union(self, elem1, elem2):
+        p1 = self.find(elem1)
+        p2 = self.find(elem2)
+        if p1 != p2:
+            self.parent[p1] = p2
+
+    def is_connected(self, elem1, elem2):
+        return self.find(elem1) == self.find(elem2)
+
+    def union_all(self, elems):
+        if len(elems) <= 1:
+            return
+        root = elems[0]
+        for i in xrange(1, len(elems)):
+            self.union(root, elems[i])
+
+    def find_roots(self):
+        return set(self.parent)
+
+    def find_bipartite(self):
+        root_set = self.find_roots()
+        if len(root_set) <= 1:
+            return False
+        pivot_root = next(iter(root_set))  # find first elem from set as pivot
+        group1 = []
+        group2 = []
+        for i in xrange(len(self.parent)):
+            if self.is_connected(i, pivot_root):
+                group1.append(i)
+            else:
+                group2.append(i)
+        return group1, group2
+
 
 def team_without_enemies(enemy_map):
-    group1, enemy1, group2, enemy2 = set(), set(), set(), set()
+    if not enemy_map:
+        return [], []
+    if len(enemy_map) == 1:
+        return list(enemy_map.keys()), []
+
+    incompatible_map = defaultdict(set)
     for student, enemies in enemy_map.items():
-        enemy_set = set(enemies)
-        if not group1 or not group1.intersection(enemy_set) and student not in enemy1:
-            group1.add(student)
-            enemy1 |= enemy_set
-        elif not group2 or not group2.intersection(enemy_set) and student not in enemy2:
-            group2.add(student)
-            enemy2 |= enemy_set
-    
-    if len(group1) + len(group2) == len(enemy_map):
-        return list(group1), list(group2)
-    else:
-        return False
+        for enemy in enemies:
+            incompatible_map[student].add(enemy)
+            incompatible_map[enemy].add(student)
+
+    uf = DisjointSet(len(incompatible_map))
+    for student, enemies in incompatible_map.items():
+        for enemy in enemies:
+            if uf.is_connected(student, enemy):
+                # One cannot be friend with enemy
+                return False
+
+        # All enemies are friends
+        uf.union_all(list(enemies))
+
+    return uf.find_bipartite()
 
 
 class TeamWithoutEnemiesSpec(unittest.TestCase):
@@ -471,8 +529,8 @@ class TeamWithoutEnemiesSpec(unittest.TestCase):
         self.assert_result(expected, team_without_enemies(enemy_map))
 
     def test_one_node_graph(self):
-        enemy_map = {1: []}
-        expected = ([1], [])
+        enemy_map = {0: []}
+        expected = ([0], [])
         self.assert_result(expected, team_without_enemies(enemy_map))
 
     def test_disconnect_graph(self):
@@ -504,6 +562,16 @@ class TeamWithoutEnemiesSpec(unittest.TestCase):
             4: []
         }
         self.assertFalse(team_without_enemies(enemy_map))
+
+    def test_square2(self):
+        enemy_map = {
+            0: [3],
+            1: [2],
+            2: [1],
+            3: [0, 2]
+        }
+        expected = ([0, 2], [1, 3])
+        self.assert_result(expected, team_without_enemies(enemy_map))
 
 
 if __name__ == '__main__':
