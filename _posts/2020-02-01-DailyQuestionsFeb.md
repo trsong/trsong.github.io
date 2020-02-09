@@ -18,6 +18,15 @@ categories: Python/Java
 
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
+### Feb 9, 2020 \[Medium\] Multiply Strings
+---
+> **Question:** Given two strings which represent non-negative integers, multiply the two numbers and return the product as a string as well. You should assume that the numbers may be sufficiently large such that the built-in integer type will not be able to store the input (Python does have BigNum, but assume it does not exist).
+
+**Example:**
+```py
+multiply("11", "13")  # returns "143"
+```
+
 ### Feb 8, 2020 \[Easy\] Intersection of Lists
 ---
 > **Question:** Given 3 sorted lists, find the intersection of those 3 lists.
@@ -25,6 +34,10 @@ categories: Python/Java
 **Example:**
 ```py
 intersection([1, 2, 3, 4], [2, 4, 6, 8], [3, 4, 5])  # returns [4]
+```
+
+**Solution:** [https://repl.it/@trsong/Intersection-of-Lists](https://repl.it/@trsong/Intersection-of-Lists)
+```py
 ```
 
 ### Feb 7, 2020 \[Medium\] Similar Websites
@@ -37,7 +50,7 @@ Suppose k = 1, and the list of tuples is:
 
 [('a', 1), ('a', 3), ('a', 5),
  ('b', 2), ('b', 6),
- ('c', 1), ('c', 2), ('c', 3), ('c', 4), ('c', 5)
+ ('c', 1), ('c', 2), ('c', 3), ('c', 4), ('c', 5),
  ('d', 4), ('d', 5), ('d', 6), ('d', 7),
  ('e', 1), ('e', 3), ('e': 5), ('e', 6)]
  
