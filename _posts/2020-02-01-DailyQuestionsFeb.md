@@ -18,13 +18,124 @@ categories: Python/Java
 
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
-### Feb 9, 2020 \[Medium\] Multiply Strings
+### Feb 10, 2020 LC 790 \[Medium\] Domino and Tromino Tiling
+---
+> **Question:**  You are given a 2 x N board, and instructed to completely cover the board with the following shapes:
+>
+> - Dominoes, or 2 x 1 rectangles.
+> - Trominoes, or L-shapes.
+>
+> Given an integer N, determine in how many ways this task is possible.
+ 
+**Example:**
+```py
+if N = 4, here is one possible configuration, where A is a domino, and B and C are trominoes.
+
+A B B C
+A B C C
+```
+
+### Feb 9, 2020 LC 43 \[Medium\] Multiply Strings
 ---
 > **Question:** Given two strings which represent non-negative integers, multiply the two numbers and return the product as a string as well. You should assume that the numbers may be sufficiently large such that the built-in integer type will not be able to store the input (Python does have BigNum, but assume it does not exist).
 
 **Example:**
 ```py
 multiply("11", "13")  # returns "143"
+```
+
+**My thoughts:** Just try some example, `"abc" * "de" = (100a + 10b + c) * (10d + e) = 1000ad + 10be + ... + ce`. So it seems digit multiplication `a*d` is shifted left 3 (ie. 1000 * ad) and be is shifted left by 1 (ie. 10 * be). Thus the pattern is that the shift amount has something to do with each digit's position. Therefore, we can accumulate product of each pair of digits and push forward the carry.  
+
+**Solution:** [https://repl.it/@trsong/Multiply-Strings](https://repl.it/@trsong/Multiply-Strings)
+```py
+import unittest
+
+def multiply(num1, num2):
+    if num1 == "0" or num2 == "0":
+        return "0"
+
+    len1, len2 = len(num1), len(num2)
+    reverse_result = [0] * (len1 + len2)
+    reverse_num1 = num1[::-1]
+    reverse_num2 = num2[::-1]
+
+    # Shift and accumlate each digit 
+    for i, digit1 in enumerate(reverse_num1):
+        for j, digit2 in enumerate(reverse_num2):
+            product = int(digit1) * int(digit2)
+            shift_amount = i + j
+            product_lo, product_hi = product % 10, product // 10
+            reverse_result[shift_amount] += product_lo
+            reverse_result[shift_amount+1] += product_hi
+    
+    # Push forward carries
+    carry = 0
+    for i in xrange(len(reverse_result)):
+        reverse_result[i] += carry
+        carry, digit = reverse_result[i] // 10, reverse_result[i] % 10
+        reverse_result[i] = str(digit)
+
+    
+    # Remove leading zeros
+    raw_result = reverse_result[::-1]
+    leading_zero_ends = 0
+    while leading_zero_ends < len(raw_result):
+        if raw_result[leading_zero_ends] != '0':
+            break
+        leading_zero_ends += 1
+
+    result = raw_result[leading_zero_ends:]
+    return "".join(result)
+
+
+class MultiplySpec(unittest.TestCase):
+    def test_example(self):
+        num1, num2 = "11", "13"
+        expected = "143"
+        self.assertEqual(expected, multiply(num1, num2))
+    
+    def test_example2(self):
+        num1, num2 = "4154", "51454"
+        expected = "213739916"
+        self.assertEqual(expected, multiply(num1, num2))
+
+    def test_zero(self):
+        self.assertEqual("0", multiply("42", "0"))
+
+    def test_trivial_case(self):
+        num1, num2 = "1", "1"
+        expected = "1"
+        self.assertEqual(expected, multiply(num1, num2))
+
+    def test_operand_contains_zero(self):
+        num1, num2 = "9012", "2077"
+        expected = "18717924"
+        self.assertEqual(expected, multiply(num1, num2))
+
+    def test_should_omit_leading_zeros(self):
+        num1, num2 = "10", "10"
+        expected = "100"
+        self.assertEqual(expected, multiply(num1, num2))
+
+    def test_should_not_overflow(self):
+        num1, num2 = "99", "999999"
+        expected = "98999901"
+        self.assertEqual(expected, multiply(num1, num2))
+
+    def test_result_has_lot_of_zeros(self):
+        num1, num2 = "33667003667", "3"
+        expected = "101001011001"
+        self.assertEqual(expected, multiply(num1, num2))
+
+    def test_handle_super_large_numbers(self):
+        num1 = "654154154151454545415415454" 
+        num2 = "63516561563156316545145146514654"
+        expected = "41549622603955309777243716069997997007620439937711509062916"
+        self.assertEqual(expected, multiply(num1, num2))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
 ```
 
 ### Feb 8, 2020 \[Easy\] Intersection of Lists
