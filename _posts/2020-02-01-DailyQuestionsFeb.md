@@ -18,6 +18,18 @@ categories: Python/Java
 
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
+### Feb 11, 2020 \[Medium\] Shortest Distance to Character
+---
+> **Question:**  Given a string s and a character c, find the distance for all characters in the string to the character c in the string s. 
+>
+> You can assume that the character c will appear at least once in the string.
+
+**Example:**
+```py
+shortest_dist('helloworld', 'l') 
+# returns [2, 1, 0, 0, 1, 2, 2, 1, 0, 1]
+```
+
 ### Feb 10, 2020 LC 790 \[Medium\] Domino and Tromino Tiling
 ---
 > **Question:**  You are given a 2 x N board, and instructed to completely cover the board with the following shapes:
@@ -33,6 +45,91 @@ if N = 4, here is one possible configuration, where A is a domino, and B and C a
 
 A B B C
 A B C C
+```
+
+**Solution with DP:** [https://repl.it/@trsong/Domino-and-Tromino-Tiling](https://repl.it/@trsong/Domino-and-Tromino-Tiling)
+```py
+import unittest
+
+# Inspired by yuweiming70's solution for LC 790
+# https://bit.ly/3bwLz0y
+def domino_tiling(N):
+    if N <= 2:
+        return N
+
+    # Let f[n] represents # ways for 2 * n pieces:
+    # f[1]: x 
+    #       x
+    #
+    # f[2]: x x
+    #       x x
+    f = [0] * (N+1)
+    f[1] = 1 
+    f[2] = 2
+
+    # Let g[n] represents # ways for 2*n + 1 pieces:
+    # g[1]: x      or   x x
+    #       x x         x
+    #
+    # g[2]: x x    or   x x x  
+    #       x x x       x x
+    g = [0] * (N+1)
+    g[1] = 1
+    g[2] = 2  # domino + tromino or tromino + domino
+
+    # Pattern:
+    # f[n]: x x x x = f[n-1]: x x x y  +  f[n-2]: x x y y  + g[n-2]: x x x y + g[n-2]: x x y y
+    #       x x x x           x x x y             x x z z            x x y y           x x x y
+    #
+    # g[n]: x x x x x = f[n-1]: x x x y y + g[n-1]: x x y y 
+    #       x x x x             x x x y             x x x
+    for n in xrange(3, N+1):
+        g[n] = f[n-1] + g[n-1]
+        f[n] = f[n-1] + f[n-2] + 2 * g[n-2]
+
+    return f[N]
+
+
+class DominoTilingSpec(unittest.TestCase):
+    def test_empty_grid(self):
+        self.assertEqual(0, domino_tiling(0))
+        
+    def test_size_one(self):
+        """
+        A
+        A
+        """
+        self.assertEqual(1, domino_tiling(1))
+
+    def test_size_two(self):
+        """
+        A B or A A
+        A B    B B
+        """
+        self.assertEqual(2, domino_tiling(2))
+
+    def test_size_three(self):
+        """
+        x x C 
+        x x C    
+
+        x C C  
+        x B B
+
+        x C C or x x C
+        x x C    x C C
+        """
+        self.assertEqual(5, domino_tiling(3))
+
+    def test_size_four(self):
+        self.assertEqual(11, domino_tiling(4))
+
+    def test_size_five(self):
+        self.assertEqual(24, domino_tiling(5))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
 ```
 
 ### Feb 9, 2020 LC 43 \[Medium\] Multiply Strings
