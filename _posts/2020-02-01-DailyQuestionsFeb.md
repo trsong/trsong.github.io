@@ -49,7 +49,7 @@ shortest_dist('helloworld', 'l')
 # returns [2, 1, 0, 0, 1, 2, 2, 1, 0, 1]
 ```
 
-**My thoughts:** The idea is similar to Problem ["LC 42 Trap Rain Water"](https://trsong.github.io/python/java/2019/05/01/DailyQuestions/#may-11-2019-lc-42-hard-trapping-rain-water): we can simple scan from left to know the shortest distance to nearest character on the left and vice versa when we can from right to left.  
+**My thoughts:** The idea is similar to Problem ["LC 42 Trap Rain Water"](https://trsong.github.io/python/java/2019/05/01/DailyQuestions/#may-11-2019-lc-42-hard-trapping-rain-water): we can simply scan from left to know the shortest distance from nearest character on the left and vice versa when we can from right to left.  
 
 **Solution:** [https://repl.it/@trsong/Shortest-Distance-to-Character](https://repl.it/@trsong/Shortest-Distance-to-Character)
 ```py
