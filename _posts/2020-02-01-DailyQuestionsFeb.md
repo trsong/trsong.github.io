@@ -18,6 +18,16 @@ categories: Python/Java
 
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
+### Feb 13, 2020 \[Easy\] Minimum Step to Reach One
+---
+> **Question:** Given a positive integer N, find the smallest number of steps it will take to reach 1.
+>
+> There are two kinds of permitted steps:
+> - You may decrement N to N - 1.
+> - If a * b = N, you may decrement N to the larger of a and b.
+> 
+> For example, given 100, you can reach 1 in five steps with the following route: 100 -> 10 -> 9 -> 3 -> 2 -> 1.
+
 ### Feb 12, 2020 LC 218 \[Hard\] City Skyline
 ---
 > **Question:** Given a list of building in the form of `(left, right, height)`, return what the skyline should look like. The skyline should be in the form of a list of `(x-axis, height)`, where x-axis is the next point where there is a change in height starting from 0, and height is the new height starting from the x-axis.
@@ -35,6 +45,11 @@ Explanation:
 pos: 0 1 2 3 4 5 6 7 8 9
 We have two buildings: one has height 3 and the other 5. The city skyline is just the outline of combined looking. 
 The result represents the scanned height of city skyline from left to right.
+```
+
+**Solution with PriorityQueue:** [https://repl.it/@trsong/City-Skyline](https://repl.it/@trsong/City-Skyline)
+```py
+
 ```
 
 ### Feb 11, 2020 LC 821 \[Medium\] Shortest Distance to Character
