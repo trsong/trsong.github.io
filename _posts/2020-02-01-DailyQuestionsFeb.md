@@ -37,11 +37,11 @@ categories: Python/Java
 Input: [(2, 8, 3), (4, 6, 5)]
 Output: [(2, 3), (4, 5), (7, 3), (9, 0)]
 Explanation:
-             2 2 2
-             2 2 2
-         1 1 2 2 2 1 1
-         1 1 2 2 2 1 1
-         1 1 2 2 2 1 1      
+           2 2 2
+           2   2
+       1 1 2 1 2 1 1
+       1   2   2   1
+       1   2   2   1      
 pos: 0 1 2 3 4 5 6 7 8 9
 We have two buildings: one has height 3 and the other 5. The city skyline is just the outline of combined looking. 
 The result represents the scanned height of city skyline from left to right.
@@ -49,7 +49,149 @@ The result represents the scanned height of city skyline from left to right.
 
 **Solution with PriorityQueue:** [https://repl.it/@trsong/City-Skyline](https://repl.it/@trsong/City-Skyline)
 ```py
+import unittest
+from Queue import PriorityQueue
 
+def scan_city_skyline(buildings):
+    unique_building_ends = set()
+    for left_pos, right_pos, _ in buildings:
+        # Critial positions are left end and right end + 1 of each building
+        unique_building_ends.add(left_pos)
+        unique_building_ends.add(right_pos+1)
+
+    res = []
+    max_heap = PriorityQueue()
+    prev_height = 0
+    index = 0
+    
+    for bar in sorted(unique_building_ends):
+        # Add all buildings whose starts before the bar
+        while index < len(buildings):
+            left_pos, right_pos, height = buildings[index]
+            if left_pos > bar:
+                break
+            max_heap.put((-height, right_pos))
+            index += 1
+        
+        # Remove building that ends before the bar
+        while not max_heap.empty():
+            _, right_pos = max_heap.queue[0]
+            if right_pos < bar:
+                max_heap.get()
+            else:
+                break
+
+        # We want to make sure we get max height of building and bar is between both ends 
+        height = -max_heap.queue[0][0] if not max_heap.empty() else 0
+        if height != prev_height:
+            res.append((bar, height))
+            prev_height = height
+    
+    return res
+
+
+
+class ScanCitySkylineSpec(unittest.TestCase):
+    def test_example(self):
+        """
+                     2 2 2
+                     2   2
+                 1 1 2   2 1 1
+                 1   2   2   1
+                 1   2   2   1      
+
+        pos: 0 1 2 3 4 5 6 7 8 9
+        """
+        buildings = [(2, 8, 3), (4, 6, 5)]
+        expected = [(2, 3), (4, 5), (7, 3), (9, 0)]
+        self.assertEqual(expected, scan_city_skyline(buildings))
+
+    def test_multiple_building_overlap(self):
+        buildings = [(2, 9, 10), (3, 7, 15), (5, 12, 12), (15, 20, 10), (19, 24, 8)]
+        expected = [(2, 10), (3, 15), (8, 12), (13, 0), (15, 10), (21, 8), (25, 0)]
+        self.assertEqual(expected, scan_city_skyline(buildings))
+
+    def test_empty_land(self):
+        self.assertEqual([], scan_city_skyline([]))
+
+    def test_length_one_building(self):
+        buildings = [(0, 0, 1), (0, 0, 10)]
+        self.assertEqual([(0, 10), (1, 0)], scan_city_skyline(buildings))
+
+    def test_upward_staircase(self):
+        """
+                     4 4 4 4 4
+                   3 3 3 3   4
+                 2 2 2   3   4
+               1 1 1 1 1 3   4
+               1 2   2 1 3   4
+               1 2   2 1 3   4
+
+        pos: 0 1 2 3 4 5 6 7 8 9
+        """
+        buildings = [(1, 5, 3), (2, 4, 4), (3, 6, 5), (4, 8, 6)]
+        expected = [(1, 3), (2, 4), (3, 5), (4, 6), (9, 0)]
+        self.assertEqual(expected, scan_city_skyline(buildings))
+
+    def test_downward_staircase(self):
+        """
+             1 1 1 1 1 
+             1       1
+             1 2 2 2 2 2 2
+             1 2   3 3 3 3 3 3
+             1 2   3 1   2   3
+
+        pos: 0 1 2 3 4 5 6 7 8 9
+        """
+        buildings = [(0, 4, 5), (1, 6, 3), (3, 8, 2)]
+        expected = [(0, 5), (5, 3), (7, 2), (9, 0)]
+        self.assertEqual(expected, scan_city_skyline(buildings))
+
+    def test_same_height_overlap_skyline(self):
+        """
+             1 1 1 2 2 2 2 2 3 3 2 2   4 4 4
+             1     2 1       3 3   2   4   4 
+
+        pos: 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6
+        """
+        buildings = [(0, 4, 2), (3, 11, 2), (8, 9, 2), (13, 15, 2)]
+        expected = [(0, 2), (12, 0), (13, 2), (16, 0)]
+        self.assertEqual(expected, scan_city_skyline(buildings))
+
+    def test_non_overlap_sky_line(self):
+        """    
+                                         5 5 5  
+               1 1 1                     5   5
+               1   1 2 2 2 3 3           5   5
+               1   1 2   2 3 3     4 4   5   5
+        
+        pos: 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7
+        """
+        buildings = [(1, 3, 3), (4, 6, 2), (7, 8, 2), (11, 12, 1), (14, 16, 4)]
+        expected = [(1, 3), (4, 2), (9, 0), (11, 1), (13, 0), (14, 4), (17, 0)]
+        self.assertEqual(expected, scan_city_skyline(buildings))
+
+    def test_down_hill_and_up_hill(self):
+        """
+               1 1 1 1 1         4 4
+               1       1         4 4
+               1 2 2 2 2 2 2 3 3 4 4 3
+               1 2     1   3 2   4 4 3
+
+        pos: 0 1 2 3 4 5 6 7 8 9 0 1 2 3 
+        """
+        buildings = [(1, 5, 4), (2, 8, 2), (7, 12, 2), (10, 11, 4)]
+        expected = [(1, 4), (6, 2), (10, 4), (12, 2), (13, 0)]
+        self.assertEqual(expected, scan_city_skyline(buildings))
+
+    def test_height_zero_buildings(self):
+        buildings = [(0, 1, 0), (0, 2, 0), (2, 11, 0), (4, 8, 0), (8, 11, 0), (11, 200, 0), (300, 400, 0)]
+        expected = []
+        self.assertEqual(expected, scan_city_skyline(buildings))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
 ```
 
 ### Feb 11, 2020 LC 821 \[Medium\] Shortest Distance to Character
