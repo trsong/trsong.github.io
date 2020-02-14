@@ -18,6 +18,17 @@ categories: Python/Java
 
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
+
+### Feb 14, 2020 \[Medium\] Minimum Number of Operations
+---
+> **Question:** You are only allowed to perform 2 operations, multiply a number by 2, or subtract a number by 1. Given a number x and a number y, find the minimum number of operations needed to go from x to y.
+
+**Example:**
+```py
+min_operations(6, 20) # returns 3  
+# (((6 - 1) * 2) * 2) = 20 : 3 operations needed only
+```
+
 ### Feb 13, 2020 \[Easy\] Minimum Step to Reach One
 ---
 > **Question:** Given a positive integer N, find the smallest number of steps it will take to reach 1.
@@ -27,6 +38,91 @@ categories: Python/Java
 > - If a * b = N, you may decrement N to the larger of a and b.
 > 
 > For example, given 100, you can reach 1 in five steps with the following route: 100 -> 10 -> 9 -> 3 -> 2 -> 1.
+
+
+**DP Solution:** [https://repl.it/@trsong/Minimum-Step-to-Reach-One-DP-Solution](https://repl.it/@trsong/Minimum-Step-to-Reach-One-DP-Solution)
+```py
+def min_step(target):
+    dp = [float('inf')] * (target + 1)
+    dp[1] = 0
+
+    for i in xrange(1, target+1):
+        if i < target:
+            dp[i+1] = min(dp[i+1], dp[i] + 1)
+        for j in xrange(2, min(i, target) + 1):
+            if i * j > target:
+                break
+            product = i * j
+            dp[product] = min(dp[product], dp[i] + 1)
+            
+    return dp[target]
+```
+
+**Solution with BFS:** [https://repl.it/@trsong/Minimum-Step-to-Reach-One-BFS](https://repl.it/@trsong/Minimum-Step-to-Reach-One-BFS)
+```py
+import unittest
+import math
+
+def min_step(target):
+    visited = set()
+    queue = [target]
+    level = 0
+
+    while queue:
+        for _ in xrange(len(queue)):
+            cur = queue.pop(0)
+            if cur in visited:
+                continue
+            if cur == 1:
+                return level
+            visited.add(cur)
+
+            # neighbors: number that are 1 distance away
+            sqrt_cur = int(math.sqrt(cur))
+            for neighbor in xrange(sqrt_cur, cur):
+                if neighbor * neighbor < cur or neighbor in visited or cur % neighbor != 0:
+                    continue
+                queue.append(neighbor)
+
+            if cur > 1 and cur - 1 not in visited:
+                queue.append(cur - 1)
+        level += 1
+
+    return None
+            
+
+class MinStepSpec(unittest.TestCase):
+    def test_example(self):
+        # 100 -> 10 -> 9 -> 3 -> 2 -> 1
+        self.assertEqual(5, min_step(100))
+
+    def test_one(self):
+        self.assertEqual(0, min_step(1))
+
+    def test_prime_number(self):
+        # 17 -> 16 -> 4 -> 2 -> 1
+        self.assertEqual(4, min_step(17))
+
+    def test_even_number(self):
+        # 6 -> 3 -> 2 -> 1
+        self.assertEqual(3, min_step(6))
+
+    def test_even_number2(self):
+        # 50 -> 10 -> 5 -> 4 -> 2 -> 1
+        self.assertEqual(5, min_step(50))
+
+    def test_power_of_2(self):
+        # 1024 -> 32 -> 8 -> 4 -> 2 -> 1
+        self.assertEqual(5, min_step(1024))
+
+    def test_square_number(self):
+        # 16 -> 4 -> 2 -> 1
+        self.assertEqual(3, min_step(16))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
+```
 
 ### Feb 12, 2020 LC 218 \[Hard\] City Skyline
 ---
