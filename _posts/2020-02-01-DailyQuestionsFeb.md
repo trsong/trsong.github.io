@@ -19,7 +19,17 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
 
-### Feb 14, 2020 \[Medium\] Minimum Number of Operations
+### Feb 15, 2020 \[Easy\] Common Characters
+---
+> **Question:** Given n strings, find the common characters in all the strings. In simple words, find characters that appear in all the strings and display them in alphabetical order or lexicographical order.
+
+**Example:**
+```py
+common_characters(['google', 'facebook', 'youtube'])
+# ['e', 'o']
+```
+
+### Feb 14, 2020 \[Easy\] Minimum Number of Operations
 ---
 > **Question:** You are only allowed to perform 2 operations, multiply a number by 2, or subtract a number by 1. Given a number x and a number y, find the minimum number of operations needed to go from x to y.
 
@@ -27,6 +37,78 @@ categories: Python/Java
 ```py
 min_operations(6, 20) # returns 3  
 # (((6 - 1) * 2) * 2) = 20 : 3 operations needed only
+```
+
+**Solution with BFS:** [https://repl.it/@trsong/Minimum-Number-of-Operations](https://repl.it/@trsong/Minimum-Number-of-Operations)
+```py
+import unittest
+
+def min_operations(start, end):
+    queue = [start]
+    level = 0
+    visited = set()
+
+    while queue:
+        for _ in xrange(len(queue)):
+            cur = queue.pop(0)
+            if cur == end:
+                return level
+            if cur in visited:
+                continue
+            visited.add(cur)
+            
+            is_same_sign = cur * queue > 0
+            double = 2 * cur
+            if is_same_sign and abs(cur) < abs(end) and double not in visited:
+                queue.append(double)
+            
+            decrement = cur - 1
+            if decrement not in visited:
+                queue.append(decrement)
+        level += 1
+    
+    return None
+
+
+class MinOperationSpec(unittest.TestCase):
+    def test_example(self):
+        # (((6 - 1) * 2) * 2) = 20 
+        self.assertEqual(3, min_operations(6, 20))
+
+    def test_first_double_then_decrement(self):
+        # 4 * 2 - 1 = 7
+        self.assertEqual(2, min_operations(4, 7))
+
+    def test_first_decrement_then_double(self):
+        # (4 - 1) * 2 = 6
+        self.assertEqual(2, min_operations(4, 6))
+
+    def test_first_decrement_then_double2(self):
+        # (2 * 2 - 1) * 2 - 1 = 5
+        self.assertEqual(4, min_operations(2, 5))
+
+    def test_first_decrement_then_double3(self):
+        # (((10 * 2) - 1 ) * 2 - 1) * 2
+        self.assertEqual(5, min_operations(10, 74))
+
+    def test_no_need_to_apply_operations(self):
+        self.assertEqual(0, min_operations(2, 2))
+
+    def test_avoid_inifite_loop(self):
+        # ((0 - 1 - 1) * 2  - 1) * 2  = -10
+        self.assertEqual(5, min_operations(0, -10))
+
+    def test_end_is_smaller(self):
+        # 10 - 1 -1 ... - 1 = 0
+        self.assertEqual(10, min_operations(10, 0))
+
+    def test_end_is_smaller2(self):
+        # (10 - 1 -1 ... - 1) * 2 * 2 = 0
+        self.assertEqual(13, min_operations(10, -4))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
 ```
 
 ### Feb 13, 2020 \[Easy\] Minimum Step to Reach One
