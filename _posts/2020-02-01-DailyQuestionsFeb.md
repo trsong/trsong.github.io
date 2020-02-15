@@ -19,6 +19,25 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
 
+### Feb 16, 2020 \[Medium\] Find All Cousins in Binary Tree
+---
+> **Question:** Two nodes in a binary tree can be called cousins if they are on the same level of the tree but have different parents. 
+>
+> Given a binary tree and a particular node, find all cousins of that node.
+
+
+**Example:**
+```py
+In the following diagram 4 and 6 are cousins:
+
+    1
+   / \
+  2   3
+ / \   \
+4   5   6
+```
+
+
 ### Feb 15, 2020 \[Easy\] Common Characters
 ---
 > **Question:** Given n strings, find the common characters in all the strings. In simple words, find characters that appear in all the strings and display them in alphabetical order or lexicographical order.
@@ -28,6 +47,83 @@ categories: Python/Java
 common_characters(['google', 'facebook', 'youtube'])
 # ['e', 'o']
 ```
+
+**Solution with Counting Sort:** [https://repl.it/@trsong/Common-Characters](https://repl.it/@trsong/Common-Characters)
+```py
+import unittest
+
+CHAR_SET_SIZE = 128
+
+def find_common_characters(words):
+    if not words:
+        return []
+
+    n = len(words)   
+    char_count = [0] * CHAR_SET_SIZE
+    for index, word in enumerate(words):
+        expected_char_occurance = index
+        for ch in word:
+            ord_ch = ord(ch)
+            # for each char in current word we only accept same char in previous word
+            if char_count[ord_ch] == expected_char_occurance:
+                char_count[ord_ch] += 1
+
+    res = []
+    for i, count in enumerate(char_count):
+        if count == n:
+            ch = chr(i)
+            res.append(ch)
+    return res
+
+
+class FindCommonCharacterSpec(unittest.TestCase):
+    def test_example(self):
+        words = ['google', 'facebook', 'youtube']
+        expected = ['e', 'o']
+        self.assertEqual(expected, find_common_characters(words))
+
+    def test_empty_array(self):
+        self.assertEqual([], find_common_characters([]))
+
+    def test_contains_empty_word(self):
+        words = ['a', 'a', 'aa', '']
+        expected = []
+        self.assertEqual(expected, find_common_characters(words))
+
+    def test_different_intersections(self):
+        words = ['aab', 'bbc', 'acc']
+        expected = []
+        self.assertEqual(expected, find_common_characters(words))
+
+    def test_contains_duplicate_characters(self):
+        words = ['zbbccaa', 'fcca', 'gaaacaaac', 'tccaccc']
+        expected = ['a', 'c']
+        self.assertEqual(expected, find_common_characters(words))
+
+    def test_captical_letters(self):
+        words = ['aAbB', 'aAb', 'AaB']
+        expected = ['A', 'a']
+        self.assertEqual(expected, find_common_characters(words))
+    
+    def test_numbers(self):
+        words = ['123321312', '3321', '1123']
+        expected = ['1', '2', '3']
+        self.assertEqual(expected, find_common_characters(words))
+
+    def test_output_in_alphanumeric_orders(self):
+        words = ['123a!  bcABC', '3abc  !ACB12?', 'A B abC! c1c2 b 3']
+        expected = [' ', '!', '1', '2', '3', 'A', 'B', 'C', 'a', 'b', 'c']
+        self.assertEqual(expected, find_common_characters(words))
+
+    def test_no_overlapping_letters(self):
+        words = ['aabbcc', '112233', 'AABBCC']
+        expected = []
+        self.assertEqual(expected, find_common_characters(words))  
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
+```
+
 
 ### Feb 14, 2020 \[Easy\] Minimum Number of Operations
 ---
