@@ -19,6 +19,27 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
 
+### Feb 18, 2020 \[Medium\] 4 Sum
+---
+> **Question:** Given a list of numbers, and a target number n, find all unique combinations of a, b, c, d, such that a + b + c + d = n.
+
+**Example 1:**
+```py
+fourSum([1, 1, -1, 0, -2, 1, -1], 0)
+# returns [[-1, -1, 1, 1], [-2, 0, 1, 1]]
+```
+
+**Example 2:**
+```py
+fourSum([3, 0, 1, -5, 4, 0, -1], 1)
+# returns [[-5, -1, 3, 4]]
+```
+
+**Example 3:**
+``py
+fourSum([0, 0, 0, 0, 0], 0)
+# returns [[0, 0, 0, 0]]
+``
 
 ### Feb 17, 2020 \[Medium\] Paint House
 ---
@@ -26,6 +47,101 @@ categories: Python/Java
 >
 > Given an N by K matrix where the n-th row and k-th column represents the cost to build the n-th house with k-th color, return the minimum cost which achieves this goal.
 
+
+**Solution with DP:** [https://repl.it/@trsong/Paint-House](https://repl.it/@trsong/Paint-House)
+```py
+import unittest
+
+def min_paint_houses_cost(paint_cost):
+    if not paint_cost or not paint_cost[0]:
+        return 0
+
+    num_houses, num_colors = len(paint_cost), len(paint_cost[0])
+    # Let dp[n][c] represents the min cost for first n houses with last house end at color c
+    # dp[n][c] = min(dp[n-1][k]) + paint_cost[n-1][c] where color k != c
+    dp = [[float('inf') for _ in xrange(num_colors)] for _ in xrange(num_houses+1)]
+
+    for c in xrange(num_colors):
+        dp[0][c] = 0
+
+    for n in xrange(1, num_houses+1):
+        first_min_cost = float('inf')
+        first_min_color = -1
+        second_min_cost = float('inf')
+
+        for end_color, prev_cost in enumerate(dp[n-1]):
+            if prev_cost < first_min_cost:
+                second_min_cost = first_min_cost
+                first_min_cost = prev_cost
+                first_min_color = end_color
+            elif prev_cost < second_min_cost:
+                second_min_cost = prev_cost
+
+        for color in xrange(num_colors):
+            if color == first_min_color:
+                dp[n][color] = second_min_cost + paint_cost[n-1][color]
+            else:
+                dp[n][color] = first_min_cost + paint_cost[n-1][color]
+    
+    # The global min cost is the min cost among n houses end in any color
+    min_cost = min(dp[num_houses])
+    return min_cost
+
+
+class MinPaintHousesCostSpec(unittest.TestCase):
+    def test_three_houses(self):
+        paint_cost = [
+            [7, 3, 8, 6, 1, 2],
+            [5, 6, 7, 2, 4, 3],
+            [10, 1, 4, 9, 7, 6]
+        ]
+        # min_cost: 1, 2, 1
+        self.assertEqual(4, min_paint_houses_cost(paint_cost))
+
+    def test_four_houses(self):
+        paint_cost = [
+            [7, 3, 8, 6, 1, 2],
+            [5, 6, 7, 2, 4, 3],
+            [10, 1, 4, 9, 7, 6],
+            [10, 1, 4, 9, 7, 6]
+        ] 
+        # min_cost: 1, 2, 4, 1
+        self.assertEqual(8, min_paint_houses_cost(paint_cost))
+
+    def test_long_term_or_short_term_cost_tradeoff(self):
+        paint_cost = [
+            [0, 1],
+            [1, 0],
+            [0, 1],
+            [0, 5]
+        ]
+        # min_cost: 1, 1, 1, 0
+        self.assertEqual(3, min_paint_houses_cost(paint_cost))
+
+    def test_long_term_or_short_term_cost_tradeoff2(self):
+        paint_cost = [
+            [1, 2, 3],
+            [3, 2, 1],
+            [1, 3, 2],
+            [1, 1, 1],
+            [5, 2, 1]
+        ]
+        # min_cost: 1, 1, 1, 1, 1
+        self.assertEqual(5, min_paint_houses_cost(paint_cost))
+
+    def test_no_houses(self):
+        self.assertEqual(0, min_paint_houses_cost([]))
+
+    def test_one_house(self):
+        paint_cost = [
+            [3, 2, 1, 2, 3, 4, 5]
+        ]
+        self.assertEqual(1, min_paint_houses_cost(paint_cost))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
+```
 
 ### Feb 16, 2020 \[Medium\] Find All Cousins in Binary Tree
 ---
