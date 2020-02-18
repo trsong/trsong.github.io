@@ -18,6 +18,15 @@ categories: Python/Java
 
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
+### Feb 19, 2020 \[Easy\] Sum Binary Numbers
+---
+> **Question:** Given two binary numbers represented as strings, return the sum of the two binary numbers as a new binary represented as a string. Do this without converting the whole binary string into an integer.
+
+**Example:**
+```py
+sum_binary("11101", "1011")
+# returns "101000"
+```
 
 ### Feb 18, 2020 \[Medium\] 4 Sum
 ---
@@ -39,6 +48,101 @@ fourSum([3, 0, 1, -5, 4, 0, -1], 1)
 ```py
 fourSum([0, 0, 0, 0, 0], 0)
 # returns [[0, 0, 0, 0]]
+```
+
+**Solution:** [https://repl.it/@trsong/4-Sum](https://repl.it/@trsong/4-Sum)
+```py
+import unittest
+
+def two_sum(nums, target, start, end):
+    while start < end:
+        sum = nums[start] + nums[end]
+        if sum > target:
+            end -= 1
+        elif sum < target:
+            start += 1
+        else:
+            yield nums[start], nums[end]
+            start += 1
+            end -= 1
+            while start < end and nums[start-1] == nums[start]:
+                start += 1
+            while start < end and nums[end+1] == nums[end]:
+                end -= 1
+
+
+def four_sum(nums, target):
+    nums.sort()
+    n = len(nums)
+    res = []
+    for i, first in enumerate(nums):
+        if i > 0 and nums[i-1] == nums[i]:
+            continue
+
+        for j in xrange(i+1, n-2):
+            if j > i+1 and nums[j-1] == nums[j]:
+                continue
+
+            second = nums[j]
+            two_sum_target = target - first - second
+
+            for third, fourth in two_sum(nums, two_sum_target, j+1, n-1):
+                res.append([first, second, third, fourth])
+
+    return res
+
+            
+class FourSumSpec(unittest.TestCase):
+    def assert_result(self, expected, result):
+        self.assertEqual(len(expected), len(result))
+        for lst in expected:
+            lst.sort()
+        for lst2 in result:
+            lst2.sort()
+        expected.sort()
+        result.sort()
+        self.assertEqual(expected, result)
+
+    def test_example1(self):
+        target, nums = 0, [1, 1, -1, 0, -2, 1, -1]
+        expected = [[-1, -1, 1, 1], [-2, 0, 1, 1]]
+        self.assert_result(expected, four_sum(nums, target))
+
+    def test_example2(self):
+        target, nums = 1, [3, 0, 1, -5, 4, 0, -1]
+        expected = [[-5, -1, 3, 4]]
+        self.assert_result(expected, four_sum(nums, target))
+
+    def test_example3(self):
+        target, nums = 0, [0, 0, 0, 0, 0]
+        expected = [[0, 0, 0, 0]]
+        self.assert_result(expected, four_sum(nums, target))
+
+    def test_not_enough_elements(self):
+        target, nums = 0, [0, 0, 0]
+        expected = []
+        self.assert_result(expected, four_sum(nums, target))
+
+    def test_unable_to_find_target_sum(self):
+        target, nums = 0, [-1, -2, -3, -1, 0, 0, 0]
+        expected = []
+        self.assert_result(expected, four_sum(nums, target))
+
+    def test_all_positives(self):
+        target, nums = 23, [10, 2, 3, 4, 5, 9, 7, 8]
+        expected = [
+            [2, 3, 8, 10], 
+            [2, 4, 7, 10], 
+            [2, 4, 8, 9], 
+            [2, 5, 7, 9], 
+            [3, 4, 7, 9], 
+            [3, 5, 7, 8]
+        ]
+        self.assert_result(expected, four_sum(nums, target))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
 ```
 
 ### Feb 17, 2020 \[Medium\] Paint House
