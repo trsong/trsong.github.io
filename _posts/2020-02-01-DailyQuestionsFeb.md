@@ -36,10 +36,10 @@ fourSum([3, 0, 1, -5, 4, 0, -1], 1)
 ```
 
 **Example 3:**
-``py
+```py
 fourSum([0, 0, 0, 0, 0], 0)
 # returns [[0, 0, 0, 0]]
-``
+```
 
 ### Feb 17, 2020 \[Medium\] Paint House
 ---
