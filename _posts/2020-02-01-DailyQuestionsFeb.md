@@ -18,6 +18,21 @@ categories: Python/Java
 
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
+### Feb 20, 2020 \[Medium\]  Generate Brackets
+---
+> **Question:** Given a number n, generate all possible combinations of n well-formed brackets.
+
+**Example 1:**
+```py
+generate_brackets(1)  # returns ['()']
+```
+
+**Example 2:**
+```py
+generate_brackets(3)  # returns ['((()))', '(()())', '()(())', '()()()', '(())()']
+```
+
+
 ### Feb 19, 2020 \[Easy\] Sum Binary Numbers
 ---
 > **Question:** Given two binary numbers represented as strings, return the sum of the two binary numbers as a new binary represented as a string. Do this without converting the whole binary string into an integer.
@@ -26,6 +41,72 @@ categories: Python/Java
 ```py
 sum_binary("11101", "1011")
 # returns "101000"
+```
+
+**Solution:** [https://repl.it/@trsong/Sum-Binary-Numbers](https://repl.it/@trsong/Sum-Binary-Numbers)
+```py
+import unittest
+
+def binary_sum(bin1, bin2):
+    reverse_result = []
+    i = len(bin1) - 1
+    j = len(bin2) - 1
+    has_carry = False
+    
+    while i >= 0 or j >= 0:
+        digit_sum = 1 if has_carry else 0
+        if i >= 0:
+            digit_sum += int(bin1[i])
+            i -= 1
+        if j >= 0:
+            digit_sum += int(bin2[j])
+            j -=1
+        
+        has_carry = digit_sum > 1
+        digit_sum %= 2
+        reverse_result.append(str(digit_sum))
+    
+    if has_carry:
+        reverse_result.append("1")
+    reverse_result.reverse()
+
+    return "".join(reverse_result)
+
+
+class BinarySumSpec(unittest.TestCase):
+    def test_example(self):
+        bin1 = "11101"
+        bin2 = "1011"
+        expected = "101000"
+        self.assertEqual(expected, binary_sum(bin1, bin2))
+
+    def test_add_zero(self):
+        bin1 = "0"
+        bin2 = "0"
+        expected = "0"
+        self.assertEqual(expected, binary_sum(bin1, bin2))
+
+    def test_should_not_overflow(self):
+        bin1 = "1111111"
+        bin2 = "1111111"
+        expected = "11111110"
+        self.assertEqual(expected, binary_sum(bin1, bin2))
+
+    def test_calculate_carry_correctly(self):
+        bin1 = "1111111"
+        bin2 = "100"
+        expected = "10000011"
+        self.assertEqual(expected, binary_sum(bin1, bin2))
+        
+    def test_no_overlapping_digits(self):
+        bin1 = "10100101"
+        bin2 =  "1011010"
+        expected = "11111111"
+        self.assertEqual(expected, binary_sum(bin1, bin2))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
 ```
 
 ### Feb 18, 2020 \[Medium\] 4 Sum
