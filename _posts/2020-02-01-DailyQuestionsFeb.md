@@ -18,6 +18,31 @@ categories: Python/Java
 
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
+
+### Feb 21, 2020 LC 240 [Medium] Search a 2D Matrix II
+---
+> **Question:** Write an efficient algorithm that searches for a value in an m x n matrix. This matrix has the following properties:
+
+- Integers in each row are sorted in ascending from left to right.
+- Integers in each column are sorted in ascending from top to bottom.
+
+**Example:**
+
+```py
+Consider the following matrix:
+
+[
+  [ 1,  4,  7, 11, 15],
+  [ 2,  5,  8, 12, 19],
+  [ 3,  6,  9, 16, 22],
+  [10, 13, 14, 17, 24],
+  [18, 21, 23, 26, 30]
+]
+Given target = 5, return True.
+Given target = 20, return False.
+```
+
+
 ### Feb 20, 2020 \[Medium\]  Generate Brackets
 ---
 > **Question:** Given a number n, generate all possible combinations of n well-formed brackets.
@@ -31,6 +56,57 @@ generate_brackets(1)  # returns ['()']
 ```py
 generate_brackets(3)  # returns ['((()))', '(()())', '()(())', '()()()', '(())()']
 ```
+
+**Solution with Backtracking:** [https://repl.it/@trsong/Generate-Brackets](https://repl.it/@trsong/Generate-Brackets)
+```py
+import unittest
+
+
+def generate_brackets(n):
+    if n <= 0:
+        return []
+    res = []
+    string_buffer = []
+    backtrack_brackets(res, string_buffer, n, n)
+    return res
+
+def backtrack_brackets(res, string_buffer, remain_left, remain_right):
+    if remain_left == 0 and remain_right == 0:
+        res.append("".join(string_buffer))
+    else:
+        if remain_left > 0:
+            string_buffer.append('(')
+            backtrack_brackets(res, string_buffer, remain_left-1, remain_right)
+            string_buffer.pop()
+        if remain_right > remain_left:
+            string_buffer.append(')')
+            backtrack_brackets(res, string_buffer, remain_left, remain_right-1)
+            string_buffer.pop()
+
+
+class GenerateBracketSpec(unittest.TestCase):
+    def assert_result(self, expected, result):
+        self.assertEqual(sorted(expected), sorted(result))
+
+    def test_example1(self):
+        self.assert_result(['()'], generate_brackets(1))
+
+    def test_example2(self):
+        n, expected = 3, ['((()))', '(()())', '()(())', '()()()', '(())()']
+        self.assert_result(expected, generate_brackets(n))
+
+    def test_input_size_is_two(self):
+        n, expected = 2, ['()()', '(())']
+        self.assert_result(expected, generate_brackets(n))
+
+    def test_input_size_is_zero(self):
+        self.assert_result([], generate_brackets(0))
+            
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
+```
+
 
 
 ### Feb 19, 2020 \[Easy\] Sum Binary Numbers
