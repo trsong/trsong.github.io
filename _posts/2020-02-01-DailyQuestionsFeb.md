@@ -19,6 +19,21 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
 
+### Feb 22, 2020 LC 79 [Medium] Word Search
+---
+> **Question:** You are given a 2D array of characters, and a target string. Return whether or not the word target word exists in the matrix. Unlike a standard word search, the word must be either going left-to-right, or top-to-bottom in the matrix.
+
+**Example:**
+```py
+[['F', 'A', 'C', 'I'],
+ ['O', 'B', 'Q', 'P'],
+ ['A', 'N', 'O', 'B'],
+ ['M', 'A', 'S', 'S']]
+
+Given this matrix, and the target word FOAM, you should return true, as it can be found going up-to-down in the first column.
+```
+
+
 ### Feb 21, 2020 LC 240 [Medium] Search a 2D Matrix II
 ---
 > **Question:** Write an efficient algorithm that searches for a value in an m x n matrix. This matrix has the following properties:
@@ -42,6 +57,106 @@ Given target = 5, return True.
 Given target = 20, return False.
 ```
 
+**My thoughts:** This problem can be solved using Divide and Conquer. First we find a mid-point (mid of row and column point). We break the matrix into 4 sub-matrices: top-left, top-right, bottom-left, bottom-right. And notice the following properties:
+1. number in top-left matrix is strictly is **less** than mid-point 
+2. number in bottom-right matrix is strictly **greater** than mid-point
+3. number in the other two could be **greater** or **smaller** than mid-point, we cannot say until find out
+
+So each time when we find a mid-point in recursion, if target number is greater than mid-point then we can say that it cannot be in top-left matrix (property 1). So we check all other 3 matrices except top-left.
+
+Or if the target number is smaller than mid-point then we can say it cannot be in bottom-right matrix (property 2). We check all other 3 matrices except bottom-right.
+
+Therefore we have `T(mn) = 3/4 * (mn/4) + O(1)`. By Master Theorem, the time complexity is `O(log(mn)) = O(log(m) + log(n))`
+
+**Solution with DFS and Binary Search:** [https://repl.it/@trsong/Search-a-Row-and-Column-Sorted-2D-Matrix](https://repl.it/@trsong/Search-a-Row-and-Column-Sorted-2D-Matrix)
+```py
+import unittest
+
+def search_matrix(matrix, target):
+    if not matrix:
+        return False
+
+    n, m = len(matrix), len(matrix[0])
+    stack = [(0, n-1, 0, m-1)]
+    while stack:
+        row_lo, row_hi, col_lo, col_hi = stack.pop()
+        if row_lo > row_hi or col_lo > col_hi:
+            continue
+
+        row_mid = row_lo + (row_hi - row_lo) // 2
+        col_mid = col_lo + (col_hi - col_lo) // 2
+        if matrix[row_mid][col_mid] == target:
+            return True
+        elif matrix[row_mid][col_mid] < target:
+            # target cannot be strictly smaller than current ie. cannot go top_left
+            bottom_left = (row_mid+1, row_hi, col_lo, col_mid)
+            right = (row_lo, row_hi, col_mid+1, col_hi)
+            stack.append(bottom_left)
+            stack.append(right)
+        else:
+            # target cannot be strictly larger than current ie. cannot go bottom_right
+            top_right = (row_lo, row_mid-1, col_mid, col_hi)
+            left = (row_lo, row_hi, col_lo, col_mid-1)
+            stack.append(top_right)
+            stack.append(left)
+    return False
+
+
+class SearchMatrixSpec(unittest.TestCase):
+    def test_empty_matrix(self):
+        self.assertFalse(search_matrix([], target=0))
+        self.assertFalse(search_matrix([[]], target=0))
+
+    def test_example(self):
+        matrix = [
+            [ 1, 4, 7,11,15],
+            [ 2, 5, 8,12,19],
+            [ 3, 6, 9,16,22],
+            [10,13,14,17,24],
+            [18,21,23,26,30]
+        ]
+        self.assertTrue(search_matrix(matrix, target=5))
+        self.assertFalse(search_matrix(matrix, target=20))
+
+    def test_mid_less_than_top_right(self):
+        matrix = [
+            [ 1, 2, 3, 4, 5],
+            [ 6, 7, 8, 9,10],
+            [11,12,13,14,15],
+            [16,17,18,19,20],
+            [21,22,23,24,25]
+        ]
+        self.assertTrue(search_matrix(matrix, target=5))
+
+    def test_mid_greater_than_top_right(self):
+        matrix = [
+            [5 , 6,10,14],
+            [6 ,10,13,18],
+            [10,13,18,19]
+        ]
+        self.assertTrue(search_matrix(matrix, target=14))
+
+    def test_mid_less_than_bottom_right(self):
+        matrix = [
+            [1,4],
+            [2,5]
+        ]
+        self.assertTrue(search_matrix(matrix, target=5))
+
+    def test_element_out_of_matrix_range(self):
+        matrix = [
+            [ 1, 4, 7,11,15],
+            [ 2, 5, 8,12,19],
+            [ 3, 6, 9,16,22],
+            [10,13,14,17,24],
+            [18,21,23,26,30]
+        ]
+        self.assertFalse(search_matrix(matrix, target=-1))
+        self.assertFalse(search_matrix(matrix, target=31))
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
+```
 
 ### Feb 20, 2020 \[Medium\]  Generate Brackets
 ---
@@ -60,7 +175,6 @@ generate_brackets(3)  # returns ['((()))', '(()())', '()(())', '()()()', '(())()
 **Solution with Backtracking:** [https://repl.it/@trsong/Generate-Brackets](https://repl.it/@trsong/Generate-Brackets)
 ```py
 import unittest
-
 
 def generate_brackets(n):
     if n <= 0:
