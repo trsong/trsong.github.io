@@ -19,18 +19,129 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
 
-### Feb 22, 2020 LC 79 [Medium] Word Search
+### Feb 23, 2020 LC 163 [Medium] Missing Ranges
 ---
-> **Question:** You are given a 2D array of characters, and a target string. Return whether or not the word target word exists in the matrix. Unlike a standard word search, the word must be either going left-to-right, or top-to-bottom in the matrix.
+> **Question:** Given a sorted list of numbers, and two integers low and high representing the lower and upper bound of a range, return a list of (inclusive) ranges where the numbers are missing. A range should be represented by a tuple in the format of (lower, upper).
 
 **Example:**
 ```py
-[['F', 'A', 'C', 'I'],
- ['O', 'B', 'Q', 'P'],
- ['A', 'N', 'O', 'B'],
- ['M', 'A', 'S', 'S']]
+missing_ranges(nums=[1, 3, 5, 10], lower=1, upper=10)
+# returns [(2, 2), (4, 4), (6, 9)]
+```
 
-Given this matrix, and the target word FOAM, you should return true, as it can be found going up-to-down in the first column.
+
+### Feb 22, 2020 LC 79 [Medium] Word Search
+---
+> **Question:** Given a 2D board and a word, find if the word exists in the grid.
+>
+> The word can be constructed from letters of sequentially adjacent cell, where "adjacent" cells are those horizontally or vertically neighboring. The same letter cell may not be used more than once.
+
+**Example:**
+```py
+board =
+[
+  ['A','B','C','E'],
+  ['S','F','C','S'],
+  ['A','D','E','E']
+]
+
+Given word = "ABCCED", return true.
+Given word = "SEE", return true.
+Given word = "ABCB", return false.
+```
+
+
+**Solution with Backtracking:** [https://repl.it/@trsong/Word-Search](https://repl.it/@trsong/Word-Search)
+```py
+import unittest
+
+def search_word(grid, word):
+    if not word or not grid or not grid[0]:
+        return False
+    
+    n, m = len(grid), len(grid[0])
+    visited = [[False for _ in xrange(m)] for _ in xrange(n)]
+        
+    for r in xrange(n):
+        for c in xrange(m):
+            if grid[r][c] == word[0] and backtrack_word(grid, word, visited, r, c, 0):
+                return True
+    return False
+
+
+def backtrack_word(grid, word, visited, row, col, index):
+    n, m = len(grid), len(grid[0])
+    if index == len(word):
+        return True
+    elif row >= n or row < 0 or col >= m or col < 0:
+        return False
+    elif grid[row][col] != word[index]:
+        return False
+    elif visited[row][col]:
+        return False
+    else:
+        visited[row][col] = True
+        is_valid = False
+        for dr, dc in [(-1, 0), (1, 0), (0, 1), (0, -1)]:
+            new_r, new_c = row + dr, col + dc
+            if backtrack_word(grid, word, visited, new_r, new_c, index+1):
+                is_valid = True
+                break
+        visited[row][col] = False
+    return is_valid
+
+
+class SearchWordSpec(unittest.TestCase):
+    def test_example(self):
+        grid = [
+            ['A','B','C','E'],
+            ['S','F','C','S'],
+            ['A','D','E','E']
+        ]
+        self.assertTrue(search_word(grid, "ABCCED"))
+        self.assertTrue(search_word(grid, "SEE"))
+        self.assertFalse(search_word(grid, "ABCB"))
+
+    def test_empty_word(self):
+        self.assertFalse(search_word([['A']], ''))
+
+    def test_empty_grid(self):
+        self.assertFalse(search_word([[]], 'a'))
+
+    def test_exhaust_all_characters(self):
+        grid = [
+            ["a","b"],
+            ["c","d"]
+        ]
+        self.assertTrue(search_word(grid, "acdb"))
+
+    def test_jump_is_not_allowed(self):
+        grid = [
+            ["a","b"],
+            ["c","d"]
+        ]
+        self.assertFalse(search_word(grid, "adbc"))
+    
+    def test_wrap_around(self):
+        grid = [
+            ["A","B","C","E"],
+            ["S","F","E","S"],
+            ["A","D","E","E"]
+        ]
+        self.assertTrue(search_word(grid, "ABCESEEEFS"))
+    
+    def test_wrap_around2(self):
+        grid = [
+            ["A","A","A","A"],
+            ["A","B","A","A"]
+        ]
+        self.assertTrue(search_word(grid, "AAAAAAAB"))
+        self.assertTrue(search_word(grid, "AAABAAAA"))
+        self.assertFalse(search_word(grid, "AAAAAAAA"))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
 ```
 
 
