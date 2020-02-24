@@ -19,6 +19,13 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
 
+### Feb 24, 2020 [Medium] Number of Flips to Make Binary String
+---
+> **Question:** You are given a string consisting of the letters x and y, such as xyxxxyxyy. In addition, you have an operation called flip, which changes a single x to y or vice versa.
+>
+> Determine how many times you would need to apply this operation to ensure that all x's come before all y's. In the preceding example, it suffices to flip the second and sixth characters, so you should return 2.
+
+
 ### Feb 23, 2020 LC 163 [Medium] Missing Ranges
 ---
 > **Question:** Given a sorted list of numbers, and two integers low and high representing the lower and upper bound of a range, return a list of (inclusive) ranges where the numbers are missing. A range should be represented by a tuple in the format of (lower, upper).
@@ -29,6 +36,103 @@ missing_ranges(nums=[1, 3, 5, 10], lower=1, upper=10)
 # returns [(2, 2), (4, 4), (6, 9)]
 ```
 
+**Solution:** [https://repl.it/@trsong/Missing-Ranges](https://repl.it/@trsong/Missing-Ranges)
+```py
+import unittest
+import sys
+
+def missing_ranges(nums, lower, upper):
+    if not nums:
+        return [(lower, upper)]
+
+    res = []
+    for i, num in enumerate(nums):
+        if lower > upper:
+            break
+
+        if i > 0 and nums[i-1] == num:
+            # skip duplicates
+            continue
+
+        if lower < num:
+            res.append((lower, min(num-1, upper)))
+        
+        lower = num + 1
+
+    if lower <= upper:
+        res.append((lower, upper))
+    
+    return res
+        
+
+class MissingRangeSpec(unittest.TestCase):
+    def test_example(self):
+        lower, upper, nums = 1, 10, [1, 3, 5, 10] 
+        expected = [(2, 2), (4, 4), (6, 9)]
+        self.assertEqual(expected, missing_ranges(nums, lower, upper))
+
+    def test_example2(self):
+        lower, upper, nums = 0, 99, [0, 1, 3, 50, 75] 
+        expected = [(2, 2), (4, 49), (51, 74), (76, 99)]
+        self.assertEqual(expected, missing_ranges(nums, lower, upper))
+
+    def test_empty_array(self):
+        lower, upper, nums = 1, 42, []
+        expected = [(1, 42)]
+        self.assertEqual(expected, missing_ranges(nums, lower, upper))
+
+    def test_target_range_greater_than_array_range(self):
+        lower, upper, nums = 1, 5, [2, 3]
+        expected = [(1, 1), (4, 5)]
+        self.assertEqual(expected, missing_ranges(nums, lower, upper))
+
+    def test_lower_bound_equals_upper_bound(self):
+        lower, upper, nums = 1, 1, [0, 1, 4]
+        expected = []
+        self.assertEqual(expected, missing_ranges(nums, lower, upper))
+
+    def test_lower_bound_equals_upper_bound2(self):
+        lower, upper, nums = 1, 1, [0, 2, 3, 4]
+        expected = [(1, 1)]
+        self.assertEqual(expected, missing_ranges(nums, lower, upper))
+
+    def test_lower_larger_than_high(self):
+        self.assertEqual([], missing_ranges([1, 2], 10, 1))
+
+    def test_missing_range_of_different_length(self):
+        lower, upper, nums = 1, 11, [0, 1, 3,  6, 10, 11]
+        expected = [(2, 2), (4, 5), (7, 9)]
+        self.assertEqual(expected, missing_ranges(nums, lower, upper))
+
+    def test_range_not_overflow(self):
+        lower, upper, nums = -sys.maxint - 1, sys.maxint, [0]
+        expected = [(-sys.maxint - 1, -1), (1, sys.maxint)]
+        self.assertEqual(expected, missing_ranges(nums, lower, upper))
+
+    def test_right_bound(self):
+        lower, upper, nums = 0, 1, [1]
+        expected = [(0, 0)]
+        self.assertEqual(expected, missing_ranges(nums, lower, upper))
+
+    def test_left_bound(self):
+        lower, upper, nums = 0, 1, [0]
+        expected = [(1, 1)]
+        self.assertEqual(expected, missing_ranges(nums, lower, upper))
+
+    def test_no_missing_range(self):
+        lower, upper, nums = 4, 6, [0, 1, 2, 3, 4, 5, 6, 7, 8]
+        expected = []
+        self.assertEqual(expected, missing_ranges(nums, lower, upper))
+    
+    def test_duplicate_numbers(self):
+        lower, upper, nums = 3, 14, [4, 4, 4, 5, 5, 7, 7, 7, 9, 9, 9, 11, 11, 16]
+        expected = [(3, 3), (6, 6), (8, 8), (10, 10), (12, 14)]
+        self.assertEqual(expected, missing_ranges(nums, lower, upper))
+        
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
+```
 
 ### Feb 22, 2020 LC 79 [Medium] Word Search
 ---
