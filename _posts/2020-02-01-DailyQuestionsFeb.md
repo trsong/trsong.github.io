@@ -27,6 +27,78 @@ categories: Python/Java
 > For example, suppose the mice are positioned at `[1, 4, 9, 15]`, and the holes are located at `[10, -5, 0, 16]`. In this case, the best pairing would require us to send the mouse at 1 to the hole at -5, so our function should return 6.
 
 
+**Greedy Solution:** [https://repl.it/@trsong/Mouse-Holes](https://repl.it/@trsong/Mouse-Holes)
+```py
+import unittest
+
+def min_last_mouse_steps(mouse_positions, hole_positions):
+    if not mouse_positions or not hole_positions:
+        return 0
+    
+    mouse_positions.sort()
+    hole_positions.sort()
+
+    last_mouse_steps = abs(mouse_positions[0] - hole_positions[0])
+    for mouse, hole in zip(mouse_positions, hole_positions):
+        last_mouse_steps = max(last_mouse_steps, abs(mouse - hole))
+    
+    return last_mouse_steps
+
+
+class MisLastMouseStepSpec(unittest.TestCase):
+    def test_example(self):
+        mouse_positions = [1, 4, 9, 15]
+        hole_positions = [10, -5, 0, 16]
+        # sorted mouse: 1 4 9 15
+        # sorted hole: -5 0 10 16
+        # distance: 6 4 1 1
+        expected = 6
+        self.assertEqual(expected, min_last_mouse_steps(mouse_positions, hole_positions))
+
+    def test_no_mice_nor_holes(self):
+        self.assertEqual(0, min_last_mouse_steps([], []))
+
+    def test_simple_case(self):
+        mouse_positions = [0, 1, 2]
+        hole_positions = [0, 1, 2]
+        # sorted mouse: 0 1 2
+        # sorted hole: 0 1 2
+        # distance: 0 0 0
+        expected = 0
+        self.assertEqual(expected, min_last_mouse_steps(mouse_positions, hole_positions))
+
+    def test_position_in_reverse_order(self):
+        mouse_positions = [0, 1, 2]
+        hole_positions = [2, 1, 0]
+        # sorted mouse: 0 1 2
+        # sorted hole: 0 1 2
+        # distance: 0 0 0
+        expected = 0
+        self.assertEqual(expected, min_last_mouse_steps(mouse_positions, hole_positions))
+
+    def test_unorded_positions(self):
+        mouse_positions = [4, -4, 2]
+        hole_positions = [4, 0, 5]
+        # sorted mouse: -4 2 4
+        # sorted hole:   0 4 5
+        # distance: 4 2 1
+        expected = 4
+        self.assertEqual(expected, min_last_mouse_steps(mouse_positions, hole_positions))
+
+    def test_large_example(self):
+        mouse_positions = [-10, -79, -79, 67, 93, -85, -28, -94]
+        hole_positions = [-2, 9, 69, 25, -31, 23, 50, 78]
+        # sorted mouse: -94 -85 -79 -79 -28 -10 67 93
+        # sorted hole: -31 -2 9 23 25 50 69 78
+        # distance: 63 83 88 102 53 60 2 15
+        expected = 102
+        self.assertEqual(expected, min_last_mouse_steps(mouse_positions, hole_positions))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
+```
+
 ### Feb 24, 2020 [Medium] Number of Flips to Make Binary String
 ---
 > **Question:** You are given a string consisting of the letters x and y, such as xyxxxyxyy. In addition, you have an operation called flip, which changes a single x to y or vice versa.
