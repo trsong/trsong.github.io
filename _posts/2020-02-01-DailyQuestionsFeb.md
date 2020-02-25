@@ -18,6 +18,14 @@ categories: Python/Java
 
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
+### Feb 25, 2020 [Easy] Mouse Holes
+---
+> **Question:** Consider the following scenario: there are N mice and N holes placed at integer points along a line. Given this, find a method that maps mice to holes such that the largest number of steps any mouse takes is minimized.
+>
+> Each move consists of moving one mouse one unit to the left or right, and only one mouse can fit inside each hole.
+>
+> For example, suppose the mice are positioned at `[1, 4, 9, 15]`, and the holes are located at `[10, -5, 0, 16]`. In this case, the best pairing would require us to send the mouse at 1 to the hole at -5, so our function should return 6.
+
 
 ### Feb 24, 2020 [Medium] Number of Flips to Make Binary String
 ---
@@ -25,6 +33,69 @@ categories: Python/Java
 >
 > Determine how many times you would need to apply this operation to ensure that all x's come before all y's. In the preceding example, it suffices to flip the second and sixth characters, so you should return 2.
 
+**My thoughts:** Basically, the question is about finding a sweet cutting spot so that # flip on left plus # flip on right is minimized. We can simply scan through the array from left and right to allow constant time query for number of flip need on the left and right for a given spot. And the final answer is just the min of sum of left and right flips.
+
+**Solution:** [https://repl.it/@trsong/Number-of-Flips-to-Make-Binary-String](https://repl.it/@trsong/Number-of-Flips-to-Make-Binary-String)
+```py
+import unittest
+
+def min_flip_to_make_binary(s):
+    if not s:
+        return 0
+    
+    n = len(s)
+    y_on_left = [0] * n
+    x_on_right = [0] * n
+    prev_y = 0
+    prev_x = 0
+    
+    for i in xrange(n):
+        y_on_left[i] = prev_y
+        prev_y += 1 if s[i] == 'y' else 0
+
+    for j in xrange(n-1, -1, -1):
+        x_on_right[j] = prev_x
+        prev_x += 1 if s[j] == 'x' else 0
+
+    num_flip = n
+    for y, x in zip(y_on_left, x_on_right):
+        num_flip = min(num_flip, y + x)
+
+    return num_flip
+
+
+class MinFlipToMakeBinarySpec(unittest.TestCase):
+    def test_example(self):
+        self.assertEqual(2, min_flip_to_make_binary('xyxxxyxyy'))  # xxxxxxxyy
+
+    def test_empty_string(self):
+        self.assertEqual(0, min_flip_to_make_binary(''))
+    
+    def test_already_binary(self):
+        self.assertEqual(0, min_flip_to_make_binary('xxxxxxxyy'))
+
+    def test_flipped_string(self):
+        self.assertEqual(3, min_flip_to_make_binary('yyyxxx'))  # yyyyyy
+
+    def test_flip_all_x(self):
+        self.assertEqual(1, min_flip_to_make_binary('yyx'))  # yyy
+
+    def test_flip_all_y(self):
+        self.assertEqual(2, min_flip_to_make_binary('yyxxx'))  # xxxxx
+
+    def test_flip_all_y2(self):
+        self.assertEqual(4, min_flip_to_make_binary('xyxxxyxyyxxx'))  # xxxxxxxxxxxx
+
+    def test_flip_y(self):
+        self.assertEqual(2, min_flip_to_make_binary('xyxxxyxyyy'))  # xxxxxxxyyy
+
+    def test_flip_x_and_y(self):
+        self.assertEqual(3, min_flip_to_make_binary('xyxxxyxyyx'))  # xxxxxyyyyy
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
+```
 
 ### Feb 23, 2020 LC 163 [Medium] Missing Ranges
 ---
