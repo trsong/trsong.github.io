@@ -18,6 +18,15 @@ categories: Python/Java
 
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
+### Feb 26, 2020 [Medium] Majority Element
+---
+> **Question:** A majority element is an element that appears more than half the time. Given a list with a majority element, find the majority element.
+
+**Example:**
+```py
+majority_element([3, 5, 3, 3, 2, 4, 3])  # gives 3
+```
+
 ### Feb 25, 2020 [Easy] Mouse Holes
 ---
 > **Question:** Consider the following scenario: there are N mice and N holes placed at integer points along a line. Given this, find a method that maps mice to holes such that the largest number of steps any mouse takes is minimized.
