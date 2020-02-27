@@ -18,6 +18,24 @@ categories: Python/Java
 
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
+### Feb 27, 2020 [Medium] Maximum Non Adjacent Sum
+---
+> **Question:** Given a list of positive numbers, find the largest possible set such that no elements are adjacent numbers of each other.
+
+**Example 1:**
+```py
+max_non_adjacent_sum([3, 4, 1, 1])
+# returns 5
+# max sum is 4 (index 1) + 1 (index 3)
+```
+
+**Exampl 2:**
+```py
+max_non_adjacent_sum([2, 1, 2, 7, 3])
+# returns 9
+# max sum is 2 (index 0) + 7 (index 3)
+```
+
 ### Feb 26, 2020 [Medium] Majority Element
 ---
 > **Question:** A majority element is an element that appears more than half the time. Given a list with a majority element, find the majority element.
@@ -25,6 +43,79 @@ categories: Python/Java
 **Example:**
 ```py
 majority_element([3, 5, 3, 3, 2, 4, 3])  # gives 3
+```
+
+**My thoughts:** ***Boyce-Moore Voting Algorithm*** is the one we should take a close look at. As it can gives `O(n)` time complexity and `O(1)` space complexity: here is how it works, the idea is to shrink the array so that the majority result is equivalent between the original array as well as the shrinked array.
+
+The way we shrink the array is to treat the very first element as majority candidate and shrink the array recursively.
+
+- If the candidate is not majority, there exists an even point `p > 0` such that the number of "majority" vs "minority" is the same. And we chop out the array before and equal to the even point p. And the real majority of the rest of array should be the same as the shrinked array
+- If the candidate is indeed majority however there is still an even point q such that the number of majority vs minority is the same. And we the same thing to chop out the array before and equal to the even point q. And a majority should still be a majority of the rest of array as we eliminate same number of majority and minority that leaves the majority unchange.
+- If the candidate is indeed majority and there is no even point such that the number of majority vs minority is the same. Thus the candidate can be safely returned as majority.
+
+
+**Solution with Boyce-Moore Voting Algorithm:** [https://repl.it/@trsong/Find-the-Majority-Element](https://repl.it/@trsong/Find-the-Majority-Element)
+```py
+import unittest
+
+def majority_element(nums):
+    if not nums:
+        return None
+    
+    major_elem = nums[0]
+    count = 0
+
+    for elem in nums:
+        if count == 0:
+            major_elem = elem
+            count += 1
+        elif elem == major_elem:
+            count +=1
+        else:
+            count -=1
+    
+    if count_target(nums, major_elem) > len(nums) / 2:
+        return major_elem
+    else:
+        return None
+
+
+def count_target(nums, target):
+    count = 0
+    for elem in nums:
+        if elem == target:
+            count += 1
+    return count
+
+
+class MajorityElementSpec(unittest.TestCase):
+    def test_no_majority_element_exists(self):
+        self.assertIsNone(majority_element([1, 2, 3, 4]))
+
+    def test_example(self):
+        self.assertEqual(3, majority_element([3, 5, 3, 3, 2, 4, 3]))
+
+    def test_example2(self):
+        self.assertEqual(3, majority_element([3, 2, 3]))
+
+    def test_example3(self):
+        self.assertEqual(2, majority_element([2, 2, 1, 1, 1, 2, 2]))
+
+    def test_there_is_a_tie(self):
+        self.assertIsNone(majority_element([1, 2, 1, 2, 1, 2]))
+
+    def test_majority_on_second_half_of_list(self):
+        self.assertEqual(1, majority_element([2, 2, 1, 2, 1, 1, 1]))
+    
+    def test_more_than_two_kinds(self):
+        self.assertEqual(1, majority_element([1, 2, 1, 1, 2, 2, 1, 3, 1, 1, 1]))
+
+    def test_zero_is_the_majority_element(self):
+        self.assertEqual(0, majority_element([0, 1, 0, 1, 0, 1, 0]))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
 ```
 
 ### Feb 25, 2020 [Easy] Mouse Holes
