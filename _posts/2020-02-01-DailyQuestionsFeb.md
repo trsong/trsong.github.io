@@ -43,7 +43,9 @@ larger_number([3, 2, 5, 6, 9, 8])
 # return [2, 2, 3, 4, -1, -1]
 ```
 
-**My thoughts:** The idea is to iterate backwards and only stack large element along the way. Doing such will mantain stack in ascending order. We can then treat the stack as a history of larger element on the right. For each element, we pop all elements that are smaller than current element until we find a larger element that is the next larger element in the list. 
+**My thoughts:** The idea is to iterate backwards and only store large element along the way with a stack. Doing such will mantain the stack in ascending order. We can then treat the stack as a history of larger element on the right. The algorithm work in the following way:
+
+For each element, we push current element in stack. And the the same time, we pop all elements that are smaller than current element until we find a larger element that is the next larger element in the list. 
 
 Note that in worst case scenario, each element can only be pushed and poped from stack once, leaves the time complexity being `O(n)`.
 
