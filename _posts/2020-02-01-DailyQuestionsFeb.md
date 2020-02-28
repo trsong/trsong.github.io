@@ -28,7 +28,6 @@ larger_number([3, 2, 5, 6, 9, 8])
 # return [2, 2, 3, 4, -1, -1]
 ```
 
-
 ### Feb 27, 2020 [Medium] Maximum Non Adjacent Sum
 ---
 > **Question:** Given a list of positive numbers, find the largest possible set such that no elements are adjacent numbers of each other.
@@ -40,7 +39,7 @@ max_non_adjacent_sum([3, 4, 1, 1])
 # max sum is 4 (index 1) + 1 (index 3)
 ```
 
-**Exampl 2:**
+**Example 2:**
 ```py
 max_non_adjacent_sum([2, 1, 2, 7, 3])
 # returns 9
