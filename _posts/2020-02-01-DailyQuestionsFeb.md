@@ -18,6 +18,17 @@ categories: Python/Java
 
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
+### Feb 28, 2020 [Medium] Index of Larger Next Number
+---
+> **Question:** Given a list of numbers, for each element find the next element that is larger than the current element. Return the answer as a list of indices. If there are no elements larger than the current element, then use -1 instead.
+
+**Example:** 
+```py
+larger_number([3, 2, 5, 6, 9, 8])
+# return [2, 2, 3, 4, -1, -1]
+```
+
+
 ### Feb 27, 2020 [Medium] Maximum Non Adjacent Sum
 ---
 > **Question:** Given a list of positive numbers, find the largest possible set such that no elements are adjacent numbers of each other.
@@ -34,6 +45,66 @@ max_non_adjacent_sum([3, 4, 1, 1])
 max_non_adjacent_sum([2, 1, 2, 7, 3])
 # returns 9
 # max sum is 2 (index 0) + 7 (index 3)
+```
+
+**Solution with DP:** [https://repl.it/@trsong/Maximum-Non-Adjacent-Sum](https://repl.it/@trsong/Maximum-Non-Adjacent-Sum)
+```py
+import unittest
+
+def max_non_adjacent_sum(nums):
+    if not nums:
+        return 0
+
+    n = len(nums)
+    # Let dp[i] represents max non adj sum after consume i numbers from nums
+    # dp[i] = max{dp[i-1], dp[i-2] + nums[i-1]}
+    dp = [0] * (n+1)
+    dp[1] = max(nums[0], 0)  # nums[0] can be negative
+
+    for i in xrange(2, n+1):
+        # choose max between include and exclude current number
+        dp[i] = max(dp[i-1], dp[i-2] + nums[i-1])
+
+    return dp[n]
+
+
+class MaxNonAdjacentSumSpec(unittest.TestCase):
+    def test_example(self):
+        self.assertEqual(5, max_non_adjacent_sum([3, 4, 1, 1]))  # 4 + 1 
+
+    def test_example2(self):
+        self.assertEqual(9, max_non_adjacent_sum([2, 1, 2, 7, 3]))  # 7 + 2
+
+    def test_example3(self):
+        self.assertEqual(110, max_non_adjacent_sum([5, 5, 10, 100, 10, 5])) 
+
+    def test_empty_array(self):
+        self.assertEqual(0, max_non_adjacent_sum([]))
+
+    def test_length_one_array(self):
+        self.assertEqual(42, max_non_adjacent_sum([42]))
+
+    def test_length_one_array2(self):
+        self.assertEqual(0, max_non_adjacent_sum([-10]))
+
+    def test_length_two_array(self):
+        self.assertEqual(0, max_non_adjacent_sum([-20, -10]))
+
+    def test_length_three_array(self):
+        self.assertEqual(1, max_non_adjacent_sum([1, -1, -1]))
+
+    def test_length_three_array2(self):
+        self.assertEqual(0, max_non_adjacent_sum([-1, -1, -1]))
+
+    def test_length_three_array3(self):
+        self.assertEqual(3, max_non_adjacent_sum([1, 3, 1]))
+
+    def test_length_three_array4(self):
+        self.assertEqual(4, max_non_adjacent_sum([2, 3, 2]))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
 ```
 
 ### Feb 26, 2020 [Medium] Majority Element
