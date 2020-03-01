@@ -30,7 +30,7 @@ search_range([1, 1, 3, 5, 7], 1)  # returns (0, 1)
 
 **Example 2:**
 ```py
-search_range([1, 2, 3, 4], 5)  # (-1, -1)
+search_range([1, 2, 3, 4], 5)  # returns (-1, -1)
 ```
 
 
