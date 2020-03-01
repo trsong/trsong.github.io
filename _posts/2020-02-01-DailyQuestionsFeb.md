@@ -18,6 +18,22 @@ categories: Python/Java
 
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
+
+### Mar 1, 2020 [Medium] Range Searching in a Sorted List
+---
+> **Question:** Given a sorted list with duplicates, and a target number n, find the range in which the number exists (represented as a tuple `(low, high)`, both inclusive. If the number does not exist in the list, return `(-1, -1)`). 
+
+**Example 1:**
+```py
+search_range([1, 1, 3, 5, 7], 1)  # returns (0, 1)
+```
+
+**Example 2:**
+```py
+search_range([1, 2, 3, 4], 5)  # (-1, -1)
+```
+
+
 ### Feb 29, 2020 [Easy] Deepest Node in a Binary Tree
 ---
 > **Question:** You are given the root of a binary tree. Return the deepest node (the furthest node from the root).
@@ -30,6 +46,97 @@ categories: Python/Java
  /
 d
 The deepest node in this tree is d at depth 3.
+```
+
+**Solution with DFS:** [https://repl.it/@trsong/Deepest-Node-in-a-Binary-Tree](https://repl.it/@trsong/Deepest-Node-in-a-Binary-Tree)
+```py
+import unittest
+
+class Node(object):
+    def __init__(self, val, left=None, right=None):
+        self.val = val
+        self.left = left
+        self.right = right
+
+
+def find_deepest_node(root):
+    if not root:
+        return None
+    
+    max_depth = 0
+    deepest_node = root
+    stack = [(root, 0)]
+    
+    while stack:
+        cur, depth = stack.pop()
+        if depth > max_depth:
+            deepest_node = cur
+            max_depth = depth
+        
+        if cur.left:
+            stack.append((cur.left, depth+1))
+        if cur.right:
+            stack.append((cur.right, depth+1))
+    
+    return deepest_node
+
+
+class FindDeepestNodeSpec(unittest.TestCase):
+    def test_example(self):
+        """
+            1
+           / \
+          2   3
+         /
+        4
+        """
+        deepest_node = Node(4)
+        root = Node(1, Node(2, deepest_node), Node(3))
+        self.assertEqual(deepest_node, find_deepest_node(root))
+
+    def test_empty_tree(self):
+        self.assertIsNone(find_deepest_node(None))
+
+    def test_root_only(self):
+        root = Node(1)
+        self.assertEqual(root, find_deepest_node(root))
+
+    def test_complete_tree(self):
+        """
+               1
+             /   \
+            2     3
+           / \   / \
+          4   5 6   7
+         /
+        8
+        """
+        deepest_node = Node(8)
+        left_tree = Node(2, Node(4, deepest_node), Node(5))
+        right_tree = Node(3, Node(6), Node(7))
+        root = Node(1, left_tree, right_tree)
+        self.assertEqual(deepest_node, find_deepest_node(root))
+
+    def test_has_more_than_one_answer(self):
+        """
+           1
+          / \
+         2   3
+        / \   \
+       4   5   6
+           /    \
+          7      8 
+        """
+        deepest_node1 = Node(7)
+        deepest_node2 = Node(8)
+        left_tree = Node(2, Node(4), Node(5, deepest_node1))
+        right_tree = Node(3, right=Node(6, right=deepest_node2))
+        root = Node(1, left_tree, right_tree)
+        self.assertIn(find_deepest_node(root), [deepest_node1, deepest_node2])
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
 ```
 
 
