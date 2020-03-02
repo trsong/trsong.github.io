@@ -47,14 +47,14 @@ search_range([1, 2, 3, 4], 5)  # returns (-1, -1)
 ```py
 import unittest
 
-def binary_search(nums, target, exculsive=False):
-    # by default exculsive is off: return the smallest index of number >= target
-    # if exculsive is turned on: return the smallest index of number > target
+def binary_search(nums, target, exclusive=False):
+    # by default exclusive is off: return the smallest index of number >= target
+    # if exclusive is turned on: return the smallest index of number > target
     lo = 0
     hi = len(nums)
     while lo < hi:
         mid = lo + (hi - lo) // 2
-        if exculsive and nums[mid] == target:
+        if exclusive and nums[mid] == target:
             lo = mid + 1
         elif nums[mid] < target:
             lo = mid + 1
@@ -71,7 +71,7 @@ def search_range(nums, target):
     if nums[lo] != target:
         return (-1, -1)
         
-    hi = binary_search(nums, target, exculsive=True) - 1
+    hi = binary_search(nums, target, exclusive=True) - 1
     return (lo, hi)
 
 
