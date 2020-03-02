@@ -19,7 +19,17 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
 
-### Mar 1, 2020 [Medium] Range Searching in a Sorted List
+### Mar 2, 2020 [Medium] Generate All Subsets
+---
+> **Question:** Given a list of unique numbers, generate all possible subsets without duplicates. This includes the empty set as well.
+
+**Example:**
+```py
+generate_all_subsets([1, 2, 3])
+# [[], [3], [2], [2, 3], [1], [1, 3], [1, 2], [1, 2, 3]]
+```
+
+### Mar 1, 2020 LC 34 [Medium] Range Searching in a Sorted List
 ---
 > **Question:** Given a sorted list with duplicates, and a target number n, find the range in which the number exists (represented as a tuple `(low, high)`, both inclusive. If the number does not exist in the list, return `(-1, -1)`). 
 
@@ -33,6 +43,98 @@ search_range([1, 1, 3, 5, 7], 1)  # returns (0, 1)
 search_range([1, 2, 3, 4], 5)  # returns (-1, -1)
 ```
 
+**Solution with Binary Search:** [https://repl.it/@trsong/Range-Searching-in-a-Sorted-List](https://repl.it/@trsong/Range-Searching-in-a-Sorted-List)
+```py
+import unittest
+
+def binary_search(nums, target, exculsive=False):
+    # by default exculsive is off: return the smallest index of number >= target
+    # if exculsive is turned on: return the smallest index of number > target
+    lo = 0
+    hi = len(nums)
+    while lo < hi:
+        mid = lo + (hi - lo) // 2
+        if exculsive and nums[mid] == target:
+            lo = mid + 1
+        elif nums[mid] < target:
+            lo = mid + 1
+        else:
+            hi = mid
+    return lo
+
+
+def search_range(nums, target):
+    if not nums or target < nums[0] or target > nums[-1]:
+        return (-1, -1)
+
+    lo = binary_search(nums, target)
+    if nums[lo] != target:
+        return (-1, -1)
+        
+    hi = binary_search(nums, target, exculsive=True) - 1
+    return (lo, hi)
+
+
+class SearchRangeSpec(unittest.TestCase):
+    def test_example1(self):
+        target, nums = 1, [1, 1, 3, 5, 7]
+        expected = (0, 1)
+        self.assertEqual(expected, search_range(nums, target))
+
+    def test_example2(self):
+        target, nums = 5, [1, 2, 3, 4]
+        expected = (-1, -1)
+        self.assertEqual(expected, search_range(nums, target))
+
+    def test_empty_list(self):
+        target, nums = 0, []
+        expected = (-1, -1)
+        self.assertEqual(expected, search_range(nums, target))
+
+    def test_list_with_unique_value(self):
+        target, nums = 1, [1, 1, 1, 1]
+        expected = (0, 3)
+        self.assertEqual(expected, search_range(nums, target))
+
+    def test_list_with_duplicate_elements(self):
+        target, nums = 0, [0, 0, 0, 1, 1, 1, 1]
+        expected = (0, 2)
+        self.assertEqual(expected, search_range(nums, target))
+
+    def test_list_with_duplicate_elements2(self):
+        target, nums = 1, [0, 1, 1, 1, 1, 2, 2, 2, 2]
+        expected = (1, 4)
+        self.assertEqual(expected, search_range(nums, target))
+
+    def test_target_element_fall_into_a_specific_range(self):
+        target, nums = 10, [1, 3, 5, 7, 9, 11, 11, 12]
+        expected = (-1, -1)
+        self.assertEqual(expected, search_range(nums, target))
+
+    def test_smaller_than_min_element(self):
+        target, nums = -10, [0]
+        expected = (-1, -1)
+        self.assertEqual(expected, search_range(nums, target))
+
+    def test_larger_than_max_element(self):
+        target, nums = 10, [0]
+        expected = (-1, -1)
+        self.assertEqual(expected, search_range(nums, target))
+
+    def test_target_is_the_max_element(self):
+        target, nums = 1, [0, 1]
+        expected = (1, 1)
+        self.assertEqual(expected, search_range(nums, target))
+
+    def test_target_is_the_min_element(self):
+        target, nums = 0, [0, 1]
+        expected = (0, 0)
+        self.assertEqual(expected, search_range(nums, target))
+    
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
+```
 
 ### Feb 29, 2020 [Easy] Deepest Node in a Binary Tree
 ---
