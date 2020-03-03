@@ -18,8 +18,18 @@ categories: Python/Java
 
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
+### Mar 3, 2020 [Hard] Unique Sum Combinations
+---
+> **Question:** Given a list of numbers and a target number, find all possible unique subsets of the list of numbers that sum up to the target number. The numbers will all be positive numbers.
 
-### Mar 2, 2020 [Medium] Generate All Subsets
+**Example:**
+```py
+sum_combinations([10, 1, 2, 7, 6, 1, 5], 8)
+# returns [(2, 6), (1, 1, 6), (1, 2, 5), (1, 7)]
+# order doesn't matter
+```
+
+### Mar 2, 2020 LC 78 [Medium] Generate All Subsets
 ---
 > **Question:** Given a list of unique numbers, generate all possible subsets without duplicates. This includes the empty set as well.
 
@@ -28,6 +38,97 @@ categories: Python/Java
 generate_all_subsets([1, 2, 3])
 # [[], [3], [2], [2, 3], [1], [1, 3], [1, 2], [1, 2, 3]]
 ```
+
+**My thoughts:** Solution 1 use reduce: initially the set of all subsets is [[]]. For each element e, create two copy of the all subsets, one remain the same, the other insert e to each subsets. e.g. `[[]]` => `[[]] + [[1]]` => `[[], [1]] + [[2], [1, 2]]`
+
+Solution 2 use binary representation of 2^n. Each set digit represents chosen elements. e.g. Binary representation `0101` in `[1, 2, 3, 4]` represents `[2, 4]`
+
+**Solution with Recursion:** [https://repl.it/@trsong/Generate-All-Subsets-with-recursion](https://repl.it/@trsong/Generate-All-Subsets-with-recursion)
+```py
+from functools import reduce
+
+def generate_all_subsets(nums):
+    return reduce(
+        lambda accu_subsets, elem: accu_subsets + map(lambda subset: subset + [elem], accu_subsets),
+        nums,
+        [[]])
+```
+
+**Solution with Binary Representation:** [https://repl.it/@trsong/Generate-All-Subsets](https://repl.it/@trsong/Generate-All-Subsets)
+```py
+import unittest
+import math
+
+def last_significant_bit_index(num):
+    without_last_bit = num & (num - 1)  # clear last significant bit
+    last_bit_number = num - without_last_bit
+    base = 2
+    index = int(math.log(last_bit_number, base)) if last_bit_number > 0 else -1
+    return index
+
+
+def all_set_indexes(num):
+    while num > 0:
+        i = last_significant_bit_index(num)
+        yield i
+        num &= ~(1 << i)
+
+
+def subset_generator(nums):
+    n = len(nums)
+    for chosen_binary in xrange(2 ** n):
+        yield [nums[i] for i in all_set_indexes(chosen_binary)]
+        
+
+def generate_all_subsets(nums):
+    return [subset for subset in subset_generator(nums)]
+
+
+class GenerateAllSubsetSpec(unittest.TestCase):
+    def assert_result(self, expected, result):
+        self.assertEqual(len(expected), len(result))
+        for l1, l2 in zip(expected, result):
+            l1.sort()
+            l2.sort()
+        expected.sort()
+        result.sort()
+        self.assertEqual(expected, result)
+
+    def test_example(self):
+        nums = [1, 2, 3]
+        expected = [[], [3], [2], [2, 3], [1], [1, 3], [1, 2], [1, 2, 3]]
+        self.assert_result(expected, generate_all_subsets(nums))
+
+    def test_empty_list(self):
+        nums = []
+        expected = [[]]
+        self.assert_result(expected, generate_all_subsets(nums))
+
+    def test_one_elem_list(self):
+        nums = [1]
+        expected = [[], [1]]
+        self.assert_result(expected, generate_all_subsets(nums))
+
+    def test_two_elem_list(self):
+        nums = [1, 2]
+        expected = [[1], [2], [1, 2], []]
+        self.assert_result(expected, generate_all_subsets(nums))
+
+    def test_four_elem_list(self):
+        nums = [1, 2, 3, 4]
+        expected = [
+            [], 
+            [1], [2], [3],  [4],
+            [1, 2], [1, 3], [2, 3], [1, 4], [2, 4], [3, 4],
+            [1, 2, 3], [1, 2, 4], [1, 3, 4], [2, 3, 4], [1, 2, 3, 4]
+        ]
+        self.assert_result(expected, generate_all_subsets(nums))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
+```
+
 
 ### Mar 1, 2020 LC 34 [Medium] Range Searching in a Sorted List
 ---
