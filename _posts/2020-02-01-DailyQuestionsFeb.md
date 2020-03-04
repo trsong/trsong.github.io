@@ -18,6 +18,17 @@ categories: Python/Java
 
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
+
+### Mar 4, 2020 [Medium] Longest Common Prefix
+---
+> **Question:** Given a list of strings, find the longest common prefix between all strings.
+
+**Example:**
+```py 
+longest_common_prefix(['helloworld', 'hellokitty', 'helly'])
+# returns 'hell'
+```
+
 ### Mar 3, 2020 [Hard] Unique Sum Combinations
 ---
 > **Question:** Given a list of numbers and a target number, find all possible unique subsets of the list of numbers that sum up to the target number. The numbers will all be positive numbers.
@@ -27,6 +38,83 @@ categories: Python/Java
 sum_combinations([10, 1, 2, 7, 6, 1, 5], 8)
 # returns [(2, 6), (1, 1, 6), (1, 2, 5), (1, 7)]
 # order doesn't matter
+```
+
+
+**Solution with Backtracking:** [https://repl.it/@trsong/Unique-Sum-Combinations](https://repl.it/@trsong/Unique-Sum-Combinations)
+```py
+import unittest
+
+def find_uniq_sum_combinations(nums, target):
+    res = []
+    nums.sort()
+    backtack_sum(res, [], nums, 0, target)
+    return res
+
+
+def backtack_sum(res, accu_list, nums, index, remain_target):
+    if remain_target == 0:
+        res.append(accu_list[:])
+    else:
+        n = len(nums)
+        for i in xrange(index, n):
+            cur_num = nums[i]
+
+            if i > index and nums[i] == nums[i-1]:
+                # skip duplicates
+                continue
+
+            if cur_num > remain_target:
+                continue
+                
+            accu_list.append(cur_num)
+            backtack_sum(res, accu_list, nums, i+1, remain_target - cur_num)
+            accu_list.pop()
+
+
+class FindUniqSumCombinationSpec(unittest.TestCase):
+    def assert_result(self, expected, result):
+        self.assertEqual(len(expected), len(result))
+        for l1, l2 in zip(expected, result):
+            l1.sort()
+            l2.sort()
+        expected.sort()
+        result.sort()
+        self.assertEqual(expected, result)
+
+    def test_example(self):
+        target, nums = 8, [10, 1, 2, 7, 6, 1, 5]
+        expected = [[2, 6], [1, 1, 6], [1, 2, 5], [1, 7]]
+        self.assert_result(expected, find_uniq_sum_combinations(nums, target))
+
+    def test_ascending_list(self):
+        target, nums = 10, [2, 3, 5, 6, 8, 10]
+        expected = [[5, 2, 3], [2, 8], [10]]
+        self.assert_result(expected, find_uniq_sum_combinations(nums, target))
+
+    def test_ascending_list2(self):
+        target, nums = 10, [1, 2, 3, 4, 5]
+        expected = [[4, 3, 2, 1], [5, 3, 2], [5, 4, 1]]
+        self.assert_result(expected, find_uniq_sum_combinations(nums, target))
+
+    def test_empty_array(self):
+        target, nums = 0, []
+        expected = [[]]
+        self.assert_result(expected, find_uniq_sum_combinations(nums, target))
+
+    def test_empty_array2(self):
+        target, nums = 1, []
+        expected = []
+        self.assert_result(expected, find_uniq_sum_combinations(nums, target))
+
+    def test_unable_to_find_target_sum(self):
+        target, nums = -1, [1, 2, 3]
+        expected = []
+        self.assert_result(expected, find_uniq_sum_combinations(nums, target))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
 ```
 
 ### Mar 2, 2020 LC 78 [Medium] Generate All Subsets
