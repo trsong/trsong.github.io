@@ -65,7 +65,8 @@ def backtack_sum(res, accu_list, nums, index, remain_target):
                 continue
 
             if cur_num > remain_target:
-                continue
+                # remaining numbers are even larger
+                break
                 
             accu_list.append(cur_num)
             backtack_sum(res, accu_list, nums, i+1, remain_target - cur_num)
