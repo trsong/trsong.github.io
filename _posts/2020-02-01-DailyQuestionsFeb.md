@@ -19,7 +19,13 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
 
-### Mar 4, 2020 [Medium] Longest Common Prefix
+### Mar 5, 2020 [Hard] Balanced Parentheses with Wildcard
+---
+> **Question:** You're given a string consisting solely of `(`, `)`, and `*`. `*` can represent either a `(`, `)`, or an empty string. Determine whether the parentheses are balanced.
+>
+> For example, `(()*` and `(*)` are balanced. `)*(` is not balanced.
+
+### Mar 4, 2020 [Easy] Longest Common Prefix
 ---
 > **Question:** Given a list of strings, find the longest common prefix between all strings.
 
@@ -27,6 +33,64 @@ categories: Python/Java
 ```py 
 longest_common_prefix(['helloworld', 'hellokitty', 'helly'])
 # returns 'hell'
+```
+
+
+**Solution:** [https://repl.it/@trsong/Longest-Common-Prefix](https://repl.it/@trsong/Longest-Common-Prefix)
+```py
+import unittest
+
+def longest_common_prefix(words):
+    if not words:
+        return ''
+
+    for i, ch in enumerate(words[0]):
+        for word in words:
+            if i >= len(word) or word[i] != ch:
+                return words[0][:i]
+    
+    return None
+
+
+class LongestCommonPrefixSpec(unittest.TestCase):
+    def test_example(self):
+        words = ['helloworld', 'hellokitty', 'helly']
+        expected = 'hell'
+        self.assertEqual(expected, longest_common_prefix(words))
+
+    def test_words_share_prefix(self):
+        words = ['flower', 'flow', 'flight']
+        expected = 'fl'
+        self.assertEqual(expected, longest_common_prefix(words))
+
+    def test_words_not_share_prefix(self):
+        words = ['dog', 'racecar', 'car']
+        expected = ''
+        self.assertEqual(expected, longest_common_prefix(words))
+
+    def test_list_with_empty_word(self):
+        words = ['abc', 'abc', '']
+        expected = ''
+        self.assertEqual(expected, longest_common_prefix(words))
+
+    def test_empty_array(self):
+        words = []
+        expected = ''
+        self.assertEqual(expected, longest_common_prefix(words))
+
+    def test_prefix_words(self):
+        words = ['abcdefgh', 'abcdefg', 'abcd', 'abcde']
+        expected = 'abcd'
+        self.assertEqual(expected, longest_common_prefix(words))
+
+    def test_nothing_in_common(self):
+        words = ['abc', 'def', 'ghi', '123']
+        expected = ''
+        self.assertEqual(expected, longest_common_prefix(words))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
 ```
 
 ### Mar 3, 2020 [Hard] Unique Sum Combinations
@@ -128,9 +192,9 @@ generate_all_subsets([1, 2, 3])
 # [[], [3], [2], [2, 3], [1], [1, 3], [1, 2], [1, 2, 3]]
 ```
 
-**My thoughts:** Solution 1 use reduce: initially the set of all subsets is [[]]. For each element e, create two copy of the all subsets, one remain the same, the other insert e to each subsets. e.g. `[[]]` => `[[]] + [[1]]` => `[[], [1]] + [[2], [1, 2]]`
+**My thoughts:** Solution 1 use reduce: initially the set of all subsets is `[[]]`. For each element e, create two copy of the all subsets, one remain the same, the other insert e to each subsets. e.g. `[[]]` => `[[]] + [[1]]` => `[[], [1]] + [[2], [1, 2]]`
 
-Solution 2 use binary representation of 2^n. Each set digit represents chosen elements. e.g. Binary representation `0101` in `[1, 2, 3, 4]` represents `[2, 4]`
+Solution 2 use binary representation of `2^n`. Each set digit represents chosen elements. e.g. Binary representation `0101` in `[1, 2, 3, 4]` represents `[2, 4]`
 
 **Solution with Recursion:** [https://repl.it/@trsong/Generate-All-Subsets-with-recursion](https://repl.it/@trsong/Generate-All-Subsets-with-recursion)
 ```py
