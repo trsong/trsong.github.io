@@ -18,6 +18,35 @@ categories: Python/Java
 
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
+### Mar 7, 2020 LC 114 \[Medium\] Flatten Binary Tree to Linked List
+---
+> **Question:** Given a binary tree, flatten it to a linked list in-place.
+>
+> For example, given the following tree:
+
+```py
+    1
+   / \
+  2   5
+ / \   \
+3   4   6
+```
+>
+> The flattened tree should look like:
+
+```py
+1
+ \
+  2
+   \
+    3
+     \
+      4
+       \
+        5
+         \
+          6
+```
 
 ### Mar 6, 2020 LC 133 [Medium] Deep Copy Graph
 ---
@@ -25,11 +54,150 @@ categories: Python/Java
 >
 > Each node in the graph contains a val (int) and a list (List[Node]) of its neighbors:
 
-```java
-class Node {
-    public int val;
-    public List<Node> neighbors;
-}
+```py
+class Node(object):
+    def __init__(self, val, neighbors=None):
+        self.val = val
+        self.neighbors = neighbors
+```
+
+**Solution with DFS:** [https://repl.it/@trsong/Deep-Copy-Graph](https://repl.it/@trsong/Deep-Copy-Graph)
+```py
+import unittest
+
+def deep_copy(root):
+    if not root:
+        return None
+
+    node_lookup = {}
+    source_nodes = get_dfs_traversal(root)
+    
+    for source in source_nodes:
+        node_lookup[source] = Node(source.val)
+
+
+    for source, cloned_source in node_lookup.items():
+        if not source.neighbors:
+            continue
+
+        cloned_source.neighbors = []
+        for neighbor in source.neighbors:
+            cloned_neighbor = node_lookup[neighbor]
+            cloned_source.neighbors.append(cloned_neighbor)
+
+    return node_lookup[source_nodes[0]]
+
+
+def get_dfs_traversal(root):
+    stack = [root]
+    visited = set()
+    res = []
+    while stack:
+        cur = stack.pop()
+        if cur not in visited:
+            res.append(cur)
+        visited.add(cur)
+            
+        if not cur.neighbors:
+            continue
+
+        for n in cur.neighbors:
+            if n not in visited:
+                stack.append(n)
+    
+    return res
+
+
+###################
+# Testing Utilities
+###################
+class Node(object):
+    def __init__(self, val, neighbors=None):
+        self.val = val
+        self.neighbors = neighbors
+
+    def __eq__(self, other):
+        if not other:
+            return False
+
+        nodes = get_dfs_traversal(self)
+        other_nodes = get_dfs_traversal(other)
+        if len(nodes) != len(other_nodes):
+            return False
+        
+        for n1, n2 in zip(nodes, other_nodes):
+            if n1.val != n2.val:
+                return False
+
+            num_neighbor1 = len(n1.neighbors) if n1.neighbors else 0
+            num_neighbor2 = len(n2.neighbors) if n2.neighbors else 0
+            if num_neighbor1 != num_neighbor2:
+                return False
+
+        return True
+
+    def __repr__(self):
+        res = []
+        for node in get_dfs_traversal(self):
+            res.append(str(node.val))
+        return "DFS: " + ",".join(res)     
+
+
+class DeepCopySpec(unittest.TestCase):
+    def assert_result(self, root1, root2):
+        # check against each node if two graph have same value yet different memory addresses
+        self.assertEqual(root1, root2)
+        node_set1 = set(get_dfs_traversal(root1))
+        node_set2 = set(get_dfs_traversal(root2))
+        self.assertEqual(set(), node_set1 & node_set2)
+
+    def test_empty_graph(self):
+        self.assertIsNone(deep_copy(None))
+
+    def test_graph_with_one_node(self):
+        root = Node(1)
+        self.assert_result(root, deep_copy(root))
+
+    def test_k3(self):
+        n = [Node(i) for i in xrange(3)]
+        n[0].neighbors = [n[1], n[2]]
+        n[1].neighbors = [n[0], n[2]]
+        n[2].neighbors = [n[1], n[0]]
+        self.assert_result(n[0], deep_copy(n[0]))
+    
+    def test_DAG(self):
+        n = [Node(i) for i in xrange(4)]
+        n[0].neighbors = [n[1], n[2]]
+        n[1].neighbors = [n[2], n[3]]
+        n[2].neighbors = [n[3]]
+        n[3].neighbors = []
+        self.assert_result(n[0], deep_copy(n[0]))
+
+    def test_graph_with_cycle(self):
+        n = [Node(i) for i in xrange(6)]
+        n[0].neighbors = [n[1]]
+        n[1].neighbors = [n[2]]
+        n[2].neighbors = [n[3]]
+        n[3].neighbors = [n[4]]
+        n[4].neighbors = [n[5]]
+        n[5].neighbors = [n[2]]
+        self.assert_result(n[0], deep_copy(n[0]))
+
+    def test_k10(self):
+        n = [Node(i) for i in xrange(10)]
+        for i in xrange(10):
+            n[i].neighbors = n[:i] + n[i+1:]
+        self.assert_result(n[0], deep_copy(n[0]))
+
+    def test_tree(self):
+        n = [Node(i) for i in xrange(5)]
+        n[0].neighbors = [n[1], n[2]]
+        n[2].neighbors = [n[3], n[4]]
+        self.assert_result(n[0], deep_copy(n[0]))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
 ```
 
 ### Mar 5, 2020 LC 678 [Medium] Balanced Parentheses with Wildcard
