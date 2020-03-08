@@ -22,6 +22,7 @@ categories: Python/Java
 ---
 > **Question:** Given an integer, find the number of 1 bits it has.
 
+**Example:**
 ```py
 one_bits(23)  # Returns 4 as 23 equals 0b10111
 ```
