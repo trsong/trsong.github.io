@@ -58,7 +58,119 @@ one_bits(23)  # Returns 4 as 23 equals 0b10111
 
 **Solution:** [https://repl.it/@trsong/Flatten-the-Binary-Tree-to-Linked-List-In-Place](https://repl.it/@trsong/Flatten-the-Binary-Tree-to-Linked-List-In-Place)
 ```py
+import unittest
 
+def flatten(tree):
+    class Context:
+        # inorder: cur, left, right
+        prev_node = TreeNode(-1, right=tree)
+
+    def inorder_flatten(root):
+        if not root:
+            return
+        
+        left = root.left
+        right = root.right
+
+        Context.prev_node.right = root
+        Context.prev_node.left = None
+        Context.prev_node = root
+
+        inorder_flatten(left)
+        inorder_flatten(right)
+
+    inorder_flatten(tree)
+    return tree
+
+
+class TreeNode(object):
+    def __init__(self, val, left=None, right=None):
+        self.val = val
+        self.left = left
+        self.right = right
+
+    def __eq__(self, other):
+        return other and other.val == self.val and other.left == self.left and other.right == self.right
+
+    def __repr__(self):
+        return "TreeNode({}, {}, {})".format(self.val, str(self.left), str(self.right))
+
+
+class FlattenSpec(unittest.TestCase):
+    @staticmethod
+    def list_to_tree(lst):
+        p = dummy = TreeNode(-1)
+        for num in lst:
+            p.right = TreeNode(num)
+            p = p.right
+        return dummy.right
+
+    def assert_result(self, lst, tree):
+        self.assertEqual(FlattenSpec.list_to_tree(lst), tree)
+
+    def test_example(self):
+        """
+            1
+           / \
+          2   5
+         / \   \
+        3   4   6
+        """
+        n2 = TreeNode(2, TreeNode(3), TreeNode(4))
+        n5 = TreeNode(5, right = TreeNode(6))
+        tree = TreeNode(1, n2, n5)
+        flatten_list = [1, 2, 3, 4, 5, 6]
+        self.assert_result(flatten_list, flatten(tree))
+
+    def test_empty_tree(self):
+        tree = None
+        flatten(tree)
+        self.assertIsNone(tree)
+
+    def test_only_right_child(self):
+        """
+        1
+         \
+          2
+           \
+            3
+        """
+        n2 = TreeNode(2, right=TreeNode(3))
+        tree = TreeNode(1, right = n2)
+        flatten_list = [1, 2, 3]
+        self.assert_result(flatten_list, flatten(tree))
+
+    def test_only_left_child(self):
+        """
+            1
+           /
+          2
+         /
+        3
+        """
+        n2 = TreeNode(2, TreeNode(3))
+        tree = TreeNode(1, n2)
+        flatten_list = [1, 2, 3]
+        self.assert_result(flatten_list, flatten(tree))  
+
+    def test_right_heavy_tree(self):
+        """
+        1
+       / \
+      3   4
+         /
+        2
+         \
+          5
+        """
+        n4 = TreeNode(4, TreeNode(2, right=TreeNode(5)))
+        tree = TreeNode(1, TreeNode(3), n4)
+        flatten_list = [1, 3, 4, 2, 5]
+        self.assert_result(flatten_list, flatten(tree)) 
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
 ```
 
 ### Mar 6, 2020 LC 133 [Medium] Deep Copy Graph
