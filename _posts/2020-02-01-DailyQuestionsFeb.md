@@ -18,6 +18,27 @@ categories: Python/Java
 
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
+
+
+### Mar 9, 2020 LC 308 \[Hard\] Range Sum Query 2D - Mutable
+---
+> **Question:** Given a 2D matrix matrix, find the sum of the elements inside the rectangle defined by its upper left corner (row1, col1) and lower right corner (row2, col2).
+
+**Example:**
+```py
+Given matrix = [
+  [3, 0, 1, 4, 2],
+  [5, 6, 3, 2, 1],
+  [1, 2, 0, 1, 5],
+  [4, 1, 0, 1, 7],
+  [1, 0, 3, 0, 5]
+]
+
+sum_region(2, 1, 4, 3)   # returns 8
+update(3, 2, 2)
+sum_region(2, 1, 4, 3)   # returns 10
+```
+
 ### Mar 8, 2020 \[Easy\] Number of 1 bits
 ---
 > **Question:** Given an integer, find the number of 1 bits it has.
@@ -25,6 +46,66 @@ categories: Python/Java
 **Example:**
 ```py
 one_bits(23)  # Returns 4 as 23 equals 0b10111
+```
+
+**My thoughts:** ***Brian Kernighan’s Algorithm*** is an efficient way to count number of set bits. In binary representation, a number num & with num - 1 always remove rightmost set bit. 
+
+```py
+1st iteration: 0b10111 -> 0b10110
+  0b10111
+& 0b10110  
+= 0b10110
+
+2nd iteration: 0b10110 -> 0b10100
+  0b10110
+& 0b10101
+= 0b10100
+
+3rd iteration: 0b10100 -> 0b10000
+  0b10100
+& 0b10011
+= 0b10000
+
+4th iteration: 0b10000 -> 0b00000
+  0b10000
+& 0b00000
+= 0b00000
+```
+
+**Solution with Brian Kernighan’s Algorithm:** [https://repl.it/@trsong/Number-of-1-bits](https://repl.it/@trsong/Number-of-1-bits)
+```py
+import unittest
+
+def count_bits(num):
+    count = 0
+    while num:
+        count += 1
+        num &= num - 1  # remove last set bit
+    return count
+
+
+class CountBitSpec(unittest.TestCase):
+    def test_example(self):
+        self.assertEqual(4, count_bits(0b10111))
+
+    def test_zero(self):
+        self.assertEqual(0, count_bits(0b0))
+
+    def test_all_bits_set(self):
+        self.assertEqual(5, count_bits(0b11111))
+
+    def test_power_of_two(self):
+        self.assertEqual(1, count_bits(0b1000000000000))
+
+    def test_every_other_bit_set(self):
+        self.assertEqual(3, count_bits(0b0101010))
+
+    def test_random_one_and_zeros(self):
+        self.assertEqual(7, count_bits(0b1010010001000010000010000001))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
 ```
 
 ### Mar 7, 2020 LC 114 \[Medium\] Flatten Binary Tree to Linked List
