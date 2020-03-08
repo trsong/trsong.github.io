@@ -18,6 +18,14 @@ categories: Python/Java
 
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
+### Mar 8, 2020 \[Easy\] Number of 1 bits
+---
+> **Question:** Given an integer, find the number of 1 bits it has.
+
+```py
+one_bits(23)  # Returns 4 as 23 equals 0b10111
+```
+
 ### Mar 7, 2020 LC 114 \[Medium\] Flatten Binary Tree to Linked List
 ---
 > **Question:** Given a binary tree, flatten it to a linked list in-place.
@@ -46,6 +54,11 @@ categories: Python/Java
         5
          \
           6
+```
+
+**Solution:** [https://repl.it/@trsong/Flatten-the-Binary-Tree-to-Linked-List-In-Place](https://repl.it/@trsong/Flatten-the-Binary-Tree-to-Linked-List-In-Place)
+```py
+
 ```
 
 ### Mar 6, 2020 LC 133 [Medium] Deep Copy Graph
