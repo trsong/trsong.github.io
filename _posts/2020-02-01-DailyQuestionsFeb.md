@@ -19,6 +19,25 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
 
+### Mar 11, 2020 \[Medium\] LRU Cache
+---
+> **Question:** LRU cache is a cache data structure that has limited space, and once there are more items in the cache than available space, it will preempt the least recently used item. What counts as recently used is any item a key has `'get'` or `'put'` called on it.
+>
+> Implement an LRU cache class with the 2 functions `'put'` and `'get'`. `'put'` should place a value mapped to a certain key, and preempt items if needed. `'get'` should return the value for a given key if it exists in the cache, and return None if it doesn't exist.
+
+**Example:**
+```py
+cache = LRUCache(2)
+cache.put(3, 3)
+cache.put(4, 4)
+cache.get(3)  # returns 3
+cache.get(2)  # returns None
+
+cache.put(2, 2)
+cache.get(4)  # returns None (pre-empted by 2)
+cache.get(3)  # returns 3
+```
+
 ### Mar 10, 2020 \[Medium\] Smallest Number of Perfect Squares
 ---
 > **Question:** Write a program that determines the smallest number of perfect squares that sum up to N.
@@ -28,6 +47,72 @@ categories: Python/Java
 Given N = 4, return 1 (4)
 Given N = 17, return 2 (16 + 1)
 Given N = 18, return 2 (9 + 9)
+```
+
+**Solution with DP:** [https://repl.it/@trsong/Smallest-Number-of-Perfect-Squares](https://repl.it/@trsong/Smallest-Number-of-Perfect-Squares)
+```py
+import unittest
+import math
+
+def min_perfect_squares(target):
+    if target < 0:
+        return -1
+    elif is_perfect_square(target):
+        return 1
+    
+    # Let dp[num] represents min perfect square to sum to target
+    #     dp[num] = 1 + min(dp[num - ps]) for all perfect square ps < num
+    # or  dp[num] = 1 if num is a perfect square 
+    dp = [float('inf')] * (target + 1)
+    dp[0] = 0
+
+    for num in xrange(1, target+1):
+        if is_perfect_square(num):
+            dp[num] = 1
+        else:
+            for sqrt_num in xrange(1, int(math.sqrt(num))+1):
+                ps = sqrt_num * sqrt_num
+                dp[num] = min(dp[num], 1 + dp[num - ps])
+
+    return dp[target]
+
+
+def is_perfect_square(num):
+    round_sqrt = int(math.sqrt(num))
+    return round_sqrt * round_sqrt == num
+
+
+class MinPerfectSquareSpec(unittest.TestCase):
+    def test_example(self):
+        self.assertEqual(1, min_perfect_squares(4))  # 4 = 4
+
+    def test_example2(self):
+        self.assertEqual(2, min_perfect_squares(17))  # 17 = 16 + 1
+
+    def test_example3(self):
+        self.assertEqual(2, min_perfect_squares(18))  # 18 = 9 + 9
+
+    def test_greedy_not_work(self):
+        self.assertEqual(2, min_perfect_squares(32))  # 32 = 16 + 16
+    
+    def test_zero(self):
+        self.assertEqual(1, min_perfect_squares(0))  # 0 = 0
+
+    def test_negative_number(self):
+        self.assertEqual(-1, min_perfect_squares(-3))  # negatives cannot be a sum of perfect squares
+    
+    def test_perfect_numbers(self):
+        self.assertEqual(1, min_perfect_squares(169))  # 169 = 169
+
+    def test_odd_number(self):
+        self.assertEqual(3, min_perfect_squares(3))  # 3 = 1 + 1 + 1
+
+    def test_even_number(self):
+        self.assertEqual(3, min_perfect_squares(6))  # 6 = 4 + 1 + 1
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
 ```
 
 ### Mar 9, 2020 LC 308 \[Hard\] Range Sum Query 2D - Mutable
