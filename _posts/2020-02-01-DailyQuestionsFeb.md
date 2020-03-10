@@ -19,6 +19,16 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
 
+### Mar 10, 2020 \[Medium\] Smallest Number of Perfect Squares
+---
+> **Question:** Write a program that determines the smallest number of perfect squares that sum up to N.
+>
+> Here are a few examples:
+```py
+Given N = 4, return 1 (4)
+Given N = 17, return 2 (16 + 1)
+Given N = 18, return 2 (9 + 9)
+```
 
 ### Mar 9, 2020 LC 308 \[Hard\] Range Sum Query 2D - Mutable
 ---
@@ -37,6 +47,77 @@ Given matrix = [
 sum_region(2, 1, 4, 3)   # returns 8
 update(3, 2, 2)
 sum_region(2, 1, 4, 3)   # returns 10
+```
+
+**Solution with 2D Binary Indexed Tree:** [https://repl.it/@trsong/Range-Sum-Query-2D-Table-Mutable](https://repl.it/@trsong/Range-Sum-Query-2D-Table-Mutable)
+```py
+import unittest
+
+class RangeSumQuery2D(object):
+    def __init__(self, matrix):
+        n, m = len(matrix), len(matrix[0])
+        self.bit_matrix = [[0 for _ in xrange(m+1)] for _ in xrange(n+1)]
+        for r in xrange(n):
+            for c in xrange(m):
+                self.update(r, c, matrix[r][c])
+
+    def sum_top_left_reigion(self, row, col):
+        res = 0
+        bit_row_index = row + 1
+        while bit_row_index > 0:
+            bit_col_index = col + 1
+            while bit_col_index > 0:
+                res += self.bit_matrix[bit_row_index][bit_col_index]
+                bit_col_index -= bit_col_index & -bit_col_index
+            bit_row_index -= bit_row_index & -bit_row_index
+        return res
+
+    def sum_region(self, top_left_row, top_left_col, bottom_right_row, bottom_right_col):
+        sum_bottom_right = self.sum_top_left_reigion(bottom_right_row, bottom_right_col)
+        sum_bottom_left = self.sum_top_left_reigion(bottom_right_row, top_left_col-1)
+        sum_top_right = self.sum_top_left_reigion(top_left_row-1, bottom_right_col)
+        sum_top_left = self.sum_top_left_reigion(top_left_row-1, top_left_col-1)
+        return sum_bottom_right - sum_bottom_left - sum_top_right + sum_top_left
+
+    def update(self, row, col, val):
+        n, m = len(self.bit_matrix), len(self.bit_matrix[0])
+        diff = val - self.sum_region(row, col, row, col)
+        bit_row_index = row + 1
+        while bit_row_index < n:
+            bit_col_index = col + 1
+            while bit_col_index < m:
+                self.bit_matrix[bit_row_index][bit_col_index] += diff
+                bit_col_index += bit_col_index & -bit_col_index
+            bit_row_index += bit_row_index & -bit_row_index
+
+
+class RangeSumQuery2DSpec(unittest.TestCase):
+    def test_example(self):
+        matrix = [
+            [3, 0, 1, 4, 2],
+            [5, 6, 3, 2, 1],
+            [1, 2, 0, 1, 5],
+            [4, 1, 0, 1, 7],
+            [1, 0, 3, 0, 5]
+        ]
+        rsq = RangeSumQuery2D(matrix)
+        self.assertEqual(8, rsq.sum_region(2, 1, 4, 3))
+        rsq.update(3, 2, 2)
+        self.assertEqual(10, rsq.sum_region(2, 1, 4, 3))
+
+    def test_non_square_matrix(self):
+        matrix = [
+            [1, 1, 1, 1, 1],
+            [1, 1, 1, 1, 1]
+        ]
+        rsq = RangeSumQuery2D(matrix)
+        self.assertEqual(6, rsq.sum_region(0, 1, 1, 3))
+        rsq.update(0, 2, 2)
+        self.assertEqual(7, rsq.sum_region(0, 1, 1, 3))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
 ```
 
 ### Mar 8, 2020 \[Easy\] Number of 1 bits
