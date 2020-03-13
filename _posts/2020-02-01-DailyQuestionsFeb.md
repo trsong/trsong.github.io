@@ -19,6 +19,13 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
 
+### Mar 13, 2020 \[Hard\] Anagram Indices Problem
+---
+> **Question:**  Given a word W and a string S, find all starting indices in S which are anagrams of W.
+>
+> For example, given that W is `"ab"`, and S is `"abxaba"`, return `0`, `3`, and `4`.
+
+
 ### Mar 12, 2020 \[Easy\] Add Two Numbers as a Linked List
 ---
 > **Question:** You are given two linked-lists representing two non-negative integers. The digits are stored in reverse order and each of their nodes contain a single digit. Add the two numbers and return it as a linked list.
@@ -28,6 +35,111 @@ categories: Python/Java
 Input: (2 -> 4 -> 3) + (5 -> 6 -> 4)
 Output: 7 -> 0 -> 8
 Explanation: 342 + 465 = 807.
+```
+
+**Solution:** [https://repl.it/@trsong/Add-Two-Numbers-as-a-Linked-List](https://repl.it/@trsong/Add-Two-Numbers-as-a-Linked-List)
+```py
+import unittest
+
+def lists_addition(l1, l2):
+    if not l1:
+        return l2
+    elif not l2:
+        return l1
+    p1 = l1
+    p2 = l2
+    p = dummy = ListNode(-1)
+    carry = 0
+    while p1 or p2:
+        v1 = p1.val if p1 else 0
+        v2 = p2.val if p2 else 0
+        v = v1 + v2 + carry
+        carry = v // 10
+        v %= 10
+
+        p.next = ListNode(v)
+        p = p.next
+        p1 = p1.next if p1 else None
+        p2 = p2.next if p2 else None
+
+    if carry:
+        p.next = ListNode(carry)
+
+    return dummy.next
+
+
+###################
+# Testing Utilities
+###################
+class ListNode(object):
+    def __init__(self, val, next=None):
+        self.val = val
+        self.next = next
+
+    def __repr__(self):
+        return "{} -> {}".format(str(self.val), str(self.next))
+
+    def __eq__(self, other):
+        return other and self.val == other.val and self.next == other.next
+
+    @staticmethod
+    def build_list(*nums):
+        node = dummy = ListNode(-1)
+        for num in nums:
+            node.next = ListNode(num)
+            node = node.next
+        return dummy.next
+
+
+class ListsAdditionSpec(unittest.TestCase):
+    def test_example(self):
+        l1 = ListNode.build_list(2, 4, 3)
+        l2 = ListNode.build_list(5, 6, 4)
+        expected = ListNode.build_list(7, 0, 8)
+        self.assertEqual(expected, lists_addition(l1, l2))
+
+    def test_add_empty_list(self):
+        self.assertEqual(None, lists_addition(None, None))
+
+    def test_add_nonempty_to_empty_list(self):
+        l1 = None
+        l2 = ListNode.build_list(1, 2, 3)
+        expected = ListNode.build_list(1, 2, 3)
+        self.assertEqual(expected, lists_addition(l1, l2))
+
+    def test_add_empty_to_nonempty_list(self):
+        l1 = ListNode.build_list(1)
+        l2 = None
+        expected = ListNode.build_list(1)
+        self.assertEqual(expected, lists_addition(l1, l2))
+
+    def test_addition_with_carryover(self):
+        l1 = ListNode.build_list(1, 1)
+        l2 = ListNode.build_list(9, 9, 9, 9)
+        expected = ListNode.build_list(0, 1, 0, 0, 1)
+        self.assertEqual(expected, lists_addition(l1, l2))
+
+    def test_addition_with_carryover2(self):
+        l1 = ListNode.build_list(7, 5, 9, 4, 6)
+        l2 = ListNode.build_list(8, 4)
+        expected = ListNode.build_list(5, 0, 0, 5, 6)
+        self.assertEqual(expected, lists_addition(l1, l2))
+
+    def test_add_zero_to_number(self):
+        l1 = ListNode.build_list(4, 2)
+        l2 = ListNode.build_list(0)
+        expected = ListNode.build_list(4, 2)
+        self.assertEqual(expected, lists_addition(l1, l2))
+    
+    def test_same_length_lists(self):
+        l1 = ListNode.build_list(1, 2, 3)
+        l2 = ListNode.build_list(9, 8, 7)
+        expected = ListNode.build_list(0, 1, 1, 1)
+        self.assertEqual(expected, lists_addition(l1, l2))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
 ```
 
 ### Mar 11, 2020 \[Medium\] LRU Cache
