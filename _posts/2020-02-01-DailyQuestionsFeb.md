@@ -19,12 +19,100 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
 
-### Mar 13, 2020 \[Hard\] Anagram Indices Problem
+### Mar 14, 2020 \[Hard\] Graph Coloring
+---
+> **Question:** Given an undirected graph represented as an adjacency matrix and an integer k, determine whether each node in the graph can be colored such that no two adjacent nodes share the same color using at most k colors.
+
+
+### Mar 13, 2020 LC 438 \[Medium\] Anagram Indices Problem
 ---
 > **Question:**  Given a word W and a string S, find all starting indices in S which are anagrams of W.
 >
 > For example, given that W is `"ab"`, and S is `"abxaba"`, return `0`, `3`, and `4`.
 
+
+**Solution with Sliding Window:** [https://repl.it/@trsong/Anagram-Indices-Problem](https://repl.it/@trsong/Anagram-Indices-Problem)
+```py
+import unittest
+
+def find_anagrams(word, s):
+    if not s or len(word) < len(s):
+        return []
+
+    freq_balance = {}
+    for c in s:
+        freq_balance[c] = freq_balance.get(c, 0) + 1
+
+    res = []
+    for j, end in enumerate(word):
+        i = j - len(s)
+        if i >= 0:
+            start = word[i]
+            freq_balance[start] = freq_balance.get(start, 0) + 1
+            if freq_balance[start] == 0:
+                del freq_balance[start]
+        
+        freq_balance[end] = freq_balance.get(end, 0) - 1
+        if freq_balance[end] == 0:
+            del freq_balance[end]
+
+        if not freq_balance:
+            res.append(i+1)
+
+    return res
+
+
+class FindAnagramSpec(unittest.TestCase):
+    def test_example(self):
+        word = 'abxaba'
+        s = 'ab'
+        self.assertEqual([0, 3, 4], find_anagrams(word, s))
+
+    def test_example2(self):
+        word = 'acdbacdacb'
+        s = 'abc'
+        self.assertEqual([3, 7], find_anagrams(word, s))
+
+    def test_empty_source(self):
+        self.assertEqual([], find_anagrams('', 'a'))
+    
+    def test_empty_pattern(self):
+        self.assertEqual([], find_anagrams('a', ''))
+
+    def test_pattern_contains_unseen_characters_in_source(self):
+        word = "abcdef"
+        s = "123"
+        self.assertEqual([], find_anagrams(word, s))
+    
+    def test_pattern_not_in_source(self):
+        word = 'ab9cd9abc9d'
+        s = 'abcd'
+        self.assertEqual([], find_anagrams(word, s))
+    
+    def test_matching_strings_have_overlapping_positions_in_source(self):
+        word = 'abab'
+        s = 'ab'
+        self.assertEqual([0, 1, 2], find_anagrams(word, s))
+    
+    def test_find_all_matching_positions(self):
+        word = 'cbaebabacd'
+        s = 'abc'
+        self.assertEqual([0, 6], find_anagrams(word, s))
+    
+    def test_find_all_matching_positions2(self):
+        word = 'BACDGABCDA'
+        s = 'ABCD'
+        self.assertEqual([0, 5, 6], find_anagrams(word, s))
+    
+    def test_find_all_matching_positions3(self):
+        word = 'AAABABAA'
+        s = 'AABA'
+        self.assertEqual([0, 1, 4], find_anagrams(word, s))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
+```
 
 ### Mar 12, 2020 \[Easy\] Add Two Numbers as a Linked List
 ---
