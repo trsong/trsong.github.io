@@ -18,11 +18,110 @@ categories: Python/Java
 
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
+### Mar 15, 2020 \[Medium\] Largest Rectangular Area in a Histogram
+---
+> **Question:** You are given a histogram consisting of rectangles of different heights. Determine the area of the largest rectangle that can be formed only from the bars of the histogram.
+
+**Example:**
+```py
+These heights are represented in an input list, such that [1, 3, 2, 5] corresponds to the following diagram:
+
+      x
+      x  
+  x   x
+  x x x
+x x x x
+
+For the diagram above, for example, this would be six, representing the 2 x 3 area at the bottom right.
+```
+
 
 ### Mar 14, 2020 \[Hard\] Graph Coloring
 ---
 > **Question:** Given an undirected graph represented as an adjacency matrix and an integer k, determine whether each node in the graph can be colored such that no two adjacent nodes share the same color using at most k colors.
 
+**My thoughts:** Solve this problem with backtracking. For each node, testing all colors one-by-one; if it turns out there is something wrong with current color, we will backtrack to test other colors.
+
+**Solution with Backtracking:** [https://repl.it/@trsong/Graph-Coloring](https://repl.it/@trsong/Graph-Coloring)
+```py
+import unittest
+
+def solve_graph_coloring(neighbor_matrix, k):
+    n = len(neighbor_matrix)
+    node_colors = [None] * n
+
+    def backtrack(current_node):
+        if current_node >= n:
+            return True
+        
+        processed_neighbors = [i for i in xrange(current_node) if neighbor_matrix[current_node][i]]
+
+        for color in xrange(k):
+            if any(color == node_colors[i] for i in processed_neighbors):
+                continue
+            node_colors[current_node] = color
+            if backtrack(current_node+1):
+                return True
+            node_colors[current_node] = None    
+        return False
+
+    return backtrack(0)
+    
+
+class SolveGraphColoringSpec(unittest.TestCase):
+    @staticmethod
+    def generateCompleteGraph(n):
+        return [[1 if i != j else 0 for i in xrange(n)] for j in xrange(n)] 
+
+    def test_k2_graph(self):
+        k2 = SolveGraphColoringSpec.generateCompleteGraph(2)
+        self.assertFalse(solve_graph_coloring(k2, 1))
+        self.assertTrue(solve_graph_coloring(k2, 2))
+        self.assertTrue(solve_graph_coloring(k2, 3))
+
+    def test_k3_graph(self):
+        k3 = SolveGraphColoringSpec.generateCompleteGraph(3)
+        self.assertFalse(solve_graph_coloring(k3, 2))
+        self.assertTrue(solve_graph_coloring(k3, 3))
+        self.assertTrue(solve_graph_coloring(k3, 4))
+
+    def test_k4_graph(self):
+        k4 = SolveGraphColoringSpec.generateCompleteGraph(4)
+        self.assertFalse(solve_graph_coloring(k4, 3))
+        self.assertTrue(solve_graph_coloring(k4, 4))
+        self.assertTrue(solve_graph_coloring(k4, 5))
+
+    def test_square_graph(self):
+        square = [
+            [0, 1, 0, 1],
+            [1, 0, 1, 0],
+            [0, 1, 0, 1],
+            [1, 0, 1, 0]
+        ]
+        self.assertFalse(solve_graph_coloring(square, 1))
+        self.assertTrue(solve_graph_coloring(square, 2))
+        self.assertTrue(solve_graph_coloring(square, 3))
+
+    def test_star_graph(self):
+        star = [
+            [0, 0, 1, 1, 0],
+            [0, 0, 0, 1, 1],
+            [1, 0, 0, 0, 1],
+            [1, 1, 0, 0, 0],
+            [0, 1, 1, 0, 0]
+        ]
+        self.assertFalse(solve_graph_coloring(star, 2))
+        self.assertTrue(solve_graph_coloring(star, 3))
+        self.assertTrue(solve_graph_coloring(star, 4))
+
+    def test_disconnected_graph(self):
+        disconnected = [[0 for _ in xrange(10)] for _ in xrange(10)]
+        self.assertTrue(solve_graph_coloring(disconnected, 1))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
+```
 
 ### Mar 13, 2020 LC 438 \[Medium\] Anagram Indices Problem
 ---
