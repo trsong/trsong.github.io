@@ -18,6 +18,12 @@ categories: Python/Java
 
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
+
+### Mar 16, 2020 \[Easy\] Pair Sum to K
+---
+> **Question:** Given an array of numbers and a number `k`, determine if there are three entries in the array which add up to the specified number `k`. For example, given `[20, 303, 3, 4, 25]` and `k = 49`, return `true` as `20 + 4 + 25 = 49`.
+
+
 ### Mar 15, 2020 \[Medium\] Largest Rectangular Area in a Histogram
 ---
 > **Question:** You are given a histogram consisting of rectangles of different heights. Determine the area of the largest rectangle that can be formed only from the bars of the histogram.
@@ -35,6 +41,10 @@ x x x x
 For the diagram above, for example, this would be six, representing the 2 x 3 area at the bottom right.
 ```
 
+**Solution with Stack:** [https://repl.it/@trsong/Largest-Rectangular-Area-in-a-Histogram](https://repl.it/@trsong/Largest-Rectangular-Area-in-a-Histogram)
+```py
+
+```
 
 ### Mar 14, 2020 \[Hard\] Graph Coloring
 ---
