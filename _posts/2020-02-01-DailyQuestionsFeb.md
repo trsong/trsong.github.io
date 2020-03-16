@@ -19,6 +19,26 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
 
+
+### Mar 17, 2020 \[Hard\] Largest Rectangle
+---
+> **Question:** Given an N by M matrix consisting only of 1's and 0's, find the largest rectangle containing only 1's and return its area.
+
+**For Example:**
+
+```py
+Given the following matrix:
+
+[[1, 0, 0, 0],
+ [1, 0, 1, 1],
+ [1, 0, 1, 1],
+ [0, 1, 0, 0]]
+
+Return 4. As the following 1s form the largest rectangle containing only 1s:
+ [1, 1],
+ [1, 1]
+```
+
 ### Mar 16, 2020 \[Easy\] Pair Sum to K
 ---
 > **Question:** Given an array of numbers and a number `k`, determine if there are three entries in the array which add up to the specified number `k`. For example, given `[20, 303, 3, 4, 25]` and `k = 49`, return `true` as `20 + 4 + 25 = 49`.
