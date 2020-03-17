@@ -65,6 +65,10 @@ def three_sum(nums, target):
     n = len(nums)
 
     for i in xrange(n-2):
+        if i > 0 and nums[i-1] == nums[i]:
+            # skip duplicates
+            continue
+
         sub_target = target - nums[i]
         if two_sum(nums, i+1, n-1, sub_target):
             return True
