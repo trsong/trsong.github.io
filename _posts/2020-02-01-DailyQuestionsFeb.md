@@ -39,10 +39,72 @@ Return 4. As the following 1s form the largest rectangle containing only 1s:
  [1, 1]
 ```
 
-### Mar 16, 2020 \[Easy\] Pair Sum to K
+### Mar 16, 2020 \[Easy\] Triplet Sum to K
 ---
 > **Question:** Given an array of numbers and a number `k`, determine if there are three entries in the array which add up to the specified number `k`. For example, given `[20, 303, 3, 4, 25]` and `k = 49`, return `true` as `20 + 4 + 25 = 49`.
 
+
+**Solution:** [https://repl.it/@trsong/Triplet-Sum-to-K-3SUM](https://repl.it/@trsong/Triplet-Sum-to-K-3SUM)
+```py
+import unittest
+
+def two_sum(sorted_nums, i, j, target):
+    while i < j:
+        sum = sorted_nums[i] + sorted_nums[j]
+        if sum == target:
+            return True
+        elif sum < target:
+            i += 1
+        else:
+            j -= 1
+    return False
+
+
+def three_sum(nums, target):
+    nums.sort()
+    n = len(nums)
+
+    for i in xrange(n-2):
+        sub_target = target - nums[i]
+        if two_sum(nums, i+1, n-1, sub_target):
+            return True
+    
+    return False
+
+
+class ThreeSumSpec(unittest.TestCase):
+    def test_example(self):
+        target, nums = 49, [20, 303, 3, 4, 25]
+        self.assertTrue(three_sum(nums, target))  # 20 + 4 + 25 = 49
+
+    def test_empty_list(self):
+        target, nums = 0, []
+        self.assertFalse(three_sum(nums, target))
+
+    def test_unsort_list(self):
+        target, nums = 24, [12, 3, 4, 1, 6, 9]
+        self.assertTrue(three_sum(nums, target))  # 12 + 3 + 9 = 24
+
+    def test_list_with_duplicates(self):
+        target, nums = 4, [1, 1, 2, 3, 3]  
+        self.assertTrue(three_sum(nums, target))  # 1 + 1 + 2 = 4
+
+    def test_list_with_duplicates2(self):
+        target, nums = 3, [1, 1, 2, 2, 3, 3]  
+        self.assertFalse(three_sum(nums, target))
+
+    def test_list_with_duplicates3(self):
+        target, nums = 0, [0, 0, 0, 0]  
+        self.assertTrue(three_sum(nums, target))
+
+    def test_list_with_negative_elements(self):
+        target, nums = 4, [4, 8, -1, 2, -2, 10]  
+        self.assertTrue(three_sum(nums, target))  # 2 - 2 + 4 = 4
+  
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
+```
 
 ### Mar 15, 2020 \[Medium\] Largest Rectangular Area in a Histogram
 ---
