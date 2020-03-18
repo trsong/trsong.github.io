@@ -19,6 +19,22 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
 
+### Mar 18, 2020 LC 938 \[Easy\] Range Sum of BST
+---
+> **Question:** Given a binary search tree and a range `[a, b]` (inclusive), return the sum of the elements of the binary search tree within the range.
+
+**Example:**
+```py
+Given the range [4, 9] and the following tree:
+
+    5
+   / \
+  3   8
+ / \ / \
+2  4 6  10
+
+return 23 (5 + 4 + 6 + 8).
+```
 
 ### Mar 17, 2020 \[Hard\] Largest Rectangle
 ---
@@ -37,6 +53,129 @@ Given the following matrix:
 Return 4. As the following 1s form the largest rectangle containing only 1s:
  [1, 1],
  [1, 1]
+```
+
+**My thoughts:** Think in a DP way: scan through row by row to accumulate each cell above. We will have a historgram for each row. Then all we need to do is to find the ara for the largest rectangle in histogram on each row. 
+
+For example,
+```py
+Suppose the table looks like the following:
+
+[
+    [0, 1, 0, 1],
+    [1, 1, 1, 0],
+    [0, 1, 1, 0]
+]
+
+The histogram of first row is just itself:
+    [0, 1, 0, 1]  # largest_rectangle_in_histogram => 1 as max at height 1 * width 1
+The histogram of second row is:
+    [0, 1, 0, 1]
+    +
+    [1, 1, 1, 0]
+    =
+    [1, 2, 1, 0]  # largest_rectangle_in_histogram => 3 as max at height 1 * width 3
+              ^ will not accumulate 0
+The histogram of third row is:
+    [1, 2, 1, 0]       
+    +
+    [0, 1, 1, 0]
+    =
+    [0, 3, 2, 0]  # largest_rectangle_in_histogram => 4 as max at height 2 * width 2
+              ^ will not accumulate 0
+     ^ will not accumulate 0
+
+Therefore, the largest rectangle has 4 1s in it.
+```
+
+**Solution with DP:** [https://repl.it/@trsong/Find-Largest-Rectangle](https://repl.it/@trsong/Find-Largest-Rectangle)
+```py
+import unittest
+
+def largest_rectangle(grid):
+    if not grid or not grid[0]:
+        return 0
+
+    n, m = len(grid), len(grid[0])
+    max_area = largest_rectangle_in_histogram(grid[0])
+
+    for r in xrange(1, n):
+        for c in xrange(m):
+            if grid[r][c] == 1:
+                grid[r][c] = grid[r-1][c] + 1
+
+        max_area_on_row = largest_rectangle_in_histogram(grid[r])
+        max_area = max(max_area, max_area_on_row)
+    
+    return max_area
+
+
+def largest_rectangle_in_histogram(histogram):
+    stack = []
+    i = 0
+    max_area = 0
+    while i < len(histogram) or stack:
+        if not stack or i < len(histogram) and histogram[stack[-1]] <= histogram[i]:
+            # maintain an ascending stack
+            stack.append(i)
+            i += 1
+        else:
+            # if stack starts decreasing,
+            # then left boundary must be stack[-2] and right boundary must be i. Note both boundaries are exclusive
+            # and height is stack[-1]
+            height = histogram[stack.pop()]
+            left_boundary = stack[-1] if stack else -1
+            right_boundary = i
+            current_area = height * (right_boundary - left_boundary - 1)
+            max_area = max(max_area, current_area)
+    return max_area
+
+
+class LargestRectangleSpec(unittest.TestCase):
+    def test_empty_table(self):
+        self.assertEqual(0, largest_rectangle([]))
+        self.assertEqual(0, largest_rectangle([[]]))
+
+    def test_example(self):
+        self.assertEqual(4, largest_rectangle([
+            [1, 0, 0, 0],
+            [1, 0, 1, 1],
+            [1, 0, 1, 1],
+            [0, 1, 0, 0]
+        ]))
+
+    def test_table2(self):
+        self.assertEqual(4, largest_rectangle([
+            [0, 1, 0, 1],
+            [1, 1, 1, 0],
+            [0, 1, 1, 0]
+        ]))
+
+    def test_table3(self):
+        self.assertEqual(3, largest_rectangle([
+            [0, 1, 1, 1, 0],
+            [1, 1, 0, 1, 1],
+            [0, 1, 1, 1, 0],
+        ]))
+
+    def test_table4(self):
+        self.assertEqual(4, largest_rectangle([
+            [0, 0, 1, 0, 1],
+            [0, 1, 1, 1, 1],
+            [0, 0, 1, 0, 1],
+        ]))
+
+    def test_table5(self):
+        self.assertEqual(8, largest_rectangle([
+            [0, 1, 1, 0],
+            [1, 1, 1, 1],
+            [1, 1, 1, 1],
+            [1, 1, 0, 0]
+        ]))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
 ```
 
 ### Mar 16, 2020 \[Easy\] Triplet Sum to K
