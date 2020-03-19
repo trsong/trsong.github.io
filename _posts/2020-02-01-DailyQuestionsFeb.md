@@ -18,6 +18,12 @@ categories: Python/Java
 
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
+### Mar 19, 2020 \[Medium\] The Celebrity Problem
+---
+> **Question:** At a party, there is a single person who everyone knows, but who does not know anyone in return (the "celebrity"). To help figure out who this is, you have access to an `O(1)` method called `knows(a, b)`, which returns `True` if person a knows person b, else `False`.
+>
+> Given a list of N people and the above operation, find a way to identify the celebrity in O(N) time.
+
 
 ### Mar 18, 2020 LC 938 \[Easy\] Range Sum of BST
 ---
@@ -34,6 +40,103 @@ Given the range [4, 9] and the following tree:
 2  4 6  10
 
 return 23 (5 + 4 + 6 + 8).
+```
+
+**Solution:** [https://repl.it/@trsong/Range-Sum-of-BST](https://repl.it/@trsong/Range-Sum-of-BST)
+```py
+import unittest
+
+
+def bst_range_sum(root, low, hi):
+    if not root:
+        return 0
+    if hi < root.val:
+        return bst_range_sum(root.left, low, hi)
+    elif root.val < low:
+        return bst_range_sum(root.right, low, hi)
+    else:
+        left_sum = bst_range_sum(root.left, low, root.val)
+        right_sum = bst_range_sum(root.right, root.val, hi)
+        return left_sum + root.val + right_sum
+
+
+class TreeNode(object):
+    def __init__(self, val, left=None, right=None):
+        self.val = val
+        self.left = left
+        self.right = right
+
+
+class BSTRangeSumSpec(unittest.TestCase):
+    def setUp(self):
+        """
+            5
+           / \
+          3   8
+         / \ / \
+        2  4 6  10
+        """
+        left = TreeNode(3, TreeNode(2), TreeNode(4))
+        right = TreeNode(8, TreeNode(6), TreeNode(10))
+        self.full_root = TreeNode(5, left, right)
+
+        """
+          1
+         / \ 
+        1   1
+           / \
+          1   1
+        """
+        right = TreeNode(1, TreeNode(1), TreeNode(1))
+        self.ragged_root = TreeNode(1, TreeNode(1), right)
+
+        """
+                 15
+             /        \
+            7          23
+           / \        /   \
+          3   11     19   27
+         / \    \   /    
+        1   5   13 17  
+        """
+        ll = TreeNode(3, TreeNode(1), TreeNode(5))
+        lr = TreeNode(11, right=TreeNode(13))
+        l = TreeNode(7, ll, lr)
+        rl = TreeNode(19, TreeNode(17))
+        r = TreeNode(23, rl, TreeNode(27))
+        self.large_root = TreeNode(15, l, r)
+
+    def test_example(self):
+        self.assertEqual(23, bst_range_sum(self.full_root, 4, 9))
+
+    def test_empty_tree(self):
+        self.assertEqual(0, bst_range_sum(None, 0, 1))
+
+    def test_tree_with_unique_value(self):
+        self.assertEqual(5, bst_range_sum(self.ragged_root, 1, 1))
+
+    def test_no_elem_in_range(self):
+        self.assertEqual(0, bst_range_sum(self.full_root, 7, 7))
+
+    def test_no_elem_in_range2(self):
+        self.assertEqual(0, bst_range_sum(self.full_root, 11, 20))
+
+    def test_end_points_are_inclusive(self):
+        self.assertEqual(36, bst_range_sum(self.full_root, 3, 10))
+
+    def test_just_cover_root(self):
+        self.assertEqual(5, bst_range_sum(self.full_root, 5, 5))
+
+    def test_large_tree(self):
+        # 71 = 3 + 5 + 7 + 11 + 13 + 15 + 17
+        self.assertEqual(71, bst_range_sum(self.large_root, 2, 18)) 
+
+    def test_large_tree2(self):
+        self.assertEqual(55, bst_range_sum(self.large_root, 0, 16)) 
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
 ```
 
 ### Mar 17, 2020 \[Hard\] Largest Rectangle
