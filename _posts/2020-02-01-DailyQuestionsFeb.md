@@ -18,12 +18,106 @@ categories: Python/Java
 
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
+
+### Mar 20, 2020 \[Medium\] Next Higher Number
+---
+> **Question:** Given an integer n, find the next biggest integer with the same number of 1-bits on. For example, given the number `6 (0110 in binary)`, return `9 (1001)`.
+
+
 ### Mar 19, 2020 \[Medium\] The Celebrity Problem
 ---
 > **Question:** At a party, there is a single person who everyone knows, but who does not know anyone in return (the "celebrity"). To help figure out who this is, you have access to an `O(1)` method called `knows(a, b)`, which returns `True` if person a knows person b, else `False`.
 >
 > Given a list of N people and the above operation, find a way to identify the celebrity in O(N) time.
 
+
+**Solution with Stack:** [https://repl.it/@trsong/The-Celebrity-Problem](https://repl.it/@trsong/The-Celebrity-Problem)
+```py
+import unittest
+
+def find_celebrity(knows, people):
+    if not people:
+        return None
+    
+    stack = people
+    while len(stack) > 1:
+        p1 = stack.pop()
+        p2 = stack.pop()
+        
+        if knows(p1, p2):
+            stack.append(p2)
+        else:
+            stack.append(p1)
+            
+    return stack.pop()
+    
+   
+class FindCelebritySpec(unittest.TestCase):
+    def knows_factory(self, neighbors):
+        return lambda me, you: you in neighbors[me]
+        
+    def test_no_one_exist(self):
+        knows = lambda x, y: False
+        self.assertIsNone(find_celebrity(knows, []))
+        
+    def test_only_one_person(self):
+        neighbors = {
+            0: []
+        }
+        knows = self.knows_factory(neighbors)
+        self.assertEqual(0, find_celebrity(knows, neighbors.keys()))
+        
+    def test_no_one_knows_others_except_celebrity(self):
+        neighbors = {
+            0: [4],
+            1: [4],
+            2: [4],
+            3: [4],
+            4: []
+        }
+        knows = self.knows_factory(neighbors)
+        self.assertEqual(4, find_celebrity(knows, neighbors.keys()))
+        
+    def test_no_one_knows_others_except_celebrity2(self):
+        neighbors = {
+            0: [],
+            1: [0],
+            2: [0],
+            3: [0],
+            4: [0]
+        }
+        knows = self.knows_factory(neighbors)
+        self.assertEqual(0, find_celebrity(knows, neighbors.keys()))
+        
+    def test_every_one_not_know_someone2(self):
+        neighbors = {
+            0: [1, 2, 3, 4],
+            1: [0, 2, 3, 4],
+            2: [4],
+            3: [2, 4],
+            4: []
+        }
+        knows = self.knows_factory(neighbors)
+        self.assertEqual(4, find_celebrity(knows, neighbors.keys()))
+        
+    def test_every_one_not_know_someone3(self):
+        neighbors = {
+            0: [1, 4, 5],
+            1: [0, 4, 5],
+            
+            2: [3, 4, 5],
+            3: [2, 4, 5],
+            
+            4: [5, 0],
+            5: [],
+        }
+        knows = self.knows_factory(neighbors)
+        self.assertEqual(5, find_celebrity(knows, neighbors.keys()))
+        
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
+```
 
 ### Mar 18, 2020 LC 938 \[Easy\] Range Sum of BST
 ---
