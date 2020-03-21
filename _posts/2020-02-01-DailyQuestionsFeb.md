@@ -19,10 +19,111 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
 
+### Mar 21, 2020 \[Medium\] Ways to Form Heap with Distinct Integers
+---
+> **Question:** Write a program to determine how many distinct ways there are to create a max heap from a list of `N` given integers.
+
+**Example:**
+```py
+If N = 3, and our integers are [1, 2, 3], there are two ways, shown below.
+
+  3      3
+ / \    / \
+1   2  2   1
+```
+
 ### Mar 20, 2020 \[Medium\] Next Higher Number
 ---
 > **Question:** Given an integer n, find the next biggest integer with the same number of 1-bits on. For example, given the number `6 (0110 in binary)`, return `9 (1001)`.
 
+**My thoughts:** The idea is to find the leftmost of rightmost ones, swap it with left zero and push remaining rightmost ones all the way till the end. 
+
+**Example:**
+```py
+   10011100
+      ^      swap with left zero
+=> 10101100 
+       ^^    push till the end
+=> 10100011 
+```
+
+**Solution:** [https://repl.it/@trsong/Next-Higher-Number](https://repl.it/@trsong/Next-Higher-Number)
+```py
+import unittest
+
+def next_higher_number(num):
+    if num <= 0:
+        return None
+    
+    # Step1: Find the rightmost 1
+    # eg. 10011100
+    #          ^
+    rightmost_one = num - (num & (num - 1))
+    num_rightmost_ones = 0
+
+    # Step2: Find the leftmost of rightmost 1's and count number
+    # eg. 10011100
+    #        ^
+    #  => 10000000, count = 3
+    #        ^
+    while rightmost_one & num:
+        num &= ~rightmost_one  
+        num_rightmost_ones += 1
+        rightmost_one <<= 1
+    
+    # Step3: Swap the leftmost of rightmost 1's with its left zero
+    # eg. 1001000
+    #       ^^ 
+    #  => 1010000   
+    num |= rightmost_one
+
+    # Step4: Futher shift remaining right ones all the way till the end
+    # eg. 10011100
+    #        ^
+    #  => 10010011
+    if num_rightmost_ones > 0:
+        num |= ((1 << num_rightmost_ones - 1) - 1)
+    return num
+
+
+class NextHigherNumberSpec(unittest.TestCase):
+    def assert_result(self, expected, result):
+        self.assertEqual(bin(expected), bin(result))
+
+    def test_example(self):
+        self.assert_result(0b1001, next_higher_number(0b0110))
+
+    def test_example2(self):
+        self.assert_result(0b110, next_higher_number(0b101))
+
+    def test_example3(self):
+        self.assert_result(0b1101, next_higher_number(0b1011))
+
+    def test_zero(self):
+        self.assertIsNone(next_higher_number(0))
+
+    def test_end_in_one(self):
+        self.assert_result(0b10, next_higher_number(0b01))
+
+    def test_end_in_one2(self):
+        self.assert_result(0b1011, next_higher_number(0b111))
+
+    def test_end_in_one3(self):
+        self.assert_result(0b110001101101, next_higher_number(0b110001101011))
+
+    def test_end_in_zero(self):
+        self.assert_result(0b100, next_higher_number(0b010))
+
+    def test_end_in_zero2(self):
+        self.assert_result(0b1000011, next_higher_number(0b0111000))
+
+    def test_end_in_zero3(self):
+        self.assert_result(0b1101110001, next_higher_number(0b1101101100))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
+```
 
 ### Mar 19, 2020 \[Medium\] The Celebrity Problem
 ---
