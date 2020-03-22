@@ -19,6 +19,19 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
 
+### Mar 22, 2020 \[Medium\] Add Subtract Currying
+---
+> **Question:** Write a function, add_subtract, which alternately adds and subtracts curried arguments. 
+
+**Example:**
+```py
+add_subtract(7) -> 7
+
+add_subtract(1)(2)(3) -> 1 + 2 - 3 -> 0
+
+add_subtract(-5)(10)(3)(9) -> -5 + 10 - 3 + 9 -> 11
+```
+
 ### Mar 21, 2020 \[Medium\] Ways to Form Heap with Distinct Integers
 ---
 > **Question:** Write a program to determine how many distinct ways there are to create a max heap from a list of `N` given integers.
@@ -30,6 +43,103 @@ If N = 3, and our integers are [1, 2, 3], there are two ways, shown below.
   3      3
  / \    / \
 1   2  2   1
+```
+
+**My thoughts:** First make observation that the root of heap is always maximum element. Then we can reduce the problem by choosing max then decide which elem goes to left so that other elem can go to right. 
+
+However, as heap has a height constraint, we cannot allow random number of elem go to left, that is, we have to keep the tree height balanced. Suppose we have l elem go to left and r elem to right, then we will have `l + r + 1 = n` (don't forget to include root). 
+
+Finally, let `dp[n]` represents solution for size n, then we will have `dp[n] = (n-1 choose l) * dp[l] * dp[r]` where `l + r + 1 = n`
+
+As for how to calculuate l, as last level of heap tree might not be full, we have two situations:
+1. last level is less than half full, then all last level goes to left tree
+2. last level is more than half full, then only half last level goes to left tree
+
+**Solution with DP:** [https://repl.it/@trsong/Ways-to-Form-Heap-with-Distinct-Integers](https://repl.it/@trsong/Ways-to-Form-Heap-with-Distinct-Integers)
+```py
+import unittest
+import math
+
+def form_heap_ways(n):
+    if n <= 1:
+        return 1
+
+    dp = [None] * (n+1)
+    choose_dp = [[None for _ in xrange(n+1)] for _ in xrange(n+1)]
+
+    dp[0] = dp[1] = 1
+    for i in xrange(2, n+1):
+        h = int(math.log(i, 2))
+        leaf_level_max = 2 ** h     # max number of possible elem at leaf level
+        full_tree = 2 ** (h+1) - 1  # max number of possible elem of full tree
+        unfilled_leaf_level = full_tree - i
+        filled_leaf_level = leaf_level_max - unfilled_leaf_level
+
+        internal_nodes = i - filled_leaf_level
+        left_tree_size = (internal_nodes - 1) // 2   # exclude root
+        if filled_leaf_level < leaf_level_max // 2:
+            left_tree_size += filled_leaf_level
+        else:
+            left_tree_size += leaf_level_max // 2
+
+        right_tree_size = i - 1 - left_tree_size
+        dp[i] = choose(i-1, left_tree_size, choose_dp) * dp[left_tree_size] * dp[right_tree_size]
+
+    return dp[n]
+
+
+def choose(n, k, dp=None):
+    if 2 * k > n:
+        return choose(n, n-k, dp)
+    elif k > n:
+        return 0
+    elif k == 0 or n <= 1:
+        return 1
+    
+    if not dp[n][k]:
+        # way to choose last elem + # ways not to choose last elem
+        dp[n][k] = choose(n-1, k-1, dp) + choose(n-1, k, dp)  
+
+    return dp[n][k]
+    
+
+class FormHeapWaySpec(unittest.TestCase):
+    def test_example(self):
+        """
+          3      3
+         / \    / \
+        1   2  2   1
+        """
+        self.assertEqual(2, form_heap_ways(3))
+
+    def test_empty_heap(self):
+        self.assertEqual(1, form_heap_ways(0))
+
+    def test_size_one_heap(self):
+        self.assertEqual(1, form_heap_ways(1))
+
+    def test_size_four_heap(self):
+        """
+            4      4      4
+           / \    / \    / \
+          3   1  3   2  2   3
+         /      /      /
+        2      1      1
+        """
+        self.assertEqual(3, form_heap_ways(4))
+
+    def test_size_five_heap(self):
+        self.assertEqual(8, form_heap_ways(5))
+
+    def test_size_ten_heap(self):
+        self.assertEqual(3360, form_heap_ways(10))
+
+    def test_size_twenty_heap(self):
+        self.assertEqual(319258368000, form_heap_ways(20))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
 ```
 
 ### Mar 20, 2020 \[Medium\] Next Higher Number
