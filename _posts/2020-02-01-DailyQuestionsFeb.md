@@ -19,6 +19,15 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
 
+### Mar 23, 2020 \[Medium\] Satisfactory Playlist
+---
+> **Question:** You have access to ranked lists of songs for various users. Each song is represented as an integer, and more preferred songs appear earlier in each list. For example, the list `[4, 1, 7]` indicates that a user likes song `4` the best, followed by songs `1` and `7`.
+>
+> Given a set of these ranked lists, interleave them to create a playlist that satisfies everyone's priorities.
+>
+> For example, suppose your input is `[[1, 7, 3], [2, 1, 6, 7, 9], [3, 9, 5]]`. In this case a satisfactory playlist could be `[2, 1, 6, 7, 3, 9, 5]`.
+
+
 ### Mar 22, 2020 \[Medium\] Add Subtract Currying
 ---
 > **Question:** Write a function, add_subtract, which alternately adds and subtracts curried arguments. 
@@ -30,6 +39,52 @@ add_subtract(7) -> 7
 add_subtract(1)(2)(3) -> 1 + 2 - 3 -> 0
 
 add_subtract(-5)(10)(3)(9) -> -5 + 10 - 3 + 9 -> 11
+```
+
+**Solution:** [https://repl.it/@trsong/Add-Subtract-Currying](https://repl.it/@trsong/Add-Subtract-Currying)
+```py
+import unittest
+
+def add_subtract(first=None):
+    if first is None:
+        return 0
+
+    class Context:
+        sign = 1
+        res = first
+
+    def f(next=None):
+        if next is None:
+            return Context.res
+        else:
+            Context.res += Context.sign * next
+            Context.sign *= -1
+            return f
+    return f
+
+
+class AddSubtractSpec(unittest.TestCase):
+    def test_example(self):
+        self.assertEqual(7, add_subtract(7)())
+
+    def test_example2(self):
+        self.assertEqual(0, add_subtract(1)(2)(3)())
+
+    def test_example3(self):
+        self.assertEqual(11, add_subtract(-5)(10)(3)(9)())
+
+    def test_empty_argument(self):
+        self.assertEqual(0, add_subtract())
+
+    def test_positive_arguments(self):
+        self.assertEqual(4, add_subtract(1)(2)(3)(4)())
+
+    def test_negative_arguments(self):
+        self.assertEqual(9, add_subtract(-1)(-3)(-5)(-1)(-9)())
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
 ```
 
 ### Mar 21, 2020 \[Medium\] Ways to Form Heap with Distinct Integers
