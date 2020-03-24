@@ -18,6 +18,19 @@ categories: Python/Java
 
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
+### Mar 24, 2020 \[Medium\] Remove Adjacent Duplicate Characters
+---
+> **Question:** Given a string, we want to remove 2 adjacent characters that are the same, and repeat the process with the new string until we can no longer perform the operation.
+
+**Example:**
+```py
+remove_adjacent_dup("cabba")
+# Start with cabba
+# After remove bb: caa
+# After remove aa: c
+# Returns c
+```
+
 
 ### Mar 23, 2020 \[Medium\] Satisfactory Playlist
 ---
@@ -27,6 +40,116 @@ categories: Python/Java
 >
 > For example, suppose your input is `[[1, 7, 3], [2, 1, 6, 7, 9], [3, 9, 5]]`. In this case a satisfactory playlist could be `[2, 1, 6, 7, 3, 9, 5]`.
 
+**My thoughts:** create a graph with vertex being song and edge `(u, v)` representing that u is more preferred than v. A topological order will make sure that all more preferred song will go before less preferred ones. Thus gives a list that satisfies everyone's priorities, if there is one (no cycle).
+
+**Solution with Topological Sort:** [https://repl.it/@trsong/Satisfactory-Playlist](https://repl.it/@trsong/Satisfactory-Playlist)
+```py
+import unittest
+
+def calculate_satisfactory_playlist(preference):
+    class NodeState:
+        UNVISITED = 0
+        VISITED = 1
+        VISITING = 2
+
+    neighbors = {}
+    node_set = set()
+    for lst in preference:
+        for i, node1 in enumerate(lst):
+            node2 = lst[i+1] if i+1 < len(lst) else None
+            node_set.add(node1)
+            if node1 not in neighbors:
+                neighbors[node1] = []
+            if node2 is not None:
+                neighbors[node1].append(node2)
+                node_set.add(node2)
+
+    reverse_top_order = []
+    node_states = {node: NodeState.UNVISITED for node in node_set}
+    for node in node_set:
+        if node_states[node] == NodeState.VISITED:
+            continue
+        stack = [node]
+        while stack:
+            cur = stack[-1]
+            if node_states[cur] == NodeState.VISITED:
+                stack.pop()
+            elif node_states[cur] == NodeState.VISITING:
+                node_states[cur] = NodeState.VISITED
+                reverse_top_order.append(cur)
+            else:
+                # node_state is UNVISITED
+                node_states[cur] = NodeState.VISITING
+                for nbr in neighbors[cur]:
+                    if node_states[nbr] == NodeState.VISITING:
+                        # cycle detected
+                        return None
+                    elif node_states[nbr] == NodeState.UNVISITED:
+                        stack.append(nbr)
+    
+    reverse_top_order.reverse()
+    return reverse_top_order
+        
+
+class CalculateSatisfactoryPlaylistSpec(unittest.TestCase):
+    def validate_result(self, preference, suggested_order):
+        song_set = set([song for songs in preference for song in songs])
+        self.assertEqual(
+            song_set,
+            set(suggested_order),
+            "Missing song: " + str(str(song_set - set(suggested_order))))
+
+        for i in xrange(len(suggested_order)):
+            for j in xrange(i+1, len(suggested_order)):
+                for lst in preference:
+                    song1, song2 = suggested_order[i], suggested_order[j]
+                    if song1 in lst and song2 in lst:
+                        self.assertLess(
+                            lst.index(song1), 
+                            lst.index(song2),
+                            "Suggested order {} conflict: {} cannot be more popular than {}".format(suggested_order, song1, song2))
+
+    def test_example(self):
+        preference = [[1, 7, 3], [2, 1, 6, 7, 9], [3, 9, 5]]
+        # possible order: 2, 1, 6, 7, 3, 9, 5
+        suggested_order = calculate_satisfactory_playlist(preference) 
+        self.validate_result(preference, suggested_order)
+    
+    def test_preference_contains_duplicate(self):
+        preference = [[1, 2], [1, 2], [1, 2]]
+        # possible order: 1, 2
+        suggested_order = calculate_satisfactory_playlist(preference) 
+        self.validate_result(preference, suggested_order)
+
+    def test_empty_graph(self):
+        self.assertEqual([], calculate_satisfactory_playlist([]))
+
+    def test_cyclic_graph(self):
+        preference = [[1, 2, 3], [1, 3, 2]]
+        self.assertIsNone(calculate_satisfactory_playlist(preference))
+
+    def test_acyclic_graph(self):
+        preference = [[1, 2], [2, 3], [1, 3, 5], [2, 5], [2, 4]]
+        # possible order: 1, 2, 3, 4, 5
+        suggested_order = calculate_satisfactory_playlist(preference)
+        self.validate_result(preference, suggested_order)
+
+    def test_disconnected_graph(self):
+        preference = [[0, 1], [2, 3], [3, 4]]
+        # possible order: 0, 1, 2, 3, 4
+        suggested_order = calculate_satisfactory_playlist(preference)
+        self.validate_result(preference, suggested_order)
+
+    def test_disconnected_graph2(self):
+        preference = [[0, 1], [2], [3]]
+        # possible order: 0, 1, 2, 3
+        suggested_order = calculate_satisfactory_playlist(preference)
+        self.validate_result(preference, suggested_order)
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
+```
 
 ### Mar 22, 2020 \[Medium\] Add Subtract Currying
 ---
