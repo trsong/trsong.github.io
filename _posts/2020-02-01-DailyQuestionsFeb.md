@@ -18,6 +18,12 @@ categories: Python/Java
 
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
+### Mar 25, 2020 LC 336 \[Hard\] Palindrome Pairs
+---
+> **Question:** Given a list of words, find all pairs of unique indices such that the concatenation of the two words is a palindrome.
+>
+> For example, given the list `["code", "edoc", "da", "d"]`, return `[(0, 1), (1, 0), (2, 3)]`.
+
 ### Mar 24, 2020 \[Medium\] Remove Adjacent Duplicate Characters
 ---
 > **Question:** Given a string, we want to remove 2 adjacent characters that are the same, and repeat the process with the new string until we can no longer perform the operation.
@@ -31,6 +37,73 @@ remove_adjacent_dup("cabba")
 # Returns c
 ```
 
+**Solution with Stack:** [https://repl.it/@trsong/Remove-Adjacent-Duplicate-Characters](https://repl.it/@trsong/Remove-Adjacent-Duplicate-Characters)
+```py
+import unittest
+
+def remove_adjacent_dup(s):
+    stack = []
+    is_top_dup = False
+    for ch in s:
+        if stack and stack[-1] != ch and is_top_dup:
+            stack.pop()
+            is_top_dup = False
+
+        if stack and stack[-1] == ch:
+            is_top_dup = True
+        else:
+            stack.append(ch)
+
+    if is_top_dup:
+        stack.pop()
+
+    return ''.join(stack) 
+
+
+class RemoveAdjacentDupSpec(unittest.TestCase):
+    def test_example(self):
+        self.assertEqual("c", remove_adjacent_dup("cabba"))
+
+    def test_empty_string(self):
+        self.assertEqual("", remove_adjacent_dup(""))
+
+    def test_no_adj_duplicates(self):
+        self.assertEqual("abc123abc", remove_adjacent_dup("abc123abc"))
+
+    def test_no_adj_duplicates2(self):
+        self.assertEqual("1010101010", remove_adjacent_dup("1010101010"))
+
+    def test_reduce_to_empty_string(self):
+        self.assertEqual("", remove_adjacent_dup("caaabbbaacdddd"))
+
+    def test_should_reduce_to_simplist(self):
+        self.assertEqual("acac", remove_adjacent_dup("acaaabbbacdddd"))
+
+    def test_should_reduce_to_simplist2(self):
+        self.assertEqual("", remove_adjacent_dup("43211234"))
+
+    def test_should_reduce_to_simplist3(self):
+        self.assertEqual("3", remove_adjacent_dup("333111221113"))
+
+    def test_one_char_string(self):
+        self.assertEqual("a", remove_adjacent_dup("a"))
+
+    def test_contains_uniq_char(self):
+        self.assertEqual("", remove_adjacent_dup("aaaa"))
+
+    def test_contains_uniq_char2(self):
+        self.assertEqual("", remove_adjacent_dup("11111"))
+
+    def test_duplicates_occur_in_the_middle(self):
+        self.assertEqual("mipie", remove_adjacent_dup("mississipie"))
+
+    def test_shrink_to_one_char(self):
+        self.assertEqual("g", remove_adjacent_dup("gghhgghhg"))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
+```
 
 ### Mar 23, 2020 \[Medium\] Satisfactory Playlist
 ---
