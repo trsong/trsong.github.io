@@ -19,7 +19,7 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
 
-### Mar 26, 2020 \[Hard\] Ternary Search Tree
+### Mar 26, 2020 \[Easy\] Ternary Search Tree
 ---
 > **Question:** A ternary search tree is a trie-like data structure where each node may have up to three children:
 >
