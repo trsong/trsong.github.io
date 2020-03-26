@@ -50,7 +50,9 @@ since code is the first word inserted in the tree, and cob lexicographically pre
 >
 > For example, given the list `["code", "edoc", "da", "d"]`, return `[(0, 1), (1, 0), (2, 3)]`.
 
-**My thoughts:** any word in the list can be partition into `prefix` and `suffix`. If there exists another word such that its reverse equals either prefix or suffix, then we can combine them and craft a new palindrome: reverse_suffix + prefix + suffix or prefix + suffix + reverse_prefix.
+**My thoughts:** any word in the list can be partition into `prefix` and `suffix`. If there exists another word such that its reverse equals either prefix or suffix, then we can combine them and craft a new palindrome: 
+1. `reverse_suffix + prefix + suffix` where prefix is a palindrome or 
+2. `prefix + suffix + reverse_prefix` where suffix is a palindrome
 
 **Solution:** [https://repl.it/@trsong/Palindrome-Pairs](https://repl.it/@trsong/Palindrome-Pairs)
 ```py
