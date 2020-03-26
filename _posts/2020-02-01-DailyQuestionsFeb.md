@@ -18,11 +18,296 @@ categories: Python/Java
 
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
+
+### Mar 26, 2020 \[Hard\] Ternary Search Tree
+---
+> **Question:** A ternary search tree is a trie-like data structure where each node may have up to three children:
+>
+> - left child nodes link to words lexicographically earlier than the parent prefix
+> - right child nodes link to words lexicographically later than the parent prefix
+> - middle child nodes continue the current word
+>
+> Implement insertion and search functions for a ternary search tree. 
+
+**Example:**
+```py
+Input: `code, cob, be, ax, war, and we.`
+Output:
+       c
+    /  |  \
+   b   o   w
+ / |   |   |
+a  e   d   a
+|    / |   | \ 
+x   b  e   r  e  
+
+since code is the first word inserted in the tree, and cob lexicographically precedes cod, cob is represented as a left child extending from cod.
+```
+
 ### Mar 25, 2020 LC 336 \[Hard\] Palindrome Pairs
 ---
 > **Question:** Given a list of words, find all pairs of unique indices such that the concatenation of the two words is a palindrome.
 >
 > For example, given the list `["code", "edoc", "da", "d"]`, return `[(0, 1), (1, 0), (2, 3)]`.
+
+**My thoughts:** any word in the list can be partition into prefix and suffix. If there exists a word such that its reverse equals either prefix or suffix, then we can combine them and craft a new palindrome: reverse_suffix + prefix + suffix or prefix + suffix + reverse_prefix.
+
+**Solution:** [https://repl.it/@trsong/Palindrome-Pairs](https://repl.it/@trsong/Palindrome-Pairs)
+```py
+import unittest
+
+
+def find_all_palindrome_pairs(words):
+    reverse_word_lookup = {}
+    for i, word in enumerate(words):
+        reverse_word = word[::-1]
+        if reverse_word not in reverse_word_lookup:
+            reverse_word_lookup[reverse_word] = []
+        reverse_word_lookup[reverse_word].append(i)
+
+    res = []
+    for i, word in enumerate(words):
+        if "" in reverse_word_lookup and is_palindrome(word):
+            for j in reverse_word_lookup[""]:
+                if i != j:
+                    res.append((j, i))
+
+        for pos in xrange(len(word)):
+            prefix = word[:pos]
+            suffix = word[pos:]
+            if is_palindrome(prefix) and suffix in reverse_word_lookup:
+                # reverse_suffix + prefix + suffix where prefix itself is palindrome
+                for j in reverse_word_lookup[suffix]:
+                    if i != j:
+                        res.append((j, i))
+
+            if is_palindrome(suffix) and prefix in reverse_word_lookup:
+                # prefix + suffix + reverse_prefix where suffix itself is palindrome
+                for j in reverse_word_lookup[prefix]:
+                    if i != j:
+                        res.append((i, j))
+    return res
+
+
+def is_palindrome(s):
+    i, j = 0, len(s)-1
+    while i < j:
+        if s[i] != s[j]:
+            return False
+        i += 1
+        j -= 1
+    return True
+
+
+class FindAllPalindromePairSpec(unittest.TestCase):
+    def assert_result(self, expected, result):
+        self.assertSetEqual(set(expected), set(result))
+        self.assertEqual(len(expected), len(result))
+
+    def test_example(self):
+        words = ["code", "edoc", "da", "d"]
+        expected = [(0, 1), (1, 0), (2, 3)]
+        self.assert_result(expected, find_all_palindrome_pairs(words))
+
+    def test_example2(self):
+        words = ["bat", "tab", "cat"]
+        expected = [(0, 1), (1, 0)]
+        self.assert_result(expected, find_all_palindrome_pairs(words))
+
+    def test_example3(self):
+        words = ["abcd", "dcba", "lls", "s", "sssll"]
+        expected = [(0, 1), (1, 0), (3, 2), (2, 4)]
+        self.assert_result(expected, find_all_palindrome_pairs(words))
+    
+    def test_single_word_string(self):
+        words = ["a", "ab", "b", ""]
+        expected = [(1, 0), (2, 1), (0, 3), (3, 0), (2, 3), (3, 2)]
+        self.assert_result(expected, find_all_palindrome_pairs(words))
+
+    def test_empty_lists(self):
+        self.assert_result([], find_all_palindrome_pairs([]))
+    
+    def test_contains_empty_word(self):
+        words = [""]
+        expected = []
+        self.assert_result(expected, find_all_palindrome_pairs(words))
+
+    def test_contains_empty_word2(self):
+        words = ["", ""]
+        expected = [(0, 1), (1, 0)]
+        self.assert_result(expected, find_all_palindrome_pairs(words))
+    
+    def test_contains_empty_word3(self):
+        words = ["", "", "a"]
+        expected = [(0, 1), (0, 2), (1, 0), (1, 2), (2, 0), (2, 1)]
+        self.assert_result(expected, find_all_palindrome_pairs(words))
+    
+    def test_contains_empty_word4(self):
+        words = ["", "a"]
+        expected = [(0, 1), (1, 0)]
+        self.assert_result(expected, find_all_palindrome_pairs(words))
+
+
+    def test_contains_duplicate_word(self):
+        words = ["a", "a", "aa"]
+        expected = [(0, 1), (1, 0), (1, 2), (2, 1), (0, 2), (2, 0)]
+        self.assert_result(expected, find_all_palindrome_pairs(words))
+
+    def test_no_pairs(self):
+        words = ["abc", "gaba", "abcg"]
+        expected = []
+        self.assert_result(expected, find_all_palindrome_pairs(words))
+
+    def test_avoid_hash_collision(self):
+        words = ["a", "jfdjfhgidffedfecbfh"]
+        expected = []
+        self.assert_result(expected, find_all_palindrome_pairs(words))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
+```
+
+**Optimization tips:** Frequently checking reverse string and calculate substring can be expensive. We can use a rolling hash function to quickly convert string into a number and by comparing the forward and backward hash value we can easily tell if a string is a palidrome or not. 
+Example 1:
+```py
+Hash("123") = 123, Hash("321") = 321. Not Palindrome 
+```
+Example 2:
+```py
+Hash("101") = 101, Hash("101") = 101. Palindrome.
+```
+Rolling hashes are amazing, they provide you an ability to calculate the hash values without rehashing the whole string. eg. Hash("123") = Hash("12") ~ 3.  ~ is some function that can efficient using previous hashing value to build new caching value. 
+
+However, we should not use Hash("123") = 123 as when the number become too big, the hash value be come arbitrarily big. Thus we use the following formula for rolling hash:
+
+```py
+hash("1234") = (1*p0^3 + 2*p0^2 + 3*p0^1 + 4*p0^0) % p1. where p0 is a much smaller prime and p1 is relatively large prime. 
+```
+
+There might be some hashing collision. However by choosing a much smaller p0 and relatively large p1, such collison is highly unlikely. Here I choose to remember a special large prime number `666667` and smaller number you can just use any smaller prime number, it shouldn't matter.
+
+
+**Optimization with Rolling Hash:** [https://repl.it/@trsong/Palindrome-Pairs-with-RollingHash](https://repl.it/@trsong/Palindrome-Pairs-with-RollingHash)
+```py
+def find_all_palindrome_pairs(words):
+    backward_hash_words = map(RollingHash.backward_hash, words)
+    forward_hash_words = map(RollingHash.forward_hash, words)
+
+    forward_hash_map = {}
+    for i, hash_val in enumerate(forward_hash_words):
+        if hash_val not in forward_hash_map:
+            forward_hash_map[hash_val] = []
+        forward_hash_map[hash_val].append(i)
+
+    res = []
+    empty_word_hash = RollingHash.forward_hash('')
+    for i, word in enumerate(words):
+        prefix_fwd_hash = 0
+        prefix_bwd_hash = 0
+        suffix_fwd_hash = forward_hash_words[i]
+        suffix_bwd_hash = backward_hash_words[i]
+        if suffix_fwd_hash == suffix_bwd_hash and empty_word_hash in forward_hash_map:
+            for j in forward_hash_map[empty_word_hash]:
+                if j != i:
+                    res.append((i, j))
+
+        for pos, ch in enumerate(word):
+            word_len = len(word)
+            prefix_fwd_hash = RollingHash.rolling_forward(prefix_fwd_hash, ch)
+            prefix_bwd_hash = RollingHash.rolling_backward(prefix_bwd_hash, pos, ch)
+            suffix_fwd_hash = RollingHash.unapply_forward_front(suffix_fwd_hash, word_len-1-pos, ch)
+            suffix_bwd_hash = RollingHash.unapply_backward_front(suffix_bwd_hash, ch)
+            if prefix_fwd_hash == prefix_bwd_hash and suffix_bwd_hash in forward_hash_map:
+                # if prefix is a palindrome and reversed_suffix exists, 
+                # then reversed_suffix + prefix + suffix must be a palindrome
+                for j in forward_hash_map[suffix_bwd_hash]:
+                    if j != i:
+                        res.append((j, i))
+            if suffix_fwd_hash == suffix_bwd_hash and prefix_bwd_hash in forward_hash_map:
+                # if suffix is a palindrome and reverse_prefix exists,
+                # then prefix + suffix + reversed_prefix must be a palindrome
+                for j in forward_hash_map[prefix_bwd_hash]:
+                    if j != i:
+                        res.append((i, j))
+    
+    # avoid hash collison
+    return filter(lambda pair: is_palindrome(words, pair[0], pair[1]), res)
+
+
+def is_palindrome(words, w1_idx, w2_idx):
+    w1, w2 = words[w1_idx], words[w2_idx]
+    n, m = len(w1), len(w2)
+    for i in xrange((n+m)//2):
+        ch1 = w1[i] if i < n else w2[i-n]
+        j = n+m-1-i
+        ch2 = w2[j-n] if j >= n else w1[j]
+        if ch1 != ch2:
+            return False
+    return True 
+
+
+class RollingHash(object):
+    p0 = 17
+    p1 = 666667
+    
+    @staticmethod
+    def forward_hash(s):
+        # eg. "123" => 123
+        res = 0
+        for ch in s:
+            res = RollingHash.rolling_forward(res, ch)
+        return res
+    
+    @staticmethod
+    def rolling_forward(prev_hash, ch):
+        # eg. 12 + "3" = 123
+        return (prev_hash * RollingHash.p0 + ord(ch)) % RollingHash.p1
+
+    @staticmethod
+    def unapply_forward_front(prev_hash, pos, ch):
+        # eg. 123 => 23
+        return (prev_hash - ord(ch) * pow(RollingHash.p0, pos)) % RollingHash.p1
+
+    @staticmethod
+    def backward_hash(s):
+        # eg. "123" => 321
+        res = 0
+        for i, ch in enumerate(s):
+            res = RollingHash.rolling_backward(res, i, ch)
+        return res
+
+    @staticmethod
+    def rolling_backward(prev_hash, pos, ch):
+        # eg. 21 + "3" => 321
+        return (prev_hash + ord(ch) * pow(RollingHash.p0, pos)) % RollingHash.p1
+
+    @staticmethod
+    def unapply_backward_front(prev_hash, ch):
+        # eg. 321 => 32
+        return ((prev_hash - ord(ch)) % RollingHash.p1 * Modulo.modinv(RollingHash.p0, RollingHash.p1)) % RollingHash.p1
+
+
+class Modulo(object):
+    """
+    In python3.8, use pow(b, -1, mod=m) to calculate (1/b % m)
+    """
+    @staticmethod
+    def egcd(a, b):
+        if a == 0:
+            return (b, 0, 1)
+        else:
+            g, y, x = Modulo.egcd(b % a, a)
+            return (g, x - (b // a) * y, y)
+    
+    @staticmethod
+    def modinv(a, m):
+        g, x, y = Modulo.egcd(a, m)
+        if g != 1:
+            raise Exception('modular inverse does not exist')
+        else:
+            return x % m
+```
 
 ### Mar 24, 2020 \[Medium\] Remove Adjacent Duplicate Characters
 ---
