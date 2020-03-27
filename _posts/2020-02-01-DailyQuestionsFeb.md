@@ -18,6 +18,21 @@ categories: Python/Java
 
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
+### Mar 27, 2020 LC 208 \[Medium\] Implement Trie (Prefix Tree)
+---
+> **Question:** Implement a trie with insert, search, and startsWith methods.
+
+**Example:**
+```py
+trie = Trie()
+
+trie.insert("apple")
+trie.search("apple")    # returns True
+trie.search("app")      # returns False
+trie.startsWith("app")  # returns True
+trie.insert("app")   
+trie.search("app")      # returns True
+```
 
 ### Mar 26, 2020 \[Easy\] Ternary Search Tree
 ---
