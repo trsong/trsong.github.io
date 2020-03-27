@@ -20,7 +20,7 @@ categories: Python/Java
 
 ### Mar 27, 2020 \[Medium\] Shortest Unique Prefix
 ---
-> **Question:** Question: Given an array of words, find all shortest unique prefixes to represent each word in the given array. Assume that no word is prefix of another.
+> **Question:** Given an array of words, find all shortest unique prefixes to represent each word in the given array. Assume that no word is prefix of another.
 
 **Example:**
 ```py
