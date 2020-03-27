@@ -18,20 +18,18 @@ categories: Python/Java
 
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
-### Mar 27, 2020 LC 208 \[Medium\] Implement Trie (Prefix Tree)
+### Mar 27, 2020 \[Medium\] Shortest Unique Prefix
 ---
-> **Question:** Implement a trie with insert, search, and startsWith methods.
+> **Question:** Question: Given an array of words, find all shortest unique prefixes to represent each word in the given array. Assume that no word is prefix of another.
 
 **Example:**
 ```py
-trie = Trie()
-
-trie.insert("apple")
-trie.search("apple")    # returns True
-trie.search("app")      # returns False
-trie.startsWith("app")  # returns True
-trie.insert("app")   
-trie.search("app")      # returns True
+Input: ['zebra', 'dog', 'duck', 'dove']
+Output: ['z', 'dog', 'du', 'dov']
+Explanation: dog => dog
+             dove = dov 
+             duck = du
+             z   => zebra 
 ```
 
 ### Mar 26, 2020 \[Easy\] Ternary Search Tree
@@ -57,6 +55,162 @@ a  e   d   a
 x   b  e   r  e  
 
 since code is the first word inserted in the tree, and cob lexicographically precedes cod, cob is represented as a left child extending from cod.
+```
+
+**Solution:** [https://repl.it/@trsong/Ternary-Search-Tree](https://repl.it/@trsong/Ternary-Search-Tree)
+```py
+import unittest
+
+class TernarySearchTree(object):
+    def __init__(self):
+        self.root = None
+        self.has_empty_word = False
+
+    def search(self, word):
+        if not word:
+            return self.has_empty_word
+        else:
+            return self.search_recur(self.root, word, 0)
+
+    def search_recur(self, node, word, i):
+        if not node:
+            return False
+        ch = word[i]
+        if ch < node.val:
+            return self.search_recur(node.left, word, i)
+        elif ch > node.val:
+            return self.search_recur(node.right, word, i)
+        elif i < len(word) - 1:
+            return self.search_recur(node.middle, word, i+1)
+        else:
+            return node.is_end
+
+    def insert(self, word):
+        if not word:
+            self.has_empty_word = True
+        else:
+            self.root = self.insert_recur(self.root, word, 0)
+    
+    def insert_recur(self, node, word, i):
+        ch = word[i]
+        if not node:
+            node = TSTNode(ch)
+        
+        if ch < node.val:
+            node.left = self.insert_recur(node.left, word, i)
+        elif ch > node.val:
+            node.right = self.insert_recur(node.right, word, i)
+        elif i < len(word) - 1:
+            node.middle = self.insert_recur(node.middle, word, i+1)
+        else:
+            node.is_end = True
+        return node
+
+    def __repr__(self):
+        return str(self.root)
+        
+
+class TSTNode(object):
+    def __init__(self, val=None, left=None, middle=None, right=None):
+        self.val = val
+        self.left = left
+        self.middle = middle
+        self.right = right
+        self.is_end = False
+
+    ###################
+    # Testing Utilities
+    ###################
+    def __eq__(self, other):
+        return (other and
+            other.val == self.val and
+            other.left == self.left and 
+            other.right == self.right)
+
+    def __repr__(self):
+        stack = [(self, 0)]
+        res = []
+        while stack:
+            node, depth = stack.pop()
+            res.append("\n" + "\t" * depth)
+            if not node:
+                res.append("* None")
+                continue
+
+            res.append("* " + str(node.val))
+            if node.is_end:
+                res.append(" [END]")
+            for child in [node.left, node.middle, node.right]:
+                stack.append((child, depth+1))
+        return "\n" + "".join(res) + "\n"
+
+
+class TSTNodeSpec(unittest.TestCase):
+    def test_example(self):
+        t = TernarySearchTree()
+        words = ["code", "cob", "be", "ax", "war", "we"]
+        for w in words:
+            t.insert(w)
+        for w in words:
+            self.assertTrue(t.search(w), msg=str(t))
+
+    def test_insert_empty_word(self):
+        t = TernarySearchTree()
+        t.insert("")
+        self.assertTrue(t.search(""), msg=str(t))
+
+    def test_search_unvisited_word(self):
+        t = TernarySearchTree()
+        self.assertFalse(t.search("a"), msg=str(t))
+        t.insert("a")
+        self.assertTrue(t.search("a"), msg=str(t))
+
+    def test_insert_word_with_same_prefix(self):
+        t = TernarySearchTree()
+        t.insert("a")
+        t.insert("aa")
+        self.assertTrue(t.search("a"), msg=str(t))
+        t.insert("aaa")
+        self.assertFalse(t.search("aaaa"), msg=str(t))
+
+    def test_insert_word_with_same_prefix2(self):
+        t = TernarySearchTree()
+        t.insert("bbb")
+        t.insert("aaa")
+        self.assertFalse(t.search("a"), msg=str(t))
+        t.insert("aa")
+        self.assertFalse(t.search("a"), msg=str(t))
+        self.assertFalse(t.search("b"), msg=str(t))
+        self.assertTrue("aa", msg=str(t))
+        self.assertTrue("aaa", msg=str(t))
+
+    def test_tst_should_follow_specification(self):
+        """
+                  c
+                / | \
+               a  u  h
+               |  |  | \
+               t  t  e  u
+             /  / |   / |
+            s  p  e  i  s
+        """
+        t = TernarySearchTree()
+        words = ["cute", "cup","at","as","he", "us", "i"]
+        for w in words:
+            t.insert(w)
+
+
+        left_tree = TSTNode('a', middle=TSTNode('t', TSTNode('s')))
+        middle_tree = TSTNode('u', middle=TSTNode('t', TSTNode('p'), TSTNode('e')))
+
+        right_right_tree = TSTNode('u', TSTNode('i'), TSTNode('s'))
+        right_tree = TSTNode('h', middle=TSTNode('e'), right=right_right_tree)
+        root = TSTNode('c', left_tree, middle_tree, right_tree)
+        self.assertEqual(root, t.root)
+        
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
 ```
 
 ### Mar 25, 2020 LC 336 \[Hard\] Palindrome Pairs
