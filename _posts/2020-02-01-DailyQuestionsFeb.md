@@ -18,7 +18,7 @@ categories: Python/Java
 
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
-### Mar 28, 2020 \[Medium\] Shortest Unique Prefix
+### Mar 28, 2020 LC 743 \[Medium\] Network Delay Time
 ---
 > **Question:** A network consists of nodes labeled 0 to N. You are given a list of edges `(a, b, t)`, describing the time `t` it takes for a message to be sent from node `a` to node `b`. Whenever a node receives a message, it immediately passes the message on to a neighboring node, if possible.
 >
