@@ -31,6 +31,135 @@ Explanation: dog => dog
              duck = du
              z   => zebra 
 ```
+**My thoughts:** Most string prefix searching problem can be solved using Trie (Prefix Tree). Trie Solution can be found here: [https://trsong.github.io/python/java/2019/11/02/DailyQuestionsNov/#jan-25-2020-medium-shortest-unique-prefix](https://trsong.github.io/python/java/2019/11/02/DailyQuestionsNov/#jan-25-2020-medium-shortest-unique-prefix). 
+
+However, trie can use a lot of memory. A more memory efficient data structure is Ternary Search Tree. 
+
+For example, the TST for given example looks like the following, note by natural of TST only middle child count as prefix. Check previous day's question for TST: [https://trsong.github.io/python/java/2020/02/02/DailyQuestionsFeb/#mar-26-2020-easy-ternary-search-tree](https://trsong.github.io/python/java/2020/02/02/DailyQuestionsFeb/#mar-26-2020-easy-ternary-search-tree)
+```py
+         z 
+ /       | 
+d        e
+|        |
+o        b
+| \      |
+g  u     r
+   | \   |
+   c  v  a
+   |  |
+   k  e
+```
+
+While building each node, we also include the count of words that share the same prefix: 
+```py
+                 z (1)
+ /               |  
+d (3)            e (1)
+|                |
+o (2)            b (1)
+|     \          |
+g (1)  u (1)     r  (1)
+       | \       |
+   (1) c  v (1)  a (1)
+       |  |
+   (1) k  e (1) 
+
+Under each node, if the count is 1 then we have a unique prefix: z, dog, du, dov
+```
+
+
+**Solution with Ternary Search Tree:** [https://repl.it/@trsong/Find-Shortest-Unique-Prefix](https://repl.it/@trsong/Find-Shortest-Unique-Prefix)
+```py
+import unittest
+
+class TSTNode(object):
+    def __init__(self, val=None):
+        self.val = val
+        self.left = None
+        self.middle = None
+        self.right = None
+        self.count = 0
+
+    def insert(self, word):
+        self.insert_recur(self, word, 0)
+
+    def insert_recur(self, node, word, i):
+        if i >= len(word):
+            return None
+        
+        ch = word[i]
+        if not node:
+            node = TSTNode(ch)
+        if node.val < ch:
+            node.right = self.insert_recur(node.right, word, i)
+        elif node.val > ch:
+            node.left = self.insert_recur(node.left, word, i)
+        else:
+            node.count += 1
+            node.middle = self.insert_recur(node.middle, word, i+1)
+        return node
+
+    def find_prefix(self, word):
+        if not word:
+            return ""
+        unique_prefix_index = self.find_prefix_index_recur(self, word, 0)
+        return word[:unique_prefix_index+1]
+
+    def find_prefix_index_recur(self, node, word, i):
+        ch = word[i]
+        if node.val < ch:
+            return self.find_prefix_index_recur(node.right, word, i)
+        elif node.val > ch:
+            return self.find_prefix_index_recur(node.left, word, i)
+        elif node.count > 1:
+            return self.find_prefix_index_recur(node.middle, word, i+1)
+        else:
+            return i
+
+
+def shortest_unique_prefix(words):
+    t = TSTNode()
+    for word in words:
+        t.insert(word)
+
+    return map(t.find_prefix, words)
+
+
+class UniquePrefixSpec(unittest.TestCase):
+    def test_example(self):
+        words = ['zebra', 'dog', 'duck', 'dove']
+        expected = ['z', 'dog', 'du', 'dov']
+        self.assertEqual(expected, shortest_unique_prefix(words))
+    
+    def test_example2(self):
+        words = ['dog', 'cat', 'apple', 'apricot', 'fish']
+        expected = ['d', 'c', 'app', 'apr', 'f']
+        self.assertEqual(expected, shortest_unique_prefix(words))
+    
+    def test_empty_word(self):
+        words = ['', 'alpha', 'aztec']
+        expected = ['', 'al', 'az']
+        self.assertEqual(expected, shortest_unique_prefix(words))
+
+    def test_prefix_overlapp_with_each_other(self):
+        words = ['abc', 'abd', 'abe', 'abf', 'abg']
+        expected = ['abc', 'abd', 'abe', 'abf', 'abg']
+        self.assertEqual(expected, shortest_unique_prefix(words))
+    
+    def test_only_entire_word_is_shortest_unique_prefix(self):
+        words = ['greek', 'greedisbad', 'greedisgood', 'greeting']
+        expected = ['greek', 'greedisb', 'greedisg', 'greet']
+        self.assertEqual(expected, shortest_unique_prefix(words))
+
+    def test_unique_prefix_is_not_empty_string(self):
+        words = ['naturalwonders']
+        expected = ['n']
+        self.assertEqual(expected, shortest_unique_prefix(words))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
+```
 
 ### Mar 26, 2020 \[Easy\] Ternary Search Tree
 ---
