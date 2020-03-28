@@ -18,6 +18,30 @@ categories: Python/Java
 
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
+### Mar 28, 2020 \[Medium\] Shortest Unique Prefix
+---
+> **Question:** A network consists of nodes labeled 0 to N. You are given a list of edges `(a, b, t)`, describing the time `t` it takes for a message to be sent from node `a` to node `b`. Whenever a node receives a message, it immediately passes the message on to a neighboring node, if possible.
+>
+> Assuming all nodes are connected, determine how long it will take for every node to receive a message that begins at node 0.
+
+**Example:** 
+```py
+given N = 5, and the following edges:
+
+edges = [
+    (0, 1, 5),
+    (0, 2, 3),
+    (0, 5, 4),
+    (1, 3, 8),
+    (2, 3, 1),
+    (3, 5, 10),
+    (3, 4, 5)
+]
+
+You should return 9, because propagating the message from 0 -> 2 -> 3 -> 4 will take that much time.
+```
+
+
 ### Mar 27, 2020 \[Medium\] Shortest Unique Prefix
 ---
 > **Question:** Given an array of words, find all shortest unique prefixes to represent each word in the given array. Assume that no word is prefix of another.
@@ -31,6 +55,7 @@ Explanation: dog => dog
              duck = du
              z   => zebra 
 ```
+
 **My thoughts:** Most string prefix searching problem can be solved using Trie (Prefix Tree). Trie Solution can be found here: [https://trsong.github.io/python/java/2019/11/02/DailyQuestionsNov/#jan-25-2020-medium-shortest-unique-prefix](https://trsong.github.io/python/java/2019/11/02/DailyQuestionsNov/#jan-25-2020-medium-shortest-unique-prefix). 
 
 However, trie can use a lot of memory. A more memory efficient data structure is Ternary Search Tree. 
