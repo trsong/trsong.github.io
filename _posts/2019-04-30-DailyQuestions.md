@@ -1281,7 +1281,7 @@ Output: 2
 ```py
 import unittest
 import sys
-from queue import PriorityQueue
+from Queue import PriorityQueue
 
 def max_network_delay(times, nodes, start):
     neighbor = [None] * (nodes + 1)
