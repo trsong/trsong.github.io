@@ -18,11 +18,136 @@ categories: Python/Java
 
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
+
+### Mar 30, 2020 \[Easy\] Permutation with Given Order
+---
+> **Question:** A permutation can be specified by an array `P`, where `P[i]` represents the location of the element at `i` in the permutation. For example, `[2, 1, 0]` represents the permutation where elements at the index `0` and `2` are swapped.
+>
+> Given an array and a permutation, apply the permutation to the array. 
+>
+> For example, given the array `["a", "b", "c"]` and the permutation `[2, 1, 0]`, return `["c", "b", "a"]`.
+
+
 ### Mar 29, 2020 \[Medium\] Rearrange String to Have Different Adjacent Characters
 ---
 > **Question:** Given a string s, rearrange the characters so that any two adjacent characters are not the same. If this is not possible, return `None`.
 >
 > For example, if `s = yyz` then return `yzy`. If `s = yyy` then return `None`.
+
+**My thougths:** This problem is basically ["LC 358 Rearrange String K Distance Apart"](https://trsong.github.io/python/java/2019/08/02/DailyQuestionsAug/#aug-24-2019-lc-358-hard-rearrange-string-k-distance-apart) with `k = 2`. The idea is to apply greedy approach, with a window of 2, choose the safest two remaining charactors until either all characters are picked, or just mulitple copy of one character left.
+
+For example, for input string: `"aaaabc"`
+1. Pick `a`, `b`. Remaining `"aaac"`. Result: `"ab"`
+2. Pick `a`, `c`. Remaining `"aa"`. Result: `"abac"`
+3. We can no longer proceed as we cannot pick same character as it violate adjacency requirement
+
+Another Example, for input string: `"abbccc"`
+1. Pick `c`, `b`. Remaining `"abcc"`. Result: `"ab"`
+2. Pick `c`, `a`. Remaining `"bc"`. Result: `"abca"`
+3. Pick `b`, `c`. Result: `"abcabc"`
+
+
+**Solution with Priority Queue:** [https://repl.it/@trsong/Rearrange-String-to-Have-Different-Adjacent-Characters](https://repl.it/@trsong/Rearrange-String-to-Have-Different-Adjacent-Characters)
+```py
+import unittest
+from Queue import PriorityQueue
+
+def rearrange_string(original_string):
+    freq_map = {}
+    for ch in original_string:
+        freq_map[ch] = freq_map.get(ch, 0) + 1
+    
+    max_heap = PriorityQueue()
+    for ch, count in freq_map.items():
+        max_heap.put((-count, ch))
+
+    res = []
+    while not max_heap.empty():
+        neg_count1, first_ch = max_heap.get()
+        remain_first_count = -neg_count1 - 1
+        res.append(first_ch)
+
+        if max_heap.empty() and remain_first_count > 0:
+            return None
+        elif max_heap.empty():
+            break
+
+        neg_count2, second_ch = max_heap.get()
+        remain_second_count = -neg_count2 - 1
+        res.append(second_ch)
+        
+        if remain_first_count > 0:
+            max_heap.put((-remain_first_count, first_ch))
+        if remain_second_count > 0:
+            max_heap.put((-remain_second_count, second_ch))
+    
+    return "".join(res)
+
+
+class RearrangeStringSpec(unittest.TestCase):
+    def assert_not_adjacent(self, rearranged_string, original_string):
+        # Test same length
+        self.assertTrue(len(original_string) == len(rearranged_string))
+
+        # Test containing all characters
+        self.assertTrue(sorted(original_string) == sorted(rearranged_string))
+
+        # Test not adjacent
+        last_occur_map = {}
+        for i, c in enumerate(rearranged_string):
+            last_occur = last_occur_map.get(c, float('-inf'))
+            self.assertTrue(i - last_occur >= 2)
+            last_occur_map[c] = i
+    
+    def test_empty_string(self):
+        self.assertEqual("", rearrange_string(""))
+
+    def test_example(self):
+        original_string = "abbccc"
+        rearranged_string = rearrange_string(original_string)
+        self.assert_not_adjacent(rearranged_string, original_string)
+    
+    def test_example2(self):
+        original_string = "yyz"
+        rearranged_string = rearrange_string(original_string)
+        self.assert_not_adjacent(rearranged_string, original_string)
+    
+    def test_example3(self):
+        original_string = "yyy"
+        self.assertIsNone(rearrange_string(original_string))
+
+    def test_original_string_contains_duplicated_characters(self):
+        original_string = "aaabb"
+        rearranged_string = rearrange_string(original_string)
+        self.assert_not_adjacent(rearranged_string, original_string)
+
+    def test_original_string_contains_duplicated_characters2(self):
+        original_string = "aaaaabbbc"
+        rearranged_string = rearrange_string(original_string)
+        self.assert_not_adjacent(rearranged_string, original_string)
+    
+    def test_original_string_contains_duplicated_characters3(self):
+        original_string = "aaabc"
+        rearranged_string = rearrange_string(original_string)
+        self.assert_not_adjacent(rearranged_string, original_string)
+
+    def test_already_rearranged(self):
+        original_string = "abcdefg"
+        rearranged_string = rearrange_string(original_string)
+        self.assert_not_adjacent(rearranged_string, original_string)
+
+    def test_impossible_to_rearrange_string(self):
+        original_string = "aa"
+        self.assertIsNone(rearrange_string(original_string))
+
+    def test_impossible_to_rearrange_string2(self):
+        original_string = "aaaabc"
+        self.assertIsNone(rearrange_string(original_string))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
+```
 
 ### Mar 28, 2020 LC 743 \[Medium\] Network Delay Time
 ---
