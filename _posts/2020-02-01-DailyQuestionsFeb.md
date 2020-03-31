@@ -18,6 +18,21 @@ categories: Python/Java
 
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
+### Mar 31, 2020 \[Medium\] Root to Leaf Numbers Summed
+---
+> **Question:** A number can be constructed by a path from the root to a leaf. Given a binary tree, sum all the numbers that can be constructed from the root to all leaves.
+
+**Example:**
+```py
+Iput:
+       1
+     /   \
+    2     3
+   / \
+  4   5
+Output: 262
+Explanation: 124 + 125 + 13 = 262
+```
 
 ### Mar 30, 2020 \[Easy\] Permutation with Given Order
 ---
@@ -27,6 +42,86 @@ categories: Python/Java
 >
 > For example, given the array `["a", "b", "c"]` and the permutation `[2, 1, 0]`, return `["c", "b", "a"]`.
 
+**My thoughts:** In-place swap require swap i with j > i. If j < i, then j's position has been swapped, we backtrack to find j.
+
+**Solution:** [https://repl.it/@trsong/Permutation-with-Given-Order](https://repl.it/@trsong/Permutation-with-Given-Order)
+```py
+import unittest
+
+def permute(arr, order):
+    for i in xrange(len(order)):
+        index_to_swap = order[i]
+        
+        # Check index if it has already been swapped before
+        while index_to_swap < i:
+            index_to_swap = order[index_to_swap]
+
+        arr[i], arr[index_to_swap] = arr[index_to_swap], arr[i]
+    return arr
+
+
+class PermuteSpec(unittest.TestCase):
+    def test_example(self):
+        arr = ["a", "b", "c"]
+        order = [2, 1, 0]
+        expected = ["c", "b", "a"]
+        self.assertEqual(expected, permute(arr, order))
+
+    def test_example2(self):
+        arr = ["11", "32", "3", "42"]
+        order = [2, 3, 0, 1]
+        expected = ["3", "42", "11", "32"]
+        self.assertEqual(expected, permute(arr, order))
+
+    def test_empty_array(self):
+        self.assertEqual([], permute([], []))
+
+    def test_order_form_different_cycles(self):
+        arr = ["a", "b", "c", "d", "e"]
+        order = [1, 0, 4, 2, 3]
+        expected = ["b", "a", "e", "c", "d"]
+        self.assertEqual(expected, permute(arr, order))
+    
+    def test_reverse_order(self):
+        arr = ["a", "b", "c", "d"]
+        order = [3, 2, 1, 0]
+        expected = ["d", "c", "b", "a"]
+        self.assertEqual(expected, permute(arr, order))
+
+    def test_nums_array(self):
+        arr = [50, 40, 70, 60, 90]
+        order = [3,  0,  4,  1,  2]
+        expected = [60, 50, 90, 40, 70]
+        self.assertEqual(expected, permute(arr, order))
+
+    def test_nums_array2(self):
+        arr = [9, 3, 7, 6, 2]
+        order = [4, 0, 3, 1, 2]
+        expected = [2, 9, 6, 3, 7]
+        self.assertEqual(expected, permute(arr, order))
+
+    def test_array_with_duplicate_number(self):
+        arr = ['a', 'a', 'b', 'c']
+        order = [0, 2, 1, 3]
+        expected = ['a', 'b', 'a', 'c']
+        self.assertEqual(expected, permute(arr, order))
+
+    def test_fail_to_swap(self):
+        arr = [50, 30, 40, 70, 60, 90]
+        order = [3, 5, 0, 4, 1, 2]
+        expected = [70, 90, 50, 60, 30, 40]
+        self.assertEqual(expected, permute(arr, order))
+
+    def test_already_in_correct_order(self):
+        arr = [0, 1, 2, 3]
+        order = [0, 1, 2, 3]
+        expected = [0, 1, 2, 3]
+        self.assertEqual(expected, permute(arr, order))
+        
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
+```
 
 ### Mar 29, 2020 \[Medium\] Rearrange String to Have Different Adjacent Characters
 ---
