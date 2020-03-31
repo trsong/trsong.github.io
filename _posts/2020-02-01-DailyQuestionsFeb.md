@@ -24,7 +24,7 @@ categories: Python/Java
 
 **Example:**
 ```py
-Iput:
+Input:
        1
      /   \
     2     3
@@ -42,7 +42,7 @@ Explanation: 124 + 125 + 13 = 262
 >
 > For example, given the array `["a", "b", "c"]` and the permutation `[2, 1, 0]`, return `["c", "b", "a"]`.
 
-**My thoughts:** In-place swap require swap i with j > i. If j < i, then j's position has been swapped, we backtrack to find j.
+**My thoughts:** In-place solution requires swapping `i` with `j` if `j > i`. However, if `j < i`, then `j`'s position has been swapped, we backtrack recursively to find `j`'s new position.
 
 **Solution:** [https://repl.it/@trsong/Permutation-with-Given-Order](https://repl.it/@trsong/Permutation-with-Given-Order)
 ```py
