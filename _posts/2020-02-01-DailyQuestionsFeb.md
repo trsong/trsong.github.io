@@ -18,6 +18,16 @@ categories: Python/Java
 
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
+
+### Apr 1, 2020 \[Easy\] Anagram to Integer
+---
+> **Question:** You are given a string formed by concatenating several words corresponding to the integers `zero` through `nine` and then anagramming.
+>
+> For example, the input could be `'niesevehrtfeev'`, which is an anagram of `'threefiveseven'`. Note that there can be multiple instances of each integer.
+>
+> Given this string, return the original integers in sorted order. In the example above, this would be `357`.
+
+
 ### Mar 31, 2020 \[Medium\] Root to Leaf Numbers Summed
 ---
 > **Question:** A number can be constructed by a path from the root to a leaf. Given a binary tree, sum all the numbers that can be constructed from the root to all leaves.
@@ -32,6 +42,113 @@ Input:
   4   5
 Output: 262
 Explanation: 124 + 125 + 13 = 262
+```
+
+**Solution with DFS:** [https://repl.it/@trsong/Root-to-Leaf-Numbers-Summed](https://repl.it/@trsong/Root-to-Leaf-Numbers-Summed)
+```py
+import unittest
+
+class TreeNode(object):
+    def __init__(self, val, left=None, right=None):
+        self.val = val
+        self.left = left
+        self.right = right
+
+
+def all_path_sum(root):
+    if not root:
+        return 0
+    
+    total = 0
+    stack = [(root, 0)]
+    while stack:
+        cur, carry = stack.pop()
+        cur_num = carry * 10 + cur.val
+        if not cur.left and not cur.right:
+            total += cur_num
+            continue
+        
+        if cur.left:
+            stack.append((cur.left, cur_num))
+        if cur.right:
+            stack.append((cur.right, cur_num))
+    
+    return total
+        
+
+class AllPathSumSpec(unittest.TestCase):
+    def test_example(self):
+        """
+              1
+            /   \
+           2     3
+          / \
+         4   5
+        """
+        left_tree = TreeNode(2, TreeNode(4), TreeNode(5))
+        root = TreeNode(1, left_tree, TreeNode(3))
+        expected = 262  # 124 + 125 + 13 = 262 
+        self.assertEqual(expected, all_path_sum(root))
+
+    def test_empty_tree(self):
+        self.assertEqual(0, all_path_sum(None))
+    
+    def test_one_node_tree(self):
+        self.assertEqual(8, all_path_sum(TreeNode(8)))
+
+    def test_tree_as_a_list(self):
+        """
+        1
+         \
+          2
+         /
+        3
+         \
+          4  
+        """
+        n3 = TreeNode(3, right=TreeNode(4))
+        n2 = TreeNode(2, n3)
+        root = TreeNode(1, right=n2)
+        expected = 1234
+        self.assertEqual(expected, all_path_sum(root))
+
+    def test_TreeNode_contains_zero(self):
+        """
+          0
+         / \
+        1   2
+           / \
+          0   0
+         /   / \
+        1   4   5
+        """
+        right_left_tree = TreeNode(0, TreeNode(1))
+        right_right_tree = TreeNode(0, TreeNode(4), TreeNode(5))
+        right_tree = TreeNode(2, right_left_tree, right_right_tree)
+        root = TreeNode(0, TreeNode(1), right_tree)
+        expected = 611  # 1 + 201 + 204 + 205 = 611
+        self.assertEqual(expected, all_path_sum(root))
+
+    def test_tree(self):
+        """
+              6
+             / \
+            3   5
+           / \   \
+          2   5   4  
+             / \
+            7   4
+        """
+        n5 = TreeNode(5, TreeNode(7), TreeNode(4))
+        n3 = TreeNode(3, TreeNode(2), n5)
+        nn5 = TreeNode(5, right=TreeNode(4))
+        root = TreeNode(6, n3, nn5)
+        expected = 13997  # 632 + 6357 + 6354 + 654 = 13997
+        self.assertEqual(expected, all_path_sum(root))
+        
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
 ```
 
 ### Mar 30, 2020 \[Easy\] Permutation with Given Order
