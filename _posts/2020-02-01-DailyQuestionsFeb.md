@@ -19,6 +19,11 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
 
+### Apr 2, 2020 \[Easy\] Height-balanced Binary Tree
+---
+> **Question:** Given a binary tree, determine whether or not it is height-balanced. A height-balanced binary tree can be defined as one in which the heights of the two subtrees of any node never differ by more than one.
+
+
 ### Apr 1, 2020 \[Easy\] Anagram to Integer
 ---
 > **Question:** You are given a string formed by concatenating several words corresponding to the integers `zero` through `nine` and then anagramming.
@@ -27,6 +32,115 @@ categories: Python/Java
 >
 > Given this string, return the original integers in sorted order. In the example above, this would be `357`.
 
+**My thoughts:** Greedily testing maximum number of digits(0-9); Upon failure, backtrack.
+
+**Solution with Backtracking:** [https://repl.it/@trsong/Anagram-to-Integer](https://repl.it/@trsong/Anagram-to-Integer)
+```py
+import unittest
+import sys
+
+
+def anagram_to_integer(s):
+    digit_map = [
+        'zero', 'one', 'two', 'three', 'four',
+        'five', 'six', 'seven', 'eight', 'nine']
+    digit_freq_map = map(count_char, digit_map)
+
+    digit_size = 10
+    freq_count = count_char(s)
+
+    class Context:
+        accu_num = 0
+
+    def backtrack(digit_index):
+        if digit_index >= digit_size:
+            return 0
+        elif not freq_count:
+            return Context.accu_num
+        else:
+            for i in xrange(digit_index, digit_size):
+                digit_count = digit_freq_map[i]
+                max_count = sys.maxint
+                for ch, num_ch in digit_count.items():
+                    max_count = min(max_count, freq_count.get(ch, 0) // num_ch)
+                
+                for actual_count in xrange(max_count, 0, -1):
+                    for ch, num_ch in digit_count.items():
+                        freq_count[ch] = freq_count.get(ch, 0) - actual_count * num_ch
+                        if freq_count[ch] == 0:
+                            del freq_count[ch]
+                    
+                    for _ in xrange(actual_count):
+                        Context.accu_num *= 10
+                        Context.accu_num += i
+
+                    if backtrack(digit_index + 1):
+                        return Context.accu_num
+
+                    for _ in xrange(actual_count):
+                        Context.accu_num /= 10
+
+                    for ch, num_ch in digit_count.items():
+                        freq_count[ch] = freq_count.get(ch, 0) + actual_count * num_ch
+            return 0
+    
+    return backtrack(0)
+                    
+
+def count_char(s):
+    freq_map = {}
+    for ch in s:
+        freq_map[ch] = freq_map.get(ch, 0) + 1
+    return freq_map
+
+        
+class AnagramToIntegerSpec(unittest.TestCase):
+    def test_example(self):
+        s = 'niesevehrtfeev'
+        expected = 357
+        self.assertEqual(expected, anagram_to_integer(s))
+
+    def test_empty_string(self):
+        self.assertEqual(0, anagram_to_integer(''))
+
+    def test_contains_duplicate_characters(self):
+        s = 'nininene'
+        expected = 99
+        self.assertEqual(expected, anagram_to_integer(s))
+
+    def test_contains_duplicate_characters2(self):
+        s = 'twoonefourfourtwoone'
+        expected = 112244
+        self.assertEqual(expected, anagram_to_integer(s))
+    
+    def test_char_in_sorted_order(self):
+        s = 'eeeffhioorrttuvw'
+        expected = 2345
+        self.assertEqual(expected, anagram_to_integer(s))
+
+    def test_zero(self):
+        s = 'zero'
+        expected = 0
+        self.assertEqual(expected, anagram_to_integer(s))
+    
+    def test_should_omit_zero(self):
+        s = 'onetwothreefourfivesixseveneightnine'
+        expected = 123456789
+        self.assertEqual(expected, anagram_to_integer(s))
+
+    def test_unique_character(self):
+        s = 'oneoneoneone'
+        expected = 1111
+        self.assertEqual(expected, anagram_to_integer(s))
+
+    def test_one_not_exists(self):
+        s = 'twonine'
+        expected = 29
+        self.assertEqual(expected, anagram_to_integer(s))
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
+```
 
 ### Mar 31, 2020 \[Medium\] Root to Leaf Numbers Summed
 ---
