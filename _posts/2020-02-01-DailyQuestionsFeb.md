@@ -18,12 +18,153 @@ categories: Python/Java
 
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
+### Apr 3, 2020 \[Medium\] Group Words that are Anagrams
+---
+> **Question:** Given a list of words, group the words that are anagrams of each other. (An anagram are words made up of the same letters).
+
+**Example:**
+```py
+Input: ['abc', 'bcd', 'cba', 'cbd', 'efg']
+Output: [['abc', 'cba'], ['bcd', 'cbd'], ['efg']]
+```
 
 ### Apr 2, 2020 \[Easy\] Height-balanced Binary Tree
 ---
 > **Question:** Given a binary tree, determine whether or not it is height-balanced. A height-balanced binary tree can be defined as one in which the heights of the two subtrees of any node never differ by more than one.
 
+**Recursive Solution:** [https://repl.it/@trsong/Height-balanced-Binary-Tree](https://repl.it/@trsong/Height-balanced-Binary-Tree)
+```py
+import unittest
 
+class TreeNode(object):
+    def __init__(self, val, left=None, right=None):
+        self.val = val
+        self.left = left
+        self.right = right
+
+
+def is_balanced_tree(root):
+
+    def calculate_height(node):
+        if not node:
+            return 0
+        
+        left_height = calculate_height(node.left)
+        if left_height < 0:
+            return -1
+        right_height = calculate_height(node.right)
+        if right_height < 0 or abs(left_height - right_height) > 1:
+            return -1
+        
+        return max(left_height, right_height) + 1
+
+    return calculate_height(root) >= 0
+
+
+class IsBalancedTreeSpec(unittest.TestCase):
+    def test_empty_tree(self):
+        self.assertTrue(is_balanced_tree(None))
+
+    def test_tree_with_only_one_node(self):
+        self.assertTrue(is_balanced_tree(TreeNode(1)))
+
+    def test_depth_one_tree_is_always_balanced(self):
+        """
+        0
+         \
+          1
+        """
+        root = TreeNode(0, right=TreeNode(1))
+        self.assertTrue(is_balanced_tree(root))
+
+    def test_depth_two_unbalanced_tree(self):
+        """
+         0
+          \
+           1
+          / \
+         2   3
+        """
+        right_tree = TreeNode(1, TreeNode(2), TreeNode(3))
+        root = TreeNode(0, right=right_tree)
+        self.assertFalse(is_balanced_tree(root))
+
+    def test_left_heavy_tree(self):
+        """
+          0
+         / \
+        1   4
+         \
+          2
+         /
+        3
+        """
+        left_tree = TreeNode(1, right=TreeNode(2, TreeNode(3)))
+        root = TreeNode(0, left_tree, TreeNode(4))
+        self.assertFalse(is_balanced_tree(root))
+
+    def test_complete_tree(self):
+        """
+            0
+           / \
+          1   2
+         / \ 
+        3   4
+        """
+        left_tree = TreeNode(1, TreeNode(3), TreeNode(4))
+        root = TreeNode(0, left_tree, TreeNode(2))
+        self.assertTrue(is_balanced_tree(root))
+
+    def test_unbalanced_internal_node(self):
+        """
+            0
+           / \
+          1   3
+         /     \
+        2       4
+               /
+              5 
+        """
+        left_tree = TreeNode(1, TreeNode(2))
+        right_tree = TreeNode(3, right=TreeNode(4, TreeNode(5)))
+        root = TreeNode(0, left_tree, right_tree)
+        self.assertFalse(is_balanced_tree(root))
+
+    def test_balanced_internal_node(self):
+        """
+            0
+           / \
+          1   3
+         /   / \
+        2   6   4
+               /
+              5 
+        """
+        left_tree = TreeNode(1, TreeNode(2))
+        right_tree = TreeNode(3, TreeNode(6), TreeNode(4, TreeNode(5)))
+        root = TreeNode(0, left_tree, right_tree)
+        self.assertTrue(is_balanced_tree(root))
+
+    def test_unbalanced_tree_with_all_children_filled(self):
+        """
+            0
+           / \ 
+          1   2
+         / \
+        3   4
+           / \
+          5   6
+        """
+        n4 = TreeNode(4, TreeNode(5), TreeNode(6))
+        n1 = TreeNode(1, TreeNode(3), n4)
+        root = TreeNode(0, n1, TreeNode(2))
+        self.assertFalse(is_balanced_tree(root))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
+
+```
 ### Apr 1, 2020 \[Easy\] Anagram to Integer
 ---
 > **Question:** You are given a string formed by concatenating several words corresponding to the integers `zero` through `nine` and then anagramming.
