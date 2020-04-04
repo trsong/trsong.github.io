@@ -33,9 +33,9 @@ Input: ['abc', 'bcd', 'cba', 'cbd', 'efg']
 Output: [['abc', 'cba'], ['bcd', 'cbd'], ['efg']]
 ```
 
-**My thoughts:** Notice that two words are anagrams of each other if both of them be equal after sort and should have same prefix. eg. `'bcda'` => `'abcd'` and `'cadb'` => 'abcd'. We can sort each word in the list and then insert those sorted words into a trie. Finally, we can perform a tree traversal to get all words with same prefix and those words will be words that are anagrams of each other.
+**My thoughts:** Notice that two words are anagrams of each other if both of them be equal after sort and should have same prefix. eg. `'bcda'` => `'abcd'` and `'cadb'` => `'abcd'`. We can sort each word in the list and then insert those sorted words into a trie. Finally, we can perform a tree traversal to get all words with same prefix and those words will be words that are anagrams of each other.
 
-We can either use Trie (Prefix Tree) or use Ternary Tree. Trie has lower time complexity while Ternary Search Tree is more memoery efficient. Trie Solution: [https://repl.it/@trsong/Group-Words-that-are-Anagrams](https://repl.it/@trsong/Group-Words-that-are-Anagrams).
+We can either use **Trie (Prefix Tree)** or use **Ternary Search Tree**. Trie has lower time complexity while Ternary Search Tree is more memoery efficient. **Trie Solution:** [https://repl.it/@trsong/Group-Words-that-are-Anagrams](https://repl.it/@trsong/Group-Words-that-are-Anagrams).
 
 **Solution with Ternary Search Tree (Trie Alternative)**: [https://repl.it/@trsong/Group-All-Words-that-Are-Anagrams](https://repl.it/@trsong/Group-All-Words-that-Are-Anagrams)
 ```py
