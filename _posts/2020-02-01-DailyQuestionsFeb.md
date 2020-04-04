@@ -18,6 +18,11 @@ categories: Python/Java
 
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
+### Apr 4, 2020 \[Easy\] Remove k-th Last Element From Linked List
+---
+> **Question:** You are given a singly linked list and an integer k. Return the linked list, removing the k-th last element from the list. 
+
+
 ### Apr 3, 2020 \[Medium\] Group Words that are Anagrams
 ---
 > **Question:** Given a list of words, group the words that are anagrams of each other. (An anagram are words made up of the same letters).
@@ -26,6 +31,114 @@ categories: Python/Java
 ```py
 Input: ['abc', 'bcd', 'cba', 'cbd', 'efg']
 Output: [['abc', 'cba'], ['bcd', 'cbd'], ['efg']]
+```
+
+**My thoughts:** Notice that two words are anagrams of each other if both of them be equal after sort and should have same prefix. eg. `'bcda'` => `'abcd'` and `'cadb'` => 'abcd'. We can sort each word in the list and then insert those sorted words into a trie. Finally, we can perform a tree traversal to get all words with same prefix and those words will be words that are anagrams of each other.
+
+We can either use Trie (Prefix Tree) or use Ternary Tree. Trie has lower time complexity while Ternary Search Tree is more memoery efficient. Trie Solution: [https://repl.it/@trsong/Group-Words-that-are-Anagrams](https://repl.it/@trsong/Group-Words-that-are-Anagrams).
+
+**Solution with Ternary Search Tree (Trie Alternative)**: [https://repl.it/@trsong/Group-All-Words-that-Are-Anagrams](https://repl.it/@trsong/Group-All-Words-that-Are-Anagrams)
+```py
+import unittest
+
+class TernaryNode(object):
+    def __init__(self, val):
+        self.val = val
+        self.anagrams = None
+        self.left = None
+        self.middle = None
+        self.right = None
+
+    def insert(self, original_word):
+        if not original_word:
+            self.anagrams = self.anagrams or []
+            self.anagrams.append(original_word)
+        else:
+            sorted_word = sorted(original_word)
+            self._insert_recur(self, sorted_word, 0, original_word)
+
+    def query_all_anagrams(self):
+        res = []
+        stack = [self]
+        while stack:
+            cur = stack.pop()
+            if cur.anagrams:
+                res.append(cur.anagrams)
+            
+            for child in [cur.left, cur.middle, cur.right]:
+                if child:
+                    stack.append(child)
+        
+        return res
+
+    def _insert_recur(self, node, word, index, original_word):
+        if index >= len(word):
+            return None
+        
+        ch = word[index]
+        if not node:
+            node = TernaryNode(ch)
+
+        if node.val < ch:
+            node.right = self._insert_recur(node.right, word, index, original_word)
+        elif node.val > ch:
+            node.left = self._insert_recur(node.left, word, index, original_word)
+        elif index < len(word) - 1:
+            node.middle = self._insert_recur(node.middle, word, index+1, original_word)
+        else:
+            node.anagrams = node.anagrams or []
+            node.anagrams.append(original_word)
+        return node
+
+
+def group_by_anagram(words):
+    t = TernaryNode('')
+    for w in words:
+        t.insert(w)
+    return t.query_all_anagrams()
+
+
+class GroupyByAnagramSpec(unittest.TestCase):
+    def assert_result(self, expected, result):
+        for l in result:
+            l.sort()
+        result.sort()
+        for l in expected:
+            l.sort()
+        expected.sort()
+        self.assertEqual(expected, result)
+
+    def test_example(self):
+        input = ['abc', 'bcd', 'cba', 'cbd', 'efg']
+        output = [['abc', 'cba'], ['bcd', 'cbd'], ['efg']]
+        self.assert_result(output, group_by_anagram(input))
+
+    def test_empty_word_list(self):
+        self.assert_result([], group_by_anagram([]))
+
+    def test_contains_duplicated_words(self):
+        input = ['a', 'aa', 'aaa', 'a', 'aaa', 'aa', 'aaa']
+        output = [['a', 'a'], ['aa', 'aa'], ['aaa', 'aaa', 'aaa']]
+        self.assert_result(output, group_by_anagram(input))
+
+    def test_contains_duplicated_words2(self):
+        input = ['abc', 'acb', 'abcd', 'dcba', 'abc', 'abcd', 'a']
+        output = [['a'], ['abc', 'acb', 'abc'], ['abcd', 'dcba', 'abcd']]
+        self.assert_result(output, group_by_anagram(input))
+
+    def test_contains_empty_word(self):
+        input = ['', 'a', 'b', 'c', '', 'bc', 'ca', '', 'ab']
+        output = [['', '', ''], ['a'], ['b'], ['c'], ['ab'], ['ca'], ['bc']]
+        self.assert_result(output, group_by_anagram(input))
+
+    def test_word_with_duplicated_letters(self):
+        input = ['aabcde', 'abbcde', 'abccde', 'abcdde', 'abcdee', 'abcdea']
+        output = [['aabcde', 'abcdea'], ['abbcde'], ['abccde'], ['abcdde'], ['abcdee']]
+        self.assert_result(output, group_by_anagram(input))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
 ```
 
 ### Apr 2, 2020 \[Easy\] Height-balanced Binary Tree
