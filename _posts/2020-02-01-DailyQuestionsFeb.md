@@ -18,9 +18,124 @@ categories: Python/Java
 
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
+
+### Apr 5, 2020 \[Medium\] Tree Serialization
+---
+> **Question:** You are given the root of a binary tree. You need to implement 2 functions:
+>
+> 1. `serialize(root)` which serializes the tree into a string representation
+> 2. `deserialize(s)` which deserializes the string back to the original tree that it represents
+>
+> For this problem, often you will be asked to design your own serialization format. However, for simplicity, let's use the pre-order traversal of the tree.
+
+**Example:**
+```py
+     1
+    / \
+   3   4
+  / \   \
+ 2   5   7
+
+serialize(tree)
+# returns "1 3 2 # # 5 # # 4 # 7 # #"
+```
+
 ### Apr 4, 2020 \[Easy\] Remove k-th Last Element From Linked List
 ---
 > **Question:** You are given a singly linked list and an integer k. Return the linked list, removing the k-th last element from the list. 
+
+**My thoughts:** Use two pointers, faster one are k position ahead of slower one. When fast one hit last element, the slow one will become the one before the kth last element.
+
+**Solution with Fast and Slow Pointers:** [https://repl.it/@trsong/Remove-the-k-th-Last-Element-From-Linked-List](https://repl.it/@trsong/Remove-the-k-th-Last-Element-From-Linked-List)
+```py
+import unittest
+
+def remove_last_kth_elem(k, lst):
+    if not lst:
+        return None
+
+    last_elem = prev_k_elem = dummy = ListNode(-1, lst)
+    for _ in xrange(k):
+        last_elem = last_elem.next
+        if not last_elem:
+            # k is beyond the range
+            return lst
+
+    while last_elem.next:
+        last_elem = last_elem.next
+        prev_k_elem = prev_k_elem.next
+    
+    # prev_k_elem.next is the k-th last element
+    prev_k_elem.next = prev_k_elem.next.next
+    
+    return dummy.next
+    
+
+###################
+# Testing Utilities
+###################
+class ListNode(object):
+    def __init__(self, x, next=None):
+        self.val = x
+        self.next = next
+
+    def __eq__(self, other):
+        return other and self.val == other.val and self.next == other.next
+
+    def __repr__(self):
+        return "{} -> {}".format(str(self.val), str(self.next))
+
+    @staticmethod
+    def seq(*vals):
+        p = dummy = ListNode(-1)
+        for elem in vals:
+            p.next = ListNode(elem)
+            p = p.next
+        return dummy.next
+
+
+class RemoveLastKthElementSpec(unittest.TestCase):
+    def test_empty_list(self):
+        self.assertIsNone(remove_last_kth_elem(0, None))
+
+    def test_remove_the_only_element(self):
+        k, lst = 1, ListNode.seq(42)
+        self.assertIsNone(remove_last_kth_elem(k, lst))
+    
+    def test_remove_the_last_element(self):
+        k, lst = 1, ListNode.seq(1, 2, 3)
+        expected = ListNode.seq(1, 2)
+        self.assertEqual(expected, remove_last_kth_elem(k, lst))
+
+    def test_remove_the_first_element(self):
+        k, lst = 4, ListNode.seq(1, 2, 3, 4)
+        expected = ListNode.seq(2, 3, 4)
+        self.assertEqual(expected, remove_last_kth_elem(k, lst))
+
+    def test_remove_element_in_the_middle(self):
+        k, lst = 3, ListNode.seq(5, 4, 3, 2, 1)
+        expected = ListNode.seq(5, 4, 2, 1)
+        self.assertEqual(expected, remove_last_kth_elem(k, lst))
+    
+    def test_k_beyond_the_range(self):
+        k, lst = 10, ListNode.seq(3, 2, 1)
+        expected = ListNode.seq(3, 2, 1)
+        self.assertEqual(expected, remove_last_kth_elem(k, lst))
+    
+    def test_k_beyond_the_range2(self):
+        k, lst = 4, ListNode.seq(3, 2, 1)
+        expected = ListNode.seq(3, 2, 1)
+        self.assertEqual(expected, remove_last_kth_elem(k, lst))
+
+    def test_remove_the_second_last_element(self):
+        k, lst = 2, ListNode.seq(4, 3, 2, 1)
+        expected = ListNode.seq(4, 3, 1)
+        self.assertEqual(expected, remove_last_kth_elem(k, lst))
+
+    
+if __name__ == '__main__':
+    unittest.main(exit=False)
+```
 
 
 ### Apr 3, 2020 \[Medium\] Group Words that are Anagrams
