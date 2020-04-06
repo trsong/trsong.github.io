@@ -18,6 +18,18 @@ categories: Python/Java
 
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
+### Apr 6, 2020 \[Medium\] JSON Encoding
+---
+> **Question:** Write a function that takes in a number, string, list, or dictionary and returns its JSON encoding. It should also handle nulls.
+>
+> For example, given the following input:
+>
+> `[None, 123, ["a", "b"], {"c":"d"}]`
+>
+> You should return the following, as a string:
+>
+> `'[null, 123, ["a", "b"], {"c": "d"}]'`
+
 
 ### Apr 5, 2020 \[Medium\] Tree Serialization
 ---
@@ -39,6 +51,204 @@ categories: Python/Java
 serialize(tree)
 # returns "1 3 2 # # 5 # # 4 # 7 # #"
 ```
+
+**Solution:** [https://repl.it/@trsong/Tree-Serialization](https://repl.it/@trsong/Tree-Serialization)
+```py
+import unittest
+
+class BinaryTreeSerializer(object):
+    @staticmethod
+    def serialize(root):
+        res = []
+        stack = [root]
+        while stack:
+            cur = stack.pop()
+            if not cur:
+                res.append('#')
+            else:
+                res.append(str(cur.val))
+                stack.append(cur.right)
+                stack.append(cur.left)
+        return ' '.join(res)
+
+    @staticmethod
+    def deserialize(s):
+        tokens = iter(s.split())
+        return BinaryTreeSerializer._build_tree_preorder(tokens)
+
+    @staticmethod
+    def _build_tree_preorder(stream):
+        node_val = next(stream, None)
+        if node_val is None or node_val == '#':
+            return None
+
+        node = TreeNode(int(node_val))
+        node.left = BinaryTreeSerializer._build_tree_preorder(stream)
+        node.right = BinaryTreeSerializer._build_tree_preorder(stream)
+        return node
+
+
+###################
+# Testing Utilities
+###################
+class TreeNode(object):
+    def __init__(self, val, left=None, right=None):
+        self.val = val
+        self.left = left
+        self.right = right
+    
+    def __eq__(self, other):
+        return (other and 
+            self.val == other.val and 
+            self.left == other.left and 
+            self.right == other.right)
+
+    def __repr__(self):
+        stack = [(self, 0)]
+        res = []
+        while stack:
+            node, depth = stack.pop()
+            res.append("\n" + "\t" * depth)
+            if not node:
+                res.append("* None")
+                continue
+
+            res.append("* " + str(node.val))
+            for child in [node.right, node.left]:
+                stack.append((child, depth+1))
+        return "\n" + "".join(res) + "\n"
+
+
+class BinaryTreeSerializerSpec(unittest.TestCase):
+    def test_example(self):
+        """
+             1
+            / \
+           3   4
+          / \   \
+         2   5   7
+        """
+        n3 = TreeNode(3, TreeNode(2), TreeNode(5))
+        n4 = TreeNode(4, right=TreeNode(7))
+        root = TreeNode(1, n3, n4)
+        encoded = BinaryTreeSerializer.serialize(root)
+        decoded = BinaryTreeSerializer.deserialize(encoded)
+        self.assertEqual(root, decoded)
+
+    def test_serialize_right_heavy_tree(self):
+        """
+            1
+           / \
+          2   3
+             / \
+            4   5
+        """
+        n3 = TreeNode(3, TreeNode(4), TreeNode(5))
+        root = TreeNode(1, TreeNode(2), n3)
+        encoded = BinaryTreeSerializer.serialize(root)
+        decoded = BinaryTreeSerializer.deserialize(encoded)
+        self.assertEqual(root, decoded)
+
+    def test_balanced_tree(self):
+        """
+               5
+              / \ 
+             4   7
+            /   /
+           3   2
+          /   /
+        -1   9
+        """
+        n4 = TreeNode(4, TreeNode(3, TreeNode(-1)))
+        n7 = TreeNode(7, TreeNode(2, TreeNode(9)))
+        root = TreeNode(5, n4, n7)
+        encoded = BinaryTreeSerializer.serialize(root)
+        decoded = BinaryTreeSerializer.deserialize(encoded)
+        self.assertEqual(root, decoded)
+
+    def test_serialize_empty_tree(self):
+        encoded = BinaryTreeSerializer.serialize(None)
+        decoded = BinaryTreeSerializer.deserialize(encoded)
+        self.assertIsNone(decoded)
+
+    def test_serialize_left_heavy_tree(self):
+        """
+            1
+           /
+          2
+         /
+        3
+        """
+        root = TreeNode(1, TreeNode(2, TreeNode(3)))
+        encoded = BinaryTreeSerializer.serialize(root)
+        decoded = BinaryTreeSerializer.deserialize(encoded)
+        self.assertEqual(root, decoded)
+
+    def test_serialize_right_heavy_tree2(self):
+        """
+        1
+         \
+          2
+         /
+        3
+        """
+        root = TreeNode(1, right=TreeNode(2, TreeNode(3)))
+        encoded = BinaryTreeSerializer.serialize(root)
+        decoded = BinaryTreeSerializer.deserialize(encoded)
+        self.assertEqual(root, decoded)
+
+    def test_zig_zag_tree(self):
+        """
+            1
+           /
+          2
+         /
+        3
+         \
+          4
+           \
+            5
+           /
+          6
+        """
+        n5 = TreeNode(5, TreeNode(6))
+        n3 = TreeNode(3, right=TreeNode(4, right=n5))
+        root = TreeNode(1, TreeNode(2, n3))
+        encoded = BinaryTreeSerializer.serialize(root)
+        decoded = BinaryTreeSerializer.deserialize(encoded)
+        self.assertEqual(root, decoded)
+
+    def test_full_tree(self):
+        """
+             1
+           /   \
+          2     3
+         / \   / \
+        4   5 6   7
+        """
+        n2 = TreeNode(2, TreeNode(4), TreeNode(5))
+        n3 = TreeNode(3, TreeNode(6), TreeNode(7))
+        root = TreeNode(1, n2, n3)
+        encoded = BinaryTreeSerializer.serialize(root)
+        decoded = BinaryTreeSerializer.deserialize(encoded)
+        self.assertEqual(root, decoded)
+
+    def test_all_node_has_value_zero(self):
+        """
+          0
+         / \
+        0   0
+        """
+        root = TreeNode(0, TreeNode(0), TreeNode(0))
+        encoded = BinaryTreeSerializer.serialize(root)
+        decoded = BinaryTreeSerializer.deserialize(encoded)
+        self.assertEqual(root, decoded)
+        
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
+```
+
 
 ### Apr 4, 2020 \[Easy\] Remove k-th Last Element From Linked List
 ---
