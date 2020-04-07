@@ -33,6 +33,15 @@ You should return the following, as a string:
 ```
 -->
 
+### Apr 7, 2020 \[Medium\] Making Changes
+---
+> **Question:** Given a list of possible coins in cents, and an amount (in cents) n, return the minimum number of coins needed to create the amount n. If it is not possible to create the amount using the given coin denomination, return None.
+
+**Example:**
+```py
+make_change([1, 5, 10, 25], 36)  # gives 3 coins (25 + 10 + 1) 
+```
+
 ### Apr 6, 2020 \[Medium\] Minimum Number of Jumps to Reach End
 ---
 > **Question:** You are given an array of integers, where each element represents the maximum number of steps that can be jumped going forward from that element. 
@@ -41,6 +50,104 @@ You should return the following, as a string:
 >
 > For example, given `[6, 2, 4, 0, 5, 1, 1, 4, 2, 9]`, you should return `2`, as the optimal solution involves jumping from `6 to 5`, and then from `5 to 9`.
 
+**My thoughts:** Instead of using DP to calculate min step required to reach current index, we can treat this problem as climbing floor with ladders. For each floor you reach, you will get a new ladder with length `i + step[i]`. Now all you need to do is to greedily use the max length ladder you have seen so far and swap to the next one when the current one reaches end. The answer will be the total number of max length ladder you have used. 
+
+**Greedy Solution:** [https://repl.it/@trsong/Find-Minimum-Number-of-Jumps-to-Reach-End](https://repl.it/@trsong/Find-Minimum-Number-of-Jumps-to-Reach-End)
+```py
+import unittest
+
+def min_jump_to_reach_end(steps):
+    if not steps:
+        return None
+
+    total_ladder_used = 0
+    max_ladder = 0
+    current_ladder = max_ladder
+
+    for floor, jump in enumerate(steps):
+        if floor > max_ladder:
+            # Even max ladder cannot reach current floor
+            return None
+        elif floor > current_ladder:
+            # To reach current floor, we have to swap to a different ladder
+            current_ladder = max_ladder
+            total_ladder_used += 1
+
+        # For each floor, we will get a new ladder 
+        new_ladder = floor + jump
+        if new_ladder > max_ladder:
+            max_ladder = new_ladder
+    
+    return total_ladder_used
+
+        
+class MinJumpToReachEndSpec(unittest.TestCase):
+    def test_example(self):
+        steps = [6, 2, 4, 0, 5, 1, 1, 4, 2, 9]
+        expected = 2  # 6 -> 5 -> 9
+        self.assertEqual(expected, min_jump_to_reach_end(steps))
+
+    def test_empty_steps(self):
+        self.assertIsNone(min_jump_to_reach_end([]))
+    
+    def test_trivial_case(self):
+        self.assertEqual(0, min_jump_to_reach_end([0]))
+
+    def test_multiple_ways_to_reach_end(self):
+        steps = [1, 3, 5, 6, 8, 12, 17]
+        expected = 3  # 1 -> 3 -> 5 -> 17
+        self.assertEqual(expected, min_jump_to_reach_end(steps)) 
+
+    def test_should_return_min_step_to_reach_end(self):
+        steps = [1, 3, 5, 8, 9, 2, 6, 7, 6, 8, 9]
+        expected = 3  # 1 -> 3 -> 9 -> 9
+        self.assertEqual(expected, min_jump_to_reach_end(steps))
+
+    def test_should_return_min_step_to_reach_end2(self):
+        steps = [15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16]
+        expected = 4
+        self.assertEqual(expected, min_jump_to_reach_end(steps))
+
+    def test_should_return_min_step_to_reach_end3(self):
+        steps = [1, 3, 6, 3, 2, 3, 6, 8, 9, 5]
+        expected = 4  # 1 -> 3 -> 6 -> 9 -> 5
+        self.assertEqual(expected, min_jump_to_reach_end(steps))
+
+    def test_should_return_min_step_to_reach_end4(self):
+        steps = [1, 3, 6, 1, 0, 9]
+        expected = 3  # 1 -> 3 -> 6 -> 9
+        self.assertEqual(expected, min_jump_to_reach_end(steps))
+
+    def test_unreachable_end(self):
+        steps = [1, -2, -3, 4, 8, 9, 11]
+        self.assertIsNone(min_jump_to_reach_end(steps))
+
+    def test_unreachable_end2(self):
+        steps = [1, 3, 2, -11, 0, 1, 0, 0, -1]
+        self.assertIsNone(min_jump_to_reach_end(steps))
+
+    def test_reachable_end(self):
+        steps = [1, 3, 6, 10]
+        expected = 2  # 1 -> 3 -> 10
+        self.assertEqual(expected, min_jump_to_reach_end(steps))
+
+    def test_stop_in_the_middle(self):
+        steps = [1, 2, 0, 0, 0, 1000, 1000]
+        self.assertIsNone(min_jump_to_reach_end(steps))
+
+    def test_stop_in_the_middle2(self):
+        steps = [2, 1, 0, 9]
+        self.assertIsNone(min_jump_to_reach_end(steps))
+
+    def test_greedy_solution_fails(self):
+        steps = [5, 3, 3, 3, 4, 2, 1, 1, 1]
+        expected = 2  # 5 -> 4 -> 1
+        self.assertEqual(expected, min_jump_to_reach_end(steps))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
+```
 
 ### Apr 5, 2020 \[Medium\] Tree Serialization
 ---
