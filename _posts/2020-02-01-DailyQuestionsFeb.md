@@ -33,6 +33,14 @@ You should return the following, as a string:
 ```
 -->
 
+### Apr 8, 2020  \[Hard\] RGB Element Array Swap
+---
+> **Question:** Given an array of strictly the characters 'R', 'G', and 'B', segregate the values of the array so that all the Rs come first, the Gs come second, and the Bs come last. You can only swap elements of the array.
+>
+> Do this in linear time and in-place.
+>
+> For example, given the array `['G', 'B', 'R', 'R', 'B', 'R', 'G']`, it should become `['R', 'R', 'R', 'G', 'G', 'B', 'B']`.
+
 ### Apr 7, 2020 \[Medium\] Making Changes
 ---
 > **Question:** Given a list of possible coins in cents, and an amount (in cents) n, return the minimum number of coins needed to create the amount n. If it is not possible to create the amount using the given coin denomination, return None.
@@ -40,6 +48,81 @@ You should return the following, as a string:
 **Example:**
 ```py
 make_change([1, 5, 10, 25], 36)  # gives 3 coins (25 + 10 + 1) 
+```
+
+**Solution with DP:** [https://repl.it/@trsong/Making-Changes](https://repl.it/@trsong/Making-Changes)
+```py
+import unittest
+import sys
+
+def make_change(coins, target):
+    if target == 0:
+        return 0
+    elif not coins:
+        return None
+
+    min_coin_val = min(coins)
+    if target < min_coin_val:
+        return None
+
+    # make sure coin won't be too big
+    filtered_coins = filter(lambda coin: coin <= target, coins)
+
+    # dp[v] represents smallest possible coins for (v + min_coin_val)
+    # dp[v] = 1 if v + min_coin_val is in coins
+    #       = 1 + min{ dp[v + min_coin_val - coin] } for all coin in coins
+    dp = [sys.maxint] * (target - min_coin_val + 1)
+    for coin in filtered_coins:
+        dp[coin-min_coin_val] = 1
+
+    for v in xrange(min_coin_val, target+1):
+        for coin in filtered_coins:
+            if v - coin >= min_coin_val:
+                dp[v-min_coin_val] = min(dp[v-min_coin_val], 1 + dp[v-coin-min_coin_val])
+    
+    return dp[-1] if dp[-1] != sys.maxint else None
+
+
+class MakeChangeSpec(unittest.TestCase):
+    def test_example(self):
+        target, coins = 36, [1, 5, 10, 25]
+        expected = 3  # 25 + 10 + 1
+        self.assertEqual(expected, make_change(coins, target))
+    
+    def test_target_is_zero(self):
+        self.assertEqual(0, make_change([1, 2, 3], 0))
+        self.assertEqual(0, make_change([], 0))
+
+    def test_unable_to_reach_target(self):
+        target, coins = -1, [1, 2, 3]
+        self.assertIsNone(make_change(coins, target))
+
+    def test_unable_to_reach_target2(self):
+        target, coins = 10, []
+        self.assertIsNone(make_change(coins, target))
+
+    def test_greedy_approach_fails(self):
+        target, coins = 11, [9, 6, 5, 1]
+        expected = 2  # 5 + 6
+        self.assertEqual(expected, make_change(coins, target))
+
+    def test_use_same_coin_multiple_times(self):
+        target, coins = 12, [1, 2, 3]
+        expected = 4  # 3 + 3 + 3 + 3
+        self.assertEqual(expected, make_change(coins, target))
+
+    def test_should_produce_minimum_number_of_changes(self):
+        target, coins = 30, [25, 10, 5]
+        expected = 2  # 25 + 5
+        self.assertEqual(expected, make_change(coins, target))
+    
+    def test_impossible_get_answer(self):
+        target, coins = 4, [3, 5, 7]
+        self.assertIsNone(make_change(coins, target))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
 ```
 
 ### Apr 6, 2020 \[Medium\] Minimum Number of Jumps to Reach End
