@@ -33,6 +33,29 @@ You should return the following, as a string:
 ```
 -->
 
+### Apr 9, 2020 \[Hard\] Max Path Value in Directed Graph
+---
+> **Question:** In a directed graph, each node is assigned an uppercase letter. We define a path's value as the number of most frequently-occurring letter along that path. For example, if a path in the graph goes through "ABACA", the value of the path is 3, since there are 3 occurrences of 'A' on the path.
+>
+> Given a graph with n nodes and m directed edges, return the largest value path of the graph. If the largest value is infinite, then return null.
+>
+> The graph is represented with a string and an edge list. The i-th character represents the uppercase letter of the i-th node. Each tuple in the edge list (i, j) means there is a directed edge from the i-th node to the j-th node. Self-edges are possible, as well as multi-edges.
+
+**Example1:** 
+```py
+Input: "ABACA", [(0, 1), (0, 2), (2, 3), (3, 4)]
+Output: 3
+Explanation: maximum value 3 using the path of vertices [0, 2, 3, 4], ie. A -> A -> C -> A.
+```
+
+**Example2:**
+```py
+Input: "A", [(0, 0)]
+Output: None
+Explanation: we have an infinite loop.
+```
+
+
 ### Apr 8, 2020  \[Hard\] RGB Element Array Swap
 ---
 > **Question:** Given an array of strictly the characters 'R', 'G', and 'B', segregate the values of the array so that all the Rs come first, the Gs come second, and the Bs come last. You can only swap elements of the array.
@@ -40,6 +63,87 @@ You should return the following, as a string:
 > Do this in linear time and in-place.
 >
 > For example, given the array `['G', 'B', 'R', 'R', 'B', 'R', 'G']`, it should become `['R', 'R', 'R', 'G', 'G', 'B', 'B']`.
+
+**My thoughts:** Treat 'R','G' and 'B' as numbers. The problem can be solved by sorting this array based on certain order. We can use Quick Sort to achieve that. And the idea is that we keep three pointers `lo <= mid <= hi` such that 'G' grows from lo, 'B' grows from hi and 'B' grows from mid and swap w/ lo to make some room. Such technique to partition the array into 3 parts is called ***3-Way Quick Select***. It feels like normal Quick Select except segregate array into 3 parts.
+
+**Solution with 3-Way Quick Select:** [https://repl.it/@trsong/RGB-Element-Array-Swap-Problem](https://repl.it/@trsong/RGB-Element-Array-Swap-Problem)
+```py
+import unittest
+
+R, G, B = 'R', 'G', 'B'
+
+def rgb_sort(colors):
+    lo = mid = 0
+    hi = len(colors) - 1
+    while mid <= hi:
+        if colors[mid] == B:
+            # case 1: colors[mid] > G
+            colors[mid], colors[hi] = colors[hi], colors[mid]
+            hi -= 1
+        elif colors[mid] == G:
+            # case 2: colors[mid] == G
+            mid += 1
+        else:
+            # case 3: colors[mid] < G
+            colors[lo], colors[mid] = colors[mid], colors[lo]
+            lo += 1
+            mid += 1
+    return colors
+
+        
+class RGBSortSpec(unittest.TestCase):
+    def test_example(self):
+        colors = [G, B, R, R, B, R, G]
+        expected = [R, R, R, G, G, B, B]
+        self.assertEqual(expected, rgb_sort(colors))
+
+    def test_empty_arr(self):
+        self.assertEqual([], rgb_sort([]))
+
+    def test_array_with_two_colors(self):
+        colors = [R, G, R, G]
+        expected = [R, R, G, G]
+        self.assertEqual(expected, rgb_sort(colors))
+
+    def test_array_with_two_colors2(self):
+        colors = [B, B, G, G]
+        expected = [G, G, B, B]
+        self.assertEqual(expected, rgb_sort(colors))
+
+    def test_array_with_two_colors3(self):
+        colors = [R, B, R]
+        expected = [R, R, B]
+        self.assertEqual(expected, rgb_sort(colors))
+
+    def test_array_in_reverse_order(self):
+        colors = [B, B, G, R, R, R]
+        expected = [R, R, R, G, B, B]
+        self.assertEqual(expected, rgb_sort(colors))
+
+    def test_array_in_reverse_order2(self):
+        colors = [B, G, R, R, R, R]
+        expected = [R, R, R, R, G, B]
+        self.assertEqual(expected, rgb_sort(colors))
+
+    def test_array_in_reverse_order3(self):
+        colors = [B, G, G, G, R]
+        expected = [R, G, G, G, B]
+        self.assertEqual(expected, rgb_sort(colors))
+
+    def test_array_in_sorted_order(self):
+        colors = [R, R, G, B, B, B, B]
+        expected = [R, R, G, B, B, B, B]
+        self.assertEqual(expected, rgb_sort(colors))
+
+    def test_array_in_random_order(self):
+        colors = [B, R, G, G, R, B]
+        expected = [R, R, G, G, B, B]
+        self.assertEqual(expected, rgb_sort(colors))
+
+    
+if __name__ == '__main__':
+    unittest.main(exit=False)
+```
 
 ### Apr 7, 2020 \[Medium\] Making Changes
 ---
