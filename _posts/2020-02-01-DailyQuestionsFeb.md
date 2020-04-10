@@ -33,6 +33,38 @@ You should return the following, as a string:
 ```
 -->
 
+### Apr 10, 2020 LC 239 \[Medium\] Sliding Window Maximum
+---
+> **Question:** Given an array nums, there is a sliding window of size k which is moving from the very left of the array to the very right. You can only see the k numbers in the window. Each time the sliding window moves right by one position. Return the max sliding window.
+> 
+
+**Example:**
+
+```py
+Input: nums = [1,3,-1,-3,5,3,6,7], and k = 3
+Output: [3,3,5,5,6,7] 
+```
+
+**Explanation:**
+
+```py
+Window position                Max
+---------------               -----
+[1  3  -1] -3  5  3  6  7       3
+ 1 [3  -1  -3] 5  3  6  7       3
+ 1  3 [-1  -3  5] 3  6  7       5
+ 1  3  -1 [-3  5  3] 6  7       5
+ 1  3  -1  -3 [5  3  6] 7       6
+ 1  3  -1  -3  5 [3  6  7]      7
+ ```
+
+> Note: 
+> You may assume k is always valid, 1 ≤ k ≤ input array's size for non-empty array.
+>
+> Follow up:
+> Could you solve it in linear time?
+
+
 ### Apr 9, 2020 \[Hard\] Max Path Value in Directed Graph
 ---
 > **Question:** In a directed graph, each node is assigned an uppercase letter. We define a path's value as the number of most frequently-occurring letter along that path. For example, if a path in the graph goes through "ABACA", the value of the path is 3, since there are 3 occurrences of 'A' on the path.
@@ -53,6 +85,115 @@ Explanation: maximum value 3 using the path of vertices [0, 2, 3, 4], ie. A -> A
 Input: "A", [(0, 0)]
 Output: None
 Explanation: we have an infinite loop.
+```
+
+**My thoughts:** This question is a perfect example illustrates how to apply different teachniques, such as DFS and DP, to solve a graph problem.
+
+The brute force solution is to iterate through all possible vertices and start from where we can search neighbors recursively and find the maximum path value. Which takes `O(V * (V + E))`.
+
+However, certain nodes will be calculated over and over again. e.g. "AAB", [(0, 1), (2, 1)] both share same neighbor second A.
+
+Thus, in order to speed up, we can use DP to cache the intermediate result. Let `dp[v][letter]` represents the path value starts from v with the letter. `dp[v][non_current_letter] = dp[nb][non_current_letter] ` or `dp[v][current_letter] = dp[nb][current_letter] + 1`.  The final solution is `max{ dp[v][current_letter_v] } for all v`.
+
+With DP solution, the time complexity drop to `O(V + E)`, 'cause each vertix and edge can only be visit once.
+
+**Solution with DFS and DP:** [https://repl.it/@trsong/Find-Max-Path-Value-in-Directed-Graph](https://repl.it/@trsong/Find-Max-Path-Value-in-Directed-Graph)
+```py
+import unittest
+
+def find_max_path_value(letters, edges):
+    class NodeState:
+        VISITED = 0
+        VISITING = 1
+        UNVISITED = 2
+    
+    if not letters:
+        return 0
+    n = len(letters)
+    letter_set_size = 26
+
+    neighbors = [None] * n
+    for u, v in edges:
+        if neighbors[u] is None:
+            neighbors[u] = []
+        neighbors[u].append(v)
+
+    node_states = [NodeState.UNVISITED] * n
+    # dp[node][letter] represents the max path value from node with letter
+    dp = [[0 for _ in xrange(letter_set_size)] for _ in xrange(n)]
+    stack = []
+    max_path_value = 0
+    for v in xrange(n):
+        if node_states[v] == NodeState.VISITED:
+            continue
+        stack.append(v)
+
+        while stack:
+            cur = stack[-1]
+
+            if node_states[cur] == NodeState.VISITED:
+                stack.pop()
+            elif node_states[cur] == NodeState.VISITING:
+                cur_neighbors = neighbors[cur] if neighbors[cur] is not None else []
+                for nb in cur_neighbors:
+                    for letter in xrange(letter_set_size):
+                        # cur path is max of all children path 
+                        dp[cur][letter] = max(dp[cur][letter], dp[nb][letter])
+
+                cur_letter_ord = ord(letters[cur]) - ord('A')
+                dp[cur][cur_letter_ord] += 1 
+                max_path_value = max(max_path_value, dp[cur][cur_letter_ord])
+                node_states[cur] = NodeState.VISITED
+            else:
+                # node_states[cur] == NodeState.UNVISITED
+                node_states[cur] = NodeState.VISITING
+                if neighbors[cur] is None:
+                    continue
+                for nb in neighbors[cur]:
+                    if node_states[nb] == NodeState.VISITING:
+                        # Back edge exists, there must be a cycle
+                        return None
+                    elif node_states[nb] == NodeState.UNVISITED:
+                        stack.append(nb)
+    return max_path_value
+
+
+class FindMaxPathValueSpec(unittest.TestCase):
+    def test_graph_with_self_edge(self):
+        letters ='A'
+        edges = [(0, 0)]
+        self.assertIsNone(find_max_path_value(letters, edges))
+
+    def test_example_graph(self):
+        letters ='ABACA'
+        edges = [(0, 1), (0, 2), (2, 3), (3, 4)]
+        self.assertEqual(3, find_max_path_value(letters, edges))
+    
+    def test_empty_graph(self):
+        self.assertEqual(0, find_max_path_value('', []))
+
+    def test_diconnected_graph(self):
+        self.assertEqual(1, find_max_path_value('AABBCCDD', []))
+    
+    def test_graph_with_cycle(self):
+        letters ='XZYABC'
+        edges = [(0, 1), (1, 2), (2, 0), (3, 2), (4, 3), (5, 3)]
+        self.assertIsNone(find_max_path_value(letters, edges))
+
+    def test_graph_with_disconnected_components(self):
+        letters ='AABBB'
+        edges = [(0, 1), (2, 3), (3, 4)]
+        self.assertEqual(3, find_max_path_value(letters, edges))
+
+    def test_complicated_graph(self):
+        letters ='XZYZYZYZQX'
+        edges = [(0, 1), (0, 9), (1, 9), (1, 3), (1, 5), (3, 5), 
+            (3, 4), (5, 4), (5, 7), (1, 7), (2, 4), (2, 6), (2, 8), (9, 8)]
+        self.assertEqual(4, find_max_path_value(letters, edges))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
 ```
 
 
