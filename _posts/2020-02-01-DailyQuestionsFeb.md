@@ -33,6 +33,21 @@ You should return the following, as a string:
 ```
 -->
 
+### Apr 11, 2020 \[Medium\] Isolated Islands
+---
+> **Question:** Given a matrix of 1s and 0s, return the number of "islands" in the matrix. A 1 represents land and 0 represents water, so an island is a group of 1s that are neighboring whose perimeter is surrounded by water.
+>
+> For example, this matrix has 4 islands.
+
+```py
+1 0 0 0 0
+0 0 1 1 0
+0 1 1 0 0
+0 0 0 0 0
+1 1 0 0 1
+1 1 0 0 1
+```
+
 ### Apr 10, 2020 LC 239 \[Medium\] Sliding Window Maximum
 ---
 > **Question:** Given an array nums, there is a sliding window of size k which is moving from the very left of the array to the very right. You can only see the k numbers in the window. Each time the sliding window moves right by one position. Return the max sliding window.
@@ -63,6 +78,113 @@ Window position                Max
 >
 > Follow up:
 > Could you solve it in linear time?
+
+**My thoughts:** The idea is to efficiently keep track of **INDEX** of 1st max, 2nd max, 3rd max and potentially k-th max elem. The reason for storing index is for the sake of avoiding index out of window. We can achieve that by using ***Double-Ended Queue*** which allow us to efficiently push and pop from both ends of the queue. 
+
+The queue looks like `[index of 1st max, index of 2nd max, ...., index of k-th max]`
+
+We might run into the following case as we progress:
+- index of 1st max is out of bound of window: we pop left and index of 2nd max because 1st max within window
+- the next elem become j-th max: evict old j-th max all the way to index of k-th max on the right of dequeue, i.e. pop right: `[index of 1st max, index of 2nd max, ..., index of j-1-th max, index of new elem]`
+
+**Solution with Double-Ended Queue:** [https://repl.it/@trsong/LC-239-Sliding-Window-Maximum-Problem](https://repl.it/@trsong/LC-239-Sliding-Window-Maximum-Problem)
+```py
+from collections import deque as Deque
+import unittest
+
+def max_sliding_window(nums, k):
+    res =  []
+    dq = Deque()
+    for index, num in enumerate(nums):
+        if dq and dq[0] <= index - k:
+            dq.popleft()
+
+        while dq and nums[dq[-1]] < num:
+            # dq elem corresponding number mantain ascending order
+            dq.pop()
+
+        dq.append(index)
+        if index >= k - 1:
+            res.append(nums[dq[0]])
+
+    return res
+
+    
+class MaxSlidingWindowSpec(unittest.TestCase):
+    def test_example_array(self):
+        k, nums = 3, [1, 3, -1, -3, 5, 3, 6, 7]
+        expected = [3, 3, 5, 5, 6, 7]
+        self.assertEqual(expected, max_sliding_window(nums, k))
+
+    def test_empty_array(self):
+        self.assertEqual([], max_sliding_window([], 1))
+
+    def test_window_has_same_size_as_array(self):
+        self.assertEqual([3], max_sliding_window([3, 2, 1], 3))
+
+    def test_window_has_same_size_as_array2(self):
+        self.assertEqual([2], max_sliding_window([1, 2], 2))
+
+    def test_window_has_same_size_as_array3(self):
+        self.assertEqual([-1], max_sliding_window([-1], 1))
+
+    def test_non_ascending_array(self):
+        k, nums = 2, [4, 3, 3, 2, 2, 1]
+        expected = [4, 3, 3, 2, 2]
+        self.assertEqual(expected, max_sliding_window(nums, k))
+
+    def test_non_ascending_array2(self):
+        k, nums = 2, [1, 1, 1]
+        expected = [1, 1]
+        self.assertEqual(expected, max_sliding_window(nums, k))
+
+    def test_non_descending_array(self):
+        k, nums = 3, [1, 1, 2, 2, 2, 3]
+        expected = [2, 2, 2, 3]
+        self.assertEqual(expected, max_sliding_window(nums, k))
+    
+    def test_non_descending_array2(self):
+        self.assertEqual(max_sliding_window([1, 1, 2, 3], 1), [1, 1, 2 ,3])
+
+    def test_first_decreasing_then_increasing_array(self):
+        k, nums = 3, [5, 4, 1, 1, 1, 2, 2, 2]
+        expected = [5, 4, 1, 2, 2, 2]
+        self.assertEqual(expected, max_sliding_window(nums, k))
+    
+    def test_first_decreasing_then_increasing_array2(self):
+        k, nums = 2, [3, 2, 1, 2, 3]
+        expected = [3, 2, 2, 3]
+        self.assertEqual(expected, max_sliding_window(nums, k))
+
+    def test_first_decreasing_then_increasing_array3(self):
+        k, nums = 3, [3, 2, 1, 2, 3]
+        expected = [3, 2, 3]
+        self.assertEqual(expected, max_sliding_window(nums, k))
+    
+    def test_first_increasing_then_decreasing_array(self):
+        k, nums = 2, [1, 2, 3, 2, 1]
+        expected = [2, 3, 3, 2]
+        self.assertEqual(expected, max_sliding_window(nums, k))
+    
+    def test_first_increasing_then_decreasing_array2(self):
+        k, nums = 3, [1, 2, 3, 2, 1]
+        expected = [3, 3, 3]
+        self.assertEqual(expected, max_sliding_window(nums, k))
+
+    def test_oscillation_array(self):
+        k, nums = 2, [1, -1, 1, -1, -1, 1, 1]
+        expected = [1, 1, 1, -1, 1, 1]
+        self.assertEqual(expected, max_sliding_window(nums, k))
+    
+    def test_oscillation_array2(self):
+        k, nums = 3, [1, 3, 1, 2, 0, 5]
+        expected = [3, 3, 2, 5]
+        self.assertEqual(expected, max_sliding_window(nums, k))
+ 
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
+```
 
 
 ### Apr 9, 2020 \[Hard\] Max Path Value in Directed Graph
