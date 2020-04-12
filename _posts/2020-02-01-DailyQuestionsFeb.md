@@ -33,6 +33,16 @@ You should return the following, as a string:
 ```
 -->
 
+### Apr 12, 2020 \[Easy\] Map Digits to Letters
+---
+> **Question:** Given a mapping of digits to letters (as in a phone number), and a digit string, return all possible letters the number could represent. You can assume each valid number in the mapping is a single digit.
+
+**Example:**
+```py
+Input: {'2': ['a', 'b', 'c'], '3': ['d', 'e', 'f']}, '23'
+Output: ['ad', 'ae', 'af', 'bd', 'be', 'bf', 'cd', 'ce', 'cf']
+```
+
 ### Apr 11, 2020 \[Medium\] Isolated Islands
 ---
 > **Question:** Given a matrix of 1s and 0s, return the number of "islands" in the matrix. A 1 represents land and 0 represents water, so an island is a group of 1s that are neighboring whose perimeter is surrounded by water.
@@ -46,6 +56,122 @@ You should return the following, as a string:
 0 0 0 0 0
 1 1 0 0 1
 1 1 0 0 1
+```
+
+**My thougth:** This problem is a typical DFS/BFS problem. Check [DFS Solution](https://repl.it/@trsong/Isolated-Islands). Yet, an alternative solution would be using union-find. Bascially, think about perform union on all connect parts of an island; meanwhile compress the path so that there is only one representative for each connected reigion. Finally, gather the roots of all regions and count number of them which gives the result.
+
+
+**Solution with Union-Find:** [https://repl.it/@trsong/Isolated-Island-with-Union-Find](https://repl.it/@trsong/Isolated-Island-with-Union-Find)
+```py
+import unittest
+
+class UnionFind(object):
+    def __init__(self, size):
+        self.parent = range(size)
+
+    def find(self, p):
+        if self.parent[p] == p:
+            return p
+        else:
+            root = self.find(self.parent[p])
+            self.parent[p] = root
+            return root
+
+    def union(self, p1, p2):
+        root1 = self.find(p1)
+        root2 = self.find(p2)
+        if root1 != root2:
+            self.parent[root1] = root2
+
+    def connect_cell(self, matrix, r, c):
+        n, m = len(matrix), len(matrix[0])
+        p = r * m + c
+        if not matrix[r][c]:
+            self.parent[p] = -1
+            return
+        
+        direction = [-1, 0, 1]
+        for dr in direction:
+            for dc in direction:
+                new_r, new_c = r + dr, c + dc
+                if 0 <= new_r < n and 0 <= new_c < m and matrix[new_r][new_c]:
+                    p2 = new_r * m + new_c
+                    self.union(p, p2)
+
+    def unique_roots(self):
+        root_set = set(map(self.find, self.parent))
+        if -1 in root_set:
+            return len(root_set) - 1
+        else:
+            return len(root_set)
+
+
+def calc_islands(area_map):
+    if not area_map or not area_map[0]:
+        return 0
+    
+    n, m = len(area_map), len(area_map[0])
+    uf = UnionFind(n * m)
+    for r in xrange(n):
+        for c in xrange(m):
+            uf.connect_cell(area_map, r, c)
+
+    return uf.unique_roots()
+
+
+class CalcIslandSpec(unittest.TestCase):
+    def test_sample_area_map(self):
+        self.assertEqual(4, calc_islands([
+            [1, 0, 0, 0, 0],
+            [0, 0, 1, 1, 0],
+            [0, 1, 1, 0, 0],
+            [0, 0, 0, 0, 0],
+            [1, 1, 0, 0, 1],
+            [1, 1, 0, 0, 1]
+        ]))
+    
+    def test_some_random_area_map(self):
+        self.assertEqual(5, calc_islands([
+            [1, 1, 0, 0, 0],
+            [0, 1, 0, 0, 1],
+            [1, 0, 0, 1, 1],
+            [0, 0, 0, 0, 0],
+            [1, 0, 1, 0, 1] 
+        ]))
+
+    def test_island_edge_of_map(self):
+        self.assertEqual(5, calc_islands([
+            [1, 0, 0, 1, 0],
+            [0, 1, 0, 1, 0],
+            [0, 0, 0, 0, 0],
+            [1, 0, 1, 0, 1],
+            [1, 0, 1, 0, 1] 
+        ]))
+
+    def test_huge_water(self):
+        self.assertEqual(0, calc_islands([
+            [0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0]
+        ]))
+
+    def test_huge_island(self):
+        self.assertEqual(1, calc_islands([
+            [1, 0, 1, 0, 1],
+            [1, 0, 0, 1, 0],
+            [1, 1, 1, 0, 1]
+        ]))
+
+    def test_non_square_island(self):
+        self.assertEqual(1, calc_islands([
+            [1],
+            [1],
+            [1]
+        ]))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
 ```
 
 ### Apr 10, 2020 LC 239 \[Medium\] Sliding Window Maximum
