@@ -33,6 +33,13 @@ You should return the following, as a string:
 ```
 -->
 
+### Apr 13, 2020 \[Easy\] Permutations
+---
+> **Question:** Given a number in the form of a list of digits, return all possible permutations.
+>
+> For example, given `[1,2,3]`, return `[[1,2,3],[1,3,2],[2,1,3],[2,3,1],[3,1,2],[3,2,1]]`.
+
+
 ### Apr 12, 2020 \[Easy\] Map Digits to Letters
 ---
 > **Question:** Given a mapping of digits to letters (as in a phone number), and a digit string, return all possible letters the number could represent. You can assume each valid number in the mapping is a single digit.
@@ -41,6 +48,52 @@ You should return the following, as a string:
 ```py
 Input: {'2': ['a', 'b', 'c'], '3': ['d', 'e', 'f']}, '23'
 Output: ['ad', 'ae', 'af', 'bd', 'be', 'bf', 'cd', 'ce', 'cf']
+```
+
+**My thoughts:** The final result equals cartesian product of letters represented by each digit. e.g. `"23" = ['a', 'b', 'c'] x ['d', 'e', 'f'] = ['ad', 'ae', 'af', 'bd', 'be', 'bf', 'cd', 'ce', 'cf']`
+
+**Solution:** [https://repl.it/@trsong/Calculate-Map-Digits-to-Letters](https://repl.it/@trsong/Calculate-Map-Digits-to-Letters)
+```py
+import unittest
+
+def cartesian_product(accu_lists, letters):
+    res = []
+    for lst in accu_lists:
+        augmented_lst = map(lambda letter: lst + [letter], letters)
+        res.extend(augmented_lst)
+    return res
+
+
+def digits_to_letters(digits, dictionary):
+    if not digits:
+        return []
+    res = [[]]
+    for digit in digits:
+        letters = dictionary[digit]
+        res = cartesian_product(res, letters)
+    return map(lambda lst: ''.join(lst), res)
+
+
+class DigitsToLetterSpec(unittest.TestCase):
+    def assert_letters(self, res, expected):
+        self.assertEqual(sorted(res), sorted(expected))
+
+    def test_empty_digits(self):
+        self.assert_letters(digits_to_letters("", {}), [])
+
+    def test_example(self):
+        dictionary = {'2': ['a', 'b', 'c'], '3': ['d', 'e', 'f']}
+        self.assert_letters(
+            digits_to_letters("23", dictionary),
+            ['ad', 'ae', 'af', 'bd', 'be', 'bf', 'cd', 'ce', 'cf'])
+
+    def test_early_google_url(self):
+        dictionary = {'2': ['a', 'b', 'c'], '3': ['d', 'e', 'f'], '4': ['g', 'h', 'i'], '5': ['j', 'k', 'l'], '6': ['m', 'n', 'o']}
+        self.assertTrue('google' in digits_to_letters("466453", dictionary))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
 ```
 
 ### Apr 11, 2020 \[Medium\] Isolated Islands
