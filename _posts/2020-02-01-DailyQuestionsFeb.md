@@ -33,12 +33,82 @@ You should return the following, as a string:
 ```
 -->
 
+### Apr 14, 2020 \[Medium\] Symmetric K-ary Tree
+---
+> **Question:** Given a k-ary tree, figure out if the tree is symmetrical.
+> 
+> A k-ary tree is a tree with k-children, and a tree is symmetrical if the data of the left side of the tree is the same as the right side of the tree. 
+>
+> Here's an example of a symmetrical k-ary tree.
+
+```py
+        4
+     /     \
+    3        3
+  / | \    / | \
+9   4  1  1  4  9
+```
+
+
 ### Apr 13, 2020 \[Easy\] Permutations
 ---
 > **Question:** Given a number in the form of a list of digits, return all possible permutations.
 >
 > For example, given `[1,2,3]`, return `[[1,2,3],[1,3,2],[2,1,3],[2,3,1],[3,1,2],[3,2,1]]`.
 
+**Solution with Backtracking:** [https://repl.it/@trsong/Calculate-Permutations](https://repl.it/@trsong/Calculate-Permutations)
+```py
+import unittest
+
+def calculate_permutations(nums):
+    res = []
+    n = len(nums)
+    def backtrack(swap_index):
+        if swap_index == n - 1:
+            res.append(nums[:])
+        else:
+            for i in xrange(swap_index, n):
+                nums[swap_index], nums[i] = nums[i], nums[swap_index]
+                backtrack(swap_index+1)
+                nums[swap_index], nums[i] = nums[i], nums[swap_index]
+    
+    backtrack(0)
+    return res
+
+
+class CalculatePermutationSpec(unittest.TestCase):
+    def assert_result(self, expected, result):
+        self.assertEqual(sorted(expected), sorted(result))
+
+    def test_permuation_of_empty_array(self):
+        self.assert_result([], calculate_permutations([]))
+
+    def test_permuation_of_2(self):
+        nums = [0, 1]
+        expected = [[0, 1], [1, 0]]
+        self.assert_result(expected, calculate_permutations(nums))
+
+    def test_permuation_of_3(self):
+        nums = [1, 2, 3]
+        expected = [
+            [1, 2, 3], [1, 3, 2], 
+            [2, 1, 3], [2, 3, 1], 
+            [3, 1, 2], [3, 2, 1]]
+        self.assert_result(expected, calculate_permutations(nums))
+    
+    def test_permuation_of_4(self):
+        nums = [1, 2, 3, 4]
+        expected = [
+            [1, 2, 3, 4], [1, 2, 4, 3], [1, 3, 2, 4], [1, 3, 4, 2], [1, 4, 3, 2], [1, 4, 2, 3], 
+            [2, 1, 3, 4], [2, 1, 4, 3], [2, 3, 1, 4], [2, 3, 4, 1], [2, 4, 3, 1], [2, 4, 1, 3], 
+            [3, 2, 1, 4], [3, 2, 4, 1], [3, 1, 2, 4], [3, 1, 4, 2], [3, 4, 1, 2], [3, 4, 2, 1], 
+            [4, 2, 3, 1], [4, 2, 1, 3], [4, 3, 2, 1], [4, 3, 1, 2], [4, 1, 3, 2], [4, 1, 2, 3]]
+        self.assert_result(expected, calculate_permutations(nums))
+    
+
+if __name__ == '__main__':
+    unittest.main(exit=False)    
+```
 
 ### Apr 12, 2020 \[Easy\] Map Digits to Letters
 ---
