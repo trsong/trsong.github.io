@@ -34,6 +34,7 @@ You should return the following, as a string:
 -->
 
 
+
 ### Apr 15, 2020 \[Medium\] Is Bipartite
 ---
 > **Question:** Given an undirected graph G, check whether it is bipartite. Recall that a graph is bipartite if its vertices can be divided into two independent sets, U and V, such that no edge connects vertices of the same set.
@@ -43,6 +44,9 @@ You should return the following, as a string:
 is_bipartite(vertices=3, edges=[(0, 1), (1, 2), (2, 0)])  # returns False 
 is_bipartite(vertices=2, edges=[(0, 1), (1, 0)])  # returns True. U = {0}. V = {1}. 
 ```
+
+
+
 
 ### Apr 14, 2020 \[Medium\] Symmetric K-ary Tree
 ---
