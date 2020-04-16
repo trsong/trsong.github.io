@@ -34,6 +34,53 @@ You should return the following, as a string:
 -->
 
 
+### Apr 16, 2020 LC 987 \[Medium\] Vertical Order Traversal of a Binary Tree
+---
+> **Question:** Given a binary tree, return the vertical order traversal of its nodes' values. (ie, from top to bottom, column by column).
+>
+> If two nodes are in the same row and column, the order should be from left to right.
+
+**Example 1:**
+```py
+Given binary tree:
+
+    3
+   / \
+  9  20
+    /  \
+   15   7
+
+return its vertical order traversal as:
+
+[
+  [9],
+  [3,15],
+  [20],
+  [7]
+]
+```
+
+**Example 2:**
+```py
+Given binary tree:
+
+    _3_
+   /   \
+  9    20
+ / \   / \
+4   5 2   7
+
+return its vertical order traversal as:
+
+[
+  [4],
+  [9],
+  [3,5,2],
+  [20],
+  [7]
+]
+```
+
 
 ### Apr 15, 2020 \[Medium\] Is Bipartite
 ---
@@ -45,8 +92,91 @@ is_bipartite(vertices=3, edges=[(0, 1), (1, 2), (2, 0)])  # returns False
 is_bipartite(vertices=2, edges=[(0, 1), (1, 0)])  # returns True. U = {0}. V = {1}. 
 ```
 
+**My thoughts:** A graph is a bipartite if we can just use 2 colors to cover entire graph so that every other node have same color. This can be implemented use BFS and we change color between layers while searching. Meanwhile, DFS can also be used to solve this problem: just assign a color different than parent DFS search tree node. 
+
+**Solution with DFS:** [https://repl.it/@trsong/Is-Undirected-Bipartite-Graph](https://repl.it/@trsong/Is-Undirected-Bipartite-Graph)
+```py
+import unittest
+
+class NodeState:
+    BLACK = 0
+    WHITE = 1
 
 
+def is_bipartite(vertices, edges):
+    if vertices <= 1:
+        return True
+    
+    neighbors = [None] * vertices
+    for u, v in edges:
+        neighbors[u] = neighbors[u] or []
+        neighbors[v] = neighbors[v] or []
+        neighbors[u].append(v)
+        neighbors[v].append(u)
+        
+    node_states = [None] * vertices
+    stack = []
+    for node in xrange(vertices):
+        if node_states[node] is None:
+            stack.append((node, NodeState.WHITE))
+        
+        while stack:
+            cur, assigned_color = stack.pop()
+            if node_states[cur] is None:
+                node_states[cur] = assigned_color
+            elif node_states[cur] != assigned_color:
+                return False
+            else:
+                continue
+            
+            if neighbors[cur] is None:
+                continue
+            for nb in neighbors[cur]:
+                nb_color = NodeState.WHITE if assigned_color == NodeState.BLACK else NodeState.BLACK
+                stack.append((nb, nb_color))
+    
+    return True
+
+
+class IsBipartiteSpec(unittest.TestCase):
+    def test_example1(self):
+        self.assertFalse(is_bipartite(vertices=3, edges=[(0, 1), (1, 2), (2, 0)]))
+
+    def test_example2(self):
+        self.assertTrue(is_bipartite(vertices=2, edges=[(0, 1), (1, 0)]))
+
+    def test_empty_graph(self):
+        self.assertTrue(is_bipartite(vertices=0, edges=[]))
+
+    def test_one_node_graph(self):
+        self.assertTrue(is_bipartite(vertices=1, edges=[]))
+    
+    def test_disconnect_graph1(self):
+        self.assertTrue(is_bipartite(vertices=10, edges=[(0, 1), (1, 0)]))
+
+    def test_disconnect_graph2(self):
+        self.assertTrue(is_bipartite(vertices=10, edges=[(0, 1), (1, 0), (2, 3), (3, 4), (4, 5), (5, 2)]))
+
+    def test_disconnect_graph3(self):
+        self.assertFalse(is_bipartite(vertices=10, edges=[(0, 1), (1, 0), (2, 3), (3, 4), (4, 2)])) 
+
+    def test_square(self):
+        self.assertTrue(is_bipartite(vertices=4, edges=[(0, 1), (1, 2), (2, 3), (3, 0)]))
+
+    def test_k5(self):
+        vertices = 5
+        edges = [
+            (0, 1), (0, 2), (0, 3), (0, 4),
+            (1, 2), (1, 3), (1, 4),
+            (2, 3), (2, 4), 
+            (3, 4)
+        ]
+        self.assertFalse(is_bipartite(vertices, edges))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
+```
 
 ### Apr 14, 2020 \[Medium\] Symmetric K-ary Tree
 ---
