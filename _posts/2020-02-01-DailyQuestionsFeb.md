@@ -33,6 +33,33 @@ You should return the following, as a string:
 ```
 -->
 
+### Apr 17, 2020 \[Easy\] Tree Isomorphism Problem
+---
+> **Question:** Write a function to detect if two trees are isomorphic. Two trees are called isomorphic if one of them can be obtained from other by a series of flips, i.e. by swapping left and right children of a number of nodes. Any number of nodes at any level can have their children swapped. Two empty trees are isomorphic.
+
+
+**Example:** 
+```py
+The following two trees are isomorphic with following sub-trees flipped: 2 and 3, NULL and 6, 7 and 8.
+
+Tree1:
+     1
+   /   \
+  2     3
+ / \   /
+4   5 6
+   / \
+  7   8
+
+Tree2:
+   1
+ /   \
+3     2
+ \   / \
+  6 4   5
+       / \
+      8   7
+```
 
 ### Apr 16, 2020 LC 987 \[Medium\] Vertical Order Traversal of a Binary Tree
 ---
@@ -79,6 +106,110 @@ return its vertical order traversal as:
   [20],
   [7]
 ]
+```
+
+**Solution with DFS:** [https://repl.it/@trsong/Generate-Vertical-Order-Traversal-of-a-Binary-Tree](https://repl.it/@trsong/Generate-Vertical-Order-Traversal-of-a-Binary-Tree)
+```py
+import unittest
+
+class Node(object):
+    def __init__(self, val, left=None, right=None):
+        self.val = val
+        self.left = left
+        self.right = right
+
+
+def vertical_traversal(root):
+    if not root:
+        return []
+
+    lo = hi = 0
+    value_with_index = []
+    stack = [(root, 0)]
+
+    while stack:
+        cur, index = stack.pop()
+        value_with_index.append((cur.val, index))
+        lo = min(lo, index)
+        hi = max(hi, index)
+
+        if cur.right:
+            stack.append((cur.right, index+1))
+
+        if cur.left:
+            stack.append((cur.left, index-1))
+    
+    n = hi - lo + 1
+    res = [[] for _ in xrange(n)]
+    for val, index in value_with_index:
+        shifted_index = index - lo
+        res[shifted_index].append(val)
+
+    return res
+
+
+class VerticalTraversalSpec(unittest.TestCase):
+    def test_example1(self):
+        """
+         3
+        / \
+       9  20
+         /  \
+        15   7
+        """
+        t = Node(3, Node(9), Node(20, Node(15), Node(7)))
+        self.assertEqual(vertical_traversal(t), [
+            [9],
+            [3,15],
+            [20],
+            [7]
+        ])
+    
+    def test_example2(self):
+        """
+            _3_
+           /   \
+          9    20
+         / \   / \
+        4   5 2   7
+        """
+        t9 = Node(9, Node(4), Node(5))
+        t20 = Node(20, Node(2), Node(7))
+        t = Node(3, t9, t20)
+
+        self.assertEqual(vertical_traversal(t), [
+            [4],
+            [9],
+            [3,5,2],
+            [20],
+            [7]
+        ])
+
+    def test_empty_tree(self):
+        self.assertEqual(vertical_traversal(None), [])
+
+    def test_left_heavy_tree(self):
+        """
+            1
+           / \
+          2   3
+         / \   \
+        4   5   6
+        """
+        t2 = Node(2, Node(4), Node(5))
+        t3 = Node(3, right=Node(6))
+        t = Node(1, t2, t3)
+        self.assertEqual(vertical_traversal(t), [
+            [4],
+            [2],
+            [1,5],
+            [3],
+            [6]
+        ])
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
 ```
 
 
