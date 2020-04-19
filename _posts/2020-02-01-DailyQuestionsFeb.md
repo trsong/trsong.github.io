@@ -42,7 +42,26 @@ You have the following 3 operations permitted on a word:
 > - Delete a character
 > - Replace a character
 
- 
+ **Example 1:**
+```py
+Given words = ["abc", "abd", "abcd", "adc"] and target = "ac", k = 1
+Return ["abc", "adc"]
+Explanation:
+- "abc" remove "b"
+- "adc" remove "d"
+```
+
+**Example 2:**
+```py
+Given words = ["acc","abcd","ade","abbcd"] and target = "abc", k = 2
+Return ["acc","abcd","ade","abbcd"]
+Explanation:
+- "acc" turns "c" into "b"
+- "abcd" remove "d"
+- "ade" turns "d" into "b" turns "e" into "c"
+- "abbcd" gets rid of "b" and "d"
+```
+
 ### Apr 18, 2020 LC 287 \[Medium\] Find the Duplicate Number
 ---
 > **Question:** You are given an array of length `n + 1` whose elements belong to the set `{1, 2, ..., n}`. By the pigeonhole principle, there must be a duplicate. Find it in linear time and space.
