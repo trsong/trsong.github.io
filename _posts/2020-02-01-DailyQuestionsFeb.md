@@ -33,6 +33,33 @@ You should return the following, as a string:
 ```
 -->
 
+### Apr 20, 2020 LC 273 \[Hard\] Integer to English Words
+---
+> **Question:** Convert a non-negative integer to its English word representation. 
+
+**Example 1:**
+```py
+Input: 123
+Output: "One Hundred Twenty Three"
+```
+
+**Example 2:**
+```py
+Input: 12345
+Output: "Twelve Thousand Three Hundred Forty Five"
+```
+
+**Example 3:**
+```py
+Input: 1234567
+Output: "One Million Two Hundred Thirty Four Thousand Five Hundred Sixty Seven"
+```
+
+**Example 4:**
+```py
+Input: 1234567891
+Output: "One Billion Two Hundred Thirty Four Million Five Hundred Sixty Seven Thousand Eight Hundred Ninety One"
+```
 
 ### Apr 19, 2020 LT 623 \[Hard\] K Edit Distance
 ---
@@ -61,7 +88,105 @@ Explanation:
 - "ade" turns "d" into "b" turns "e" into "c"
 - "abbcd" gets rid of "b" and "d"
 ```
+**My thoughts:** A brutal force way is to calculate the distance between each word and target and filter those qualified words. However, notice that word might have exactly the same prefix and that share the same DP array. So we can build a prefix tree that contains all words and calculate the DP array along the way.
 
+**Solution with Trie and DP:** [https://repl.it/@trsong/Find-All-K-Edit-Distance-Words](https://repl.it/@trsong/Find-All-K-Edit-Distance-Words)
+```py
+import unittest
+
+class Trie(object):
+    def __init__(self):
+        self.children = None
+        self.dp = None
+
+    def insert_and_check(self, word, target_word, k):
+        n, m = len(word), len(target_word)
+        if n < m - k or n > m + k:
+            return False
+        
+        # dp[m] represents edit distance between prefix so far and target_word[:m+1]
+        # child.dp[m+1] = parent.dp[m+1]  if child's last char matches target_word[m] 
+        #       otherwise = 1 + min(parent.dp[m], parent.dp[m+1], child.dp[m])  ie. replace, remove, insert cost
+        parent = self
+        parent.dp = parent.dp or range(m+1)
+        for i, ch in enumerate(word):
+            parent.children = parent.children or {}
+
+            if ch not in parent.children:
+                child = Trie()
+                child.dp = [None] * (m+1)
+                child.dp[0] = parent.dp[0] + 1
+                for j, target_ch in enumerate(target_word):
+                    if target_ch == ch:
+                        child.dp[j+1] = parent.dp[j]
+                    else:
+                        child.dp[j+1] = 1 + min(child.dp[j], parent.dp[j], parent.dp[j+1])
+                parent.children[ch] = child
+
+            parent = parent.children[ch]
+
+        return parent.dp[-1] <= k
+
+
+def filter_k_edit_distance(words, target, k):
+    trie = Trie()
+    res = []
+    for word in words:
+        if trie.insert_and_check(word, target, k):
+            res.append(word)
+    return res
+
+
+class FilterKEditDistanceSpec(unittest.TestCase):
+    def assert_k_distance_array(self, res, expected):
+        self.assertEqual(sorted(res), sorted(expected))
+
+    def test_example1(self):
+        words =["abc", "abd", "abcd", "adc"] 
+        target = "ac"
+        k = 1
+        expected = ["abc", "adc"]
+        self.assert_k_distance_array(expected, filter_k_edit_distance(words, target, k))
+    
+    def test_example2(self):
+        words = ["acc","abcd","ade","abbcd"]
+        target = "abc"
+        k = 2
+        expected = ["acc","abcd","ade","abbcd"]
+        self.assert_k_distance_array(expected, filter_k_edit_distance(words, target, k))
+
+    def test_duplicated_words(self):
+        words = ["a","b","a","c", "bb", "cc"]
+        target = ""
+        k = 1
+        expected = ["a","b","a","c"]
+        self.assert_k_distance_array(expected, filter_k_edit_distance(words, target, k))
+
+    def test_empty_words(self):
+        words = ["", "", "", "c", "bbbbb", "cccc"]
+        target = "ab"
+        k = 2
+        expected = ["", "", "", "c"]
+        self.assert_k_distance_array(expected, filter_k_edit_distance(words, target, k))
+
+    def test_same_word(self):
+        words = ["ab", "ab", "ab"]
+        target = "ab"
+        k = 1000
+        expected = ["ab", "ab", "ab"]
+        self.assert_k_distance_array(expected, filter_k_edit_distance(words, target, k))
+
+    def test_unqualified_words(self):
+        words = ["", "a", "aa", "aaa", "aaaa", "aaaaa", "aaaaaa", "aaaaaaa", "aaaaaaaa"]
+        target = "aaaaa"
+        k = 2
+        expected = ["aaa", "aaaa", "aaaaa", "aaaaaa", "aaaaaaa"]
+        self.assert_k_distance_array(expected, filter_k_edit_distance(words, target, k))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
+```
 ### Apr 18, 2020 LC 287 \[Medium\] Find the Duplicate Number
 ---
 > **Question:** You are given an array of length `n + 1` whose elements belong to the set `{1, 2, ..., n}`. By the pigeonhole principle, there must be a duplicate. Find it in linear time and space.
