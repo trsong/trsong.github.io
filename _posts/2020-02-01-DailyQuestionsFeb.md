@@ -33,6 +33,25 @@ You should return the following, as a string:
 ```
 -->
 
+### Apr 21, 2020 LC 236 \[Medium\] Lowest Common Ancestor of a Binary Tree
+---
+> **Question:** Given a binary tree, find the lowest common ancestor (LCA) of two given nodes in the tree.
+
+**Example:**
+
+```py
+     1
+   /   \
+  2     3
+ / \   / \
+4   5 6   7
+
+LCA(4, 5) = 2
+LCA(4, 6) = 1
+LCA(3, 4) = 1
+LCA(2, 4) = 2
+```
+
 ### Apr 20, 2020 LC 273 \[Hard\] Integer to English Words
 ---
 > **Question:** Convert a non-negative integer to its English word representation. 
@@ -59,6 +78,94 @@ Output: "One Million Two Hundred Thirty Four Thousand Five Hundred Sixty Seven"
 ```py
 Input: 1234567891
 Output: "One Billion Two Hundred Thirty Four Million Five Hundred Sixty Seven Thousand Eight Hundred Ninety One"
+```
+
+**Solution:** [https://repl.it/@trsong/Convert-Integer-to-English-Words](https://repl.it/@trsong/Convert-Integer-to-English-Words)
+```py
+import unittest
+
+word_lookup = {
+    0: 'Zero', 1: 'One', 2: 'Two', 3: 'Three', 4: 'Four', 5: 'Five',
+    6: 'Six', 7: 'Seven', 8: 'Eight', 9: 'Nine', 10: 'Ten',
+    11: 'Eleven', 12: 'Twelve', 13: 'Thirteen', 14: 'Fourteen', 15: 'Fifteen',
+    16: 'Sixteen', 17: 'Seventeen', 18: 'Eighteen', 19: 'Nineteen', 20: 'Twenty',
+    30: 'Thirty', 40: 'Forty', 50: 'Fifty', 60: 'Sixty', 
+    70: 'Seventy', 80: 'Eighty', 90: 'Ninety',
+    100: 'Hundred', 1000: 'Thousand', 1000000: 'Million', 1000000000: 'Billion'
+}
+
+def read_hundred(num):
+    global word_lookup
+    res = []
+    if num > 100:
+        res.append(word_lookup[num // 100])
+        res.append(word_lookup[100])
+    
+    num %= 100
+    if num > 20:
+        res.append(word_lookup[num - num % 10])
+        if num % 10 > 0:
+            res.append(word_lookup[num % 10])
+    elif num > 0:
+        res.append(word_lookup[num])
+
+    return res
+
+
+def number_to_words(num):
+    global word_lookup
+    if num == 0:
+        return word_lookup[num]
+    seperators = [1000000000, 1000000, 1000]
+    res = []
+    for sep in seperators:
+        if num >= sep:
+            res.extend(read_hundred(num // sep))
+            res.append(word_lookup[sep])
+            num %= sep
+        
+    if num > 0:
+        res.extend(read_hundred(num))
+
+    return ' '.join(res)
+
+
+class NumberToWordSpec(unittest.TestCase):
+    def test_example1(self):
+        self.assertEqual(number_to_words(123), "One Hundred Twenty Three")
+
+    def test_example2(self):
+        self.assertEqual(number_to_words(12345), "Twelve Thousand Three Hundred Forty Five")
+
+    def test_example3(self):
+        self.assertEqual(number_to_words(1234567), "One Million Two Hundred Thirty Four Thousand Five Hundred Sixty Seven")
+
+    def test_example4(self):
+        self.assertEqual(number_to_words(1234567891), "One Billion Two Hundred Thirty Four Million Five Hundred Sixty Seven Thousand Eight Hundred Ninety One")
+
+    def test_zero(self):
+        self.assertEqual(number_to_words(0), "Zero")
+
+    def test_one_digit(self):
+        self.assertEqual(number_to_words(8), "Eight")
+
+    def test_two_digits(self):
+        self.assertEqual(number_to_words(21), "Twenty One")
+        self.assertEqual(number_to_words(10), "Ten")
+        self.assertEqual(number_to_words(20), "Twenty")
+        self.assertEqual(number_to_words(16), "Sixteen")
+        self.assertEqual(number_to_words(32), "Thirty Two")
+        self.assertEqual(number_to_words(30), "Thirty")
+
+    def test_ignore_thousand_part(self):
+        self.assertEqual(number_to_words(30002000000), "Thirty Billion Two Million")
+
+    def test_ignore_million_part(self):
+        self.assertEqual(number_to_words(50000000200), "Fifty Billion Two Hundred")
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
 ```
 
 ### Apr 19, 2020 LT 623 \[Hard\] K Edit Distance
