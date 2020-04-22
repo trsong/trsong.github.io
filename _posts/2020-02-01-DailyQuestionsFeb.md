@@ -33,6 +33,15 @@ You should return the following, as a string:
 ```
 -->
 
+### Apr 22, 2020 \[Medium\] K Closest Elements
+---
+> **Question:** Given a list of sorted numbers, and two integers `k` and `x`, find `k` closest numbers to the pivot `x`.
+
+**Example:**
+```py
+closest_nums([1, 3, 7, 8, 9], 3, 5)  # gives [7, 3, 8]
+```
+
 ### Apr 21, 2020 LC 236 \[Medium\] Lowest Common Ancestor of a Binary Tree
 ---
 > **Question:** Given a binary tree, find the lowest common ancestor (LCA) of two given nodes in the tree.
@@ -50,6 +59,110 @@ LCA(4, 5) = 2
 LCA(4, 6) = 1
 LCA(3, 4) = 1
 LCA(2, 4) = 2
+```
+
+**My thoughts:** Notice that only the nodes at the same level can find common ancestor with same number of tracking backward. e.g. Consider 3 and 4 in above example: the common ancestor is 1, 3 needs 1 tracking backward, but 4 need 2 tracking backward. So the idea is to move those two nodes to the same level and then tacking backward until hit the common ancestor. The algorithm works as below:
+
+We can use BFS/DFS to find target nodes and their depth. And by tracking backward the parent of the deeper node, we can make sure both of nodes are on the same level. Finally, we can tracking backwards until hit a common ancestor. 
+
+**Solution with DFS and Two-pointers:** [https://repl.it/@trsong/Find-the-Lowest-Common-Ancestor-of-a-Binary-Tree](https://repl.it/@trsong/Find-the-Lowest-Common-Ancestor-of-a-Binary-Tree)
+```py
+import unittest
+
+class TreeNode(object):
+    def __init__(self, val, left=None, right=None):
+        self.val = val
+        self.left = left
+        self.right = right
+
+    def __repr__(self):
+        return "NodeValue: " + str(self.val)
+
+
+def find_lca(tree, n1, n2):
+    parent_node_map = {}
+    stack = [tree]
+
+    while stack:
+        if n1 in parent_node_map and n2 in parent_node_map:
+            break
+        
+        cur = stack.pop()
+        if cur.left:
+            parent_node_map[cur.left] = cur
+            stack.append(cur.left)
+        if cur.right:
+            parent_node_map[cur.right] = cur
+            stack.append(cur.right)
+
+    return find_intersection_in_linked_list(n1, n2, parent_node_map)
+
+
+def find_length(p, next_node):
+    length = 0
+    while p in next_node:
+        p = next_node[p]
+        length += 1
+    return length
+
+
+def find_intersection_in_linked_list(p1, p2, next_node):
+    len1, len2 = find_length(p1, next_node), find_length(p2, next_node)
+    shorter, longer = (p1, p2) if len1 < len2 else (p2, p1)
+    for _ in xrange(abs(len1 - len2)):
+        longer = next_node[longer]
+    
+    while shorter != longer:
+        shorter = next_node[shorter]
+        longer = next_node[longer]
+
+    return shorter
+        
+
+class FindLCASpec(unittest.TestCase):
+    def setUp(self):
+        """
+             1
+           /   \
+          2     3
+         / \   / \
+        4   5 6   7
+        """
+        self.n4 = TreeNode(4)
+        self.n5 = TreeNode(5)
+        self.n6 = TreeNode(6)
+        self.n7 = TreeNode(7)
+        self.n2 = TreeNode(2, self.n4, self.n5)
+        self.n3 = TreeNode(3, self.n6, self.n7)
+        self.n1 = TreeNode(1, self.n2, self.n3)
+
+    def test_both_nodes_on_leaves(self):
+        self.assertEqual(self.n2, find_lca(self.n1, self.n4, self.n5))
+
+    def test_both_nodes_on_leaves2(self):
+        self.assertEqual(self.n3, find_lca(self.n1, self.n6, self.n7))
+    
+    def test_both_nodes_on_leaves3(self):
+        self.assertEqual(self.n1, find_lca(self.n1, self.n4, self.n6))
+
+    def test_nodes_on_different_levels(self):
+        self.assertEqual(self.n2, find_lca(self.n1, self.n4, self.n2))
+    
+    def test_nodes_on_different_levels2(self):
+        self.assertEqual(self.n2, find_lca(self.n1, self.n4, self.n2))
+    
+    def test_nodes_on_different_levels3(self):
+        self.assertEqual(self.n1, find_lca(self.n1, self.n4, self.n1))
+
+    def test_same_nodes(self):
+        self.assertEqual(self.n2, find_lca(self.n1, self.n2, self.n2))
+    
+    def test_same_nodes2(self):
+        self.assertEqual(self.n6, find_lca(self.n1, self.n6, self.n6))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
 ```
 
 ### Apr 20, 2020 LC 273 \[Hard\] Integer to English Words
