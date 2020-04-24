@@ -33,9 +33,95 @@ You should return the following, as a string:
 ```
 -->
 
+### Apr 24, 2020  \[Easy\] Inorder Successor in BST
+---
+> **Question:** Given a node in a binary search tree (may not be the root), find the next largest node in the binary search tree (also known as an inorder successor). The nodes in this binary search tree will also have a parent field to traverse up the tree.
+
+**Example:**
+```py
+Given the following BST:
+    20
+   / \
+  8   22
+ / \
+4  12
+   / \
+ 10  14
+
+inorder successor of 8 is 10, 
+inorder successor of 10 is 12 and
+inorder successor of 14 is 20.
+```
+
 ### Apr 23, 2020 \[Easy\] Pythagorean Triplet in an Array
 ---
 > **Question:** Given an array of integers, determine whether it contains a Pythagorean triplet. Recall that a Pythogorean triplet `(a, b, c)` is defined by the equation `a*a + b*b = c*c`.
+
+**Solution:** [https://repl.it/@trsong/Determine-Existence-of-Pythagorean-Triplet-in-an-Array](https://repl.it/@trsong/Determine-Existence-of-Pythagorean-Triplet-in-an-Array)
+```py
+import unittest
+
+def contains_triplet(nums):
+    sorted_squares = sorted(map(lambda x: x*x, nums))
+    n = len(nums)
+    for i in xrange(n):
+        target = sorted_squares[i]
+        if two_sum(sorted_squares, 0, i-1, target):
+            return True
+    return False
+
+
+def two_sum(sorted_nums, start, end, target):
+    while start < end:
+        sum = sorted_nums[start] + sorted_nums[end]
+        if sum == target:
+            return True
+        elif sum < target:
+            start +=1
+        else:
+            end -= 1
+    return False
+
+
+class ContainsTripletSpec(unittest.TestCase):
+    def test_empty_array(self):
+        self.assertFalse(contains_triplet([]))
+
+    def test_simple_array_with_triplet(self):
+        # 3, 4, 5
+        self.assertTrue(contains_triplet([3, 1, 4, 6, 5]))
+
+    def test_simple_array_with_triplet2(self):
+        # 5, 12, 13
+        self.assertTrue(contains_triplet([5, 7, 8, 12, 13]))
+
+    def test_simple_array_with_triplet3(self):
+        # 9, 12, 15
+        self.assertTrue(contains_triplet([9, 12, 15, 4, 5]))
+
+    def test_complicated_array_with_triplet(self):
+        # 28, 45, 53
+        self.assertTrue(contains_triplet([25, 28, 32, 45, 47, 48, 50, 53, 55, 60])) 
+
+    def test_array_without_triplet(self):
+        self.assertFalse(contains_triplet([10, 4, 6, 12, 5]))
+
+    def test_array_with_duplicated_numbers(self):
+        self.assertFalse(contains_triplet([0, 0]))
+    
+    def test_array_with_duplicated_numbers2(self):
+        self.assertTrue(contains_triplet([0, 0, 0]))
+    
+    def test_array_with_duplicated_numbers3(self):
+        self.assertTrue(contains_triplet([1, 1, 0]))
+    
+    def test_array_with_negative_numbers(self):
+        self.assertTrue(contains_triplet([-3, -5, -4]))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
+```
 
 ### Apr 22, 2020 \[Medium\] K Closest Elements
 ---
