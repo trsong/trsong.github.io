@@ -33,6 +33,13 @@ You should return the following, as a string:
 ```
 -->
 
+### Apr 26, 2020 \[Easy\] Swap Even and Odd Nodes
+---
+> **Question:** Given the head of a singly linked list, swap every two nodes and return its head.
+>
+> **Note:** Make sure it’s acutally nodes that get swapped not value.
+
+
 ### Apr 25, 2020 LC 230 \[Medium\] Kth Smallest Element in a BST
 ---
 > **Question:** Given a binary search tree, write a function kthSmallest to find the kth smallest element in it.
@@ -66,6 +73,105 @@ Input:
 
 k = 3
 Output: 3
+```
+
+**My thoughts:** Unless we explicitedly store number of children underneath each node, we cannot go without iterating through the inorder traversal of BST. 
+
+Besides the traditional way of generating inorder traversal with recursion, we can leverage a stack and a node pointer to get in-order traversal.
+
+**Iterative Inorder Traversal with Stack Template:**
+```py
+def inorder_traversal(root):
+    p = root
+    stack = []
+    while True:
+        if p:
+            stack.append(p)
+            p = p.left
+        elif stack:
+            p = stack.pop()
+            yield p
+            p = p.right
+        else:
+            break
+```
+
+**Solution with Iterative In-order Traversal:** [https://repl.it/@trsong/Find-the-Kth-Smallest-Element-in-a-BST](https://repl.it/@trsong/Find-the-Kth-Smallest-Element-in-a-BST)
+```py
+import unittest
+
+def kth_smallest(root, k):
+    p = root
+    stack = []
+    while p or stack:
+        if p:
+            stack.append(p)
+            p = p.left
+        elif stack:
+            p = stack.pop()
+            k -= 1
+            if k == 0:
+                return p.val
+            p = p.right
+    return None
+
+
+class TreeNode(object):
+    def __init__(self, val, left=None, right=None):
+        self.val = val
+        self.left = left
+        self.right = right
+
+class KthSmallestSpec(unittest.TestCase):
+    def test_example1(self):
+        """
+           3
+          / \
+         1   4
+          \
+           2
+        """
+        n1 = TreeNode(1, right=TreeNode(2))
+        tree = TreeNode(3, n1, TreeNode(4))
+        check_expected = [1, 2, 3, 4]
+        for e in check_expected:
+            self.assertEqual(e, kth_smallest(tree, e))
+
+    def test_example2(self):
+        """
+              5
+             / \
+            3   6
+           / \
+          2   4
+         /
+        1
+        """
+        n2 = TreeNode(2, TreeNode(1))
+        n3 = TreeNode(3, n2, TreeNode(4))
+        tree = TreeNode(5, n3, TreeNode(6))
+        check_expected = [1, 2, 3, 4, 5, 6]
+        for e in check_expected:
+            self.assertEqual(e, kth_smallest(tree, e))
+
+    def test_full_BST(self):
+        """
+             4
+           /   \
+          2     6
+         / \   / \
+        1   3 5   7
+        """
+        n2 = TreeNode(2, TreeNode(1), TreeNode(3))
+        n6 = TreeNode(6, TreeNode(5), TreeNode(7))
+        tree = TreeNode(4, n2, n6)
+        check_expected = [1, 2, 3, 4, 5, 6, 7]
+        for e in check_expected:
+            self.assertEqual(e, kth_smallest(tree, e))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
 ```
 
 ### Apr 24, 2020  \[Easy\] Inorder Successor in BST
