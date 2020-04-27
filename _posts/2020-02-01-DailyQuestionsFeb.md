@@ -33,11 +33,97 @@ You should return the following, as a string:
 ```
 -->
 
+### Apr 27, 2020 \[Hard\] Critical Routers (Articulation Point)
+--- 
+> **Question:** You are given an undirected connected graph. An articulation point (or cut vertex) is defined as a vertex which, when removed along with associated edges, makes the graph disconnected (or more precisely, increases the number of connected components in the graph). The task is to find all articulation points in the given graph.
+
+**Example1:**
+```py
+Input: vertices = 4, edges = [[0, 1], [1, 2], [2, 3]]
+Output: [1, 2]
+Explanation: 
+Removing either vertex 0 or 3 along with edges [0, 1] or [2, 3] does not increase number of connected components. 
+But removing 1, 2 breaks graph into two components.
+```
+
+**Example2:**
+```py
+Input: vertices = 5, edges = [[0, 1], [0, 2], [1, 2], [0, 3], [3, 4]]
+Output: [0, 3]
+```
+
 ### Apr 26, 2020 \[Easy\] Swap Even and Odd Nodes
 ---
 > **Question:** Given the head of a singly linked list, swap every two nodes and return its head.
 >
 > **Note:** Make sure it’s acutally nodes that get swapped not value.
+
+**Solution:** [https://repl.it/@trsong/Swap-Even-and-Odd-Nodes-in-Linked-List](https://repl.it/@trsong/Swap-Even-and-Odd-Nodes-in-Linked-List)
+```py
+import unittest
+
+def swap_list(lst):
+    prev = dummy = ListNode(-1, lst)
+    p = lst
+    while p and p.next:
+        second = p.next
+
+        p.next = second.next
+        second.next = p
+        prev.next = second
+
+        prev = p
+        p = p.next
+    return dummy.next
+
+
+class ListNode(object):
+    def __init__(self, val, next=None):
+        self.val = val
+        self.next = next
+
+
+class SwapListSpec(unittest.TestCase):
+    def assert_lists(self, lst, node_seq):
+        p = lst
+        for node in node_seq:
+            if p != node: print (p.data if p else "None"), (node.data if node else "None")
+            self.assertTrue(p == node)
+            p = p.next
+        self.assertTrue(p is None)
+
+    def test_empty(self):
+        self.assert_lists(swap_list(None), [])
+
+    def test_one_elem_list(self):
+        n1 = ListNode(1)
+        self.assert_lists(swap_list(n1), [n1])
+
+    def test_two_elems_list(self):
+        # 1 -> 2
+        n2 = ListNode(2)
+        n1 = ListNode(1, n2)
+        self.assert_lists(swap_list(n1), [n2, n1])
+
+    def test_three_elems_list(self):
+        # 1 -> 2 -> 3
+        n3 = ListNode(3)
+        n2 = ListNode(2, n3)
+        n1 = ListNode(1, n2)
+        self.assert_lists(swap_list(n1), [n2, n1, n3])
+
+    def test_four_elems_list(self):
+        # 1 -> 2 -> 3 -> 4
+        n4 = ListNode(4)
+        n3 = ListNode(3, n4)
+        n2 = ListNode(2, n3)
+        n1 = ListNode(1, n2)
+        self.assert_lists(swap_list(n1), [n2, n1, n4, n3])
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
+```
 
 
 ### Apr 25, 2020 LC 230 \[Medium\] Kth Smallest Element in a BST
