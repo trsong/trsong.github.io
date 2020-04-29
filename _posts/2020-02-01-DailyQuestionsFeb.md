@@ -33,6 +33,25 @@ You should return the following, as a string:
 ```
 -->
 
+### Apr 29, 2020 \[Medium\] K-th Missing Number
+---
+
+> **Question:** Given a sorted without any duplicate integer array, define the missing numbers to be the gap among numbers. Write a function to calculate K-th missing number. If such number does not exist, then return null.
+> 
+> For example, original array: `[2,4,7,8,9,15]`, within the range defined by original array, all missing numbers are: `[3,5,6,10,11,12,13,14]`
+> - the 1st missing number is 3,
+> - the 2nd missing number is 5,
+> - the 3rd missing number is 6
+
+**My thoughts:** An array without any gap must be continuous and should look something like the following:
+
+```py
+[0, 1, 2, 3, 4, 5, 6, 7]
+[8, 9, 10, 11]
+...
+```
+
+
 ### Apr 28, 2020 \[Medium\] Generate Binary Search Trees
 --- 
 > **Question:** Given a number n, generate all binary search trees that can be constructed with nodes 1 to n.
@@ -53,6 +72,94 @@ Pre-order traversals of binary trees from 1 to n:
        3  2             2  1
 ``` 
 
+**Solution:** [https://repl.it/@trsong/Generate-Binary-Search-Trees-from-1-to-n](https://repl.it/@trsong/Generate-Binary-Search-Trees-from-1-to-n)
+```py
+import unittest
+
+def generate_bst(n):
+    if n < 1:
+        return []
+    return generate_bst_recur(1, n)
+
+
+def generate_bst_recur(lo, hi):
+    if lo > hi:
+        return [None]
+
+    res = []
+    for val in xrange(lo, hi+1):
+        for left_node in generate_bst_recur(lo, val-1):
+            for right_node in generate_bst_recur(val+1, hi):
+                res.append(TreeNode(val, left_node, right_node))
+    
+    return res
+
+
+###################
+# Testing Utilities
+###################
+class TreeNode(object):
+    def __init__(self, val, left=None, right=None):
+        self.val = val
+        self.left = left
+        self.right = right
+
+    def preorder_traversal(self):
+        res = [self.val]
+        if self.left:
+            res += self.left.preorder_traversal()
+        if self.right:
+            res += self.right.preorder_traversal()
+        return res
+
+
+class GenerateBSTSpec(unittest.TestCase):
+    def assert_result(self, expected_preorder_traversal, bst_seq):
+        self.assertEqual(len(expected_preorder_traversal), len(bst_seq))
+        result_traversal = map(lambda t: t.preorder_traversal(), bst_seq)
+        self.assertEqual(sorted(expected_preorder_traversal), sorted(result_traversal))
+
+    def test_example(self):
+        expected_preorder_traversal = [
+            [1, 2, 3],
+            [1, 3, 2],
+            [2, 1, 3],
+            [3, 1, 2],
+            [3, 2, 1]
+        ]
+        self.assert_result(expected_preorder_traversal, generate_bst(3))
+    
+    def test_empty_tree(self):
+        self.assertEqual([], generate_bst(0))
+
+    def test_base_case(self):
+        expected_preorder_traversal = [[1]]
+        self.assert_result(expected_preorder_traversal, generate_bst(1))
+
+    def test_generate_4_nodes(self):
+        expected_preorder_traversal = [
+            [1, 2, 3, 4],
+            [1, 2, 4, 3],
+            [1, 3, 2, 4],
+            [1, 4, 2, 3],
+            [1, 4, 3, 2],
+            [2, 1, 3, 4],
+            [2, 1, 4, 3],
+            [3, 1, 2, 4],
+            [3, 2, 1, 4],
+            [4, 1, 2, 3],
+            [4, 1, 3, 2],
+            [4, 2, 1, 3],
+            [4, 3, 1, 2],
+            [4, 3, 2, 1]
+        ]
+        self.assert_result(expected_preorder_traversal, generate_bst(4))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
+        
+```
 ### Apr 27, 2020 \[Hard\] Critical Routers (Articulation Point)
 --- 
 > **Question:** You are given an undirected connected graph. An articulation point (or cut vertex) is defined as a vertex which, when removed along with associated edges, makes the graph disconnected (or more precisely, increases the number of connected components in the graph). The task is to find all articulation points in the given graph.
