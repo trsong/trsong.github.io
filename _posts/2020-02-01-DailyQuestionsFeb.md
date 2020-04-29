@@ -33,7 +33,7 @@ You should return the following, as a string:
 ```
 -->
 
-### Apr 29, 2020 \[Medium\] K-th Missing Number
+### Apr 29, 2020 \[Medium\] K-th Missing Number in Sorted Array
 ---
 > **Question:** Given a sorted without any duplicate integer array, define the missing numbers to be the gap among numbers. Write a function to calculate K-th missing number. If such number does not exist, then return null.
 > 
@@ -41,14 +41,6 @@ You should return the following, as a string:
 > - the 1st missing number is 3,
 > - the 2nd missing number is 5,
 > - the 3rd missing number is 6
-
-**My thoughts:** An array without any gap must be continuous and should look something like the following:
-
-```py
-[0, 1, 2, 3, 4, 5, 6, 7]
-[8, 9, 10, 11]
-...
-```
 
 
 ### Apr 28, 2020 \[Medium\] Generate Binary Search Trees
