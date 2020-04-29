@@ -35,7 +35,6 @@ You should return the following, as a string:
 
 ### Apr 29, 2020 \[Medium\] K-th Missing Number
 ---
-
 > **Question:** Given a sorted without any duplicate integer array, define the missing numbers to be the gap among numbers. Write a function to calculate K-th missing number. If such number does not exist, then return null.
 > 
 > For example, original array: `[2,4,7,8,9,15]`, within the range defined by original array, all missing numbers are: `[3,5,6,10,11,12,13,14]`
