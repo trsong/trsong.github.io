@@ -33,6 +33,33 @@ You should return the following, as a string:
 ```
 -->
 
+### Apr 30, 2020 \[Medium\] Pre-order & In-order Binary Tree Traversal
+---
+> **Question:** Given pre-order and in-order traversals of a binary tree, write a function to reconstruct the tree.
+>
+> For example, given the following preorder traversal:
+
+```py
+[a, b, d, e, c, f, g]
+```
+
+> And the following inorder traversal:
+
+```py
+[d, b, e, a, f, c, g]
+```
+
+> You should return the following tree:
+
+```py
+    a
+   / \
+  b   c
+ / \ / \
+d  e f  g
+```
+
+
 ### Apr 29, 2020 \[Medium\] K-th Missing Number in Sorted Array
 ---
 > **Question:** Given a sorted without any duplicate integer array, define the missing numbers to be the gap among numbers. Write a function to calculate K-th missing number. If such number does not exist, then return null.
@@ -42,6 +69,140 @@ You should return the following, as a string:
 > - the 2nd missing number is 5,
 > - the 3rd missing number is 6
 
+**My thoughts:** An array without any gap must be continuous and should look something like the following:
+
+```py
+[0, 1, 2, 3, 4, 5, 6, 7]
+[8, 9, 10, 11]
+...
+```
+
+Which can be easily verified by using `last - first` element and check the result against length of array.
+
+Likewise, given any index, treat the element the index refer to as the last element, we can easily the number of missing elements by using the following:
+
+```py
+def total_missing_on_left(index):
+    expect_last_number = nums[0] + index
+    return nums[index] - expect_last_number
+```
+
+Thus, ever since it's `O(1)` to verify the total missing numbers on the left against the k-th missing number, we can always use binary search to shrink the searching space into half. 
+
+> Tips: do you know the template for binary searching the array with lots of duplicates?
+> 
+> eg. Find the index of first 1 in [0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 3, 3, 3, 3, 3, 3].
+
+```py
+lo = 0
+hi = n - 1
+while lo < hi:
+    mid = lo + (hi - lo) / 2  # avoid overflow in some other language like Java
+    if arr[mid] < target:     # this is the condition. When exit the loop, lo will stop at first element that not statify the condition
+        lo = mid + 1          # why + 1?  lo = (lo + hi) / 2 if hi = lo + 1, we will have lo = (2 * lo + 1) / 2 == lo
+    else:
+        hi = mid
+return lo
+```
+
+Note: above template will return the index of first element that not statify the condition. e.g. If `target == 1`, the first elem that >= 1 is 1 at index 3. If `target == 2`, the first elem that >= 2 is 3 at position 10.
+
+> Note, why we need to know above template? Like how does it help to solve this question?
+
+Let's consider the following case:  `find_kth_missing_number([3, 4, 8, 9, 10, 11, 12], 2)`.
+
+```py
+[3, 4, 8, 9, 10, 11, 12]
+```
+
+Above source array can be converted to the following total_missing_on_left array:
+
+```py
+[0, 0, 3, 3, 3, 3, 3]
+```
+
+Above array represents how many missing numbers are on the left of current element. 
+
+Since we are looking at the 2-nd missing number. The first element that not less than target is 3 at position 2. Then using that position we can backtrack to get first element that has 3 missing number on the left is 8. Finally, since 8 has 3 missing number on the left, then we imply that 6 must has 2 missing number on the left which is what we are looking for.
+
+
+**Solution with Binary Search:** [https://repl.it/@trsong/K-th-Missing-Number-in-Sorted-Array](https://repl.it/@trsong/K-th-Missing-Number-in-Sorted-Array)
+```py
+import unittest
+
+def find_kth_missing_number(nums, k):
+    n = len(nums)
+    if not nums or k < 1 or total_missing_on_left(nums, n-1) < k:
+        return None
+
+    lo = 0
+    hi = len(nums) - 1
+    while lo < hi:
+        mid = lo + (hi - lo) // 2
+        if total_missing_on_left(nums, mid) < k:
+            lo = mid + 1
+        else:
+            hi = mid
+    
+    delta = total_missing_on_left(nums, lo) - k
+    return nums[lo] - 1 - delta
+
+     
+def total_missing_on_left(nums, index):
+    expect_last_number = nums[0] + index
+    return nums[index] - expect_last_number
+
+
+class FindKthMissingNumberSpec(unittest.TestCase):
+    def test_empty_source(self):
+        self.assertIsNone(find_kth_missing_number([], 0))
+    
+    def test_empty_source2(self):
+        self.assertIsNone(find_kth_missing_number([], 1))
+
+    def test_missing_number_not_exists(self):
+        self.assertIsNone(find_kth_missing_number([1, 2, 3], 0))
+    
+    def test_missing_number_not_exists2(self):
+        self.assertIsNone(find_kth_missing_number([1, 2, 3], 1))
+
+    def test_missing_number_not_exists3(self):
+        self.assertIsNone(find_kth_missing_number([1, 3], 2))
+
+    def test_one_gap_in_source(self):
+        self.assertEqual(5, find_kth_missing_number([3, 4, 8, 9, 10, 11, 12], 1))
+    
+    def test_one_gap_in_source2(self):
+        self.assertEqual(6, find_kth_missing_number([3, 4, 8, 9, 10, 11, 12], 2))
+
+    def test_one_gap_in_source3(self):
+        self.assertEqual(7, find_kth_missing_number([3, 4, 8, 9, 10, 11, 12], 3))
+
+    def test_one_gap_in_source4(self):
+        self.assertEqual(4, find_kth_missing_number([3, 6, 7], 1))
+
+    def test_one_gap_in_source5(self):
+        self.assertEqual(5, find_kth_missing_number([3, 6, 7], 2))
+    
+    def test_multiple_gap_in_source(self):
+        self.assertEqual(3, find_kth_missing_number([2, 4, 7, 8, 9, 15], 1))
+    
+    def test_multiple_gap_in_source2(self):
+        self.assertEqual(5, find_kth_missing_number([2, 4, 7, 8, 9, 15], 2))
+    
+    def test_multiple_gap_in_source3(self):
+        self.assertEqual(6, find_kth_missing_number([2, 4, 7, 8, 9, 15], 3))
+
+    def test_multiple_gap_in_source4(self):
+        self.assertEqual(10, find_kth_missing_number([2, 4, 7, 8, 9, 15], 4))
+
+    def test_multiple_gap_in_source5(self):
+        self.assertEqual(11, find_kth_missing_number([2, 4, 7, 8, 9, 15], 5))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
+```
 
 ### Apr 28, 2020 \[Medium\] Generate Binary Search Trees
 --- 
