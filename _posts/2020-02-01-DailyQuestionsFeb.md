@@ -59,6 +59,165 @@ You should return the following, as a string:
 d  e f  g
 ```
 
+**My thoughts:** Inorder traversal follows the order: 
+```
+Inorder(Left), Current, Inorder(Right)
+```
+
+Whereas preorder (DFS searching order) traversal follows the order: 
+
+```
+Current, Preorder(Left), Preorder(Right)
+```
+
+If we further expand the inorder traversal, we will get
+
+```
+Inorder(Left), CURRENT, Inorder(Right)
+=>
+Inorder(Left2), CURRENT2, Inorder(Right2), CURRENT, Inorder(Right)
+```
+
+And if we further expand the preorder traversal
+```
+CURRENT, Preorder(Left), Preorder(Right)
+=>
+CURRENT, CURRENT2, Preorder(Left2), Preorder(Right2), Preorder(Right)
+```
+
+My takeaway is that let's fucus on the postion of CURRENT. We can use the preorder to keep going left, left, left, until at a point which is not possible and that point is determined by inorder recursive call.
+
+**Solution:** [https://repl.it/@trsong/Build-Tree-from-Pre-order-and-In-order-Binary-Tree-Traversal](https://repl.it/@trsong/Build-Tree-from-Pre-order-and-In-order-Binary-Tree-Traversal)
+```py
+import unittest
+
+def build_tree(inorder, preorder):
+    if not inorder or not preorder:
+        return None
+    n = len(preorder)
+    source = iter(preorder)
+    index_lookup = {val: index for index, val in enumerate(inorder)}
+    return build_in_order_tree_recur(source, 0, n-1, index_lookup)
+
+
+def build_in_order_tree_recur(source, lo, hi, index_lookup):
+    if lo > hi:
+        return None
+    
+    node_val = next(source)
+    node_index = index_lookup[node_val]
+    left_tree = build_in_order_tree_recur(source, lo, node_index-1, index_lookup)
+    right_tree = build_in_order_tree_recur(source, node_index+1, hi, index_lookup)
+    return TreeNode(node_val, left_tree, right_tree)
+
+
+###################
+# Testing Utilities
+###################
+class TreeNode(object):
+    def __init__(self, val, left=None, right=None):
+        self.val = val
+        self.left = left
+        self.right = right
+    
+    def __eq__(self, other):
+        return other and self.val == other.val and self.left == other.left and self.right == other.right
+
+    def __repr__(self):
+        stack = [(self, 0)]
+        res = []
+        while stack:
+            node, depth = stack.pop()
+            res.append("\n" + "\t" * depth)
+            if not node:
+                res.append("* None")
+                continue
+
+            res.append("* " + str(node.val))
+            for child in [node.right, node.left]:
+                stack.append((child, depth+1))
+        return "\n" + "".join(res) + "\n"
+
+
+class BuildTreeSpec(unittest.TestCase):
+    def test_empty_tree(self):
+        self.assertIsNone(build_tree([], []))
+
+    def test_sample_tree(self):
+        """
+            a
+           / \
+          b   c
+         / \ / \
+        d  e f  g
+        """
+        preorder = ['a', 'b', 'd', 'e', 'c', 'f', 'g']
+        inorder = ['d', 'b', 'e', 'a', 'f', 'c', 'g']
+        b = TreeNode('b', TreeNode('d'), TreeNode('e'))
+        c = TreeNode('c', TreeNode('f'), TreeNode('g'))
+        a = TreeNode('a', b, c)
+        self.assertEqual(a, build_tree(inorder, preorder))
+
+    def test_left_heavy_tree(self):
+        """
+            a
+           / \
+          b   c
+         /   
+        d     
+        """
+        preorder = ['a', 'b', 'd', 'c']
+        inorder = ['d', 'b', 'a', 'c']
+        b = TreeNode('b', TreeNode('d'))
+        c = TreeNode('c')
+        a = TreeNode('a', b, c)
+        self.assertEqual(a, build_tree(inorder, preorder))
+
+    def test_right_heavy_tree(self):
+        """
+            a
+           / \
+          b   c
+             / \
+            f   g
+        """
+        preorder = ['a', 'b', 'c', 'f', 'g']
+        inorder = ['b', 'a', 'f', 'c', 'g']
+        b = TreeNode('b')
+        c = TreeNode('c', TreeNode('f'), TreeNode('g'))
+        a = TreeNode('a', b, c)
+        self.assertEqual(a, build_tree(inorder, preorder))
+
+    def test_left_only_tree(self):
+        """
+            a
+           /
+          b   
+         /   
+        c     
+        """
+        preorder = ['a', 'b', 'c']
+        inorder = ['c', 'b', 'a']
+        a = TreeNode('a', TreeNode('b', TreeNode('c')))
+        self.assertEqual(a, build_tree(inorder, preorder))
+
+    def test_right_only_tree(self):
+        """
+            a
+             \
+              b
+               \
+                c
+        """
+        preorder = ['a', 'b', 'c']
+        inorder = ['a', 'b', 'c']
+        a = TreeNode('a', right=TreeNode('b', right=TreeNode('c')))
+        self.assertEqual(a, build_tree(inorder, preorder))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
+```
 
 ### Apr 29, 2020 \[Medium\] K-th Missing Number in Sorted Array
 ---
