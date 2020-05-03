@@ -33,6 +33,25 @@ You should return the following, as a string:
 ```
 -->
 
+### May 2, 2020  \[Easy\] Spreadsheet Columns
+--- 
+> **Question:** In many spreadsheet applications, the columns are marked with letters. From the 1st to the 26th column the letters are A to Z. Then starting from the 27th column it uses AA, AB, ..., ZZ, AAA, etc.
+>
+> Given a number n, find the n-th column name.
+
+
+**Examples:**
+```py
+Input          Output
+ 26             Z
+ 51             AY
+ 52             AZ
+ 80             CB
+ 676            YZ
+ 702            ZZ
+ 705            AAC
+```
+
 ### May 1, 2020 \[Easy\] ZigZag Binary Tree
 ---
 > **Questions:** In Ancient Greece, it was common to write text with the first line going left to right, the second line going right to left, and continuing to go back and forth. This style was called "boustrophedon".
@@ -153,9 +172,3 @@ class ZigzagTraversalSpec(unittest.TestCase):
 if __name__ == '__main__':
     unittest.main(exit=False)
 ```
-
-### May 2, 2020  \[Easy\] Spreadsheet Columns
---- 
-> **Question:** In many spreadsheet applications, the columns are marked with letters. From the 1st to the 26th column the letters are A to Z. Then starting from the 27th column it uses AA, AB, ..., ZZ, AAA, etc.
->
-> Given a number n, find the n-th column name.
