@@ -33,6 +33,24 @@ You should return the following, as a string:
 ```
 -->
 
+### May 3, 2020 \[Hard\] Maximize Sum of the Minimum of K Subarrays
+--- 
+> **Question:** Given an array a of size N and an integer K, the task is to divide the array into K segments such that sum of the minimum of K segments is maximized.
+
+**Example1:**
+```py
+Input: [5, 7, 4, 2, 8, 1, 6], K = 3
+Output: 13
+Divide the array at indexes 0 and 1. Then the segments are [5], [7], [4, 2, 8, 1, 6] Sum of the minimus is 5 + 7 + 1 = 13
+```
+
+**Example2:**
+```py
+Input: [6, 5, 3, 8, 9, 10, 4, 7, 10], K = 4
+Output: 27
+[6, 5, 3, 8, 9], [10], [4, 7], [10] => 3 + 10 + 4 + 10 = 27
+```
+
 ### May 2, 2020  \[Easy\] Spreadsheet Columns
 --- 
 > **Question:** In many spreadsheet applications, the columns are marked with letters. From the 1st to the 26th column the letters are A to Z. Then starting from the 27th column it uses AA, AB, ..., ZZ, AAA, etc.
@@ -51,6 +69,60 @@ Input          Output
  702            ZZ
  705            AAC
 ```
+
+**Solution:** [https://repl.it/@trsong/CandidFriendlyCalculators](https://repl.it/@trsong/CandidFriendlyCalculators)
+```py
+import unittest
+
+def digit_to_letter(num):
+    ord_A = ord('A')
+    return chr(ord_A + num)
+
+
+def spreadsheet_columns(n):
+    base = 26
+    q = n - 1 # convert to zero-based
+    res = []
+    
+    while q >= 0:
+        q, r = divmod(q, base)
+        res.append(digit_to_letter(r))
+        q -= 1  # A, B, C....Z, AA, AB, ... AZ, BA
+
+    res.reverse()
+    return "".join(res)
+
+
+class SpreadsheetColumnSpec(unittest.TestCase):
+    def test_trivial_example(self):
+        self.assertEqual("A", spreadsheet_columns(1))
+    
+    def test_example1(self):
+        self.assertEqual("Z", spreadsheet_columns(26))
+    
+    def test_example2(self):
+        self.assertEqual("AY", spreadsheet_columns(51))
+    
+    def test_example3(self):
+        self.assertEqual("AZ", spreadsheet_columns(52))
+    
+    def test_example4(self):
+        self.assertEqual("CB", spreadsheet_columns(80))
+    
+    def test_example5(self):
+        self.assertEqual("YZ", spreadsheet_columns(676))
+    
+    def test_example6(self):
+        self.assertEqual("ZZ", spreadsheet_columns(702))
+    
+    def test_example7(self):
+        self.assertEqual("AAC", spreadsheet_columns(705))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
+```
+
 
 ### May 1, 2020 \[Easy\] ZigZag Binary Tree
 ---
