@@ -33,6 +33,30 @@ You should return the following, as a string:
 ```
 -->
 
+### May 7, 2019  \[Easy\] Full Binary Tree
+--- 
+> **Question:** Given a binary tree, remove the nodes in which there is only 1 child, so that the binary tree is a full binary tree.
+>
+> So leaf nodes with no children should be kept, and nodes with 2 children should be kept as well.
+
+**Example:**
+```py
+Given this tree:
+     1
+    / \ 
+   2   3
+  /   / \
+ 0   9   4
+
+We want a tree like:
+     1
+    / \ 
+   0   3
+      / \
+     9   4
+```
+
+
 ### May 6, 2019 LC 301 \[Hard\] Remove Invalid Parentheses
 --- 
 > **Question:** Remove the minimum number of invalid parentheses in order to make the input string valid. Return all possible results.
@@ -57,6 +81,137 @@ Input: ")("
 Output: [""]
 ```
 
+**My thoughts:** What makes a string with parenthese invalid? There must be an index such that number of open parentheses is less than close parentheses or in the end all open and close parentheses are not equal. Now we can count how many parentheses are invalid so that we can remove those invalid ones during backtracking.
+
+We can define:
+Number of invalid open is equal to total open - total close.
+Number of invalid close is equal to number of close exceed previous open. 
+
+During backtracking, each open and close could be invalid one, so give a try to remove those and that will decrese the invalid count and we can hope all the best that our solution works. If it works, ie. the final string is valid, then add to result, else backtrack.
+
+
+How to avoid duplicates? For each candidate of invalid ones, we only remove the first one and skip the duplicates.
+eg. `((()((())`
+We have `6` open and `3` close gives `6 - 3 = 3` invalid open and we have no invalid close.
+
+```py
+((()((())
+^^^
+Removing any two of above gives same result
+
+To avoid duplicate, we only remove first two:
+((()((())
+^^
+```
+
+
+**Solution with Backtracking:** [https://repl.it/@trsong/LC301-Remove-Invalid-Parentheses](https://repl.it/@trsong/LC301-Remove-Invalid-Parentheses)
+```py
+import unittest
+
+def remove_invalid_parenthese(s):
+    invalid_open = invalid_close = 0
+    for c in s:
+        if c == ')' and invalid_open == 0:
+            invalid_close += 1
+        elif c == '(':
+            invalid_open += 1
+        elif c == ')':
+            invalid_open -= 1
+    
+    res = []
+    backtrack(s, res, 0, invalid_open, invalid_close)
+    return filter(is_valid, res)
+
+
+def backtrack(s, res, next_index, invalid_open, invalid_close):
+    if invalid_open == 0 and invalid_close == 0:
+        res.append(s)
+    else:
+        for i in xrange(next_index, len(s)):
+            c = s[i]
+            if c == '(' and invalid_open > 0 or c == ')' and invalid_close > 0:
+                if i > next_index and s[i] == s[i-1]:
+                    # skip same character
+                    continue
+                
+                updated_s = s[:i] + s[i+1:]
+                if c == '(':
+                    backtrack(updated_s, res, i, invalid_open-1, invalid_close)
+                else:
+                    backtrack(updated_s, res, i, invalid_open, invalid_close-1)
+
+
+def is_valid(s):
+    count = 0
+    for c in s:
+        if count < 0:
+            return False
+        elif c == '(':
+            count += 1
+        elif c == ')':
+            count -= 1
+    return count == 0
+
+
+class RemoveInvalidParentheseSpec(unittest.TestCase):
+    def assert_result(self, expected, output):
+        self.assertEqual(sorted(expected), sorted(output))
+
+    def test_example1(self):
+        input = "()())()"
+        expected = ["()()()", "(())()"]
+        self.assert_result(expected, remove_invalid_parenthese(input))
+
+    def test_example2(self):
+        input = "(a)())()"
+        expected = ["(a)()()", "(a())()"]
+        self.assert_result(expected, remove_invalid_parenthese(input))
+
+    def test_example3(self):
+        input = ")("
+        expected = [""]
+        self.assert_result(expected, remove_invalid_parenthese(input))
+
+    def test_valid_string1(self):
+        input = "(a)((b))(c)"
+        expected = ["(a)((b))(c)"]
+        self.assert_result(expected, remove_invalid_parenthese(input))
+
+    def test_empty_string(self):
+        input = ""
+        expected = [""]
+        self.assert_result(expected, remove_invalid_parenthese(input))
+
+    def test_unique_result1(self):
+        input = "(a)(((a)"
+        expected = ["(a)(a)"]
+        self.assert_result(expected, remove_invalid_parenthese(input))
+
+    def test_unique_result2(self):
+        input = "()))((()"
+        expected = ["()()"]
+        self.assert_result(expected, remove_invalid_parenthese(input))
+    
+    def test_unique_result3(self):
+        input = "a))b))c)d"
+        expected = ["abcd"]
+        self.assert_result(expected, remove_invalid_parenthese(input))
+
+    def test_multiple_results(self):
+        input = "a(b(c(d)"
+        expected = ["a(bcd)", "ab(cd)", "abc(d)"]
+        self.assert_result(expected, remove_invalid_parenthese(input))
+
+    def test_multiple_results2(self):
+        input = "(a)b)c)d)"
+        expected = ["(a)bcd", "(ab)cd", "(abc)d", "(abcd)"]
+        self.assert_result(expected, remove_invalid_parenthese(input))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
+```
 
 ### May 5, 2019 \[Hard\] Maximum Spanning Tree
 --- 
