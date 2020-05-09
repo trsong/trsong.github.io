@@ -33,6 +33,21 @@ You should return the following, as a string:
 ```
 -->
 
+### May 10, 2019 \[Medium\] All Root to Leaf Paths in Binary Tree
+---
+> **Question:** Given a binary tree, return all paths from the root to leaves.
+>
+> For example, given the tree:
+
+```py
+   1
+  / \
+ 2   3
+    / \
+   4   5
+```
+> Return `[[1, 2], [1, 3, 4], [1, 3, 5]]`.
+
 ### May 9, 2019  \[Easy\] String Compression
 ---
 > **Question:** Given an array of characters with repeats, compress it in place. The length after compression should be less than or equal to the original array.
@@ -41,6 +56,91 @@ You should return the following, as a string:
 ```py
 Input: ['a', 'a', 'b', 'c', 'c', 'c']
 Output: ['a', '2', 'b', 'c', '3']
+```
+
+**Solution:** [https://repl.it/@trsong/Compress-String](https://repl.it/@trsong/Compress-String)
+```py
+import unittest
+
+def string_compression(msg):
+    if not msg:
+        return
+
+    pos = 0
+    count = 0
+    prev_char = msg[0]
+    n = len(msg)
+
+    for i in xrange(n+1):
+        char = msg[i] if i < n else None
+        if char != prev_char:
+            msg[pos] = prev_char
+            if count > 1:
+                for count_char in str(count):
+                    pos += 1
+                    msg[pos] = count_char
+            pos += 1
+            count = 1
+            prev_char = char
+        else:
+            count += 1
+    
+    for _ in xrange(pos, n):
+        msg.pop()
+
+
+class StringCompressionSpec(unittest.TestCase):
+    def test_example(self):
+        msg = ['a', 'a', 'b', 'c', 'c', 'c']
+        expected = ['a', '2', 'b', 'c', '3']
+        string_compression(msg)
+        self.assertEqual(expected, msg)
+
+    def test_empty_msg(self):
+        msg = []
+        expected = []
+        string_compression(msg)
+        self.assertEqual(expected, msg)
+
+    def test_msg_with_one_char(self):
+        msg = ['a']
+        expected = ['a']
+        string_compression(msg)
+        self.assertEqual(expected, msg)
+
+    def test_msg_with_distinct_chars(self):
+        msg = ['a', 'b', 'c', 'd']
+        expected = ['a', 'b', 'c', 'd']
+        string_compression(msg)
+        self.assertEqual(expected, msg)
+
+    def test_msg_with_repeated_chars(self):
+        msg = ['a'] * 12
+        expected = ['a', '1', '2']
+        string_compression(msg)
+        self.assertEqual(expected, msg)
+
+    def test_msg_with_repeated_chars2(self):
+        msg = ['a', 'b', 'b']
+        expected = ['a', 'b', '2']
+        string_compression(msg)
+        self.assertEqual(expected, msg)
+
+    def test_msg_with_repeated_chars3(self):
+        msg = ['a'] * 10 + ['b'] * 21 + ['c'] * 198
+        expected = ['a', '1', '0', 'b', '2', '1', 'c', '1', '9', '8']
+        string_compression(msg)
+        self.assertEqual(expected, msg)
+
+    def test_msg_contains_digits(self):
+        msg = ['a', '2', 'a', '3', '3']
+        expected = ['a', '2', 'a', '3', '2']
+        string_compression(msg)
+        self.assertEqual(expected, msg)
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
 ```
 
 ### May 8, 2019  \[Easy\] Find Unique Element among Array of Duplicates
