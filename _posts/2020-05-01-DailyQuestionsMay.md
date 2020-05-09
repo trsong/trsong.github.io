@@ -33,6 +33,16 @@ You should return the following, as a string:
 ```
 -->
 
+### May 9, 2019  \[Easy\] String Compression
+---
+> **Question:** Given an array of characters with repeats, compress it in place. The length after compression should be less than or equal to the original array.
+
+**Example:**
+```py
+Input: ['a', 'a', 'b', 'c', 'c', 'c']
+Output: ['a', '2', 'b', 'c', '3']
+```
+
 ### May 8, 2019  \[Easy\] Find Unique Element among Array of Duplicates
 ---
 > **Question:** Given an array of integers, arr, where all numbers occur twice except one number which occurs once, find the number. Your solution should ideally be `O(n)` time and use constant extra space.
@@ -41,6 +51,49 @@ You should return the following, as a string:
 ```py
 Input: arr = [7, 3, 5, 5, 4, 3, 4, 8, 8]
 Output: 7
+```
+
+**My thoughts:** XOR has many pretty useful properties:
+
+* 0 ^ x = x
+* x ^ x = 0
+* x ^ y = y ^ x 
+
+**For example:** 
+```py
+7 ^ 3 ^ 5 ^ 5 ^ 4 ^ 3 ^ 4 ^ 8 ^ 8
+= 7 ^ 3 ^ (5 ^ 5) ^ 4 ^ 3 ^ 4 ^ (8 ^ 8)
+= 7 ^ 3 ^ 4 ^ 3 ^ 4 
+= 7 ^ 3 ^ 3 ^ 4 ^ 4
+= 7 ^ (3 ^ 3) ^ (4 ^ 4)
+= 7
+```
+
+**Solution with XOR:** [https://repl.it/@trsong/Find-Unique-Element-in-Array](https://repl.it/@trsong/Find-Unique-Element-in-Array)
+```py
+import unittest
+
+def find_unique_element(nums):
+    return reduce(lambda num, accu: num ^ accu, nums)
+
+class FindUniqueElementSpec(unittest.TestCase):
+    def test_example(self):
+        self.assertEqual(7, find_unique_element([7, 3, 5, 5, 4, 3, 4, 8, 8]))
+
+    def test_array_with_one_element(self):
+        self.assertEqual(42, find_unique_element([42]))
+
+    def test_same_duplicated_number_not_consecutive(self):
+        self.assertEqual(5, find_unique_element([1, 2, 1, 5, 3, 2, 3]))
+
+    def test_array_with_negative_elements(self):
+        self.assertEqual(-1, find_unique_element([-1, 1, 0, 0, 1]))
+
+    def test_array_with_negative_elements2(self):
+        self.assertEqual(0, find_unique_element([-1, 0, 1, -2, 2, -1, 1, -2, 2]))
+    
+if __name__ == '__main__':
+    unittest.main(exit=False)
 ```
 
 ### May 7, 2019  \[Easy\] Full Binary Tree
