@@ -33,6 +33,55 @@ You should return the following, as a string:
 ```
 -->
 
+### May 11, 2019 \[Easy\] Compare Version Numbers
+--- 
+> **Question:** Version numbers are strings that are used to identify unique states of software products. A version number is in the format a.b.c.d. and so on where a, b, etc. are numeric strings separated by dots. These generally represent a hierarchy from major to minor changes. 
+> 
+> Given two version numbers version1 and version2, conclude which is the latest version number. Your code should do the following:
+> - If version1 > version2 return 1.
+> - If version1 < version2 return -1.
+> - Otherwise return 0.
+>
+> Note that the numeric strings such as a, b, c, d, etc. may have leading zeroes, and that the version strings do not start or end with dots. Unspecified level revision numbers default to 0.
+
+**Example 1:**
+```py
+Input: 
+version1 = "1.0.33"
+version2 = "1.0.27"
+Output: 1 
+#version1 > version2
+```
+
+**Example 2:**
+```py
+Input:
+version1 = "0.1"
+version2 = "1.1"
+Output: -1
+#version1 < version2
+```
+
+**Example 3:**
+```py
+Input: 
+version1 = "1.01"
+version2 = "1.001"
+Output: 0
+#ignore leading zeroes, 01 and 001 represent the same number. 
+```
+
+**Example 4:**
+```py
+Input:
+version1 = "1.0"
+version2 = "1.0.0"
+Output: 0
+#version1 does not have a 3rd level revision number, which
+defaults to "0"
+```
+
+
 ### May 10, 2019 \[Medium\] All Root to Leaf Paths in Binary Tree
 ---
 > **Question:** Given a binary tree, return all paths from the root to leaves.
@@ -47,6 +96,79 @@ You should return the following, as a string:
    4   5
 ```
 > Return `[[1, 2], [1, 3, 4], [1, 3, 5]]`.
+
+
+**Solution with Backtracking:** [https://repl.it/@trsong/Find-All-Root-to-Leaf-Paths-in-Binary-Tree](https://repl.it/@trsong/Find-All-Root-to-Leaf-Paths-in-Binary-Tree)
+```py
+import unittest
+
+class TreeNode(object):
+    def __init__(self, val, left=None, right=None):
+        self.val = val
+        self.left = left
+        self.right= right
+
+
+def path_to_leaves(tree):
+    if not tree:
+        return []
+    res = []
+    backtrack(res, [], tree)
+    return res
+
+
+def backtrack(res, path_to_node, cur_node):
+    if cur_node.left is None and cur_node.right is None:
+        res.append(path_to_node + [cur_node.val])
+    else:
+        for child in [cur_node.left, cur_node.right]:
+            if child is not None:
+                path_to_node.append(cur_node.val)
+                backtrack(res, path_to_node, child)
+                path_to_node.pop()
+
+
+class PathToLeavesSpec(unittest.TestCase):
+    def test_empty_tree(self):
+        self.assertEqual([], path_to_leaves(None))
+
+    def test_one_level_tree(self):
+        self.assertEqual([[1]], path_to_leaves(TreeNode(1)))
+
+    def test_two_level_tree(self):
+        tree = TreeNode(1, TreeNode(2), TreeNode(3))
+        self.assertEqual([[1, 2], [1, 3]], path_to_leaves(tree))
+
+    def test_example(self):
+        """
+          1
+         / \
+        2   3
+           / \
+          4   5
+        """
+        n3 = TreeNode(3, TreeNode(4), TreeNode(5))
+        tree = TreeNode(1, TreeNode(2), n3)
+        self.assertEqual([[1, 2], [1, 3, 4], [1, 3, 5]], path_to_leaves(tree))
+
+    def test_complete_tree(self):
+        """
+             1
+           /   \
+          2     3
+         / \   / \
+        4   5 6   7
+        """
+        n2 = TreeNode(2, TreeNode(4), TreeNode(5))
+        n3 = TreeNode(3, TreeNode(6), TreeNode(7))
+        root = TreeNode(1, n2, n3)
+        expected = [[1, 2, 4], [1, 2, 5], [1, 3, 6], [1, 3, 7]]
+        self.assertEqual(expected, path_to_leaves(root))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
+```
 
 ### May 9, 2019  \[Easy\] String Compression
 ---
