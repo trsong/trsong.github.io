@@ -33,6 +33,23 @@ You should return the following, as a string:
 ```
 -->
 
+### May 12, 2019 \[Medium\] Look-and-Say Sequence
+--- 
+> **Question:** The "look and say" sequence is defined as follows: beginning with the term 1, each subsequent term visually describes the digits appearing in the previous term. The first few terms are as follows:
+
+```py
+1
+11
+21
+1211
+111221
+```
+
+> As an example, the fourth term is 1211, since the third term consists of one 2 and one 1.
+>
+> Given an integer N, print the Nth term of this sequence
+
+
 ### May 11, 2019 \[Easy\] Compare Version Numbers
 --- 
 > **Question:** Version numbers are strings that are used to identify unique states of software products. A version number is in the format a.b.c.d. and so on where a, b, etc. are numeric strings separated by dots. These generally represent a hierarchy from major to minor changes. 
@@ -79,6 +96,94 @@ version2 = "1.0.0"
 Output: 0
 #version1 does not have a 3rd level revision number, which
 defaults to "0"
+```
+
+**Solution:** [https://repl.it/@trsong/Version-Number-Comparison](https://repl.it/@trsong/Version-Number-Comparison)
+```py
+import unittest
+
+def compare(v1, v2):
+    version_seq1 = map(int, v1.split('.') if v1 else [0])
+    version_seq2 = map(int, v2.split('.') if v2 else [0])
+
+    max_len = max(len(version_seq1), len(version_seq2))
+
+    for _ in xrange(max_len - len(version_seq1)):
+        version_seq1.append(0)
+
+    for _ in xrange(max_len - len(version_seq2)):
+        version_seq2.append(0)
+
+    for num1, num2 in zip(version_seq1, version_seq2):
+        if num1 == num2:
+            continue
+        elif num1 < num2:
+            return -1
+        else:
+            return 1
+    
+    return 0
+
+
+class VersionNumberCompareSpec(unittest.TestCase):
+    def test_example1(self):
+        version1 = "1.0.33"
+        version2 = "1.0.27"
+        self.assertEqual(1, compare(version1, version2))
+
+    def test_example2(self):
+        version1 = "0.1"
+        version2 = "1.1"
+        self.assertEqual(-1, compare(version1, version2))
+
+    def test_example3(self):
+        version1 = "1.01"
+        version2 = "1.001"
+        self.assertEqual(0, compare(version1, version2))
+
+    def test_example4(self):
+        version1 = "1.0"
+        version2 = "1.0.0"
+        self.assertEqual(0, compare(version1, version2))
+
+    def test_unspecified_version_numbers(self):
+        self.assertEqual(0, compare("", ""))
+        self.assertEqual(-1, compare("", "1"))
+        self.assertEqual(1, compare("2", ""))
+
+    def test_unaligned_zeros(self):
+        version1 = "00000.00000.00000.0"
+        version2 = "0.00000.000.00.00000.000.000.0"
+        self.assertEqual(0, compare(version1, version2))
+
+    def test_same_version_yet_unaligned(self):
+        version1 = "00001.001"
+        version2 = "1.000001.0000000.0000"
+        self.assertEqual(0, compare(version1, version2))
+
+    def test_different_version_numbers(self):
+        version1 = "1.2.3.4"
+        version2 = "1.2.3.4.5"
+        self.assertEqual(-1, compare(version1, version2))
+
+    def test_different_version_numbers2(self):
+        version1 = "3.2.1"
+        version2 = "3.1.2.3"
+        self.assertEqual(1, compare(version1, version2))
+
+    def test_different_version_numbers3(self):
+        version1 = "00001.001.0.1"
+        version2 = "1.000001.0000000.0000"
+        self.assertEqual(1, compare(version1, version2))
+
+    def test_without_dots(self):
+        version1 = "32123"
+        version2 = "3144444"
+        self.assertEqual(-1, compare(version1, version2))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
 ```
 
 
