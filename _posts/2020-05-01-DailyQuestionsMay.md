@@ -34,11 +34,16 @@ You should return the following, as a string:
 -->
 
 
+### May 14, 2019 \[Medium\] Bitwise AND of a Range
+---
+> **Question:** Write a function that returns the bitwise AND of all integers between M and N, inclusive.
+
+
 ### May 13, 2019 \[Hard\] Climb Staircase Problem
 ---
 > **Question:** There exists a staircase with N steps, and you can climb up either 1 or 2 steps at a time. Given N, write a function that **PRINT** out all possible unique ways you can climb the staircase. The **ORDER** of the steps matters. 
 >
-> For example, if N is 4, then there are 5 unique ways (accoding to May 5's question). This time we print them out as the following:
+> For example, if N is 4, X = {1, 2} then there are 5 unique ways. This time we print them out as the following:
 
 ```py
 1, 1, 1, 1
@@ -54,6 +59,119 @@ You should return the following, as a string:
 
 ```py
 2, 2, 2
+```
+**My thoughts:** The only way to figure out each path is to manually test all outcomes. However, certain cases are invalid (like exceed the target value while climbing) so we try to modify certain step until its valid. Such technique is called ***Backtracking***.
+
+We may use recursion to implement backtracking, each recursive step will create a separate branch which also represent different recursive call stacks. Once the branch is invalid, the call stack will bring us to a different branch, i.e. backtracking to a different solution space.
+
+For example, if N is 4, and feasible steps are `[1, 2]`, then there are 5 different solution space/path. Each node represents a choice we made and each branch represents a recursive call.
+
+Note we also keep track of the remaining steps while doing recursion. 
+```py
+├ 1 
+│ ├ 1
+│ │ ├ 1
+│ │ │ └ 1 SUCCEED
+│ │ └ 2 SUCCEED
+│ └ 2 
+│   └ 1 SUCCEED
+└ 2 
+  ├ 1
+  │ └ 1 SUCCEED
+  └ 2 SUCCEED
+```
+
+If N is 6 and fesible step is `[5, 2]`:
+```py
+├ 5 FAILURE
+└ 2 
+  └ 2
+    └ 2 SUCCEED
+```
+
+**Solution with Backtracking:** [https://repl.it/@trsong/Climb-Staircase-Problem](https://repl.it/@trsong/Climb-Staircase-Problem)
+```py
+import unittest
+
+def climb_stairs(n, feasible_steps):
+    sorted_feasible_steps = sorted(list(set(feasible_steps)))
+    res = []
+    backtack(res, [], n, sorted_feasible_steps)
+    if not res:
+        return None
+    else:
+        return "\n".join(res)
+
+
+def backtack(res, path, remain, feasible_steps):
+    if remain == 0:
+        path_str = ", ".join(path)
+        res.append(path_str)
+    else:
+        for step in feasible_steps:
+            if step > remain:
+                break
+            
+            path.append(str(step))
+            backtack(res, path, remain - step, feasible_steps)
+            path.pop()
+
+
+class ClimbStairSpec(unittest.TestCase):
+    def assert_result(self, expected, result):
+        expected_lines = expected.splitlines()
+        result_lines = result.splitlines()
+        self.assertEqual(sorted(expected_lines), sorted(result_lines))
+        
+    def test_example(self):
+        n, feasible_steps = 4, [1, 2]
+        expected = "\n".join([
+            "1, 1, 1, 1", 
+            "2, 1, 1",
+            "1, 2, 1",
+            "1, 1, 2",
+            "2, 2"])
+        self.assert_result(expected, climb_stairs(n, feasible_steps))
+
+    def test_example2(self):
+        n, feasible_steps = 5, [1, 3, 5]
+        expected = "\n".join([
+            "1, 1, 1, 1, 1",
+            "3, 1, 1",
+            "1, 3, 1",
+            "1, 1, 3",
+            "5"])
+        self.assert_result(expected, climb_stairs(n, feasible_steps))
+
+    def test_no_feasible_solution(self):
+        n, feasible_steps = 9, []
+        self.assertIsNone(climb_stairs(n, feasible_steps))
+
+    def test_no_feasible_solution2(self):
+        n, feasible_steps = 99, [7]
+        self.assertIsNone(climb_stairs(n, feasible_steps))
+
+    def test_only_one_step_qualify(self):
+        n, feasible_steps = 42, [41, 42, 43]
+        expected = "42"
+        self.assert_result(expected, climb_stairs(n, feasible_steps))
+
+    def test_various_way_to_climb(self):
+        n, feasible_steps = 4, [1, 2, 3, 4]
+        expected = "\n".join([
+            "1, 1, 1, 1",
+            "1, 1, 2",
+            "1, 2, 1",
+            "1, 3",
+            "2, 1, 1",
+            "2, 2",
+            "3, 1",
+            "4"])
+        self.assert_result(expected, climb_stairs(n, feasible_steps))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
 ```
 
 ### May 12, 2019 \[Medium\] Look-and-Say Sequence
