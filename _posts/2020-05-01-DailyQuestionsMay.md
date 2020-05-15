@@ -33,11 +33,110 @@ You should return the following, as a string:
 ```
 -->
 
+### May 15, 2019 \[Medium\] Longest Consecutive Sequence in an Unsorted Array
+---
+> **Question:** Given an array of integers, return the largest range, inclusive, of integers that are all included in the array.
+>
+> For example, given the array `[9, 6, 1, 3, 8, 10, 12, 11]`, return `(8, 12)` since `8, 9, 10, 11, and 12` are all in the array.
+
 
 ### May 14, 2019 \[Medium\] Bitwise AND of a Range
 ---
 > **Question:** Write a function that returns the bitwise AND of all integers between M and N, inclusive.
 
+**Solution:** [https://repl.it/@trsong/Bitwise-AND-of-a-Range](https://repl.it/@trsong/Bitwise-AND-of-a-Range)
+```py
+import unittest
+
+def bitwise_and_of_range(m, n):
+    """
+      0b10110001   -> m
+    & 0b10110010
+    & 0b10110011
+    & 0b10110100   
+    & 0b10110101   -> n
+    = 0b10110000
+
+    We need to find longest prefix between m and n. That means we can keep removing least significant bit of n until n < m. Then we can get the longest prefix. 
+    """
+
+    if m > n:
+        m, n = n, m
+    
+    while m < n:
+        # remove the least significant bit
+        n &= n - 1  
+
+    return n
+
+
+class BitwiseAndOfRangeSpec(unittest.TestCase):
+    def test_same_end_point(self):
+        m, n, expected = 42, 42, 42
+        self.assertEqual(expected, bitwise_and_of_range(m, n))
+
+    def test_end_share_same_prefix(self):
+        m = 0b110100
+        n = 0b110011
+        expected = 0b110000
+        self.assertEqual(expected, bitwise_and_of_range(m, n))
+
+    def test_one_end_has_zero(self):
+        m = 0b1111111
+        n = 0b0
+        expected = 0b0
+        self.assertEqual(expected, bitwise_and_of_range(m, n))
+
+    def test_neither_end_has_same_digit(self):
+        m = 0b100101
+        n = 0b011010
+        expected = 0b0
+        self.assertEqual(expected, bitwise_and_of_range(m, n))
+
+    def test_bitwise_all_number_within_range(self):
+        """
+          0b1100
+        & 0b1101
+        & 0b1110
+        & 0b1111
+        = 0b1100
+        """
+        m = 12  # 0b1100
+        n = 15  # 0b1111
+        expected = 0b1100
+        self.assertEqual(expected, bitwise_and_of_range(m, n))
+
+    def test_bitwise_all_number_within_range2(self):
+        """
+          0b10001
+        & 0b10010
+        & 0b10011
+        = 0b10000
+        """
+        m = 17  # 0b10001
+        n = 19  # 0b10011
+        expected = 0b10000
+        self.assertEqual(expected, bitwise_and_of_range(m, n))
+
+    def test_both_end_share_some_digits(self):
+        """
+          0b01010
+        & 0b01011
+        ...
+        & 0b10000
+        ...
+        & 0b10100
+        = 0b00000
+        """
+        m = 10  # 0b01010
+        n = 20  # 0b10100
+        expected = 0
+        self.assertEqual(expected, bitwise_and_of_range(m, n))
+        
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
+```
 
 ### May 13, 2019 \[Hard\] Climb Staircase Problem
 ---
