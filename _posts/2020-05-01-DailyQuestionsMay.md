@@ -33,11 +33,98 @@ You should return the following, as a string:
 ```
 -->
 
+
+### May 16, 2019 LC 394 \[Medium\] Decode String
+---
+> **Question:** Given a string with a certain rule: `k[string]` should be expanded to string `k` times. So for example, `3[abc]` should be expanded to `abcabcabc`. Nested expansions can happen, so `2[a2[b]c]` should be expanded to `abbcabbc`.
+
+
 ### May 15, 2019 \[Medium\] Longest Consecutive Sequence in an Unsorted Array
 ---
 > **Question:** Given an array of integers, return the largest range, inclusive, of integers that are all included in the array.
 >
 > For example, given the array `[9, 6, 1, 3, 8, 10, 12, 11]`, return `(8, 12)` since `8, 9, 10, 11, and 12` are all in the array.
+
+**My thoughts:** We can use BFS to find max length of consecutive sequence. Two number are neighbor if they differ by 1. Thus for any number we can scan though its left-most and right-most neighbor recursively. 
+
+**Solution with BFS:** [https://repl.it/@trsong/Longest-Consecutive-Sequence-in-an-Unsorted-Array](https://repl.it/@trsong/Longest-Consecutive-Sequence-in-an-Unsorted-Array)
+```py
+import unittest
+
+def longest_consecutive_seq(nums):
+    if not nums:
+        return None
+
+    num_set = set(nums)
+    max_length = 0
+    global_lo = global_hi = 0
+
+    while num_set:
+        pivot = next(iter(num_set))
+        num_set.remove(pivot)
+        lower_bound = pivot - 1
+        upper_bound = pivot + 1
+
+        while num_set and lower_bound in num_set:
+            num_set.remove(lower_bound)
+            lower_bound -= 1
+
+        while num_set and upper_bound in num_set:
+            num_set.remove(upper_bound)
+            upper_bound += 1
+
+        length = upper_bound - lower_bound - 1
+        if length > max_length:
+            max_length = length
+            global_lo = lower_bound
+            global_hi = upper_bound
+
+    return (global_lo + 1, global_hi - 1)
+
+
+class LongestConsecutiveSeqSpec(unittest.TestCase):
+    def test_example(self):
+        nums = [9, 6, 1, 3, 8, 10, 12, 11]
+        expected = (8, 12)
+        self.assertEqual(expected, longest_consecutive_seq(nums))
+
+    def test_example2(self):
+        nums = [2, 10, 3, 12, 5, 4, 11, 8, 7, 6, 15]
+        expected = (2, 8)
+        self.assertEqual(expected, longest_consecutive_seq(nums))
+
+    def test_empty_array(self):
+        self.assertIsNone(longest_consecutive_seq([]))
+
+    def test_no_consecutive_sequence(self):
+        nums = [1, 3, 5, 7]
+        possible_solutions = [(1, 1), (3, 3), (5, 5), (7, 7)]
+        self.assertIn(longest_consecutive_seq(nums), possible_solutions)
+
+    def test_more_than_one_solution(self):
+        nums = [0, 3, 4, 5, 9, 10, 13, 14, 15, 19, 20, 1]
+        possible_solutions = [(3, 5), (13, 15)]
+        self.assertIn(longest_consecutive_seq(nums), possible_solutions)
+
+    def test_longer_array(self):
+        nums = [10, 21, 45, 22, 7, 2, 67, 19, 13, 45, 12, 11, 18, 16, 17, 100, 201, 20, 101]
+        expected = (16, 22)
+        self.assertEqual(expected, longest_consecutive_seq(nums))
+
+    def test_entire_array_is_continous(self):
+        nums = [0, 1, 2, 3, 4, 5]
+        expected = (0, 5)
+        self.assertEqual(expected, longest_consecutive_seq(nums))
+
+    def test_array_with_duplicated_numbers(self):
+        nums = [0, 0, 3, 3, 2, 2, 1, 4, 7, 8, 10]
+        expected = (0, 4)
+        self.assertEqual(expected, longest_consecutive_seq(nums))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
+```
 
 
 ### May 14, 2019 \[Medium\] Bitwise AND of a Range
