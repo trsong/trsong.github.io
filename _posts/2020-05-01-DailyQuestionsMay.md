@@ -33,6 +33,23 @@ You should return the following, as a string:
 ```
 -->
 
+### May 17, 2020 LC 480 \[Hard\] Sliding Window Median
+---
+> **Question:** Given an array of numbers arr and a window of size k, print out the median of each window of size k starting from the left and moving right by one position each time.
+>
+> For example, given that `k = 3` and array equals `[-1, 5, 13, 8, 2, 3, 3, 1]`, your function should return `[5, 8, 8, 3, 3, 3]`
+
+**Explanation:**
+```py
+Recall that the median of an even-sized list is the average of the two middle numbers.
+5 <- median of [-1, 5, 13]
+8 <- median of [5, 13, 8]
+8 <- median of [13, 8, 2]
+3 <- median of [8, 2, 3]
+3 <- median of [2, 3, 3]
+3 <- median of [3, 3, 1]
+```
+
 
 ### May 16, 2020 LC 394 \[Medium\] Decode String
 ---
