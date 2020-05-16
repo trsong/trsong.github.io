@@ -34,12 +34,12 @@ You should return the following, as a string:
 -->
 
 
-### May 16, 2019 LC 394 \[Medium\] Decode String
+### May 16, 2020 LC 394 \[Medium\] Decode String
 ---
 > **Question:** Given a string with a certain rule: `k[string]` should be expanded to string `k` times. So for example, `3[abc]` should be expanded to `abcabcabc`. Nested expansions can happen, so `2[a2[b]c]` should be expanded to `abbcabbc`.
 
 
-### May 15, 2019 \[Medium\] Longest Consecutive Sequence in an Unsorted Array
+### May 15, 2020 \[Medium\] Longest Consecutive Sequence in an Unsorted Array
 ---
 > **Question:** Given an array of integers, return the largest range, inclusive, of integers that are all included in the array.
 >
@@ -127,7 +127,7 @@ if __name__ == '__main__':
 ```
 
 
-### May 14, 2019 \[Medium\] Bitwise AND of a Range
+### May 14, 2020 \[Medium\] Bitwise AND of a Range
 ---
 > **Question:** Write a function that returns the bitwise AND of all integers between M and N, inclusive.
 
@@ -225,7 +225,7 @@ if __name__ == '__main__':
     unittest.main(exit=False)
 ```
 
-### May 13, 2019 \[Hard\] Climb Staircase Problem
+### May 13, 2020 \[Hard\] Climb Staircase Problem
 ---
 > **Question:** There exists a staircase with N steps, and you can climb up either 1 or 2 steps at a time. Given N, write a function that **PRINT** out all possible unique ways you can climb the staircase. The **ORDER** of the steps matters. 
 >
@@ -360,7 +360,7 @@ if __name__ == '__main__':
     unittest.main(exit=False)
 ```
 
-### May 12, 2019 \[Medium\] Look-and-Say Sequence
+### May 12, 2020 \[Medium\] Look-and-Say Sequence
 --- 
 > **Question:** The "look and say" sequence is defined as follows: beginning with the term 1, each subsequent term visually describes the digits appearing in the previous term. The first few terms are as follows:
 
@@ -430,7 +430,7 @@ if __name__ == '__main__':
     unittest.main(exit=False)
 ```
 
-### May 11, 2019 \[Easy\] Compare Version Numbers
+### May 11, 2020 \[Easy\] Compare Version Numbers
 --- 
 > **Question:** Version numbers are strings that are used to identify unique states of software products. A version number is in the format a.b.c.d. and so on where a, b, etc. are numeric strings separated by dots. These generally represent a hierarchy from major to minor changes. 
 > 
@@ -567,7 +567,7 @@ if __name__ == '__main__':
 ```
 
 
-### May 10, 2019 \[Medium\] All Root to Leaf Paths in Binary Tree
+### May 10, 2020 \[Medium\] All Root to Leaf Paths in Binary Tree
 ---
 > **Question:** Given a binary tree, return all paths from the root to leaves.
 >
@@ -655,7 +655,7 @@ if __name__ == '__main__':
     unittest.main(exit=False)
 ```
 
-### May 9, 2019  \[Easy\] String Compression
+### May 9, 2020  \[Easy\] String Compression
 ---
 > **Question:** Given an array of characters with repeats, compress it in place. The length after compression should be less than or equal to the original array.
 
@@ -750,7 +750,7 @@ if __name__ == '__main__':
     unittest.main(exit=False)
 ```
 
-### May 8, 2019  \[Easy\] Find Unique Element among Array of Duplicates
+### May 8, 2020  \[Easy\] Find Unique Element among Array of Duplicates
 ---
 > **Question:** Given an array of integers, arr, where all numbers occur twice except one number which occurs once, find the number. Your solution should ideally be `O(n)` time and use constant extra space.
 
@@ -803,7 +803,7 @@ if __name__ == '__main__':
     unittest.main(exit=False)
 ```
 
-### May 7, 2019  \[Easy\] Full Binary Tree
+### May 7, 2020  \[Easy\] Full Binary Tree
 --- 
 > **Question:** Given a binary tree, remove the nodes in which there is only 1 child, so that the binary tree is a full binary tree.
 >
@@ -958,7 +958,7 @@ if __name__ == '__main__':
     unittest.main(exit=False)
 ```
 
-### May 6, 2019 LC 301 \[Hard\] Remove Invalid Parentheses
+### May 6, 2020 LC 301 \[Hard\] Remove Invalid Parentheses
 --- 
 > **Question:** Remove the minimum number of invalid parentheses in order to make the input string valid. Return all possible results.
 >
@@ -1114,7 +1114,7 @@ if __name__ == '__main__':
     unittest.main(exit=False)
 ```
 
-### May 5, 2019 \[Hard\] Maximum Spanning Tree
+### May 5, 2020 \[Hard\] Maximum Spanning Tree
 --- 
 > **Question:** Recall that the minimum spanning tree is the subset of edges of a tree that connect all its vertices with the smallest possible total edge weight. 
 > 
