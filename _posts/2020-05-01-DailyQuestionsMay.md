@@ -56,6 +56,89 @@ Recall that the median of an even-sized list is the average of the two middle nu
 > **Question:** Given a string with a certain rule: `k[string]` should be expanded to string `k` times. So for example, `3[abc]` should be expanded to `abcabcabc`. Nested expansions can happen, so `2[a2[b]c]` should be expanded to `abbcabbc`.
 
 
+**Solution:** [https://repl.it/@trsong/LC-394-Decode-String](https://repl.it/@trsong/LC-394-Decode-String)
+```py
+import unittest
+
+def decode_string(encoded_string):
+    stack = []
+    count = 0
+    pattern = []
+    for ch in encoded_string:
+        print pattern
+        if ch.isdigit():
+            count = 10 * count + int(ch)
+        elif ch == '[':
+            prev_str = ''.join(pattern)
+            prev_count = count
+            stack.append((prev_str, prev_count))
+            count = 0
+            pattern = []
+        elif ch == ']':
+            pattern_str = ''.join(pattern)
+            prev_str, count = stack.pop()
+            pattern = [prev_str, pattern_str * count]
+            count = 0
+        else:
+            pattern.append(ch)
+    return ''.join(pattern)
+        
+
+class DecodeStringSpec(unittest.TestCase):
+    def test_example1(self):
+        input = "3[abc]"
+        expected = 3 * "abc"
+        self.assertEqual(expected, decode_string(input))
+
+    def test_example2(self):
+        input = "2[a2[b]c]"
+        expected = 2 * ('a' + 2 * 'b' + 'c')
+        self.assertEqual(expected, decode_string(input)) 
+
+    def test_example3(self):
+        input = "3[a]2[bc]"
+        expected = "aaabcbc"
+        self.assertEqual(expected, decode_string(input)) 
+    
+    def test_example4(self):
+        input = "3[a2[c]]"
+        expected = "accaccacc"
+        self.assertEqual(expected, decode_string(input)) 
+
+    def test_example5(self):
+        input = "2[abc]3[cd]ef"
+        expected = "abcabccdcdcdef"
+        self.assertEqual(expected, decode_string(input)) 
+
+    def test_empty_string(self):
+        self.assertEqual("", decode_string(""))
+        self.assertEqual("", decode_string("42[]"))
+
+    def test_not_decode_negative_number_of_strings(self):
+        input = "-3[abc]"
+        expected = "-abcabcabc"
+        self.assertEqual(expected, decode_string(input))
+
+    def test_duplicate_more_than_10_times(self):
+        input = "233[ab]"
+        expected =  233 * "ab"
+        self.assertEqual(expected, decode_string(input))
+
+    def test_2Level_nested_encoded_string(self):
+        input = "2[3[a]3[bc]2[d]]4[2[e]]"
+        expected = 2 * (3*"a" + 3*"bc" + 2*"d") + 4*2*"e"
+        self.assertEqual(expected, decode_string(input))
+
+    def test_3Level_nested_encoded_string(self):
+        input = "2[a2[b3[c]d4[ef]g]h]"
+        expected = 2*('a' + 2*('b' + 3*'c' + 'd' + 4 * 'ef' + 'g' ) + 'h')
+        self.assertEqual(expected, decode_string(input))
+
+
+if __name__ == "__main__":
+    unittest.main(exit=False)
+```
+
 ### May 15, 2020 \[Medium\] Longest Consecutive Sequence in an Unsorted Array
 ---
 > **Question:** Given an array of integers, return the largest range, inclusive, of integers that are all included in the array.
