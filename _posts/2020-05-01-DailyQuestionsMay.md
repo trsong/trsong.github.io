@@ -65,7 +65,6 @@ def decode_string(encoded_string):
     count = 0
     pattern = []
     for ch in encoded_string:
-        print pattern
         if ch.isdigit():
             count = 10 * count + int(ch)
         elif ch == '[':
