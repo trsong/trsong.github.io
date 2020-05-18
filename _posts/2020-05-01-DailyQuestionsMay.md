@@ -33,7 +33,15 @@ You should return the following, as a string:
 ```
 -->
 
-### May 18, 2020 Question
+### May 18, 2020 LC 435 \[Medium\] Non-overlapping Intervals
+---
+> **Question:** Given a collection of intervals, find the minimum number of intervals you need to remove to make the rest of the intervals non-overlapping.
+>
+> Intervals can "touch", such as `[0, 1]` and `[1, 2]`, but they won't be considered overlapping.
+>
+> For example, given the intervals `(7, 9), (2, 4), (5, 8)`, return `1` as the last interval can be removed and the first two won't overlap.
+>
+> The intervals are not necessarily sorted in any order.
 
 
 ### May 17, 2020 LC 480 \[Hard\] Sliding Window Median
@@ -53,6 +61,107 @@ Recall that the median of an even-sized list is the average of the two middle nu
 3 <- median of [3, 3, 1]
 ```
 
+**My thoughts:** Maintain a max heap and a min heap where all elem in max heap is smaller than min heap. Together, they can hold k elements. For each new elem incoming, there must be an element kickout. Determine if they are on the same side. If not, we will need to balance both heap by moving element to the other. As removed element, we can lazily remove them: after each iteration, we need to double-check the head of each heap in order to make sure those element are within the window.
+
+**Solution with Priority Queue:** [https://repl.it/@trsong/Sliding-Window-Median](https://repl.it/@trsong/Sliding-Window-Median)
+```py
+import unittest
+from Queue import PriorityQueue
+
+def sliding_median(nums, k):
+    max_heap = PriorityQueue()  # left heap
+    min_heap = PriorityQueue()  # right heap
+
+    for i in xrange(k):
+        max_heap.put((-nums[i], i))
+
+    while min_heap.qsize() < max_heap.qsize():
+        move_head(max_heap, min_heap)
+
+    res = [find_median(max_heap, min_heap, k)]
+
+    for i in xrange(k, len(nums)):
+        cur_num = nums[i]
+        removed_num = nums[i - k]
+        if cur_num >= min_heap.queue[0][0]:
+            # insert new elem into the right heap
+            min_heap.put((cur_num, i))
+            if removed_num <= min_heap.queue[0][0]:
+                # the removed elem create a hole on the left heap
+                move_head(min_heap, max_heap)
+        else:
+            # insert new elem into left heap
+            max_heap.put((-cur_num, i))
+            if removed_num >= min_heap.queue[0][0]:
+                # the removed elem create a hole on the right heap
+                move_head(max_heap, min_heap)
+
+        while not max_heap.empty() and max_heap.queue[0][1] <= i - k:
+            max_heap.get()
+
+        while not min_heap.empty() and min_heap.queue[0][1] <= i - k:
+            min_heap.get()
+
+        res.append(find_median(max_heap, min_heap, k))
+
+    return res
+
+
+def move_head(pq1, pq2):
+    num, i = pq1.get()
+    pq2.put((-num, i))
+
+
+def find_median(max_heap, min_heap, k):
+    if k % 2 == 0:
+        neg_num1, _ = max_heap.queue[0]
+        num2, _ = min_heap.queue[0]
+        return (-neg_num1 + num2) * 0.5
+    else:
+        num, _ = min_heap.queue[0]
+        return num
+
+
+class SlidingMedianSpec(unittest.TestCase):
+    def test_example(self):
+        k, nums = 3, [-1, 5, 13, 8, 2, 3, 3, 1]
+        expected = [5, 8, 8, 3, 3, 3]
+        self.assertEqual(expected, sliding_median(nums, k))
+
+    def test_example2(self):
+        k, nums = 3, [1, 3, -1, -3, 5, 3, 6, 7]
+        expected = [1, -1, -1, 3, 5, 6]
+        self.assertEqual(expected, sliding_median(nums, k))
+
+    def test_k_equals_array_size(self):
+        k, nums = 5, [1, 2, 3, 4, 5]
+        expected = [3]
+        self.assertEqual(expected, sliding_median(nums, k))
+
+    def test_k_equals_array_size2(self):
+        k, nums = 4, [1, 2, 3, 4]
+        expected = [2.5]
+        self.assertEqual(expected, sliding_median(nums, k))
+
+    def test_k_equals_one(self):
+        k, nums = 1, [3, 1, 2, 4, 1, 2]
+        expected = [3, 1, 2, 4, 1, 2]
+        self.assertEqual(expected, sliding_median(nums, k))
+
+    def test_even_sized_window(self):
+        k, nums = 2, [1, 3, 3, 1, 1, 3, 3, 1]
+        expected = [2, 3, 2, 1, 2, 3, 2]
+        self.assertEqual(expected, sliding_median(nums, k))
+
+    def test_array_with_duplicated_elements(self):
+        k, nums = 5, [1, 1, 1, 1, 1, 1, 1, 1]
+        expected = [1, 1, 1, 1]
+        self.assertEqual(expected, sliding_median(nums, k))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
+```
 
 ### May 16, 2020 LC 394 \[Medium\] Decode String
 ---
