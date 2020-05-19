@@ -33,7 +33,7 @@ You should return the following, as a string:
 ```
 -->
 
-### May 19, 2020 \[Easy\] \[Easy\] Max and Min with Limited Comparisons
+### May 19, 2020 \[Easy\] Max and Min with Limited Comparisons
 ---
 > **Question:** Given a list of numbers of size `n`, where `n` is greater than `3`, find the maximum and minimum of the list using less than `2 * (n - 1)` comparisons.
 
