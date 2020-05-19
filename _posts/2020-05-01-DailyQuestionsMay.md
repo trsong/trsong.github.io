@@ -33,6 +33,11 @@ You should return the following, as a string:
 ```
 -->
 
+### May 19, 2020 \[Easy\] \[Easy\] Max and Min with Limited Comparisons
+---
+> **Question:** Given a list of numbers of size `n`, where `n` is greater than `3`, find the maximum and minimum of the list using less than `2 * (n - 1)` comparisons.
+
+
 ### May 18, 2020 LC 435 \[Medium\] Non-overlapping Intervals
 ---
 > **Question:** Given a collection of intervals, find the minimum number of intervals you need to remove to make the rest of the intervals non-overlapping.
@@ -42,6 +47,74 @@ You should return the following, as a string:
 > For example, given the intervals `(7, 9), (2, 4), (5, 8)`, return `1` as the last interval can be removed and the first two won't overlap.
 >
 > The intervals are not necessarily sorted in any order.
+
+**My thoughts:** Think about the problem backwards: to remove the least number of intervals to make non-overlapping is equivalent to pick most number of non-overlapping intervals and remove the rest. Therefore we just need to pick most number of non-overlapping intervals that can be done with greedy algorithm by sorting on end time and pick as many intervals as possible.
+
+**Greedy Solution:** [https://repl.it/@trsong/Non-overlapping-Intervals](https://repl.it/@trsong/Non-overlapping-Intervals)
+```py
+import unittest
+
+def remove_overlapping_intervals(intervals):
+    inteval_by_end_time = sorted(intervals, key=lambda start_end: start_end[-1])
+    prev_end_time = None
+    chosen = 0
+
+    for start, end in inteval_by_end_time:
+        if start >= prev_end_time:
+            chosen += 1
+            prev_end_time = end
+    
+    return len(intervals) - chosen
+
+
+class RemoveOveralppingIntervalSpec(unittest.TestCase):
+    def test_example(self):
+        intervals = [(7, 9), (2, 4), (5, 8)]
+        expected = 1  # remove (7, 9)
+        self.assertEqual(expected, remove_overlapping_intervals(intervals))
+
+    def test_no_intervals(self):
+        self.assertEqual(0, remove_overlapping_intervals([]))
+
+    def test_one_interval(self):
+        intervals = [(0, 42)]
+        expected = 0
+        self.assertEqual(expected, remove_overlapping_intervals(intervals))
+
+    def test_return_least_number_of_interval_to_remove(self):
+        intervals = [(1, 2), (2, 3), (3, 4), (1, 3)]
+        expected = 1  # remove (1, 3)
+        self.assertEqual(expected, remove_overlapping_intervals(intervals))
+
+    def test_duplicated_intervals(self):
+        intervals = [(1, 2), (1, 2), (1, 2)]
+        expected = 2  # remove (1, 2), (1, 2)
+        self.assertEqual(expected, remove_overlapping_intervals(intervals))
+
+    def test_non_overlapping_intervals(self):
+        intervals = [(1, 2), (2, 3)]
+        expected = 0
+        self.assertEqual(expected, remove_overlapping_intervals(intervals))
+
+    def test_share_end_points(self):
+        intervals = [(1, 2), (1, 3), (1, 4), (2, 3), (2, 4), (3, 4)]
+        expected = 3  # remove (1, 3), (1, 4), (2, 4)
+        self.assertEqual(expected, remove_overlapping_intervals(intervals))
+
+    def test_overlapping_intervals(self):
+        intervals = [(1, 4), (2, 3), (4, 6), (8, 9)]
+        expected = 1  # remove (2, 3)
+        self.assertEqual(expected, remove_overlapping_intervals(intervals))
+
+    def test_should_remove_first_interval(self):
+        intervals = [(1, 9), (2, 3), (5, 7)]
+        expected = 1 # remove (1, 9)
+        self.assertEqual(expected, remove_overlapping_intervals(intervals))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
+```
 
 
 ### May 17, 2020 LC 480 \[Hard\] Sliding Window Median
