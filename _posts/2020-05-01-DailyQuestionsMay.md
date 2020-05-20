@@ -33,9 +33,132 @@ You should return the following, as a string:
 ```
 -->
 
+### May 20, 2020  \[Medium\] Split a Binary Search Tree
+---
+> **Question:** Given a binary search tree (BST) and a value s, split the BST into 2 trees, where one tree has all values less than or equal to s, and the other tree has all values greater than s while maintaining the tree structure of the original BST. You can assume that s will be one of the node's value in the BST. Return both tree's root node as a tuple.
+
+**Example:**
+```py
+Given the following tree, and s = 2
+     3
+   /   \
+  1     4
+   \     \
+    2     5
+
+Split into two trees:
+ 1    And   3
+  \          \
+   2          4
+               \
+                5
+```
+
+
 ### May 19, 2020 \[Easy\] Max and Min with Limited Comparisons
 ---
 > **Question:** Given a list of numbers of size `n`, where `n` is greater than `3`, find the maximum and minimum of the list using less than `2 * (n - 1)` comparisons.
+
+**My thoughts:** The idea is to use Tournament Method. Think about each number as a team in the tournament. One team, zero matches. Two team, one match. N team, let's break them into half and use two matches to get best of best and worest of worest:
+
+```
+T(n) = 2 * T(n/2) + 2
+T(1) = 0
+T(2) = 1
+
+=>
+T(n) = 3n/2 - 2 
+```
+
+
+**Solution with Divide And Conquer:** [https://repl.it/@trsong/Find-Max-and-Min-with-Limited-Comparisons](https://repl.it/@trsong/Find-Max-and-Min-with-Limited-Comparisons)
+```py
+import unittest
+from functools import reduce
+
+class MinMaxPair(object):
+    def __init__(self, min_val, max_val):
+        self.min_val = min_val
+        self.max_val = max_val
+
+
+def find_min_max(nums):
+    return find_min_max_recur(nums, 0, len(nums) - 1)
+
+
+def find_min_max_recur(nums, lo, hi):
+    if lo > hi:
+        return None
+    elif lo == hi:
+        return MinMaxPair(nums[lo], nums[lo])
+    elif lo == hi - 1:
+        return MinMaxPair(nums[lo], nums[hi]) if nums[lo] < nums[hi] else MinMaxPair(nums[hi], nums[lo])
+    else:
+        mid = lo + (hi - lo) // 2
+        left_res = find_min_max_recur(nums, lo, mid)
+        right_res = find_min_max_recur(nums, mid+1, hi)
+        if left_res and right_res:
+            return MinMaxPair(min(left_res.min_val, right_res.min_val), max(left_res.max_val, right_res.max_val))
+        else:
+            return left_res or right_res 
+    
+
+#######################################
+# Testing Utilities
+#######################################
+class Number(int):
+    def __new__(self, value):
+        self.history = []
+        return int.__new__(self, value)
+
+    def __cmp__(self, other):
+        self.history.append((self, other))
+        return int.__cmp__(self, other)
+
+    def count_comparison(self):
+        return len(self.history)
+
+    def get_history(self):
+        return '\n'.join(self.history)
+
+
+class GetMinMaxSpec(unittest.TestCase):
+    def assert_find_min_max(self, nums):
+        min_val = min(nums)
+        max_val = max(nums)
+        n = len(nums)
+        mapped_nums = list(map(Number, nums))
+        res = find_min_max(mapped_nums)
+        self.assertEqual(min_val, res.min_val)
+        self.assertEqual(max_val, res.max_val)
+        total_num_comparisons = sum(map(lambda num: num.count_comparison(), mapped_nums))
+        history = reduce(lambda accu, num: accu + '\n' + num.get_history(), mapped_nums, '')
+        if total_num_comparisons > 0:
+            msg = "Expect less than %d comparisons but gives %d\n%s" % (2 * (n - 1), total_num_comparisons, history) 
+            self.assertLess(total_num_comparisons, 2 * (n - 1), msg)
+
+    def test_empty_list(self):
+        self.assertIsNone(find_min_max([]))
+
+    def test_list_with_one_element(self):
+        self.assert_find_min_max([-1])
+
+    def test_list_with_two_elements(self):
+        self.assert_find_min_max([1, 2])
+
+    def test_increasing_list(self):
+        self.assert_find_min_max([1, 2, 3, 4])
+
+    def test_list_with_duplicated_element(self):
+        self.assert_find_min_max([-1, 1, -1, 1])
+
+    def test_long_list(self):
+        self.assert_find_min_max([1, 2, 3, 4, 5, 6, 7, 7, 6, 5, 4, 3, 2, 1])
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
+```
 
 
 ### May 18, 2020 LC 435 \[Medium\] Non-overlapping Intervals
