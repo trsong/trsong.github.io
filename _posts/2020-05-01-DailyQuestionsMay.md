@@ -100,6 +100,136 @@ Split into two trees:
                 5
 ```
 
+**Solution:** [https://repl.it/@trsong/Split-BST](https://repl.it/@trsong/Split-BST)
+```py
+import unittest
+
+def split_bst(root, s):
+    if not root:
+        return None, None
+
+    if s < root.val:
+        left_tree, right_tree = split_bst(root.left, s)
+        root.left = right_tree
+        return left_tree, root
+    else:
+        left_tree, right_tree = split_bst(root.right, s)
+        root.right = left_tree
+        return root, right_tree
+
+
+###################
+# Testing Utilities
+###################
+class TreeNode(object):
+    def __init__(self, val, left=None, right=None):
+        self.val = val
+        self.left = left
+        self.right = right
+
+    def __eq__(self, other):
+        return (other and
+         other.val == self.val and
+         other.left == self.left and
+         other.right == self.right)
+
+
+class SplitTreeSpec(unittest.TestCase):
+    def test_example(self):
+        """
+             3
+           /   \
+          1     4
+           \     \
+            2     5
+
+        Split into:
+         1    And   3
+          \          \
+           2          4
+                       \
+                        5
+        """
+        original_left = TreeNode(1, right=TreeNode(2))
+        original_right = TreeNode(4, right=TreeNode(5))
+        original_tree = TreeNode(3, original_left, original_right)
+
+        split_tree1 = TreeNode(1, right=TreeNode(2))
+        split_tree2 = TreeNode(3, right=TreeNode(4, right=TreeNode(5)))
+        expected = (split_tree1, split_tree2)
+        self.assertEqual(expected, split_bst(original_tree, s=2)) 
+
+    def test_empty_tree(self):
+        self.assertEqual((None, None), split_bst(None, 42))
+
+    def test_split_one_tree_into_empty(self):
+        """
+          2
+         / \
+        1   3 
+        """
+        
+        original_tree = TreeNode(2, TreeNode(1), TreeNode(3))
+        split_tree = TreeNode(2, TreeNode(1), TreeNode(3))
+        self.assertEqual((split_tree, None), split_bst(original_tree, s=3)) 
+        self.assertEqual((None, split_tree), split_bst(original_tree, s=0))
+
+    def test_split_tree_change_original_tree_layout(self):
+        """
+             4
+           /  \
+          2     6
+         / \   / \
+        1   3 5   7
+        
+        Split into:
+                 4
+                /  \
+          2    3    6
+         /         / \
+        1         5   7      
+        """
+
+        original_left = TreeNode(2, TreeNode(1), TreeNode(3))
+        original_right = TreeNode(6, TreeNode(5), TreeNode(7))
+        original_tree = TreeNode(4, original_left, original_right)
+
+        split_tree1 = TreeNode(2, TreeNode(1))
+        split_tree2_right = TreeNode(6, TreeNode(5), TreeNode(7))
+        split_tree2 = TreeNode(4, TreeNode(3), split_tree2_right)
+        expected = (split_tree1, split_tree2)
+        self.assertEqual(expected, split_bst(original_tree, s=2)) 
+
+    def test_split_tree_change_original_tree_layout2(self):
+        """
+             4
+           /  \
+          2     6
+         / \   / \
+        1   3 5   7
+        
+        Split into:
+             4
+           /  \
+          2    5    6
+         / \         \
+        1   3         7     
+        """
+
+        original_left = TreeNode(2, TreeNode(1), TreeNode(3))
+        original_right = TreeNode(6, TreeNode(5), TreeNode(7))
+        original_tree = TreeNode(4, original_left, original_right)
+
+        split_tree1_left = TreeNode(2, TreeNode(1), TreeNode(3))
+        split_tree1 = TreeNode(4, split_tree1_left, TreeNode(5))
+        split_tree2 = TreeNode(6, right=TreeNode(7))
+        expected = (split_tree1, split_tree2)
+        self.assertEqual(expected, split_bst(original_tree, s=5)) 
+        
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
+```
 
 ### May 19, 2020 \[Easy\] Max and Min with Limited Comparisons
 ---
