@@ -31,7 +31,53 @@ Given the following input:
 You should return the following, as a string:
 '[null, 123, ["a", "b"], {"c": "d"}]'
 ```
+
+
+### May 22, 2020 LC 1136 \[Hard\] Parallel Courses
+---
+> **Question:** There are N courses, labelled from 1 to N.
+>
+> We are given `relations[i] = [X, Y]`, representing a prerequisite relationship between course X and course Y: course X has to be studied before course Y.
+>
+> In one semester you can study any number of courses as long as you have studied all the prerequisites for the course you are studying.
+>
+> Return the minimum number of semesters needed to study all courses.  If there is no way to study all the courses, return -1.
+
+ 
+
+**Example 1:**
+```py
+Input: N = 3, relations = [[1,3],[2,3]]
+Output: 2
+Explanation: 
+In the first semester, courses 1 and 2 are studied. In the second semester, course 3 is studied.
+```
+
+**Example 2:**
+```py
+Input: N = 3, relations = [[1,2],[2,3],[3,1]]
+Output: -1
+Explanation: 
+No course can be studied because they depend on each other.
+```
 -->
+
+### May 21, 2020 LT 189 \[Medium\] Find Missing Positive
+---
+> **Question:** Given an unsorted integer array, find the first missing positive integer.
+
+**Example 1:**
+```py
+Input: [1, 2, 0]
+Output: 3
+```
+
+**Example 2:**
+```py
+Input: [3, 4, -1, 1]
+Output: 2
+```
+
 
 ### May 20, 2020  \[Medium\] Split a Binary Search Tree
 ---
