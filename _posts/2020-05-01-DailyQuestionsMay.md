@@ -32,6 +32,7 @@ You should return the following, as a string:
 '[null, 123, ["a", "b"], {"c": "d"}]'
 ```
 
+-->
 
 ### May 22, 2020 LC 1136 \[Hard\] Parallel Courses
 ---
@@ -43,7 +44,6 @@ You should return the following, as a string:
 >
 > Return the minimum number of semesters needed to study all courses.  If there is no way to study all the courses, return -1.
 
- 
 
 **Example 1:**
 ```py
@@ -60,7 +60,6 @@ Output: -1
 Explanation: 
 No course can be studied because they depend on each other.
 ```
--->
 
 ### May 21, 2020 LT 189 \[Medium\] Find Missing Positive
 ---
@@ -77,6 +76,85 @@ Output: 3
 Input: [3, 4, -1, 1]
 Output: 2
 ```
+
+**My thougths:** Ideally each positive number should map to the same index as its `value - 1`. So all we need to do is for each postion, use its value as index and swap with that element until we find correct number. Keep doing this and each postive should store in postion of its `value - 1`.  Now we just scan through the entire array until find the first missing number by checking each element's value against index. 
+
+**Solution:** [https://repl.it/@trsong/Find-Missing-Positive](https://repl.it/@trsong/Find-Missing-Positive)
+```py
+import unittest
+
+def val_to_index(num):
+    # the index num map to 
+    return num - 1
+
+
+def find_missing_positive(nums):
+    n = len(nums)
+    for i in xrange(n):
+        while 1 <= nums[i] <= n and val_to_index(nums[i]) != i:
+            swap_index = val_to_index(nums[i])
+            if nums[i] == nums[swap_index]:
+                # eliminate loop
+                break
+            nums[i], nums[swap_index] = nums[swap_index], nums[i]
+
+    for i in xrange(n):
+        if val_to_index(nums[i]) != i:
+            return i+1
+    
+    return n+1
+
+
+class FindMissingPositiveSpec(unittest.TestCase):
+    def test_example(self):
+        nums = [1, 2, 0]
+        expected = 3
+        self.assertEqual(expected, find_missing_positive(nums))
+
+    def test_example2(self):
+        nums = [3, 4, -1, 1]
+        expected = 2
+        self.assertEqual(expected, find_missing_positive(nums))
+    
+    def test_empty_array(self):
+        nums = []
+        expected = 1
+        self.assertEqual(expected, find_missing_positive(nums))
+
+    def test_all_non_positives(self):
+        nums = [-1, 0, -1, -2, -1, -3, -4]
+        expected = 1
+        self.assertEqual(expected, find_missing_positive(nums))
+
+    def test_number_out_of_range(self):
+        nums = [101, 102, 103]
+        expected = 1
+        self.assertEqual(expected, find_missing_positive(nums))
+
+    def test_duplicated_numbers(self):
+        nums = [1, 1, 3, 3, 2, 2, 5]
+        expected = 4
+        self.assertEqual(expected, find_missing_positive(nums))
+
+    def test_missing_positive_falls_out_of_range(self):
+        nums = [5, 4, 3, 2, 1]
+        expected = 6
+        self.assertEqual(expected, find_missing_positive(nums))
+
+    def test_number_off_by_one_position(self):
+        nums = [0, 2, 3, 4, 7, 6, 1]
+        expected = 5
+        self.assertEqual(expected, find_missing_positive(nums))
+
+    def test_positive_and_negative_numbers(self):
+        nums = [-1, -3, -2, 0, 1, 2, 4, -4, 5, -6, 7]
+        expected = 3
+        self.assertEqual(expected, find_missing_positive(nums))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
+``
 
 
 ### May 20, 2020  \[Medium\] Split a Binary Search Tree
