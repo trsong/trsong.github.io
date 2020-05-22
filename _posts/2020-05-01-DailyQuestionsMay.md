@@ -154,7 +154,7 @@ class FindMissingPositiveSpec(unittest.TestCase):
 
 if __name__ == '__main__':
     unittest.main(exit=False)
-``
+```
 
 
 ### May 20, 2020  \[Medium\] Split a Binary Search Tree
