@@ -34,6 +34,25 @@ You should return the following, as a string:
 
 -->
 
+### May 23, 2020 LC 394 \[Medium\] Decode String (Invariant)
+---
+> **Question:** Given an encoded string in form of `"ab[cd]{2}def"`. You have to return decoded string `"abcdcddef"`
+>
+> Notice that if there is a number inside curly braces, then it means preceding string in square brackets has to be repeated the same number of times. It becomes tricky where you have nested braces.
+
+**Example 1:**
+```py
+Input: "ab[cd]{2}"
+Output: "abcdcd"
+```
+
+**Example 2:**
+```py
+Input: "def[ab[cd]{2}]{3}ghi"
+Output: "defabcdcdabcdcdabcdcdghi"
+```
+
+
 ### May 22, 2020 LC 1136 \[Hard\] Parallel Courses
 ---
 > **Question:** There are N courses, labelled from 1 to N.
@@ -59,6 +78,140 @@ Input: N = 3, relations = [[1,2],[2,3],[3,1]]
 Output: -1
 Explanation: 
 No course can be studied because they depend on each other.
+```
+
+**My thoughts:** Treat each course as vertex and prerequisite relation as edges. We will have a directed acyclic graph (DAG) with edge weight = 1. The problem then convert to find the longest path in a DAG. To find the answer, we need to find topological order of courses and then find longest path based on topological order.  
+
+**Solution with Topological Sort:** [https://repl.it/@trsong/Parallel-Courses](https://repl.it/@trsong/Parallel-Courses)
+```py
+import unittest
+
+
+class VertexState(object):
+    UNVISITED = 0
+    VISITING = 1
+    VISITED = 2
+
+
+def min_semesters(total_courses, prerequisites):
+    if total_courses <= 0:
+        return 0
+
+    neighbors = [None] * (total_courses + 1)
+    for u, v in prerequisites:
+        if neighbors[u] is None:
+            neighbors[u] = []
+        neighbors[u].append(v)
+
+    top_order = find_topological_order(neighbors)
+    if top_order is None:
+        return -1
+    max_path_length = find_max_path_length(neighbors, top_order)
+    return max_path_length + 1
+
+
+def find_topological_order(neighbors):
+    n = len(neighbors)
+    node_states = [VertexState.UNVISITED] * n
+    reverse_top_order = []
+
+    for node in xrange(n):
+        if node_states[node] is not VertexState.UNVISITED:
+            continue
+
+        stack = [node]
+        while stack:
+            cur = stack[-1]
+            if node_states[cur] is VertexState.VISITED:
+                stack.pop()
+            elif node_states[cur] is VertexState.VISITING:
+                reverse_top_order.append(cur)
+                node_states[cur] = VertexState.VISITED
+            else:
+                # node_states is UNVISITED
+                node_states[cur] = VertexState.VISITING
+                if neighbors[cur] is None:
+                    continue
+                for nb in neighbors[cur]:
+                    if node_states[nb] is VertexState.VISITING:
+                        return None
+                    elif node_states[nb] is VertexState.UNVISITED:
+                        stack.append(nb)
+
+    return reverse_top_order[::-1]
+
+
+def find_max_path_length(neighbors, node_traversal):
+    n = len(neighbors)
+    distance = [0] * n
+    for node in node_traversal:
+        if neighbors[node] is None:
+            continue
+        for nb in neighbors[node]:
+            distance[nb] = max(distance[nb], 1 + distance[node])
+
+    return max(distance)
+
+
+class min_semesterss(unittest.TestCase):
+    def test_example(self):
+        total_courses = 3
+        prerequisites = [[1, 3], [2, 3]]
+        expected = 2  # gradudation path: 1/2, 3
+        self.assertEqual(expected, min_semesters(total_courses, prerequisites))
+
+    def test_no_course_to_take(self):
+        total_courses = 0
+        prerequisites = []
+        expected = 0
+        self.assertEqual(expected, min_semesters(total_courses, prerequisites))
+
+    def test_all_courses_are_independent(self):
+        total_courses = 3
+        prerequisites = []
+        expected = 1  # gradudation path: 1/2/3
+        self.assertEqual(expected, min_semesters(total_courses, prerequisites))
+
+    def test_grap_with_cycle(self):
+        total_courses = 3
+        prerequisites = [[1, 2], [3, 1], [2, 3]]
+        expected = -1
+        self.assertEqual(expected, min_semesters(total_courses, prerequisites))
+
+    def test_grap_with_cycle2(self):
+        total_courses = 2
+        prerequisites = [[1, 2], [2, 1]]
+        expected = -1
+        self.assertEqual(expected, min_semesters(total_courses, prerequisites))
+
+    def test_disconnected_graph(self):
+        total_courses = 5
+        prerequisites = [[1, 2], [3, 4], [4, 5]]
+        expected = 3  # gradudation path: 1/3, 2/4, 5
+        self.assertEqual(expected, min_semesters(total_courses, prerequisites))
+
+    def test_graph_with_two_paths(self):
+        total_courses = 5
+        prerequisites = [[1, 2], [2, 5], [1, 3], [3, 4], [4, 5]]
+        expected = 4  # gradudation path: 1, 2/3, 4, 5
+        self.assertEqual(expected, min_semesters(total_courses, prerequisites))
+
+    def test_graph_with_two_paths2(self):
+        total_courses = 5
+        prerequisites = [[1, 3], [3, 4], [4, 5], [1, 2], [2, 5]]
+        expected = 4  # gradudation path: 1, 2/3, 4, 5
+        self.assertEqual(expected, min_semesters(total_courses, prerequisites))
+
+    def test_connected_graph_with_paths_of_different_lenghths(self):
+        total_courses = 7
+        prerequisites = [[1, 3], [1, 4], [2, 3], [2, 4], [3, 4], [3, 6],
+                         [4, 5], [4, 6], [4, 7], [3, 6], [6, 7]]
+        expected = 5  # path: 1/2, 3, 4, 5/6, 7
+        self.assertEqual(expected, min_semesters(total_courses, prerequisites))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
 ```
 
 ### May 21, 2020 LT 189 \[Medium\] Find Missing Positive
