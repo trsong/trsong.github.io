@@ -34,6 +34,13 @@ You should return the following, as a string:
 
 -->
 
+### May 24, 2020 \[Hard\] Longest Palindromic Substring
+---
+> **Question:** Given a string, find the longest palindromic contiguous substring. If there are more than one with the maximum length, return any one.
+>
+> For example, the longest palindromic substring of `"aabcdcb"` is `"bcdcb"`. The longest palindromic substring of `"bananas"` is `"anana"`.
+
+
 ### May 23, 2020 LC 394 \[Medium\] Decode String (Invariant)
 ---
 > **Question:** Given an encoded string in form of `"ab[cd]{2}def"`. You have to return decoded string `"abcdcddef"`
@@ -52,6 +59,99 @@ Input: "def[ab[cd]{2}]{3}ghi"
 Output: "defabcdcdabcdcdabcdcdghi"
 ```
 
+**Solution:** [https://repl.it/@trsong/Decode-String-Invariant](https://repl.it/@trsong/Decode-String-Invariant)
+```py
+import unittest
+
+def decode_string(encoded_string):
+    buff = []
+    stack = []
+    count = 0
+    is_in_counting_section = False
+    buff_str = ''
+    for ch in encoded_string:
+        if ch == '{':
+            is_in_counting_section = True
+            count = 0
+        elif ch == '}':
+            is_in_counting_section = False
+            prev_str = stack.pop()
+            combined_str = prev_str + buff_str * count
+            buff = [combined_str]
+        elif is_in_counting_section:
+            count = 10 * count + int(ch)
+        elif ch == '[':
+            buff_str = ''.join(buff)
+            buff = []
+            stack.append(buff_str)
+        elif ch == ']':
+            buff_str = ''.join(buff)
+        else:
+            buff.append(ch)
+    
+    return ''.join(buff)
+        
+
+class DecodeStringSpec(unittest.TestCase):
+    def test_example(self):
+        input = "ab[cd]{2}"
+        expected = "abcdcd"
+        self.assertEqual(expected, decode_string(input))
+    
+    def test_example2(self):
+        input = "def[ab[cd]{2}]{3}ghi"
+        expected = "defabcdcdabcdcdabcdcdghi"
+        self.assertEqual(expected, decode_string(input))
+
+    def test_empty_string(self):
+        self.assertEqual("", decode_string(""))
+    
+    def test_empty_string2(self):
+        self.assertEqual("", decode_string("[]{42}"))
+
+    def test_two_pattern_back_to_back(self):
+        input = "[a]{3}[bc]{2}"
+        expected = "aaabcbc"
+        self.assertEqual(expected, decode_string(input)) 
+    
+    def test_nested_pattern(self):
+        input = "[a[c]{2}]{3}"
+        expected = "accaccacc"
+        self.assertEqual(expected, decode_string(input)) 
+    
+    def test_nested_pattern2(self):
+        input = "[a[b]{2}c]{2}"
+        expected = 2 * ('a' + 2 * 'b' + 'c')
+        self.assertEqual(expected, decode_string(input)) 
+
+    def test_back_to_back_pattern_with_extra_appending(self):
+        input = "[abc]{2}[cd]{3}ef"
+        expected = "abcabccdcdcdef"
+        self.assertEqual(expected, decode_string(input)) 
+    
+    def test_simple_pattern(self):
+        input = "[abc]{3}"
+        expected = 3 * "abc"
+        self.assertEqual(expected, decode_string(input))
+    def test_duplicate_more_than_10_times(self):
+        input = "[ab]{233}"
+        expected =  233 * "ab"
+        self.assertEqual(expected, decode_string(input))
+
+    def test_2Level_nested_encoded_string(self):
+        input = "[[a]{3}[bc]{3}[d]{2}]{2}[[e]{2}]{4}"
+        expected = 2 * (3*"a" + 3*"bc" + 2*"d") + 4*2*"e"
+        self.assertEqual(expected, decode_string(input))
+
+    def test_3Level_nested_encoded_string(self):
+        input = "[a[b[c]{3}d[ef]{4}g]{2}h]{2}"
+        expected = 2*('a' + 2*('b' + 3*'c' + 'd' + 4 * 'ef' + 'g' ) + 'h')
+        self.assertEqual(expected, decode_string(input))
+
+
+if __name__ == "__main__":
+    unittest.main(exit=False)
+```
 
 ### May 22, 2020 LC 1136 \[Hard\] Parallel Courses
 ---
