@@ -34,11 +34,85 @@ You should return the following, as a string:
 
 -->
 
+### May 25, 2020 \[Medium\] Craft Sentence
+---
+> **Question:** Write an algorithm to justify text. Given a sequence of words and an integer line length k, return a list of strings which represents each line, fully justified.
+> 
+> More specifically, you should have as many words as possible in each line. There should be at least one space between each word. Pad extra spaces when necessary so that each line has exactly length k. Spaces should be distributed as equally as possible, with the extra spaces, if any, distributed starting from the left.
+> 
+> If you can only fit one word on a line, then you should pad the right-hand side with spaces.
+> 
+> Each word is guaranteed not to be longer than k.
+>
+> For example, given the list of words `["the", "quick", "brown", "fox", "jumps", "over", "the", "lazy", "dog"]` and `k = 16`, you should return the following:
+
+```py
+["the  quick brown",
+ "fox  jumps  over",
+ "the   lazy   dog"]
+```
+
+
 ### May 24, 2020 \[Hard\] Longest Palindromic Substring
 ---
 > **Question:** Given a string, find the longest palindromic contiguous substring. If there are more than one with the maximum length, return any one.
 >
 > For example, the longest palindromic substring of `"aabcdcb"` is `"bcdcb"`. The longest palindromic substring of `"bananas"` is `"anana"`.
+
+**Solution with DP:** [https://repl.it/@trsong/Find-Longest-Palindromic-Substring](https://repl.it/@trsong/Find-Longest-Palindromic-Substring)
+```py
+import unittest
+
+def find_longest_palindromic_substring(s):
+    if not s:
+        return ""
+
+    n = len(s)
+    # Let dp[i][j] represents whether substring[i:j+1] is palindromic or not
+    #     dp[i][j] = True if dp[i+1][j-1] and s[i]==s[j] 
+    dp = [[False for _ in xrange(n)] for _ in xrange(n)]
+    
+    max_window_size = 1
+    max_window_start = 0
+    for window_size in xrange(1, n+1):
+        for start in xrange(n):
+            end = start + window_size - 1
+            if end >= n: 
+                break
+            
+            if s[start] == s[end] and (start+1 >= end-1 or dp[start+1][end-1]):
+                dp[start][end] = True
+                if window_size > max_window_size:
+                    max_window_size = window_size
+                    max_window_start = start
+    
+    return s[max_window_start:max_window_start+max_window_size]
+            
+
+class FindLongestPalindromicSubstringSpec(unittest.TestCase):
+    def test_example(self):
+        self.assertEqual("bcdcb", find_longest_palindromic_substring("aabcdcb"))
+
+    def test_example2(self):
+        self.assertEqual("anana", find_longest_palindromic_substring("bananas"))
+
+    def test_one_letter_palindrome(self):
+        word = "abcdef"
+        result = find_longest_palindromic_substring(word)
+        self.assertTrue(result in word and len(result) == 1)
+    
+    def test_multiple_length_2_palindrome(self):
+        result = find_longest_palindromic_substring("zaaqrebbqreccqreddz")
+        self.assertIn(result, ["aa", "bb", "cc", "dd"])
+
+    def test_multiple_length_3_palindrome(self):
+        result = find_longest_palindromic_substring("xxaza1xttv1xpqp1x")
+        self.assertIn(result, ["aza", "ttt", "pqp"])
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
+```
 
 
 ### May 23, 2020 LC 394 \[Medium\] Decode String (Invariant)
