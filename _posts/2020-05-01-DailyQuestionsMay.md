@@ -33,6 +33,12 @@ You should return the following, as a string:
 ```
 
 -->
+### May 26, 2020 \[Medium\] Longest Alternating Subsequence Problem
+---
+> **Question:** Finding the length of a subsequence of a given sequence in which the elements are in alternating order, and in which the sequence is as long as possible. 
+>
+> For example, consider array `A[] = [8, 9, 6, 4, 5, 7, 3, 2, 4]` The length of longest subsequence is `6` and the subsequence is `[8, 9, 6, 7, 3, 4]` as `(8 < 9 > 6 < 7 > 3 < 4)`.
+
 
 ### May 25, 2020 \[Medium\] Craft Sentence
 ---
@@ -52,6 +58,86 @@ You should return the following, as a string:
  "the   lazy   dog"]
 ```
 
+
+**Solution:** [https://repl.it/@trsong/Craft-Sentence-Problem#main.py](https://repl.it/@trsong/Craft-Sentence-Problem#main.py)
+```py
+import unittest
+
+def craft_sentence(words, k):
+    buff = []
+    res = []
+    sentence_size = 0
+    for word in words:
+        if sentence_size + len(word) > k:
+            sentence = craft_one_sentence(buff, k)
+            res.append(sentence)
+            buff = []
+            sentence_size = 0
+        
+        buff.append(word)
+        sentence_size += len(word) + 1
+    
+    if buff:
+        res.append(craft_one_sentence(buff, k))
+
+    return res
+
+
+def craft_one_sentence(words, k):
+    n = len(words)
+    num_char = sum(map(len, words))
+    white_spaces = k - num_char
+    padding = white_spaces // (n - 1) if n > 1 else white_spaces
+    extra_padding = white_spaces % (n - 1) if n > 1 else 0
+
+    res = []
+    for word in words:
+        res.append(word)
+        if extra_padding > 0:
+            res.append(" " * (padding + 1))
+            white_spaces -= (padding + 1)
+            extra_padding -= 1
+        elif white_spaces > 0:
+            res.append(" " * padding)
+            white_spaces -= padding
+    return ''.join(res)
+
+
+class CraftSentenceSpec(unittest.TestCase):
+    def test_fit_only_one_word(self):
+        k, words = 7, ["test", "same", "length", "string"]
+        expected = ["test   ", "same   ", "length ", "string "]
+        self.assertEqual(expected, craft_sentence(words, k))
+    
+    def test_fit_only_one_word2(self):
+        k, words = 6, ["test", "same", "length", "string"]
+        expected = ["test  ", "same  ", "length", "string"]
+        self.assertEqual(expected, craft_sentence(words, k))
+
+    def test_no_padding(self):
+        k, words = 2, ["to", "be"]
+        expected = ["to", "be"]
+        self.assertEqual(expected, craft_sentence(words, k))
+
+    def test_fit_two_words(self):
+        k, words = 6, ["To", "be", "or", "not", "to", "be"]
+        expected = ["To  be", "or not", "to  be"]
+        self.assertEqual(expected, craft_sentence(words, k))
+
+    def test_fit_two_words2(self):
+        k, words = 11, ["Greed", "is", "not", "good"]
+        expected = ["Greed    is", "not    good"]
+        self.assertEqual(expected, craft_sentence(words, k))
+
+    def test_fit_more_words(self):
+        k, words = 16, ["the", "quick", "brown", "fox", "jumps", "over", "the", "lazy", "dog"]
+        expected = ["the  quick brown", "fox  jumps  over", "the   lazy   dog"]
+        self.assertEqual(expected, craft_sentence(words, k))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
+```
 
 ### May 24, 2020 \[Hard\] Longest Palindromic Substring
 ---
