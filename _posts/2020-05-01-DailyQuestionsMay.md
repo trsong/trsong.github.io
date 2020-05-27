@@ -33,12 +33,78 @@ You should return the following, as a string:
 ```
 
 -->
+
+### May 27, 2020 \[Medium\] Off-by-One Non-Decreasing Array
+---
+> **Question:** Given an array of integers, write a function to determine whether the array could become non-decreasing by modifying at most 1 element.
+>
+> For example, given the array `[10, 5, 7]`, you should return true, since we can modify the `10` into a `1` to make the array non-decreasing.
+>
+> Given the array `[10, 5, 1]`, you should return false, since we can't modify any one element to get a non-decreasing array.
+n
+
 ### May 26, 2020 \[Medium\] Longest Alternating Subsequence Problem
 ---
 > **Question:** Finding the length of a subsequence of a given sequence in which the elements are in alternating order, and in which the sequence is as long as possible. 
 >
 > For example, consider array `A[] = [8, 9, 6, 4, 5, 7, 3, 2, 4]` The length of longest subsequence is `6` and the subsequence is `[8, 9, 6, 7, 3, 4]` as `(8 < 9 > 6 < 7 > 3 < 4)`.
 
+**My thoughts:** Consider the value of array goes up and down. The length of longest alternating subsequence cannot exceed `1 + number of max and min points`. 
+
+**Solution:** [https://repl.it/@trsong/Longest-Alternating-Subsequence](https://repl.it/@trsong/Longest-Alternating-Subsequence)
+```py
+import unittest
+
+def find_len_of_longest_alt_seq(nums):
+    if len(nums) <= 1:
+        return len(nums)
+
+    prev_sign = None
+    res = 1
+    for i in xrange(1, len(nums)):
+        current_sign = cmp(nums[i - 1], nums[i])
+        if current_sign != 0 and prev_sign != current_sign:
+            res += 1
+            prev_sign = current_sign
+
+    return res
+
+
+class FindLenOfLongestAltSeqSpec(unittest.TestCase):
+    def test_example(self):
+        nums = [8, 9, 6, 4, 5, 7, 3, 2, 4]
+        expected = 6  # [8, 9, 6, 7, 3, 4]
+        self.assertEqual(expected, find_len_of_longest_alt_seq(nums))
+
+    def test_empty_array(self):
+        nums = []
+        expected = 0
+        self.assertEqual(expected, find_len_of_longest_alt_seq(nums))
+
+    def test_entire_array_is_alternating(self):
+        nums = [1, 7, 4, 9, 2, 5]
+        expected = 6  # [1, 7, 4, 9, 2, 5]
+        self.assertEqual(expected, find_len_of_longest_alt_seq(nums))
+
+    def test_multiple_results(self):
+        nums = [1, 17, 5, 10, 13, 15, 10, 5, 16, 8]
+        expected = 7  # One solution: [1, 17, 10, 13, 10, 16, 8]
+        self.assertEqual(expected, find_len_of_longest_alt_seq(nums))
+
+    def test_increasing_array(self):
+        nums = [1, 3, 8, 9]
+        expected = 2  # One solution: [1, 3]
+        self.assertEqual(expected, find_len_of_longest_alt_seq(nums))
+
+    def test_local_solution_is_not_optimal(self):
+        nums = [4, 8, 2, 5, 8, 6]
+        expected = 5  # [4, 8, 2, 8, 6]
+        self.assertEqual(expected, find_len_of_longest_alt_seq(nums))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
+```
 
 ### May 25, 2020 \[Medium\] Craft Sentence
 ---
