@@ -41,7 +41,7 @@ You should return the following, as a string:
 > For example, given the array `[10, 5, 7]`, you should return true, since we can modify the `10` into a `1` to make the array non-decreasing.
 >
 > Given the array `[10, 5, 1]`, you should return false, since we can't modify any one element to get a non-decreasing array.
-n
+
 
 ### May 26, 2020 \[Medium\] Longest Alternating Subsequence Problem
 ---
