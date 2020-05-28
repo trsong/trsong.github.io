@@ -34,7 +34,26 @@ You should return the following, as a string:
 
 -->
 
-### May 27, 2020 \[Medium\] Off-by-One Non-Decreasing Array
+### May 28, 2020 \[Easy\]  Rearrange Array in Alternating Positive & Negative Order
+---
+> **Question:** Given an array of positive and negative numbers, arrange them in an alternate fashion such that every positive number is followed by negative and vice-versa maintaining the order of appearance.
+> 
+> Number of positive and negative numbers need not be equal. If there are more positive numbers they appear at the end of the array. If there are more negative numbers, they too appear in the end of the array.
+
+**Example1:**
+```py
+Input:  arr[] = {1, 2, 3, -4, -1, 4}
+Output: arr[] = {-4, 1, -1, 2, 3, 4}
+```
+
+**Example2:**
+```py
+Input:  arr[] = {-5, -2, 5, 2, 4, 7, 1, 8, 0, -8}
+output: arr[] = {-5, 5, -2, 2, -8, 4, 7, 1, 8, 0} 
+```
+
+
+### May 27, 2020 LC 665 \[Medium\] Off-by-One Non-Decreasing Array
 ---
 > **Question:** Given an array of integers, write a function to determine whether the array could become non-decreasing by modifying at most 1 element.
 >
@@ -42,6 +61,77 @@ You should return the following, as a string:
 >
 > Given the array `[10, 5, 1]`, you should return false, since we can't modify any one element to get a non-decreasing array.
 
+**My thoughts:** try to identify the down postition. The problematic position prevents array from non-decreasing is either the down position or its previous position. Just remove either position and test array again, if it works then it's off-by-one array otherwise it's not since more positions need to be removed.
+
+**Solution:** [https://repl.it/@trsong/Determine-Off-by-One-Non-Decreasing-Array](https://repl.it/@trsong/Determine-Off-by-One-Non-Decreasing-Array)
+```py
+import unittest
+
+def is_off_by_one_array(nums):
+    if len(nums) <= 2:
+        return True
+
+    n = len(nums)
+    down_pos = None
+    for i in xrange(1, n):
+        if nums[i-1] > nums[i]:
+            if down_pos is not None:
+                return False
+            down_pos = i
+
+    # Either prev_down_pos or down_pos has some issue, we try to fix that
+    if down_pos is None or down_pos == 1 or down_pos == n - 1:
+        return True
+    else:
+        prev_down_pos = down_pos - 1
+        without_prev = nums[down_pos-1] <= nums[down_pos+1]
+        without_cur = nums[prev_down_pos-1] <= nums[prev_down_pos+1]
+        return without_prev or without_cur
+
+
+class IsOffByOneArraySpec(unittest.TestCase):
+    def test_example(self):
+        self.assertTrue(is_off_by_one_array([10, 5, 7]))
+
+    def test_example2(self):
+        self.assertFalse(is_off_by_one_array([10, 5, 1]))
+
+    def test_empty_array(self):
+        self.assertTrue(is_off_by_one_array([]))
+
+    def test_one_element_array(self):
+        self.assertTrue(is_off_by_one_array([1]))
+
+    def test_two_elements_array(self):
+        self.assertTrue(is_off_by_one_array([1, 1]))
+        self.assertTrue(is_off_by_one_array([1, 0]))
+        self.assertTrue(is_off_by_one_array([0, 1]))
+
+    def test_decreasing_array(self):
+        self.assertFalse(is_off_by_one_array([8, 2, 0]))
+
+    def test_non_decreasing_array(self):
+        self.assertTrue(is_off_by_one_array([0, 0, 1, 2, 2]))
+        self.assertTrue(is_off_by_one_array([0, 1, 2]))
+        self.assertTrue(is_off_by_one_array([0, 0, 0, 0]))
+
+    def test_off_by_one_array(self):
+        self.assertTrue(is_off_by_one_array([2, 10, 0]))
+        self.assertTrue(is_off_by_one_array([5, 2, 10]))
+        self.assertTrue(is_off_by_one_array([0, 1, 0, 0]))
+        self.assertTrue(is_off_by_one_array([-1, 4, 2, 3]))
+        self.assertTrue(is_off_by_one_array([0, 1, 1, 0]))
+
+    def test_off_by_two_array(self):
+        self.assertFalse(is_off_by_one_array([5, 2, 10, 3, 4]))
+        self.assertTrue(is_off_by_one_array([0, 1, 0, 0, 0, 1]))
+        self.assertFalse(is_off_by_one_array([1, 1, 0, 0]))
+        self.assertFalse(is_off_by_one_array([0, 1, 1, 0, 0, 1]))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
+```
 
 ### May 26, 2020 \[Medium\] Longest Alternating Subsequence Problem
 ---
