@@ -34,6 +34,25 @@ You should return the following, as a string:
 
 -->
 
+### May 29, 2020 \[Easy\] Longest Consecutive Subsequence
+---
+> **Question:** Given an array of integers, find the length of the longest sub-sequence such that elements in the subsequence are consecutive integers, the consecutive numbers can be in any order.
+
+**Example1:**
+Input: [1, 9, 3, 10, 4, 20, 2}
+Output: 4
+The subsequence 1, 3, 4, 2 is the longest subsequence
+of consecutive elements
+
+**Example2:**
+```py
+Input: [36, 41, 56, 35, 44, 33, 34, 92, 43, 32, 42]
+Output: 5
+The subsequence 36, 35, 33, 34, 32 is the longest subsequence
+of consecutive elements. 
+```
+
+
 ### May 28, 2020 \[Easy\]  Rearrange Array in Alternating Positive & Negative Order
 ---
 > **Question:** Given an array of positive and negative numbers, arrange them in an alternate fashion such that every positive number is followed by negative and vice-versa maintaining the order of appearance.
@@ -52,6 +71,74 @@ Input:  arr[] = {-5, -2, 5, 2, 4, 7, 1, 8, 0, -8}
 output: arr[] = {-5, 5, -2, 2, -8, 4, 7, 1, 8, 0} 
 ```
 
+**Solution:** [https://repl.it/@trsong/Rearrange-Array-in-Alternating-Positive-and-Negative-Order](https://repl.it/@trsong/Rearrange-Array-in-Alternating-Positive-and-Negative-Order)
+```py
+import unittest
+
+def rearrange_array(nums):
+    positives = []
+    negatives = []
+    for num in nums:
+        if num >= 0:
+            positives.append(num)
+        else:
+            negatives.append(num)
+
+    i = j = k = 0
+    while k < len(nums):
+        if i < len(negatives):
+            nums[k] = negatives[i]
+            i += 1
+            k += 1
+        
+        if j < len(positives):
+            nums[k] = positives[j]
+            j += 1
+            k += 1   
+    
+    return nums
+
+    
+class RearrangeArraySpec(unittest.TestCase):
+    def test_example(self):
+        nums = [1, 2, 3, -4, -1, 4]
+        expected = [-4, 1, -1, 2, 3, 4]
+        self.assertEqual(expected, rearrange_array(nums))
+
+    def test_example2(self):
+        nums = [-5, -2, 5, 2, 4, 7, 1, 8, 0, -8]
+        expected = [-5, 5, -2, 2, -8, 4, 7, 1, 8, 0]
+        self.assertEqual(expected, rearrange_array(nums))
+
+    def test_more_negatives_than_positives(self):
+        nums = [-1, -2, -3, -4, 1, 2, -5, -6]
+        expected =  [-1, 1, -2, 2, -3, -4, -5, -6]
+        self.assertEqual(expected, rearrange_array(nums))
+
+    def test_more_positives_than_negatives(self):
+        nums = [-1, 1, 2, 3, -2]
+        expected =  [-1, 1, -2, 2, 3]
+        self.assertEqual(expected, rearrange_array(nums))
+
+    def test_empty_array(self):
+        nums = []
+        expected = []
+        self.assertEqual(expected, rearrange_array(nums))
+
+    def test_no_negatives(self):
+        nums = [1, 1, 2, 3]
+        expected = [1, 1, 2, 3]
+        self.assertEqual(expected, rearrange_array(nums))
+
+    def test_no_positive_array(self):
+        nums = [-1]
+        expected = [-1]
+        self.assertEqual(expected, rearrange_array(nums))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
+```
 
 ### May 27, 2020 LC 665 \[Medium\] Off-by-One Non-Decreasing Array
 ---
