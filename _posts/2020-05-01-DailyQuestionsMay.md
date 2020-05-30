@@ -34,7 +34,7 @@ You should return the following, as a string:
 
 -->
 
- ### May 30, 2020 \[Easy\] Rotate Linked List
+### May 30, 2020 \[Easy\] Rotate Linked List
 ---
 > **Question:** Given a linked list and a number k, rotate the linked list by k places.
 
