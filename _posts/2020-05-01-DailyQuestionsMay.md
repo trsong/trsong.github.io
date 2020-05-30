@@ -34,13 +34,27 @@ You should return the following, as a string:
 
 -->
 
+ ### May 30, 2020 \[Easy\] Rotate Linked List
+---
+> **Question:** Given a linked list and a number k, rotate the linked list by k places.
+
+**Example:**
+```py
+Input: 
+Node(1, Node(2, Node(3, Node(4))))
+2
+
+Output:
+Node(3, Node(4, Node(1, Node(2))))
+```
+
 ### May 29, 2020 \[Easy\] Longest Consecutive Subsequence
 ---
 > **Question:** Given an array of integers, find the length of the longest sub-sequence such that elements in the subsequence are consecutive integers, the consecutive numbers can be in any order.
 
 **Example1:**
 ```py
-Input: [1, 9, 3, 10, 4, 20, 2}
+Input: [1, 9, 3, 10, 4, 20, 2]
 Output: 4
 The subsequence 1, 3, 4, 2 is the longest subsequence
 of consecutive elements
@@ -54,6 +68,88 @@ The subsequence 36, 35, 33, 34, 32 is the longest subsequence
 of consecutive elements. 
 ```
 
+**Solution:** [https://repl.it/@trsong/Longest-Consecutive-Subsequence](https://repl.it/@trsong/Longest-Consecutive-Subsequence)
+```py
+import unittest
+
+def find_longest_consecutive_seq(nums):
+    num_set = set(nums)
+
+    res = 0
+    for pivot in nums:
+        if pivot not in num_set:
+            continue
+        
+        seq_len = 1
+        p = pivot - 1
+        while p in num_set:
+            seq_len += 1
+            num_set.remove(p)
+            p -= 1
+
+        p = pivot + 1
+        while p in num_set:
+            seq_len += 1
+            num_set.remove(p)
+            p += 1
+
+        res = max(res, seq_len)
+    return res   
+
+
+class FindLongestConsecutiveSeqSpec(unittest.TestCase):
+    def test_example(self):
+        nums = [1, 9, 3, 10, 4, 20, 2]
+        expected = 4  # [1, 3, 4, 2]
+        self.assertEqual(expected, find_longest_consecutive_seq(nums))
+
+    def test_example2(self):
+        nums = [36, 41, 56, 35, 44, 33, 34, 92, 43, 32, 42]
+        expected = 5  # [36, 35, 33, 34, 32]
+        self.assertEqual(expected, find_longest_consecutive_seq(nums))
+
+    def test_example3(self):
+        nums = [9, 6, 1, 3, 8, 10, 12, 11]
+        expected = 5  # [9, 8, 10, 12, 11]
+        self.assertEqual(expected, find_longest_consecutive_seq(nums))
+
+    def test_example4(self):
+        nums = [2, 10, 3, 12, 5, 4, 11, 8, 7, 6, 15]
+        expected = 7  # [2, 3, 5, 4, 8, 7, 6]
+        self.assertEqual(expected, find_longest_consecutive_seq(nums))
+
+    def test_empty_array(self):
+        self.assertEqual(0, find_longest_consecutive_seq([]))
+
+    def test_no_consecutive_sequence(self):
+        nums = [1, 3, 5, 7]
+        expected = 1
+        self.assertEqual(expected, find_longest_consecutive_seq(nums))
+
+    def test_more_than_one_solution(self):
+        nums = [0, 3, 4, 5, 9, 10, 13, 14, 15, 19, 20, 1]
+        expected = 3  # [3, 4, 5]
+        self.assertEqual(expected, find_longest_consecutive_seq(nums))
+
+    def test_longer_array(self):
+        nums = [10, 21, 45, 22, 7, 2, 67, 19, 13, 45, 12, 11, 18, 16, 17, 100, 201, 20, 101]
+        expected = 7  # [21, 22, 19, 18, 16, 17, 20]
+        self.assertEqual(expected, find_longest_consecutive_seq(nums))
+
+    def test_entire_array_is_continous(self):
+        nums = [0, 1, 2, 3, 4, 5]
+        expected = 6
+        self.assertEqual(expected, find_longest_consecutive_seq(nums))
+
+    def test_array_with_duplicated_numbers(self):
+        nums = [0, 0, 3, 3, 2, 2, 1, 4, 7, 8, 10]
+        expected = 5  # [0, 3, 2, 1, 4] 
+        self.assertEqual(expected, find_longest_consecutive_seq(nums))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
+```
 
 ### May 28, 2020 \[Easy\]  Rearrange Array in Alternating Positive & Negative Order
 ---
