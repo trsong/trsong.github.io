@@ -34,6 +34,15 @@ You should return the following, as a string:
 
 -->
 
+### May 31, 2020 \[Medium\] Remove K-th Last Element from Singly Linked-list
+---
+> **Question:** Given a singly linked list and an integer k, remove the kth last element from the list. k is guaranteed to be smaller than the length of the list.
+>
+> **Note:**
+> - The list is very long, so making more than one pass is prohibitively expensive.
+> - Do this in constant space and in one pass.
+
+
 ### May 30, 2020 \[Easy\] Rotate Linked List
 ---
 > **Question:** Given a linked list and a number k, rotate the linked list by k places.
@@ -47,6 +56,98 @@ Node(1, Node(2, Node(3, Node(4))))
 Output:
 Node(3, Node(4, Node(1, Node(2))))
 ```
+
+**Solution:** [https://repl.it/@trsong/Rotate-Linked-List](https://repl.it/@trsong/Rotate-Linked-List)
+```py
+import unittest
+
+def rotate_list(head, k):
+    if not head:
+        return head
+
+    p = dummy = Node(-1, head)
+    lst_len = 0
+    while p.next:
+        p = p.next
+        lst_len += 1
+    k %= lst_len
+    if k == 0:
+        return head
+
+    p.next = dummy.next
+    p = dummy
+    for _ in xrange(k):
+        p = p.next
+
+    res = p.next
+    p.next = None
+    return res
+
+
+class Node(object):
+    def __init__(self, val, next=None):
+        self.val = val
+        self.next = next
+
+    def __eq__(self, other):
+        return other and self.val == other.val and self.next == other.next
+
+    def __repr__(self):
+        return "%d -> %s" % (self.val, self.next)
+
+    @staticmethod
+    def List(*vals):
+        p = dummy = Node(-1)
+        for val in vals:
+            p.next = Node(val)
+            p = p.next
+        return dummy.next
+
+
+class RotateListSpec(unittest.TestCase):
+    def test_example(self):
+        k, lst = 2, Node.List(1, 2, 3, 4)
+        expected = Node.List(3, 4, 1, 2)
+        self.assertEqual(expected, rotate_list(lst, k))
+
+    def test_empty_list(self):
+        self.assertIsNone(rotate_list(None, 42))
+
+    def test_single_elem_list(self):
+        k, lst = 42, Node.List(1)
+        expected = Node.List(1)
+        self.assertEqual(expected, rotate_list(lst, k))
+
+    def test_k_greater_than_length_of_list(self):
+        k, lst = 5, Node.List(1, 2)
+        expected = Node.List(2, 1)
+        self.assertEqual(expected, rotate_list(lst, k))
+
+    def test_k_equal_length_of_list(self):
+        k, lst = 3, Node.List(1, 2, 3)
+        expected = Node.List(1, 2, 3)
+        self.assertEqual(expected, rotate_list(lst, k))
+
+    def test_k_is_negative(self):
+        k, lst = -1, Node.List(1, 2, 3)
+        expected = Node.List(3, 1, 2)
+        self.assertEqual(expected, rotate_list(lst, k))
+
+    def test_k_less_than_length_of_list(self):
+        k, lst = 5, Node.List(0, 1, 2, 3, 4, 5)
+        expected = Node.List(5, 0, 1, 2, 3, 4)
+        self.assertEqual(expected, rotate_list(lst, k))
+
+    def test_array_contains_duplicates(self):
+        k, lst = 1, Node.List(1, 1, 2, 2, 3, 3, 3, 4)
+        expected = Node.List(1, 2, 2, 3, 3, 3, 4, 1)
+        self.assertEqual(expected, rotate_list(lst, k))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
+```
+
 
 ### May 29, 2020 \[Easy\] Longest Consecutive Subsequence
 ---
