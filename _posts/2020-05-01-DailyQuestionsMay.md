@@ -34,6 +34,11 @@ You should return the following, as a string:
 
 -->
 
+### June 1, 2020 \[Medium\] Find Next Biggest Integer
+---
+> **Question:** Given an integer `n`, find the next biggest integer with the same number of 1-bits on. For example, given the number `6 (0110 in binary)`, return `9 (1001)`.
+
+
 ### May 31, 2020 \[Medium\] Remove K-th Last Element from Singly Linked-list
 ---
 > **Question:** Given a singly linked list and an integer k, remove the kth last element from the list. k is guaranteed to be smaller than the length of the list.
@@ -42,6 +47,80 @@ You should return the following, as a string:
 > - The list is very long, so making more than one pass is prohibitively expensive.
 > - Do this in constant space and in one pass.
 
+**Solution with Fast and Slow Pointer:** [https://repl.it/@trsong/Remove-the-K-th-Last-Element-from-Singly-Linked-list](https://repl.it/@trsong/Remove-the-K-th-Last-Element-from-Singly-Linked-list)
+```py
+
+import unittest
+
+def remove_last_kth_elem(k, lst):
+    fast = slow = dummy = ListNode(-1, lst)
+    for _ in xrange(k):
+        fast = fast.next
+
+    while fast.next:
+        fast = fast.next
+        slow = slow.next
+
+    if slow.next:
+        slow.next = slow.next.next
+    return dummy.next
+    
+
+###################
+# Testing Utilities
+###################
+class ListNode(object):
+    def __init__(self, x, next=None):
+        self.val = x
+        self.next = next
+
+    def __eq__(self, other):
+        return other and self.val == other.val and self.next == other.next
+
+    def __repr__(self):
+        return "%d -> %s" % (self.val, self.next)
+
+    @staticmethod
+    def seq(*vals):
+        p = dummy = ListNode(-1)
+        for elem in vals:
+            p.next = ListNode(elem)
+            p = p.next
+        return dummy.next
+
+
+class RemoveLastKthElementSpec(unittest.TestCase):
+    def test_empty_list(self):
+        self.assertIsNone(remove_last_kth_elem(0, None))
+
+    def test_remove_the_only_element(self):
+        k, lst = 1, ListNode.seq(42)
+        self.assertIsNone(remove_last_kth_elem(k, lst))
+    
+    def test_remove_the_last_element(self):
+        k, lst = 1, ListNode.seq(1, 2, 3)
+        expected = ListNode.seq(1, 2)
+        self.assertEqual(expected, remove_last_kth_elem(k, lst))
+
+    def test_remove_the_first_element(self):
+        k, lst = 4, ListNode.seq(1, 2, 3, 4)
+        expected = ListNode.seq(2, 3, 4)
+        self.assertEqual(expected, remove_last_kth_elem(k, lst))
+
+    def test_remove_element_in_the_middle(self):
+        k, lst = 3, ListNode.seq(5, 4, 3, 2, 1)
+        expected = ListNode.seq(5, 4, 2, 1)
+        self.assertEqual(expected, remove_last_kth_elem(k, lst))
+
+    def test_remove_the_second_last_element(self):
+        k, lst = 2, ListNode.seq(4, 3, 2, 1)
+        expected = ListNode.seq(4, 3, 1)
+        self.assertEqual(expected, remove_last_kth_elem(k, lst))
+
+    
+if __name__ == '__main__':
+    unittest.main(exit=False)
+```
 
 ### May 30, 2020 \[Easy\] Rotate Linked List
 ---
