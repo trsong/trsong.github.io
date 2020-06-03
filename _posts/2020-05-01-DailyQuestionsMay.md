@@ -34,14 +34,86 @@ You should return the following, as a string:
 
 -->
 
+### June 4, 2020 LC 289 \[Medium\] Conway's Game of Life
+---
+> **Question:** Conway's Game of Life takes place on an infinite two-dimensional board of square cells. Each cell is either dead or alive, and at each tick, the following rules apply:
+>
+> - Any live cell with less than two live neighbours dies.
+> - Any live cell with two or three live neighbours remains living.
+> - Any live cell with more than three live neighbours dies.
+> - Any dead cell with exactly three live neighbours becomes a live cell.
+> - A cell neighbours another cell if it is horizontally, vertically, or diagonally adjacent.
+>
+> Implement Conway's Game of Life. It should be able to be initialized with a starting list of live cell coordinates and the number of steps it should run for. Once initialized, it should print out the board state at each step. Since it's an infinite board, print out only the relevant coordinates, i.e. from the top-leftmost live cell to bottom-rightmost live cell.
+>
+> You can represent a live cell with an asterisk (*) and a dead cell with a dot (.).
+
+
 ### June 3, 2020 \[Medium\] In-place Array Rotation
 ---
-> **Question:** Write a function that rotates a list by `k` elements.
+> **Question:** Write a function that rotates an array by `k` elements.
 >
 > For example, `[1, 2, 3, 4, 5, 6]` rotated by two becomes [`3, 4, 5, 6, 1, 2]`.
 >
-> Try solving this without creating a copy of the list. How many swap or move operations do you need?
+> Try solving this without creating a copy of the array. How many swap or move operations do you need?
 
+
+**Solution:** [https://repl.it/@trsong/Rotate-Array-In-place](https://repl.it/@trsong/Rotate-Array-In-place)
+```py
+import unittest
+
+def rotate(nums, k):
+    if not nums:
+        return nums
+    
+    n = len(nums)
+    k %= n
+    reverse(nums, 0, k-1)
+    reverse(nums, k, n-1)
+    reverse(nums, 0, n-1)
+    return nums
+
+
+def reverse(nums, start, end):
+    while start < end:
+        nums[start], nums[end] = nums[end], nums[start]
+        start += 1
+        end -= 1
+
+
+class RotateSpec(unittest.TestCase):
+    def test_example(self):
+        k, nums = 2, [1, 2, 3, 4, 5, 6]
+        expected = [3, 4, 5, 6, 1, 2]
+        self.assertEqual(expected, rotate(nums, k))
+
+    def test_rotate_0_position(self):
+        k, nums = 0, [0, 1, 2, 3]
+        expected = [0, 1, 2, 3]
+        self.assertEqual(expected, rotate(nums, k))
+
+    def test_empty_array(self):
+        self.assertEqual([], rotate([], k=10))
+
+    def test_shift_negative_position(self):
+        k, nums = -1, [0, 1, 2, 3]
+        expected = [3, 0, 1, 2]
+        self.assertEqual(expected, rotate(nums, k))
+
+    def test_shift_more_than_array_size(self):
+        k, nums = 8,  [1, 2, 3, 4, 5, 6]
+        expected = [3, 4, 5, 6, 1, 2]
+        self.assertEqual(expected, rotate(nums, k))
+
+    def test_multiple_round_of_forward_and_backward_shift(self):
+        k, nums = 5, [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
+        expected = [5, 6, 7, 8, 9, 10, 11, 12, 0, 1, 2, 3, 4]
+        self.assertEqual(expected, rotate(nums, k))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
+```
 
 ### June 2, 2020 \[Hard\] Find Next Greater Permutation
 ---
