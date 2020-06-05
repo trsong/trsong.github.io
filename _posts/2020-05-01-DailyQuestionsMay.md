@@ -34,6 +34,20 @@ You should return the following, as a string:
 
 -->
 
+### June 5, 2020 \[Medium\] Minimum Number of Operations
+---
+> **Question:** You are only allowed to perform 2 operations:
+> - either multiply a number by 2;
+> - or subtract a number by 1. 
+>
+> Given a number `x` and a number `y`, find the minimum number of operations needed to go from `x` to `y`.
+
+**Example:**
+```py
+min_operations(6, 20)  # Gives 3
+# Since (((6 - 1) * 2) * 2) = 20 : 3 operations needed only
+```
+
 ### June 4, 2020 LC 289 \[Medium\] Conway's Game of Life
 ---
 > **Question:** Conway's Game of Life takes place on an infinite two-dimensional board of square cells. Each cell is either dead or alive, and at each tick, the following rules apply:
@@ -48,6 +62,195 @@ You should return the following, as a string:
 >
 > You can represent a live cell with an asterisk (*) and a dead cell with a dot (.).
 
+
+**Solution:** [https://repl.it/@trsong/Solve-Conways-Game-of-Life](https://repl.it/@trsong/Solve-Conways-Game-of-Life)
+```py
+import unittest
+
+class ConwaysGameOfLife(object):
+    def __init__(self, initial_life_coordinates):
+        self._grid = {}
+        self._reset_boundary()
+        for coord in initial_life_coordinates:
+            if coord[0] not in self._grid:
+                self._grid[coord[0]] = set()
+            self._grid[coord[0]].add(coord[1])
+            self._update_boundary(coord)
+
+    def _reset_boundary(self):
+        self._left_boundary = None
+        self._right_boundary = None
+        self._top_boundary = None
+        self._bottom_boundary = None
+
+    def _update_boundary(self, coord):
+        self._left_boundary = coord[1] if self._left_boundary is None else  min(self._left_boundary, coord[1])
+        self._right_boundary = coord[1] if self._right_boundary is None else max(self._right_boundary, coord[1])
+        self._top_boundary =  coord[0] if self._top_boundary is None else min(self._top_boundary, coord[0])
+        self._bottom_boundary = coord[0] if self._bottom_boundary is None else max(self._bottom_boundary, coord[0])
+
+    def _check_alive(self, coord):
+        r, c = coord[0], coord[1]
+        delta = [-1, 0, 1]
+        num_neighbor = 0
+        for dr in delta:
+            for dc in delta:
+                if dr == dc == 0:
+                    continue
+                if r+dr in self._grid and c+dc in self._grid[r+dr]:
+                    num_neighbor += 1
+        is_prev_alive = r in self._grid and c in self._grid[r]
+        return is_prev_alive and 2 <= num_neighbor <= 3 or not is_prev_alive and num_neighbor == 3
+
+    def _next_round(self):
+        added_changeset = []
+        removed_changeset = []
+        for r in xrange(self._top_boundary-1, self._bottom_boundary + 2):
+            for c in xrange(self._left_boundary-1, self._right_boundary + 2):
+                is_prev_alive = r in self._grid and c in self._grid[r]
+                is_now_alive = self._check_alive([r, c])
+                if not is_prev_alive and is_now_alive:
+                    added_changeset.append([r, c])
+                elif is_prev_alive and not is_now_alive:
+                    removed_changeset.append([r, c])
+
+        for coord in removed_changeset:
+            self._grid[coord[0]].remove(coord[1])
+            if not len(self._grid[coord[0]]):
+                del self._grid[coord[0]]
+
+        for coord in added_changeset:
+            if coord[0] not in self._grid:
+                self._grid[coord[0]] = set()
+            self._grid[coord[0]].add(coord[1])
+        
+        self._reset_boundary()
+        for r in self._grid:
+            for c in self._grid[r]:
+                self._update_boundary([r, c])
+
+    def proceed(self, n_round):
+        for _ in xrange(n_round):
+            self._next_round()
+
+    def display_grid(self):
+        if not self._grid: return []
+        res = []
+        for r in xrange(self._top_boundary, self._bottom_boundary + 1):
+            if r in self._grid:
+                line = []
+                for c in xrange(self._left_boundary, self._right_boundary + 1):
+                    if c in self._grid[r]:
+                        line.append("*")
+                    else:
+                        line.append(".")
+                res.append("".join(line))
+            else:
+                res.append("." * (self._right_boundary - self._left_boundary + 1))
+        return res
+
+
+class ConwaysGameOfLifeSpec(unittest.TestCase):
+    def test_still_lives_scenario(self):
+        game = ConwaysGameOfLife([[1, 1], [1, 2], [2, 1], [2, 2]])
+        self.assertEqual(game.display_grid(), [
+            "**",
+            "**"
+        ])
+        game.proceed(1)
+        self.assertEqual(game.display_grid(), [
+            "**",
+            "**"
+        ])
+
+        game2 = ConwaysGameOfLife([[0, 1], [0, 2], [1, 0], [1, 3], [2, 1], [2, 2]])
+        self.assertEqual(game2.display_grid(), [
+            ".**.",
+            "*..*",
+            ".**."
+        ])
+        game2.proceed(2)
+        self.assertEqual(game2.display_grid(), [
+            ".**.",
+            "*..*",
+            ".**."
+        ])
+
+    def test_oscillators_scenario(self):
+        game = ConwaysGameOfLife([[-100, 0], [-100, 1], [-100, 2]])
+        self.assertEqual(game.display_grid(), [
+            "***",
+        ])
+        game.proceed(1)
+        self.assertEqual(game.display_grid(), [
+            "*",
+            "*",
+            "*"
+        ])
+        game.proceed(3)
+        self.assertEqual(game.display_grid(), [
+           "***",
+        ])
+
+        game2 = ConwaysGameOfLife([[0, 0], [0, 1], [1, 0], [2, 3], [3, 2], [3, 3]])
+        self.assertEqual(game2.display_grid(), [
+            "**..",
+            "*...",
+            "...*",
+            "..**"
+        ])
+        game2.proceed(1)
+        self.assertEqual(game2.display_grid(), [
+            "**..",
+            "**..",
+            "..**",
+            "..**",
+        ])
+        game2.proceed(3)
+        self.assertEqual(game2.display_grid(), [
+            "**..",
+            "*...",
+            "...*",
+            "..**"
+        ])
+
+
+    def test_spaceships_scenario(self):
+        game = ConwaysGameOfLife([[0, 2], [1, 0], [1, 2], [2, 1], [2, 2]])
+        self.assertEqual(game.display_grid(), [
+            "..*",
+            "*.*",
+            ".**"
+        ])
+        game.proceed(1)
+        self.assertEqual(game.display_grid(), [
+           "*..",
+           ".**",
+           "**."
+        ])
+        game.proceed(1)
+        self.assertEqual(game.display_grid(), [
+            ".*.",
+            "..*",
+            "***"
+        ])
+        game.proceed(1)
+        self.assertEqual(game.display_grid(), [
+            "*.*",
+            ".**",
+            ".*."
+        ])
+        game.proceed(1)
+        self.assertEqual(game.display_grid(), [
+            "..*",
+            "*.*",
+            ".**"
+        ])
+        
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
+```
 
 ### June 3, 2020 \[Medium\] In-place Array Rotation
 ---
