@@ -34,6 +34,23 @@ You should return the following, as a string:
 
 -->
 
+### June 6, 2020 \[Easy\] First and Last Indices of an Element in a Sorted Array
+---
+> **Question:** Given a sorted array, A, with possibly duplicated elements, find the indices of the first and last occurrences of a target element, x. Return -1 if the target is not found.
+
+**Examples:**
+```py
+Input: A = [1, 3, 3, 5, 7, 8, 9, 9, 9, 15], target = 9
+Output: [6, 8]
+
+Input: A = [100, 150, 150, 153], target = 150
+Output: [1, 2]
+
+Input: A = [1, 2, 3, 4, 5, 6, 10], target = 9
+Output: [-1, -1]
+```
+
+
 ### June 5, 2020 \[Medium\] Minimum Number of Operations
 ---
 > **Question:** You are only allowed to perform 2 operations:
@@ -41,6 +58,72 @@ You should return the following, as a string:
 > - or subtract a number by 1. 
 >
 > Given a number `x` and a number `y`, find the minimum number of operations needed to go from `x` to `y`.
+
+**Solution with BFS:** [https://repl.it/@trsong/Find-the-min-number-of-operations](https://repl.it/@trsong/Find-the-min-number-of-operations)
+```py
+import unittest
+
+def min_operations(start, end):
+    queue = [start]
+    visited = set()
+    num_ops = 0
+
+    while True:
+        for _ in xrange(len(queue)):
+            cur = queue.pop(0)
+            if cur == end:
+                return num_ops
+            if cur in visited:
+                continue
+            else:
+                visited.add(cur)
+            
+            for nb in [2*cur, cur-1]:
+                if nb not in visited:
+                    queue.append(nb)
+        num_ops += 1
+
+            
+class MinOperationSpec(unittest.TestCase):
+    def test_example(self):
+        # (((6 - 1) * 2) * 2) = 20 
+        self.assertEqual(3, min_operations(6, 20))
+
+    def test_first_double_then_decrement(self):
+        # 4 * 2 - 1 = 7
+        self.assertEqual(2, min_operations(4, 7))
+
+    def test_first_decrement_then_double(self):
+        # (4 - 1) * 2 = 6
+        self.assertEqual(2, min_operations(4, 6))
+
+    def test_first_decrement_then_double2(self):
+        # (2 * 2 - 1) * 2 - 1 = 5
+        self.assertEqual(4, min_operations(2, 5))
+
+    def test_first_decrement_then_double3(self):
+        # (((10 * 2) - 1 ) * 2 - 1) * 2
+        self.assertEqual(5, min_operations(10, 74))
+
+    def test_no_need_to_apply_operations(self):
+        self.assertEqual(0, min_operations(2, 2))
+
+    def test_avoid_inifite_loop(self):
+        # ((0 - 1 - 1) * 2  - 1) * 2  = -10
+        self.assertEqual(5, min_operations(0, -10))
+
+    def test_end_is_smaller(self):
+        # 10 - 1 -1 ... - 1 = 0
+        self.assertEqual(10, min_operations(10, 0))
+
+    def test_end_is_smaller2(self):
+        # (10 - 1 -1 ... - 1) * 2 * 2 = 0
+        self.assertEqual(13, min_operations(10, -4))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
+```
 
 **Example:**
 ```py
