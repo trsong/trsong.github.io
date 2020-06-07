@@ -34,6 +34,23 @@ You should return the following, as a string:
 
 -->
 
+### June 7, 2020 \[Easy\] Generate All Possible Subsequences
+---
+> **Question:** For example, given the string `xyz`, return an array or set with the following strings:
+
+```py
+x
+y
+z
+xy
+xz
+yz
+xyz
+```
+
+> Note that `zx` is not a valid subsequence since it is not in the order of the given string.
+
+
 ### June 6, 2020 \[Easy\] First and Last Indices of an Element in a Sorted Array
 ---
 > **Question:** Given a sorted array, A, with possibly duplicated elements, find the indices of the first and last occurrences of a target element, x. Return -1 if the target is not found.
@@ -48,6 +65,101 @@ Output: [1, 2]
 
 Input: A = [1, 2, 3, 4, 5, 6, 10], target = 9
 Output: [-1, -1]
+```
+
+**Solution with Binary Search:** [https://repl.it/@trsong/Find-First-and-Last-Indices-of-an-Element-in-a-Sorted-Array](https://repl.it/@trsong/Find-First-and-Last-Indices-of-an-Element-in-a-Sorted-Array)
+```py
+import unittest
+
+def binary_search(nums, target, exclusive=False):
+    # by default exclusive is off: return the smallest index of number >= target
+    # if exclusive is turned on: return the smallest index of number > target
+    lo = 0
+    hi = len(nums)
+    while lo < hi:
+        mid = lo + (hi - lo) // 2
+        if exclusive and nums[mid] == target:
+            lo = mid + 1
+        elif nums[mid] < target:
+            lo = mid + 1
+        else:
+            hi = mid
+    
+    return lo
+
+
+def search_range(nums, target):
+    if not nums or target < nums[0] or target > nums[-1]:
+        return (-1, -1)
+
+    lo = binary_search(nums, target)
+    if nums[lo] != target:
+        return (-1, -1)
+    
+    hi_plus = binary_search(nums, target, exclusive=True)
+
+    return (lo, hi_plus - 1)
+
+
+class SearchRangeSpec(unittest.TestCase):
+    def test_example1(self):
+        target, nums = 1, [1, 1, 3, 5, 7]
+        expected = (0, 1)
+        self.assertEqual(expected, search_range(nums, target))
+
+    def test_example2(self):
+        target, nums = 5, [1, 2, 3, 4]
+        expected = (-1, -1)
+        self.assertEqual(expected, search_range(nums, target))
+
+    def test_empty_list(self):
+        target, nums = 0, []
+        expected = (-1, -1)
+        self.assertEqual(expected, search_range(nums, target))
+
+    def test_list_with_unique_value(self):
+        target, nums = 1, [1, 1, 1, 1]
+        expected = (0, 3)
+        self.assertEqual(expected, search_range(nums, target))
+
+    def test_list_with_duplicate_elements(self):
+        target, nums = 0, [0, 0, 0, 1, 1, 1, 1]
+        expected = (0, 2)
+        self.assertEqual(expected, search_range(nums, target))
+
+    def test_list_with_duplicate_elements2(self):
+        target, nums = 1, [0, 1, 1, 1, 1, 2, 2, 2, 2]
+        expected = (1, 4)
+        self.assertEqual(expected, search_range(nums, target))
+
+    def test_target_element_fall_into_a_specific_range(self):
+        target, nums = 10, [1, 3, 5, 7, 9, 11, 11, 12]
+        expected = (-1, -1)
+        self.assertEqual(expected, search_range(nums, target))
+
+    def test_smaller_than_min_element(self):
+        target, nums = -10, [0]
+        expected = (-1, -1)
+        self.assertEqual(expected, search_range(nums, target))
+
+    def test_larger_than_max_element(self):
+        target, nums = 10, [0]
+        expected = (-1, -1)
+        self.assertEqual(expected, search_range(nums, target))
+
+    def test_target_is_the_max_element(self):
+        target, nums = 1, [0, 1]
+        expected = (1, 1)
+        self.assertEqual(expected, search_range(nums, target))
+
+    def test_target_is_the_min_element(self):
+        target, nums = 0, [0, 1]
+        expected = (0, 0)
+        self.assertEqual(expected, search_range(nums, target))
+    
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
 ```
 
 
