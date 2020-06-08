@@ -34,9 +34,21 @@ You should return the following, as a string:
 
 -->
 
+### June 8, 2020 \[Medium\] Group Words that are Anagrams
+---
+> **Question:** Given a list of words, group the words that are anagrams of each other. (An anagram are words made up of the same letters).
+
+**Example:**
+```py
+Input: ['abc', 'bcd', 'cba', 'cbd', 'efg']
+Output: [['abc', 'cba'], ['bcd', 'cbd'], ['efg']]
+```
+
 ### June 7, 2020 \[Easy\] Generate All Possible Subsequences
 ---
-> **Question:** For example, given the string `xyz`, return an array or set with the following strings:
+> **Question:** Given a string, generate all possible subsequences of the string.
+>
+> For example, given the string `xyz`, return an array or set with the following strings:
 
 ```py
 x
@@ -50,6 +62,70 @@ xyz
 
 > Note that `zx` is not a valid subsequence since it is not in the order of the given string.
 
+
+**Solution with Backtracking:** [https://repl.it/@trsong/Generate-All-Possible-Subsequences](https://repl.it/@trsong/Generate-All-Possible-Subsequences)
+```py
+import unittest
+
+
+def generate_subsequences(s):
+    if not s:
+        return ['']
+
+    res = set()
+    backtrack(s, res, "", -1, len(s))
+    return res
+
+
+def backtrack(s, res, accu_str, prev_index, remain):
+    if accu_str:
+        res.add(accu_str)
+
+    if remain == 0:
+        return
+
+    n = len(s)
+    for i in xrange(prev_index + 1, n):
+        updated_str = accu_str + s[i]
+        backtrack(s, res, updated_str, i, remain - 1)
+
+
+class GenerateSubsequenceSpec(unittest.TestCase):
+    def assert_result(self, expected, result):
+        self.assertEqual(set(expected), set(result))
+
+    def test_example(self):
+        s = 'xyz'
+        expected = ['x', 'y', 'z', 'xy', 'xz', 'yz', 'xyz']
+        self.assert_result(expected, generate_subsequences(s))
+
+    def test_empty_string(self):
+        s = ''
+        expected = ['']
+        self.assert_result(expected, generate_subsequences(s))
+
+    def test_binary_string(self):
+        s = '01'
+        expected = ['0', '1', '01']
+        self.assert_result(expected, generate_subsequences(s))
+
+    def test_length_four_string(self):
+        s = '0123'
+        expected = [
+            '0', '1', '2', '3', '01', '02', '03', '12', '13', '23', '123',
+            '023', '013', '012', '0123'
+        ]
+        self.assert_result(expected, generate_subsequences(s))
+
+    def test_duplicated_characters(self):
+        s = 'aaa'
+        expected = ['a', 'aa', 'aaa']
+        self.assert_result(expected, generate_subsequences(s))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
+```
 
 ### June 6, 2020 \[Easy\] First and Last Indices of an Element in a Sorted Array
 ---
