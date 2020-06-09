@@ -34,6 +34,20 @@ You should return the following, as a string:
 
 -->
 
+### June 9, 2020 \[Medium\] Circle of Chained Words
+---
+> **Question:** Two words can be 'chained' if the last character of the first word is the same as the first character of the second word.
+>
+> Given a list of words, determine if there is a way to 'chain' all the words in a circle.
+
+**Example:**
+```py
+Input: ['eggs', 'karat', 'apple', 'snack', 'tuna']
+Output: True
+Explanation:
+The words in the order of ['apple', 'eggs', 'snack', 'karat', 'tuna'] creates a circle of chained words.
+```
+
 ### June 8, 2020 \[Medium\] Group Words that are Anagrams
 ---
 > **Question:** Given a list of words, group the words that are anagrams of each other. (An anagram are words made up of the same letters).
@@ -42,6 +56,93 @@ You should return the following, as a string:
 ```py
 Input: ['abc', 'bcd', 'cba', 'cbd', 'efg']
 Output: [['abc', 'cba'], ['bcd', 'cbd'], ['efg']]
+```
+
+**My thoughts:** Notice that two words are anagrams of each other if both of them be equal after sort and should have same prefix. eg. `'bcda' => 'abcd'` and `'cadb' => 'abcd'`. We can sort each word in the list and then insert those sorted words into a trie. Finally, we can perform a tree traversal to get all words with same prefix and those words will be words that are anagrams of each other.
+
+**Solution with Trie:** [https://repl.it/@trsong/Group-Anagrams](https://repl.it/@trsong/Group-Anagrams)
+```py
+import unittest
+
+class Trie(object):
+    def __init__(self):
+        self.children = None
+        self.word_indices = None
+
+    def insert_word(self, word, index):
+        p = self
+        for c in sorted(word):
+            p.children = p.children or {}
+            p.children[c] = p.children[c] if c in p.children else Trie()
+            p = p.children[c]
+        p.word_indices = p.word_indices or []
+        p.word_indices.append(index)
+
+    def words_groupby_anagram(self, words):
+        stack = [self]
+        res = []
+        while stack:
+            cur = stack.pop()
+
+            if cur.word_indices:
+                anagrams = map(lambda i: words[i], cur.word_indices)
+                res.append(anagrams)
+            
+            if cur.children:
+                stack.extend(cur.children.values())
+        
+        return res
+
+
+def group_by_anagram(words):
+    t = Trie()
+    for i, word in enumerate(words):
+        t.insert_word(word, i)
+
+    return t.words_groupby_anagram(words)
+
+
+class GroupyByAnagramSpec(unittest.TestCase):
+    def assert_result(self, expected, result):
+        for l in result:
+            l.sort()
+        result.sort()
+        for l in expected:
+            l.sort()
+        expected.sort()
+        self.assertEqual(expected, result)
+
+    def test_example(self):
+        input = ['abc', 'bcd', 'cba', 'cbd', 'efg']
+        output = [['abc', 'cba'], ['bcd', 'cbd'], ['efg']]
+        self.assert_result(output, group_by_anagram(input))
+
+    def test_empty_word_list(self):
+        self.assert_result([], group_by_anagram([]))
+
+    def test_contains_duplicated_words(self):
+        input = ['a', 'aa', 'aaa', 'a', 'aaa', 'aa', 'aaa']
+        output = [['a', 'a'], ['aa', 'aa'], ['aaa', 'aaa', 'aaa']]
+        self.assert_result(output, group_by_anagram(input))
+
+    def test_contains_duplicated_words2(self):
+        input = ['abc', 'acb', 'abcd', 'dcba', 'abc', 'abcd', 'a']
+        output = [['a'], ['abc', 'acb', 'abc'], ['abcd', 'dcba', 'abcd']]
+        self.assert_result(output, group_by_anagram(input))
+
+    def test_contains_empty_word(self):
+        input = ['', 'a', 'b', 'c', '', 'bc', 'ca', '', 'ab']
+        output = [['', '', ''], ['a'], ['b'], ['c'], ['ab'], ['ca'], ['bc']]
+        self.assert_result(output, group_by_anagram(input))
+
+    def test_word_with_duplicated_letters(self):
+        input = ['aabcde', 'abbcde', 'abccde', 'abcdde', 'abcdee', 'abcdea']
+        output = [['aabcde', 'abcdea'], ['abbcde'], ['abccde'], ['abcdde'], ['abcdee']]
+        self.assert_result(output, group_by_anagram(input))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
 ```
 
 ### June 7, 2020 \[Easy\] Generate All Possible Subsequences
