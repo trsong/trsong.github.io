@@ -65,7 +65,7 @@ The words in the order of ['apple', 'eggs', 'snack', 'karat', 'tuna'] creates a 
 
 **My thoughts:** Treat each non-empty word as an edge in a directed graph with vertices being the first and last letter of the word. Now, pick up any letter as a starting point. Perform DFS and remove any edge we visited from the graph. Check if all edges are used. And make sure the vertex we stop at is indeed the starting point. If all above statisfied, then there exists a cycle that chains all words. 
 
-**Solution with DFS:** https://repl.it/@trsong/Contains-Circle-of-Chained-Wordshttps://repl.it/@trsong/Contains-Circle-of-Chained-Words)
+**Solution with DFS:** [https://repl.it/@trsong/Contains-Circle-of-Chained-Words](https://repl.it/@trsong/Contains-Circle-of-Chained-Words)
 ```py
 import unittest
 
