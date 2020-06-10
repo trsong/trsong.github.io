@@ -34,6 +34,21 @@ You should return the following, as a string:
 
 -->
 
+### June 10, 2020  LC 621 \[Medium\] Task Scheduler
+---
+> **Question:** Given a char array representing tasks CPU need to do. It contains capital letters A to Z where different letters represent different tasks. Tasks could be done without original order. Each task could be done in one interval. For each interval, CPU could finish one task or just be idle.
+>
+> However, there is a non-negative cooling interval n that means between two same tasks, there must be at least n intervals that CPU are doing different tasks or just be idle.
+>
+> You need to return the least number of intervals the CPU will take to finish all the given tasks.
+
+**Example:**
+```py
+Input: tasks = ["A", "A", "A", "B", "B", "B"], n = 2
+Output: 8
+Explanation: A -> B -> idle -> A -> B -> idle -> A -> B.
+```
+
 ### June 9, 2020 \[Medium\] Circle of Chained Words
 ---
 > **Question:** Two words can be 'chained' if the last character of the first word is the same as the first character of the second word.
@@ -46,6 +61,96 @@ Input: ['eggs', 'karat', 'apple', 'snack', 'tuna']
 Output: True
 Explanation:
 The words in the order of ['apple', 'eggs', 'snack', 'karat', 'tuna'] creates a circle of chained words.
+```
+
+**My thoughts:** Treat each non-empty word as an edge in a directed graph with vertices being the first and last letter of the word. Now, pick up any letter as a starting point. Perform DFS and remove any edge we visited from the graph. Check if all edges are used. And make sure the vertex we stop at is indeed the starting point. If all above statisfied, then there exists a cycle that chains all words. 
+
+**Solution with DFS:** https://repl.it/@trsong/Contains-Circle-of-Chained-Wordshttps://repl.it/@trsong/Contains-Circle-of-Chained-Words)
+```py
+import unittest
+
+def exists_cycle(words):
+    if not words:
+        return False
+
+    neighbors = {}
+    for word in words:
+        if not word: continue
+        u, v = word[0], word[-1]
+        if u not in neighbors:
+            neighbors[u] = {}
+        neighbors[u][v] = neighbors[u].get(v, 0) + 1
+
+    if not neighbors:
+        return False
+        
+    start = next(neighbors.iterkeys())
+    stack = [start]
+    while stack and neighbors:
+        cur = stack.pop()
+        if cur not in neighbors:
+            return False
+            
+        nb = next(neighbors[cur].iterkeys())
+        neighbors[cur][nb] -= 1
+        if neighbors[cur][nb] == 0:
+            del neighbors[cur][nb]
+            if not neighbors[cur]:
+                del neighbors[cur]
+        
+        stack.append(nb)
+
+    return not neighbors and len(stack) == 1 and stack[0] == start
+            
+
+class ExistsCycleSpec(unittest.TestCase):
+    def test_example(self):
+        words = ['eggs', 'karat', 'apple', 'snack', 'tuna']
+        self.assertTrue(exists_cycle(words)) # ['apple', 'eggs', 'snack', 'karat', 'tuna']
+
+    def test_empty_words(self):
+        words = []
+        self.assertFalse(exists_cycle(words))
+    
+    def test_not_contains_cycle(self):
+        words = ['ab']
+        self.assertFalse(exists_cycle(words))
+
+    def test_not_contains_cycle2(self):
+        words = ['']
+        self.assertFalse(exists_cycle(words))
+
+    def test_not_exist_cycle(self):
+        words = ['ab', 'c', 'c', 'def', 'gh']
+        self.assertFalse(exists_cycle(words))
+
+    def test_exist_cycle_but_not_chaining_all_words(self):
+        words = ['ab', 'be', 'bf', 'bc', 'ca']
+        self.assertFalse(exists_cycle(words))
+    
+    def test_exist_cycle_but_not_chaining_all_words2(self):
+        words = ['ab', 'ba', 'bc', 'ca']
+        self.assertFalse(exists_cycle(words))
+
+    def test_duplicate_words_with_cycle(self):
+        words = ['ab', 'bc', 'ca', 'ab', 'bd', 'da' ]
+        self.assertTrue(exists_cycle(words))
+
+    def test_contains_mutiple_cycles(self):
+        words = ['ab', 'ba', 'ac', 'ca']
+        self.assertTrue(exists_cycle(words))
+
+    def test_disconnect_graph(self):
+        words = ['ab', 'ba', 'cd', 'de', 'ec']
+        self.assertFalse(exists_cycle(words))
+
+    def test_conains_empty_string(self):
+        words2 = ['', 'a', '', '', 'a']
+        self.assertTrue(exists_cycle(words2))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
 ```
 
 ### June 8, 2020 \[Medium\] Group Words that are Anagrams
