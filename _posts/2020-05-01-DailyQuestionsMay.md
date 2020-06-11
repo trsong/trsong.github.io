@@ -34,6 +34,17 @@ You should return the following, as a string:
 
 -->
 
+### June 11, 2020 \[Medium\] Longest Subarray with Sum Divisible by K
+---
+> **Question:** Given an arr[] containing n integers and a positive integer k. The problem is to find the length of the longest subarray with sum of the elements divisible by the given value k.
+
+**Example:**
+```py
+Input : arr[] = {2, 7, 6, 1, 4, 5}, k = 3
+Output : 4
+The subarray is {7, 6, 1, 4} with sum 18, which is divisible by 3.
+```
+
 ### June 10, 2020  LC 621 \[Medium\] Task Scheduler
 ---
 > **Question:** Given a char array representing tasks CPU need to do. It contains capital letters A to Z where different letters represent different tasks. Tasks could be done without original order. Each task could be done in one interval. For each interval, CPU could finish one task or just be idle.
@@ -47,6 +58,77 @@ You should return the following, as a string:
 Input: tasks = ["A", "A", "A", "B", "B", "B"], n = 2
 Output: 8
 Explanation: A -> B -> idle -> A -> B -> idle -> A -> B.
+```
+
+**My thoughts:** Treat n+1 as the size of each window. For each window, we try to fit as many tasks as possible following the max number of remaining tasks. If all tasks are chosen, we instead use idle.
+
+**Greedy Solution:** [https://repl.it/@trsong/LC-621-Task-Scheduler](https://repl.it/@trsong/LC-621-Task-Scheduler)
+```py
+import unittest
+from Queue import PriorityQueue
+
+def least_interval(tasks, n):
+    task_histogram = {}
+    for task in tasks:
+        task_histogram[task] = task_histogram.get(task, 0) + 1
+
+    max_heap = PriorityQueue()
+    for task, count in task_histogram.items():
+        max_heap.put((-count, task))
+
+    res = 0
+    while not max_heap.empty():
+        next_round_tasks = []
+        for _ in xrange(n+1):
+            if max_heap.empty() and not next_round_tasks:
+                break
+            elif not max_heap.empty():
+                neg_count, task = max_heap.get()
+                remain_task = -neg_count - 1
+
+                if remain_task > 0:
+                    next_round_tasks.append((task, remain_task))
+            res += 1
+
+        for task, count in next_round_tasks:
+            max_heap.put((-count, task))
+
+    return res
+
+
+class LeastIntervalSpec(unittest.TestCase):
+    def test_example(self):
+        tasks = ["A", "A", "A", "B", "B", "B"]
+        n = 2
+        self.assertEqual(least_interval(tasks, n), 8) # A -> B -> idle -> A -> B -> idle -> A -> B
+
+    def test_no_tasks(self):
+        self.assertEqual(least_interval([], 0), 0)
+        self.assertEqual(least_interval([], 2), 0)
+    
+    def test_same_task_and_idle(self):
+        tasks = ["A", "A", "A"]
+        n = 1
+        self.assertEqual(least_interval(tasks, n), 5)  # A -> idle -> A -> idle -> A
+
+    def test_three_kind_tasks_no_idle(self):
+        tasks = ["A", "B", "A", "C"]
+        n = 1
+        self.assertEqual(least_interval(tasks, n), 4)  # A -> B -> A -> C
+    
+    def test_three_kind_tasks_with_one_idle(self):
+        tasks = ["A", "A", "A", "B", "C", "C"]
+        n = 2
+        self.assertEqual(least_interval(tasks, n), 7)  # A -> C -> B -> A -> C -> idle -> A
+
+    def test_each_kind_one_task(self):
+        tasks = ["A", "B", "C", "D"]
+        n = 10
+        self.assertEqual(least_interval(tasks, n), 4)  # A -> B -> C -> D
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
 ```
 
 ### June 9, 2020 \[Medium\] Circle of Chained Words
