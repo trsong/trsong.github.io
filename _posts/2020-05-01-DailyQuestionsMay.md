@@ -34,6 +34,16 @@ You should return the following, as a string:
 
 -->
 
+
+### June 12, 2020 \[Medium\] Minimum Window Substring
+---
+> **Question:** Given a string and a set of characters, return the shortest substring containing all the characters in the set.
+>
+> For example, given the string `"figehaeci"` and the set of characters `{a, e, i}`, you should return `"aeci"`.
+>
+> If there is no substring containing all the characters in the set, return null.
+
+
 ### June 11, 2020 \[Medium\] Longest Subarray with Sum Divisible by K
 ---
 > **Question:** Given an arr[] containing n integers and a positive integer k. The problem is to find the length of the longest subarray with sum of the elements divisible by the given value k.
@@ -43,6 +53,55 @@ You should return the following, as a string:
 Input : arr[] = {2, 7, 6, 1, 4, 5}, k = 3
 Output : 4
 The subarray is {7, 6, 1, 4} with sum 18, which is divisible by 3.
+```
+
+**My thoughts:** Recall the way to efficiently calculate subarray sum is to calculate prefix sum, `prefix_sum[i] = arr[0] + arr[1] + ... + arr[i] and prefix_sum[i] = prefix_sum[i-1] + arr[i]`. The subarray sum between index i and j, `arr[i] + arr[i+1] + ... + arr[j] = prefix_sum[j] - prefix_sum[i-1]`.
+
+But this question is asking to find subarray whose sum is divisible by 3, that is,  `(prefix_sum[j] - prefix_sum[i-1]) mod k == 0 ` which implies `prefix_sum[j] % k == prefix_sum[j-1] % k`. So we just need to generate prefix_modulo array and find i,j such that `j - i reaches max` and `prefix_modulo[j] == prefix_modulo[i-1]`. As `j > i` and we must have value of `prefix_modulo[i-1]` already when we reach j. We can use a map to store the first occurance of certain prefix_modulo. This feels similar to Two-Sum question in a sense that we use map to store previous reached element and is able to quickly tell if current element satisfies or not.
+
+
+**Solution:** [https://repl.it/@trsong/Find-Longest-Subarray-with-Sum-Divisible-by-K](https://repl.it/@trsong/Find-Longest-Subarray-with-Sum-Divisible-by-K)
+```py
+import unittest
+
+def longest_subarray(nums, k):
+    prefix_sum = {0: -1}
+    res = 0
+    accu = 0
+    for i, num in enumerate(nums):
+        accu += num
+        accu %= k
+        if accu not in prefix_sum:
+            prefix_sum[accu] = i
+        else:
+            res = max(res, i - prefix_sum[accu])
+    return res
+
+
+class LongestSubarraySpec(unittest.TestCase):
+    def test_example(self):
+        # Modulo 3, prefix array = [2, 0, 0, 1, 2, 1]. max (end - start) = 4 such that prefix[end] - prefix[start-1] = 0
+        self.assertEqual(longest_subarray([2, 7, 6, 1, 4, 5], 3), 4)  # sum([7, 6, 1, 4]) = 18 (18 % 3 = 0)
+
+    def test_empty_array(self):
+        self.assertEqual(longest_subarray([], 10), 0)
+    
+    def test_no_existance_of_such_subarray(self):
+        self.assertEqual(longest_subarray([1, 2, 3, 4], 11), 0)
+    
+    def test_entire_array_qualify(self):
+        # Modulo 4, prefix array: [0, 1, 2, 3, 3, 2, 1, 0]. max (end - start) = 8 such that prefix[end] - prefix[start-1] = 0
+        self.assertEqual(longest_subarray([0, 1, 1, 1, 0, -1, -1, -1], 4), 8)  # entire array sum = 0
+        self.assertEqual(longest_subarray([4, 5, 9, 17, 8, 3, 7, -1], 4), 8)  # entire array sum = 52 (52 % 4 = 0)
+
+    def test_unique_subarray(self):
+        # Modulo 6, prefix array: [0, 1, 1, 2, 3, 2, 4, 4, 5]. max (end - start) = 2 such that prefix[end] - prefix[start-1] = 0
+        self.assertEqual(longest_subarray([0, 1, 0, 1, 1, -1, 2, 0, 1], 6), 2)  #  sum([1, -1]) = 0
+        self.assertEqual(longest_subarray([6, 7, 12, 7, 13, 5, 8, 36, 19], 6), 2)  #  sum([13, 5]) = 18 (18 % 6 = 0)
+    
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
 ```
 
 ### June 10, 2020  LC 621 \[Medium\] Task Scheduler
