@@ -199,6 +199,80 @@ Explanation:
 >
 > If there is no substring containing all the characters in the set, return null.
 
+**My thoughts:** Most substring problem can be solved with Sliding Window method which requires two pointers represent boundaries of a window as well as a map storing certain properties associated w/ letter in substring (in this problem, the count of letter).
+
+In this problem, we first find the count of letter requirement of each letter in target. And we define two pointers: `start`, `end`. For each incoming letters, we proceed end and decrease the letter requirement of that letter; once all letter requirement satisfies, we proceed start that will eliminate unnecessary letters to shrink the window size for sure; however it might also introduces new letter requirement and then we proceed end and wait for all letter requirement satisfies again.
+
+We do that over and over and record min window along the way gives the final result.
+
+**Solution with Sliding Window:** [https://repl.it/@trsong/Find-Minimum-Window-Substring](https://repl.it/@trsong/Find-Minimum-Window-Substring)
+```py
+import unittest
+import sys
+
+def min_window_substring(source, target):
+    target_histogram = {}
+    for c in target:
+        target_histogram[c] = target_histogram.get(c, 0) + 1
+
+    min_window_start = 0
+    min_window = sys.maxint
+    balance = len(target)
+    start = 0
+
+    for end, end_char in enumerate(source):
+        if end_char in target_histogram:
+            if target_histogram[end_char] > 0:
+                balance -= 1
+            target_histogram[end_char] -= 1
+
+        while balance == 0:
+            window = end - start + 1
+            if window < min_window:
+                min_window = window
+                min_window_start = start
+
+            start_char = source[start]
+            if start_char in target_histogram:
+                if target_histogram[start_char] == 0:
+                    balance += 1
+                target_histogram[start_char] += 1
+
+            start += 1
+
+    return "" if min_window == sys.maxint else source[min_window_start: min_window_start + min_window]
+                
+
+class MinWindowSubstringSpec(unittest.TestCase):
+    def test_example(self):
+        source, target, expected = "ADOBECODEBANC", "ABC", "BANC"
+        self.assertEqual(expected, min_window_substring(source, target))
+
+    def test_no_matching_due_to_missing_letters(self):
+        source, target, expected = "CANADA", "CAB", ""
+        self.assertEqual(expected, min_window_substring(source, target))
+
+    def test_no_matching_due_to_target_too_short(self):
+        source, target, expected = "USD", "UUSD", ""
+        self.assertEqual(expected, min_window_substring(source, target))
+    
+    def test_target_string_with_duplicated_letters(self):
+        source, target, expected = "BANANAS", "ANANS", "NANAS"
+        self.assertEqual(expected, min_window_substring(source, target))
+
+    def test_matching_window_in_the_middle_of_source(self):
+        source, target, expected = "AB_AABB_AB_BAB_ABB_BB_BACAB", "ABB", "ABB"
+        self.assertEqual(expected, min_window_substring(source, target))
+
+    def test_matching_window_in_different_order(self):
+        source, target, expected = "CBADDBBAADBBAAADDDCCBBA", "AAACCCBBBBDDD", "CBADDBBAADBBAAADDDCC"
+        self.assertEqual(expected, min_window_substring(source, target))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False)   
+```
+
 
 ### June 11, 2020 \[Medium\] Longest Subarray with Sum Divisible by K
 ---
