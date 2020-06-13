@@ -32,10 +32,166 @@ You should return the following, as a string:
 '[null, 123, ["a", "b"], {"c": "d"}]'
 ```
 
+### Oct 16, 2019 \[Medium\] Count Arithmetic Subsequences
+---
+> **Question:** Given an array of n positive integers. The task is to count the number of Arithmetic Subsequence in the array. Note: Empty sequence or single element sequence is also Arithmetic Sequence. 
+
+**Example 1:**
+```py
+Input : arr[] = [1, 2, 3]
+Output : 8
+Arithmetic Subsequence from the given array are:
+[], [1], [2], [3], [1, 2], [2, 3], [1, 3], [1, 2, 3].
+```
+
+**Example 2:**
+```py
+Input : arr[] = [10, 20, 30, 45]
+Output : 12
+```
+
+**Example 3:**
+```py
+Input : arr[] = [1, 2, 3, 4, 5]
+Output : 23
+```
+
+**Similar Question:** LC 446 Arithmetic Slices II - Subsequence
+
+### Jul 2, 2019 \[Hard\] The Longest Increasing Subsequence
+---
+> **Question:** Given an array of numbers, find the length of the longest increasing **subsequence** in the array. The subsequence does not necessarily have to be contiguous.
+>
+> For example, given the array `[0, 8, 4, 12, 2, 10, 6, 14, 1, 9, 5, 13, 3, 11, 7, 15]`, the longest increasing subsequence has length 6: it is 0, 2, 6, 9, 11, 15.
+>
+> Definition of **Subsequence**:
+> A subsequence is a sequence that can be derived from another sequence by deleting some or no elements without changing the order of the remaining elements. For example, the sequence `[A, B, D]`  is a subsequence of  `[A, B, C, D, E, F]`  obtained after removal of elements C, E, and F.  
+> 
+
+### Jul 19, 2019 \[Medium\] Longest Common Subsequence
+---
+> **Question:** Given two sequences, find the length of longest subsequence present in both of them. 
+>
+> A subsequence is a sequence that appears in the same relative order, but not necessarily contiguous.
+
+**Example 1:**
+
+```
+Input:  "ABCD" and "EDCA"
+Output:  1
+	
+Explanation:
+LCS is 'A' or 'D' or 'C'
+```
+
+**Example 2:**
+
+```
+Input: "ABCD" and "EACB"
+Output:  2
+	
+Explanation: 
+LCS is "AC"
+```
+
+
+### June 25, 2019 LC 239 \[Medium\] Sliding Window Maximum
+---
+> **Question:** Given an array nums, there is a sliding window of size k which is moving from the very left of the array to the very right. You can only see the k numbers in the window. Each time the sliding window moves right by one position. Return the max sliding window.
+> 
+
+**Example:**
+
+```py
+Input: nums = [1,3,-1,-3,5,3,6,7], and k = 3
+Output: [3,3,5,5,6,7] 
+```
+
+**Explanation:**
+
+```
+Window position                Max
+---------------               -----
+[1  3  -1] -3  5  3  6  7       3
+ 1 [3  -1  -3] 5  3  6  7       3
+ 1  3 [-1  -3  5] 3  6  7       5
+ 1  3  -1 [-3  5  3] 6  7       5
+ 1  3  -1  -3 [5  3  6] 7       6
+ 1  3  -1  -3  5 [3  6  7]      7
+ ```
+
+### Dec 12, 2019 \[Medium\] Sorting Window Range
+--- 
+> **Question:** Given a list of numbers, find the smallest window to sort such that the whole list will be sorted. If the list is already sorted return (0, 0). 
+
+**Example:**
+```py
+Input: [2, 4, 7, 5, 6, 8, 9]
+Output: (2, 4)
+Explanation: Sorting the window (2, 4) which is [7, 5, 6] will also means that the whole list is sorted.
+```
+
+### Aug 16, 2019 \[Medium\] Longest Substring without Repeating Characters
+---
+> **Question:** Given a string, find the length of the longest substring without repeating characters.
+>
+> **Note:** Can you find a solution in linear time?
+ 
+**Example:**
+```py
+lengthOfLongestSubstring("abrkaabcdefghijjxxx") # => 10 as len("abcdefghij") == 10
+```
+
+
+### Jan 13, 2020 LT 386 \[Medium\] Longest Substring with At Most K Distinct Characters
+---
+> **Question:** Given a string, find the longest substring that contains at most k unique characters. 
+> 
+> For example, given `"abcbbbbcccbdddadacb"`, the longest substring that contains 2 unique character is `"bcbbbbcccb"`.
+
+
+### Sep 26, 2019 \[Hard\] Ordered Minimum Window Subsequence
+---
+> **Question:** Given an array nums and a subsequence sub, find the shortest subarray of nums that contains sub.
+> 
+> * If such subarray does not exist, return -1, -1.
+> * Note that the subarray must contain the elements of sub in the correct order.
+
+**Example:**
+
+```py
+Input: nums = [1, 2, 3, 5, 8, 7, 6, 9, 5, 7, 3, 0, 5, 2, 3, 4, 4, 7], sub = [5, 7]
+Output: start = 8, size = 2
+```
+
+### Aug 13, 2019 LC 727 \[Hard\] Minimum Window Subsequence
+---
+> **Question:** Given strings S and T, find the minimum (contiguous) substring W of S, so that T is a subsequence of W.
+>
+> If there is no such window in S that covers all characters in T, return the empty string "". If there are multiple such minimum-length windows, return the one with the left-most starting index.
+
+**Example:**
+
+```
+Input: 
+S = "abcdebdde", T = "bde"
+Output: "bcde"
+
+Explanation: 
+"bcde" is the answer because it occurs before "bdde" which has the same length.
+"deb" is not a smaller window because the elements of T in the window must occur in order.
+```
+
 -->
 
+### June 13, 2020 LC 438 \[Medium\] Anagram Indices Problem
+---
+> **Question:**  Given a word W and a string S, find all starting indices in S which are anagrams of W.
+>
+> For example, given that W is `"ab"`, and S is `"abxaba"`, return `0`, `3`, and `4`.
 
-### June 12, 2020 \[Medium\] Minimum Window Substring
+
+### June 12, 2020 LC 76 \[Hard\] Minimum Window Substring
 ---
 > **Question:** Given a string and a set of characters, return the shortest substring containing all the characters in the set.
 >
