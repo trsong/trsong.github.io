@@ -94,32 +94,6 @@ Explanation:
 LCS is "AC"
 ```
 
-
-### June 25, 2019 LC 239 \[Medium\] Sliding Window Maximum
----
-> **Question:** Given an array nums, there is a sliding window of size k which is moving from the very left of the array to the very right. You can only see the k numbers in the window. Each time the sliding window moves right by one position. Return the max sliding window.
-> 
-
-**Example:**
-
-```py
-Input: nums = [1,3,-1,-3,5,3,6,7], and k = 3
-Output: [3,3,5,5,6,7] 
-```
-
-**Explanation:**
-
-```
-Window position                Max
----------------               -----
-[1  3  -1] -3  5  3  6  7       3
- 1 [3  -1  -3] 5  3  6  7       3
- 1  3 [-1  -3  5] 3  6  7       5
- 1  3  -1 [-3  5  3] 6  7       5
- 1  3  -1  -3 [5  3  6] 7       6
- 1  3  -1  -3  5 [3  6  7]      7
- ```
-
 ### Dec 12, 2019 \[Medium\] Sorting Window Range
 --- 
 > **Question:** Given a list of numbers, find the smallest window to sort such that the whole list will be sorted. If the list is already sorted return (0, 0). 
@@ -184,12 +158,120 @@ Explanation:
 
 -->
 
+### June 14, 2020 LC 239 \[Medium\] Sliding Window Maximum
+---
+> **Question:** Given an array nums, there is a sliding window of size k which is moving from the very left of the array to the very right. You can only see the k numbers in the window. Each time the sliding window moves right by one position. Return the max sliding window.
+> 
+
+**Example:**
+
+```py
+Input: nums = [1, 3, -1, -3, 5, 3, 6, 7], and k = 3
+Output: [3, 3, 5, 5, 6, 7] 
+```
+
+**Explanation:**
+```
+Window position                Max
+---------------               -----
+[1  3  -1] -3  5  3  6  7       3
+ 1 [3  -1  -3] 5  3  6  7       3
+ 1  3 [-1  -3  5] 3  6  7       5
+ 1  3  -1 [-3  5  3] 6  7       5
+ 1  3  -1  -3 [5  3  6] 7       6
+ 1  3  -1  -3  5 [3  6  7]      7
+ ```
+
+
 ### June 13, 2020 LC 438 \[Medium\] Anagram Indices Problem
 ---
 > **Question:**  Given a word W and a string S, find all starting indices in S which are anagrams of W.
 >
 > For example, given that W is `"ab"`, and S is `"abxaba"`, return `0`, `3`, and `4`.
 
+
+**Solution with Sliding Window of Fixed Size:** [https://repl.it/@trsong/Find-All-Anagram-Indices](https://repl.it/@trsong/Find-All-Anagram-Indices)
+```py
+import unittest
+
+def find_anagrams(word, s):
+    if not s or len(word) < len(s):
+        return []
+
+    target_histogram = {}
+    for c in s:
+        target_histogram[c] = target_histogram.get(c, 0) + 1
+    
+    res = []
+    for j, in_char in enumerate(word):
+        target_histogram[in_char] = target_histogram.get(in_char, 0) - 1
+        if target_histogram[in_char] == 0:
+            del target_histogram[in_char]
+
+        i = j - len(s)
+        if i >= 0:
+            out_char = word[i]
+            target_histogram[out_char] = target_histogram.get(out_char, 0) + 1
+            if target_histogram[out_char] == 0:
+                del target_histogram[out_char]
+
+        if not target_histogram:
+            res.append(i+1)
+
+    return res
+    
+
+class FindAnagramSpec(unittest.TestCase):
+    def test_example(self):
+        word = 'abxaba'
+        s = 'ab'
+        self.assertEqual([0, 3, 4], find_anagrams(word, s))
+
+    def test_example2(self):
+        word = 'acdbacdacb'
+        s = 'abc'
+        self.assertEqual([3, 7], find_anagrams(word, s))
+
+    def test_empty_source(self):
+        self.assertEqual([], find_anagrams('', 'a'))
+    
+    def test_empty_pattern(self):
+        self.assertEqual([], find_anagrams('a', ''))
+
+    def test_pattern_contains_unseen_characters_in_source(self):
+        word = "abcdef"
+        s = "123"
+        self.assertEqual([], find_anagrams(word, s))
+    
+    def test_pattern_not_in_source(self):
+        word = 'ab9cd9abc9d'
+        s = 'abcd'
+        self.assertEqual([], find_anagrams(word, s))
+    
+    def test_matching_strings_have_overlapping_positions_in_source(self):
+        word = 'abab'
+        s = 'ab'
+        self.assertEqual([0, 1, 2], find_anagrams(word, s))
+    
+    def test_find_all_matching_positions(self):
+        word = 'cbaebabacd'
+        s = 'abc'
+        self.assertEqual([0, 6], find_anagrams(word, s))
+    
+    def test_find_all_matching_positions2(self):
+        word = 'BACDGABCDA'
+        s = 'ABCD'
+        self.assertEqual([0, 5, 6], find_anagrams(word, s))
+    
+    def test_find_all_matching_positions3(self):
+        word = 'AAABABAA'
+        s = 'AABA'
+        self.assertEqual([0, 1, 4], find_anagrams(word, s))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
+```
 
 ### June 12, 2020 LC 76 \[Hard\] Minimum Window Substring
 ---
