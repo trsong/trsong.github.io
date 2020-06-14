@@ -200,26 +200,26 @@ def find_anagrams(word, s):
         return []
 
     # Initially owing a lot of chars
-    char_balance = {}
+    char_debt = {}
     for c in s:
-        char_balance[c] = char_balance.get(c, 0) - 1
+        char_debt[c] = char_debt.get(c, 0) + 1
     
     res = []
     for j, in_char in enumerate(word):
         # Accumulate incomming chars
-        char_balance[in_char] = char_balance.get(in_char, 0) + 1
-        if char_balance[in_char] == 0:
-            del char_balance[in_char]
+        char_debt[in_char] = char_debt.get(in_char, 0) - 1
+        if char_debt[in_char] == 0:
+            del char_debt[in_char]
 
         # Removing outgoing chars
         i = j - len(s)
         if i >= 0:
             out_char = word[i]
-            char_balance[out_char] = char_balance.get(out_char, 0) - 1
-            if char_balance[out_char] == 0:
-                del char_balance[out_char]
+            char_debt[out_char] = char_debt.get(out_char, 0) + 1
+            if char_debt[out_char] == 0:
+                del char_debt[out_char]
 
-        if not char_balance:
+        if not char_debt:
             res.append(i+1)
 
     return res
