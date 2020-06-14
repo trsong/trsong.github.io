@@ -191,6 +191,7 @@ Window position                Max
 
 
 **Solution with Sliding Window of Fixed Size:** [https://repl.it/@trsong/Find-All-Anagram-Indices](https://repl.it/@trsong/Find-All-Anagram-Indices)
+
 ```py
 import unittest
 
@@ -198,24 +199,27 @@ def find_anagrams(word, s):
     if not s or len(word) < len(s):
         return []
 
-    target_histogram = {}
+    # Initially owing a lot of chars
+    char_balance = {}
     for c in s:
-        target_histogram[c] = target_histogram.get(c, 0) + 1
+        char_balance[c] = char_balance.get(c, 0) - 1
     
     res = []
     for j, in_char in enumerate(word):
-        target_histogram[in_char] = target_histogram.get(in_char, 0) - 1
-        if target_histogram[in_char] == 0:
-            del target_histogram[in_char]
+        # Accumulate incomming chars
+        char_balance[in_char] = char_balance.get(in_char, 0) + 1
+        if char_balance[in_char] == 0:
+            del char_balance[in_char]
 
+        # Removing outgoing chars
         i = j - len(s)
         if i >= 0:
             out_char = word[i]
-            target_histogram[out_char] = target_histogram.get(out_char, 0) + 1
-            if target_histogram[out_char] == 0:
-                del target_histogram[out_char]
+            char_balance[out_char] = char_balance.get(out_char, 0) - 1
+            if char_balance[out_char] == 0:
+                del char_balance[out_char]
 
-        if not target_histogram:
+        if not char_balance:
             res.append(i+1)
 
     return res
