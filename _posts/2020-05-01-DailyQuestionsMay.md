@@ -117,30 +117,18 @@ lengthOfLongestSubstring("abrkaabcdefghijjxxx") # => 10 as len("abcdefghij") == 
 ```
 
 
-### Jan 13, 2020 LT 386 \[Medium\] Longest Substring with At Most K Distinct Characters
----
-> **Question:** Given a string, find the longest substring that contains at most k unique characters. 
-> 
-> For example, given `"abcbbbbcccbdddadacb"`, the longest substring that contains 2 unique character is `"bcbbbbcccb"`.
 
 
-### Sep 26, 2019 \[Hard\] Ordered Minimum Window Subsequence
----
-> **Question:** Given an array nums and a subsequence sub, find the shortest subarray of nums that contains sub.
-> 
-> * If such subarray does not exist, return -1, -1.
-> * Note that the subarray must contain the elements of sub in the correct order.
-
-**Example:**
-
-```py
-Input: nums = [1, 2, 3, 5, 8, 7, 6, 9, 5, 7, 3, 0, 5, 2, 3, 4, 4, 7], sub = [5, 7]
-Output: start = 8, size = 2
-```
 
 ```
 
 -->
+
+### June 16, 2020 LT 386 \[Medium\] Longest Substring with At Most K Distinct Characters
+---
+> **Question:** Given a string, find the longest substring that contains at most k unique characters. 
+> 
+> For example, given `"abcbbbbcccbdddadacb"`, the longest substring that contains 2 unique character is `"bcbbbbcccb"`.
 
 
 ### June 15, 2020 LC 727 \[Hard\] Minimum Window Subsequence
