@@ -148,6 +148,83 @@ Explanation:
 "deb" is not a smaller window because the elements of T in the window must occur in order.
 ```
 
+**My thoughts:** Have you noticed the pattern that substring of s always has the same first char as t. i.e. `s = "abcdebdde", t = "bde", substring = "bcde", substring[0] == t[0]`,  we can take advantage of that to keep track of previous index such that t[0] == s[index] and we can do that recursively for the rest of t and s. We get the following recursive definition
+
+```py
+Let dp[i][j] = index where index represents index such that s[index:i] has subsequence t[0:j].
+
+dp[i][j] = dp[i-1][j-1] if there s[i-1] matches t[j-1] 
+         = dp[i-1][j]   otherwise
+```
+
+And the final solution is to find index where `len of t <= index <= len of s` such that `index - dp[index][len of t]` i.e. the length of substring, reaches minimum. 
+
+**Solution with DP:** [https://repl.it/@trsong/Find-Minimum-Window-Subsequence](https://repl.it/@trsong/Find-Minimum-Window-Subsequence)
+```py
+import unittest
+
+def min_window_subsequence(s, t):
+    if len(s) < len(t):
+        return ""
+
+    n, m = len(s), len(t)
+    # Let dp[n][m] represents min index such that s[index:n] contains subsequence t[:m]
+    # dp[n][m] = dp[n-1][m-1] if s[n-1] == t[m-1]
+    #          = dp[n][m-1]   otherwise
+    dp = [[-1 for _ in xrange(m+1)] for _ in xrange(n+1)]
+    for i in xrange(n+1):
+        dp[i][0] = i
+
+    for i in xrange(1, n+1):
+        for j in xrange(1, m+1):
+            if s[i-1] == t[j-1]:
+                dp[i][j] = dp[i-1][j-1]
+            else:
+                dp[i][j] = dp[i-1][j]
+
+    start = -1
+    min_window = float('inf')
+    for i in xrange(m, n+1):
+        if dp[i][m] == -1:
+            continue
+        
+        index = dp[i][m]
+        window = i - index
+        if window < min_window:
+            min_window = window
+            start = index
+
+    return s[start: start + min_window] if start != -1 else ""
+        
+
+class MinWindowSubsequenceSpec(unittest.TestCase):
+    def test_example(self):
+        self.assertEqual(min_window_subsequence("abcdebdde", "bde"), "bcde")
+
+    def test_target_too_long(self):
+        self.assertEqual(min_window_subsequence("a", "aaa"), "")
+
+    def test_duplicated_char_in_target(self):
+        self.assertEqual(min_window_subsequence("abbbbabbbabbababbbb", "aa"), "aba")
+
+    def test_duplicated_char_but_no_matching(self):
+        self.assertEqual(min_window_subsequence("ccccabbbbabbbabbababbbbcccc", "aca"), "")
+
+    def test_match_last_char(self):
+        self.assertEqual(min_window_subsequence("abcdef", "f"), "f")
+
+    def test_match_first_char(self):
+        self.assertEqual(min_window_subsequence("abcdef", "a"), "a")
+
+    def test_equal_length_string(self):
+        self.assertEqual(min_window_subsequence("abc", "abc"), "abc")
+        self.assertEqual(min_window_subsequence("abc", "bca"), "")
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
+```
+
 
 ### June 14, 2020 LC 239 \[Medium\] Sliding Window Maximum
 ---
