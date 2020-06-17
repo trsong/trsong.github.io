@@ -105,7 +105,11 @@ Output: (2, 4)
 Explanation: Sorting the window (2, 4) which is [7, 5, 6] will also means that the whole list is sorted.
 ```
 
-### Aug 16, 2019 \[Medium\] Longest Substring without Repeating Characters
+```
+
+-->
+
+### June 17, 2020 \[Medium\] Longest Substring without Repeating Characters
 ---
 > **Question:** Given a string, find the length of the longest substring without repeating characters.
 >
@@ -116,20 +120,79 @@ Explanation: Sorting the window (2, 4) which is [7, 5, 6] will also means that t
 lengthOfLongestSubstring("abrkaabcdefghijjxxx") # => 10 as len("abcdefghij") == 10
 ```
 
-
-
-
-
-```
-
--->
-
 ### June 16, 2020 LT 386 \[Medium\] Longest Substring with At Most K Distinct Characters
 ---
 > **Question:** Given a string, find the longest substring that contains at most k unique characters. 
 > 
 > For example, given `"abcbbbbcccbdddadacb"`, the longest substring that contains 2 unique character is `"bcbbbbcccb"`.
 
+
+**Solution with Sliding Window:** [https://repl.it/@trsong/Find-Longest-Substring-with-At-Most-K-Distinct-Characters#main.py](https://repl.it/@trsong/Find-Longest-Substring-with-At-Most-K-Distinct-Characters#main.py)
+```py
+import unittest
+
+def longest_substr_with_k_distinct_chars(s, k):
+    max_window = 0
+    max_window_start = 0
+    window_char_freq = {}
+    i = 0
+    for j, in_char in enumerate(s):
+        window_char_freq[in_char] = window_char_freq.get(in_char, 0) + 1
+
+        while len(window_char_freq) > k:
+            out_char = s[i]
+            window_char_freq[out_char] -= 1
+            if window_char_freq[out_char] == 0:
+                del window_char_freq[out_char]
+            i += 1
+
+        new_window = j - i + 1
+        if new_window > max_window:
+            max_window = new_window
+            max_window_start = i
+
+    return s[max_window_start: max_window_start+max_window]
+
+
+class LongestSubstrWithKDistinctCharSpec(unittest.TestCase):
+    def test_example(self):
+        k, s = 2, "abcbbbbcccbdddadacb"
+        expected = "bcbbbbcccb"
+        self.assertEqual(expected, longest_substr_with_k_distinct_chars(s, k))
+
+    def test_empty_string(self):
+        self.assertEqual("", longest_substr_with_k_distinct_chars("", 3))
+
+    def test_substr_with_3_distinct_chars(self):
+        k, s = 3, "abcadcacacaca"
+        expected = "cadcacacaca"
+        self.assertEqual(expected, longest_substr_with_k_distinct_chars(s, k))
+
+    def test_substr_with_3_distinct_chars2(self):
+        k, s = 3, "eceba"
+        expected = "eceb"
+        self.assertEqual(expected, longest_substr_with_k_distinct_chars(s, k))
+
+    def test_multiple_solutions(self):
+        k, s = 4, "WORLD" 
+        res = longest_substr_with_k_distinct_chars(s, k)
+        sol1 = "WORL"
+        sol2 = "ORLD"
+        self.assertTrue(sol1 == res or sol2 == res)
+
+    def test_complicated_input(self):
+        s = "abcbdbdbbdcdabd"
+        k2, sol2 = 2, "bdbdbbd"
+        k3, sol3 = 3, "bcbdbdbbdcd"
+        k5, sol5 = 5, "abcbdbdbbdcdabd"
+        self.assertEqual(sol2, longest_substr_with_k_distinct_chars(s, k2))
+        self.assertEqual(sol3, longest_substr_with_k_distinct_chars(s, k3))
+        self.assertEqual(sol5, longest_substr_with_k_distinct_chars(s, k5))
+    
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
+```
 
 ### June 15, 2020 LC 727 \[Hard\] Minimum Window Subsequence
 ---
