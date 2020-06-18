@@ -68,7 +68,24 @@ Output : 23
 > A subsequence is a sequence that can be derived from another sequence by deleting some or no elements without changing the order of the remaining elements. For example, the sequence `[A, B, D]`  is a subsequence of  `[A, B, C, D, E, F]`  obtained after removal of elements C, E, and F.  
 > 
 
-### Jul 19, 2019 \[Medium\] Longest Common Subsequence
+
+
+### Dec 12, 2019 \[Medium\] Sorting Window Range
+--- 
+> **Question:** Given a list of numbers, find the smallest window to sort such that the whole list will be sorted. If the list is already sorted return (0, 0). 
+
+**Example:**
+```py
+Input: [2, 4, 7, 5, 6, 8, 9]
+Output: (2, 4)
+Explanation: Sorting the window (2, 4) which is [7, 5, 6] will also means that the whole list is sorted.
+```
+
+```
+
+-->
+
+### June 18, 2020 \[Medium\] Longest Common Subsequence
 ---
 > **Question:** Given two sequences, find the length of longest subsequence present in both of them. 
 >
@@ -94,21 +111,6 @@ Explanation:
 LCS is "AC"
 ```
 
-### Dec 12, 2019 \[Medium\] Sorting Window Range
---- 
-> **Question:** Given a list of numbers, find the smallest window to sort such that the whole list will be sorted. If the list is already sorted return (0, 0). 
-
-**Example:**
-```py
-Input: [2, 4, 7, 5, 6, 8, 9]
-Output: (2, 4)
-Explanation: Sorting the window (2, 4) which is [7, 5, 6] will also means that the whole list is sorted.
-```
-
-```
-
--->
-
 ### June 17, 2020 \[Medium\] Longest Substring without Repeating Characters
 ---
 > **Question:** Given a string, find the length of the longest substring without repeating characters.
@@ -118,6 +120,60 @@ Explanation: Sorting the window (2, 4) which is [7, 5, 6] will also means that t
 **Example:**
 ```py
 lengthOfLongestSubstring("abrkaabcdefghijjxxx") # => 10 as len("abcdefghij") == 10
+```
+
+**My thoughts:** This is a typical sliding window problem. The idea is to mantain a last occurance map while proceeding the sliding window. Such window is bounded by indices `(i, j)`, whenever we process next character j, we check the last occurance map to see if the current character `a[j]` is duplicated within the window `(i, j)`, ie. `i <= k < j`, if that's the case, we move `i` to `k + 1` so that `a[j]` no longer exists in window. And we mantain the largest window size `j - i + 1` as the longest substring without repeating characters.
+
+**Solution with Sliding Window:** [https://repl.it/@trsong/Find-Longest-Substring-without-Repeating-Characters](https://repl.it/@trsong/Find-Longest-Substring-without-Repeating-Characters)
+```py
+import unittest
+
+def longest_nonrepeated_substring(s):
+    max_window = 0
+    last_occur = {}
+    i = -1
+
+    for j, in_char in enumerate(s):
+        i = max(i, last_occur.get(in_char, -1))
+        window = j - i
+        max_window = max(max_window, window)
+        last_occur[in_char] = j
+
+    return max_window
+
+
+class LongestNonrepeatedSubstringSpec(unittest.TestCase):
+    def test_example(self):
+        s = "abrkaabcdefghijjxxx"
+        expected = 10  # "abcdefghij"
+        self.assertEqual(expected, longest_nonrepeated_substring(s))
+
+    def test_empty_string(self):
+        self.assertEqual(0, longest_nonrepeated_substring(""))
+
+    def test_string_with_repeated_characters(self):
+        s = "aabbafacbbcacbfa"
+        expected = 4  # "facb"
+        self.assertEqual(expected, longest_nonrepeated_substring(s))
+
+    def test_some_random_string(self):
+        s = "ABDEFGABEF"
+        expected = 6  # "ABDEFG"
+        self.assertEqual(expected, longest_nonrepeated_substring(s))
+
+    def test_all_repated_characters(self):
+        s = "aaa"
+        expected = 1  # "a"
+        self.assertEqual(expected, longest_nonrepeated_substring(s))
+
+    def test_non_repated_characters(self):
+        s = "abcde"
+        expected = 5  # "abcde"
+        self.assertEqual(expected, longest_nonrepeated_substring(s))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
 ```
 
 ### June 16, 2020 LT 386 \[Medium\] Longest Substring with At Most K Distinct Characters
