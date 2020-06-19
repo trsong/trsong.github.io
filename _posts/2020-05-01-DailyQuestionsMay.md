@@ -58,17 +58,6 @@ Output : 23
 
 **Similar Question:** LC 446 Arithmetic Slices II - Subsequence
 
-### Jul 2, 2019 \[Hard\] The Longest Increasing Subsequence
----
-> **Question:** Given an array of numbers, find the length of the longest increasing **subsequence** in the array. The subsequence does not necessarily have to be contiguous.
->
-> For example, given the array `[0, 8, 4, 12, 2, 10, 6, 14, 1, 9, 5, 13, 3, 11, 7, 15]`, the longest increasing subsequence has length 6: it is 0, 2, 6, 9, 11, 15.
->
-> Definition of **Subsequence**:
-> A subsequence is a sequence that can be derived from another sequence by deleting some or no elements without changing the order of the remaining elements. For example, the sequence `[A, B, D]`  is a subsequence of  `[A, B, C, D, E, F]`  obtained after removal of elements C, E, and F.  
-> 
-
-
 
 ### Dec 12, 2019 \[Medium\] Sorting Window Range
 --- 
@@ -83,7 +72,28 @@ Explanation: Sorting the window (2, 4) which is [7, 5, 6] will also means that t
 
 ```
 
+Increasing Subsequence length K
+
+Given an int array nums of length n and an int k. Return an increasing subsequence of length k (KIS).
+
+Example 1:
+
+Input: nums = [10, 1, 4, 8, 2, 9], k = 3
+Output: [1, 4, 8] or [1, 4, 9] or [1, 8, 9]
+Example 2:
+
+Input: nums = [10, 1, 4, 8, 2, 9], k = 4
+Output: [1, 4, 8, 9]
+Expected time complexity O(nlogk).
+
 -->
+
+### June 19, 2020 \[Hard\] The Longest Increasing Subsequence
+---
+> **Question:** Given an array of numbers, find the length of the longest increasing **subsequence** in the array. The subsequence does not necessarily have to be contiguous.
+>
+> For example, given the array `[0, 8, 4, 12, 2, 10, 6, 14, 1, 9, 5, 13, 3, 11, 7, 15]`, the longest increasing subsequence has length `6` ie. `[0, 2, 6, 9, 11, 15]`.
+
 
 ### June 18, 2020 \[Medium\] Longest Common Subsequence
 ---
@@ -109,6 +119,76 @@ Output:  2
 	
 Explanation: 
 LCS is "AC"
+```
+
+**My thoughts:** This problem is similar to Levenshtein Edit Distance in multiple ways:
+
+1. If the last digit of each string matches each other, i.e. lcs(seq1 + s, seq2 + s) then result = 1 + lcs(seq1, seq2).
+2. If the last digit not matches,  i.e. lcs(seq1 + s, seq2 + p), then res is either ignore s or ignore q. Just like insert a whitespace or remove a letter from edit distance, which gives max(lcs(seq1, seq2 + p), lcs(seq1 + s, seq2))
+
+The difference between this question and edit distance is that each subsequence does not allow switching to different letters.
+ 
+
+**Solution with DP:** [https://repl.it/@trsong/Find-the-Longest-Common-Subsequence](https://repl.it/@trsong/Find-the-Longest-Common-Subsequence)
+```py
+import unittest
+
+def lcs(seq1, seq2):
+    n, m = len(seq1), len(seq2)
+    # Let dp[n][m] represents lcs for seq1[:n] and seq[:m]
+    # dp[n][m] = dp[n-1][m-1] + 1  if seq[n-1] matches seq2[m-1]
+    #          = max(dp[n-1][m], dp[n][m-1]) otherwise
+    dp = [[0 for _ in xrange(m+1)] for _ in xrange(n+1)]
+    for i in xrange(1, n+1):
+        for j in xrange(1, m+1):
+            if seq1[i-1] == seq2[j-1]:
+                dp[i][j] = dp[i-1][j-1] + 1
+            else:
+                dp[i][j] = max(dp[i-1][j], dp[i][j-1])
+    return dp[n][m]
+
+
+class LCSSpec(unittest.TestCase):
+    def test_empty_sequences(self):
+        self.assertEqual(0, lcs("", ""))
+
+    def test_match_last_position(self):
+        self.assertEqual(1, lcs("abcdz", "efghijz"))  # a
+
+    def test_match_first_position(self):
+        self.assertEqual(1, lcs("aefgh", "aijklmnop"))  # a
+
+    def test_off_by_one_position(self):
+        self.assertEqual(4, lcs("10101", "01010"))  # 0101
+
+    def test_off_by_one_position2(self):
+        self.assertEqual(4, lcs("12345", "1235"))  # 1235
+
+    def test_off_by_one_position3(self):
+        self.assertEqual(3, lcs("1234", "1243"))  # 124
+
+    def test_off_by_one_position4(self):
+        self.assertEqual(4, lcs("12345", "12340"))  # 1234
+
+    def test_multiple_matching(self):
+        self.assertEqual(5, lcs("afbgchdie",
+                                "__a__b_c__de___f_g__h_i___"))  # abcde
+
+    def test_ascending_vs_descending(self):
+        self.assertEqual(1, lcs("01234", "_4__3___2_1_0__"))  # 0
+
+    def test_multiple_ascending(self):
+        self.assertEqual(6, lcs("012312342345", "012345"))  # 012345
+
+    def test_multiple_descending(self):
+        self.assertEqual(5, lcs("5432432321", "54321"))  # 54321
+
+    def test_example(self):
+        self.assertEqual(2, lcs("ABCD", "EACB"))  # AC
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
 ```
 
 ### June 17, 2020 \[Medium\] Longest Substring without Repeating Characters
