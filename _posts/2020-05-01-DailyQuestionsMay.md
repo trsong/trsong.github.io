@@ -105,26 +105,27 @@ Output: [1, 4, 8, 9]
 ```
 
 
-### June 19, 2020 \[Hard\] The Longest Increasing Subsequence
+### June 19, 2020 LC 300 \[Hard\] The Longest Increasing Subsequence
 ---
 > **Question:** Given an array of numbers, find the length of the longest increasing **subsequence** in the array. The subsequence does not necessarily have to be contiguous.
 >
 > For example, given the array `[0, 8, 4, 12, 2, 10, 6, 14, 1, 9, 5, 13, 3, 11, 7, 15]`, the longest increasing subsequence has length `6` ie. `[0, 2, 6, 9, 11, 15]`.
 
-**Solution:** [https://repl.it/@trsong/Find-the-Longest-Increasing-Subsequence](https://repl.it/@trsong/Find-the-Longest-Increasing-Subsequence)
+**Solution with DP and Binary Search:** [https://repl.it/@trsong/Find-the-Longest-Increasing-Subsequence](https://repl.it/@trsong/Find-the-Longest-Increasing-Subsequence)
 ```py
 import unittest
 
 def longest_increasing_subsequence(sequence):
-    res = []
+    # The index i in in dp[i] represents exits an increasing subseq of size i+1
+    dp = []
     for num in sequence:
-        i = binary_search(res, 0, len(res), num)
+        i = binary_search(dp, 0, len(dp), num)
         # For any elem append to res, that means there exists a subseq of the same size as res
-        if i == len(res):
-            res.append(num)
+        if i == len(dp):
+            dp.append(num)
         else:
-            res[i] = num
-    return len(res)
+            dp[i] = num
+    return len(dp)
 
 
 def binary_search(nums, lo, hi, target):
