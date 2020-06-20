@@ -88,11 +88,108 @@ Expected time complexity O(nlogk).
 
 -->
 
+### June 20, 2020 \[Hard\] Increasing Subsequence of Length K
+---
+> **Question:** Given an int array nums of length n and an int k. Return an increasing subsequence of length k (KIS). Expected time complexity `O(nlogk)`.
+
+**Example 1:**
+```py
+Input: nums = [10, 1, 4, 8, 2, 9], k = 3
+Output: [1, 4, 8] or [1, 4, 9] or [1, 8, 9]
+```
+
+**Example 2:**
+```py
+Input: nums = [10, 1, 4, 8, 2, 9], k = 4
+Output: [1, 4, 8, 9]
+```
+
+
 ### June 19, 2020 \[Hard\] The Longest Increasing Subsequence
 ---
 > **Question:** Given an array of numbers, find the length of the longest increasing **subsequence** in the array. The subsequence does not necessarily have to be contiguous.
 >
 > For example, given the array `[0, 8, 4, 12, 2, 10, 6, 14, 1, 9, 5, 13, 3, 11, 7, 15]`, the longest increasing subsequence has length `6` ie. `[0, 2, 6, 9, 11, 15]`.
+
+**Solution:** [https://repl.it/@trsong/Find-the-Longest-Increasing-Subsequence](https://repl.it/@trsong/Find-the-Longest-Increasing-Subsequence)
+```py
+import unittest
+
+def longest_increasing_subsequence(sequence):
+    res = []
+    for num in sequence:
+        i = binary_search(res, 0, len(res), num)
+        # For any elem append to res at position i, res[:i+1] will form a subsequence
+        if i == len(res):
+            res.append(num)
+        else:
+            res[i] = num
+    return len(res)
+
+
+def binary_search(nums, lo, hi, target):
+    while lo < hi:
+        mid = lo + (hi - lo) // 2
+        if nums[mid] < target:
+            lo = mid + 1
+        else:
+            hi = mid
+    return lo
+
+
+class LongestIncreasingSubsequnceSpec(unittest.TestCase):
+    def test_empty_sequence(self):
+        self.assertEqual(0, longest_increasing_subsequence([]))
+
+    def test_last_elem_is_local_max(self):
+        seq = [1, 2, 3, 0, 2]
+        expected = 3  # [1, 2, 3]
+        self.assertEqual(expected, longest_increasing_subsequence(seq))
+
+    def test_last_elem_is_global_max(self):
+        seq = [1, 2, 3, 0, 6]
+        expected = 4  # [1, 2, 3, 6]
+        self.assertEqual(expected, longest_increasing_subsequence(seq))
+
+    def test_longest_increasing_subsequence_in_first_half_sequence(self):
+        seq = [4, 5, 6, 7, 1, 2, 3]
+        expected = 4  # [4, 5, 6, 7]
+        self.assertEqual(expected, longest_increasing_subsequence(seq))
+
+    def test_longest_increasing_subsequence_in_second_half_sequence(self):
+        seq = [1, 2, 3, -2, -1, 0, 1]
+        expected = 4  # [-2, -1, 0, 1]
+        self.assertEqual(expected, longest_increasing_subsequence(seq))
+
+    def test_sequence_in_up_down_up_pattern(self):
+        seq = [1, 2, 3, 2, 4]
+        expected = 4  # [1, 2, 2, 4]
+        self.assertEqual(expected, longest_increasing_subsequence(seq))
+
+    def test_sequence_in_up_down_up_pattern2(self):
+        seq = [1, 2, 3, -1, 0]
+        expected = 3  # [1, 2, 3]
+        self.assertEqual(expected, longest_increasing_subsequence(seq))
+
+    def test_sequence_in_down_up_down_pattern(self):
+        seq = [4, 3, 5]
+        expected = 2  # [3, 5]
+        self.assertEqual(expected, longest_increasing_subsequence(seq))
+
+    def test_sequence_in_down_up_down_pattern2(self):
+        seq = [4, 0, 1]
+        expected = 2  # [0, 1]
+        self.assertEqual(expected, longest_increasing_subsequence(seq))
+
+    def test_multiple_result(self):
+        seq = [10, 9, 2, 5, 3, 7, 101, 18]
+        expected = 4  # [2, 3, 7, 101]
+        self.assertEqual(expected, longest_increasing_subsequence(seq))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
+```
 
 
 ### June 18, 2020 \[Medium\] Longest Common Subsequence
