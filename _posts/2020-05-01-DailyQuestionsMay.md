@@ -119,7 +119,7 @@ def longest_increasing_subsequence(sequence):
     res = []
     for num in sequence:
         i = binary_search(res, 0, len(res), num)
-        # For any elem append to res at position i, res[:i+1] will form a subsequence
+        # For any elem append to res, that means there exists a subseq of the same size as res
         if i == len(res):
             res.append(num)
         else:
