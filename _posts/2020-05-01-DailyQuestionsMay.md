@@ -59,7 +59,11 @@ Output : 23
 **Similar Question:** LC 446 Arithmetic Slices II - Subsequence
 
 
-### Dec 12, 2019 \[Medium\] Sorting Window Range
+
+
+-->
+
+### June 21, 2020 \[Medium\] Sorting Window Range
 --- 
 > **Question:** Given a list of numbers, find the smallest window to sort such that the whole list will be sorted. If the list is already sorted return (0, 0). 
 
@@ -69,24 +73,6 @@ Input: [2, 4, 7, 5, 6, 8, 9]
 Output: (2, 4)
 Explanation: Sorting the window (2, 4) which is [7, 5, 6] will also means that the whole list is sorted.
 ```
-
-```
-
-Increasing Subsequence length K
-
-Given an int array nums of length n and an int k. Return an increasing subsequence of length k (KIS).
-
-Example 1:
-
-Input: nums = [10, 1, 4, 8, 2, 9], k = 3
-Output: [1, 4, 8] or [1, 4, 9] or [1, 8, 9]
-Example 2:
-
-Input: nums = [10, 1, 4, 8, 2, 9], k = 4
-Output: [1, 4, 8, 9]
-Expected time complexity O(nlogk).
-
--->
 
 ### June 20, 2020 \[Hard\] Increasing Subsequence of Length K
 ---
@@ -102,6 +88,89 @@ Output: [1, 4, 8] or [1, 4, 9] or [1, 8, 9]
 ```py
 Input: nums = [10, 1, 4, 8, 2, 9], k = 4
 Output: [1, 4, 8, 9]
+```
+
+**Solution with DP and Binary Search:** [https://repl.it/@trsong/Increasing-Subsequence-of-Length-K](https://repl.it/@trsong/Increasing-Subsequence-of-Length-K)
+```py
+import unittest
+
+def increasing_sequence(nums, k):
+    if k <= 0 or not nums:
+        return []
+        
+    # The index i in in dp[i] represents exits an increasing subseq of size i+1
+    dp = []
+    prev_num = {}
+    for num in nums:
+        i = binary_search(dp, 0, len(dp), num)
+        # For any elem append to res, that means there exists a subseq of the same size as res
+        if i == len(dp):
+            dp.append(num)
+        else:
+            dp[i] = num
+        prev_num[num] = dp[i-1] if i > 0 else None
+        if len(dp) == k:
+            break
+
+    res = []
+    num = dp[-1]
+    while num in prev_num:
+        res.append(num)
+        num = prev_num[num]
+    return res[::-1]
+
+
+def binary_search(nums, lo, hi, target):
+    while lo < hi:
+        mid = lo + (hi - lo) // 2
+        if nums[mid] < target:
+            lo = mid + 1
+        else:
+            hi = mid
+    return lo
+
+
+class IncreasingSequenceSpec(unittest.TestCase):
+    def validate_result(self, nums, k):
+        subseq = increasing_sequence(nums, k)
+        self.assertEqual(k, len(subseq), str(subseq) + " Is not of length " + str(k))
+
+        i = 0
+        for num in nums:
+            if i < len(subseq) and num == subseq[i]:
+                i += 1
+        self.assertEqual(len(subseq), i, str(subseq) + " Is not valid subsequence.")
+        
+        for i in xrange(1, len(subseq)):
+            self.assertLessEqual(subseq[i-1], subseq[i], str(subseq) + " Is not increasing subsequene.")
+
+    def test_example(self):
+        k, nums = 3, [10, 1, 4, 8, 2, 9]
+        self.validate_result(nums, k)  # possible result: [1, 4, 8]
+
+    def test_example2(self):
+        k, nums = 4, [10, 1, 4, 8, 2, 9]
+        self.validate_result(nums, k)  # possible result: [1, 4, 8, 9]
+
+    def test_empty_sequence(self):
+        k, nums = 0, []
+        self.validate_result(nums, k)
+
+    def test_longest_increasing_subsequence(self):
+        k, nums = 4, [10, 9, 2, 5, 3, 7, 101, 18]
+        self.validate_result(nums, k)  # possible result: [2, 3, 7, 101]
+
+    def test_longest_increasing_subsequence_in_second_half_sequence(self):
+        k, nums = 4, [1, 2, 3, -2, -1, 0, 1]
+        self.validate_result(nums, k)  # possible result: [-2, -1, 0, 1]
+
+    def test_should_return_valid_subsequene(self):
+        k, nums = 3, [8, 9, 7, 6, 10]
+        self.validate_result(nums, k)  # possible result: [8, 9, 10]
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
 ```
 
 
