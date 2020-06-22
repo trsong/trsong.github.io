@@ -31,8 +31,9 @@ Given the following input:
 You should return the following, as a string:
 '[null, 123, ["a", "b"], {"c": "d"}]'
 ```
+-->
 
-### Oct 16, 2019 \[Medium\] Count Arithmetic Subsequences
+### June 22, 2020 LC 446 \[Medium\] Count Arithmetic Subsequences
 ---
 > **Question:** Given an array of n positive integers. The task is to count the number of Arithmetic Subsequence in the array. Note: Empty sequence or single element sequence is also Arithmetic Sequence. 
 
@@ -56,13 +57,6 @@ Input : arr[] = [1, 2, 3, 4, 5]
 Output : 23
 ```
 
-**Similar Question:** LC 446 Arithmetic Slices II - Subsequence
-
-
-
-
--->
-
 ### June 21, 2020 \[Medium\] Sorting Window Range
 --- 
 > **Question:** Given a list of numbers, find the smallest window to sort such that the whole list will be sorted. If the list is already sorted return (0, 0). 
@@ -72,6 +66,101 @@ Output : 23
 Input: [2, 4, 7, 5, 6, 8, 9]
 Output: (2, 4)
 Explanation: Sorting the window (2, 4) which is [7, 5, 6] will also means that the whole list is sorted.
+```
+
+**My thoughts:** A sorted array has no min range to sort. So we want first identity the range `(i, j)` that goes wrong, that is, we want to identify first `i` and last `j` that makes array not sorted. ie. smallest `i` such that `nums[i] > nums[i+1]`, largest `j` such that `nums[j] < nums[j-1]`. 
+
+Secondly, range `(i, j)` inclusive is where we should start. And there could be number smaller than `nums[i+1]` and bigger than `nums[j-1]`, therefore we need to figure out how we can release the boundary of `(i, j)` to get `(i', j')` where `i' <= i` and `j' <= j` so that `i'`, `j'` covers those smallest and largest number within `(i, j)`. 
+
+After doing that, we will get smallest range to make original array sorted, the range is `i'` through `j'` inclusive.
+
+**Solution:** [https://repl.it/@trsong/Min-Window-Range-to-Sort](https://repl.it/@trsong/Min-Window-Range-to-Sort)
+```py
+import unittest
+
+def sort_window_range(nums):
+    if not nums:
+        return 0, 0
+    n = len(nums)
+    i = 0
+    j = n - 1
+
+    while i < n - 1 and nums[i] <= nums[i+1]:
+        i += 1
+
+    if i == n - 1:
+        return 0, 0
+    
+    while j > i and nums[j-1] <= nums[j]:
+        j -= 1
+
+    window_min = float('inf')
+    window_max = float('-inf')
+    for k in xrange(i, j+1):
+        if nums[k] < window_min:
+            window_min = nums[k]
+        if nums[k] > window_max:
+            window_max = nums[k]
+
+    while i > 0 and nums[i-1] > window_min:
+        i -= 1
+
+    while j < n - 1 and nums[j+1] < window_max:
+        j += 1
+
+    return i, j
+
+
+class SortWindowRangeSpec(unittest.TestCase):
+    def test_example(self):
+        self.assertEqual((2, 4), sort_window_range([2, 4, 7, 5, 6, 8, 9]))
+
+    def test_example1(self):
+        self.assertEqual((1, 5), sort_window_range([1, 7, 9, 5, 7, 8, 10]))
+        
+    def test_example2(self):
+        self.assertEqual((3, 8), sort_window_range([10, 12, 20, 30, 25, 40, 32, 31, 35, 50, 60]))
+
+    def test_example3(self):
+        self.assertEqual((2, 5), sort_window_range([0, 1, 15, 25, 6, 7, 30, 40, 50]))
+
+    def test_empty_array(self):
+        self.assertEqual((0, 0), sort_window_range([]))
+
+    def test_already_sorted_array(self):
+        self.assertEqual((0, 0), sort_window_range([1, 2, 3, 4]))
+
+    def test_array_contains_one_elem(self):
+        self.assertEqual((0, 0), sort_window_range([42]))
+
+    def test_reverse_sorted_array(self):
+        self.assertEqual((0, 3), sort_window_range([4, 3, 2, 1]))
+
+    def test_table_shape_array(self):
+        self.assertEqual((2, 5), sort_window_range([1, 2, 3, 3, 3, 2]))
+
+    def test_increase_decrease_then_increase(self):
+        self.assertEqual((2, 6), sort_window_range([1, 2, 3, 4, 3, 2, 3, 4, 5, 6]))
+
+    def test_increase_decrease_then_increase2(self):
+        self.assertEqual((0, 4), sort_window_range([0, 1, 2, -1, 1, 2]))
+
+    def test_increase_decrease_then_increase3(self):
+        self.assertEqual((0, 6), sort_window_range([0, 1, 2, 99, -99, 1, 2]))
+        self.assertEqual((0, 6), sort_window_range([0, 1, 2, -99, 99, 1, 2]))
+    
+    def test_array_contains_duplicated_numbers(self):
+        self.assertEqual((0, 5), sort_window_range([1, 1, 1, 0, -1, -1, 1, 1, 1]))
+
+    def test_array_contains_one_outlier(self):
+        self.assertEqual((3, 6), sort_window_range([0, 0, 0, 1, 0, 0, 0]))
+
+    def test_array_contains_one_outlier2(self):
+        self.assertEqual((0, 3), sort_window_range([0, 0, 0, -1, 0, 0, 0]))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
 ```
 
 ### June 20, 2020 \[Hard\] Increasing Subsequence of Length K
