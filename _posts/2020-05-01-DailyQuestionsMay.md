@@ -33,11 +33,9 @@ You should return the following, as a string:
 ```
 -->
 
-### June 23, 2020 \[Medium\] Minimum Size Subarray Sum
+### June 23, 2020 LC 209 \[Medium\] Minimum Size Subarray Sum
 ---
-> **Question:** Given an array of n positive integers and a positive integer s, find the minimal length of a contiguous subarray of which the sum ≥ s. If there isn't one, return 0 instead.
->
-> Given an array of n positive integers and a positive integer s, find the minimal length of a contiguous subarray of which the sum ≥ s. If there isn't one, return 0 instead.
+> **Question:** Given an array of n positive integers and a positive integer s, find the minimal length of a contiguous subarray of which the sum >= s. If there isn't one, return 0 instead.
 
 **Example:**
 ```py
