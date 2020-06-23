@@ -33,6 +33,19 @@ You should return the following, as a string:
 ```
 -->
 
+### June 23, 2020 \[Medium\] Minimum Size Subarray Sum
+---
+> **Question:** Given an array of n positive integers and a positive integer s, find the minimal length of a contiguous subarray of which the sum ≥ s. If there isn't one, return 0 instead.
+>
+> Given an array of n positive integers and a positive integer s, find the minimal length of a contiguous subarray of which the sum ≥ s. If there isn't one, return 0 instead.
+
+**Example:**
+```py
+Input: s = 7, nums = [2, 3, 1, 2, 4, 3]
+Output: 2
+Explanation: the subarray [4,3] has the minimal length under the problem constraint.
+```
+
 ### June 22, 2020 LC 446 \[Medium\] Count Arithmetic Subsequences
 ---
 > **Question:** Given an array of n positive integers. The task is to count the number of Arithmetic Subsequence in the array. Note: Empty sequence or single element sequence is also Arithmetic Sequence. 
@@ -55,6 +68,60 @@ Output : 12
 ```py
 Input : arr[] = [1, 2, 3, 4, 5]
 Output : 23
+```
+
+**My thoughts:** this problem can be solved with DP: defined as `dp[i][d]` represents number of arithemtic subsequence end at index `i` with common difference `d`. `dp[i][d] = dp[j][d] + 1 where d = nums[i] - nums[j] for all j < i`. Thus the total number of arithemtic subsequence = sum of `dp[i][d]` for all `i`, `d`. 
+
+**Solution with DP:** [https://repl.it/@trsong/Count-Number-of-Arithmetic-Subsequences](https://repl.it/@trsong/Count-Number-of-Arithmetic-Subsequences)
+```py
+import unittest
+from collections import defaultdict
+
+def count_arithmetic_subsequence(nums):
+    n = len(nums)
+    # let dp[i][d] represents number of arithemtic subsequence end at index i with common difference d
+    #     dp[i][d] = dp[j][d] + 1 where d = nums[i] - nums[j]
+    # The total number of arithemtic subsequence = sum of dp[i][d] for all i, d
+    dp = [defaultdict(int) for _ in xrange(n)]
+    res = n + 1
+    for i in xrange(n):
+        for j in xrange(i):
+            d = nums[i] - nums[j]
+            dp[i][d] += dp[j][d] + 1  # (seq ends at j) append nums[i] and (nums[j], nums[i])
+        res += sum(dp[i].values())
+    return res
+
+
+class CountArithmeticSubsequenceSpec(unittest.TestCase):
+    def test_example1(self):
+        # All arithemtic subsequence: [], [1], [2], [3], [1, 2], [2, 3], [1, 3], [1, 2, 3].
+        self.assertEqual(8, count_arithmetic_subsequence([1, 2, 3]))
+
+    def test_example2(self):
+        self.assertEqual(12, count_arithmetic_subsequence([10, 20, 30, 45]))
+
+    def test_example3(self):
+        self.assertEqual(23, count_arithmetic_subsequence([1, 2, 3, 4, 5]))
+
+    def test_empty_array(self):
+        self.assertEqual(1, count_arithmetic_subsequence([]))
+
+    def test_array_with_one_element(self):
+        self.assertEqual(2, count_arithmetic_subsequence([1]))
+
+    def test_array_with_two_element(self):
+        # All arithemtic subsequence: [], [1], [2], [1, 2]
+        self.assertEqual(4, count_arithmetic_subsequence([1, 2]))
+
+    def test_array_with_unique_number(self):
+        self.assertEqual(8, count_arithmetic_subsequence([1, 1, 1]))
+
+    def test_contains_duplicate_number(self):
+        self.assertEqual(12, count_arithmetic_subsequence([2, 1, 1, 1]))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
 ```
 
 ### June 21, 2020 \[Medium\] Sorting Window Range
