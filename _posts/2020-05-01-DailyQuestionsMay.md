@@ -33,6 +33,17 @@ You should return the following, as a string:
 ```
 -->
 
+### June 24, 2020 \[Easy\] Find the K-th Largest Number
+---
+> **Question:** Find the k-th largest number in a sequence of unsorted numbers. Can you do this in linear time?
+
+**Example:**
+```py
+Input: 3, [8, 7, 2, 3, 4, 1, 5, 6, 9, 0]
+Output: 7
+```
+
+
 ### June 23, 2020 LC 209 \[Medium\] Minimum Size Subarray Sum
 ---
 > **Question:** Given an array of n positive integers and a positive integer s, find the minimal length of a contiguous subarray of which the sum >= s. If there isn't one, return 0 instead.
@@ -42,6 +53,74 @@ You should return the following, as a string:
 Input: s = 7, nums = [2, 3, 1, 2, 4, 3]
 Output: 2
 Explanation: the subarray [4,3] has the minimal length under the problem constraint.
+```
+
+**My thoughts:** Naive solution is to iterate through all possible `(start, end)` intervals to calculate min size of qualified subarrays. However, there is a way to optimize such process. Notice that if `(start, end1)` already has `sum > s`, there is not need to go to another interval `(start, end2)` where `end2 > end1`. That is iterating through the rest of list won't improve the result. Therefore we shortcut start once figure out the qualified end index. 
+
+During iteration, with s fixed, once we figure out the minimum interval `(s, e)` that has `sum < s`. Since `(s, e)` is minimum for all e and some s. If we proceed s, interval `(s+1, e)` won't have `sum > s`.
+
+Thus we can move start and end index during the iteration that will form a sliding window.
+
+**Solution with Sliding Window:** [https://repl.it/@trsong/Find-the-Minimum-Size-Subarray-Sum](https://repl.it/@trsong/Find-the-Minimum-Size-Subarray-Sum)
+```py
+import unittest
+import sys
+
+def min_size_subarray_sum(s, nums):
+    accu_sum = 0
+    j = 0
+    res = sys.maxint
+    n = len(nums)
+
+    for i in xrange(n):
+        while j < n and accu_sum < s:
+            accu_sum += nums[j]
+            j += 1
+
+        if accu_sum >= s:
+            res = min(res, j - i)
+        accu_sum -= nums[i]
+
+    return res if res < sys.maxint else 0
+
+
+class MinSizeSubarraySumSpec(unittest.TestCase):
+    def test_example(self):
+        s, nums = 7, [2, 3, 1, 2, 4, 3]
+        expected = 2  # [4, 3]
+        self.assertEqual(expected, min_size_subarray_sum(s, nums))
+
+    def test_empty_array(self):
+        self.assertEqual(0,  min_size_subarray_sum(0, []))
+
+    def test_no_such_subarray_exists(self):
+        s, nums = 3, [1, 1]
+        expected = 0
+        self.assertEqual(expected, min_size_subarray_sum(s, nums))
+
+    def test_no_such_subarray_exists2(self):
+        s, nums = 8, [1, 2, 4]
+        expected = 0
+        self.assertEqual(expected, min_size_subarray_sum(s, nums))
+    
+    def test_target_subarray_size_greater_than_one(self):
+        s, nums = 51, [1, 4, 45, 6, 0, 19]
+        expected = 2  # [45, 6]
+        self.assertEqual(expected, min_size_subarray_sum(s, nums))
+
+    def test_target_subarray_size_one(self):
+        s, nums = 9, [1, 10, 5, 2, 7]
+        expected = 1  # [10]
+        self.assertEqual(expected, min_size_subarray_sum(s, nums))
+
+    def test_return_min_size_of_such_subarray(self):
+        s, nums = 200, [1, 11, 100, 1, 0, 200, 3, 2, 1, 250]
+        expected = 1   # [200]
+        self.assertEqual(expected, min_size_subarray_sum(s, nums))
+   
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
 ```
 
 ### June 22, 2020 LC 446 \[Medium\] Count Arithmetic Subsequences
