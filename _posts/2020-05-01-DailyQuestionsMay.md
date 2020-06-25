@@ -33,6 +33,18 @@ You should return the following, as a string:
 ```
 -->
 
+
+### June 25, 2020\[Easy\] Largest Product of 3 Elements
+---
+> **Question:** You are given an array of integers. Return the largest product that can be made by multiplying any 3 integers in the array.
+
+**Example:**
+```py
+Input: [-4, -4, 2, 8]
+Output: 128
+Explanation: the largest product can be made by multiplying -4 * -4 * 8 = 128.
+```
+
 ### June 24, 2020 \[Easy\] Find the K-th Largest Number
 ---
 > **Question:** Find the k-th largest number in a sequence of unsorted numbers. Can you do this in linear time?
@@ -43,6 +55,80 @@ Input: 3, [8, 7, 2, 3, 4, 1, 5, 6, 9, 0]
 Output: 7
 ```
 
+**Solution with Quick Select:** [https://repl.it/@trsong/Find-the-K-th-Largest-Number](https://repl.it/@trsong/Find-the-K-th-Largest-Number)
+```py
+import unittest
+import random
+
+def find_kth_max(nums, k):
+    n = len(nums)
+    if k > n:
+        return None
+
+    lo, hi = 0, n - 1
+    while True:
+        pos = quick_select(nums, lo, hi)
+        if pos == n - k:
+            return nums[pos]
+        elif pos < n - k:
+            lo = pos + 1
+        else:
+            hi = pos - 1
+        
+    return None
+
+
+def quick_select(nums, lo, hi):
+    pivot_index = random.randint(lo, hi)
+    # swap pivot with hi
+    nums[hi], nums[pivot_index] = nums[pivot_index], nums[hi]
+
+    i = lo
+    for j in xrange(lo, hi):
+        if nums[j] < nums[hi]:
+            nums[j], nums[i] = nums[i], nums[j]
+            i += 1
+    
+    # swap back pivot to correct position
+    nums[i], nums[hi] = nums[hi], nums[i]
+    return i
+
+    
+class FindKthMaxSpec(unittest.TestCase):
+    def test_example(self):
+        k, nums = 3, [8, 7, 2, 3, 4, 1, 5, 6, 9, 0]
+        expected = 7
+        self.assertEqual(expected, find_kth_max(nums, k))
+
+    def test_find_max(self):
+        k, nums = 1, [1, 2, 3]
+        expected = 3
+        self.assertEqual(expected, find_kth_max(nums, k))
+
+    def test_find_min(self):
+        k, nums = 5, [1, 2, 3, 4, 5]
+        expected = 1
+        self.assertEqual(expected, find_kth_max(nums, k))
+
+    def test_array_with_duplicated_elements(self):
+        k, nums = 3, [1, 1, 3, 5, 5]
+        expected = 3
+        self.assertEqual(expected, find_kth_max(nums, k))
+
+    def test_array_with_duplicated_elements2(self):
+        k, nums = 4, [1, 1, 1, 1, 1, 1, 1, 1]
+        expected = 1
+        self.assertEqual(expected, find_kth_max(nums, k)) 
+
+    def test_array_with_duplicated_elements3(self):
+        k, nums = 2, [1, 2, 3, 1, 2, 3, 1, 2, 3]
+        expected = 3
+        self.assertEqual(expected, find_kth_max(nums, k)) 
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
+```
 
 ### June 23, 2020 LC 209 \[Medium\] Minimum Size Subarray Sum
 ---
