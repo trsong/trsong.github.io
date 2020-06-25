@@ -34,7 +34,7 @@ You should return the following, as a string:
 -->
 
 
-### June 25, 2020\[Easy\] Largest Product of 3 Elements
+### June 25, 2020 \[Easy\] Largest Product of 3 Elements
 ---
 > **Question:** You are given an array of integers. Return the largest product that can be made by multiplying any 3 integers in the array.
 
