@@ -33,6 +33,28 @@ You should return the following, as a string:
 ```
 -->
 
+### June 26, 2020 \[Easy\] Find a Peak Element
+---
+> **Question:** Given an unsorted array, in which all elements are distinct, find a "peak" element in `O(log N)` time.
+>
+> An element is considered a peak if it is greater than both its left and right neighbors. It is guaranteed that the first and last elements are lower than all others.
+
+**Example 1:**
+```py
+Input: [5, 10, 20, 15]
+Output: 20
+The element 20 has neighbours 10 and 15,
+both of them are less than 20.
+```
+
+**Example 2:**
+```py
+Input: [10, 20, 15, 2, 23, 90, 67]
+Output: 20 or 90
+The element 20 has neighbours 10 and 15, 
+both of them are less than 20, similarly 90 has neighbous 23 and 67.
+```
+
 
 ### June 25, 2020 \[Easy\] Largest Product of 3 Elements
 ---
@@ -43,6 +65,80 @@ You should return the following, as a string:
 Input: [-4, -4, 2, 8]
 Output: 128
 Explanation: the largest product can be made by multiplying -4 * -4 * 8 = 128.
+```
+
+**My thoughts:** The largest product of three comes from either `max1 * max2 * max3` or `min1 * min2 * max1` where `min1` is 1st min, `max1` is 1st max, vice versa for `max2`, `max3` and `min2`.
+
+**Solution with Priority Queue:** [https://repl.it/@trsong/Find-Largest-Product-of-3-Elements-in-Array](https://repl.it/@trsong/Find-Largest-Product-of-3-Elements-in-Array)
+```py
+import unittest
+from Queue import PriorityQueue
+
+def max_3product(nums):
+    max_heap = PriorityQueue()
+    min_heap = PriorityQueue()
+
+    for i in xrange(3):
+        max_heap.put(-nums[i])
+        min_heap.put(nums[i])
+
+    for i in xrange(3, len(nums)):
+        if nums[i] > min_heap.queue[0]:
+            min_heap.get()
+            min_heap.put(nums[i])
+        elif nums[i] < -max_heap.queue[0]:
+            max_heap.get()
+            max_heap.put(-nums[i])
+            
+    max_heap.get()
+    min2 = max_heap.get()
+    min1 = max_heap.get()
+    max3 = min_heap.get()
+    max2 = min_heap.get()
+    max1 = min_heap.get()
+    return max(max1 * max2 * max3, max1 * min1 * min2)
+
+
+class Max3ProductSpec(unittest.TestCase):
+    def test_all_positive(self):
+        # Max1 * Max2 * Max3 = 5 * 4 * 3 = 60
+        self.assertEqual(60, max_3product([1, 2, 3, 4, 5]))
+    
+    def test_all_positive2(self):
+        # Max1 * Max2 * Max3 = 6 * 6 * 6 = 216
+        self.assertEqual(216, max_3product([2, 3, 6, 1, 1, 6, 3, 2, 1, 6]))
+
+    def test_all_negative(self):
+        # Max1 * Max2 * Max3 = -1 * -2 * -3 = -6
+        self.assertEqual(-6, max_3product([-5, -4, -3, -2, -1]))
+    
+    def test_all_negative2(self):
+        # Max1 * Max2 * Max3 = -1 * -2 * -3 = -6
+        self.assertEqual(-6, max_3product([-1, -5, -2, -4, -3]))
+    
+    def test_all_negative3(self):
+        # Max1 * Max2 * Max3 = -3 * -5 * -6 = -90
+        self.assertEqual(-90, max_3product([-10, -3, -5, -6, -20]))
+
+    def test_mixed(self):
+        # Min1 * Min2 * Max1 =  -1 * -1 * 3 = 3
+        self.assertEqual(3, max_3product([-1, -1, -1, 0, 2, 3]))
+    
+    def test_mixed2(self):
+        # Max1 * Max2 * Max3 = 0 * 0 * -1 = 0
+        self.assertEqual(0, max_3product([0, -1, -2, -3, 0]))
+    
+    def test_mixed3(self):
+        # Min1 * Min2 * Max1 =  -6 * -4 * 7 = 168
+        self.assertEqual(168, max_3product([1, -4, 3, -6, 7, 0]))
+    
+    def test_mixed4(self):
+        # Max1 * Max2 * Max3 = 3 * 2 * 1 = 6
+        self.assertEqual(6, max_3product([-3, 1, 2, 3]))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
 ```
 
 ### June 24, 2020 \[Easy\] Find the K-th Largest Number
