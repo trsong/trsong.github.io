@@ -33,6 +33,17 @@ You should return the following, as a string:
 ```
 -->
 
+### June 27, 2020 \[Medium\] Find Two Elements Appear Once
+---
+> **Question:** Given an array of integers in which two elements appear exactly once and all other elements appear exactly twice, find the two elements that appear only once. Can you do this in linear time and constant space?
+
+**Example:**
+```py
+Input: [2, 4, 6, 8, 10, 2, 6, 10]
+Output: [4, 8] order does not matter
+ ```
+
+
 ### June 26, 2020 \[Easy\] Find a Peak Element
 ---
 > **Question:** Given an unsorted array, in which all elements are distinct, find a "peak" element in `O(log N)` time.
