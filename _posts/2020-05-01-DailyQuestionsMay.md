@@ -31,6 +31,15 @@ Given the following input:
 You should return the following, as a string:
 '[null, 123, ["a", "b"], {"c": "d"}]'
 ```
+
+### Feb 26, 2020 [Medium] Majority Element
+---
+> **Question:** A majority element is an element that appears more than half the time. Given a list with a majority element, find the majority element.
+
+**Example:**
+```py
+majority_element([3, 5, 3, 3, 2, 4, 3])  # gives 3
+```
 -->
 
 ### June 27, 2020 \[Medium\] Find Two Elements Appear Once
@@ -44,7 +53,7 @@ Output: [4, 8] order does not matter
  ```
 
 
-### June 26, 2020 \[Easy\] Find a Peak Element
+### June 26, 2020 LC 162 \[Easy\] Find a Peak Element
 ---
 > **Question:** Given an unsorted array, in which all elements are distinct, find a "peak" element in `O(log N)` time.
 >
@@ -64,6 +73,67 @@ Input: [10, 20, 15, 2, 23, 90, 67]
 Output: 20 or 90
 The element 20 has neighbours 10 and 15, 
 both of them are less than 20, similarly 90 has neighbous 23 and 67.
+```
+
+**Solution with Binary Search:** [https://repl.it/@trsong/Find-a-Peak-Element](https://repl.it/@trsong/Find-a-Peak-Element)
+```py
+import unittest
+
+def find_peak_value(nums):
+    lo, hi = 0, len(nums)
+    while lo < hi:
+        mid = lo + (hi - lo) // 2
+        # uphill
+        if mid == 0 or nums[mid-1] < nums[mid]:
+            lo = mid + 1
+        else:
+            hi = mid
+    
+    # lo stops at downhill point
+    return nums[lo-1]
+            
+
+class FindPeakValueSpec(unittest.TestCase):
+    def validate_result(self, nums):
+        peak = find_peak_value(nums)
+        self.assertIn(peak, nums)
+        peak_index = nums.index(peak)
+        if peak_index > 0:
+            self.assertLess(nums[peak_index - 1], peak)
+        if peak_index < len(nums) - 1:
+            self.assertGreater(peak, nums[peak_index + 1])
+
+    def test_example(self):
+        nums = [5, 10, 20, 15]  # solution: 20
+        self.validate_result(nums)
+
+    def test_example2(self):
+        nums = [10, 20, 15, 2, 23, 90, 67]  # possible solution: 20, 90
+        self.validate_result(nums)
+
+    def test_unordered_array(self):
+        nums = [0, 24, 23, 22, 17, 15, 35, 26, -1]  # possible solution: 24, 35
+        self.validate_result(nums)
+        
+    def test_unordered_array2(self):
+        nums = [3, 2, 8, 7, 19, 27, 5]  # solution: 3
+        self.validate_result(nums)
+
+    def test_up_and_down_array(self):
+        nums = [-10, 5, -4, 4, -3, 2, -2, 1, -1, 0]  # possible solution: 5
+        self.validate_result(nums)
+
+    def test_increasing_array(self):
+        nums = [1, 2, 3, 4, 5]  # solution: 5
+        self.validate_result(nums)
+
+    def test_decreasing_array(self):
+        nums = [3, 2, 1, 0, -1]  # solution: 3
+        self.validate_result(nums)
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
 ```
 
 
