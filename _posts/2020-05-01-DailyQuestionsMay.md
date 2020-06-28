@@ -60,8 +60,8 @@ x ^ x = 0
 x ^ y = y ^ x
 ```
 
-If there is only one unique element, we can simply xor all elements.
-**For example:**
+If there is only one unique element, we can simply xor all elements. For example,
+
 ```py
 7 ^ 3 ^ 5 ^ 5 ^ 4 ^ 3 ^ 4 ^ 8 ^ 8
 = 7 ^ 3 ^ (5 ^ 5) ^ 4 ^ 3 ^ 4 ^ (8 ^ 8)
