@@ -31,8 +31,9 @@ Given the following input:
 You should return the following, as a string:
 '[null, 123, ["a", "b"], {"c": "d"}]'
 ```
+-->
 
-### Feb 26, 2020 [Medium] Majority Element
+### June 28, 2020 \[Medium\] Majority Element
 ---
 > **Question:** A majority element is an element that appears more than half the time. Given a list with a majority element, find the majority element.
 
@@ -40,7 +41,6 @@ You should return the following, as a string:
 ```py
 majority_element([3, 5, 3, 3, 2, 4, 3])  # gives 3
 ```
--->
 
 ### June 27, 2020 \[Medium\] Find Two Elements Appear Once
 ---
@@ -52,6 +52,72 @@ Input: [2, 4, 6, 8, 10, 2, 6, 10]
 Output: [4, 8] order does not matter
  ```
 
+**My thoughts:** XOR has many pretty useful properties:
+
+```py
+0 ^ x = x
+x ^ x = 0
+x ^ y = y ^ x
+```
+
+If there is only one unique element, we can simply xor all elements.
+**For example:**
+```py
+7 ^ 3 ^ 5 ^ 5 ^ 4 ^ 3 ^ 4 ^ 8 ^ 8
+= 7 ^ 3 ^ (5 ^ 5) ^ 4 ^ 3 ^ 4 ^ (8 ^ 8)
+= 7 ^ 3 ^ 4 ^ 3 ^ 4 
+= 7 ^ 3 ^ 3 ^ 4 ^ 4
+= 7 ^ (3 ^ 3) ^ (4 ^ 4)
+= 7
+```
+
+But for two unique elements. The idea is to partition the array so that both unique numbers cannot present in the same array. We will need to xor through array twice. 
+- The first time we xor all element, we will get `(unique number 1) xor (unique number 2)`. Notice that all bit set by that xor number can only belong to one number not the other. eg. `0b110 xor 0b011 = 0b101`. We can just chose any bit as a flag. Say the least significant bit. `0b001.` Just simply `num & -num` will give the LSB. 
+- Then we can partition the original array such that one contians the flag, the other not contains. xor them separately shall yield the result.
+
+
+**Solution with XOR:** [https://repl.it/@trsong/Find-Two-Elements-Appear-Once](https://repl.it/@trsong/Find-Two-Elements-Appear-Once)
+```py
+import unittest
+
+def find_two_unique_elements(nums):
+    xor_sum = xor_reduce(nums)
+    one_set_bit = xor_sum & -xor_sum
+    sub_nums1 = filter(lambda num: num & one_set_bit, nums)
+    sub_nums2 = filter(lambda num: not (num & one_set_bit), nums)
+    return [xor_reduce(sub_nums1), xor_reduce(sub_nums2)]
+
+
+def xor_reduce(nums):
+    return reduce(lambda accu, num: accu ^ num, nums, 0)
+
+
+class FindTwoUniqueElementSpec(unittest.TestCase):
+    def test_example(self):
+        self.assertItemsEqual([4, 8], find_two_unique_elements([2, 4, 6, 8, 10, 2, 6, 10]))
+
+    def test_array_with_positive_numbers(self):
+        self.assertItemsEqual([7, 1], find_two_unique_elements([7, 3, 5, 5, 4, 3, 4, 8, 8, 1]))
+
+    def test_one_of_elem_is_zero(self):
+        self.assertItemsEqual([0, 1], find_two_unique_elements([0, 3, 2, 2, 1, 3]))
+
+    def test_array_with_two_element(self):
+        self.assertItemsEqual([42, 41], find_two_unique_elements([42, 41]))
+
+    def test_same_duplicated_number_not_consecutive(self):
+        self.assertItemsEqual([5, 7], find_two_unique_elements([1, 2, 1, 5, 3, 2, 3, 7]))
+
+    def test_array_with_negative_elements(self):
+        self.assertItemsEqual([-1, -2], find_two_unique_elements([-1, 1, 0, 0, 1, -2]))
+
+    def test_array_with_negative_elements2(self):
+        self.assertItemsEqual([3, 0], find_two_unique_elements([-1, 0, 1, -2, 2, -1, 1, -2, 2, 3]))
+    
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
+```
 
 ### June 26, 2020 LC 162 \[Easy\] Find a Peak Element
 ---
