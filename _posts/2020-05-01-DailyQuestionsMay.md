@@ -33,6 +33,16 @@ You should return the following, as a string:
 ```
 -->
 
+### June 29, 2020 LC 163 [Medium] Missing Ranges
+---
+> **Question:** Given a sorted list of numbers, and two integers low and high representing the lower and upper bound of a range, return a list of (inclusive) ranges where the numbers are missing. A range should be represented by a tuple in the format of (lower, upper).
+
+**Example:**
+```py
+missing_ranges(nums=[1, 3, 5, 10], lower=1, upper=10)
+# returns [(2, 2), (4, 4), (6, 9)]
+```
+
 ### June 28, 2020 \[Medium\] Majority Element
 ---
 > **Question:** A majority element is an element that appears more than half the time. Given a list with a majority element, find the majority element.
@@ -41,6 +51,68 @@ You should return the following, as a string:
 ```py
 majority_element([3, 5, 3, 3, 2, 4, 3])  # gives 3
 ```
+
+**Althernative Solution with** [***Boyce-Moore Voting Algorithm***](https://trsong.github.io/python/java/2020/02/02/DailyQuestionsFeb/#feb-26-2020-medium-majority-element)
+
+**Solution:** [https://repl.it/@trsong/Find-Majority-Element](https://repl.it/@trsong/Find-Majority-Element)
+```py
+import unittest
+import math
+
+def majority_element(nums):
+    if not nums:
+        return None
+
+    max_num = max(nums)
+    num_bits = int(math.log(max_num, 2)) + 1
+    n = len(nums)
+    res = 0
+
+    for i in xrange(num_bits):
+        count = 0
+        for num in nums:
+            if num & 1 << i:
+                count += 1
+        if count > n // 2:
+            res |= 1 << i
+
+    # Majority must have set bit > n/2, but converse is not necessarily true
+    if nums.count(res) > n // 2:
+        return res
+    else:
+        return None
+
+
+class MajorityElementSpec(unittest.TestCase):
+    def test_no_majority_element_exists(self):
+        self.assertIsNone(majority_element([1, 2, 3, 4]))
+
+    def test_example(self):
+        self.assertEqual(3, majority_element([3, 5, 3, 3, 2, 4, 3]))
+
+    def test_example2(self):
+        self.assertEqual(3, majority_element([3, 2, 3]))
+
+    def test_example3(self):
+        self.assertEqual(2, majority_element([2, 2, 1, 1, 1, 2, 2]))
+
+    def test_there_is_a_tie(self):
+        self.assertIsNone(majority_element([1, 2, 1, 2, 1, 2]))
+
+    def test_majority_on_second_half_of_list(self):
+        self.assertEqual(1, majority_element([2, 2, 1, 2, 1, 1, 1]))
+    
+    def test_more_than_two_kinds(self):
+        self.assertEqual(1, majority_element([1, 2, 1, 1, 2, 2, 1, 3, 1, 1, 1]))
+
+    def test_zero_is_the_majority_element(self):
+        self.assertEqual(0, majority_element([0, 1, 0, 1, 0, 1, 0]))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
+```
+
 
 ### June 27, 2020 \[Medium\] Find Two Elements Appear Once
 ---
