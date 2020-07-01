@@ -33,6 +33,31 @@ You should return the following, as a string:
 ```
 -->
 
+
+### Jul 1, 2020 \[Medium\] Remove Character to Create Palindrome
+---
+> **Question:** Given a string, determine if you can remove any character to create a palindrome.
+
+**Example 1:**
+```py
+Input: "abcdcbea"
+Output: True 
+Explanation: Remove 'e' gives "abcdcba"
+```
+
+**Example 2:**
+```py
+Input: "abccba"
+Output: False
+```
+
+**Example 3:**
+```py
+Input: "abccaa"
+Output: False
+```
+
+
 ### June 30, 2020 \[Medium\] Maximum Number of Connected Colors
 ---
 > **Question:** Given a grid with cells in different colors, find the maximum number of same color  cells that are connected.
@@ -48,6 +73,81 @@ You should return the following, as a string:
     [2, 3, 3, 1, 2]
  ]
  ```
+
+**My thoughts:** Perform BFS/DFS or Union-Find on all unvisited cells, count its neighbors of same color and mark them as visited.
+
+**Solution with DFS:** [https://repl.it/@trsong/Find-Maximum-Number-of-Connected-Colors](https://repl.it/@trsong/Find-Maximum-Number-of-Connected-Colors)
+ ```py
+ import unittest
+
+def max_connected_colors(grid):
+    n, m = len(grid), len(grid[0])
+    visited = [[False for _ in xrange(m)] for _ in xrange(n)]
+    max_size = 0
+    directions = [(-1, 0), (1, 0), (0, 1), (0, -1)]
+
+    for i in xrange(n):
+        for j in xrange(m):
+            if visited[i][j]:
+                continue
+
+            size = 0
+            stack = [(i, j)]
+            color = grid[i][j]
+
+            while stack:
+                r, c = stack.pop()
+                if visited[r][c]:
+                    continue
+                visited[r][c] = True
+                size += 1
+                for dr, dc in directions:
+                    new_r, new_c = r + dr, c + dc
+                    if 0 <= new_r < n and 0 <= new_c < m and not visited[new_r][new_c] and grid[new_r][new_c] == color:
+                        stack.append((new_r, new_c))
+                    
+            max_size = max(max_size, size)
+
+    return max_size
+
+
+class MaxConnectedColorSpec(unittest.TestCase):
+    def test_empty_graph(self):
+        self.assertEqual(max_connected_colors([[]]), 0)   
+
+    def test_example(self):
+        self.assertEqual(max_connected_colors([
+            [1, 1, 2, 2, 3],
+            [1, 2, 3, 3, 1],
+            [2, 3, 3, 1, 2]
+        ]), 4)
+
+    def test_disconnected_colors(self):
+        self.assertEqual(max_connected_colors([
+            [1, 0, 1],
+            [0, 1, 0],
+            [1, 0, 1]
+        ]), 1)
+
+    def test_cross_shap(self):
+        self.assertEqual(max_connected_colors([
+            [1, 0, 1],
+            [0, 0, 0],
+            [1, 0, 1]
+        ]), 5)
+
+    def test_boundary(self):
+        self.assertEqual(max_connected_colors([
+            [1, 1, 1],
+            [1, 0, 1],
+            [1, 1, 1]
+        ]), 8)
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
+ ```
+
 
 ### June 29, 2020 LC 163 [Medium] Missing Ranges
 ---
