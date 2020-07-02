@@ -34,7 +34,12 @@ You should return the following, as a string:
 -->
 
 
-### Jul 1, 2020 \[Medium\] Remove Character to Create Palindrome
+### Jul 2, 2020 \[Hard\] The N Queens Puzzle
+---
+> **Question:** You have an N by N board. Write a function that, given N, returns the number of possible arrangements of the board where N queens can be placed on the board without threatening each other, i.e. no two queens share the same row, column, or diagonal.
+
+
+### Jul 1, 2020 LC 680 \[Easy\] Remove Character to Create Palindrome
 ---
 > **Question:** Given a string, determine if you can remove any character to create a palindrome.
 
@@ -48,7 +53,7 @@ Explanation: Remove 'e' gives "abcdcba"
 **Example 2:**
 ```py
 Input: "abccba"
-Output: False
+Output: True
 ```
 
 **Example 3:**
@@ -57,6 +62,70 @@ Input: "abccaa"
 Output: False
 ```
 
+**Solution:** [https://repl.it/@trsong/Remove-Character-to-Create-Palindrome](https://repl.it/@trsong/Remove-Character-to-Create-Palindrome)
+```py
+import unittest
+
+def is_one_palindrome(s):
+    return is_palindrome_in_range(s, 0, len(s)-1, 0)
+    
+
+def is_palindrome_in_range(s, lo, hi, num_error):
+    if num_error > 1:
+        return False
+
+    while lo < hi:
+        if s[lo] != s[hi]:
+            return is_palindrome_in_range(s, lo+1, hi, num_error+1) or is_palindrome_in_range(s, lo, hi-1, num_error+1)
+        lo += 1
+        hi -= 1
+    return True
+
+
+class IsOnePalindromeSpec(unittest.TestCase):
+    def test_example(self):
+        # remove e gives abcdcba
+        self.assertTrue(is_one_palindrome('abcdcbea'))
+
+    def test_example2(self):
+        self.assertTrue(is_one_palindrome('abccba'))
+
+    def test_example3(self):
+        self.assertFalse(is_one_palindrome('abccaa'))
+
+    def test_empty_string(self):
+        self.assertTrue(is_one_palindrome(''))
+
+    def test_one_char_string(self):
+        self.assertTrue(is_one_palindrome('a'))
+
+    def test_palindrome_string(self):
+        # remove 4 gives 012343210
+        self.assertTrue(is_one_palindrome('0123443210'))
+
+    def test_remove_first_letter(self):
+        # remove 9 gives 0123443210
+        self.assertTrue(is_one_palindrome('90123443210'))
+
+    def test_remove_last_letter(self):
+        # remove 9 gives 012343210
+        self.assertTrue(is_one_palindrome('0123432109'))
+
+    def test_impossible_string(self):
+        self.assertFalse(is_one_palindrome('abecbea'))
+
+    def test_string_with_duplicated_chars(self):
+        # remove second d gives eedee
+        self.assertTrue(is_one_palindrome('eedede'))
+
+    def test_longer_example(self):
+        # remove second e gives ebcbbccabbacecbbcbe
+        self.assertTrue(is_one_palindrome('ebcbbcecabbacecbbcbe'))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
+```
 
 ### June 30, 2020 \[Medium\] Maximum Number of Connected Colors
 ---
