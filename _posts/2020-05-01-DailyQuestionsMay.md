@@ -33,11 +33,105 @@ You should return the following, as a string:
 ```
 -->
 
+### Jul 2, 2020 \[Medium\] Largest BST in a Binary Tree
+---
+> **Question:** You are given the root of a binary tree. Find and return the largest subtree of that tree, which is a valid binary search tree.
+
+**Example1:**
+```py
+Input: 
+      5
+    /  \
+   2    4
+ /  \
+1    3
+
+Output:
+   2  
+ /  \
+1    3
+```
+
+**Example2:**
+```py
+Input: 
+       50
+     /    \
+  30       60
+ /  \     /  \ 
+5   20   45    70
+              /  \
+            65    80
+            
+Output: 
+      60
+     /  \ 
+   45    70
+        /  \
+      65    80
+```
 
 ### Jul 2, 2020 \[Hard\] The N Queens Puzzle
 ---
 > **Question:** You have an N by N board. Write a function that, given N, returns the number of possible arrangements of the board where N queens can be placed on the board without threatening each other, i.e. no two queens share the same row, column, or diagonal.
 
+
+**My thoughts:** Solve the N Queen Problem with Backtracking: place each queen on different columns one by one and test different rows. Mark previous chosen rows and diagonals.
+
+**Solution with Backtracking:** [https://repl.it/@trsong/Solve-the-N-Queen-Problem](https://repl.it/@trsong/Solve-the-N-Queen-Problem)
+```py
+import unittest
+
+def solve_n_queen(n):
+    visited_column = [False] * n
+    visited_diagonal1 = [False] * (2 * n)
+    visited_diagonal2 = [False] * (2 * n)
+
+    class Context:
+        res = 0
+        
+    def backtrack(r):
+        if r >= n:
+            Context.res += 1
+        else:
+            for c in xrange(n):
+                d1 = r + c
+                d2 = n + r - c
+                if visited_column[c] or visited_diagonal1[d1] or visited_diagonal2[d2]:
+                    continue
+                
+                visited_column[c] = True
+                visited_diagonal1[d1] = True
+                visited_diagonal2[d2] = True
+                backtrack(r+1)
+                visited_column[c] = False
+                visited_diagonal1[d1] = False
+                visited_diagonal2[d2] = False
+
+    backtrack(0)
+    return Context.res
+                    
+    
+class SolveNQueenSpec(unittest.TestCase):
+    def test_one_queen(self):
+        self.assertEqual(1, solve_n_queen(1))
+    
+    def test_two_three_queen(self):
+        self.assertEqual(0, solve_n_queen(2))
+
+    def test_three_queens(self):
+        self.assertEqual(0, solve_n_queen(3))
+        
+    def test_four_queen(self):
+        self.assertEqual(2, solve_n_queen(4))
+    
+    def test_eight_queen(self):
+        self.assertEqual(92, solve_n_queen(8))
+
+
+if __name__ == "__main__":
+	unittest.main(exit=False)
+```
 
 ### Jul 1, 2020 LC 680 \[Easy\] Remove Character to Create Palindrome
 ---
