@@ -33,7 +33,7 @@ You should return the following, as a string:
 ```
 -->
 
-### Jul 2, 2020 \[Medium\] Largest BST in a Binary Tree
+### Jul 3, 2020 \[Medium\] Largest BST in a Binary Tree
 ---
 > **Question:** You are given the root of a binary tree. Find and return the largest subtree of that tree, which is a valid binary search tree.
 
