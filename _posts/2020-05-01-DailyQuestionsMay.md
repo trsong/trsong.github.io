@@ -33,6 +33,23 @@ You should return the following, as a string:
 ```
 -->
 
+### Jul 4, 2020 \[Easy\] One-to-one Character Mapping
+---
+> **Question:** Given two strings, find if there is a one-to-one mapping of characters between the two strings.
+
+**Example 1:**
+```py
+Input: 'abc', 'def'
+Output: True # a -> d, b -> e, c -> f
+```
+
+**Example 2:**
+```py
+Input: 'aab', 'def'
+Ouput: False # a can't map to d and e 
+```
+
+
 ### Jul 3, 2020 \[Medium\] Largest BST in a Binary Tree
 ---
 > **Question:** You are given the root of a binary tree. Find and return the largest subtree of that tree, which is a valid binary search tree.
@@ -69,6 +86,147 @@ Output:
    45    70
         /  \
       65    80
+```
+
+**My thoughts:** This problem is similar to finding height of binary tree where post-order traversal is used. The idea is to gather infomation from left and right tree to determine if current node forms a valid BST or not through checking if the value fit into the range. And the infomation from children should contain if children are valid BST, the min & max of subtree and accumulated largest sub BST size.
+
+**Solution with Recursion:** [https://repl.it/@trsong/Find-Largest-BST-in-a-Binary-Tree](https://repl.it/@trsong/Find-Largest-BST-in-a-Binary-Tree)
+```py
+import unittest
+
+
+def largest_bst(root):
+    res = largest_bst_recur(root)
+    return res.max_bst
+
+
+def largest_bst_recur(root):
+    if not root:
+        return BSTResult()
+
+    left_res = largest_bst_recur(root.left)
+    right_res = largest_bst_recur(root.right)
+    
+    left_max = left_res.max_val if root.left else root.val
+    right_min = right_res.min_val if root.right else root.val
+    is_root_valid = left_max <= root.val <= right_min
+
+    res = BSTResult()
+    if is_root_valid and left_res.is_valid and right_res.is_valid:
+        res.min_val = left_res.min_val if root.left else root.val
+        res.max_val = right_res.max_val if root.right else root.val
+        res.max_bst_size = 1 + left_res.max_bst_size + right_res.max_bst_size
+        res.max_bst = root
+    else:
+        res.is_valid = False
+        if left_res.max_bst_size > right_res.max_bst_size:
+            res.max_bst = left_res.max_bst
+        else:
+            res.max_bst = right_res.max_bst
+    return res
+
+
+class BSTResult(object):
+    def __init__(self):
+        self.min_val = None
+        self.max_val = None
+        self.max_bst_size = 0
+        self.max_bst = None
+        self.is_valid = True
+
+
+class TreeNode(object):
+    def __init__(self, val, left=None, right=None):
+        self.val = val
+        self.left = left
+        self.right = right
+
+    def __eq__(self, other):
+        return (other and 
+         other.val == self.val and 
+         other.left == self.left and 
+         other.right == self.right)
+
+
+class LargestBSTSpec(unittest.TestCase):
+    def test_empty_tree(self):
+        self.assertIsNone(largest_bst(None))
+    
+    def test_right_heavy_tree(self):
+        """
+           1
+            \
+             10
+            /  \
+           11  28
+        """
+        n11, n28 = TreeNode(11), TreeNode(28)
+        n10 = TreeNode(10, n11, n28)
+        n1 = TreeNode(1, right=n10)
+        result = largest_bst(n1)
+        self.assertTrue(result == n11 or result == n28)
+
+    def test_left_heavy_tree(self):
+        """  
+              0
+             / 
+            3
+           /
+          2
+         /
+        1
+        """
+        n1 = TreeNode(1)
+        n2 = TreeNode(2, n1)
+        n3 = TreeNode(3, n2)
+        n0 = TreeNode(0, n3)
+        self.assertEqual(n3, largest_bst(n0))
+
+    def test_largest_BST_on_left_subtree(self):
+        """ 
+            0
+           / \
+          2   -2
+         / \   \
+        1   3   -1
+        """
+        n2 = TreeNode(2, TreeNode(1), TreeNode(3))
+        n2m = TreeNode(2, right=TreeNode(-1))
+        n0 = TreeNode(0, n2, n2m)
+        self.assertEqual(n2, largest_bst(n0))
+
+    def test_largest_BST_on_right_subtree(self):
+        """
+               50
+             /    \
+           30      60
+          /  \    /  \ 
+         5   20  45   70
+                     /  \
+                    65   80
+        """
+        n30 = TreeNode(30, TreeNode(5), TreeNode(20))
+        n70 = TreeNode(70, TreeNode(65), TreeNode(80))
+        n60 = TreeNode(60, TreeNode(45), n70)
+        n50 = TreeNode(50, n30, n60)
+        self.assertEqual(n60, largest_bst(n50))
+
+    def test_entire_tree_is_bst(self):
+        """ 
+            4
+           / \
+          2   5
+         / \   \
+        1   3   6
+        """
+        left_tree = TreeNode(2, TreeNode(1), TreeNode(3))
+        right_tree = TreeNode(5, right=TreeNode(6))
+        root = TreeNode(4, left_tree, right_tree)
+        self.assertEqual(root, largest_bst(root))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
 ```
 
 ### Jul 2, 2020 \[Hard\] The N Queens Puzzle
