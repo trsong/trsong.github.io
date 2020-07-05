@@ -33,6 +33,22 @@ You should return the following, as a string:
 ```
 -->
 
+### Jul 5, 2020 \[Easy\] Symmetric K-ary Tree
+---
+> **Question:** Given a k-ary tree, figure out if the tree is symmetrical.
+> 
+> A k-ary tree is a tree with k-children, and a tree is symmetrical if the data of the left side of the tree is the same as the right side of the tree. 
+>
+> Here's an example of a symmetrical k-ary tree.
+
+```py
+        4
+     /     \
+    3        3
+  / | \    / | \
+9   4  1  1  4  9
+```
+
 ### Jul 4, 2020 \[Easy\] One-to-one Character Mapping
 ---
 > **Question:** Given two strings, find if there is a one-to-one mapping of characters between the two strings.
