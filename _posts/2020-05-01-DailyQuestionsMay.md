@@ -65,6 +65,55 @@ Input: 'aab', 'def'
 Ouput: False # a can't map to d and e 
 ```
 
+**Solution:** [https://repl.it/@trsong/Find-One-to-one-Character-Mapping](https://repl.it/@trsong/Find-One-to-one-Character-Mapping)
+```py
+import unittest
+
+CHAR_SPACE_SIZE = 256
+
+def is_one_to_one_mapping(s1, s2):
+    if len(s1) != len(s2):
+        return False
+    
+    char_table = [None] * CHAR_SPACE_SIZE
+    for u, v in zip(s1, s2):
+        ord_u, ord_v = ord(u), ord(v)
+        if char_table[ord_u] is None:
+            char_table[ord_u] = ord_v
+        elif char_table[ord_u] != ord_v:
+            return False
+
+    return True
+
+
+class IsOneToOneMappingSpec(unittest.TestCase):
+    def test_example1(self):
+        self.assertTrue(is_one_to_one_mapping('abc', 'bcd'))
+
+    def test_example2(self):
+        self.assertFalse(is_one_to_one_mapping('foo', 'bar'))
+
+    def test_empty_mapping(self):
+        self.assertTrue(is_one_to_one_mapping('', ''))
+        self.assertFalse(is_one_to_one_mapping('', ' '))
+        self.assertFalse(is_one_to_one_mapping(' ', ''))
+
+    def test_map_strings_with_different_lengths(self):
+        self.assertFalse(is_one_to_one_mapping('abc', 'abcd'))
+        self.assertFalse(is_one_to_one_mapping('abcd', 'abc'))
+    
+    def test_duplicated_chars(self):
+        self.assertTrue(is_one_to_one_mapping('aabbcc', '112233'))
+        self.assertTrue(is_one_to_one_mapping('abccba', '123321'))
+
+    def test_same_domain(self):
+        self.assertTrue(is_one_to_one_mapping('abca', 'bcab'))
+        self.assertFalse(is_one_to_one_mapping('abca', 'bcaa'))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
+```
 
 ### Jul 3, 2020 \[Medium\] Largest BST in a Binary Tree
 ---
