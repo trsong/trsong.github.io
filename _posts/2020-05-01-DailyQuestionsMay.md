@@ -75,13 +75,16 @@ def is_valid_mountain(arr):
     
     sign = 1
     num_sign_change = 0
+    has_increase = False
     for i in xrange(1, len(arr)):
         diff = arr[i] - arr[i-1]
-        if(diff * sign < 0):
+        if diff > 0:
+            has_increase = True
+        if diff * sign < 0:
             sign *= -1
             num_sign_change += 1
 
-    return num_sign_change == 1
+    return has_increase and num_sign_change == 1
         
 
 class IsValidMountainSpec(unittest.TestCase):
@@ -108,6 +111,9 @@ class IsValidMountainSpec(unittest.TestCase):
 
     def test_duplicted_elements(self):
         self.assertFalse(is_valid_mountain([1, 2, 2]))
+    
+    def test_duplicted_element2(self):
+        self.assertFalse(is_valid_mountain([1, 1, 2]))
 
     def test_duplicted_elements2(self):
         self.assertFalse(is_valid_mountain([0, 0, 0]))
@@ -120,6 +126,12 @@ class IsValidMountainSpec(unittest.TestCase):
 
     def test_concave_array(self):
         self.assertFalse(is_valid_mountain([0, -1, 1]))
+
+    def test_no_ascending(self):
+        self.assertFalse(is_valid_mountain([0, 0, -1]))
+
+    def test_no_ascending2(self):
+        self.assertFalse(is_valid_mountain([0, -1, -1]))
 
 
 if __name__ == '__main__':
