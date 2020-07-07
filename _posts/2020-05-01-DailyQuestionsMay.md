@@ -33,6 +33,28 @@ You should return the following, as a string:
 ```
 -->
 
+### Jul 7, 2020 \[Medium\] Matrix Rotation
+---
+> **Question:** Given an N by N matrix, rotate it by 90 degrees clockwise.
+>
+> For example, given the following matrix:
+
+```py
+[[1, 2, 3],
+ [4, 5, 6],
+ [7, 8, 9]]
+ ```
+
+> you should return:
+
+```py
+[[7, 4, 1],
+ [8, 5, 2],
+ [9, 6, 3]]
+ ```
+
+> Follow-up: What if you couldn't use any extra space?
+
 ### Jul 6, 2020 \[Easy\] Valid Mountain Array
 ---
 > **Question:** Given an array of heights, determine whether the array forms a "mountain" pattern. A mountain pattern goes up and then down.
@@ -41,6 +63,67 @@ You should return the following, as a string:
 ```py
 validMountainArray([1, 2, 3, 2, 1])  # True
 validMountainArray([1, 2, 3])  # False
+```
+
+**Solution:** [https://repl.it/@trsong/Valid-Mountain-Array](https://repl.it/@trsong/Valid-Mountain-Array)
+```py
+import unittest
+
+def is_valid_mountain(arr):
+    if len(arr) < 3:
+        return False
+    
+    sign = 1
+    num_sign_change = 0
+    for i in xrange(1, len(arr)):
+        diff = arr[i] - arr[i-1]
+        if(diff * sign < 0):
+            sign *= -1
+            num_sign_change += 1
+
+    return num_sign_change == 1
+        
+
+class IsValidMountainSpec(unittest.TestCase):
+    def test_example1(self):
+        self.assertTrue(is_valid_mountain([1, 2, 3, 2, 1]))
+
+    def test_example2(self):
+        self.assertFalse(is_valid_mountain([1, 2, 3]))
+
+    def test_empty_array(self):
+        self.assertFalse(is_valid_mountain([]))
+
+    def test_one_element_array(self):
+        self.assertFalse(is_valid_mountain([1]))
+
+    def test_two_elements_array(self):
+        self.assertFalse(is_valid_mountain([1, 2]))
+
+    def test_three_elements_array(self):
+        self.assertFalse(is_valid_mountain([1, 2, 3]))
+
+    def test_three_elements_array2(self):
+        self.assertTrue(is_valid_mountain([1, 2, 1]))
+
+    def test_duplicted_elements(self):
+        self.assertFalse(is_valid_mountain([1, 2, 2]))
+
+    def test_duplicted_elements2(self):
+        self.assertFalse(is_valid_mountain([0, 0, 0]))
+
+    def test_mutiple_mountains(self):
+        self.assertFalse(is_valid_mountain([1, 2, 1, 2]))
+
+    def test_mutiple_mountains2(self):
+        self.assertFalse(is_valid_mountain([1, 2, 1, 2, 1]))
+
+    def test_concave_array(self):
+        self.assertFalse(is_valid_mountain([0, -1, 1]))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
 ```
 
 
