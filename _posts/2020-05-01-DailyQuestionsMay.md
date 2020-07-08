@@ -33,6 +33,27 @@ You should return the following, as a string:
 ```
 -->
 
+
+### Jul 9, 2020 \[Medium\] Common Browsing Histories
+---
+> **Question:** We have some historical clickstream data gathered from our site anonymously using cookies. The histories contain URLs that users have visited in chronological order.
+>
+> Write a function that takes two users' browsing histories as input and returns the longest contiguous sequence of URLs that appear in both.
+>
+> For example, given the following two users' histories:
+
+```py
+user1 = ['/home', '/register', '/login', '/user', '/one', '/two']
+user2 = ['/home', '/red', '/login', '/user', '/one', '/pink']
+```
+
+> You should return the following:
+
+```py
+['/login', '/user', '/one']
+```
+
+
 ### Jul 8, 2020 LC 872 \[Easy\] Leaf-Similar Trees
 ---
 > **Question:** Given two trees, whether they are `"leaf similar"`. Two trees are considered `"leaf-similar"` if their leaf orderings are the same. 
@@ -53,6 +74,111 @@ You should return the following, as a string:
   2   1
    \
     2 
+```
+
+**Solution with DFS:** [https://repl.it/@trsong/Leaf-Similar-Trees](https://repl.it/@trsong/Leaf-Similar-Trees)
+```py
+import unittest
+
+def is_leaf_similar(t1, t2):
+    if t1 is None and t2 is None:
+        return True
+    elif t1 is None or t2 is None:
+        return False
+
+    leaves1 = leaf_traversal(t1)
+    leaves2 = leaf_traversal(t2)
+    # Zip Longest leaves1 and leaves2
+    for leaf1, leaf2 in map(None, leaves1, leaves2):
+        if leaf1 != leaf2:
+            return False
+
+    return True
+
+
+def leaf_traversal(root):
+    stack = [root]
+    while stack:
+        cur = stack.pop()
+
+        if cur.left is None and cur.right is None:
+            yield cur.val
+            continue
+        
+        if cur.right:
+            stack.append(cur.right)
+
+        if cur.left:
+            stack.append(cur.left)
+
+
+class TreeNode(object):
+    def __init__(self, val, left=None, right=None):
+        self.val = val
+        self.left = left
+        self.right = right
+
+
+class IsLeafSimilarSpec(unittest.TestCase):
+    def test_example(self):
+        """
+            3
+           / \ 
+          5   1
+           \
+            2 
+
+            7
+           / \ 
+          2   1
+           \
+            2 
+        """
+        t1 = TreeNode(3, TreeNode(5, right=TreeNode(2)), TreeNode(1))
+        t2 = TreeNode(7, TreeNode(2, right=TreeNode(2)), TreeNode(1))
+        self.assertTrue(is_leaf_similar(t1, t2))
+
+    def test_both_empty(self):
+        self.assertTrue(is_leaf_similar(None, None))
+
+    def test_one_tree_empty(self):
+        self.assertFalse(is_leaf_similar(TreeNode(0), None))
+
+    def test_tree_of_different_depths(self):
+        """
+          1
+         / \
+        2   3
+
+           1
+         /   \
+        5     4
+         \   /
+          2 3
+        """
+        t1 = TreeNode(1, TreeNode(2), TreeNode(3))
+        t2l = TreeNode(5, right=TreeNode(2))
+        t2r = TreeNode(4, TreeNode(3))
+        t2 = TreeNode(1, t2l, t2r)
+        self.assertTrue(is_leaf_similar(t1, t2))
+
+    def test_tree_with_different_number_of_leaves(self):
+        """
+          1
+         / \
+        2   3
+
+           1
+         /   
+        2     
+        """
+        t1 = TreeNode(1, TreeNode(2), TreeNode(3))
+        t2 = TreeNode(1, TreeNode(2))
+        self.assertFalse(is_leaf_similar(t1, t2))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
 ```
 
 
