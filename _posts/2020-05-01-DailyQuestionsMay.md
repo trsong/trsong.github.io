@@ -33,6 +33,28 @@ You should return the following, as a string:
 ```
 -->
 
+### Jul 8, 2020 LC 872 \[Easy\] Leaf-Similar Trees
+---
+> **Question:** Given two trees, whether they are `"leaf similar"`. Two trees are considered `"leaf-similar"` if their leaf orderings are the same. 
+>
+> For instance, the following two trees are considered leaf-similar because their leaves are `[2, 1]`:
+```py
+# Tree1
+    3
+   / \ 
+  5   1
+   \
+    2 
+
+# Tree2
+    7
+   / \ 
+  2   1
+   \
+    2 
+```
+
+
 ### Jul 7, 2020 \[Medium\] Matrix Rotation
 ---
 > **Question:** Given an N by N matrix, rotate it by 90 degrees clockwise.
@@ -54,6 +76,101 @@ You should return the following, as a string:
  ```
 
 > Follow-up: What if you couldn't use any extra space?
+
+**My thoughts:** There are two ways to solve this problem without using any extra space.  First one is to move element one by one in spiral order: `left->top, bottom->left, right->bottom, top->right`. Second one is to flip matrix diagonally and horizontally.
+
+**Solution with Spiral Element Swap:** [https://repl.it/@trsong/Matrix-Rotation-In-place-with-Spiral-Element-Swap](https://repl.it/@trsong/Matrix-Rotation-In-place-with-Spiral-Element-Swap)
+```py
+def matrix_rotation(matrix):
+    if not matrix or not matrix[0]:
+        return matrix
+
+    lo, hi = 0, len(matrix)-1
+    while lo < hi:
+        for offset in xrange(hi-lo):
+            top = matrix[lo][lo+offset]
+            matrix[lo][lo+offset] = matrix[hi-offset][lo]
+            matrix[hi-offset][lo] = matrix[hi][hi-offset]
+            matrix[hi][hi-offset] = matrix[lo+offset][hi]
+            matrix[lo+offset][hi] = top
+        lo += 1
+        hi -= 1
+    
+    return matrix
+```
+
+**Solution with Matrix Flip:** [https://repl.it/@trsong/Matrix-Rotation-In-place-with-flip](https://repl.it/@trsong/Matrix-Rotation-In-place-with-flip)
+```py
+import unittest
+
+def matrix_rotation(matrix):
+    if not matrix or not matrix[0]:
+        return matrix
+
+    n = len(matrix)
+    # Flip diagonally
+    for r in xrange(n):
+        for c in xrange(r, n):
+            matrix[r][c], matrix[c][r] = matrix[c][r], matrix[r][c]
+
+    # Flip horizontally
+    for r in xrange(n):
+        for c in xrange(n//2):
+            matrix[r][c], matrix[r][n-1-c] = matrix[r][n-1-c], matrix[r][c]
+
+    return matrix
+
+
+class MatrixRotationSpec(unittest.TestCase):
+    def test_empty_matrix(self):
+        self.assertEqual(matrix_rotation([]), [])
+
+    def test_size_one_matrix(self):
+        self.assertEqual(matrix_rotation([[1]]), [[1]])
+
+    def test_size_two_matrix(self):
+        input_matrix = [
+            [1, 2],
+            [3, 4]
+        ]
+        expected_matrix = [
+            [3, 1],
+            [4, 2]
+        ]
+        self.assertEqual(matrix_rotation(input_matrix), expected_matrix)
+
+    def test_size_three_matrix(self):
+        input_matrix = [
+            [1, 2, 3],
+            [4, 5, 6],
+            [7, 8, 9]
+        ]
+        expected_matrix = [
+            [7, 4, 1],
+            [8, 5, 2],
+            [9, 6, 3]
+        ]
+        self.assertEqual(matrix_rotation(input_matrix), expected_matrix)
+
+    def test_size_four_matrix(self):
+        input_matrix = [
+            [1, 2, 3, 4],
+            [5, 6, 7, 8],
+            [9, 10, 11, 12],
+            [13, 14, 15, 16]
+        ]
+        expected_matrix = [
+            [13, 9, 5, 1],
+            [14, 10, 6, 2],
+            [15, 11, 7, 3],
+            [16, 12, 8, 4]
+        ]
+        self.assertEqual(matrix_rotation(input_matrix), expected_matrix)
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
+```
 
 ### Jul 6, 2020 \[Easy\] Valid Mountain Array
 ---
