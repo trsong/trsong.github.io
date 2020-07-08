@@ -38,6 +38,7 @@ You should return the following, as a string:
 > **Question:** Given two trees, whether they are `"leaf similar"`. Two trees are considered `"leaf-similar"` if their leaf orderings are the same. 
 >
 > For instance, the following two trees are considered leaf-similar because their leaves are `[2, 1]`:
+
 ```py
 # Tree1
     3
