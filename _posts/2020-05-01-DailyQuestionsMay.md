@@ -34,7 +34,7 @@ You should return the following, as a string:
 -->
 
 
-### Jul 9, 2020 \[Medium\] Common Browsing Histories
+### Jul 9, 2020 \[Medium\] Longest Common Sequence of Browsing Histories 
 ---
 > **Question:** We have some historical clickstream data gathered from our site anonymously using cookies. The histories contain URLs that users have visited in chronological order.
 >
