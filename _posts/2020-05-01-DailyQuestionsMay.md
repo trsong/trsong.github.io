@@ -70,6 +70,99 @@ user2 = ['/home', '/red', '/login', '/user', '/one', '/pink']
 ['/login', '/user', '/one']
 ```
 
+**Solution with DP:** [https://repl.it/@trsong/Longest-Common-Sequence-of-Browsing-Histories](https://repl.it/@trsong/Longest-Common-Sequence-of-Browsing-Histories)
+```py
+import unittest
+
+def lcs_histories(h1, h2):
+    n, m = len(h1), len(h2)
+    # Let dp[n][m] represents longest continous sequence between h1[:n] and h2[:m]
+    # dp[n][m] = 1 + dp[n-1][m-1]  if there is a match
+    #    or    = 0                 otherwise
+    dp = [[0 for _ in xrange(m+1)] for _ in xrange(n+1)]
+    lcs_size = 0
+    lcs_pos = 0
+    
+    for i in xrange(1, n+1):
+        for j in xrange(1, m+1):
+            if h1[i-1] != h2[j-1]:
+                dp[i][j] = 0
+                continue
+            
+            dp[i][j] = 1 + dp[i-1][j-1]
+            if dp[i][j] > lcs_size:
+                lcs_size = dp[i][j]
+                lcs_pos = i - lcs_size 
+
+    return h1[lcs_pos: lcs_pos + lcs_size]
+
+
+class LCSHistorieSpec(unittest.TestCase):
+    def test_example(self):
+        user1 = ['/home', '/register', '/login', '/user', '/one', '/two']
+        user2 = ['/home', '/red', '/login', '/user', '/one', '/pink']
+        expected = ['/login', '/user', '/one']
+        self.assertEqual(expected, lcs_histories(user1, user2))
+
+    def test_emtpy_string(self):
+        user1 = []
+        user2 = ['/a']
+        expected = []
+        self.assertEqual(expected, lcs_histories(user1, user2))
+
+    def test_emtpy_string2(self):
+        user1 = []
+        user2 = []
+        expected = []
+        self.assertEqual(expected, lcs_histories(user1, user2))
+
+    def test_match_head_with_tail(self):
+        user1 = ['a', 'b', 'c', 'd', 'x', 'y', 'z']
+        user2 = ['x', 'y', 'z', 'a', 'b', 'c', 'd']
+        expected = ['a', 'b', 'c', 'd']
+        self.assertEqual(expected, lcs_histories(user1, user2))
+
+    def test_match_middle(self):
+        user1 = ['/z', '/x', '/a', '/b', '/c', '/d', '/e', '/z', '/y']
+        user2 = ['/y', '/z', '/a', '/b', '/c', '/d', '/e', '/z', '/x']
+        expected = ['/a', '/b', '/c', '/d', '/e', '/z']
+        self.assertEqual(expected, lcs_histories(user1, user2))
+    
+    def test_match_last_position(self):
+        user1 = ['/a', '/b', '/c', '/d', '/z']
+        user2 = ['/e', '/f', '/g', '/h', '/i', '/j', '/z']
+        expected = ['/z']
+        self.assertEqual(expected, lcs_histories(user1, user2))
+
+    def test_match_first_position(self):
+        user1 = ['/a', '/e', '/f', '/g', '/h']
+        user2 = ['/a', '/i', '/j', '/k', '/l', '/m', '/n']
+        expected = ['/a']
+        self.assertEqual(expected, lcs_histories(user1, user2))
+
+    def test_off_by_one_position(self):
+        user1 = ['/0', '/1', '/0', '/1', '/0', '/1']
+        user2 = ['/1', '/0', '/1', '/0', '/1']
+        expected = ['/1', '/0', '/1', '/0', '/1']
+        self.assertEqual(expected, lcs_histories(user1, user2))
+
+    def test_off_by_one_position2(self):
+        user1 = ['/1', '/2', '/3', '/4', '/5']
+        user2 = ['/1', '/2', '/3', '/5']
+        expected = ['/1', '/2', '/3']
+        self.assertEqual(expected, lcs_histories(user1, user2))
+
+    def test_off_by_one_position3(self):
+        user1 = ['/1', '/2', '/3', '/4']
+        user2 = ['/1', '/2', '/4', '/3']
+        expected = ['/1', '/2']
+        self.assertEqual(expected, lcs_histories(user1, user2))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
+
+```
 
 ### Jul 8, 2020 LC 872 \[Easy\] Leaf-Similar Trees
 ---
