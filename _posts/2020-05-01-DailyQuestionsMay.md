@@ -33,6 +33,23 @@ You should return the following, as a string:
 ```
 -->
 
+### Jul 10, 2020 LC 383 \[Easy\] Ransom Note
+---
+> **Question:** A criminal is constructing a ransom note. In order to disguise his handwriting, he is cutting out letters from a magazine.
+>
+> Given a magazine of letters and the note he wants to write, determine whether he can construct the word.
+
+**Example 1:**
+```py
+Input: ['a', 'b', 'c', 'd', 'e', 'f'], 'bed'
+Output: True
+```
+
+**Example 2:**
+```py
+Input: ['a', 'b', 'c', 'd', 'e', 'f'], 'cat'
+Output: False
+```
 
 ### Jul 9, 2020 \[Medium\] Longest Common Sequence of Browsing Histories 
 ---
