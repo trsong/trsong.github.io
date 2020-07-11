@@ -33,6 +33,12 @@ You should return the following, as a string:
 ```
 -->
 
+
+### Jul 11, 2020 \[Easy\] Generate Binary Search Trees
+---
+> **Question:** Given an integer N, construct all possible binary search trees with N nodes.
+
+
 ### Jul 10, 2020 LC 383 \[Easy\] Ransom Note
 ---
 > **Question:** A criminal is constructing a ransom note. In order to disguise his handwriting, he is cutting out letters from a magazine.
@@ -50,6 +56,66 @@ Output: True
 Input: ['a', 'b', 'c', 'd', 'e', 'f'], 'cat'
 Output: False
 ```
+
+**Solution:** [https://repl.it/@trsong/Ransom-Note](https://repl.it/@trsong/Ransom-Note)
+```py
+import unittest
+
+def can_construct_ransom_note(letters, word):
+    word_histogram = {}
+    for c in word:
+        word_histogram[c] = word_histogram.get(c, 0) + 1
+
+    balance = len(word)
+    for c in letters:
+        if word_histogram.get(c, 0) > 0:
+            word_histogram[c] -= 1
+            balance -= 1
+
+        if balance == 0:
+            return True
+
+    return False
+
+
+class CanConstructRansomNoteSpec(unittest.TestCase):
+    def test_example(self):
+        word, letters = 'bed', ['a', 'b', 'c', 'd', 'e', 'f']
+        self.assertTrue(can_construct_ransom_note(letters, word))
+
+    def test_example2(self):
+        word, letters = 'cat', ['a', 'b', 'c', 'd', 'e', 'f']
+        self.assertFalse(can_construct_ransom_note(letters, word))
+    
+    def test_empty_word(self):
+        word, letters = '', ['a']
+        self.assertTrue(can_construct_ransom_note(letters, word))
+    
+    def test_empty_letters(self):
+        word, letters = 'ab', []
+        self.assertFalse(can_construct_ransom_note(letters, word))
+    
+    def test_word_with_duplicated_letters(self):
+        word, letters = 'aa', ['a', 'a', 'b']
+        self.assertTrue(can_construct_ransom_note(letters, word))
+    
+    def test_word_with_duplicated_letters2(self):
+        word, letters = 'abab', ['a', 'a', 'b']
+        self.assertFalse(can_construct_ransom_note(letters, word))
+    
+    def test_word_not_in_letters(self):
+        word, letters = 'cap', ['a', 'p', 'd', 'e']
+        self.assertFalse(can_construct_ransom_note(letters, word))
+
+    def test_insufficient_number_of_letters(self):
+        word, letters = 'aabbcc', ['a', 'b', 'c']
+        self.assertFalse(can_construct_ransom_note(letters, word))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
+```
+
 
 ### Jul 9, 2020 LC 718 \[Medium\] Longest Common Sequence of Browsing Histories 
 ---
