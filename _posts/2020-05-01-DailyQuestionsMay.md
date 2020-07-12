@@ -33,6 +33,12 @@ You should return the following, as a string:
 ```
 -->
 
+
+### Jul 13, 2020 \[Medium\] Reverse a Directed Graph
+---
+> **Question:**  Write an algorithm that computes the reversal of a directed graph. For example, if a graph consists of `A -> B -> C`, it should become `A <- B <- C`.
+
+
 ### Jul 12, 2020 \[Easy\] Angle between Clock Hands
 ---
 > **Question:** Given a clock time in `hh:mm` format, determine, to the nearest degree, the angle between the hour and the minute hands.
