@@ -33,11 +33,103 @@ You should return the following, as a string:
 ```
 -->
 
+### Jul 12, 2020 \[Easy\] Angle between Clock Hands
+---
+> **Question:** Given a clock time in `hh:mm` format, determine, to the nearest degree, the angle between the hour and the minute hands.
+
 
 ### Jul 11, 2020 \[Easy\] Generate Binary Search Trees
 ---
 > **Question:** Given an integer N, construct all possible binary search trees with N nodes.
 
+**Solution:** [https://repl.it/@trsong/Generate-Binary-Search-Trees-with-N-Nodes](https://repl.it/@trsong/Generate-Binary-Search-Trees-with-N-Nodes)
+```py
+import unittest
+
+def generate_bst(n):
+    if n < 1:
+        return []
+    
+    return generate_bst_recur(1, n)
+
+
+def generate_bst_recur(lo, hi):
+    if lo > hi:
+        return [None]
+
+    res = []
+    for val in xrange(lo, hi+1):
+        for left_node in generate_bst_recur(lo, val-1):
+            for right_node in generate_bst_recur(val+1, hi):
+                res.append(TreeNode(val, left_node, right_node))
+
+    return res
+
+
+###################
+# Testing Utilities
+###################
+class TreeNode(object):
+    def __init__(self, val, left=None, right=None):
+        self.val = val
+        self.left = left
+        self.right = right
+
+    def preorder_traversal(self):
+        res = [self.val]
+        if self.left:
+            res += self.left.preorder_traversal()
+        if self.right:
+            res += self.right.preorder_traversal()
+        return res
+
+
+class GenerateBSTSpec(unittest.TestCase):
+    def assert_result(self, expected_preorder_traversal, bst_seq):
+        self.assertEqual(len(expected_preorder_traversal), len(bst_seq))
+        result_traversal = map(lambda t: t.preorder_traversal(), bst_seq)
+        self.assertEqual(sorted(expected_preorder_traversal), sorted(result_traversal))
+
+    def test_example(self):
+        expected_preorder_traversal = [
+            [1, 2, 3],
+            [1, 3, 2],
+            [2, 1, 3],
+            [3, 1, 2],
+            [3, 2, 1]
+        ]
+        self.assert_result(expected_preorder_traversal, generate_bst(3))
+    
+    def test_empty_tree(self):
+        self.assertEqual([], generate_bst(0))
+
+    def test_base_case(self):
+        expected_preorder_traversal = [[1]]
+        self.assert_result(expected_preorder_traversal, generate_bst(1))
+
+    def test_generate_4_nodes(self):
+        expected_preorder_traversal = [
+            [1, 2, 3, 4],
+            [1, 2, 4, 3],
+            [1, 3, 2, 4],
+            [1, 4, 2, 3],
+            [1, 4, 3, 2],
+            [2, 1, 3, 4],
+            [2, 1, 4, 3],
+            [3, 1, 2, 4],
+            [3, 2, 1, 4],
+            [4, 1, 2, 3],
+            [4, 1, 3, 2],
+            [4, 2, 1, 3],
+            [4, 3, 1, 2],
+            [4, 3, 2, 1]
+        ]
+        self.assert_result(expected_preorder_traversal, generate_bst(4))
+    
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
+```
 
 ### Jul 10, 2020 LC 383 \[Easy\] Ransom Note
 ---
