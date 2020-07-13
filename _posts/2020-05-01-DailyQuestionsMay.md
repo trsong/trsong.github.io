@@ -39,10 +39,70 @@ You should return the following, as a string:
 > **Question:**  Write an algorithm that computes the reversal of a directed graph. For example, if a graph consists of `A -> B -> C`, it should become `A <- B <- C`.
 
 
-### Jul 12, 2020 \[Easy\] Angle between Clock Hands
+### Jul 12, 2020 LC 1344 \[Easy\] Angle between Clock Hands
 ---
 > **Question:** Given a clock time in `hh:mm` format, determine, to the nearest degree, the angle between the hour and the minute hands.
 
+
+**Solution:** [https://repl.it/@trsong/Angle-between-Clock-Hands](https://repl.it/@trsong/Angle-between-Clock-Hands)
+```py
+import unittest
+
+def clock_angle(hhmm):
+    h, m = map(int, hhmm.split(':'))
+    h %= 12
+    unit_hr = 360 / 12.0
+    unit_min = 360 / 60.0
+
+    major_arc = abs(h * unit_hr + unit_hr * m / 60 - m * unit_min)
+    return min(major_arc, 360 - major_arc)
+    
+
+class ClockAngleSpec(unittest.TestCase):
+    def test_minute_point_zero(self):
+        hhmm = "12:00"
+        angle = 0
+        self.assertEqual(angle, clock_angle(hhmm))
+        
+    def test_minute_point_zero2(self):
+        hhmm = "1:00"
+        angle = 30
+        self.assertEqual(angle, clock_angle(hhmm))
+        
+    def test_minute_point_zero3(self):
+        hhmm = "9:00"
+        angle = 90
+        self.assertEqual(angle, clock_angle(hhmm))
+        
+    def test_minute_point_zero4(self):
+        hhmm = "6:00"
+        angle = 180
+        self.assertEqual(angle, clock_angle(hhmm))
+        
+    def test_half_pass_hour(self):
+        hhmm = "12:30"
+        angle = 165
+        self.assertEqual(angle, clock_angle(hhmm))
+        
+    def test_half_pass_hour2(self):
+        hhmm = "3:30"
+        angle = 75
+        self.assertEqual(angle, clock_angle(hhmm))
+
+    def test_irregular_time(self):
+        hhmm = "16:20"
+        angle = 10
+        self.assertEqual(angle, clock_angle(hhmm))
+
+    def test_irregular_time3(self):
+        hhmm = "3:15"
+        angle = 7.5
+        self.assertEqual(angle, clock_angle(hhmm))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
+```
 
 ### Jul 11, 2020 \[Easy\] Generate Binary Search Trees
 ---
