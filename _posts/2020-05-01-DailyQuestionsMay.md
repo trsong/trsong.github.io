@@ -33,11 +33,121 @@ You should return the following, as a string:
 ```
 -->
 
+### Jul 14, 2020 \[Medium\] Maximum Product Subarray
+---
+> **Question:** Given an array that contains both positive and negative integers, find the product of the maximum product subarray. 
+
+**Example 1:**
+```py
+Input: [6, -3, -10, 0, 2]
+Output:  180
+Explanation: The subarray is [6, -3, -10]
+```
+
+**Example 2:**
+```py
+Input: [-1, -3, -10, 0, 60]
+Output:   60 
+Explanation: The subarray is [60]
+```
+
+**Example 3:**
+```py
+Input: [-2, -3, 0, -2, -40]
+Output: 80
+Explanation: The subarray is [-2, -40]
+```
+
 
 ### Jul 13, 2020 \[Medium\] Reverse a Directed Graph
 ---
 > **Question:**  Write an algorithm that computes the reversal of a directed graph. For example, if a graph consists of `A -> B -> C`, it should become `A <- B <- C`.
 
+
+**Solution:** [https://repl.it/@trsong/Reverse-a-Directed-Graph](https://repl.it/@trsong/Reverse-a-Directed-Graph)
+```py
+import unittest
+
+class Graph(object):
+    def __init__(self, vertices, edges):
+        self.neighbor = {v: [] for v in vertices}
+        for u, v in edges:
+            self.neighbor[u].append(v)
+
+    def __eq__(self, other):
+        # Testing Utility
+        if other and set(self.neighbor.keys()) != set(other.neighbor.keys()):
+            return False
+
+        for k in self.neighbor:
+            if set(self.neighbor[k]) != set(other.neighbor[k]):
+                return False
+        return True
+
+    @staticmethod
+    def reverse(graph):
+        vertices = graph.neighbor.keys()
+        edges = []
+        for u, neighbors in graph.neighbor.items():
+            for v in neighbors:
+                edges.append((v, u))
+
+        return Graph(vertices, edges)
+        
+
+class ReverseGraphSpec(unittest.TestCase):
+    def test_grap_with_cycle(self):
+        v = range(3)
+        e = [(0, 1), (2, 0), (1, 2)]
+        graph = Graph(v, e)
+        e2 = [(1, 0), (0, 2), (2, 1)]
+        expected_graph = Graph(v, e2)
+        self.assertEqual(expected_graph, Graph.reverse(graph))
+
+    def test_grap_with_cycle2(self):
+        v = range(2)
+        e = [(0, 1), (0, 0)]
+        graph = Graph(v, e)
+        e2 = [(1, 0), (0, 0)]
+        expected_graph = Graph(v, e2)
+        self.assertEqual(expected_graph, Graph.reverse(graph))
+
+    def test_disconnected_graph(self):
+        v = range(5)
+        e = [(0, 1), (2, 3), (3, 4)]
+        graph = Graph(v, e)
+        e2 = [(1, 0), (3, 2), (4, 3)]
+        expected_graph = Graph(v, e2)
+        self.assertEqual(expected_graph, Graph.reverse(graph))
+
+    def test_graph_with_two_paths(self):
+        v = range(5)
+        e = [(0, 1), (1, 4), (0, 2), (2, 3), (3, 4)]
+        graph = Graph(v, e)
+        e2 = [(1, 0), (4, 1), (2, 0), (3, 2), (4, 3)]
+        expected_graph = Graph(v, e2)
+        self.assertEqual(expected_graph, Graph.reverse(graph))
+
+    def test_graph_with_two_paths2(self):
+        v = range(5)
+        e = [(0, 2), (2, 3), (3, 4), (0, 1), (1, 4)]
+        graph = Graph(v, e)
+        e2 = [(2, 0), (3, 2), (4, 3), (1, 0), (4, 1)]
+        expected_graph = Graph(v, e2)
+        self.assertEqual(expected_graph, Graph.reverse(graph))
+    
+    def test_connected_graph_with_paths_of_different_lenghths(self):
+        v = range(7)
+        e = [(0, 2), (0, 3), (1, 2), (1, 3), (2, 3), (2, 5), (3, 4), (3, 5), (3, 6), (2, 5), (5, 6)]
+        graph = Graph(v, e)
+        e2 = [(2, 0), (3, 0), (2, 1), (3, 1), (3, 2), (5, 2), (4, 3), (5, 3), (6, 3), (5, 2), (6, 5)]
+        expected_graph = Graph(v, e2)
+        self.assertEqual(expected_graph, Graph.reverse(graph))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
+```
 
 ### Jul 12, 2020 LC 1344 \[Easy\] Angle between Clock Hands
 ---
