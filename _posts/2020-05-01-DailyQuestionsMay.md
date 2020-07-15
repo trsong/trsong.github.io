@@ -33,7 +33,20 @@ You should return the following, as a string:
 ```
 -->
 
-### Jul 14, 2020 \[Medium\] Maximum Product Subarray
+### Jul 15, 2020 \[Medium\] Remove Adjacent Duplicate Characters
+---
+> **Question:** Given a string, we want to remove 2 adjacent characters that are the same, and repeat the process with the new string until we can no longer perform the operation.
+
+**Example:**
+```py
+remove_adjacent_dup("cabba")
+# Start with cabba
+# After remove bb: caa
+# After remove aa: c
+# Returns c
+```
+
+### Jul 14, 2020 LC 152 \[Medium\] Maximum Product Subarray
 ---
 > **Question:** Given an array that contains both positive and negative integers, find the product of the maximum product subarray. 
 
@@ -56,6 +69,72 @@ Explanation: The subarray is [60]
 Input: [-2, -3, 0, -2, -40]
 Output: 80
 Explanation: The subarray is [-2, -40]
+```
+
+**Solution with Prefix Product:** [https://repl.it/@trsong/Maximum-Product-Subarray](https://repl.it/@trsong/Maximum-Product-Subarray)
+```py
+import unittest
+
+def max_subarray_product(nums):
+    if not nums:
+        return None
+
+    prefix_product = 1
+    pos_min = 1
+    neg_max = None
+    res = nums[0]
+
+    for num in nums:
+        prefix_product *= num
+        if prefix_product > 0:
+            res = max(res, prefix_product / pos_min)
+            pos_min = min(pos_min, prefix_product)
+        elif prefix_product < 0:
+            res = max(res, prefix_product / neg_max) if neg_max else res
+            neg_max = max(neg_max or float('-inf'), prefix_product)
+        else:
+            prefix_product = 1
+            pos_min = 1
+            neg_max = None
+            res = max(res, 0)
+    
+    return res
+
+
+class MaxSubarrayProductSpec(unittest.TestCase):
+    def test_example(self):
+        nums = [6, -3, -10, 0, 2]
+        expected = 180  # [6, -3, -10]
+        self.assertEqual(expected, max_subarray_product(nums))
+
+    def test_example2(self):
+        nums = [-1, -3, -10, 0, 60]
+        expected = 60  # [60]
+        self.assertEqual(expected, max_subarray_product(nums))
+
+    def test_example3(self):
+        nums = [-2, -3, 0, -2, -40]
+        expected = 80  # [-2, -40]
+        self.assertEqual(expected, max_subarray_product(nums))
+    
+    def test_non_positive_numbers(self):
+        nums = [-1, -1, 0]
+        expected = 1  # [-1, -1]
+        self.assertEqual(expected, max_subarray_product(nums))
+    
+    def test_non_positive_numbers2(self):
+        nums = [-4, 0, -5, 0]
+        expected = 0  # [0]
+        self.assertEqual(expected, max_subarray_product(nums))
+    
+    def test_odd_number_of_negatives(self):
+        nums = [2, 2, 4, -2, 2, 13]
+        expected = 26  # [2, 13]
+        self.assertEqual(expected, max_subarray_product(nums))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
 ```
 
 
