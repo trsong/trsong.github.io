@@ -33,7 +33,25 @@ You should return the following, as a string:
 ```
 -->
 
-### Jul 15, 2020 \[Medium\] Remove Adjacent Duplicate Characters
+### Jul 16, 2020 \[Medium\] Autocompletion
+---
+> **Question:**  Implement auto-completion. Given a large set of words (for instance 1,000,000 words) and then a single word prefix, find all words that it can complete to.
+
+**Example:**
+```py
+class Solution:
+  def build(self, words):
+    # Fill this in.
+    
+  def autocomplete(self, word):
+    # Fill this in.
+
+s = Solution()
+s.build(['dog', 'dark', 'cat', 'door', 'dodge'])
+s.autocomplete('do')  # Return ['dog', 'door', 'dodge']
+```
+
+### Jul 15, 2020 LC 1047 \[Easy\] Remove Adjacent Duplicate Characters
 ---
 > **Question:** Given a string, we want to remove 2 adjacent characters that are the same, and repeat the process with the new string until we can no longer perform the operation.
 
@@ -44,6 +62,65 @@ remove_adjacent_dup("cabba")
 # After remove bb: caa
 # After remove aa: c
 # Returns c
+```
+
+**Solution with Stack:** [https://repl.it/@trsong/Remove-2-Adjacent-Duplicate-Characters](https://repl.it/@trsong/Remove-2-Adjacent-Duplicate-Characters)
+```py
+import unittest
+
+def remove_adjacent_dup(s):
+    stack = []
+    for c in s:
+        if stack and stack[-1] == c:
+            stack.pop()
+        else:
+            stack.append(c)
+    return "".join(stack)
+
+
+class RemoveAdjacentDupSpec(unittest.TestCase):
+    def test_example(self):
+        self.assertEqual("c", remove_adjacent_dup("cabba"))
+
+    def test_empty_string(self):
+        self.assertEqual("", remove_adjacent_dup(""))
+
+    def test_no_adj_duplicates(self):
+        self.assertEqual("abc123abc", remove_adjacent_dup("abc123abc"))
+
+    def test_no_adj_duplicates2(self):
+        self.assertEqual("1010101010", remove_adjacent_dup("1010101010"))
+
+    def test_reduce_to_empty_string(self):
+        self.assertEqual("", remove_adjacent_dup("caaabbacdddd"))
+
+    def test_should_reduce_to_simplist(self):
+        self.assertEqual("a", remove_adjacent_dup("acaaabbacdddd"))
+
+    def test_should_reduce_to_simplist2(self):
+        self.assertEqual("", remove_adjacent_dup("43211234"))
+
+    def test_should_reduce_to_simplist3(self):
+        self.assertEqual("", remove_adjacent_dup("333111221113"))
+
+    def test_one_char_string(self):
+        self.assertEqual("a", remove_adjacent_dup("a"))
+
+    def test_contains_uniq_char(self):
+        self.assertEqual("", remove_adjacent_dup("aaaa"))
+
+    def test_contains_uniq_char2(self):
+        self.assertEqual("1", remove_adjacent_dup("11111"))
+
+    def test_duplicates_occur_in_the_middle(self):
+        self.assertEqual("mipie", remove_adjacent_dup("mississipie"))
+
+    def test_shrink_to_one_char(self):
+        self.assertEqual("g", remove_adjacent_dup("gghhgghhg"))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
 ```
 
 ### Jul 14, 2020 LC 152 \[Medium\] Maximum Product Subarray
