@@ -73,6 +73,7 @@ class Trie(object):
         self.children = None
         self.words = None
         self.word_dict = word_dict or {}
+        self.is_end = False
 
     def insert(self, word):
         if self.exist(word):
@@ -92,7 +93,8 @@ class Trie(object):
             p = p.children[ord_c]
         p.words = p.words or []
         p.words.append(word_id)
-    
+        p.is_end = True
+
     def exist(self, word):
         p = self
         for c in word:
@@ -101,8 +103,8 @@ class Trie(object):
                 p = p.children[ord_c]
             else:
                 return False
-        return p is not None
-    
+        return p and p.is_end
+
     def search_prefix(self, word):
         p = self
         for c in word:
@@ -124,7 +126,7 @@ class Autocomplete:
     def build(self, words):
         for word in words:
             self.trie.insert(word)
-        
+
     def run(self, word):
         return self.trie.search_prefix(word)
 
@@ -165,7 +167,13 @@ class AutocompleteSpec(unittest.TestCase):
         auto.build(['a', 'aa', 'aa', 'aaa', 'aab', 'abb', 'aaa'])
         expected = ['aa', 'aaa', 'aab']
         self.assertItemsEqual(expected, auto.run('aa'))
-    
+
+    def test_word_with_same_prefix(self):
+        auto = Autocomplete()
+        auto.build(['aaa', 'aa', 'a'])
+        expected = ['a', 'aa', 'aaa']
+        self.assertItemsEqual(expected, auto.run('a'))
+
 
 if __name__ == '__main__':
     unittest.main(exit=False)
