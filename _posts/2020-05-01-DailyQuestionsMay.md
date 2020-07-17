@@ -33,6 +33,16 @@ You should return the following, as a string:
 ```
 -->
 
+### Jul 17, 2020 [Medium] Index of Larger Next Number
+---
+> **Question:** Given a list of numbers, for each element find the next element that is larger than the current element. Return the answer as a list of indices. If there are no elements larger than the current element, then use -1 instead.
+
+**Example:** 
+```py
+larger_number([3, 2, 5, 6, 9, 8])
+# return [2, 2, 3, 4, -1, -1]
+```
+
 ### Jul 16, 2020 \[Medium\] Autocompletion
 ---
 > **Question:**  Implement auto-completion. Given a large set of words (for instance 1,000,000 words) and then a single word prefix, find all words that it can complete to.
@@ -49,6 +59,116 @@ class Solution:
 s = Solution()
 s.build(['dog', 'dark', 'cat', 'door', 'dodge'])
 s.autocomplete('do')  # Return ['dog', 'door', 'dodge']
+```
+
+**Solution with Trie:** [https://repl.it/@trsong/Autocompletion](https://repl.it/@trsong/Autocompletion)
+```py
+import unittest
+import uuid
+
+class Trie(object):
+    CHAR_SIZE = 128
+
+    def __init__(self, word_dict=None):
+        self.children = None
+        self.words = None
+        self.word_dict = word_dict or {}
+
+    def insert(self, word):
+        if self.exist(word):
+            return
+
+        word_id = uuid.uuid4()  # random uuid
+        self.word_dict[word_id] = word
+
+        p = self
+        for c in word:
+            ord_c = ord(c)
+            p.words = p.words or []
+            p.words.append(word_id)
+
+            p.children = p.children or [None] * Trie.CHAR_SIZE
+            p.children[ord_c] = p.children[ord_c] or Trie(self.word_dict)
+            p = p.children[ord_c]
+        p.words = p.words or []
+        p.words.append(word_id)
+    
+    def exist(self, word):
+        p = self
+        for c in word:
+            ord_c = ord(c)
+            if p and p.children and p.children[ord_c]:
+                p = p.children[ord_c]
+            else:
+                return False
+        return p is not None
+    
+    def search_prefix(self, word):
+        p = self
+        for c in word:
+            ord_c = ord(c)
+            if p and p.children and p.children[ord_c] and p.words:
+                p = p.children[ord_c]
+            else:
+                return []
+
+        if p is None:
+            return []
+        return map(lambda id: p.word_dict[id], p.words)
+
+
+class Autocomplete:
+    def __init__(self):
+        self.trie = Trie()
+
+    def build(self, words):
+        for word in words:
+            self.trie.insert(word)
+        
+    def run(self, word):
+        return self.trie.search_prefix(word)
+
+
+class AutocompleteSpec(unittest.TestCase):
+    def test_example(self):
+        auto = Autocomplete()
+        auto.build(['dog', 'dark', 'cat', 'door', 'dodge'])
+        expected = ['dog', 'door', 'dodge']
+        self.assertItemsEqual(expected, auto.run('do'))
+
+    def test_empty_prefix(self):
+        auto = Autocomplete()
+        auto.build(['dog', 'dark', 'cat', 'door', 'dodge'])
+        expected = ['dog', 'dark', 'cat', 'door', 'dodge']
+        self.assertItemsEqual(expected, auto.run(''))
+
+    def test_search_exact_word(self):
+        auto = Autocomplete()
+        auto.build(['a', 'aa', 'aaa'])
+        expected = ['aaa']
+        self.assertItemsEqual(expected, auto.run('aaa'))
+
+    def test_prefix_not_exist(self):
+        auto = Autocomplete()
+        auto.build(['a', 'aa', 'aaa'])
+        expected = []
+        self.assertItemsEqual(expected, auto.run('aaabc'))
+
+    def test_prefix_not_exist2(self):
+        auto = Autocomplete()
+        auto.build(['a', 'aa', 'aaa'])
+        expected = []
+        self.assertItemsEqual(expected, auto.run('c'))
+
+    def test_sentence_with_duplicates(self):
+        auto = Autocomplete()
+        auto.build(['a', 'aa', 'aa', 'aaa', 'aab', 'abb', 'aaa'])
+        expected = ['aa', 'aaa', 'aab']
+        self.assertItemsEqual(expected, auto.run('aa'))
+    
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
 ```
 
 ### Jul 15, 2020 LC 1047 \[Easy\] Remove Adjacent Duplicate Characters
