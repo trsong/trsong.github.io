@@ -33,6 +33,17 @@ You should return the following, as a string:
 ```
 -->
 
+### Jul 18, 2020 [Medium] Sorting a List With 3 Unique Numbers
+---
+> **Question:** Given a list of numbers with only `3` unique numbers `(1, 2, 3)`, sort the list in `O(n)` time.
+
+**Example:**
+```py
+Input: [3, 3, 2, 1, 3, 2, 1]
+Output: [1, 1, 2, 2, 3, 3, 3]
+```
+
+
 ### Jul 17, 2020 [Medium] Index of Larger Next Number
 ---
 > **Question:** Given a list of numbers, for each element find the next element that is larger than the current element. Return the answer as a list of indices. If there are no elements larger than the current element, then use -1 instead.
@@ -41,6 +52,81 @@ You should return the following, as a string:
 ```py
 larger_number([3, 2, 5, 6, 9, 8])
 # return [2, 2, 3, 4, -1, -1]
+```
+
+**My thoughts:** The idea is to iterate backwards and only store large element along the way with a stack. Doing such will mantain the stack in ascending order. We can then treat the stack as a history of larger element on the right. The algorithm work in the following way:
+
+For each element, we push current element in stack. And the the same time, we pop all elements that are smaller than current element until we find a larger element that is the next larger element in the list.
+
+Note that in worst case scenario, each element can only be pushed and poped from stack once, leaves the time complexity being `O(n)`.
+
+**Solution with Stack:** [https://repl.it/@trsong/Find-Index-of-Larger-Next-Number](https://repl.it/@trsong/Find-Index-of-Larger-Next-Number)
+```py
+import unittest
+
+def larger_number(nums):
+    if not nums:
+        return []
+
+    n = len(nums)
+    res = [None] * n
+    stack = []
+    for i in xrange(n-1, -1, -1):
+        while stack and nums[i] >= nums[stack[-1]]:
+            stack.pop()
+
+        res[i] = stack[-1] if stack else -1
+        stack.append(i)
+    return res 
+
+
+class LargerNumberSpec(unittest.TestCase):
+    def test_example(self):
+        nums = [3, 2, 5, 6, 9, 8]
+        expected = [2, 2, 3, 4, -1, -1]
+        self.assertEqual(expected, larger_number(nums))
+
+    def test_empty_list(self):
+        self.assertEqual([], larger_number([]))
+
+    def test_asecending_list(self):
+        nums = [0, 1, 2, 2, 3, 3, 3, 4, 5]
+        expected = [1, 2, 4, 4, 7, 7, 7, 8, -1]
+        self.assertEqual(expected, larger_number(nums))
+
+    def test_descending_list(self):
+        nums = [9, 8, 8, 7, 4, 3, 2, 1, 0, -1]
+        expected = [-1, -1, -1, -1, -1, -1, -1, -1, -1, -1]
+        self.assertEqual(expected, larger_number(nums))
+
+    def test_up_down_up(self):
+        nums = [0, 1, 2, 1, 2, 3, 4, 5]
+        expected = [1, 2, 5, 4, 5, 6, 7, -1]
+        self.assertEqual(expected, larger_number(nums))
+
+    def test_up_down_up2(self):
+        nums = [0, 4, -1, 2]
+        expected = [1, -1, 3, -1]
+        self.assertEqual(expected, larger_number(nums))
+
+    def test_down_up_down(self):
+        nums = [9, 5, 6, 3]
+        expected = [-1, 2, -1, -1]
+        self.assertEqual(expected, larger_number(nums))
+    
+    def test_up_down(self):
+        nums = [11, 21, 31, 3]
+        expected = [1, 2, -1, -1]
+        self.assertEqual(expected, larger_number(nums))
+
+    def test_random_order(self):
+        nums = [4, 3, 5, 2, 4, 7]
+        expected = [2, 2, 5, 4, 5, -1]
+        self.assertEqual(expected, larger_number(nums))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
 ```
 
 ### Jul 16, 2020 \[Medium\] Autocompletion
