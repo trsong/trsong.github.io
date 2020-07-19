@@ -33,6 +33,18 @@ You should return the following, as a string:
 ```
 -->
 
+### Jul 19, 2020 [Easy] Intersection of Linked Lists
+---
+> **Question:** You are given two singly linked lists. The lists intersect at some node. Find, and return the node. Note: the lists are non-cyclical.
+
+**Example:**
+```py
+A = 1 -> 2 -> 3 -> 4
+B = 6 -> 3 -> 4
+# This should return 3 (you may assume that any nodes with the same value are the same node)
+```
+
+
 ### Jul 18, 2020 [Medium] Sorting a List With 3 Unique Numbers
 ---
 > **Question:** Given a list of numbers with only `3` unique numbers `(1, 2, 3)`, sort the list in `O(n)` time.
@@ -42,6 +54,73 @@ You should return the following, as a string:
 Input: [3, 3, 2, 1, 3, 2, 1]
 Output: [1, 1, 2, 2, 3, 3, 3]
 ```
+
+
+**Solution with 3-Way Quick Select:** [https://repl.it/@trsong/Sorting-a-List-With-3-Unique-Numbers](https://repl.it/@trsong/Sorting-a-List-With-3-Unique-Numbers)
+```py
+import unittest
+
+def sort(nums):
+    lo, mid, hi = 0, 0, len(nums)-1
+    pivot = 2
+
+    while mid <= hi:
+        if nums[mid] == pivot:
+            mid += 1
+        elif nums[mid] < pivot:
+            nums[lo], nums[mid] = nums[mid], nums[lo]
+            mid += 1
+            lo += 1
+        else:
+            nums[mid], nums[hi] = nums[hi], nums[mid]
+            hi -=1
+    return nums
+        
+
+class SortSpec(unittest.TestCase):
+    def test_example(self):
+        nums = [3, 3, 2, 1, 3, 2, 1]
+        expected = [1, 1, 2, 2, 3, 3, 3]
+        self.assertEqual(expected, sort(nums))
+
+    def test_empty_arry(self):
+        self.assertEqual([], sort([]))
+
+    def test_descending_array(self):
+        nums = [3, 2, 2, 1]
+        expected = [1, 2, 2, 3]
+        self.assertEqual(expected, sort(nums))
+
+    def test_sorted_array(self):
+        nums = [1, 1, 2, 3]
+        expected = [1, 1, 2, 3]
+        self.assertEqual(expected, sort(nums))
+
+    def test_array_without_one(self):
+        nums = [2, 3, 2, 2, 3, 3, 2]
+        expected = [2, 2, 2, 2, 3, 3, 3]
+        self.assertEqual(expected, sort(nums))
+
+    def test_array_without_two(self):
+        nums = [1, 3, 3, 1, 1, 1, 1]
+        expected = [1, 1, 1, 1, 1, 3, 3]
+        self.assertEqual(expected, sort(nums))
+    
+    def test_array_without_three(self):
+        nums = [2, 1, 1, 1, 2]
+        expected = [1, 1, 1, 2, 2]
+        self.assertEqual(expected, sort(nums))
+    
+    def test_last_elem_is_one(self):
+        nums = [2, 1, 1]
+        expected = [1, 1, 2]
+        self.assertEqual(expected, sort(nums))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
+```
+
 
 
 ### Jul 17, 2020 [Medium] Index of Larger Next Number
