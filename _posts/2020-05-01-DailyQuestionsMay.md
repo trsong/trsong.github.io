@@ -33,6 +33,23 @@ You should return the following, as a string:
 ```
 -->
 
+### Jul 20, 2020 \[Medium\] Tokenization
+---
+> **Questions:** Given a dictionary of words and a string made up of those words (no spaces), return the original sentence in a list. If there is more than one possible reconstruction, return any of them. If there is no possible reconstruction, then return null.
+
+**Example 1:**
+```py
+Input: ['quick', 'brown', 'the', 'fox'], 'thequickbrownfox'
+Output: ['the', 'quick', 'brown', 'fox']
+```
+
+**Example 2:**
+```py
+Input: ['bed', 'bath', 'bedbath', 'and', 'beyond'], 'bedbathandbeyond'
+Output:  Either ['bed', 'bath', 'and', 'beyond'] or ['bedbath', 'and', 'beyond']
+```
+
+
 ### Jul 19, 2020 [Easy] Intersection of Linked Lists
 ---
 > **Question:** You are given two singly linked lists. The lists intersect at some node. Find, and return the node. Note: the lists are non-cyclical.
@@ -44,6 +61,81 @@ B = 6 -> 3 -> 4
 # This should return 3 (you may assume that any nodes with the same value are the same node)
 ```
 
+**Solution:** [https://repl.it/@trsong/Intersection-of-Linked-Lists](https://repl.it/@trsong/Intersection-of-Linked-Lists)
+```py
+import unittest
+
+def intersection(l1, l2):
+    len1, len2 = count_length(l1), count_length(l2)
+    if len1 < len2:
+        len1, len2 = len2, len1
+        l1, l2 = l2, l1
+    
+    for _ in xrange(len1 - len2):
+        l1 = l1.next
+
+    while l1.val != l2.val:
+        l1 = l1.next
+        l2 = l2.next
+        
+    return l1.val
+
+
+def count_length(l):
+    res = 0
+    while l:
+        res += 1
+        l = l.next
+    return res
+
+
+class ListNode(object):
+    def __init__(self, val, next=None):
+        self.val = val
+        self.next = next
+
+    def __repr__(self):
+        return "%d -> %s" % (self.val, str(self.next))
+
+    @staticmethod
+    def List(*vals):
+        p = dummy = ListNode(-1)
+        for v in vals:
+            p.next = ListNode(v)
+            p = p.next
+        return dummy.next
+
+
+class IntersectionSpec(unittest.TestCase):
+    def test_example(self):
+        l1 = ListNode.List(1, 2, 3, 4)
+        l2 = ListNode.List(6, 3, 4)
+        self.assertEqual(3, intersection(l1, l2))
+
+    def test_intersect_at_last_elem(self):
+        l1 = ListNode.List(1, 2, 3, 4)
+        l2 = ListNode.List(4)
+        self.assertEqual(4, intersection(l1, l2))
+
+    def test_intersect_at_first_elem(self):
+        l1 = ListNode.List(1, 2, 3, 4)
+        l2 = ListNode.List(0, 1, 2, 3, 4)
+        self.assertEqual(1, intersection(l1, l2))
+
+    def test_same_list(self):
+        l1 = ListNode.List(1, 2, 3, 4)
+        l2 = ListNode.List(1, 2, 3, 4)
+        self.assertEqual(1, intersection(l1, l2))
+
+    def test_same_list2(self):
+        l1 = ListNode.List(1)
+        l2 = ListNode.List(1)
+        self.assertEqual(1, intersection(l1, l2))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
+```
 
 ### Jul 18, 2020 [Medium] Sorting a List With 3 Unique Numbers
 ---
