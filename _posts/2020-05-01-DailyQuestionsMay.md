@@ -33,6 +33,25 @@ You should return the following, as a string:
 ```
 -->
 
+### Jul 21, 2020 \[Medium\] Find All Cousins in Binary Tree
+---
+> **Question:** Two nodes in a binary tree can be called cousins if they are on the same level of the tree but have different parents. 
+>
+> Given a binary tree and a particular node, find all cousins of that node.
+
+
+**Example:**
+```py
+In the following diagram 4 and 6 are cousins:
+
+    1
+   / \
+  2   3
+ / \   \
+4   5   6
+```
+
+
 ### Jul 20, 2020 \[Medium\] Tokenization
 ---
 > **Questions:** Given a dictionary of words and a string made up of those words (no spaces), return the original sentence in a list. If there is more than one possible reconstruction, return any of them. If there is no possible reconstruction, then return null.
@@ -49,6 +68,82 @@ Input: ['bed', 'bath', 'bedbath', 'and', 'beyond'], 'bedbathandbeyond'
 Output:  Either ['bed', 'bath', 'and', 'beyond'] or ['bedbath', 'and', 'beyond']
 ```
 
+**Solution with Backtracking:** [https://repl.it/@trsong/String-Tokenization](https://repl.it/@trsong/String-Tokenization)
+```py
+import unittest
+
+def tokenize(dictionary, sentence):
+    dict_set = set(dictionary)
+    _, res = tokenize_recur(dict_set, sentence)
+    return res
+
+
+def tokenize_recur(dict_set, sentence):
+    if not sentence:
+        return True, []
+    
+    for i in xrange(len(sentence)):
+        prefix = sentence[:i+1]
+        if prefix in dict_set:
+            can_token, res = tokenize_recur(dict_set, sentence[i+1:])
+            if can_token:
+                return True, [prefix] + res
+    
+    return False, None
+
+
+class TokenizeSpec(unittest.TestCase):
+    def test_example(self):
+        dictionary = ['quick', 'brown', 'the', 'fox']
+        sentence = 'thequickbrownfox'
+        expected = ['the', 'quick', 'brown', 'fox']
+        self.assertEqual(expected, tokenize(dictionary, sentence))
+
+    def test_example2(self):
+        dictionary = ['bed', 'bath', 'bedbath', 'and', 'beyond']
+        sentence = 'bedbathandbeyond'
+        expected1 = ['bed', 'bath', 'and', 'beyond']
+        expected2 = ['bedbath', 'and', 'beyond']
+        res = tokenize(dictionary, sentence)
+        self.assertIn(res, [expected1, expected2])
+
+    def test_match_entire_sentence(self):
+        dictionary = ['thequickbrownfox']
+        sentence = 'thequickbrownfox'
+        expected = ['thequickbrownfox']
+        self.assertEqual(expected, tokenize(dictionary, sentence))
+
+    def test_cannot_tokenize(self):
+        dictionary = ['thequickbrownfox']
+        sentence = 'thefox'
+        self.assertIsNone(tokenize(dictionary, sentence))
+
+    def test_longer_sentence(self):
+        dictionary = ['i', 'and', 'like', 'sam', 'sung', 'samsung', 'mobile', 'ice', 'cream', 'icecream', 'man', 'go', 'mango']
+        sentence = 'ilikesamsungmobile'
+        expected1 = ['i', 'like', 'samsung', 'mobile']
+        expected2 = ['i', 'like', 'sam', 'sung', 'mobile']
+        res = tokenize(dictionary, sentence)
+        self.assertIn(res, [expected1, expected2])
+
+    def test_longer_sentence2(self):
+        dictionary = ['i', 'and', 'like', 'sam', 'sung', 'samsung', 'mobile', 'ice', 'cream', 'icecream', 'go', 'mango']
+        sentence = 'ilikeicecreamandmango'
+        expected1 = ['i', 'like', 'icecream', 'and', 'mango']
+        expected2 = ['i', 'like', 'ice', 'cream', 'and', 'mango']
+        res = tokenize(dictionary, sentence)
+        self.assertIn(res, [expected1, expected2])
+
+    def test_greedy_approach_will_fail(self):
+        dictionary = ['ice', 'icecream', 'coffee']
+        sentence = 'icecream'
+        expected = ['icecream']
+        self.assertEqual(expected, tokenize(dictionary, sentence))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
+```
 
 ### Jul 19, 2020 [Easy] Intersection of Linked Lists
 ---
