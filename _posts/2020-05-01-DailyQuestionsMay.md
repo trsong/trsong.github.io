@@ -33,6 +33,23 @@ You should return the following, as a string:
 ```
 -->
 
+### Jul 22, 2020 LC 938 \[Easy\] Range Sum of BST
+---
+> **Question:** Given a binary search tree and a range `[a, b]` (inclusive), return the sum of the elements of the binary search tree within the range.
+
+**Example:**
+```py
+Given the range [4, 9] and the following tree:
+
+    5
+   / \
+  3   8
+ / \ / \
+2  4 6  10
+
+return 23 (5 + 4 + 6 + 8).
+```
+
 ### Jul 21, 2020 \[Medium\] Find All Cousins in Binary Tree
 ---
 > **Question:** Two nodes in a binary tree can be called cousins if they are on the same level of the tree but have different parents. 
