@@ -33,6 +33,15 @@ You should return the following, as a string:
 ```
 -->
 
+### Jul 23, 2020 LC 93 \[Medium\] All Possible Valid IP Address Combinations
+---
+> **Question:** Given a string of digits, generate all possible valid IP address combinations.
+>
+> IP addresses must follow the format A.B.C.D, where A, B, C, and D are numbers between `0` and `255`. Zero-prefixed numbers, such as `01` and `065`, are not allowed, except for `0` itself.
+>
+> For example, given `"2542540123"`, you should return `['254.25.40.123', '254.254.0.123']`
+
+
 ### Jul 22, 2020 LC 938 \[Easy\] Range Sum of BST
 ---
 > **Question:** Given a binary search tree and a range `[a, b]` (inclusive), return the sum of the elements of the binary search tree within the range.
@@ -49,6 +58,108 @@ Given the range [4, 9] and the following tree:
 
 return 23 (5 + 4 + 6 + 8).
 ```
+
+**Solution with DFS:** [https://repl.it/@trsong/Find-Range-Sum-of-BST](https://repl.it/@trsong/Find-Range-Sum-of-BST)
+```py
+import unittest
+
+def bst_range_sum(root, low, hi):
+    stack = [root]
+    res = 0
+    while stack:
+        cur = stack.pop()
+        if cur is None:
+            continue
+            
+        if cur.val < low:
+            stack.append(cur.right)
+        elif cur.val > hi:
+            stack.append(cur.left)
+        else:
+            res += cur.val
+            stack.extend([cur.left, cur.right])
+    return res
+
+
+class TreeNode(object):
+    def __init__(self, val, left=None, right=None):
+        self.val = val
+        self.left = left
+        self.right = right
+
+
+class BSTRangeSumSpec(unittest.TestCase):
+    def setUp(self):
+        """
+            5
+           / \
+          3   8
+         / \ / \
+        2  4 6  10
+        """
+        left = TreeNode(3, TreeNode(2), TreeNode(4))
+        right = TreeNode(8, TreeNode(6), TreeNode(10))
+        self.full_root = TreeNode(5, left, right)
+
+        """
+          1
+         / \ 
+        1   1
+           / \
+          1   1
+        """
+        right = TreeNode(1, TreeNode(1), TreeNode(1))
+        self.ragged_root = TreeNode(1, TreeNode(1), right)
+
+        """
+                 15
+             /        \
+            7          23
+           / \        /   \
+          3   11     19   27
+         / \    \   /    
+        1   5   13 17  
+        """
+        ll = TreeNode(3, TreeNode(1), TreeNode(5))
+        lr = TreeNode(11, right=TreeNode(13))
+        l = TreeNode(7, ll, lr)
+        rl = TreeNode(19, TreeNode(17))
+        r = TreeNode(23, rl, TreeNode(27))
+        self.large_root = TreeNode(15, l, r)
+
+    def test_example(self):
+        self.assertEqual(23, bst_range_sum(self.full_root, 4, 9))
+
+    def test_empty_tree(self):
+        self.assertEqual(0, bst_range_sum(None, 0, 1))
+
+    def test_tree_with_unique_value(self):
+        self.assertEqual(5, bst_range_sum(self.ragged_root, 1, 1))
+
+    def test_no_elem_in_range(self):
+        self.assertEqual(0, bst_range_sum(self.full_root, 7, 7))
+
+    def test_no_elem_in_range2(self):
+        self.assertEqual(0, bst_range_sum(self.full_root, 11, 20))
+
+    def test_end_points_are_inclusive(self):
+        self.assertEqual(36, bst_range_sum(self.full_root, 3, 10))
+
+    def test_just_cover_root(self):
+        self.assertEqual(5, bst_range_sum(self.full_root, 5, 5))
+
+    def test_large_tree(self):
+        # 71 = 3 + 5 + 7 + 11 + 13 + 15 + 17
+        self.assertEqual(71, bst_range_sum(self.large_root, 2, 18)) 
+
+    def test_large_tree2(self):
+        self.assertEqual(55, bst_range_sum(self.large_root, 0, 16)) 
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
+```
+
 
 ### Jul 21, 2020 \[Medium\] Find All Cousins in Binary Tree
 ---
