@@ -88,31 +88,28 @@ def all_ip_combinations(raw_str):
 
 
 class AllIpCombinationSpec(unittest.TestCase):
-    def assert_result(self, expected, result):
-        self.assertEqual(sorted(expected), sorted(result))
-
     def test_example(self):
         raw_str = '2542540123'
         expected = ['254.25.40.123', '254.254.0.123']
-        self.assert_result(expected, all_ip_combinations(raw_str))
+        self.assertItemsEqual(expected, all_ip_combinations(raw_str))
 
     def test_empty_string(self):
-        self.assert_result([], all_ip_combinations(''))
+        self.assertItemsEqual([], all_ip_combinations(''))
 
     def test_no_valid_ips(self):
         raw_str = '25505011535'
         expected = []
-        self.assert_result(expected, all_ip_combinations(raw_str))
+        self.assertItemsEqual(expected, all_ip_combinations(raw_str))
 
     def test_multiple_outcomes(self):
         raw_str = '25525511135'
         expected = ['255.255.11.135', '255.255.111.35']
-        self.assert_result(expected, all_ip_combinations(raw_str))
+        self.assertItemsEqual(expected, all_ip_combinations(raw_str))
 
     def test_multiple_outcomes2(self):
         raw_str = '25011255255'
         expected = ['250.112.55.255', '250.11.255.255']
-        self.assert_result(expected, all_ip_combinations(raw_str))
+        self.assertItemsEqual(expected, all_ip_combinations(raw_str))
 
     def test_multiple_outcomes3(self):
         raw_str = '10101010'
@@ -120,27 +117,27 @@ class AllIpCombinationSpec(unittest.TestCase):
             '10.10.10.10', '10.10.101.0', '10.101.0.10', '101.0.10.10',
             '101.0.101.0'
         ]
-        self.assert_result(expected, all_ip_combinations(raw_str))
+        self.assertItemsEqual(expected, all_ip_combinations(raw_str))
 
     def test_multiple_outcomes4(self):
         raw_str = '01010101'
         expected = ['0.10.10.101', '0.101.0.101']
-        self.assert_result(expected, all_ip_combinations(raw_str))
+        self.assertItemsEqual(expected, all_ip_combinations(raw_str))
 
     def test_unique_outcome(self):
         raw_str = '111111111111'
         expected = ['111.111.111.111']
-        self.assert_result(expected, all_ip_combinations(raw_str))
+        self.assertItemsEqual(expected, all_ip_combinations(raw_str))
 
     def test_unique_outcome2(self):
         raw_str = '0000'
         expected = ['0.0.0.0']
-        self.assert_result(expected, all_ip_combinations(raw_str))
+        self.assertItemsEqual(expected, all_ip_combinations(raw_str))
 
     def test_missing_parts(self):
         raw_str = '000'
         expected = []
-        self.assert_result(expected, all_ip_combinations(raw_str))
+        self.assertItemsEqual(expected, all_ip_combinations(raw_str))
 
 
 if __name__ == '__main__':
