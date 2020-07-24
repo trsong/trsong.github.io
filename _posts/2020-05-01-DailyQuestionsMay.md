@@ -33,6 +33,11 @@ You should return the following, as a string:
 ```
 -->
 
+### Jul 24, 2020 \[Medium\] Second Largest in BST
+---
+> **Question:** Given the root to a binary search tree, find the second largest node in the tree.
+
+
 ### Jul 23, 2020 LC 93 \[Medium\] All Possible Valid IP Address Combinations
 ---
 > **Question:** Given a string of digits, generate all possible valid IP address combinations.
@@ -41,6 +46,106 @@ You should return the following, as a string:
 >
 > For example, given `"2542540123"`, you should return `['254.25.40.123', '254.254.0.123']`
 
+
+**Solution with Backtracking:** [https://repl.it/@trsong/Find-All-Possible-Valid-IP-Address-Combinations](https://repl.it/@trsong/Find-All-Possible-Valid-IP-Address-Combinations)
+```py
+import unittest
+
+AVAILABLE_LENGTH = [1, 2, 3]
+NUM_SUB_PARTS = 4
+
+def all_ip_combinations(raw_str):
+    res = []
+    accu = []
+    n = len(raw_str)
+
+    def backtrack(index):
+        if len(accu) > NUM_SUB_PARTS:
+            return
+        if index >= n and len(accu) == NUM_SUB_PARTS:
+            res.append(".".join(accu))
+        else:
+            for token_len in AVAILABLE_LENGTH:
+                if index + token_len > n:
+                    break
+                raw_num = raw_str[index:index + token_len]
+                num = int(raw_num)
+
+                # [0-9]
+                cond1 = token_len == 1
+                # [1-9][0-9]
+                cond2 = token_len == 2 and num >= 10
+                # 1[0-9][0-9] or 2[0-4][0-9] or 25[0-5]
+                cond3 = token_len == 3 and 100 <= num <= 255
+
+                if cond1 or cond2 or cond3:
+                    accu.append(raw_num)
+                    backtrack(index + token_len)
+                    accu.pop()
+
+    backtrack(0)
+    return res
+
+
+class AllIpCombinationSpec(unittest.TestCase):
+    def assert_result(self, expected, result):
+        self.assertEqual(sorted(expected), sorted(result))
+
+    def test_example(self):
+        raw_str = '2542540123'
+        expected = ['254.25.40.123', '254.254.0.123']
+        self.assert_result(expected, all_ip_combinations(raw_str))
+
+    def test_empty_string(self):
+        self.assert_result([], all_ip_combinations(''))
+
+    def test_no_valid_ips(self):
+        raw_str = '25505011535'
+        expected = []
+        self.assert_result(expected, all_ip_combinations(raw_str))
+
+    def test_multiple_outcomes(self):
+        raw_str = '25525511135'
+        expected = ['255.255.11.135', '255.255.111.35']
+        self.assert_result(expected, all_ip_combinations(raw_str))
+
+    def test_multiple_outcomes2(self):
+        raw_str = '25011255255'
+        expected = ['250.112.55.255', '250.11.255.255']
+        self.assert_result(expected, all_ip_combinations(raw_str))
+
+    def test_multiple_outcomes3(self):
+        raw_str = '10101010'
+        expected = [
+            '10.10.10.10', '10.10.101.0', '10.101.0.10', '101.0.10.10',
+            '101.0.101.0'
+        ]
+        self.assert_result(expected, all_ip_combinations(raw_str))
+
+    def test_multiple_outcomes4(self):
+        raw_str = '01010101'
+        expected = ['0.10.10.101', '0.101.0.101']
+        self.assert_result(expected, all_ip_combinations(raw_str))
+
+    def test_unique_outcome(self):
+        raw_str = '111111111111'
+        expected = ['111.111.111.111']
+        self.assert_result(expected, all_ip_combinations(raw_str))
+
+    def test_unique_outcome2(self):
+        raw_str = '0000'
+        expected = ['0.0.0.0']
+        self.assert_result(expected, all_ip_combinations(raw_str))
+
+    def test_missing_parts(self):
+        raw_str = '000'
+        expected = []
+        self.assert_result(expected, all_ip_combinations(raw_str))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
+```
 
 ### Jul 22, 2020 LC 938 \[Easy\] Range Sum of BST
 ---
