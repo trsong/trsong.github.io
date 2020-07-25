@@ -42,7 +42,7 @@ You should return the following, as a string:
 >
 > For example, if `N = 5` and `k = 2`, the order of executions would be `[2, 4, 1, 5, 3]`, so you should return `3`.
 >
-> Note: if k = 2 solution should be O(log N)
+> Bonus: if k = 2 solution should be `O(log N)`
 
 ### Jul 24, 2020 \[Medium\] Second Largest in BST
 ---
