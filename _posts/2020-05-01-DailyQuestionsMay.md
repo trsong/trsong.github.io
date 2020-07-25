@@ -33,9 +33,175 @@ You should return the following, as a string:
 ```
 -->
 
+
+### Jul 25, 2020 LC 390 \[Easy\] Josephus Problem
+---
+> **Question:** There are `N` prisoners standing in a circle, waiting to be executed. The executions are carried out starting with the `kth` person, and removing every successive `kth` person going clockwise until there is no one left.
+>
+> Given `N` and `k`, write an algorithm to determine where a prisoner should stand in order to be the last survivor.
+>
+> For example, if `N = 5` and `k = 2`, the order of executions would be `[2, 4, 1, 5, 3]`, so you should return `3`.
+>
+> Note: if k = 2 solution should be O(log N)
+
 ### Jul 24, 2020 \[Medium\] Second Largest in BST
 ---
 > **Question:** Given the root to a binary search tree, find the second largest node in the tree.
+
+**My thoughts:**Recall the way we figure out the largest element in BST: we go all the way to the right until not possible. So the second largest element must be on the left of largest element. We have two possibilities here:
+- Either it's the parent of rightmost element, if there is no child underneath
+- Or it's the rightmost element in left subtree of the rightmost element. ie. 2nd rightmost
+
+```py
+Case 1: Parent
+1
+ \ 
+  2*
+   \
+    3
+
+Case 2: 2nd rightmost 
+1
+ \
+  4
+ /
+2
+ \ 
+  3* 
+``` 
+
+
+**Solution:** [https://repl.it/@trsong/Find-Second-Largest-in-BST](https://repl.it/@trsong/Find-Second-Largest-in-BST)
+```py
+import unittest
+
+def bst_2nd_max(node):
+    if not node:
+        return None
+
+    parent, right_most = find_right_most_and_parent(node)
+    if not right_most.left:
+        return parent
+    
+    _, second_right_most = find_right_most_and_parent(right_most.left)
+    return second_right_most
+
+
+def find_right_most_and_parent(node):    
+    prev, cur = None, node
+    while cur and cur.right:
+        prev = cur
+        cur = cur.right
+    return prev, cur    
+
+
+###################
+# Testing Utilities
+###################
+class TreeNode(object):
+    def __init__(self, val, left=None, right=None):
+        self.val = val
+        self.left = left
+        self.right = right
+
+    def __repr__(self):
+        stack = [(self, 0)]
+        res = []
+        while stack:
+            node, depth = stack.pop()
+            res.append("\n" + "\t" * depth)
+            if not node:
+                res.append("* None")
+                continue
+
+            res.append("* " + str(node.val))
+            for child in [node.right, node.left]:
+                stack.append((child, depth+1))
+        return "\n" + "".join(res) + "\n"
+
+
+class Bst2ndMaxSpec(unittest.TestCase):
+    def test_empty_tree(self):
+        self.assertIsNone(bst_2nd_max(None))
+
+    def test_one_element_tree(self):
+        root = TreeNode(1)
+        self.assertIsNone(bst_2nd_max(root))
+
+    def test_left_heavy_tree(self):
+        """
+          2
+         /
+        1*
+        """
+        left_tree = TreeNode(1)
+        root = TreeNode(2, left_tree)
+        self.assertEqual(left_tree, bst_2nd_max(root))
+
+    def test_left_heavy_tree2(self):
+        """
+          3
+         /
+        1
+         \
+          2*
+        """
+        leaf = TreeNode(2)
+        root = TreeNode(3, TreeNode(1, right=leaf))
+        self.assertEqual(leaf, bst_2nd_max(root))
+
+    def test_balanced_tree(self):
+        """
+          2*
+         / \
+        1   3
+        """
+        root = TreeNode(2, TreeNode(1), TreeNode(3))
+        self.assertEqual(root, bst_2nd_max(root))
+
+    def test_balanced_tree2(self):
+        """
+             4
+           /   \
+          2     6*
+         / \   / \ 
+        1   3 5   7 
+        """
+        left_tree = TreeNode(2, TreeNode(1), TreeNode(3))
+        right_tree = TreeNode(6, TreeNode(5), TreeNode(7))
+        root = TreeNode(4, left_tree, right_tree)
+        self.assertEqual(right_tree, bst_2nd_max(root))
+
+    def test_right_heavy_tree(self):
+        """
+        1
+         \
+          2*
+           \
+            3
+        """
+        right_tree = TreeNode(2, right=TreeNode(3))
+        root = TreeNode(1, right=right_tree)
+        self.assertEqual(right_tree, bst_2nd_max(root))
+
+    def test_unbalanced_tree(self):
+        """
+        1
+         \
+          4
+         /
+        2
+         \
+          3*
+        """
+        leaf = TreeNode(3)
+        root = TreeNode(1, right=TreeNode(4, TreeNode(2, right=leaf)))
+        self.assertEqual(leaf, bst_2nd_max(root))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
+```
 
 
 ### Jul 23, 2020 LC 93 \[Medium\] All Possible Valid IP Address Combinations
