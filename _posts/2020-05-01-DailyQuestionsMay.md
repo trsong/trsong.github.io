@@ -34,6 +34,17 @@ You should return the following, as a string:
 -->
 
 
+### Jul 26, 2020 \[Easy\] Minimum Step to Reach One
+---
+> **Question:** Given a positive integer `N`, find the smallest number of steps it will take to reach `1`.
+>
+> There are two kinds of permitted steps:
+> - You may decrement `N` to `N - 1`.
+> - If `a * b = N`, you may decrement `N` to the larger of `a` and `b`.
+> 
+> For example, given `100`, you can reach `1` in five steps with the following route: `100 -> 10 -> 9 -> 3 -> 2 -> 1`.
+
+
 ### Jul 25, 2020 LC 390 \[Easy\] Josephus Problem
 ---
 > **Question:** There are `N` prisoners standing in a circle, waiting to be executed. The executions are carried out starting with the `kth` person, and removing every successive `kth` person going clockwise until there is no one left.
