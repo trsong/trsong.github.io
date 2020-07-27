@@ -50,7 +50,7 @@ You should return the following, as a string:
 > 
 > For example, given `100`, you can reach `1` in five steps with the following route: `100 -> 10 -> 9 -> 3 -> 2 -> 1`.
 
-**My thoughts:** one can use BFS or DP to solve this problem: [Link](https://trsong.github.io/python/java/2020/02/02/DailyQuestionsFeb/#feb-13-2020-easy-minimum-step-to-reach-one). However, if the input number is too large, A-Star search can help reduce the time significantly. (Try input `2^23`). As DP can't handle large input, and BFS will expand too many branches, ideally A-Star will only expand branches close to 1. That's why I choose `num - 1` as heuristic function.
+**My thoughts:** one can use BFS or DP to solve this problem: [Link](https://trsong.github.io/python/java/2020/02/02/DailyQuestionsFeb/#feb-13-2020-easy-minimum-step-to-reach-one). However, if the input number is too large, A-Star search can help reduce the time significantly. (Try input `2^50`). As DP can't handle large input, and BFS will expand too many branches, ideally A-Star will only expand branches close to 1. That's why I choose `num - 1` as heuristic function.
 
 **Solution with A-Star Search:** [https://repl.it/@trsong/Find-Minimum-Step-to-Reach-One](https://repl.it/@trsong/Find-Minimum-Step-to-Reach-One)
 ```py
@@ -76,11 +76,12 @@ def min_step(n):
             pq.put((cur-1, 1+cost+heuristic(cur-1)))
             parent[cur-1] = cur
 
-        sqrt_cur = int(math.ceil(math.sqrt(cur)))
-        for factor in xrange(sqrt_cur, cur):
+        sqrt_cur = int(math.sqrt(cur))
+        for factor in xrange(sqrt_cur, 1, -1):
             if cur % factor == 0:
-                pq.put((factor, 1+cost+heuristic(factor)))
-                parent[factor] = cur
+                larger_factor = cur // factor
+                pq.put((larger_factor, 1+cost+heuristic(larger_factor)))
+                parent[larger_factor] = cur
     
     p = target
     step = 0
@@ -131,6 +132,11 @@ class MinStepSpec(unittest.TestCase):
         # 2^23 -> 2^12 -> 2^6 -> 2^3 -> 2^2 -> 2 -> 1
         target = 2 ** 23
         self.assertEqual(6, min_step(target))
+    
+    def test_performance3(self):
+        # 2^50 -> 2^25 -> 2^13 -> 2^7 -> 2^4 -> 2^2 -> 2 -> 1
+        target = 2 ** 50
+        self.assertEqual(7, min_step(target))
 
 
 if __name__ == '__main__':
