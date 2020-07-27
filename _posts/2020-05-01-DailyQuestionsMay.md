@@ -50,6 +50,93 @@ You should return the following, as a string:
 > 
 > For example, given `100`, you can reach `1` in five steps with the following route: `100 -> 10 -> 9 -> 3 -> 2 -> 1`.
 
+**My thoughts:** one can use BFS or DP to solve this problem: [Link](https://trsong.github.io/python/java/2020/02/02/DailyQuestionsFeb/#feb-13-2020-easy-minimum-step-to-reach-one). However, if the input number is too large, A-Star search can help reduce the time significantly. (Try input `2^23`). As DP can't handle large input, and BFS will expand too many branches, ideally A-Star will only expand branches close to 1. That's why I choose `num - 1` as heuristic function.
+
+**Solution with A-Star Search:** [https://repl.it/@trsong/Find-Minimum-Step-to-Reach-One](https://repl.it/@trsong/Find-Minimum-Step-to-Reach-One)
+```py
+import unittest
+from Queue import PriorityQueue
+import math
+
+def min_step(n):
+    pq = PriorityQueue()
+    pq.put((n, 0))
+    target = 1
+    visited = set()
+    parent = {}
+    while not pq.empty():
+        cur, cost = pq.get()
+        if cur == target:
+            break
+        if cur in visited:
+            continue
+        visited.add(cur)
+
+        if cur - 1 not in visited:
+            pq.put((cur-1, 1+cost+heuristic(cur-1)))
+            parent[cur-1] = cur
+
+        sqrt_cur = int(math.ceil(math.sqrt(cur)))
+        for factor in xrange(sqrt_cur, cur):
+            if cur % factor == 0:
+                pq.put((factor, 1+cost+heuristic(factor)))
+                parent[factor] = cur
+    
+    p = target
+    step = 0
+    while p != n:
+        p = parent[p]
+        step += 1
+    return step
+
+
+def heuristic(num):
+    return num - 1
+            
+
+class MinStepSpec(unittest.TestCase):
+    def test_example(self):
+        # 100 -> 10 -> 9 -> 3 -> 2 -> 1
+        self.assertEqual(5, min_step(100))
+
+    def test_one(self):
+        self.assertEqual(0, min_step(1))
+
+    def test_prime_number(self):
+        # 17 -> 16 -> 4 -> 2 -> 1
+        self.assertEqual(4, min_step(17))
+
+    def test_even_number(self):
+        # 6 -> 3 -> 2 -> 1
+        self.assertEqual(3, min_step(6))
+
+    def test_even_number2(self):
+        # 50 -> 10 -> 5 -> 4 -> 2 -> 1
+        self.assertEqual(5, min_step(50))
+
+    def test_power_of_2(self):
+        # 1024 -> 32 -> 8 -> 4 -> 2 -> 1
+        self.assertEqual(5, min_step(1024))
+
+    def test_square_number(self):
+        # 16 -> 4 -> 2 -> 1
+        self.assertEqual(3, min_step(16))
+    
+    def test_performance(self):
+        # 2^16 -> 2^8 -> 2^4 -> 2^2 -> 2 -> 1
+        target = 2 ** 16
+        self.assertEqual(5, min_step(target))
+    
+    def test_performance2(self):
+        # 2^23 -> 2^12 -> 2^6 -> 2^3 -> 2^2 -> 2 -> 1
+        target = 2 ** 23
+        self.assertEqual(6, min_step(target))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False) 
+```
+
 
 ### Jul 25, 2020 LC 390 \[Easy\] Josephus Problem
 ---
