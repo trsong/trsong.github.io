@@ -33,11 +33,11 @@ You should return the following, as a string:
 ```
 -->
 
-### Jul 26, 2020 \[Medium\] The Celebrity Problem
+### Jul 27, 2020 \[Medium\] The Celebrity Problem
 ---
-> **Question:** At a party, there is a single person who everyone knows, but who does not know anyone in return (the "celebrity"). To help figure out who this is, you have access to an `O(1)` method called `knows(a, b)`, which returns `True` if person a knows person b, else `False`.
+> **Question:** At a party, there is a single person who everyone knows, but who does not know anyone in return (the "celebrity"). To help figure out who this is, you have access to an `O(1)` method called `knows(a, b)`, which returns `True` if person `a` knows person `b`, else `False`.
 >
-> Given a list of N people and the above operation, find a way to identify the celebrity in O(N) time.
+> Given a list of `N` people and the above operation, find a way to identify the celebrity in `O(N)` time.
 
 
 ### Jul 26, 2020 \[Easy\] Minimum Step to Reach One
