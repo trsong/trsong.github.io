@@ -31,7 +31,78 @@ Given the following input:
 You should return the following, as a string:
 '[null, 123, ["a", "b"], {"c": "d"}]'
 ```
+
+Construct a Binary Tree from Postorder and Inorder
+
+Given Postorder and Inorder traversals, construct the tree.
+
+Examples:
+
+Input : 
+in[]   = {2, 1, 3}
+post[] = {2, 3, 1}
+
+Output : Root of below tree
+      1
+    /   \
+   2     3 
+
+
+Input : 
+in[]   = {4, 8, 2, 5, 1, 6, 3, 7}
+post[] = {8, 4, 5, 2, 6, 7, 3, 1} 
+
+Output : Root of below tree
+          1
+       /     \
+     2        3
+   /    \   /   \
+  4     5   6    7
+    \
+      8
+
+=====
+Construct Full Binary Tree from given preorder and postorder traversals
+
+Given two arrays that represent preorder and postorder traversals of a full binary tree, construct the binary tree.
+
+A Full Binary Tree is a binary tree where every node has either 0 or 2 children
+
+Following are examples of Full Trees.
+====
+
+Given two binary trees S and T, the task is the check that if S is a subtree of the Tree T.
+
+
 -->
+
+
+### Jul 28, 2020 \[Medium\] Pre-order & In-order Binary Tree Traversal
+---
+> **Question:** Given pre-order and in-order traversals of a binary tree, write a function to reconstruct the tree.
+>
+> For example, given the following preorder traversal:
+
+```py
+[a, b, d, e, c, f, g]
+```
+
+> And the following inorder traversal:
+
+```py
+[d, b, e, a, f, c, g]
+```
+
+> You should return the following tree:
+
+```py
+    a
+   / \
+  b   c
+ / \ / \
+d  e f  g
+```
+
 
 ### Jul 27, 2020 \[Medium\] The Celebrity Problem
 ---
