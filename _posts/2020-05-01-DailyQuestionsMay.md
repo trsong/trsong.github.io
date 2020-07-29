@@ -32,34 +32,7 @@ You should return the following, as a string:
 '[null, 123, ["a", "b"], {"c": "d"}]'
 ```
 
-Construct a Binary Tree from Postorder and Inorder
 
-Given Postorder and Inorder traversals, construct the tree.
-
-Examples:
-
-Input : 
-in[]   = {2, 1, 3}
-post[] = {2, 3, 1}
-
-Output : Root of below tree
-      1
-    /   \
-   2     3 
-
-
-Input : 
-in[]   = {4, 8, 2, 5, 1, 6, 3, 7}
-post[] = {8, 4, 5, 2, 6, 7, 3, 1} 
-
-Output : Root of below tree
-          1
-       /     \
-     2        3
-   /    \   /   \
-  4     5   6    7
-    \
-      8
 
 =====
 Construct Full Binary Tree from given preorder and postorder traversals
@@ -76,6 +49,38 @@ Given two binary trees S and T, the task is the check that if S is a subtree of 
 
 -->
 
+
+### Jul 29, 2020 \[Medium\] Construct a Binary Tree from Postorder and Inorder
+---
+> **Question:** Given Postorder and Inorder traversals, construct the tree.
+
+**Examples 1:**
+```py
+Input: 
+in_order = [2, 1, 3]
+post_order = [2, 3, 1]
+
+Output: 
+      1
+    /   \
+   2     3 
+```
+
+**Example 2:**
+```py
+Input: 
+in_order = [4, 8, 2, 5, 1, 6, 3, 7]
+post_order = [8, 4, 5, 2, 6, 7, 3, 1]
+
+Output:
+          1
+       /     \
+     2        3
+   /    \   /   \
+  4     5   6    7
+    \
+      8
+```
 
 ### Jul 28, 2020 \[Medium\] Pre-order & In-order Binary Tree Traversal
 ---
