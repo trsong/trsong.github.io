@@ -50,7 +50,7 @@ Given two binary trees S and T, the task is the check that if S is a subtree of 
 -->
 
 
-### Jul 29, 2020 \[Medium\] Construct a Binary Tree from Postorder and Inorder
+### Jul 29, 2020 \[Medium\] In-order & Post-order Binary Tree Traversal
 ---
 > **Question:** Given Postorder and Inorder traversals, construct the tree.
 
