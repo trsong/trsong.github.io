@@ -106,15 +106,14 @@ def all_max_distinct_subarray(nums):
     return res
 
 
-
 class AllMaxDistinctSubarraySpec(unittest.TestCase):
     def test_example(self):
         nums = [5, 2, 3, 5, 4, 3]
         expected = [[5, 2, 3], [2, 3, 5, 4], [5, 4, 3]]
-        self.assertEqual(expected, all_max_distinct_subarray(nums))
+        self.assertItemsEqual(expected, all_max_distinct_subarray(nums))
 
     def test_empty_array(self):
-        self.assertEqual([], all_max_distinct_subarray([]))
+        self.assertItemsEqual([], all_max_distinct_subarray([]))
 
     def test_array_with_no_duplicates(self):
         nums = [1, 2, 3, 4, 5, 6]
