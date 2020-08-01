@@ -49,7 +49,7 @@ Given two binary trees S and T, the task is the check that if S is a subtree of 
 
 -->
 
-### Jul 31, 2020 \[Easy\] Longest Path in Binary Tree
+### Jul 31, 2020 \[Hard\] Longest Path in Binary Tree
 ---
 > **Question:** Given a binary tree, return any of the longest path.
 
@@ -74,6 +74,192 @@ Input:      1
 
 Output: [4, 2, 1, 3, 6] or [5, 2, 1, 3, 6] 
 ```
+
+**Proof:** Given any node `x` in a tree, the farthest node `y` from `x` is always one end of longest path. 
+
+Supoose longest path is `u-v`. Path `x-v` intersect at `w`. Assume `v` close to `x` than `u`, ie. `d(x, u) >= d(x, v)`. We want to show `d(x, u) = d(x, y)` that is `y` is `u`.
+
+**Case 1: Path x-y goes through w**
+```py
+u   v
+ \ /
+  w
+ / \
+y   x
+```
+Note y is farthest from x, i.e.`xy >= ux` cancel `xw` path gives `uw <= wy`
+Note u-v is the longest path, i.e `uv >= yv` cancel `vw` path gives `uw >= wy` 
+Combine those two gives `uw = wy` that is `y` is `u`
+
+**Case 2: Path x-y does not go through w**
+```
+u    v 
+ \  / 
+  w   
+  |   
+  x     
+  |
+  y
+```
+
+Note u-v is the longest path, i.e `uv >= yv` cancel `wv` path gives `uw >= wy = wx + xy` 
+Note y is farthest from x, i.e.`xy >= xu = wx + uw`
+Combine those two gives `xy >= wx + uw >= 2wx + xy` which `x` is `w` and `wx = 0` and `u` is `y`.
+
+Therefore, in both cases u is y, that means given any node `x` in a tree, the farthest node `y` from `x` is always one end of longest path. 
+
+**My thoughts:** We can BFS from any node `x` to find the farthest node `y`. Such `y` must be an end of the longest path. Then we can perform another BFS from `y` to find farthest node of `y` say `v`. That path `y-v` will be the longest path in a tree.
+
+
+**Solution with BFS:** [https://repl.it/@trsong/Longest-Path-in-Binary-Tree](https://repl.it/@trsong/Longest-Path-in-Binary-Tree)
+```py
+import unittest
+
+class TreeNode(object):
+    def __init__(self, val, left=None, right=None):
+        self.val = val
+        self.left = left
+        self.right = right
+
+
+def find_longest_path(root):
+    if not root:
+        return []
+
+    parents = {}
+    farthest = bfs_longest_path(root, parents)[0]
+    path = bfs_longest_path(farthest, parents)
+    return map(lambda node: node.val, path)
+
+
+def bfs_longest_path(start, parents):
+    queue = [(start, None)]
+    end = start
+    prev_path = {}
+    while queue:
+        for _ in xrange(len(queue)):
+            cur, prev = queue.pop(0)
+            end = cur
+            prev_path[cur] = prev
+
+            if cur not in parents:
+                parents[cur] = prev
+            neighbours = [parents[cur], cur.left, cur.right]
+
+            for nb in neighbours:
+                if nb and nb != prev:
+                    queue.append((nb, cur))
+
+    res = []
+    while end:
+        res.append(end)
+        end = prev_path[end]
+    return res
+
+
+class FindLongetPathSpec(unittest.TestCase):
+    def assert_result(self, possible_solutions, result):
+        reversed_solution = map(lambda path: path[::-1], possible_solutions)
+        solutions = possible_solutions + reversed_solution
+        self.assertIn(result, solutions, "\nIncorrect result: {}.\nPossible solutions:\n{}".format(str(result), "\n".join(map(str, solutions))))
+
+    def test_example(self):
+        """ 
+           1
+          / \
+         2   3
+        / \
+       4   5
+        """
+        root = TreeNode(1, TreeNode(2, TreeNode(4), TreeNode(5)), TreeNode(3))
+        possible_solutions = [
+            [4, 2, 1, 3],
+            [5, 2, 1, 3]
+        ]
+        self.assert_result(possible_solutions, find_longest_path(root))
+
+    def test_example2(self):
+        """
+            1
+           / \
+          2   3
+         / \   \
+        4   5   6
+        """
+        left_tree = TreeNode(2, TreeNode(4), TreeNode(5))
+        right_tree = TreeNode(3, right=TreeNode(6))
+        root = TreeNode(1, left_tree, right_tree)
+        possible_solutions = [
+            [4, 2, 1, 3, 6],
+            [5, 2, 1, 3, 6]
+        ]
+        self.assert_result(possible_solutions, find_longest_path(root))
+
+    def test_empty_tree(self):
+        self.assertEqual([], find_longest_path(None))
+
+    def test_longest_path_start_from_root(self):
+        """
+        1
+         \
+          2
+         / 
+        3  
+       / \
+      5   4
+         /
+        6
+        """
+        n3 = TreeNode(3, TreeNode(5), TreeNode(4, TreeNode(6)))
+        n2 = TreeNode(2, n3)
+        root = TreeNode(1, right=n2)
+        possible_solutions = [
+            [1, 2, 3, 4, 6]
+        ]
+        self.assert_result(possible_solutions, find_longest_path(root))
+
+    def test_longest_path_goes_through_root(self):
+        """
+            1
+           / \
+          2   3
+         /     \
+        4       5
+        """
+        left_tree = TreeNode(2, TreeNode(4))
+        right_tree = TreeNode(3, right=TreeNode(5))
+        root = TreeNode(1, left_tree, right_tree)
+        possible_solutions = [
+            [4, 2, 1, 3, 5]
+        ]
+        self.assert_result(possible_solutions, find_longest_path(root))
+
+    def test_longest_path_not_through_root(self):
+        """
+         1
+        / \
+       2   3
+          / \
+         4   5
+        /   / \
+       6   7   8
+      /    \
+     9     10
+        """
+        right_left_tree = TreeNode(4, TreeNode(6, TreeNode(9)))
+        right_right_tree = TreeNode(5, TreeNode(7, right=TreeNode(10)), TreeNode(8))
+        right_tree = TreeNode(3, right_left_tree, right_right_tree)
+        root = TreeNode(1, TreeNode(2), right_tree)
+        possible_solutions = [
+            [10, 7, 5, 3, 4, 6, 9]
+        ]
+        self.assert_result(possible_solutions, find_longest_path(root))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
+```
+
 
 ### Jul 30, 2020 \[Medium\] All Max-size Subarrays with Distinct Elements
 ---
