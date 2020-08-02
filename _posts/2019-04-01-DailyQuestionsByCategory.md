@@ -39,8 +39,55 @@ categories: Python/Java
 ## Array
 ---
 
-### Basic
----
+<details>
+<summary class="lc_e">
+
+- [**\[Easy\] Valid Mountain Array**](https://trsong.github.io/python/java/2020/05/02/DailyQuestionsMay/#jul-6-2020-easy-valid-mountain-array) -- *Given an array of heights, determine whether the array forms a “mountain” pattern. A mountain pattern goes up and then down.* [*\(Try ME\)*](https://repl.it/@trsong/Valid-Mountain-Array-1)
+
+</summary>
+<div>
+
+**Question:** Given an array of heights, determine whether the array forms a "mountain" pattern. A mountain pattern goes up and then down.
+
+**Example:**
+```py
+validMountainArray([1, 2, 3, 2, 1])  # True
+validMountainArray([1, 2, 3])  # False
+```
+
+</div>
+</details>
+
+<details>
+<summary class="lc_e">
+
+- [**\[Easy\] Matrix Rotation**](https://trsong.github.io/python/java/2020/05/02/DailyQuestionsMay/#jul-7-2020-medium-matrix-rotation) -- *Given an N by N matrix, rotate it by 90 degrees clockwise.* [*\(Try ME\)*](https://repl.it/@trsong/Matrix-Rotation-In-place-with-flip-1)
+
+</summary>
+<div>
+
+**Question:** Given an N by N matrix, rotate it by 90 degrees clockwise.
+
+For example, given the following matrix:
+
+```py
+[[1, 2, 3],
+ [4, 5, 6],
+ [7, 8, 9]]
+ ```
+
+you should return:
+
+```py
+[[7, 4, 1],
+ [8, 5, 2],
+ [9, 6, 3]]
+ ```
+
+Follow-up: What if you couldn't use any extra space?
+ 
+</div>
+</details>
 
 ### Two Pointers
 ---
@@ -210,6 +257,80 @@ return 23 (5 + 4 + 6 + 8).
 
 ### Traversal
 ---
+
+<details>
+<summary class="lc_m">
+
+- [**\[Medium\] Largest BST in a Binary Tree**](https://trsong.github.io/python/java/2020/05/02/DailyQuestionsMay/#jul-3-2020-medium-largest-bst-in-a-binary-tree) -- *You are given the root of a binary tree. Find and return the largest subtree of that tree, which is a valid binary search tree.* [*\(Try ME\)*](https://repl.it/@trsong/Find-Largest-BST-in-a-Binary-Tree-1)
+
+</summary>
+<div>
+
+**Question:** You are given the root of a binary tree. Find and return the largest subtree of that tree, which is a valid binary search tree.
+
+**Example1:**
+```py
+Input: 
+      5
+    /  \
+   2    4
+ /  \
+1    3
+
+Output:
+   2  
+ /  \
+1    3
+```
+
+**Example2:**
+```py
+Input: 
+       50
+     /    \
+  30       60
+ /  \     /  \ 
+5   20   45    70
+              /  \
+            65    80
+            
+Output: 
+      60
+     /  \ 
+   45    70
+        /  \
+      65    80
+```
+
+</div>
+</details>
+
+
+<details>
+<summary class="lc_e">
+
+- [**\[Easy\] Symmetric K-ary Tree**](https://trsong.github.io/python/java/2020/05/02/DailyQuestionsMay/#jul-5-2020-easy-symmetric-k-ary-tree) -- *Given a k-ary tree, figure out if the tree is symmetrical.* [*\(Try ME\)*](https://repl.it/@trsong/Is-Symmetric-K-ary-Tree-1)
+
+</summary>
+<div>
+
+**Question:** Given a k-ary tree, figure out if the tree is symmetrical.
+ 
+A k-ary tree is a tree with k-children, and a tree is symmetrical if the data of the left side of the tree is the same as the right side of the tree. 
+
+Here's an example of a symmetrical k-ary tree.
+
+```py
+        4
+     /     \
+    3        3
+  / | \    / | \
+9   4  1  1  4  9
+```
+
+</div>
+</details>
+
 
 <details>
 <summary class="lc_e">
@@ -576,6 +697,20 @@ For example, given `"2542540123"`, you should return `['254.25.40.123', '254.254
 </details>
 
 
+<details>
+<summary class="lc_h">
+
+- [**\[Hard\] The N Queens Puzzle**](https://trsong.github.io/python/java/2020/05/02/DailyQuestionsMay/#jul-2-2020-hard-the-n-queens-puzzle) -- *Given N, returns the number of possible arrangements of the board where N queens can be placed on the board without attacking each other.* [*\(Try ME\)*](https://repl.it/@trsong/Solve-the-N-Queen-Problem-1)
+
+</summary>
+<div>
+
+**Question:** You have an N by N board. Write a function that, given N, returns the number of possible arrangements of the board where N queens can be placed on the board without threatening each other, i.e. no two queens share the same row, column, or diagonal.
+
+</div>
+</details>
+
+
 ## Dynamic Programming
 ---
 
@@ -652,5 +787,36 @@ Output:  Either ['bed', 'bath', 'and', 'beyond'] or ['bedbath', 'and', 'beyond']
 ### Palindrome
 ---
 
+<details>
+<summary class="lc_e">
+
+- [**\[Easy\] LC 680. Remove Character to Create Palindrome**](https://trsong.github.io/python/java/2020/05/02/DailyQuestionsMay/#jul-1-2020-lc-680-easy-remove-character-to-create-palindrome) -- *Given a string, determine if you can remove any character to create a palindrome.* [*\(Try ME\)*](https://repl.it/@trsong/Remove-Character-to-Create-Palindrome-1)
+
+</summary>
+<div>
+
+**Question:** Given a string, determine if you can remove any character to create a palindrome.
+
+**Example 1:**
+```py
+Input: "abcdcbea"
+Output: True 
+Explanation: Remove 'e' gives "abcdcba"
+```
+
+**Example 2:**
+```py
+Input: "abccba"
+Output: True
+```
+
+**Example 3:**
+```py
+Input: "abccaa"
+Output: False
+```
+
+</div>
+</details>
 
 {::options parse_block_html="false" /}
