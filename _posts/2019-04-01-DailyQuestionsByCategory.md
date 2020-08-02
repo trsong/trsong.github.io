@@ -642,6 +642,59 @@ Output: [4, 2, 1, 3, 6] or [5, 2, 1, 3, 6]
 ### Level-based BFS
 ---
 
+<details>
+<summary class="lc_h">
+
+- [**\[Hard\] LC 934. Shortest Bridge**](https://trsong.github.io/python/java/2020/08/02/DailyQuestionsAug/#aug-1-2020-lc-934-medium-shortest-bridge) -- *In a given 2D binary array A, there are two islands.Return the smallest number of 0s that must be flipped.* [*\(Try ME\)*](https://repl.it/@trsong/Shortest-Bridge-1)
+
+</summary>
+<div>
+
+**Question:** In a given 2D binary array A, there are two islands.  (An island is a 4-directionally connected group of 1s not connected to any other 1s.)
+
+Now, we may change 0s to 1s so as to connect the two islands together to form 1 island.
+
+Return the smallest number of 0s that must be flipped.  (It is guaranteed that the answer is at least 1.)
+
+**Example 1:**
+```py
+Input: 
+[
+    [0, 1],
+    [1, 0]
+]
+Output: 1
+```
+
+**Example 2:**
+```py
+Input: 
+[
+    [0, 1, 0],
+    [0, 0, 0],
+    [0, 0, 1]
+]
+Output: 2
+```
+
+**Example 3:**
+```py
+Input: 
+[
+    [1, 1, 1, 1, 1],
+    [1, 0, 0, 0, 1],
+    [1, 0, 1, 0, 1],
+    [1, 0, 0, 0, 1],
+    [1, 1, 1, 1, 1]
+]
+Output: 1
+```
+
+
+</div>
+</details>
+
+
 ### DFS
 ---
 
