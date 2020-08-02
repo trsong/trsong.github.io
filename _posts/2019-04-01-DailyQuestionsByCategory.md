@@ -54,10 +54,30 @@ categories: Python/Java
 ### Singly Linked List
 ---
 
+<details>
+<summary class="lc_e">
+
+- [**\[Easy\] Intersection of Linked Lists**](https://trsong.github.io/python/java/2020/05/02/DailyQuestionsMay/#jul-19-2020-easy-intersection-of-linked-lists) -- *Given two singly linked lists. The lists intersect at some node. Find, and return the node. Note: the lists are non-cyclical.* [*\(Try ME\)*](https://repl.it/@trsong/Intersection-of-Linked-Lists-1)
+
+</summary>
+<div>
+
+**Question:** You are given two singly linked lists. The lists intersect at some node. Find, and return the node. Note: the lists are non-cyclical.
+
+**Example:**
+```py
+A = 1 -> 2 -> 3 -> 4
+B = 6 -> 3 -> 4
+# This should return 3 (you may assume that any nodes with the same value are the same node)
+```
+
+</div>
+</details>
+
 ### Doubly Linked List
 ---
 
-### circular linked list
+### Circular Linked List
 ---
 
 ### Fast-slow Pointers
@@ -71,6 +91,25 @@ categories: Python/Java
 
 ### Quick Select & Quick Sort
 ---
+
+<details>
+<summary class="lc_m">
+
+- [**\[Medium\] Sorting a List With 3 Unique Numbers**](https://trsong.github.io/python/java/2020/05/02/DailyQuestionsMay/#jul-18-2020-medium-sorting-a-list-with-3-unique-numbers) -- *Given a list of numbers with only 3 unique numbers (1, 2, 3), sort the list in O(n) time.* [*\(Try ME\)*](https://repl.it/@trsong/Sorting-a-List-With-3-Unique-Numbers-1)
+
+</summary>
+<div>
+
+**Question:** Given a list of numbers with only `3` unique numbers `(1, 2, 3)`, sort the list in `O(n)` time.
+
+**Example:**
+```py
+Input: [3, 3, 2, 1, 3, 2, 1]
+Output: [1, 1, 2, 2, 3, 3, 3]
+```
+
+</div>
+</details>
 
 ### Counting Sort
 ---
@@ -212,6 +251,25 @@ d  e f  g
 ## Stack
 ---
 
+<details>
+<summary class="lc_m">
+
+- [**\[Medium\] Index of Larger Next Number**](https://trsong.github.io/python/java/2020/05/02/DailyQuestionsMay/#jul-17-2020-medium-index-of-larger-next-number) -- *Given a list of numbers, for each element find the next element that is larger than the current element.* [*\(Try ME\)*](https://repl.it/@trsong/Find-Index-of-Larger-Next-Number-1)
+
+</summary>
+<div>
+
+**Question:** Given a list of numbers, for each element find the next element that is larger than the current element. Return the answer as a list of indices. If there are no elements larger than the current element, then use -1 instead.
+
+**Example:** 
+```py
+larger_number([3, 2, 5, 6, 9, 8])
+# return [2, 2, 3, 4, -1, -1]
+```
+
+</div>
+</details>
+
 
 <details>
 <summary class="lc_m">
@@ -269,6 +327,34 @@ Given a list of `N` people and the above operation, find a way to identify the c
 
 ### BFS
 ---
+
+<details>
+<summary class="lc_m">
+
+- [**\[Medium\] Find All Cousins in Binary Tree**](https://trsong.github.io/python/java/2020/05/02/DailyQuestionsMay/#jul-21-2020-medium-find-all-cousins-in-binary-tree) -- *Given a binary tree and a particular node, find all cousins of that node.* [*\(Try ME\)*](https://repl.it/@trsong/All-Cousins-in-Binary-Tree-1)
+
+</summary>
+<div>
+
+**Question:** Two nodes in a binary tree can be called cousins if they are on the same level of the tree but have different parents. 
+
+Given a binary tree and a particular node, find all cousins of that node.
+
+
+**Example:**
+```py
+In the following diagram 4 and 6 are cousins:
+
+    1
+   / \
+  2   3
+ / \   \
+4   5   6
+```
+
+</div>
+</details>
+
 
 <details>
 <summary class="lc_h">
@@ -378,6 +464,31 @@ For example, given `"2542540123"`, you should return `['254.25.40.123', '254.254
 
 ## String
 ---
+
+<details>
+<summary class="lc_m">
+
+- [**\[Medium\] Tokenization**](https://trsong.github.io/python/java/2020/05/02/DailyQuestionsMay/#jul-20-2020-medium-tokenization) -- *Given a dictionary of words and a string made up of those words (no spaces), return the original sentence in a list.* [*\(Try ME\)*](https://repl.it/@trsong/String-Tokenization-1)
+
+</summary>
+<div>
+
+**Questions:** Given a dictionary of words and a string made up of those words (no spaces), return the original sentence in a list. If there is more than one possible reconstruction, return any of them. If there is no possible reconstruction, then return null.
+
+**Example 1:**
+```py
+Input: ['quick', 'brown', 'the', 'fox'], 'thequickbrownfox'
+Output: ['the', 'quick', 'brown', 'fox']
+```
+
+**Example 2:**
+```py
+Input: ['bed', 'bath', 'bedbath', 'and', 'beyond'], 'bedbathandbeyond'
+Output:  Either ['bed', 'bath', 'and', 'beyond'] or ['bedbath', 'and', 'beyond']
+```
+
+</div>
+</details>
 
 ### Anagram
 ---
