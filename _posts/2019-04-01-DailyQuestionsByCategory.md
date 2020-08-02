@@ -79,8 +79,50 @@ categories: Python/Java
 ## Tree
 ---
 
+### BST
+---
+
+<details>
+<summary class="lc_e">
+
+- [**\[Easy\] Second Largest in BST**](https://trsong.github.io/python/java/2020/05/02/DailyQuestionsMay/#jul-24-2020-medium-second-largest-in-bst) -- *Given the root to a binary search tree, find the second largest node in the tree.* [*\(Try ME\)*](https://repl.it/@trsong/Find-Second-Largest-in-BST-1)
+
+</summary>
+<div>
+
+**Question:** Given the root to a binary search tree, find the second largest node in the tree.
+
+</div>
+</details>
+
 ### Recursion
 ---
+
+<details>
+<summary class="lc_e">
+
+- [**\[Easy\] LC 938. Range Sum of BST**](https://trsong.github.io/python/java/2020/05/02/DailyQuestionsMay/#jul-22-2020-lc-938-easy-range-sum-of-bst) -- *Given a binary search tree and a range [a, b] (inclusive), return the sum of the elements of the binary search tree within the range.* [*\(Try ME\)*](https://repl.it/@trsong/Find-Range-Sum-of-BST-1)
+
+</summary>
+<div>
+
+**Question:** Given a binary search tree and a range `[a, b]` (inclusive), return the sum of the elements of the binary search tree within the range.
+
+**Example:**
+```py
+Given the range [4, 9] and the following tree:
+
+    5
+   / \
+  3   8
+ / \ / \
+2  4 6  10
+
+return 23 (5 + 4 + 6 + 8).
+```
+
+</div>
+</details>
 
 
 
@@ -275,9 +317,50 @@ Output: [4, 2, 1, 3, 6] or [5, 2, 1, 3, 6]
 ### Union Find
 ---
 
+### A-Star
+---
+
+
+<details>
+<summary class="lc_h">
+
+- [**\[Hard\] Minimum Step to Reach One**](https://trsong.github.io/python/java/2020/05/02/DailyQuestionsMay/#jul-26-2020-easy-minimum-step-to-reach-one) -- *Given a positive integer N, find the smallest number of steps it will take to reach 1.* [*\(Try ME\)*](https://repl.it/@trsong/Test-Find-Minimum-Step-to-Reach-One)
+
+</summary>
+<div>
+
+**Question:** Given a positive integer `N`, find the smallest number of steps it will take to reach `1`.
+
+There are two kinds of permitted steps:
+- You may decrement `N` to `N - 1`.
+- If `a * b = N`, you may decrement `N` to the larger of `a` and `b`.
+ 
+For example, given `100`, you can reach `1` in five steps with the following route: `100 -> 10 -> 9 -> 3 -> 2 -> 1`.
+
+</div>
+</details>
+
 
 ## Backtracking
 ---
+
+
+<details>
+<summary class="lc_m">
+
+- [**\[Medium\] LC 93. All Possible Valid IP Address Combinations**](https://trsong.github.io/python/java/2020/05/02/DailyQuestionsMay/#jul-23-2020-lc-93-medium-all-possible-valid-ip-address-combinations) -- *Given a string of digits, generate all possible valid IP address combinations.* [*\(Try ME\)*](https://repl.it/@trsong/Find-All-Possible-Valid-IP-Address-Combinations-1)
+
+</summary>
+<div>
+
+**Question:** Given a string of digits, generate all possible valid IP address combinations.
+
+IP addresses must follow the format A.B.C.D, where A, B, C, and D are numbers between `0` and `255`. Zero-prefixed numbers, such as `01` and `065`, are not allowed, except for `0` itself.
+
+For example, given `"2542540123"`, you should return `['254.25.40.123', '254.254.0.123']`
+ 
+</div>
+</details>
 
 
 ## Dynamic Programming
