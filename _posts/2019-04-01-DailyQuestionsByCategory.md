@@ -84,6 +84,11 @@ categories: Python/Java
 
 
 
+
+### Traversal
+---
+
+
 <details>
 <summary class="lc_m">
 
@@ -125,18 +130,61 @@ Output:
 </div>
 </details>
 
-### Traversal
----
+
+<details>
+<summary class="lc_m">
+
+- [**\[Medium\] Pre-order & In-order Binary Tree Traversal**](https://trsong.github.io/python/java/2020/05/02/DailyQuestionsMay/#jul-28-2020-medium-pre-order--in-order-binary-tree-traversal) -- *Given pre-order and in-order traversals of a binary tree, write a function to reconstruct the tree.* [*\(Try ME\)*](https://repl.it/@trsong/Test-Pre-order-and-In-order-Binary-Tree-Traversal)
+
+</summary>
+<div>
+
+**Question:** Given pre-order and in-order traversals of a binary tree, write a function to reconstruct the tree.
+
+For example, given the following preorder traversal:
+
+```py
+[a, b, d, e, c, f, g]
+```
+
+And the following inorder traversal:
+
+```py
+[d, b, e, a, f, c, g]
+```
+
+You should return the following tree:
+
+```py
+    a
+   / \
+  b   c
+ / \ / \
+d  e f  g
+```
+
+</div>
+</details>
 
 
 ## Stack
 ---
 
-### Basic
----
 
-### Advance
----
+<details>
+<summary class="lc_m">
+
+- [**\[Medium\] The Celebrity Problem**](https://trsong.github.io/python/java/2020/05/02/DailyQuestionsMay/#jul-27-2020-medium-the-celebrity-problem) -- *Given a list of N people and the above operation, find a way to identify the celebrity in O(N) time.* [*\(Try ME\)*](https://repl.it/@trsong/Test-The-Celebrity-Problem)
+
+</summary>
+<div>
+
+**Question:** At a party, there is a single person who everyone knows, but who does not know anyone in return (the "celebrity"). To help figure out who this is, you have access to an `O(1)` method called `knows(a, b)`, which returns `True` if person `a` knows person `b`, else `False`.
+
+Given a list of `N` people and the above operation, find a way to identify the celebrity in `O(N)` time.
+ 
+</div>
+</details>
 
 
 ## Priority Queue
