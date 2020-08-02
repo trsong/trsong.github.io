@@ -11,6 +11,8 @@ permalink: pretty
 
 # Build settings
 markdown: kramdown
+kramdown:
+  parse_block_html: true
 
 
 theme: jekyll-theme-leap-day
