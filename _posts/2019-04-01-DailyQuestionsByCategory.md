@@ -47,6 +47,34 @@ categories: Python/Java
 
 ### Sliding Window
 ---
+
+<details>
+<summary class="lc_e">
+
+- [**\[Easy\] LC 383. Ransom Note**](https://trsong.github.io/python/java/2020/05/02/DailyQuestionsMay/#jul-10-2020-lc-383-easy-ransom-note) -- *Given a magazine of letters and the note he wants to write, determine whether he can construct the word.* [*\(Try ME\)*](https://repl.it/@trsong/Ransom-Note-1)
+
+</summary>
+<div>
+
+**Question:** A criminal is constructing a ransom note. In order to disguise his handwriting, he is cutting out letters from a magazine.
+
+Given a magazine of letters and the note he wants to write, determine whether he can construct the word.
+
+**Example 1:**
+```py
+Input: ['a', 'b', 'c', 'd', 'e', 'f'], 'bed'
+Output: True
+```
+
+**Example 2:**
+```py
+Input: ['a', 'b', 'c', 'd', 'e', 'f'], 'cat'
+Output: False
+```
+
+</div>
+</details>
+
  
 ## List
 ---
@@ -124,6 +152,20 @@ Output: [1, 1, 2, 2, 3, 3, 3]
 <details>
 <summary class="lc_e">
 
+- [**\[Easy\] Generate Binary Search Trees**](https://trsong.github.io/python/java/2020/05/02/DailyQuestionsMay/#jul-11-2020-easy-generate-binary-search-trees) -- *Given an integer N, construct all possible binary search trees with N nodes.* [*\(Try ME\)*](https://repl.it/@trsong/Generate-Binary-Search-Trees-with-N-Nodes-1)
+
+</summary>
+<div>
+
+**Question:** Given an integer N, construct all possible binary search trees with N nodes.
+
+</div>
+</details>
+
+
+<details>
+<summary class="lc_e">
+
 - [**\[Easy\] Second Largest in BST**](https://trsong.github.io/python/java/2020/05/02/DailyQuestionsMay/#jul-24-2020-medium-second-largest-in-bst) -- *Given the root to a binary search tree, find the second largest node in the tree.* [*\(Try ME\)*](https://repl.it/@trsong/Find-Second-Largest-in-BST-1)
 
 </summary>
@@ -168,6 +210,37 @@ return 23 (5 + 4 + 6 + 8).
 
 ### Traversal
 ---
+
+<details>
+<summary class="lc_e">
+
+- [**\[Easy\] LC 872. Leaf-Similar Trees**](https://trsong.github.io/python/java/2020/05/02/DailyQuestionsMay/#jul-8-2020-lc-872-easy-leaf-similar-trees) -- *Given two trees, whether they are "leaf similar". Two trees are considered "leaf-similar" if their leaf orderings are the same.* [*\(Try ME\)*](https://repl.it/@trsong/Leaf-Similar-Trees-1)
+
+</summary>
+<div>
+
+**Question:** Given two trees, whether they are `"leaf similar"`. Two trees are considered `"leaf-similar"` if their leaf orderings are the same. 
+
+For instance, the following two trees are considered leaf-similar because their leaves are `[2, 1]`:
+
+```py
+# Tree1
+    3
+   / \ 
+  5   1
+   \
+    2 
+
+# Tree2
+    7
+   / \ 
+  2   1
+   \
+    2 
+```
+
+</div>
+</details>
 
 
 <details>
@@ -247,9 +320,63 @@ d  e f  g
 </div>
 </details>
 
+## Trie
+---
+
+
+<details>
+<summary class="lc_m">
+
+- [**\[Medium\] Autocompletion**](https://trsong.github.io/python/java/2020/05/02/DailyQuestionsMay/#jul-16-2020-medium-autocompletion) -- *Given a large set of words and then a single word prefix, find all words that it can complete to.* [*\(Try ME\)*](https://repl.it/@trsong/Autocompletion-1)
+
+</summary>
+<div>
+
+**Question:**  Implement auto-completion. Given a large set of words (for instance 1,000,000 words) and then a single word prefix, find all words that it can complete to.
+
+**Example:**
+```py
+class Solution:
+  def build(self, words):
+    # Fill this in.
+    
+  def autocomplete(self, word):
+    # Fill this in.
+
+s = Solution()
+s.build(['dog', 'dark', 'cat', 'door', 'dodge'])
+s.autocomplete('do')  # Return ['dog', 'door', 'dodge']
+```
+
+</div>
+</details>
 
 ## Stack
 ---
+
+
+<details>
+<summary class="lc_e">
+
+- [**\[Easy\] LC 1047. Remove Adjacent Duplicate Characters**](https://trsong.github.io/python/java/2020/05/02/DailyQuestionsMay/#jul-15-2020-lc-1047-easy-remove-adjacent-duplicate-characters) -- *Given a string, we want to remove 2 adjacent characters that are the same, and repeat the process with the new string until we can no longer* [*\(Try ME\)*](https://repl.it/@trsong/Remove-2-Adjacent-Duplicate-Characters-1)
+
+</summary>
+<div>
+
+**Question:** Given a string, we want to remove 2 adjacent characters that are the same, and repeat the process with the new string until we can no longer perform the operation.
+
+**Example:**
+```py
+remove_adjacent_dup("cabba")
+# Start with cabba
+# After remove bb: caa
+# After remove aa: c
+# Returns c
+```
+
+</div>
+</details>
+
 
 <details>
 <summary class="lc_m">
@@ -457,6 +584,35 @@ For example, given `"2542540123"`, you should return `['254.25.40.123', '254.254
 
 ### 2D DP
 ---
+
+<details>
+<summary class="lc_m">
+
+- [**\[Medium\] LC 718. Longest Common Sequence of Browsing Histories**](https://trsong.github.io/python/java/2020/05/02/DailyQuestionsMay/#jul-9-2020-lc-718-medium-longest-common-sequence-of-browsing-histories) -- *Write a function that takes two users’ browsing histories as input and returns the longest contiguous sequence of URLs that appear in both.* [*\(Try ME\)*](https://repl.it/@trsong/Longest-Common-Sequence-of-Browsing-Histories-1)
+
+</summary>
+<div>
+
+**Question:** We have some historical clickstream data gathered from our site anonymously using cookies. The histories contain URLs that users have visited in chronological order.
+
+Write a function that takes two users' browsing histories as input and returns the longest contiguous sequence of URLs that appear in both.
+
+For example, given the following two users' histories:
+
+```py
+user1 = ['/home', '/register', '/login', '/user', '/one', '/two']
+user2 = ['/home', '/red', '/login', '/user', '/one', '/pink']
+```
+
+You should return the following:
+
+```py
+['/login', '/user', '/one']
+```
+
+</div>
+</details>
+
 
 ### DP+ 
 ---
