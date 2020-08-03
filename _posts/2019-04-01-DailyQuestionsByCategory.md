@@ -33,11 +33,49 @@ categories: Python/Java
 ### XOR
 ---
 
+<details>
+<summary class="lc_m">
+
+- [**\[Medium\] Find Two Elements Appear Once**](https://trsong.github.io/python/java/2020/05/02/DailyQuestionsMay/#june-27-2020-medium-find-two-elements-appear-once) -- *Given an array with two elements appear exactly once and all other elements appear exactly twice,find the two elements that appear only once* [*\(Try ME\)*](https://repl.it/@trsong/Find-Two-Elements-Appear-Once-1)
+
+</summary>
+<div>
+
+**Question:** Given an array of integers in which two elements appear exactly once and all other elements appear exactly twice, find the two elements that appear only once. Can you do this in linear time and constant space?
+
+**Example:**
+```py
+Input: [2, 4, 6, 8, 10, 2, 6, 10]
+Output: [4, 8] order does not matter
+ ```
+
+</div>
+</details>
+
 ### Hashing
 ---
 
 ## Array
 ---
+
+<details>
+<summary class="lc_m">
+
+- [**\[Medium\] Majority Element**](https://trsong.github.io/python/java/2020/05/02/DailyQuestionsMay/#june-28-2020-medium-majority-element) -- *A majority element is an element that appears more than half the time. Given a list with a majority element, find the majority element.* [*\(Try ME\)*](https://repl.it/@trsong/Find-Majority-Element-1)
+
+</summary>
+<div>
+
+**Question:** A majority element is an element that appears more than half the time. Given a list with a majority element, find the majority element.
+
+**Example:**
+```py
+majority_element([3, 5, 3, 3, 2, 4, 3])  # gives 3
+```
+
+</div>
+</details>
+
 
 <details>
 <summary class="lc_e">
@@ -88,6 +126,29 @@ Follow-up: What if you couldn't use any extra space?
  
 </div>
 </details>
+
+### Binary Search
+---
+
+<details>
+<summary class="lc_m">
+
+- [**\[Medium\] LC 163. Missing Ranges**](https://trsong.github.io/python/java/2020/05/02/DailyQuestionsMay/#june-29-2020-lc-163-medium-missing-ranges) -- *Given a sorted list of numbers, and two integers low and high, return a list of (inclusive) ranges where the numbers are missing.* [*\(Try ME\)*](https://repl.it/@trsong/Find-Missing-Ranges-1)
+
+</summary>
+<div>
+
+**Question:** Given a sorted list of numbers, and two integers low and high representing the lower and upper bound of a range, return a list of (inclusive) ranges where the numbers are missing. A range should be represented by a tuple in the format of (lower, upper).
+
+**Example:**
+```py
+missing_ranges(nums=[1, 3, 5, 10], lower=1, upper=10)
+# returns [(2, 2), (4, 4), (6, 9)]
+```
+
+</div>
+</details>
+
 
 ### Two Pointers
 ---
@@ -575,6 +636,33 @@ Given a list of `N` people and the above operation, find a way to identify the c
 
 ### BFS
 ---
+
+<details>
+<summary class="lc_m">
+
+- [**\[Medium\] Maximum Number of Connected Colors**](https://trsong.github.io/python/java/2020/05/02/DailyQuestionsMay/#june-30-2020-medium-maximum-number-of-connected-colors) -- *Given a grid with cells in different colors, find the maximum number of same color cells that are connected.* [*\(Try ME\)*](https://repl.it/@trsong/Find-Maximum-Number-of-Connected-Colors-1)
+
+</summary>
+<div>
+
+**Question:** Given a grid with cells in different colors, find the maximum number of same color  cells that are connected.
+
+Note: two cells are connected if they are of the same color and adjacent to each other: left, right, top or bottom. To stay simple, we use integers to represent colors:
+
+The following grid have max 4 connected colors. `[color 3: (1, 2), (1, 3), (2, 1), (2, 2)]`
+
+```py
+ [
+    [1, 1, 2, 2, 3], 
+    [1, 2, 3, 3, 1],
+    [2, 3, 3, 1, 2]
+ ]
+ ```
+
+
+</div>
+</details>
+
 
 <details>
 <summary class="lc_m">
