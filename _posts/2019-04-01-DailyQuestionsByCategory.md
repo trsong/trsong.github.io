@@ -30,6 +30,38 @@ categories: Python/Java
 ### Puzzle
 ---
 
+<details>
+<summary class="lc_m">
+
+- [**\[Medium\] Find Next Biggest Integer**](https://trsong.github.io/python/java/2020/05/02/DailyQuestionsMay/#june-1-2020-medium-find-next-biggest-integer) -- *Given an integer n, find the next biggest integer with the same number of 1-bits on.* [*\(Try ME\)*](https://repl.it/@trsong/Find-the-Next-Biggest-Integer-1)
+
+</summary>
+<div>
+
+**Question:** Given an integer `n`, find the next biggest integer with the same number of 1-bits on. For example, given the number `6 (0110 in binary)`, return `9 (1001)`.
+
+</div>
+</details>
+
+
+<details>
+<summary class="lc_h">
+
+- [**\[Hard\] Find Next Greater Permutation**](https://trsong.github.io/python/java/2020/05/02/DailyQuestionsMay/#june-2-2020-hard-find-next-greater-permutation) -- *Given a number represented by a list of digits, find the next greater permutation of a number, in terms of lexicographic ordering.* [*\(Try ME\)*](https://repl.it/@trsong/Find-the-Next-Greater-Permutation-1)
+
+</summary>
+<div>
+
+**Question:** Given a number represented by a list of digits, find the next greater permutation of a number, in terms of lexicographic ordering. If there is not greater permutation possible, return the permutation with the lowest value/ordering.
+
+For example, the list `[1,2,3]` should return `[1,3,2]`. The list `[1,3,2]` should return `[2,1,3]`. The list `[3,2,1]` should return `[1,2,3]`.
+
+Can you perform the operation without allocating extra memory (disregarding the input memory)?
+
+</div>
+</details>
+
+
 ### XOR
 ---
 
@@ -57,6 +89,44 @@ Output: [4, 8] order does not matter
 
 ## Array
 ---
+
+<details>
+<summary class="lc_e">
+
+- [**\[Easy\] In-place Array Rotation**](https://trsong.github.io/python/java/2020/05/02/DailyQuestionsMay/#june-3-2020-medium-in-place-array-rotation) -- *Write a function that rotates an array by k elements.* [*\(Try ME\)*](https://repl.it/@trsong/Rotate-Array-In-place-1)
+
+</summary>
+<div>
+
+Write a function that rotates an array by `k` elements.
+
+For example, `[1, 2, 3, 4, 5, 6]` rotated by two becomes [`3, 4, 5, 6, 1, 2]`.
+
+Try solving this without creating a copy of the array. How many swap or move operations do you need?
+
+</div>
+</details>
+
+
+<details>
+<summary class="lc_m">
+
+- [**\[Medium\] Longest Subarray with Sum Divisible by K**](https://trsong.github.io/python/java/2020/05/02/DailyQuestionsMay/#june-11-2020-medium-longest-subarray-with-sum-divisible-by-k) -- *Find the length of the longest subarray with sum of the elements divisible by the given value k.* [*\(Try ME\)*](https://repl.it/@trsong/Find-Longest-Subarray-with-Sum-Divisible-by-K-1)
+
+</summary>
+<div>
+
+**Question:** Given an arr[] containing n integers and a positive integer k. The problem is to find the length of the longest subarray with sum of the elements divisible by the given value k.
+
+**Example:**
+```py
+Input : arr[] = {2, 7, 6, 1, 4, 5}, k = 3
+Output : 4
+The subarray is {7, 6, 1, 4} with sum 18, which is divisible by 3.
+```
+
+</div>
+</details>
 
 <details>
 <summary class="lc_m">
@@ -163,6 +233,32 @@ Follow-up: What if you couldn't use any extra space?
 
 ### Binary Search
 ---
+
+<details>
+<summary class="lc_e">
+
+- [**\[Easy\] First and Last Indices of an Element in a Sorted Array**](https://trsong.github.io/python/java/2020/05/02/DailyQuestionsMay/#june-6-2020-easy-first-and-last-indices-of-an-element-in-a-sorted-array) -- *Given a sorted array, A, with possibly duplicated elements, find the indices of the first and last occurrences of a target element.* [*\(Try ME\)*](https://repl.it/@trsong/Find-First-and-Last-Indices-of-an-Element-in-a-Sorted-Arr-1)
+
+</summary>
+<div>
+
+**Question:** Given a sorted array, A, with possibly duplicated elements, find the indices of the first and last occurrences of a target element, x. Return -1 if the target is not found.
+
+**Examples:**
+```py
+Input: A = [1, 3, 3, 5, 7, 8, 9, 9, 9, 15], target = 9
+Output: [6, 8]
+
+Input: A = [100, 150, 150, 153], target = 150
+Output: [1, 2]
+
+Input: A = [1, 2, 3, 4, 5, 6, 10], target = 9
+Output: [-1, -1]
+```
+
+</div>
+</details>
+
 
 <details>
 <summary class="lc_h">
@@ -403,6 +499,24 @@ Output: False
 
 ### Singly Linked List
 ---
+
+<details>
+<summary class="lc_e">
+
+- [**\[Easy\] Remove K-th Last Element from Singly Linked-list**](https://trsong.github.io/python/java/2020/05/02/DailyQuestionsMay/#may-31-2020-medium-remove-k-th-last-element-from-singly-linked-list) -- *Given a singly linked list and an integer k, remove the kth last element from the list.* [*\(Try ME\)*](https://repl.it/@trsong/Remove-the-K-th-Last-Element-from-Singly-Linked-list-1)
+
+</summary>
+<div>
+
+**Question:** Given a singly linked list and an integer k, remove the kth last element from the list. k is guaranteed to be smaller than the length of the list.
+
+**Note:**
+- The list is very long, so making more than one pass is prohibitively expensive.
+- Do this in constant space and in one pass.
+
+</div>
+</details>
+
 
 <details>
 <summary class="lc_e">
@@ -763,6 +877,26 @@ d  e f  g
 <details>
 <summary class="lc_m">
 
+- [**\[Medium\] Group Words that are Anagrams**](https://trsong.github.io/python/java/2020/05/02/DailyQuestionsMay/#june-8-2020-medium-group-words-that-are-anagrams) -- *Given a list of words, group the words that are anagrams of each other. (An anagram are words made up of the same letters).* [*\(Try ME\)*](https://repl.it/@trsong/Group-Anagrams-1)
+
+</summary>
+<div>
+
+**Question:** Given a list of words, group the words that are anagrams of each other. (An anagram are words made up of the same letters).
+
+**Example:**
+```py
+Input: ['abc', 'bcd', 'cba', 'cbd', 'efg']
+Output: [['abc', 'cba'], ['bcd', 'cbd'], ['efg']]
+```
+
+</div>
+</details>
+
+
+<details>
+<summary class="lc_m">
+
 - [**\[Medium\] Autocompletion**](https://trsong.github.io/python/java/2020/05/02/DailyQuestionsMay/#jul-16-2020-medium-autocompletion) -- *Given a large set of words and then a single word prefix, find all words that it can complete to.* [*\(Try ME\)*](https://repl.it/@trsong/Autocompletion-1)
 
 </summary>
@@ -875,6 +1009,33 @@ Explanation: the largest product can be made by multiplying -4 * -4 * 8 = 128.
 
 ### Scheduling
 ---
+
+
+<details>
+<summary class="lc_m">
+
+- [**\[Medium\] LC 621. Task Scheduler**](https://trsong.github.io/python/java/2020/05/02/DailyQuestionsMay/#june-10-2020--lc-621-medium-task-scheduler) -- *Given a char array representing tasks CPU need to do.You need to return the least number of intervals the CPU will take to finish all tasks.* [*\(Try ME\)*](https://repl.it/@trsong/LC-621-Task-Scheduler-1)
+
+</summary>
+<div>
+
+**Question:** Given a char array representing tasks CPU need to do. It contains capital letters A to Z where different letters represent different tasks. Tasks could be done without original order. Each task could be done in one interval. For each interval, CPU could finish one task or just be idle.
+
+However, there is a non-negative cooling interval n that means between two same tasks, there must be at least n intervals that CPU are doing different tasks or just be idle.
+
+You need to return the least number of intervals the CPU will take to finish all the given tasks.
+
+**Example:**
+```py
+Input: tasks = ["A", "A", "A", "B", "B", "B"], n = 2
+Output: 8
+Explanation: A -> B -> idle -> A -> B -> idle -> A -> B.
+```
+
+
+</div>
+</details>
+
 
 
 ## Hashmap
@@ -1060,6 +1221,30 @@ Output: 1
 ### DFS
 ---
 
+<details>
+<summary class="lc_m">
+
+- [**\[Medium\] Circle of Chained Words**](https://trsong.github.io/python/java/2020/05/02/DailyQuestionsMay/#june-9-2020-medium-circle-of-chained-words) -- *Given a list of words, determine if there is a way to ‘chain’ all the words in a circle.* [*\(Try ME\)*](https://repl.it/@trsong/Contains-Circle-of-Chained-Words-1)
+
+</summary>
+<div>
+
+**Question:** Two words can be 'chained' if the last character of the first word is the same as the first character of the second word.
+
+Given a list of words, determine if there is a way to 'chain' all the words in a circle.
+
+**Example:**
+```py
+Input: ['eggs', 'karat', 'apple', 'snack', 'tuna']
+Output: True
+Explanation:
+The words in the order of ['apple', 'eggs', 'snack', 'karat', 'tuna'] creates a circle of chained words.
+```
+
+</div>
+</details>
+
+
 ### Topological Sort
 ---
 
@@ -1092,6 +1277,34 @@ For example, given `100`, you can reach `1` in five steps with the following rou
 
 ## Backtracking
 ---
+
+<details>
+<summary class="lc_e">
+
+- [**\[Easy\] Generate All Possible Subsequences**](https://trsong.github.io/python/java/2020/05/02/DailyQuestionsMay/#june-7-2020-easy-generate-all-possible-subsequences) -- *Given a string, generate all possible subsequences of the string.* [*\(Try ME\)*](https://repl.it/@trsong/Generate-All-Possible-Subsequences-1)
+
+</summary>
+<div>
+
+**Question:** Given a string, generate all possible subsequences of the string.
+
+For example, given the string `xyz`, return an array or set with the following strings:
+
+```py
+x
+y
+z
+xy
+xz
+yz
+xyz
+```
+
+Note that `zx` is not a valid subsequence since it is not in the order of the given string.
+
+
+</div>
+</details>
 
 
 <details>
