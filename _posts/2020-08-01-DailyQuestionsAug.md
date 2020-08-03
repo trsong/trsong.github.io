@@ -19,6 +19,12 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
 
+
+### Aug 3, 2020 \[Hard\] Graph Coloring
+---
+> **Question:** Given an undirected graph represented as an adjacency matrix and an integer `k`, determine whether each node in the graph can be colored such that no two adjacent nodes share the same color using at most `k` colors.
+
+
 ### Aug 2, 2020 \[Medium\] Maximum Circular Subarray Sum
 ---
 > **Question:** Given a circular array, compute its maximum subarray sum in `O(n)` time. A subarray can be empty, and in this case the sum is 0.
