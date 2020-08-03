@@ -16,3 +16,6 @@ kramdown:
 
 
 theme: jekyll-theme-leap-day
+
+plugins:
+  - jekyll-sitemap
