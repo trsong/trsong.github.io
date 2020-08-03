@@ -59,6 +59,26 @@ Output: [4, 8] order does not matter
 ---
 
 <details>
+<summary class="lc_e">
+
+- [**\[Easy\] Sorting Window Range**](https://trsong.github.io/python/java/2020/05/02/DailyQuestionsMay/#june-21-2020-medium-sorting-window-range) -- *Given a list of numbers, find the smallest window to sort such that the whole list will be sorted.* [*\(Try ME\)*](https://repl.it/@trsong/Min-Window-Range-to-Sort-1)
+
+</summary>
+<div>
+
+**Question:** Given a list of numbers, find the smallest window to sort such that the whole list will be sorted. If the list is already sorted return (0, 0). 
+
+**Example:**
+```py
+Input: [2, 4, 7, 5, 6, 8, 9]
+Output: (2, 4)
+Explanation: Sorting the window (2, 4) which is [7, 5, 6] will also means that the whole list is sorted.
+```
+
+</div>
+</details>
+
+<details>
 <summary class="lc_m">
 
 - [**\[Medium\] Majority Element**](https://trsong.github.io/python/java/2020/05/02/DailyQuestionsMay/#june-28-2020-medium-majority-element) -- *A majority element is an element that appears more than half the time. Given a list with a majority element, find the majority element.* [*\(Try ME\)*](https://repl.it/@trsong/Find-Majority-Element-1)
@@ -131,6 +151,78 @@ Follow-up: What if you couldn't use any extra space?
 ---
 
 <details>
+<summary class="lc_h">
+
+- [**\[Hard\] LC 300. The Longest Increasing Subsequence**](https://trsong.github.io/python/java/2020/05/02/DailyQuestionsMay/#june-19-2020-lc-300-hard-the-longest-increasing-subsequence) -- *Given an array of numbers, find the length of the longest increasing subsequence in the array.* [*\(Try ME\)*](https://repl.it/@trsong/Find-the-Longest-Increasing-Subsequence-1)
+
+</summary>
+<div>
+
+**Question:** Given an array of numbers, find the length of the longest increasing **subsequence** in the array. The subsequence does not necessarily have to be contiguous.
+>
+> For example, given the array `[0, 8, 4, 12, 2, 10, 6, 14, 1, 9, 5, 13, 3, 11, 7, 15]`, the longest increasing subsequence has length `6` ie. `[0, 2, 6, 9, 11, 15]`.
+
+</div>
+</details>
+
+<details>
+<summary class="lc_h">
+
+- [**\[Hard\] Increasing Subsequence of Length K**](https://trsong.github.io/python/java/2020/05/02/DailyQuestionsMay/#june-20-2020-hard-increasing-subsequence-of-length-k) -- *Given an int array nums of length n and an int k. Return an increasing subsequence of length k (KIS).* [*\(Try ME\)*](https://repl.it/@trsong/Increasing-Subsequence-of-Length-K-1)
+
+</summary>
+<div>
+
+**Question:** Given an int array nums of length n and an int k. Return an increasing subsequence of length k (KIS). Expected time complexity `O(nlogk)`.
+
+**Example 1:**
+```py
+Input: nums = [10, 1, 4, 8, 2, 9], k = 3
+Output: [1, 4, 8] or [1, 4, 9] or [1, 8, 9]
+```
+
+**Example 2:**
+```py
+Input: nums = [10, 1, 4, 8, 2, 9], k = 4
+Output: [1, 4, 8, 9]
+```
+
+</div>
+</details>
+
+
+<details>
+<summary class="lc_e">
+
+- [**\[Easy\] LC 162. Find a Peak Element**](https://trsong.github.io/python/java/2020/05/02/DailyQuestionsMay/#june-26-2020-lc-162-easy-find-a-peak-element) -- *Given an unsorted array, in which all elements are distinct, find a “peak” element in O(log N) time.* [*\(Try ME\)*](https://repl.it/@trsong/Find-a-Peak-Element-2)
+
+</summary>
+<div>
+
+**Question:** Given an unsorted array, in which all elements are distinct, find a "peak" element in `O(log N)` time.
+
+An element is considered a peak if it is greater than both its left and right neighbors. It is guaranteed that the first and last elements are lower than all others.
+
+**Example 1:**
+```py
+Input: [5, 10, 20, 15]
+Output: 20
+The element 20 has neighbours 10 and 15,
+both of them are less than 20.
+```
+
+**Example 2:**
+```py
+Input: [10, 20, 15, 2, 23, 90, 67]
+Output: 20 or 90
+The element 20 has neighbours 10 and 15, 
+both of them are less than 20, similarly 90 has neighbous 23 and 67.
+```
+
+</div>
+</details>
+
+<details>
 <summary class="lc_m">
 
 - [**\[Medium\] LC 163. Missing Ranges**](https://trsong.github.io/python/java/2020/05/02/DailyQuestionsMay/#june-29-2020-lc-163-medium-missing-ranges) -- *Given a sorted list of numbers, and two integers low and high, return a list of (inclusive) ranges where the numbers are missing.* [*\(Try ME\)*](https://repl.it/@trsong/Find-Missing-Ranges-1)
@@ -155,6 +247,47 @@ missing_ranges(nums=[1, 3, 5, 10], lower=1, upper=10)
 
 ### Sliding Window
 ---
+
+<details>
+<summary class="lc_m">
+
+- [**\[Medium\] Longest Substring without Repeating Characters**](https://trsong.github.io/python/java/2020/05/02/DailyQuestionsMay/#june-17-2020-medium-longest-substring-without-repeating-characters) -- *Given a string, find the length of the longest substring without repeating characters.* [*\(Try ME\)*](https://repl.it/@trsong/Find-Longest-Substring-without-Repeating-Characters-1)
+
+</summary>
+<div>
+
+**Question:** Given a string, find the length of the longest substring without repeating characters.
+
+**Note:** Can you find a solution in linear time?
+ 
+**Example:**
+```py
+lengthOfLongestSubstring("abrkaabcdefghijjxxx") # => 10 as len("abcdefghij") == 10
+```
+
+</div>
+</details>
+
+
+<details>
+<summary class="lc_m">
+
+- [**\[Medium\] LC 209. Minimum Size Subarray Sum**](https://trsong.github.io/python/java/2020/05/02/DailyQuestionsMay/#june-23-2020-lc-209-medium-minimum-size-subarray-sum) -- *Given an array of n positive integers and a positive integer s, find the minimal length of a contiguous subarray of which the sum >= s.* [*\(Try ME\)*](https://repl.it/@trsong/Find-the-Minimum-Size-Subarray-Sum-1)
+
+</summary>
+<div>
+
+**Question:** Given an array of n positive integers and a positive integer s, find the minimal length of a contiguous subarray of which the sum >= s. If there isn't one, return 0 instead.
+
+**Example:**
+```py
+Input: s = 7, nums = [2, 3, 1, 2, 4, 3]
+Output: 2
+Explanation: the subarray [4,3] has the minimal length under the problem constraint.
+```
+
+</div>
+</details>
 
 <details>
 <summary class="lc_e">
@@ -227,6 +360,26 @@ B = 6 -> 3 -> 4
 
 ### Quick Select & Quick Sort
 ---
+
+<details>
+<summary class="lc_e">
+
+- [**\[Easy\] Find the K-th Largest Number**](https://trsong.github.io/python/java/2020/05/02/DailyQuestionsMay/#june-24-2020-easy-find-the-k-th-largest-number) -- *Find the k-th largest number in a sequence of unsorted numbers.* [*\(Try ME\)*](https://repl.it/@trsong/Find-the-K-th-Largest-Number-1)
+
+</summary>
+<div>
+
+**Question:** Find the k-th largest number in a sequence of unsorted numbers. Can you do this in linear time?
+
+**Example:**
+```py
+Input: 3, [8, 7, 2, 3, 4, 1, 5, 6, 9, 0]
+Output: 7
+```
+
+</div>
+</details>
+
 
 <details>
 <summary class="lc_m">
@@ -599,6 +752,26 @@ Given a list of `N` people and the above operation, find a way to identify the c
 ## Priority Queue
 ---
 
+<details>
+<summary class="lc_e">
+
+- [**\[Easy\] Largest Product of 3 Elements**](https://trsong.github.io/python/java/2020/05/02/DailyQuestionsMay/#june-25-2020-easy-largest-product-of-3-elements) -- *You are given an array of integers. Return the largest product that can be made by multiplying any 3 integers in the array.* [*\(Try ME\)*](https://repl.it/@trsong/Find-Largest-Product-of-3-Elements-in-Array-1)
+
+</summary>
+<div>
+
+**Question:** You are given an array of integers. Return the largest product that can be made by multiplying any 3 integers in the array.
+
+**Example:**
+```py
+Input: [-4, -4, 2, 8]
+Output: 128
+Explanation: the largest product can be made by multiplying -4 * -4 * 8 = 128.
+```
+
+</div>
+</details>
+
 ### Scheduling
 ---
 
@@ -860,6 +1033,75 @@ For example, given `"2542540123"`, you should return `['254.25.40.123', '254.254
 
 ### 2D DP
 ---
+
+<details>
+<summary class="lc_m">
+
+- [**\[Medium\] Longest Common Subsequence**](https://trsong.github.io/python/java/2020/05/02/DailyQuestionsMay/#june-18-2020-medium-longest-common-subsequence) -- *Given two sequences, find the length of longest subsequence present in both of them.* [*\(Try ME\)*](https://repl.it/@trsong/Find-the-Longest-Common-Subsequence-1)
+
+</summary>
+<div>
+
+**Question:** Given two sequences, find the length of longest subsequence present in both of them. 
+>
+> A subsequence is a sequence that appears in the same relative order, but not necessarily contiguous.
+
+**Example 1:**
+
+```py
+Input:  "ABCD" and "EDCA"
+Output:  1
+	
+Explanation:
+LCS is 'A' or 'D' or 'C'
+```
+
+**Example 2:**
+
+```py
+Input: "ABCD" and "EACB"
+Output:  2
+	
+Explanation: 
+LCS is "AC"
+```
+
+</div>
+</details>
+
+<details>
+<summary class="lc_m">
+
+- [**\[Medium\] LC 446. Count Arithmetic Subsequences**](https://trsong.github.io/python/java/2020/05/02/DailyQuestionsMay/#june-22-2020-lc-446-medium-count-arithmetic-subsequences) -- *Given an array of n positive integers. The task is to count the number of Arithmetic Subsequence in the array.* [*\(Try ME\)*](https://repl.it/@trsong/Count-Number-of-Arithmetic-Subsequences-1)
+
+</summary>
+<div>
+
+**Question:** Given an array of n positive integers. The task is to count the number of Arithmetic Subsequence in the array. Note: Empty sequence or single element sequence is also Arithmetic Sequence. 
+
+**Example 1:**
+```py
+Input : arr[] = [1, 2, 3]
+Output : 8
+Arithmetic Subsequence from the given array are:
+[], [1], [2], [3], [1, 2], [2, 3], [1, 3], [1, 2, 3].
+```
+
+**Example 2:**
+```py
+Input : arr[] = [10, 20, 30, 45]
+Output : 12
+```
+
+**Example 3:**
+```py
+Input : arr[] = [1, 2, 3, 4, 5]
+Output : 23
+```
+
+</div>
+</details>
+
 
 <details>
 <summary class="lc_m">

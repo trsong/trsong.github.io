@@ -4596,7 +4596,7 @@ if __name__ == '__main__':
 
 **Example 1:**
 
-```
+```py
 Input:  "ABCD" and "EDCA"
 Output:  1
 	
@@ -4606,7 +4606,7 @@ LCS is 'A' or 'D' or 'C'
 
 **Example 2:**
 
-```
+```py
 Input: "ABCD" and "EACB"
 Output:  2
 	
