@@ -59,20 +59,34 @@ Output: [4, 8] order does not matter
 ---
 
 <details>
-<summary class="lc_e">
+<summary class="lc_m">
 
-- [**\[Easy\] Sorting Window Range**](https://trsong.github.io/python/java/2020/05/02/DailyQuestionsMay/#june-21-2020-medium-sorting-window-range) -- *Given a list of numbers, find the smallest window to sort such that the whole list will be sorted.* [*\(Try ME\)*](https://repl.it/@trsong/Min-Window-Range-to-Sort-1)
+- [**\[Medium\] LC 152. Maximum Product Subarray**](https://trsong.github.io/python/java/2020/05/02/DailyQuestionsMay/#jul-14-2020-lc-152-medium-maximum-product-subarray) -- *Given an array that contains both positive and negative integers, find the product of the maximum product subarray.* [*\(Try ME\)*](https://repl.it/@trsong/Maximum-Product-Subarray-1)
 
 </summary>
 <div>
 
-**Question:** Given a list of numbers, find the smallest window to sort such that the whole list will be sorted. If the list is already sorted return (0, 0). 
+**Question:** Given an array that contains both positive and negative integers, find the product of the maximum product subarray. 
 
-**Example:**
+**Example 1:**
 ```py
-Input: [2, 4, 7, 5, 6, 8, 9]
-Output: (2, 4)
-Explanation: Sorting the window (2, 4) which is [7, 5, 6] will also means that the whole list is sorted.
+Input: [6, -3, -10, 0, 2]
+Output:  180
+Explanation: The subarray is [6, -3, -10]
+```
+
+**Example 2:**
+```py
+Input: [-1, -3, -10, 0, 60]
+Output:   60 
+Explanation: The subarray is [60]
+```
+
+**Example 3:**
+```py
+Input: [-2, -3, 0, -2, -40]
+Output: 80
+Explanation: The subarray is [-2, -40]
 ```
 
 </div>
@@ -159,8 +173,8 @@ Follow-up: What if you couldn't use any extra space?
 <div>
 
 **Question:** Given an array of numbers, find the length of the longest increasing **subsequence** in the array. The subsequence does not necessarily have to be contiguous.
->
-> For example, given the array `[0, 8, 4, 12, 2, 10, 6, 14, 1, 9, 5, 13, 3, 11, 7, 15]`, the longest increasing subsequence has length `6` ie. `[0, 2, 6, 9, 11, 15]`.
+
+For example, given the array `[0, 8, 4, 12, 2, 10, 6, 14, 1, 9, 5, 13, 3, 11, 7, 15]`, the longest increasing subsequence has length `6` ie. `[0, 2, 6, 9, 11, 15]`.
 
 </div>
 </details>
@@ -247,6 +261,73 @@ missing_ranges(nums=[1, 3, 5, 10], lower=1, upper=10)
 
 ### Sliding Window
 ---
+
+
+<details>
+<summary class="lc_m">
+
+- [**\[Medium\] LC 438. Anagram Indices Problem**](https://trsong.github.io/python/java/2020/05/02/DailyQuestionsMay/#june-13-2020-lc-438-medium-anagram-indices-problem) -- *Given a word W and a string S, find all starting indices in S which are anagrams of W.* [*\(Try ME\)*](https://repl.it/@trsong/Find-All-Anagram-Indices-1)
+
+</summary>
+<div>
+
+**Question:**  Given a word W and a string S, find all starting indices in S which are anagrams of W.
+
+For example, given that W is `"ab"`, and S is `"abxaba"`, return `0`, `3`, and `4`.
+ 
+</div>
+</details>
+
+
+<details>
+<summary class="lc_m">
+
+- [**\[Medium\] LC 239. Sliding Window Maximum**](https://trsong.github.io/python/java/2020/05/02/DailyQuestionsMay/#june-14-2020-lc-239-medium-sliding-window-maximum) -- *Given an array nums, return the max sliding window.* [*\(Try ME\)*](https://repl.it/@trsong/Find-Sliding-Window-Maximum-1)
+
+</summary>
+<div>
+
+**Question:** Given an array nums, there is a sliding window of size k which is moving from the very left of the array to the very right. You can only see the k numbers in the window. Each time the sliding window moves right by one position. Return the max sliding window.
+ 
+
+**Example:**
+
+```py
+Input: nums = [1, 3, -1, -3, 5, 3, 6, 7], and k = 3
+Output: [3, 3, 5, 5, 6, 7] 
+```
+
+**Explanation:**
+```
+Window position                Max
+---------------               -----
+[1  3  -1] -3  5  3  6  7       3
+ 1 [3  -1  -3] 5  3  6  7       3
+ 1  3 [-1  -3  5] 3  6  7       5
+ 1  3  -1 [-3  5  3] 6  7       5
+ 1  3  -1  -3 [5  3  6] 7       6
+ 1  3  -1  -3  5 [3  6  7]      7
+ ```
+
+</div>
+</details>
+
+
+<details>
+<summary class="lc_m">
+
+- [**\[Medium\] LT 386. Longest Substring with At Most K Distinct Characters**](https://trsong.github.io/python/java/2020/05/02/DailyQuestionsMay/#june-16-2020-lt-386-medium-longest-substring-with-at-most-k-distinct-characters) -- *Given a string, find the longest substring that contains at most k unique characters.* [*\(Try ME\)*](https://repl.it/@trsong/Find-Longest-Substring-with-At-Most-K-Distinct-Characters-1)
+
+</summary>
+<div>
+
+**Question:** Given a string, find the longest substring that contains at most k unique characters. 
+ 
+For example, given `"abcbbbbcccbdddadacb"`, the longest substring that contains 2 unique character is `"bcbbbbcccb"`.
+
+</div>
+</details>
+
 
 <details>
 <summary class="lc_m">
@@ -354,6 +435,26 @@ B = 6 -> 3 -> 4
 
 ## Sort
 ---
+
+<details>
+<summary class="lc_e">
+
+- [**\[Easy\] Sorting Window Range**](https://trsong.github.io/python/java/2020/05/02/DailyQuestionsMay/#june-21-2020-medium-sorting-window-range) -- *Given a list of numbers, find the smallest window to sort such that the whole list will be sorted.* [*\(Try ME\)*](https://repl.it/@trsong/Min-Window-Range-to-Sort-1)
+
+</summary>
+<div>
+
+**Question:** Given a list of numbers, find the smallest window to sort such that the whole list will be sorted. If the list is already sorted return (0, 0). 
+
+**Example:**
+```py
+Input: [2, 4, 7, 5, 6, 8, 9]
+Output: (2, 4)
+Explanation: Sorting the window (2, 4) which is [7, 5, 6] will also means that the whole list is sorted.
+```
+
+</div>
+</details>
 
 ### Merge Sort
 ---
@@ -1034,6 +1135,51 @@ For example, given `"2542540123"`, you should return `['254.25.40.123', '254.254
 ### 2D DP
 ---
 
+
+<details>
+<summary class="lc_h">
+
+- [**\[Hard\] LC 76. Minimum Window Substring**](https://trsong.github.io/python/java/2020/05/02/DailyQuestionsMay/#june-12-2020-lc-76-hard-minimum-window-substring) -- *Given a string and a set of characters, return the shortest substring containing all the characters in the set.* [*\(Try ME\)*](https://repl.it/@trsong/Find-Minimum-Window-Substring-1)
+
+</summary>
+<div>
+
+**Question:** Given a string and a set of characters, return the shortest substring containing all the characters in the set.
+
+For example, given the string `"figehaeci"` and the set of characters `{a, e, i}`, you should return `"aeci"`.
+
+If there is no substring containing all the characters in the set, return null.
+ 
+</div>
+</details>
+
+<details>
+<summary class="lc_h">
+
+- [**\[Hard\] LC 727. Minimum Window Subsequence**](https://trsong.github.io/python/java/2020/05/02/DailyQuestionsMay/#june-15-2020-lc-727-hard-minimum-window-subsequence) -- *Given strings S and T, find the minimum (contiguous) substring W of S, so that T is a subsequence of W.* [*\(Try ME\)*](https://repl.it/@trsong/Find-Minimum-Window-Subsequence-1)
+
+</summary>
+<div>
+
+**Question:** Given strings S and T, find the minimum (contiguous) substring W of S, so that T is a subsequence of W.
+
+If there is no such window in S that covers all characters in T, return the empty string "". If there are multiple such minimum-length windows, return the one with the left-most starting index.
+
+**Example:**
+```py
+Input: 
+S = "abcdebdde", T = "bde"
+Output: "bcde"
+
+Explanation: 
+"bcde" is the answer because it occurs before "bdde" which has the same length.
+"deb" is not a smaller window because the elements of T in the window must occur in order.
+```
+
+</div>
+</details>
+
+
 <details>
 <summary class="lc_m">
 
@@ -1043,8 +1189,8 @@ For example, given `"2542540123"`, you should return `['254.25.40.123', '254.254
 <div>
 
 **Question:** Given two sequences, find the length of longest subsequence present in both of them. 
->
-> A subsequence is a sequence that appears in the same relative order, but not necessarily contiguous.
+
+A subsequence is a sequence that appears in the same relative order, but not necessarily contiguous.
 
 **Example 1:**
 
