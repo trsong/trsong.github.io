@@ -1279,6 +1279,19 @@ For example, given `100`, you can reach `1` in five steps with the following rou
 ---
 
 <details>
+<summary class="lc_h">
+
+- [**\[Hard\] Graph Coloring**](https://trsong.github.io/python/java/2020/08/02/DailyQuestionsAug/#aug-3-2020-hard-graph-coloring) -- *Given an undirected graph and an integer k, determine whether color with k colors such that no two adjacent nodes share the same color.* [*\(Try ME\)*](https://repl.it/@trsong/k-Graph-Coloring-1)
+
+</summary>
+<div>
+
+**Question:** Given an undirected graph represented as an adjacency matrix and an integer `k`, determine whether each node in the graph can be colored such that no two adjacent nodes share the same color using at most `k` colors.
+
+</div>
+</details>
+
+<details>
 <summary class="lc_e">
 
 - [**\[Easy\] Generate All Possible Subsequences**](https://trsong.github.io/python/java/2020/05/02/DailyQuestionsMay/#june-7-2020-easy-generate-all-possible-subsequences) -- *Given a string, generate all possible subsequences of the string.* [*\(Try ME\)*](https://repl.it/@trsong/Generate-All-Possible-Subsequences-1)
