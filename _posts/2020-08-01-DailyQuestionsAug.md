@@ -19,6 +19,27 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
 
+
+
+### Aug 5, 2020 \[Easy\] Array of Equal Parts
+---
+> **Question:** Given an array containing only positive integers, return if you can pick two integers from the array which cuts the array into three pieces such that the sum of elements in all pieces is equal.
+
+**Example 1:**
+```py
+Input: [2, 4, 5, 3, 3, 9, 2, 2, 2]
+Output: True
+Explanation: choosing the number 5 and 9 results in three pieces [2, 4], [3, 3] and [2, 2, 2]. Sum = 6.
+```
+
+**Example 2:**
+```py
+Input: [1, 1, 1, 1]
+Output: False
+```
+
+
+
 ### Aug 4, 2020 \[Medium\] M Smallest in K Sorted Lists
 ---
 > **Question:** Given k sorted arrays of possibly different sizes, find m-th smallest value in the merged array.
