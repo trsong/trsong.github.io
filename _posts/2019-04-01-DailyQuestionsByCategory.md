@@ -988,6 +988,40 @@ Given a list of `N` people and the above operation, find a way to identify the c
 ---
 
 <details>
+<summary class="lc_m">
+
+- [**\[Medium\] M Smallest in K Sorted Lists**](https://trsong.github.io/python/java/2020/08/02/DailyQuestionsAug/#aug-4-2020-medium-m-smallest-in-k-sorted-lists) -- *Given k sorted arrays of possibly different sizes, find m-th smallest value in the merged array.* [*\(Try ME\)*](https://repl.it/@trsong/Find-M-Smallest-in-K-Sorted-Lists-1)
+
+</summary>
+<div>
+
+**Question:** Given k sorted arrays of possibly different sizes, find m-th smallest value in the merged array.
+
+**Example 1:**
+```py
+Input: [[1, 3], [2, 4, 6], [0, 9, 10, 11]], m = 5
+Output: 4
+Explanation: The merged array would be [0, 1, 2, 3, 4, 6, 9, 10, 11].  
+The 5-th smallest element in this merged array is 4.
+```
+
+**Example 2:**
+```py
+Input: [[1, 3, 20], [2, 4, 6]], m = 2
+Output: 2
+```
+
+**Example 3:**
+```py
+Input: [[1, 3, 20], [2, 4, 6]], m = 6
+Output: 20
+```
+
+</div>
+</details>
+
+
+<details>
 <summary class="lc_e">
 
 - [**\[Easy\] Largest Product of 3 Elements**](https://trsong.github.io/python/java/2020/05/02/DailyQuestionsMay/#june-25-2020-easy-largest-product-of-3-elements) -- *You are given an array of integers. Return the largest product that can be made by multiplying any 3 integers in the array.* [*\(Try ME\)*](https://repl.it/@trsong/Find-Largest-Product-of-3-Elements-in-Array-1)
