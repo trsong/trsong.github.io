@@ -64,6 +64,86 @@ Input: [[1, 3, 20], [2, 4, 6]], m = 6
 Output: 20
 ```
 
+**My thoughts:** This problem is almost the same as merge k sorted list. The idea is to leverage priority queue to keep track of minimum element among all k sorted list.
+
+**Solution with Priority Queue:** [https://repl.it/@trsong/Find-M-Smallest-in-K-Sorted-Lists](https://repl.it/@trsong/Find-M-Smallest-in-K-Sorted-Lists)
+```py
+import unittest
+from Queue import PriorityQueue
+
+def find_m_smallest(ksorted_list, m):
+    sorted_iterators = map(iter, ksorted_list)
+    pq = PriorityQueue()
+
+    for it in sorted_iterators:
+        num = next(it, None)
+        if num is not None:
+            pq.put((num, it))
+
+    while m > 1 and not pq.empty():
+        _, it = pq.get()
+        next_num = next(it, None)
+        if next_num is not None:
+            pq.put((next_num, it))
+        m -= 1
+
+    return None if pq.empty() else pq.get()[0]
+
+
+class FindMSmallestSpec(unittest.TestCase):
+    def test_example1(self):
+        m, ksorted_list = 5, [
+            [1, 3],
+            [2, 4, 6],
+            [0, 9, 10, 11]
+        ]
+        expected = 4
+        self.assertEqual(expected, find_m_smallest(ksorted_list, m))
+
+    def test_example2(self):
+        m, ksorted_list = 2, [
+            [1, 3, 20],
+            [2, 4, 6]
+        ]
+        expected = 2
+        self.assertEqual(expected, find_m_smallest(ksorted_list, m))
+
+    def test_example3(self):
+        m, ksorted_list = 6, [
+            [1, 3, 20],
+            [2, 4, 6]
+        ]
+        expected = 20
+        self.assertEqual(expected, find_m_smallest(ksorted_list, m))
+
+    def test_empty_sublist(self):
+        m, ksorted_list = 2, [
+            [1],
+            [],
+            [0, 2]
+        ]
+        expected = 1
+        self.assertEqual(expected, find_m_smallest(ksorted_list, m))
+
+    def test_one_sublist(self):
+        m, ksorted_list = 5, [
+            [1, 2, 3, 4, 5],
+        ]
+        expected = 5
+        self.assertEqual(expected, find_m_smallest(ksorted_list, m))
+
+    def test_target_out_of_boundary(self):
+        m, ksorted_list = 7, [
+            [1, 2, 3],
+            [4, 5, 6]
+        ]
+        self.assertIsNone(find_m_smallest(ksorted_list, m))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
+```
+
 
 ### Aug 3, 2020 \[Hard\] Graph Coloring
 ---
