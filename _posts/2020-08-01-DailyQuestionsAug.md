@@ -30,7 +30,6 @@ generate_all_subsets([1, 2, 3])
 # [[], [3], [2], [2, 3], [1], [1, 3], [1, 2], [1, 2, 3]]
 ```
 
-
 ### Aug 5, 2020 \[Easy\] Array of Equal Parts
 ---
 > **Question:** Given an array containing only positive integers, return if you can pick two integers from the array which cuts the array into three pieces such that the sum of elements in all pieces is equal.
@@ -46,6 +45,80 @@ Explanation: choosing the number 5 and 9 results in three pieces [2, 4], [3, 3] 
 ```py
 Input: [1, 1, 1, 1]
 Output: False
+```
+
+**Solution with Prefix Sum and Two Pointers:** [https://repl.it/@trsong/Array-of-Equal-Parts](https://repl.it/@trsong/Array-of-Equal-Parts)
+```py
+import unittest
+
+def contains_3_equal_parts(nums):
+    if not nums:
+        return False
+
+    prefix_sum = nums[:]
+    n = len(nums)
+    for i in xrange(1, n):
+        prefix_sum[i] += prefix_sum[i-1]
+
+    i, j = 0, n-1
+    total = prefix_sum[n-1]
+    while i < j:
+        left_sum = prefix_sum[i] - nums[i]
+        right_sum = total - prefix_sum[j]
+        if left_sum < right_sum:
+            i += 1
+        elif left_sum > right_sum:
+            j -= 1
+        else:
+            # left_sum == right_sum
+            mid_sum = prefix_sum[j] - nums[j] - prefix_sum[i]
+            if mid_sum == left_sum:
+                return True
+            i += 1
+            j -= 1
+
+    return False
+        
+
+class Contains3EqualPartSpec(unittest.TestCase):
+    def test_example(self):
+        nums = [2, 4, 5, 3, 3, 9, 2, 2, 2]
+        # Remove 5, 9 to break array into [2, 4], [3, 3] and [2, 2, 2]
+        self.assertTrue(contains_3_equal_parts(nums))
+
+    def test_example2(self):
+        nums = [1, 1, 1, 1]
+        self.assertFalse(contains_3_equal_parts(nums))
+
+    def test_empty_array(self):
+        self.assertFalse(contains_3_equal_parts([]))
+
+    def test_two_element_array(self):
+        nums = [1, 2]
+        # [], [], []
+        self.assertTrue(contains_3_equal_parts(nums))
+
+    def test_three_element_array(self):
+        nums = [1, 2, 3]
+        self.assertFalse(contains_3_equal_parts(nums))
+
+    def test_symmetic_array(self):
+        nums = [1, 2, 4, 3, 5, 2, 1]
+        # remove 4, 5 gives [1, 2], [3], [2, 1]
+        self.assertTrue(contains_3_equal_parts(nums))
+
+    def test_sum_not_divisiable_by_3(self):
+        nums = [2, 2, 2, 2, 2, 2]
+        self.assertFalse(contains_3_equal_parts(nums))
+
+    def test_ascending_array(self):
+        nums = [1, 2, 3, 3, 3, 3, 4, 6]
+        # remove 3, 4 gives [1, 2, 3], [3, 3], [6]
+        self.assertTrue(contains_3_equal_parts(nums))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
 ```
 
 
