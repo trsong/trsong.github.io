@@ -355,6 +355,33 @@ missing_ranges(nums=[1, 3, 5, 10], lower=1, upper=10)
 ### Two Pointers
 ---
 
+<details>
+<summary class="lc_e">
+
+- [**\[Easy\] Array of Equal Parts**](https://trsong.github.io/python/java/2020/08/02/DailyQuestionsAug/#aug-5-2020-easy-array-of-equal-parts) -- *Given an array with only positive integers, determine if exist two numbers such that removing them can break array into 3 equal-sum sub-arrays.* [*\(Try ME\)*](https://repl.it/@trsong/Array-of-Equal-Parts-1)
+
+</summary>
+<div>
+
+**Question:** Given an array containing only positive integers, return if you can pick two integers from the array which cuts the array into three pieces such that the sum of elements in all pieces is equal.
+
+**Example 1:**
+```py
+Input: [2, 4, 5, 3, 3, 9, 2, 2, 2]
+Output: True
+Explanation: choosing the number 5 and 9 results in three pieces [2, 4], [3, 3] and [2, 2, 2]. Sum = 6.
+```
+
+**Example 2:**
+```py
+Input: [1, 1, 1, 1]
+Output: False
+```
+
+</div>
+</details>
+
+
 ### Sliding Window
 ---
 
