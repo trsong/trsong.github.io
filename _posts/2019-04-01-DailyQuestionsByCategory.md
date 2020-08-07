@@ -1340,6 +1340,26 @@ For example, given `100`, you can reach `1` in five steps with the following rou
 ---
 
 <details>
+<summary class="lc_m">
+
+- [**\[Medium\] LC 78. Generate All Subsets**](https://trsong.github.io/python/java/2020/08/02/DailyQuestionsAug/#aug-6-2020-lc-78-medium-generate-all-subsets) -- *Given a list of unique numbers, generate all possible subsets without duplicates. This includes the empty set as well.* [*\(Try ME\)*](https://repl.it/@trsong/Generate-All-the-Subsets-1)
+
+</summary>
+<div>
+
+**Question:** Given a list of unique numbers, generate all possible subsets without duplicates. This includes the empty set as well.
+
+**Example:**
+```py
+generate_all_subsets([1, 2, 3])
+# [[], [3], [2], [2, 3], [1], [1, 3], [1, 2], [1, 2, 3]]
+```
+
+</div>
+</details>
+
+
+<details>
 <summary class="lc_h">
 
 - [**\[Hard\] Graph Coloring**](https://trsong.github.io/python/java/2020/08/02/DailyQuestionsAug/#aug-3-2020-hard-graph-coloring) -- *Given an undirected graph and an integer k, determine whether color with k colors such that no two adjacent nodes share the same color.* [*\(Try ME\)*](https://repl.it/@trsong/k-Graph-Coloring-1)
