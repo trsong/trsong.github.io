@@ -55,6 +55,71 @@ generate_all_subsets([1, 2, 3])
 # [[], [3], [2], [2, 3], [1], [1, 3], [1, 2], [1, 2, 3]]
 ```
 
+**Solution with Recursion:** [https://repl.it/@trsong/Generate-All-Subsets-with-recursion](https://repl.it/@trsong/Generate-All-Subsets-with-recursion)
+```py
+from functools import reduce
+
+def generate_all_subsets(nums):
+    return reduce(
+        lambda accu_subsets, elem: accu_subsets + map(lambda subset: subset + [elem], accu_subsets),
+        nums,
+        [[]])
+```
+
+**Solution with Backtracking:** [https://repl.it/@trsong/Generate-All-the-Subsets](https://repl.it/@trsong/Generate-All-the-Subsets)
+```py
+import unittest
+
+def generate_all_subsets(nums):
+    res = []
+    backtrack(0, res, [], nums)
+    return res
+
+
+def backtrack(next_index, res, accu, nums):
+    res.append(accu[:])
+    for i in xrange(next_index, len(nums)):
+        accu.append(nums[i])
+        backtrack(i+1, res, accu, nums)
+        accu.pop()
+
+
+class GenerateAllSubsetSpec(unittest.TestCase):
+    def test_example(self):
+        nums = [1, 2, 3]
+        expected = [[], [3], [2], [2, 3], [1], [1, 3], [1, 2], [1, 2, 3]]
+        self.assertItemsEqual(expected, generate_all_subsets(nums))
+
+    def test_empty_list(self):
+        nums = []
+        expected = [[]]
+        self.assertItemsEqual(expected, generate_all_subsets(nums))
+
+    def test_one_elem_list(self):
+        nums = [1]
+        expected = [[], [1]]
+        self.assertItemsEqual(expected, generate_all_subsets(nums))
+
+    def test_two_elem_list(self):
+        nums = [1, 2]
+        expected = [[1], [2], [1, 2], []]
+        self.assertItemsEqual(expected, generate_all_subsets(nums))
+
+    def test_four_elem_list(self):
+        nums = [1, 2, 3, 4]
+        expected = [
+            [], 
+            [1], [2], [3],  [4],
+            [1, 2], [1, 3], [2, 3], [1, 4], [2, 4], [3, 4],
+            [1, 2, 3], [1, 2, 4], [1, 3, 4], [2, 3, 4], [1, 2, 3, 4]
+        ]
+        self.assertItemsEqual(expected, generate_all_subsets(nums))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
+```
+
 ### Aug 5, 2020 \[Easy\] Array of Equal Parts
 ---
 > **Question:** Given an array containing only positive integers, return if you can pick two integers from the array which cuts the array into three pieces such that the sum of elements in all pieces is equal.
