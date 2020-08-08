@@ -75,7 +75,7 @@ In this case, the shortest valid path would be 0 -> 2 -> 4 -> 0, with a distance
 
 **My thoughts:** Break the graph in to uphill and downhill graph separately. For uphill graph, we can calculate shortest distance from 0 to target node. For downhill graph, we want to calculate shortest distance from node to 0. But how? One way is that we can reverse the edge of graph and convert the problem to find shortest distance from 0 to node. Once get shorest distance from and to node, we can sum them up and find the shorest combined distance which will give the final solution.
 
-Then how to do we find shortest distance in directed graph? We can use Dijkstra's algorithm that will be `O(U + V log V)` due to priority queue used in the algorithm. However, notice that in this problem neither uphill graph nor downhil graph can form a cycle. Then we will have a DAG. The shortest distance in DAG can be found in `O(U + V)`. Therefore our solution will have `O(U+V)` in time complexity.
+Then how to do we find shortest distance in directed graph? We can use Dijkstra's algorithm that will be `O(V + E log E)` due to priority queue used in the algorithm. However, notice that in this problem neither uphill graph nor downhil graph can form a cycle. Then we will have a DAG. The shortest distance in DAG can be found in `O(V + E)`. Therefore our solution will have `O(V + E)` in time complexity.
 
 **Solution with Topological Sort:** [https://repl.it/@trsong/Shortest-Uphill-and-Downhill-Route](https://repl.it/@trsong/Shortest-Uphill-and-Downhill-Route)
 ```py
