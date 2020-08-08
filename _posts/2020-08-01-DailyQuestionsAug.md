@@ -25,6 +25,7 @@ categories: Python/Java
 > **Question:** Write a function to flatten a nested dictionary. Namespace the keys with a period.
 
 **Example:**
+
 ```py
 Given the following dictionary:
 {
@@ -47,7 +48,7 @@ it should become:
 You can assume keys do not contain dots in them, i.e. no clobbering will occur.
 ```
 
-### Aug 7, 2020 \[Medium\] Shortest Uphill and Downhill Route
+### Aug 7, 2020 \[Hard\] Shortest Uphill and Downhill Route
 ---
 > **Question:** A competitive runner would like to create a route that starts and ends at his house, with the condition that the route goes entirely uphill at first, and then entirely downhill.
 >
@@ -70,6 +71,183 @@ paths = {
 }
 
 In this case, the shortest valid path would be 0 -> 2 -> 4 -> 0, with a distance of 28.
+```
+
+**My thoughts:** Break the graph in to uphill and downhill graph separately. For uphill graph, we can calculate shortest distance from 0 to target node. For downhill graph, we want to calculate shortest distance from node to 0. But how? One way is that we can reverse the edge of graph and convert the problem to find shortest distance from 0 to node. Once get shorest distance from and to node, we can sum them up and find the shorest combined distance which will give the final solution.
+
+Then how to do we find shortest distance in directed graph? We can use Dijkstra's algorithm that will be `O(U + V log V)` due to priority queue used in the algorithm. However, notice that in this problem neither uphill graph nor downhil graph can form a cycle. Then we will have a DAG. The shortest distance in DAG can be found in `O(U + V)`. Therefore our solution will have `O(U+V)` in time complexity.
+
+**Solution with Topological Sort:** [https://repl.it/@trsong/Shortest-Uphill-and-Downhill-Route](https://repl.it/@trsong/Shortest-Uphill-and-Downhill-Route)
+```py
+import unittest
+from collections import defaultdict
+
+def shortest_uphill_downhill_cycle(elevations, paths):
+    uphill_neighbors = defaultdict(list)
+    reverse_downhill_neighbors = defaultdict(list)
+    for u, v in paths:
+        if elevations[u] < elevations[v]:
+            uphill_neighbors[u].append(v)
+        else:
+            reverse_downhill_neighbors[v].append(u)
+    
+    uphill_order = topological_sort(uphill_neighbors, elevations)
+    shorest_distance_to = shortest_distance(uphill_order, uphill_neighbors, paths)
+
+    reverse_downhill_order = topological_sort(reverse_downhill_neighbors, elevations)
+    shortest_distance_from = shortest_distance(reverse_downhill_order, reverse_downhill_neighbors, paths, reversed=True)
+
+    del shorest_distance_to[0]
+    del shortest_distance_from[0]
+    shortest_cycle_through = map(lambda u: shorest_distance_to[u] + shortest_distance_from[u], elevations.keys())
+    return min(shortest_cycle_through) 
+
+    
+def topological_sort(neighbors, elevations):
+    class Vertex_State:
+        UNVISITED = 0
+        VISITING = 1
+        VISITED = 2
+
+    vertext_states = {node: Vertex_State.UNVISITED for node in elevations}
+    reverse_top_order = []
+
+    for node, node_state in vertext_states.items():
+        if node_state is not Vertex_State.UNVISITED:
+            continue
+        
+        stack = [node]
+        while stack:
+            cur = stack[-1]
+            if vertext_states[cur] is Vertex_State.VISITED:
+                stack.pop()
+            elif vertext_states[cur] is Vertex_State.VISITING:
+                vertext_states[cur] = Vertex_State.VISITED
+                reverse_top_order.append(cur)
+            else:
+                # vertext_states[cur] is Vertex_State.UNVISITED
+                vertext_states[cur] = Vertex_State.VISITING
+                for nb in neighbors[cur]:
+                    if vertext_states[nb] is Vertex_State.UNVISITED:
+                        stack.append(nb)
+    
+    return reverse_top_order[::-1]
+
+
+def shortest_distance(top_order, neighbors, paths, reversed=False):
+    node_distance = defaultdict(lambda: float('inf'))
+    node_distance[0] = 0
+    for u in top_order:
+        for v in neighbors[u]:
+            w = float('inf')
+            if reversed:
+                w = paths.get((v, u), float('inf'))
+            else:
+                w = paths.get((u, v), float('inf'))
+            node_distance[v] = min(node_distance[v], node_distance[u] + w)
+    return node_distance
+
+
+class ShortestUphillDownhillCycleSpec(unittest.TestCase):
+    def test_example(self):
+        elevations = {0: 5, 1: 25, 2: 15, 3: 20, 4: 10}
+        paths = {
+            (0, 1): 10,
+            (0, 2): 8,
+            (0, 3): 15,
+            (1, 3): 12,
+            (2, 4): 10,
+            (3, 4): 5,
+            (3, 0): 17,
+            (4, 0): 10
+        }
+        expected = 28  # 0 -> 2 -> 4 -> 0
+        self.assertEqual(expected, shortest_uphill_downhill_cycle(elevations, paths))
+
+    def test_choose_between_downhill_routes(self):
+        """
+         1
+       / | \
+      2  |  3
+       \ | /
+         0
+        """
+        elevations = {0: 0, 1: 10, 2: 5, 3: 7}
+        paths = {
+            (0, 1): 10,
+            (1, 2): 20,
+            (2, 0): 30,
+            (1, 3): 5,
+            (3, 0): 6
+        }
+        expected = 21  # 0 -> 1 -> 3 -> 0
+        self.assertEqual(expected, shortest_uphill_downhill_cycle(elevations, paths))
+    
+    def test_star_graph(self):
+        """
+          3
+          |
+          0
+         / \
+        1   2
+        """
+        elevations = {0: 0, 1: 1, 2: 2, 3: 3}
+        paths = {
+            (0, 1): 1,
+            (1, 0): 10,
+            (0, 2): 8,
+            (2, 0): 5,
+            (0, 3): 4,
+            (3, 0): 6
+        }
+        expected = 10  # 0 -> 3 -> 0
+        self.assertEqual(expected, shortest_uphill_downhill_cycle(elevations, paths))
+    
+    def test_clockwise_vs_conterclockwise(self):
+        """
+        0 - 1
+        |   |
+        3 - 2 
+        """
+        elevations = {0: 0, 1: 1, 2: 2, 3: 3}
+        paths = {
+            (0, 1): 10,
+            (1, 2): 20,
+            (2, 3): 30,
+            (3, 0): 99,
+            (0, 3): 1,
+            (3, 2): 2,
+            (2, 1): 3,
+            (1, 0): 4
+        }
+        expected = 10  # 0 -> 3 -> 2 -> 1 -> 0
+        self.assertEqual(expected, shortest_uphill_downhill_cycle(elevations, paths))
+    
+    def test_choose_downhill_or_uphill(self):
+        """
+         1
+       / | \
+      2  |  3
+       \ | /
+         0
+        """
+        elevations = {0: 0, 1: 50, 2: 25, 3: 100}
+        paths = {
+            (0, 1): 10,
+            (1, 0): 9999,
+            (1, 2): 5,
+            (2, 0): 3,
+            (1, 3): 1,
+            (3, 0): 0,
+            (0, 3): 999,
+            (0, 2): 999
+        }
+        expected = 11  # 0 -> 1 -> 3 -> 0
+        self.assertEqual(expected, shortest_uphill_downhill_cycle(elevations, paths))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
 ```
 
 
