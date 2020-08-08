@@ -19,6 +19,34 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
 
+
+### Aug 8, 2020 \[Easy\] Flatten a Nested Dictionary
+---
+> **Question:** Write a function to flatten a nested dictionary. Namespace the keys with a period.
+
+**Example:**
+```py
+Given the following dictionary:
+{
+    "key": 3,
+    "foo": {
+        "a": 5,
+        "bar": {
+            "baz": 8
+        }
+    }
+}
+
+it should become:
+{
+    "key": 3,
+    "foo.a": 5,
+    "foo.bar.baz": 8
+}
+
+You can assume keys do not contain dots in them, i.e. no clobbering will occur.
+```
+
 ### Aug 7, 2020 \[Medium\] Shortest Uphill and Downhill Route
 ---
 > **Question:** A competitive runner would like to create a route that starts and ends at his house, with the condition that the route goes entirely uphill at first, and then entirely downhill.
