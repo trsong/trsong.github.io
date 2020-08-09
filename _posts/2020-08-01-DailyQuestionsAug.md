@@ -18,6 +18,14 @@ categories: Python/Java
 
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
+### Aug 9, 2020 \[Medium\] Making Changes
+---
+> **Question:** Given a list of possible coins in cents, and an amount (in cents) n, return the minimum number of coins needed to create the amount n. If it is not possible to create the amount using the given coin denomination, return None.
+
+**Example:**
+```py
+make_change([1, 5, 10, 25], 36)  # gives 3 coins (25 + 10 + 1) 
+```
 
 
 ### Aug 8, 2020 \[Easy\] Flatten a Nested Dictionary
