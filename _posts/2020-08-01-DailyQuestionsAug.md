@@ -48,6 +48,62 @@ it should become:
 You can assume keys do not contain dots in them, i.e. no clobbering will occur.
 ```
 
+**Solution with DFS:** [https://repl.it/@trsong/Flatten-Nested-Dictionary](https://repl.it/@trsong/Flatten-Nested-Dictionary)
+```py
+import unittest
+
+def flatten_dictionary(dictionary):
+    stack = [(dictionary, None)]
+    res = {}
+    while stack:
+        val, prefix = stack.pop()
+        if type(val) is dict:
+            for k, v in val.items():
+                updated_prefix = k if prefix is None else "{}.{}".format(prefix, k)
+                stack.append((v, updated_prefix))
+        else:
+            res[prefix] = val
+    return res
+
+
+class FlattenDictionarySpec(unittest.TestCase):
+    def test_example(self):
+        self.assertEqual({
+            "key": 3,
+            "foo.a": 5,
+            "foo.bar.baz": 8
+        }, flatten_dictionary({
+            "key": 3,
+            "foo": {
+                "a": 5,
+                "bar": {
+                    "baz": 8}}}))
+
+    def test_empty_dictionary(self):
+        self.assertEqual({}, flatten_dictionary({}))
+
+    def test_simple_dictionary(self):
+        d = {
+            'a': 1,
+            'b': 2
+        }
+        self.assertEqual(d, flatten_dictionary(d))
+    
+    def test_multi_level_dictionary(self):
+        d_e = {'e': 0}
+        d_d = {'d': d_e}
+        d_c = {'c': d_d}
+        d_b = {'b': d_c}
+        d_a = {'a': d_b}
+        self.assertEqual({
+            'a.b.c.d.e': 0
+        }, flatten_dictionary(d_a))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
+```
+
 ### Aug 7, 2020 \[Hard\] Shortest Uphill and Downhill Route
 ---
 > **Question:** A competitive runner would like to create a route that starts and ends at his house, with the condition that the route goes entirely uphill at first, and then entirely downhill.
