@@ -1134,6 +1134,43 @@ Explanation: A -> B -> idle -> A -> B -> idle -> A -> B.
 ---
 
 <details>
+<summary class="lc_e">
+
+- [**\[Easy\] Flatten a Nested Dictionary**](https://trsong.github.io/python/java/2020/08/02/DailyQuestionsAug/#aug-8-2020-easy-flatten-a-nested-dictionary) -- *Write a function to flatten a nested dictionary. Namespace the keys with a period.* [*\(Try ME\)*](https://repl.it/@trsong/Flatten-Nested-Dictionary-1)
+
+</summary>
+<div>
+
+**Question:** Write a function to flatten a nested dictionary. Namespace the keys with a period.
+
+**Example:**
+```py
+Given the following dictionary:
+{
+    "key": 3,
+    "foo": {
+        "a": 5,
+        "bar": {
+            "baz": 8
+        }
+    }
+}
+
+it should become:
+{
+    "key": 3,
+    "foo.a": 5,
+    "foo.bar.baz": 8
+}
+
+You can assume keys do not contain dots in them, i.e. no clobbering will occur.
+```
+
+</div>
+</details>
+
+
+<details>
 <summary class="lc_m">
 
 - [**\[Medium\] Maximum Number of Connected Colors**](https://trsong.github.io/python/java/2020/05/02/DailyQuestionsMay/#june-30-2020-medium-maximum-number-of-connected-colors) -- *Given a grid with cells in different colors, find the maximum number of same color cells that are connected.* [*\(Try ME\)*](https://repl.it/@trsong/Find-Maximum-Number-of-Connected-Colors-1)
