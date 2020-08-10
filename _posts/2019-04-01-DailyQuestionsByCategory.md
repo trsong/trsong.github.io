@@ -1513,6 +1513,25 @@ For example, given `"2542540123"`, you should return `['254.25.40.123', '254.254
 ### 1D DP
 ---
 
+<details>
+<summary class="lc_m">
+
+- [**\[Medium\] Making Changes**](https://trsong.github.io/python/java/2020/08/02/DailyQuestionsAug/#aug-9-2020-medium-making-changes) -- *Given a list of possible coins in cents, and an amount (in cents) n, return the minimum number of coins needed to create the amount n.* [*\(Try ME\)*](https://repl.it/@trsong/Making-Changes-Problem-1)
+
+</summary>
+<div>
+
+**Question:** Given a list of possible coins in cents, and an amount (in cents) n, return the minimum number of coins needed to create the amount n. If it is not possible to create the amount using the given coin denomination, return None.
+
+**Example:**
+```py
+make_change([1, 5, 10, 25], 36)  # gives 3 coins (25 + 10 + 1) 
+```
+
+</div>
+</details>
+
+
 ### 2D DP
 ---
 
