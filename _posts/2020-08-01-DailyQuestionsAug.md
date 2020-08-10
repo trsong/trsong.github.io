@@ -18,6 +18,22 @@ categories: Python/Java
 
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
+### Aug 10, 2020 LC 261 \[Medium\] Graph Valid Tree
+---
+> **Question:** Given n nodes labeled from 0 to n-1 and a list of undirected edges (each edge is a pair of nodes), write a function to check whether these edges make up a valid tree.
+
+**Example 1:**
+```py
+Input: n = 5, and edges = [[0,1], [0,2], [0,3], [1,4]]
+Output: True
+```
+
+**Example 2:**
+```py
+Input: n = 5, and edges = [[0,1], [1,2], [2,3], [1,3], [1,4]]
+Output: False
+```
+
 ### Aug 9, 2020 \[Medium\] Making Changes
 ---
 > **Question:** Given a list of possible coins in cents, and an amount (in cents) n, return the minimum number of coins needed to create the amount n. If it is not possible to create the amount using the given coin denomination, return None.
