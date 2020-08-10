@@ -18,6 +18,7 @@ categories: Python/Java
 
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
+
 ### Aug 10, 2020 LC 261 \[Medium\] Graph Valid Tree
 ---
 > **Question:** Given n nodes labeled from 0 to n-1 and a list of undirected edges (each edge is a pair of nodes), write a function to check whether these edges make up a valid tree.
@@ -43,6 +44,76 @@ Output: False
 make_change([1, 5, 10, 25], 36)  # gives 3 coins (25 + 10 + 1) 
 ```
 
+**Solution with DP:** [https://repl.it/@trsong/Making-Changes-Problem](https://repl.it/@trsong/Making-Changes-Problem)
+```py
+import unittest
+import sys
+
+def make_change(coins, target):
+    if target == 0:
+        return 0
+
+    # Let dp[v] represents smallest # of coin for value v
+    # dp[v] = 1 if v is one of coins
+    #       = 1 + min(dp[v-coin]) for all valid coin
+    dp = [sys.maxint] * (target+1)
+    valid_coins = filter(lambda coin: 0 < coin <= target, coins)
+    if not valid_coins:
+        return None
+
+    dp[0] = 0
+    for coin in valid_coins:
+        dp[coin] = 1
+
+    for v in xrange(1, target+1):
+        for coin in valid_coins:
+            if v > coin:
+                dp[v] = min(dp[v], 1 + dp[v-coin])
+    
+    return dp[target] if dp[target] != sys.maxint else None
+
+
+class MakeChangeSpec(unittest.TestCase):
+    def test_example(self):
+        target, coins = 36, [1, 5, 10, 25]
+        expected = 3  # 25 + 10 + 1
+        self.assertEqual(expected, make_change(coins, target))
+    
+    def test_target_is_zero(self):
+        self.assertEqual(0, make_change([1, 2, 3], 0))
+        self.assertEqual(0, make_change([], 0))
+
+    def test_unable_to_reach_target(self):
+        target, coins = -1, [1, 2, 3]
+        self.assertIsNone(make_change(coins, target))
+
+    def test_unable_to_reach_target2(self):
+        target, coins = 10, []
+        self.assertIsNone(make_change(coins, target))
+
+    def test_greedy_approach_fails(self):
+        target, coins = 11, [9, 6, 5, 1]
+        expected = 2  # 5 + 6
+        self.assertEqual(expected, make_change(coins, target))
+
+    def test_use_same_coin_multiple_times(self):
+        target, coins = 12, [1, 2, 3]
+        expected = 4  # 3 + 3 + 3 + 3
+        self.assertEqual(expected, make_change(coins, target))
+
+    def test_should_produce_minimum_number_of_changes(self):
+        target, coins = 30, [25, 10, 5]
+        expected = 2  # 25 + 5
+        self.assertEqual(expected, make_change(coins, target))
+    
+    def test_impossible_get_answer(self):
+        target, coins = 4, [3, 5, 7]
+        self.assertIsNone(make_change(coins, target))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
+```
 
 ### Aug 8, 2020 \[Easy\] Flatten a Nested Dictionary
 ---
