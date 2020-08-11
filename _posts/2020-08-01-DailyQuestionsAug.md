@@ -58,6 +58,87 @@ Input: n = 5, and edges = [[0,1], [1,2], [2,3], [1,3], [1,4]]
 Output: False
 ```
 
+**My thoughts:** A tree is a connected graph with n-1 edges. As it is undirected graph and a tree must not have cyclee, we can use Disjoint Set (Union-Find) to detect cycle. Append both ends of each edge and test if it's already connected before adding this edge. 
+
+**Solution with Union-Find:** [https://repl.it/@trsong/Graph-Valid-Tree](https://repl.it/@trsong/Graph-Valid-Tree)
+```py
+import unittest
+
+class UnionFind(object):
+    def __init__(self, n):
+        self.parent = [-1] * n
+
+    def find(self, p):
+        while self.parent[p] != -1:
+            p = self.parent[p]
+        return p
+
+    def union(self, p1, p2):
+        parent1 = self.find(p1)
+        parent2 = self.find(p2)
+        if parent1 != parent2:
+            self.parent[parent1] = parent2
+
+    def is_connected(self, p1, p2):
+        return self.find(p1) == self.find(p2)
+
+
+def is_valid_tree(n, edges):
+    if n == 0:
+        return True
+    if len(edges) != n - 1:
+        return False
+    
+    uf = UnionFind(n)
+    for u, v in edges:
+        if uf.is_connected(u, v):
+            return False
+        uf.union(u, v)
+    return True
+
+
+class IsValidTreeSpec(unittest.TestCase):
+    def test_example(self):
+        n, edges = 5, [[0, 1], [0, 2], [0, 3], [1, 4]]
+        self.assertTrue(is_valid_tree(n, edges))
+
+    def test_example2(self):
+        n, edges = 5, [[0, 1], [1, 2], [2, 3], [1, 3], [1, 4]]
+        self.assertFalse(is_valid_tree(n, edges))
+
+    def test_empty_graph(self):
+        n, edges = 0, []
+        self.assertTrue(is_valid_tree(n, edges))
+
+    def test_one_node_graph(self):
+        n, edges = 1, []
+        self.assertTrue(is_valid_tree(n, edges))
+
+    def test_disconnected_graph(self):
+        n, edges = 3, []
+        self.assertFalse(is_valid_tree(n, edges))
+
+    def test_disconnected_graph2(self):
+        n, edges = 5, [[0, 1], [2, 3], [3, 4], [4, 2]]
+        self.assertFalse(is_valid_tree(n, edges))
+
+    def test_disconnected_graph3(self):
+        n, edges = 4, [[0, 1], [2, 3]]
+        self.assertFalse(is_valid_tree(n, edges))
+
+    def test_tree_with_cycle(self):
+        n, edges = 4, [[0, 1], [0, 2], [0, 3], [3, 2]]
+        self.assertFalse(is_valid_tree(n, edges))
+
+    def test_binary_tree(self):
+        n, edges = 7, [[0, 1], [0, 2], [1, 3], [1, 4], [2, 5], [2, 6]]
+        self.assertTrue(is_valid_tree(n, edges))
+
+
+if __name__ == "__main__":
+    unittest.main(exit=False)
+```
+
 ### Aug 9, 2020 \[Medium\] Making Changes
 ---
 > **Question:** Given a list of possible coins in cents, and an amount (in cents) n, return the minimum number of coins needed to create the amount n. If it is not possible to create the amount using the given coin denomination, return None.
