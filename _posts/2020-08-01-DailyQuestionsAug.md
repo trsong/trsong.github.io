@@ -58,7 +58,7 @@ Input: n = 5, and edges = [[0,1], [1,2], [2,3], [1,3], [1,4]]
 Output: False
 ```
 
-**My thoughts:** A tree is a connected graph with n-1 edges. As it is undirected graph and a tree must not have cyclee, we can use Disjoint Set (Union-Find) to detect cycle. Append both ends of each edge and test if it's already connected before adding this edge. 
+**My thoughts:** A tree is a connected graph with n-1 edges. As it is undirected graph and a tree must not have cycle, we can use Disjoint Set (Union-Find) to detect cycle: append both ends of each edge and test if it's already connected before adding this edge. 
 
 **Solution with Union-Find:** [https://repl.it/@trsong/Graph-Valid-Tree](https://repl.it/@trsong/Graph-Valid-Tree)
 ```py
