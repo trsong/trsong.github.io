@@ -19,6 +19,29 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
 
+### Aug 11, 2020 \[Easy\] Full Binary Tree
+--- 
+> **Question:** Given a binary tree, remove the nodes in which there is only 1 child, so that the binary tree is a full binary tree.
+>
+> So leaf nodes with no children should be kept, and nodes with 2 children should be kept as well.
+
+**Example:**
+```py
+Given this tree:
+     1
+    / \ 
+   2   3
+  /   / \
+ 0   9   4
+
+We want a tree like:
+     1
+    / \ 
+   0   3
+      / \
+     9   4
+```
+
 ### Aug 10, 2020 LC 261 \[Medium\] Graph Valid Tree
 ---
 > **Question:** Given n nodes labeled from 0 to n-1 and a list of undirected edges (each edge is a pair of nodes), write a function to check whether these edges make up a valid tree.
