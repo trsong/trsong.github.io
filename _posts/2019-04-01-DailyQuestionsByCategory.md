@@ -1386,6 +1386,32 @@ In this case, the shortest valid path would be 0 -> 2 -> 4 -> 0, with a distance
 ### Union Find
 ---
 
+<details>
+<summary class="lc_m">
+
+- [**\[Medium\] LC 261. Graph Valid Tree**](https://trsong.github.io/python/java/2020/08/02/DailyQuestionsAug/#aug-10-2020-lc-261-medium-graph-valid-tree) -- *Given n nodes and a list of undirected edges, write a function to check whether these edges make up a valid tree.* [*\(Try ME\)*](https://repl.it/@trsong/Graph-Valid-Tree-1)
+
+</summary>
+<div>
+
+**Question:** Given n nodes labeled from 0 to n-1 and a list of undirected edges (each edge is a pair of nodes), write a function to check whether these edges make up a valid tree.
+
+**Example 1:**
+```py
+Input: n = 5, and edges = [[0,1], [0,2], [0,3], [1,4]]
+Output: True
+```
+
+**Example 2:**
+```py
+Input: n = 5, and edges = [[0,1], [1,2], [2,3], [1,3], [1,4]]
+Output: False
+```
+
+</div>
+</details>
+
+
 ### A-Star
 ---
 
