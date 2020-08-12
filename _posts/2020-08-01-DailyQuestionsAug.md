@@ -100,6 +100,22 @@ class TreeNode(object):
     def __eq__(self, other):
         return other and other.val == self.val and other.left == self.left and other.right == self.right
 
+    def __repr__(self):
+        stack = [(self, 0)]
+        res = []
+        while stack:
+            node, depth = stack.pop()
+            res.append("\n" + "\t" * depth)
+            if not node:
+                res.append("* None")
+                continue
+
+            res.append("* " + str(node.val))
+            for child in [node.right, node.left]:
+                stack.append((child, depth+1))
+        return "\n" + "".join(res) + "\n"
+
+
 class RemovePartialNodeSpec(unittest.TestCase):
     def test_example(self):
         """
@@ -199,6 +215,7 @@ class RemovePartialNodeSpec(unittest.TestCase):
 if __name__ == '__main__':
     unittest.main(exit=False)
 ```
+
 
 ### Aug 10, 2020 LC 261 \[Medium\] Graph Valid Tree
 ---

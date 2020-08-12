@@ -685,6 +685,39 @@ Output: [1, 1, 2, 2, 3, 3, 3]
 <details>
 <summary class="lc_e">
 
+- [**\[Easy\] Full Binary Tree**](https://trsong.github.io/python/java/2020/08/02/DailyQuestionsAug/#aug-11-2020-easy-full-binary-tree) -- *Given a binary tree, remove the nodes in which there is only 1 child, so that the binary tree is a full binary tree.* [*\(Try ME\)*](https://repl.it/@trsong/Prune-to-Full-Binary-Tree-1)
+
+</summary>
+<div>
+
+**Question:** Given a binary tree, remove the nodes in which there is only 1 child, so that the binary tree is a full binary tree.
+
+So leaf nodes with no children should be kept, and nodes with 2 children should be kept as well.
+
+**Example:**
+```py
+Given this tree:
+     1
+    / \ 
+   2   3
+  /   / \
+ 0   9   4
+
+We want a tree like:
+     1
+    / \ 
+   0   3
+      / \
+     9   4
+```
+
+</div>
+</details>
+
+
+<details>
+<summary class="lc_e">
+
 - [**\[Easy\] LC 938. Range Sum of BST**](https://trsong.github.io/python/java/2020/05/02/DailyQuestionsMay/#jul-22-2020-lc-938-easy-range-sum-of-bst) -- *Given a binary search tree and a range [a, b] (inclusive), return the sum of the elements of the binary search tree within the range.* [*\(Try ME\)*](https://repl.it/@trsong/Find-Range-Sum-of-BST-1)
 
 </summary>
