@@ -68,6 +68,138 @@ We want a tree like:
      9   4
 ```
 
+**Solution with Recursion:** [https://repl.it/@trsong/Prune-to-Full-Binary-Tree](https://repl.it/@trsong/Prune-to-Full-Binary-Tree)
+```py
+import unittest
+
+def full_tree_prune(root):
+    if not root:
+        return None
+    
+    updated_left = full_tree_prune(root.left)
+    updated_right = full_tree_prune(root.right)
+
+    if updated_left and updated_right:
+        root.left = updated_left
+        root.right = updated_right
+        return root
+    elif updated_left:
+        return updated_left
+    elif updated_right:
+        return updated_right
+    else:
+        return root
+
+
+class TreeNode(object):
+    def __init__(self, val, left=None, right=None):
+        self.val = val
+        self.left = left
+        self.right = right
+
+    def __eq__(self, other):
+        return other and other.val == self.val and other.left == self.left and other.right == self.right
+
+class RemovePartialNodeSpec(unittest.TestCase):
+    def test_example(self):
+        """
+             1
+            / \ 
+          *2   3
+          /   / \
+         0   9   4
+        """
+        n3 = TreeNode(3, TreeNode(9), TreeNode(4))
+        n2 = TreeNode(2, TreeNode(0))
+        original_tree = TreeNode(1, n2, n3)
+        
+        """
+             1
+            / \ 
+           0   3
+              / \
+             9   4
+        """
+        t3 = TreeNode(3, TreeNode(9), TreeNode(4))
+        expected_tree = TreeNode(1, TreeNode(0), t3)
+        self.assertEqual(expected_tree, full_tree_prune(original_tree))
+
+    def test_empty_tree(self):        
+        self.assertIsNone(None, full_tree_prune(None))
+
+    def test_both_parent_and_child_node_is_not_full(self):
+        """
+             2
+           /   \
+         *7    *5
+           \     \
+            6    *9
+           / \   /
+          1  11 4
+        """
+        n7 = TreeNode(7, right=TreeNode(6, TreeNode(1), TreeNode(11)))
+        n5 = TreeNode(5, right=TreeNode(9, TreeNode(4)))
+        original_tree = TreeNode(2, n7, n5)
+
+        """
+            2
+           / \
+          6   4
+         / \
+        1  11 
+        """
+        t6 = TreeNode(6, TreeNode(1), TreeNode(11))
+        expected_tree = TreeNode(2, t6, TreeNode(4))
+        self.assertEqual(expected_tree, full_tree_prune(original_tree))
+
+    def test_root_is_partial(self):
+        """
+           *1
+           /
+         *2
+         /
+        3
+        """
+        original_tree = TreeNode(1, TreeNode(2, TreeNode(3)))
+        expected_tree = TreeNode(3)
+        self.assertEqual(expected_tree, full_tree_prune(original_tree))
+
+    def test_root_is_partial2(self):
+        """
+           *1
+             \
+             *2
+             /
+            3
+        """
+        original_tree = TreeNode(1, right=TreeNode(2, TreeNode(3)))
+        expected_tree = TreeNode(3)
+        self.assertEqual(expected_tree, full_tree_prune(original_tree))
+
+    def test_tree_is_full(self):
+        """
+              1
+            /   \
+           4     5
+          / \   / \
+         2   3 6   7 
+        / \       / \
+       8   9    10  11
+        """
+        import copy
+        n2 = TreeNode(2, TreeNode(8), TreeNode(9))
+        n7 = TreeNode(7, TreeNode(10), TreeNode(11))
+        n4 = TreeNode(4, n2, TreeNode(3))
+        n5 = TreeNode(5, TreeNode(6), n7)
+        original_tree = TreeNode(1, n4, n5)
+        expected_tree = copy.deepcopy(original_tree)
+        self.assertEqual(expected_tree, full_tree_prune(original_tree))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
+```
+
 ### Aug 10, 2020 LC 261 \[Medium\] Graph Valid Tree
 ---
 > **Question:** Given n nodes labeled from 0 to n-1 and a list of undirected edges (each edge is a pair of nodes), write a function to check whether these edges make up a valid tree.
