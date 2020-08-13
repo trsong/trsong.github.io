@@ -1772,6 +1772,42 @@ Explanation: we choose the numbers 5 and 1.
 ## String
 ---
 
+
+<details>
+<summary class="lc_e">
+
+- [**\[Easy\] LC 1021. Remove One Layer of Parenthesis**](https://trsong.github.io/python/java/2020/08/02/DailyQuestionsAug/#aug-12-2020-lc-1021-easy-remove-one-layer-of-parenthesis) -- *Given a valid parenthesis string, remove the outermost layers of the parenthesis string and return the new parenthesis string.* [*\(Try ME\)*](https://repl.it/@trsong/Remove-One-Layer-of-Parenthesis-1)
+
+</summary>
+<div>
+
+**Question:** Given a valid parenthesis string (with only '(' and ')', an open parenthesis will always end with a close parenthesis, and a close parenthesis will never start first), remove the outermost layers of the parenthesis string and return the new parenthesis string.
+
+If the string has multiple outer layer parenthesis (ie (())()), remove all outer layers and construct the new string. So in the example, the string can be broken down into (()) + (). By removing both components outer layer we are left with () + '' which is simply (), thus the answer for that input would be ().
+
+**Example 1:**
+```py
+Input: '(())()'
+Output: '()'
+```
+
+**Example 2:**
+```py
+Input: '(()())'
+Output: '()()'
+```
+
+**Example 3:**
+```py
+Input: '()()()'
+Output: ''
+```
+
+
+</div>
+</details>
+
+
 <details>
 <summary class="lc_m">
 
