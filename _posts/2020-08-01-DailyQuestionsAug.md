@@ -55,6 +55,61 @@ Input: '()()()'
 Output: ''
 ```
 
+**Solution:** [https://repl.it/@trsong/Remove-One-Layer-of-Parenthesis](https://repl.it/@trsong/Remove-One-Layer-of-Parenthesis)
+```py
+import unittest
+
+class ValidCharFilter(object):
+    def __init__(self):
+        self.balance = 0
+    
+    def is_valid_char(self, c):
+        if c == '(':
+            self.balance += 1
+            return self.balance > 1
+        else:
+            self.balance -= 1
+            return self.balance > 0
+    
+
+def remove_one_layer_parenthesis(s):
+    f = ValidCharFilter()
+    return ''.join(filter(f.is_valid_char, s))
+
+
+class RemoveOneLayerParenthesisSpec(unittest.TestCase):
+    def test_example(self):
+        s = '(())()'
+        expected = '()'
+        self.assertEqual(expected, remove_one_layer_parenthesis(s))
+
+    def test_example2(self):
+        s = '(()())'
+        expected = '()()'
+        self.assertEqual(expected, remove_one_layer_parenthesis(s))
+
+    def test_example3(self):
+        s = '()()()'
+        expected = ''
+        self.assertEqual(expected, remove_one_layer_parenthesis(s))
+
+    def test_empty_string(self):
+        self.assertEqual('', remove_one_layer_parenthesis(''))
+
+    def test_nested_parenthesis(self):
+        s = '(()())(())'
+        expected = '()()()'
+        self.assertEqual(expected, remove_one_layer_parenthesis(s))
+
+    def test_complicated_parenthesis(self):
+        s = '(()())(())(()(()))'
+        expected = '()()()()(())'
+        self.assertEqual(expected, remove_one_layer_parenthesis(s))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
+```
 
 ### Aug 11, 2020 \[Easy\] Full Binary Tree
 --- 
