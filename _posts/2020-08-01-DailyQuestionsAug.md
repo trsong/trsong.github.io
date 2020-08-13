@@ -20,6 +20,17 @@ categories: Python/Java
 
 
 
+### Aug 13, 2020 \[Medium\] Nearest Larger Number
+--- 
+> **Question:** Given an array of numbers and an index `i`, return the index of the nearest larger number of the number at index `i`, where distance is measured in array indices.
+>
+> For example, given `[4, 1, 3, 5, 6]` and index `0`, you should return `3`.
+>
+> If two distances to larger numbers are the equal, then return any one of them. If the array at i doesn't have a nearest larger integer, then return null.
+>
+> **Follow-up:** If you can preprocess the array, can you do this in constant time?
+
+
 ### Aug 12, 2020 LC 1021 \[Easy\] Remove One Layer of Parenthesis
 --- 
 > **Question:** Given a valid parenthesis string (with only '(' and ')', an open parenthesis will always end with a close parenthesis, and a close parenthesis will never start first), remove the outermost layers of the parenthesis string and return the new parenthesis string.
