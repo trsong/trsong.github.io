@@ -986,6 +986,26 @@ s.autocomplete('do')  # Return ['dog', 'door', 'dodge']
 
 
 <details>
+<summary class="lc_m">
+
+- [**\[Medium\] Nearest Larger Number**](https://trsong.github.io/python/java/2020/08/02/DailyQuestionsAug/#aug-13-2020-medium-nearest-larger-number) -- *Given an array of numbers and an index i, return the index of the nearest larger number of the number at index i.* [*\(Try ME\)*](https://repl.it/@trsong/Nearest-Larger-Number-1)
+
+</summary>
+<div>
+
+**Question:** Given an array of numbers and an index `i`, return the index of the nearest larger number of the number at index `i`, where distance is measured in array indices.
+
+For example, given `[4, 1, 3, 5, 6]` and index `0`, you should return `3`.
+
+If two distances to larger numbers are the equal, then return any one of them. If the array at i doesn't have a nearest larger integer, then return null.
+
+**Follow-up:** If you can preprocess the array, can you do this in constant time?
+
+</div>
+</details>
+
+
+<details>
 <summary class="lc_e">
 
 - [**\[Easy\] LC 1047. Remove Adjacent Duplicate Characters**](https://trsong.github.io/python/java/2020/05/02/DailyQuestionsMay/#jul-15-2020-lc-1047-easy-remove-adjacent-duplicate-characters) -- *Given a string, we want to remove 2 adjacent characters that are the same, and repeat the process with the new string until we can no longer* [*\(Try ME\)*](https://repl.it/@trsong/Remove-2-Adjacent-Duplicate-Characters-1)
