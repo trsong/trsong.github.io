@@ -37,6 +37,103 @@ categories: Python/Java
 >
 > **Follow-up:** If you can preprocess the array, can you do this in constant time?
 
+**Thoughts:** The logical is exactly the same as [**find next largest number on the right**](https://trsong.github.io/python/java/2020/05/02/DailyQuestionsMay/#jul-17-2020-medium-index-of-larger-next-number) except we have to compare next largest number from both left and right for this question.
+
+**Solution with Stack:** [https://repl.it/@trsong/Nearest-Larger-Number](https://repl.it/@trsong/Nearest-Larger-Number)
+```py
+import unittest
+
+class NearestLargerNumberFinder(object):
+    def __init__(self, nums):
+        right_larger_indices = NearestLargerNumberFinder.previous_larger_number(nums)
+        reverse_left_larger_indices = NearestLargerNumberFinder.previous_larger_number(nums[::-1])
+        n = len(nums)
+
+        self.nearest_indiecs = [None] * n
+        for i in xrange(n):
+            j = n-1-i
+            left_index = n-1-reverse_left_larger_indices[j] if reverse_left_larger_indices[j] is not None else None
+            right_index = right_larger_indices[i]
+            if left_index is not None and right_index is not None:
+                self.nearest_indiecs[i] = left_index if nums[left_index] < nums[right_index] else right_index
+            elif left_index is None:
+                self.nearest_indiecs[i] = right_index
+            elif right_index is None:
+                self.nearest_indiecs[i] = left_index
+
+    def search_index(self, i):
+        return self.nearest_indiecs[i]
+
+    @staticmethod
+    def previous_larger_number(nums):
+        if not nums:
+            return []
+
+        n = len(nums)
+        stack = []
+        res = [None] * n
+        for i in xrange(n-1, -1, -1):
+            while stack and nums[i] >= nums[stack[-1]]:
+                stack.pop()
+            if stack:
+                res[i] = stack[-1]
+            stack.append(i)
+        return res
+
+
+class LargerNumberSpec(unittest.TestCase):
+    def assert_all_result(self, nums, expected):
+        finder = NearestLargerNumberFinder(nums)
+        self.assertEqual(expected, map(finder.search_index, range(len(nums))))
+
+    def test_random_list(self):
+        nums = [3, 2, 5, 6, 9, 8]
+        expected = [2, 0, 3, 4, None, 4]
+        self.assert_all_result(nums, expected)
+
+    def test_empty_list(self):
+        self.assert_all_result([], [])
+
+    def test_asecending_list(self):
+        nums = [0, 1, 2, 2, 3, 3, 3, 4, 5]
+        expected = [1, 2, 4, 4, 7, 7, 7, 8, None]
+        self.assert_all_result(nums, expected)
+
+    def test_descending_list(self):
+        nums = [9, 8, 8, 7, 4, 3, 2, 1, 0, -1]
+        expected = [None, 0, 0, 2, 3, 4, 5, 6, 7, 8]
+        self.assert_all_result(nums, expected)
+
+    def test_up_down_up(self):
+        nums = [0, 1, 2, 1, 2, 3, 4, 5]
+        expected = [1, 2, 5, 4, 5, 6, 7, None]
+        self.assert_all_result(nums, expected)
+
+    def test_up_down_up2(self):
+        nums = [0, 4, -1, 2]
+        expected = [1, None, 3, 1]
+        self.assert_all_result(nums, expected)
+
+    def test_down_up_down(self):
+        nums = [9, 5, 6, 3]
+        expected = [None, 2, 0, 2]
+        self.assert_all_result(nums, expected)
+    
+    def test_up_down(self):
+        nums = [11, 21, 31, 3]
+        expected = [1, 2, None, 2]
+        self.assert_all_result(nums, expected)
+
+    def test_random_order(self):
+        nums = [4, 3, 5, 2, 4, 7]
+        expected = [2, 0, 5, 4, 2, None]
+        self.assert_all_result(nums, expected)
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
+```
+
 
 ### Aug 12, 2020 LC 1021 \[Easy\] Remove One Layer of Parenthesis
 --- 
