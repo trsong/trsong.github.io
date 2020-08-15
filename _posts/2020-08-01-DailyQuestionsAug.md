@@ -34,6 +34,124 @@ categories: Python/Java
 >
 > For example, the linked list `4 -> 1 -> -3 -> 99` should become `-3 -> 1 -> 4 -> 99`.
 
+**Solution with Merge Sort:** [https://repl.it/@trsong/Sort-Linked-List](https://repl.it/@trsong/Sort-Linked-List)
+```py
+import unittest
+
+def sort_linked_list(head):
+    return MergeSort.sort(head)
+
+
+class MergeSort(object):
+    @staticmethod
+    def sort(lst):
+        if not lst or not lst.next:
+            return lst
+
+        l1, l2 = MergeSort.partition(lst)
+        sorted_l1 = MergeSort.sort(l1)
+        sorted_l2 = MergeSort.sort(l2)
+        return MergeSort.merge(sorted_l1, sorted_l2)
+
+    @staticmethod
+    def partition(lst):
+        slow = fast = ListNode(-1, lst)
+        fast = fast.next
+        while fast and fast.next:
+            slow = slow.next
+            fast = fast.next.next
+
+        half_lst = slow.next
+        slow.next = None
+        return lst, half_lst
+
+    @staticmethod
+    def merge(lst1, lst2):
+        p = dummy = ListNode(-1)
+        while lst1 and lst2:
+            if lst1.val < lst2.val:
+                p.next = lst1
+                lst1 = lst1.next
+            else:
+                p.next = lst2
+                lst2 = lst2.next
+            p = p.next 
+        
+        if lst1:
+            p.next = lst1
+        elif lst2:
+            p.next = lst2
+        
+        return dummy.next
+
+
+##################
+# Testing Utility
+##################
+class ListNode(object):
+    def __init__(self, val, next=None):
+        self.val = val
+        self.next = next
+
+    def __eq__(self, other):
+        return other and self.val == other.val and self.next == other.next
+
+    def __repr__(self):
+        return "{} -> {}".format(str(self.val), str(self.next))
+
+    @staticmethod
+    def List(*vals):
+        p = dummy = ListNode(-1)
+        for v in vals:
+            p.next = ListNode(v)
+            p = p.next
+        return dummy.next
+
+
+class SortLinkedListSpec(unittest.TestCase):
+    def test_example(self):
+        lst = ListNode.List(4, 1, -3, 99)
+        expected = ListNode.List(-3, 1, 4, 99)
+        self.assertEqual(expected, sort_linked_list(lst))
+
+    def test_empty_list(self):
+        self.assertIsNone(sort_linked_list(None))
+
+    def test_list_with_one_element(self):
+        lst = ListNode.List(1)
+        expected = ListNode.List(1)
+        self.assertEqual(expected, sort_linked_list(lst))
+
+    def test_already_sorted_list(self):
+        lst = ListNode.List(1, 2, 3, 4, 5)
+        expected = ListNode.List(1, 2, 3, 4, 5)
+        self.assertEqual(expected, sort_linked_list(lst))
+
+    def test_list_in_descending_order(self):
+        lst = ListNode.List(5, 4, 3, 2, 1)
+        expected = ListNode.List(1, 2, 3, 4, 5)
+        self.assertEqual(expected, sort_linked_list(lst))
+
+    def test_list_with_duplicated_elements(self):
+        lst = ListNode.List(1, 1, 3, 2, 1, 2, 1, 1, 3)
+        expected = ListNode.List(1, 1, 1, 1, 1, 2, 2, 3, 3)
+        self.assertEqual(expected, sort_linked_list(lst))
+
+    def test_binary_list(self):
+        lst = ListNode.List(0, 1, 0, 1, 0, 1)
+        expected = ListNode.List(0, 0, 0, 1, 1, 1)
+        self.assertEqual(expected, sort_linked_list(lst))
+
+    def test_odd_length_list(self):
+        lst = ListNode.List(4, 1, 2)
+        expected = ListNode.List(1, 2, 4)
+        self.assertEqual(expected, sort_linked_list(lst))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
+```
+
 
 ### Aug 13, 2020 \[Medium\] Nearest Larger Number
 --- 
