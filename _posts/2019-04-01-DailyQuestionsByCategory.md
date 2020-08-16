@@ -93,6 +93,26 @@ Output: [4, 8] order does not matter
 <details>
 <summary class="lc_e">
 
+- [**\[Easy\] Record the Last N Orders**](https://trsong.github.io/python/java/2020/08/02/DailyQuestionsAug/#aug-15-2020-easy-record-the-last-n-orders) -- *You run an e-commerce website and want to record the last N order ids in a log.* [*\(Try ME\)*](https://repl.it/@trsong/Record-the-Last-N-Orders-1)
+
+</summary>
+<div>
+
+**Question:** You run an e-commerce website and want to record the last `N` order ids in a log. Implement a data structure to accomplish this, with the following API:
+
+- `record(order_id)`: adds the order_id to the log
+- `get_last(i)`: gets the ith last element from the log. `i` is guaranteed to be smaller than or equal to `N`.
+ 
+You should be as efficient with time and space as possible.
+
+
+</div>
+</details>
+
+
+<details>
+<summary class="lc_e">
+
 - [**\[Easy\] In-place Array Rotation**](https://trsong.github.io/python/java/2020/05/02/DailyQuestionsMay/#june-3-2020-medium-in-place-array-rotation) -- *Write a function that rotates an array by k elements.* [*\(Try ME\)*](https://repl.it/@trsong/Rotate-Array-In-place-1)
 
 </summary>
