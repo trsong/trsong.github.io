@@ -33,6 +33,73 @@ categories: Python/Java
 > 
 > You should be as efficient with time and space as possible.
 
+**Solution with Circular Queue:** [https://repl.it/@trsong/Record-the-Last-N-Orders](https://repl.it/@trsong/Record-the-Last-N-Orders)
+```py
+import unittest
+
+class ECommerceLogService(object):
+    def __init__(self, n):
+        self.logs = [None] * n
+        self.next_index = 0
+
+    def record(self, order_id):
+        self.logs[self.next_index] = order_id
+        self.next_index = (self.next_index + 1) % len(self.logs)
+
+    def get_last(self, i):
+        physical_index = (self.next_index - i) % len(self.logs)
+        log = self.logs[physical_index]
+        if log is None:
+            raise ValueError('Log %d does not exists' % i)
+        else:
+            return log
+
+
+class ECommerceLogServiceSpec(unittest.TestCase):
+    def test_throw_exception_when_acessing_log_not_exists(self):
+        service = ECommerceLogService(10)
+        self.assertRaises(ValueError, service.get_last, 1)
+
+    def test_access_last_element(self):
+        service = ECommerceLogService(1)
+        service.record(42)
+        self.assertEqual(42, service.get_last(1))
+
+    def test_acess_fist_element(self):
+        service = ECommerceLogService(3)
+        service.record(1)
+        service.record(2)
+        service.record(3)
+        self.assertEqual(1, service.get_last(3))
+
+    def test_overwrite_previous_record(self):
+        service = ECommerceLogService(1)
+        service.record(1)
+        service.record(2)
+        service.record(3)
+        self.assertEqual(3, service.get_last(1))
+
+    def test_overwrite_previous_record2(self):
+        service = ECommerceLogService(2)
+        service.record(1)
+        service.record(2)
+        service.record(3)
+        service.record(4)
+        self.assertEqual(3, service.get_last(2))
+
+    def test_overwrite_previous_record3(self):
+        service = ECommerceLogService(3)
+        service.record(1)
+        service.record(2)
+        service.record(3)
+        service.record(4)
+        self.assertEqual(3, service.get_last(2))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
+```
+
 ### Aug 14, 2020 \[Medium\] Sort Linked List
 --- 
 > **Question:** Given a linked list, sort it in `O(n log n)` time and constant space.
