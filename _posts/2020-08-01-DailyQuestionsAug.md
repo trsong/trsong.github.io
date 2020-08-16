@@ -33,7 +33,7 @@ categories: Python/Java
 > 
 > You should be as efficient with time and space as possible.
 
-**Solution with Circular Queue:** [https://repl.it/@trsong/Record-the-Last-N-Orders](https://repl.it/@trsong/Record-the-Last-N-Orders)
+**Solution with Circular Buffer:** [https://repl.it/@trsong/Record-the-Last-N-Orders](https://repl.it/@trsong/Record-the-Last-N-Orders)
 ```py
 import unittest
 
