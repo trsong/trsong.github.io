@@ -29,6 +29,106 @@ categories: Python/Java
 > **Question:** Given a linked list with DISTINCT value, rearrange the node values such that they appear in alternating `low -> high -> low -> high ...` form. For example, given `1 -> 2 -> 3 -> 4 -> 5`, you should return `1 -> 3 -> 2 -> 5 -> 4`.
 
 
+**Solution:** [https://repl.it/@trsong/Zig-Zag-Order-of-Distinct-LinkedList](https://repl.it/@trsong/Zig-Zag-Order-of-Distinct-LinkedList)
+```py
+import unittest
+
+def zig_zag_order(lst):
+    should_increase = True
+    prev = dummy = ListNode(-1, lst)
+    p = prev.next
+    while p and p.next:
+        does_increase = p.next.val > p.val
+        if should_increase != does_increase:
+            second = p.next
+
+            p.next = second.next
+            second.next = p
+
+            prev.next = second
+            prev = second
+        else:
+            prev = p
+            p = p.next
+        should_increase = not should_increase
+    return dummy.next
+        
+
+###################
+# Testing Utilities
+###################
+class ListNode(object):
+    def __init__(self, val, next=None):
+        self.val = val
+        self.next = next
+    
+    @staticmethod  
+    def List(*vals):
+        dummy = ListNode(-1)
+        p = dummy
+        for elem in vals:
+            p.next = ListNode(elem)
+            p = p.next
+        return dummy.next  
+
+    def __repr__(self):
+        return "{} -> {}".format(str(self.val), str(self.next))
+
+
+class ZigZagOrderSpec(unittest.TestCase):
+    def verify_order(self, lst):
+        isLessThanPrevious = False
+        if not lst:
+            return
+        p = lst.next
+        prev = lst
+        while p:
+            if isLessThanPrevious:
+                self.assertLess(p.val, prev.val, "%d in %s" % (p.val, lst))
+            else:
+                self.assertGreater(p.val, prev.val, "%d in %s" % (p.val, lst))
+
+            isLessThanPrevious = not isLessThanPrevious
+            prev = p
+            p = p.next
+
+    def test_example(self):
+        lst = ListNode.List(1, 2, 3, 4, 5)
+        self.verify_order(zig_zag_order(lst))
+
+    def test_empty_array(self):
+        lst = ListNode.List()
+        self.verify_order(zig_zag_order(lst))
+
+    def test_unsorted_list1(self):
+        lst = ListNode.List(10, 5, 6, 3, 2, 20, 100, 80)
+        self.verify_order(zig_zag_order(lst))
+
+    def test_unsorted_list2(self):
+        lst = ListNode.List(2, 4, 6, 8, 10, 20)
+        self.verify_order(zig_zag_order(lst))
+
+    def test_unsorted_list3(self):
+        lst = ListNode.List(3, 6, 5, 10, 7, 20)
+        self.verify_order(zig_zag_order(lst))
+
+    def test_unsorted_list4(self):
+        lst = ListNode.List(20, 10, 8, 6, 4, 2)
+        self.verify_order(zig_zag_order(lst))
+
+    def test_unsorted_list5(self):
+        lst = ListNode.List(6, 4, 2, 1, 8, 3)
+        self.verify_order(zig_zag_order(lst))
+
+    def test_sorted_list(self):
+        lst = ListNode.List(6, 5, 4, 3, 2, 1)
+        self.verify_order(zig_zag_order(lst))
+    
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
+```
+
 ### Aug 15, 2020 \[Easy\] Record the Last N Orders
 --- 
 > **Question:** You run an e-commerce website and want to record the last `N` order ids in a log. Implement a data structure to accomplish this, with the following API:
