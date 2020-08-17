@@ -550,7 +550,7 @@ Output: False
 <details>
 <summary class="lc_e">
 
-- [****](https://trsong.github.io/python/java/2020/08/02/DailyQuestionsAug/#aug-16-2020-easy-zig-zag-distinct-linkedlist) -- *Rearrange distinct linked-list such that they appear in alternating order.* [*\(Try ME\)*](https://repl.it/@trsong/Zig-Zag-Order-of-Distinct-LinkedList-1)
+- [** \[Easy\] Zig-Zag Distinct LinkedList**](https://trsong.github.io/python/java/2020/08/02/DailyQuestionsAug/#aug-16-2020-easy-zig-zag-distinct-linkedlist) -- *Rearrange distinct linked-list such that they appear in alternating order.* [*\(Try ME\)*](https://repl.it/@trsong/Zig-Zag-Order-of-Distinct-LinkedList-1)
 
 </summary>
 <div>
