@@ -32,6 +32,7 @@ categories: Python/Java
 **Solution:** [https://repl.it/@trsong/Zig-Zag-Order-of-Distinct-LinkedList](https://repl.it/@trsong/Zig-Zag-Order-of-Distinct-LinkedList)
 ```py
 import unittest
+import copy
 
 def zig_zag_order(lst):
     should_increase = True
@@ -74,12 +75,22 @@ class ListNode(object):
     def __repr__(self):
         return "{} -> {}".format(str(self.val), str(self.next))
 
+    def to_list(self):
+        res = []
+        p = self
+        while p:
+            res.append(p.val)
+            p = p.next
+        return res
+
 
 class ZigZagOrderSpec(unittest.TestCase):
-    def verify_order(self, lst):
+    def verify_order(self, original_lst):
+        lst = zig_zag_order(copy.deepcopy(original_lst))
+        self.assertIsNotNone(lst)
+        self.assertEqual(set(original_lst.to_list()), set(lst.to_list()))
+
         isLessThanPrevious = False
-        if not lst:
-            return
         p = lst.next
         prev = lst
         while p:
@@ -94,40 +105,40 @@ class ZigZagOrderSpec(unittest.TestCase):
 
     def test_example(self):
         lst = ListNode.List(1, 2, 3, 4, 5)
-        self.verify_order(zig_zag_order(lst))
+        self.verify_order(lst)
 
     def test_empty_array(self):
-        lst = ListNode.List()
-        self.verify_order(zig_zag_order(lst))
+        self.assertIsNone(zig_zag_order(None))
 
     def test_unsorted_list1(self):
         lst = ListNode.List(10, 5, 6, 3, 2, 20, 100, 80)
-        self.verify_order(zig_zag_order(lst))
+        self.verify_order(lst)
 
     def test_unsorted_list2(self):
         lst = ListNode.List(2, 4, 6, 8, 10, 20)
-        self.verify_order(zig_zag_order(lst))
+        self.verify_order(lst)
 
     def test_unsorted_list3(self):
         lst = ListNode.List(3, 6, 5, 10, 7, 20)
-        self.verify_order(zig_zag_order(lst))
+        self.verify_order(lst)
 
     def test_unsorted_list4(self):
         lst = ListNode.List(20, 10, 8, 6, 4, 2)
-        self.verify_order(zig_zag_order(lst))
+        self.verify_order(lst)
 
     def test_unsorted_list5(self):
         lst = ListNode.List(6, 4, 2, 1, 8, 3)
-        self.verify_order(zig_zag_order(lst))
+        self.verify_order(lst)
 
     def test_sorted_list(self):
         lst = ListNode.List(6, 5, 4, 3, 2, 1)
-        self.verify_order(zig_zag_order(lst))
+        self.verify_order(lst)
     
 
 if __name__ == '__main__':
     unittest.main(exit=False)
 ```
+
 
 ### Aug 15, 2020 \[Easy\] Record the Last N Orders
 --- 
