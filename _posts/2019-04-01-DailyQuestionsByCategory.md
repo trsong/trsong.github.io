@@ -30,7 +30,7 @@ categories: Python/Java
 <details>
 <summary class="lc_e">
 
-- [**\[Medium\] Overlapping Rectangles**](https://trsong.github.io/python/java/2020/08/02/DailyQuestionsAug/#aug-17-2020-medium-overlapping-rectangles) -- *Find the area of overlapping rectangles.* [*\(Try ME\)*](https://repl.it/@trsong/Overlapping-Rectangle-Areas-1)
+- [**\[Easy\] Overlapping Rectangles**](https://trsong.github.io/python/java/2020/08/02/DailyQuestionsAug/#aug-17-2020-medium-overlapping-rectangles) -- *Find the area of overlapping rectangles.* [*\(Try ME\)*](https://repl.it/@trsong/Overlapping-Rectangle-Areas-1)
 
 </summary>
 <div>
