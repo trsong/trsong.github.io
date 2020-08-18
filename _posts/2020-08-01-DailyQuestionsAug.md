@@ -33,6 +33,87 @@ categories: Python/Java
 > **Question:** You’re given 2 over-lapping rectangles on a plane. For each rectangle, you’re given its bottom-left and top-right points. How would you find the area of their overlap?
 
 
+**Solution:** [https://repl.it/@trsong/Overlapping-Rectangle-Areas](https://repl.it/@trsong/Overlapping-Rectangle-Areas)
+```py
+import unittest
+
+class Rectangle(object):
+    def __init__(self, x1, y1, x2, y2):
+        self.x_min = min(x1, x2)
+        self.x_max = max(x1, x2)
+        self.y_min = min(y1, y2)
+        self.y_max = max(y1, y2)
+
+
+def overlapping_areas(rect1, rect2):
+    has_no_x_overlap = rect1.x_max < rect2.x_min or rect2.x_max < rect1.x_min
+    has_no_y_overlap = rect1.y_max < rect2.y_min or rect2.y_max < rect1.y_min
+    if has_no_x_overlap or has_no_y_overlap:
+        return 0
+    x_proj = min(rect1.x_max, rect2.x_max) - max(rect1.x_min, rect2.x_min)
+    y_proj = min(rect1.y_max, rect2.y_max) - max(rect1.y_min, rect2.y_min)
+    return x_proj * y_proj
+
+
+class OverlappingAreaSpec(unittest.TestCase):
+    def assert_result(self, res, rect1, rect2):
+        self.assertEqual(res, overlapping_areas(rect1, rect2))
+        self.assertEqual(res, overlapping_areas(rect2, rect1))
+
+    def test_no_overlapping(self):
+        rect1 = Rectangle(-1, 1, 0, 0)
+        rect2 = Rectangle(0, 0, 1, -1)
+        self.assert_result(0, rect1, rect2)
+        
+    def test_no_overlapping2(self):
+        rect1 = Rectangle(-1, -1, 0, 2)
+        rect2 = Rectangle(0, 2, 1, -1)
+        self.assert_result(0, rect1, rect2)
+
+    def test_no_overlapping3(self):
+        rect1 = Rectangle(0, 0, 1, 1)
+        rect2 = Rectangle(0, -1, 1, -2)
+        self.assert_result(0, rect1, rect2)
+
+    def test_rectanlge_contains_the_other(self):
+        rect1 = Rectangle(-2, 2, 2, -2)
+        rect2 = Rectangle(-1, -1, 1, 1)
+        self.assert_result(4, rect1, rect2)
+
+    def test_rectanlge_contains_the_other2(self):
+        rect1 = Rectangle(0, 0, 2, 2)
+        rect2 = Rectangle(0, 0, 2, 1)
+        self.assert_result(2, rect1, rect2)
+
+    def test_overlapping_top_bottom(self):
+        rect1 = Rectangle(-2, 0, 2, -2)
+        rect2 = Rectangle(-1, 1, 1, -1)
+        self.assert_result(2, rect1, rect2)
+    
+    def test_overlapping_left_right(self):
+        rect1 = Rectangle(-1, -1, 1, 1)
+        rect2 = Rectangle(0, -2, 2, 2)
+        self.assert_result(2, rect1, rect2)
+    
+    def test_overlapping_top_left_bottom_right(self):
+        rect1 = Rectangle(-2, 2, 1, -1)
+        rect2 = Rectangle(-1, 1, 2, -2)
+        self.assert_result(4, rect1, rect2)
+    
+    def test_overlapping_top_right_bottom_left(self):
+        rect1 = Rectangle(-1, -1, 2, 2)
+        rect2 = Rectangle(-2, -2, 1, 1)
+        self.assert_result(4, rect1, rect2)
+
+    def test_entire_overlapping(self):
+        rect1 = Rectangle(0, 0, 1, 1)
+        self.assert_result(1, rect1, rect1)
+
+    
+if __name__ == '__main__':
+    unittest.main(exit=False)
+```
+
 ### Aug 16, 2020 \[Easy\] Zig-Zag Distinct LinkedList
 --- 
 > **Question:** Given a linked list with DISTINCT value, rearrange the node values such that they appear in alternating `low -> high -> low -> high ...` form. For example, given `1 -> 2 -> 3 -> 4 -> 5`, you should return `1 -> 3 -> 2 -> 5 -> 4`.
