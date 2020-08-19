@@ -19,6 +19,31 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
 
+### Aug 19, 2020 LC 91 \[Medium\] Decode Ways
+---
+> **Question:** A message containing letters from `A-Z` is being encoded to numbers using the following mapping:
+>
+> ```py
+> 'A' -> 1
+> 'B' -> 2
+> ...
+> 'Z' -> 26
+> ```
+> Given an encoded message containing digits, determine the total number of ways to decode it.
+
+**Example 1:**
+```py
+Input: "12"
+Output: 2
+Explanation: It could be decoded as AB (1 2) or L (12).
+```
+
+**Example 2:**
+```py
+Input: "10"
+Output: 1
+```
+
 ### Aug 18, 2020 \[Easy\] Merge Overlapping Intervals
 ---
 > **Question:** Given a list of possibly overlapping intervals, return a new list of intervals where all overlapping intervals have been merged.
