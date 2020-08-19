@@ -52,6 +52,77 @@ Output: 1
 >
 > For example, given `[(1, 3), (5, 8), (4, 10), (20, 25)]`, you should return `[(1, 3), (4, 10), (20, 25)]`.
 
+**My thoughts:** Sort intervals based on start time, then for each consecutive intervals s1, s2 the following could occur:
+- `s1.end < s2.start`, we append s2 to result
+- `s2.start <= s1.end < s2.end`, we merge s1 and s2
+- `s2.end <= s1.end`, s1 overlaps all of s2, we do nothing
+
+Note: as all intervals are sorted based on start time, `s1.start <= s2.start`
+
+**Solution with Stack:** [https://repl.it/@trsong/Merge-All-Overlapping-Intervals](https://repl.it/@trsong/Merge-All-Overlapping-Intervals)
+```py
+import unittest
+
+def merge_intervals(interval_seq):
+    interval_seq.sort(key=lambda interval: interval[0])
+    stack = []
+    for start, end in interval_seq:
+        if not stack or stack[-1][1] < start:
+            stack.append((start, end))
+        elif stack[-1][1] < end:
+            prev_start, _ = stack.pop()
+            stack.append((prev_start, end))
+    return stack
+
+
+class MergeIntervalSpec(unittest.TestCase):
+    def test_interval_with_zero_mergings(self):
+        self.assertItemsEqual(merge_intervals([]), [])
+
+    def test_interval_with_zero_mergings2(self):
+        interval_seq = [(1, 2), (3, 4), (5, 6)]
+        expected = [(1, 2), (3, 4), (5, 6)]
+        self.assertItemsEqual(expected, merge_intervals(interval_seq))
+
+    def test_interval_with_zero_mergings3(self):
+        interval_seq = [(-3, -2), (5, 6), (1, 4)]
+        expected = [(-3, -2), (1, 4), (5, 6)]
+        self.assertItemsEqual(expected, merge_intervals(interval_seq))
+
+    def test_interval_with_one_merging(self):
+        interval_seq = [(1, 3), (5, 7), (7, 11), (2, 4)]
+        expected = [(1, 4), (5, 11)]
+        self.assertItemsEqual(expected, merge_intervals(interval_seq))
+
+    def test_interval_with_one_merging2(self):
+        interval_seq = [(1, 4), (0, 8)]
+        expected = [(0, 8)]
+        self.assertItemsEqual(expected, merge_intervals(interval_seq))
+
+    def test_interval_with_two_mergings(self):
+        interval_seq = [(1, 3), (3, 5), (5, 8)]
+        expected = [(1, 8)]
+        self.assertItemsEqual(expected, merge_intervals(interval_seq))
+
+    def test_interval_with_two_mergings2(self):
+        interval_seq = [(5, 8), (1, 6), (0, 2)]
+        expected = [(0, 8)]
+        self.assertItemsEqual(expected, merge_intervals(interval_seq))
+
+    def test_interval_with_multiple_mergings(self):
+        interval_seq = [(-5, 0), (1, 4), (1, 4), (1, 4), (5, 7), (6, 10), (0, 1)]
+        expected = [(-5, 4), (5, 10)]
+        self.assertItemsEqual(expected, merge_intervals(interval_seq))
+
+    def test_interval_with_multiple_mergings2(self):
+        interval_seq = [(1, 3), (5, 8), (4, 10), (20, 25)]
+        expected = [(1, 3), (4, 10), (20, 25)]
+        self.assertItemsEqual(expected, merge_intervals(interval_seq))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
+```
 
 ### Aug 17, 2020 \[Medium\] Overlapping Rectangles
 --- 
