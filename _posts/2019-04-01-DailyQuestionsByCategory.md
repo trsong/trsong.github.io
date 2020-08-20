@@ -1676,6 +1676,40 @@ For example, given `"2542540123"`, you should return `['254.25.40.123', '254.254
 <details>
 <summary class="lc_m">
 
+- [**\[Medium\] LC 91. Decode Ways**](https://trsong.github.io/python/java/2020/08/02/DailyQuestionsAug/#aug-19-2020-lc-91-medium-decode-ways) -- *A message containing letters from A-Z is being encoded to numbers using the following mapping: 'A' -> 1 'B' -> 2 ... 'Z' -> 26.* [*\(Try ME\)*](https://repl.it/@trsong/Number-of-Decode-Ways-1)
+
+</summary>
+<div>
+
+**Question:** A message containing letters from `A-Z` is being encoded to numbers using the following mapping:
+
+ ```py
+ 'A' -> 1
+ 'B' -> 2
+ ...
+ 'Z' -> 26
+ ```
+ Given an encoded message containing digits, determine the total number of ways to decode it.
+
+**Example 1:**
+```py
+Input: "12"
+Output: 2
+Explanation: It could be decoded as AB (1 2) or L (12).
+```
+
+**Example 2:**
+```py
+Input: "10"
+Output: 1
+```
+
+</div>
+</details>
+
+<details>
+<summary class="lc_m">
+
 - [**\[Medium\] Making Changes**](https://trsong.github.io/python/java/2020/08/02/DailyQuestionsAug/#aug-9-2020-medium-making-changes) -- *Given a list of possible coins in cents, and an amount (in cents) n, return the minimum number of coins needed to create the amount n.* [*\(Try ME\)*](https://repl.it/@trsong/Making-Changes-Problem-1)
 
 </summary>
