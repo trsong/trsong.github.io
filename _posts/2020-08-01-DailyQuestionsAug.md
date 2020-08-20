@@ -66,6 +66,86 @@ Input: "10"
 Output: 1
 ```
 
+**My thoughts:** This question can be solved w/ DP. Similar to the climb stair problem, `DP[n] = DP[n-1] + DP[n-2]` under certain conditions. If last digits can form a number, i.e. `1 ~ 9` then `DP[n] = DP[n-1]`. And if last two digits can form a number, i.e. `10 ~ 26`, then `DP[n] = DP[n-2]`. If we consider both digits, we will have 
+
+```py
+dp[k] = dp[k-1] if str[k-1] can form a number. i.e not zero, 1-9
+       + dp[k-2] if str[k-2] and str[k-1] can form a number. 10-26
+```
+
+**Solution with DP:** [https://repl.it/@trsong/Number-of-Decode-Ways](https://repl.it/@trsong/Number-of-Decode-Ways)
+```py
+import unittest
+
+def decode_ways(encoded_string):
+    if not encoded_string or encoded_string[0] == '0':
+        return 0
+
+    n = len(encoded_string)
+    # Let dp[i] represents # of decode ways for encoded_string[:i]
+    # dp[i] = dp[i-1]               if digit at i-1 is not zero
+    # or    = dp[i-1] + dp[i-2]     if digits at i-1,i-2 is valid 26 char
+    dp = [0] * (n + 1)
+    dp[0] = dp[1] = 1
+    ord_zero = ord('0')
+    for i in xrange(2, n + 1):
+        first_digit = ord(encoded_string[i - 2]) - ord_zero
+        second_digit = ord(encoded_string[i - 1]) - ord_zero
+        if second_digit > 0:
+            dp[i] += dp[i - 1]
+        if 10 <= 10 * first_digit + second_digit <= 26:
+            dp[i] += dp[i-2]
+    return dp[n]
+
+
+class DecodeWaySpec(unittest.TestCase):
+    def test_empty_string(self):
+        self.assertEqual(0, decode_ways(""))
+
+    def test_invalid_string(self):
+        self.assertEqual(0, decode_ways("0"))
+
+    def test_length_one_string(self):
+        self.assertEqual(1, decode_ways("2"))
+
+    def test_length_one_string2(self):
+        self.assertEqual(1, decode_ways("9"))
+
+    def test_length_two_string(self):
+        self.assertEqual(1, decode_ways("20"))  # 20
+
+    def test_length_two_string2(self):
+        self.assertEqual(2, decode_ways("19"))  # 1,9 and 19
+
+    def test_length_three_string(self):
+        self.assertEqual(3, decode_ways("121"))  # 1, 20 and 12, 0
+
+    def test_length_three_string2(self):
+        self.assertEqual(1, decode_ways("120"))  # 1, 20
+
+    def test_length_three_string3(self):
+        self.assertEqual(1, decode_ways("209"))  # 20, 9
+
+    def test_length_three_string4(self):
+        self.assertEqual(2, decode_ways("912"))  # 9,1,2 and 9,12
+
+    def test_length_three_string5(self):
+        self.assertEqual(2, decode_ways("231"))  # 2,3,1 and 23, 1
+
+    def test_length_three_string6(self):
+        self.assertEqual(3, decode_ways("123"))  # 1,2,3, and 1, 23 and 12, 3
+
+    def test_length_four_string(self):
+        self.assertEqual(3, decode_ways("1234"))
+
+    def test_length_four_string2(self):
+        self.assertEqual(5, decode_ways("1111"))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
+```
+
 ### Aug 18, 2020 \[Easy\] Merge Overlapping Intervals
 ---
 > **Question:** Given a list of possibly overlapping intervals, return a new list of intervals where all overlapping intervals have been merged.
