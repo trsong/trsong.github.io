@@ -19,6 +19,28 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
 
+### Aug 20, 2020 \[Medium\] Tree Serialization
+---
+> **Question:** You are given the root of a binary tree. You need to implement 2 functions:
+>
+> 1. `serialize(root)` which serializes the tree into a string representation
+> 2. `deserialize(s)` which deserializes the string back to the original tree that it represents
+>
+> For this problem, often you will be asked to design your own serialization format. However, for simplicity, let's use the pre-order traversal of the tree.
+
+**Example:**
+```py
+     1
+    / \
+   3   4
+  / \   \
+ 2   5   7
+
+serialize(tree)
+# returns "1 3 2 # # 5 # # 4 # 7 # #"
+```
+
+
 ### Aug 19, 2020 LC 91 \[Medium\] Decode Ways
 ---
 > **Question:** A message containing letters from `A-Z` is being encoded to numbers using the following mapping:
