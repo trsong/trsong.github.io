@@ -19,6 +19,16 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
 
+### Aug 21, 2020 \[Easy\] Make the Largest Number
+---
+> **Question:** Given a number of integers, combine them so it would create the largest number.
+
+**Example:**
+```py
+Input: [17, 7, 2, 45, 72]
+Output: 77245217
+```
+
 ### Aug 20, 2020 \[Medium\] Tree Serialization
 ---
 > **Question:** You are given the root of a binary tree. You need to implement 2 functions:
