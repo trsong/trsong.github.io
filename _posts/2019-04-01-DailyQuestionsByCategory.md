@@ -811,6 +811,38 @@ return 23 (5 + 4 + 6 + 8).
 ### Traversal
 ---
 
+
+<details>
+<summary class="lc_m">
+
+- [**\[Medium\] Tree Serialization**](https://trsong.github.io/python/java/2020/08/02/DailyQuestionsAug/#aug-20-2020-medium-tree-serialization) -- *Given the root of a binary tree. You need to implement 2 functions: Serialize and Deserialize.* [*\(Try ME\)*](https://repl.it/@trsong/Serialize-and-Deserialize-the-Binary-Tree-1)
+
+</summary>
+<div>
+
+**Question:** You are given the root of a binary tree. You need to implement 2 functions:
+
+1. `serialize(root)` which serializes the tree into a string representation
+2. `deserialize(s)` which deserializes the string back to the original tree that it represents
+
+For this problem, often you will be asked to design your own serialization format. However, for simplicity, let's use the pre-order traversal of the tree.
+
+**Example:**
+```py
+     1
+    / \
+   3   4
+  / \   \
+ 2   5   7
+
+serialize(tree)
+# returns "1 3 2 # # 5 # # 4 # 7 # #"
+```
+
+
+</div>
+</details>
+
 <details>
 <summary class="lc_m">
 
