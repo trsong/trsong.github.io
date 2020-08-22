@@ -627,6 +627,27 @@ B = 6 -> 3 -> 4
 <details>
 <summary class="lc_e">
 
+- [**\[Easy\] Make the Largest Number**](https://trsong.github.io/python/java/2020/08/02/DailyQuestionsAug/#aug-21-2020-easy-make-the-largest-number) -- *Given a number of integers, combine them so it would create the largest number.* [*\(Try ME\)*](https://repl.it/@trsong/Construct-Largest-Number-1)
+
+</summary>
+<div>
+
+**Question:** Given a number of integers, combine them so it would create the largest number.
+
+**Example:**
+```py
+Input: [17, 7, 2, 45, 72]
+Output: 77245217
+```
+
+
+</div>
+</details>
+
+
+<details>
+<summary class="lc_e">
+
 - [**\[Easy\] Sorting Window Range**](https://trsong.github.io/python/java/2020/05/02/DailyQuestionsMay/#june-21-2020-medium-sorting-window-range) -- *Given a list of numbers, find the smallest window to sort such that the whole list will be sorted.* [*\(Try ME\)*](https://repl.it/@trsong/Min-Window-Range-to-Sort-1)
 
 </summary>
