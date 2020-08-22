@@ -19,6 +19,13 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
 
+### Aug 22, 2020 LC 451 \[Easy\] Sort Characters By Frequency
+---
+> **Question:** Given a string, sort it in decreasing order based on the frequency of characters. If there are multiple possible solutions, return any of them.
+>
+> For example, given the string `tweet`, return `tteew`. `eettw` would also be acceptable.
+
+
 ### Aug 21, 2020 \[Easy\] Make the Largest Number
 ---
 > **Question:** Given a number of integers, combine them so it would create the largest number.
