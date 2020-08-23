@@ -19,6 +19,13 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
 
+### Aug 23, 2020 LC 29 \[Medium\] Divide Two Integers
+---
+> **Question:** Implement integer division without using the division operator. Your function should return a tuple of `(dividend, remainder)` and it should take two numbers, the product and divisor.
+>
+> For example, calling `divide(10, 3)` should return `(3, 1)` since the divisor is `3` and the remainder is `1`.
+
+
 ### Aug 22, 2020 LC 451 \[Easy\] Sort Characters By Frequency
 ---
 > **Question:** Given a string, sort it in decreasing order based on the frequency of characters. If there are multiple possible solutions, return any of them.
