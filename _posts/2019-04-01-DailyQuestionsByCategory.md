@@ -730,6 +730,22 @@ Output: [1, 1, 2, 2, 3, 3, 3]
 ### Counting Sort
 ---
 
+<details>
+<summary class="lc_e">
+
+- [**\[Easy\] LC 451. Sort Characters By Frequency**](https://trsong.github.io/python/java/2020/08/02/DailyQuestionsAug/#aug-22-2020-lc-451-easy-sort-characters-by-frequency) -- *Given a string, sort it in decreasing order based on the frequency of characters.* [*\(Try ME\)*](https://repl.it/@trsong/Sort-Characters-By-Frequency-1)
+
+</summary>
+<div>
+
+**Question:** Given a string, sort it in decreasing order based on the frequency of characters. If there are multiple possible solutions, return any of them.
+
+For example, given the string `tweet`, return `tteew`. `eettw` would also be acceptable.
+
+
+</div>
+</details>
+
 
 ## Tree
 ---
