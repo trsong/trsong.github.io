@@ -33,6 +33,61 @@ categories: Python/Java
 > For example, given the string `tweet`, return `tteew`. `eettw` would also be acceptable.
 
 
+**Solution with Counting Sort:** [https://repl.it/@trsong/Sort-Characters-By-Frequency](https://repl.it/@trsong/Sort-Characters-By-Frequency)
+```py
+import unittest
+
+def string_ordered_by_frequency(s):
+    char_freq = {}
+    for c in s:
+        char_freq[c] = char_freq.get(c, 0) + 1
+
+    n = len(s)
+    counting = [None] * (n + 1)
+    for c, freq in char_freq.items():
+        if counting[freq] is None:
+            counting[freq] = []
+        counting[freq].append(c)
+    
+    res = []
+    for freq in xrange(n, 0, -1):
+        if counting[freq] is None:
+            continue
+        
+        for c in counting[freq]:
+            res.append(c * freq)
+
+    return ''.join(res)
+           
+
+class StringOrderedByFrequencySpec(unittest.TestCase):
+    def test_example(self):
+        s = 'tweet'
+        expected = ['tteew', 'eettw']
+        self.assertIn(string_ordered_by_frequency(s), expected)
+
+    def test_empty_string(self):
+        self.assertEqual('', string_ordered_by_frequency(''))
+
+    def test_contains_upper_and_lower_letters(self):
+        s = 'aAbb'
+        expected = ['bbaA', 'bbAa']
+        self.assertIn(string_ordered_by_frequency(s), expected)
+
+    def test_letter_with_differnt_frequency(self):
+        s = '241452345534535'
+        expected = '555554444333221'
+        self.assertEqual(expected, string_ordered_by_frequency(s))
+
+    def test_string_with_unique_letter(self):
+        s = 'aaaaaaa'
+        self.assertEqual(s, string_ordered_by_frequency(s))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
+```
+
 ### Aug 21, 2020 \[Easy\] Make the Largest Number
 ---
 > **Question:** Given a number of integers, combine them so it would create the largest number.
