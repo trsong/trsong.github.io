@@ -31,6 +31,85 @@ categories: Python/Java
 >
 > For example, calling `divide(10, 3)` should return `(3, 1)` since the divisor is `3` and the remainder is `1`.
 
+**My thoughts:** Left shift `x << i` is just `x * (2 ** i)`, we can take advantage of that to figure out each digit of the quotient. And find pattern from following to handle special case when operands are negative.
+```py
+divide(1, 3) => (0, 1)    # 0*3+1 = 1
+divide(-1, 3) => (-1, 2)  # -1*3+2 = -1
+divide(1, -3) => (-1, -2) # -1*-3-2= 1
+divide(-1, -3) => (0, -1) # 0*-3-1= -1
+```
+
+**Solution:** [https://repl.it/@trsong/Divide-Two-Integers](https://repl.it/@trsong/Divide-Two-Integers)
+```py
+import unittest
+
+
+def divide(dividend, divisor):
+    INT_DIGITS = 32
+    divisor_sign = -1 if divisor < 0 else 1
+    sign = -1 if (dividend > 0) ^ (divisor > 0) else 1
+    dividend, divisor = abs(dividend), abs(divisor)
+    quotient = 0
+
+    for i in xrange(INT_DIGITS, -1, -1):
+        if dividend >= (divisor << i):
+            quotient |= 1 << i
+            dividend -= (divisor << i)
+
+    if dividend == 0:
+        return sign * quotient, 0
+    elif sign > 0:
+        return quotient, divisor_sign * dividend
+    else:
+        return -quotient-1, divisor_sign * (divisor-dividend)
+    
+
+class DivideSpec(unittest.TestCase):
+    def test_example(self):
+        dividend, divisor = 10, 3
+        expected = 3, 1
+        self.assertEqual(expected, divide(dividend, divisor))
+
+    def test_product_is_zero(self):
+        dividend, divisor = 0, 1
+        expected = 0, 0
+        self.assertEqual(expected, divide(dividend, divisor))
+
+    def test_divisor_is_one(self):
+        dividend, divisor = 42, 1
+        expected = 42, 0
+        self.assertEqual(expected, divide(dividend, divisor))
+
+    def test_product_is_negative(self):
+        dividend, divisor = -17, 3
+        expected = -6, 1
+        self.assertEqual(expected, divide(dividend, divisor))
+
+    def test_divisor_is_negative(self):
+        dividend, divisor = 42, -5
+        expected = -9, -3
+        self.assertEqual(expected, divide(dividend, divisor))
+
+    def test_both_num_are_negative(self):
+        dividend, divisor = -42, -5
+        expected = 8, -2
+        self.assertEqual(expected, divide(dividend, divisor))
+
+    def test_product_is_divisible(self):
+        dividend, divisor = 42, 3
+        expected = 14, 0
+        self.assertEqual(expected, divide(dividend, divisor))
+
+    def test_product_is_divisible2(self):
+        dividend, divisor = 42, -3
+        expected = -14, 0
+        self.assertEqual(expected, divide(dividend, divisor))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
+```
+
 
 ### Aug 22, 2020 LC 451 \[Easy\] Sort Characters By Frequency
 ---
