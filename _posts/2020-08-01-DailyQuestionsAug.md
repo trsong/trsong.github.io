@@ -18,6 +18,12 @@ categories: Python/Java
 
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
+### Aug 24, 2020 LC 560 \[Medium\] Subarray Sum Equals K
+---
+> **Question:** Given a list of integers and a number `K`, return which contiguous elements of the list sum to `K`.
+>
+> For example, if the list is `[1, 2, 3, 4, 5]` and `K` is `9`, then it should return `[2, 3, 4]`, since `2 + 3 + 4 = 9`.
+
 
 ### Aug 23, 2020 LC 29 \[Medium\] Divide Two Integers
 ---
