@@ -1321,11 +1321,20 @@ Explanation: A -> B -> idle -> A -> B -> idle -> A -> B.
 ## Hashmap
 ---
 
-### Basic
----
+<details>
+<summary class="lc_m">
 
-### Advance
----
+- [**\[Medium\] LC 560. Subarray Sum Equals K**](https://trsong.github.io/python/java/2020/08/02/DailyQuestionsAug/#aug-24-2020-lc-560-medium-subarray-sum-equals-k) -- *Given a list of integers and a number K, return which contiguous elements of the list sum to K.* [*\(Try ME\)*](https://repl.it/@trsong/Find-Number-of-Sub-array-Sum-Equals-K-1)
+
+</summary>
+<div>
+
+**Question:** Given a list of integers and a number `K`, return which contiguous elements of the list sum to `K`.
+
+For example, if the list is `[1, 2, 3, 4, 5]` and `K` is `9`, then it should return `[2, 3, 4]`, since `2 + 3 + 4 = 9`.
+
+</div>
+</details>
 
 
 ## Set
