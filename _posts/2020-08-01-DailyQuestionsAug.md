@@ -18,6 +18,14 @@ categories: Python/Java
 
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
+
+### Aug 25, 2020 LC 796 \[Easy\] Shift-Equivalent Strings
+---
+> **Question:** Given two strings A and B, return whether or not A can be shifted some number of times to get B.
+>
+> For example, if A is `'abcde'` and B is `'cdeab'`, return `True`. If A is `'abc'` and B is `'acb'`, return `False`.
+
+
 ### Aug 24, 2020 LC 560 \[Medium\] Subarray Sum Equals K
 ---
 > **Question:** Given a list of integers and a number `K`, return which contiguous elements of the list sum to `K`.
