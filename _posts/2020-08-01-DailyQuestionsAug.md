@@ -33,6 +33,50 @@ categories: Python/Java
 > For example, if the list is `[1, 2, 3, 4, 5]` and `K` is `9`, then it should return `[2, 3, 4]`, since `2 + 3 + 4 = 9`.
 
 
+**My thoughts:** Store prefix sum along the way to find how many index i exists such that `prefix[j] - prefix[i] = k`. As `j > i`, when we reach j, we pass i already, so we can store `prefix[i]` in a map and put value as occurance of `prefix[i]`, that is why this question feels similar to Two Sum question.
+
+**Solution:** [https://repl.it/@trsong/Find-Number-of-Sub-array-Sum-Equals-K](https://repl.it/@trsong/Find-Number-of-Sub-array-Sum-Equals-K)
+```py
+import unittest
+
+def subarray_sum(nums, k):
+    prefix_sum = 0
+    prefix_count = {0: 1}
+    res = 0
+    for num in nums:
+        prefix_sum += num
+        target = prefix_sum - k
+        res += prefix_count.get(target, 0)
+        prefix_count[prefix_sum] = prefix_count.get(prefix_sum, 0) + 1
+    return res
+
+
+class SubarraySumSpec(unittest.TestCase):
+    def test_example(self):
+        self.assertEqual(subarray_sum([1, 1, 1], 2), 2)  # [1, 1] and [1, 1]
+    
+    def test_empty_array(self):
+        self.assertEqual(subarray_sum([], 2), 0) 
+
+    def test_target_is_zero(self):
+        self.assertEqual(subarray_sum([0, 0], 0), 3) # [0], [0], [0, 0]
+
+    def test_array_with_one_elem(self):
+        self.assertEqual(subarray_sum([1], 0), 0)
+    
+    def test_array_with_one_elem2(self):
+        self.assertEqual(subarray_sum([1], 1), 1) # [1]
+
+    def test_array_with_unique_target_prefix(self):
+        # suppose the prefix_sum = [1, 2, 3, 3, 2, 1]
+        self.assertEqual(subarray_sum([1, 1, 1, 0, -1, -1], 2), 4)  # [1, 1], [1, ,1], [1, 1, 0], [1, 1, 1, 0, -1]
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
+```
+
+
 ### Aug 23, 2020 LC 29 \[Medium\] Divide Two Integers
 ---
 > **Question:** Implement integer division without using the division operator. Your function should return a tuple of `(dividend, remainder)` and it should take two numbers, the product and divisor.
