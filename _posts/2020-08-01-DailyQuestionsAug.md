@@ -57,6 +57,74 @@ Output: 1
 >
 > For example, if A is `'abcde'` and B is `'cdeab'`, return `True`. If A is `'abc'` and B is `'acb'`, return `False`.
 
+**My thoughts:** It should be pretty easy to come up with non-linear time complexity solution. But for linear, I can only come up w/ rolling hash solution. The idea is to treat each digit as a number. For example, `"1234"` is really `1234`, each time we move the most significant bit to right by `(1234 - 1 * 10^3) * 10 + 1 = 2341`. In general, we can treat `'abc'` as numeric value of `abc` base `p0` ie. `a * p0^2 + b * p0^1 + c * p0^0` and in order to prevent overflow, we use a larger prime number which I personally prefer 666667 (easy to remember), `'abc' =>  (a * p0^2 + b * p0^1 + c * p0^0) % p1 where p0 and p1 are both prime and p0 is much smaller than p1`.
+
+**Solution with Roling Hash:** [https://repl.it/@trsong/Check-if-Strings-are-Shift-Equivalent](https://repl.it/@trsong/Check-if-Strings-are-Shift-Equivalent)
+```py
+import unittest
+from functools import reduce
+
+P0 = 23  # small prime number
+P1 = 666667 # larger prime number
+
+def hash(s):
+    rolling_hash = lambda accu, ch: (accu * P0 % P1 + ord(ch)) % P1
+    return reduce(rolling_hash, s, 0)
+
+
+def is_shift_eq(source, target):
+    if len(source) != len(target):
+        return False
+    elif source == target:
+        return True
+    
+    source_hash = hash(source)
+    target_hash = hash(target)
+    n = len(source)
+    leftmost_digit_base = reduce(lambda accu, _: (accu * P0) % P1, xrange(n-1), 1)
+
+    for ch in source:
+        ord_ch = ord(ch)
+        leftmost_digit = (ord_ch * leftmost_digit_base) % P1
+        source_hash = ((source_hash - leftmost_digit) * P0 + ord_ch) % P1
+        if source_hash == target_hash:
+            return True
+    
+    return False
+
+
+class IsShiftEqSpec(unittest.TestCase):
+    def test_example1(self):
+        self.assertTrue(is_shift_eq('abcde', 'cdeab'))
+
+    def test_example2(self):
+        self.assertFalse(is_shift_eq('abc', 'acb'))
+
+    def test_different_length_strings(self):
+        self.assertFalse(is_shift_eq(' a ', ' a'))
+
+    def test_empty_strings(self):
+        self.assertTrue(is_shift_eq('', ''))
+
+    def test_string_with_unique_word(self):
+        self.assertTrue(is_shift_eq('aaaaa', 'aaaaa'))
+
+    def test_string_with_multiple_spaces(self):
+        self.assertFalse(is_shift_eq('aa aa aa', 'aaaa  aa'))
+
+    def test_number_strins(self):
+        self.assertTrue(is_shift_eq("567890", "890567"))
+
+    def test_large_string_performance_test(self):
+        N = 100000
+        source = str(range(N))
+        target = source[:N//2] + source[N//2:]
+        self.assertTrue(is_shift_eq(source, target))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
+```
 
 ### Aug 24, 2020 LC 560 \[Medium\] Subarray Sum Equals K
 ---
