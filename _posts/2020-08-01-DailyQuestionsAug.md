@@ -19,6 +19,38 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
 
+### Aug 26, 2020 LC 1171 \[Medium\] Remove Consecutive Nodes that Sum to 0
+---
+> **Question:** Given a linked list of integers, remove all consecutive nodes that sum up to 0.
+
+**Example 1:**
+```py
+Input: 10 -> 5 -> -3 -> -3 -> 1 -> 4 -> -4
+Output: 10
+Explanation: The consecutive nodes 5 -> -3 -> -3 -> 1 sums up to 0 so that sequence should be removed. 4 -> -4 also sums up to 0 too so that sequence should also be removed.
+```
+
+**Example 2:**
+
+```py
+Input: 1 -> 2 -> -3 -> 3 -> 1
+Output: 3 -> 1
+Note: 1 -> 2 -> 1 would also be accepted.
+```
+
+**Example 3:**
+```py
+Input: 1 -> 2 -> 3 -> -3 -> 4
+Output: 1 -> 2 -> 4
+```
+
+**Example 4:**
+```py
+Input: 1 -> 2 -> 3 -> -3 -> -2
+Output: 1
+```
+
+
 ### Aug 25, 2020 LC 796 \[Easy\] Shift-Equivalent Strings
 ---
 > **Question:** Given two strings A and B, return whether or not A can be shifted some number of times to get B.
