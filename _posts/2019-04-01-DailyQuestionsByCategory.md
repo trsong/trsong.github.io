@@ -116,6 +116,21 @@ Output: [4, 8] order does not matter
 ### Hashing
 ---
 
+<details>
+<summary class="lc_e">
+
+- [**\[Easy\] LC 796. Shift-Equivalent Strings**](https://trsong.github.io/python/java/2020/08/02/DailyQuestionsAug/#aug-25-2020-lc-796-easy-shift-equivalent-strings) -- *Given two strings A and B, return whether or not A can be shifted some number of times to get B.* [*\(Try ME\)*](https://repl.it/@trsong/Check-if-Strings-are-Shift-Equivalent-1)
+
+</summary>
+<div>
+
+**Question:** Given two strings A and B, return whether or not A can be shifted some number of times to get B.
+
+For example, if A is `'abcde'` and B is `'cdeab'`, return `True`. If A is `'abc'` and B is `'acb'`, return `False`.
+
+</div>
+</details>
+
 ## Array
 ---
 
