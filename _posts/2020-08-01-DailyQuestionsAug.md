@@ -19,6 +19,13 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
 
+### Aug 27, 2020 LC 253 \[Easy\] Minimum Lecture Rooms
+---
+> **Questions:** Given an array of time intervals `(start, end)` for classroom lectures (possibly overlapping), find the minimum number of rooms required.
+>
+> For example, given `[(30, 75), (0, 50), (60, 150)]`, you should return `2`.
+
+
 ### Aug 26, 2020 LC 1171 \[Medium\] Remove Consecutive Nodes that Sum to 0
 ---
 > **Question:** Given a linked list of integers, remove all consecutive nodes that sum up to 0.
