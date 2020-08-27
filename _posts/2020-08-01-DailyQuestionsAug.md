@@ -50,6 +50,88 @@ Input: 1 -> 2 -> 3 -> -3 -> -2
 Output: 1
 ```
 
+**My thoughts:** This question is just the list version of [Contiguous Sum to K](https://trsong.github.io/python/java/2019/05/01/DailyQuestions/#jul-24-2019-medium-contiguous-sum-to-k). The idea is exactly the same, in previous question: `sum[i:j]` can be achieved use `prefix[j] - prefix[i-1] where i <= j`, whereas for this question, we can use map to store the "prefix" sum: the sum from the head node all the way to current node. And by checking the prefix so far, we can easily tell if there is a node we should have seen before that has "prefix" sum with same value. i.e. There are consecutive nodes that sum to 0 between these two nodes.
+
+
+**Solution:** [https://repl.it/@trsong/Remove-Consecutive-Nodes-that-Sum-to-Zero](https://repl.it/@trsong/Remove-Consecutive-Nodes-that-Sum-to-Zero)
+```py
+import unittest
+
+def remove_zero_sum_sublists(head):
+    dummy = ListNode(-1, head)
+    prefix_sum_lookup = {0: dummy}
+    p = dummy.next
+    accu_sum = 0
+    while p:
+        accu_sum += p.val
+        if accu_sum not in prefix_sum_lookup:
+            prefix_sum_lookup[accu_sum] = p
+        else:
+            loop_start = prefix_sum_lookup[accu_sum]
+            q = loop_start.next
+            accu_sum_to_remove = accu_sum
+            while q != p:
+                accu_sum_to_remove += q.val
+                del prefix_sum_lookup[accu_sum_to_remove]
+                q = q.next
+            loop_start.next = p.next
+        p = p.next
+    return dummy.next
+
+
+###################
+# Testing Utility
+###################
+class ListNode(object):
+    def __init__(self, val, next=None):
+        self.val = val
+        self.next = next
+
+    def __eq__(self, other):
+        return other and self.val == other.val and self.next == other.next
+
+    def __repr__(self):
+        return "%s -> %s" % (str(self.val), str(self.next))
+
+    @staticmethod  
+    def List(*vals):
+        p = dummy = ListNode(-1)
+        for elem in vals:
+            p.next = ListNode(elem)
+            p = p.next
+        return dummy.next  
+
+    
+class RemoveZeroSumSublistSpec(unittest.TestCase):
+    def test_example1(self):
+        self.assertEqual(ListNode.List(10), remove_zero_sum_sublists(ListNode.List(10, 5, -3, -3, 1, 4, -4)))
+
+    def test_example2(self):
+        self.assertEqual(ListNode.List(3, 1), remove_zero_sum_sublists(ListNode.List(1, 2, -3, 3, 1)))
+
+    def test_example3(self):
+        self.assertEqual(ListNode.List(1, 2, 4), remove_zero_sum_sublists(ListNode.List(1, 2, 3, -3, 4)))
+
+    def test_example4(self):
+        self.assertEqual(ListNode.List(1), remove_zero_sum_sublists(ListNode.List(1, 2, 3, -3, -2)))
+
+    def test_empty_list(self):
+        self.assertEqual(ListNode.List(), remove_zero_sum_sublists(ListNode.List()))
+
+    def test_all_zero_list(self):
+        self.assertEqual(ListNode.List(), remove_zero_sum_sublists(ListNode.List(0, 0, 0)))
+
+    def test_add_up_to_zero_list(self):
+        self.assertEqual(ListNode.List(), remove_zero_sum_sublists(ListNode.List(1, -1, 0, -1, 1)))
+
+    def test_overlap_section_add_to_zero(self):
+        self.assertEqual(ListNode.List(1, 5, -1, -2, 99), remove_zero_sum_sublists(ListNode.List(1, -1, 2, 3, 0, -3, -2, 1, 5, -1, -2, 99)))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
+```
+
 
 ### Aug 25, 2020 LC 796 \[Easy\] Shift-Equivalent Strings
 ---
