@@ -1339,6 +1339,46 @@ Explanation: A -> B -> idle -> A -> B -> idle -> A -> B.
 <details>
 <summary class="lc_m">
 
+- [**\[Medium\] LC 1171. Remove Consecutive Nodes that Sum to 0**](https://trsong.github.io/python/java/2020/08/02/DailyQuestionsAug/#aug-26-2020-lc-1171-medium-remove-consecutive-nodes-that-sum-to-0) -- *Given a linked list of integers, remove all consecutive nodes that sum up to 0.* [*\(Try ME\)*](https://repl.it/@trsong/Remove-Consecutive-Nodes-that-Sum-to-Zero-1)
+
+</summary>
+<div>
+
+**Question:** Given a linked list of integers, remove all consecutive nodes that sum up to 0.
+
+**Example 1:**
+```py
+Input: 10 -> 5 -> -3 -> -3 -> 1 -> 4 -> -4
+Output: 10
+Explanation: The consecutive nodes 5 -> -3 -> -3 -> 1 sums up to 0 so that sequence should be removed. 4 -> -4 also sums up to 0 too so that sequence should also be removed.
+```
+
+**Example 2:**
+
+```py
+Input: 1 -> 2 -> -3 -> 3 -> 1
+Output: 3 -> 1
+Note: 1 -> 2 -> 1 would also be accepted.
+```
+
+**Example 3:**
+```py
+Input: 1 -> 2 -> 3 -> -3 -> 4
+Output: 1 -> 2 -> 4
+```
+
+**Example 4:**
+```py
+Input: 1 -> 2 -> 3 -> -3 -> -2
+Output: 1
+```
+
+</div>
+</details>
+
+<details>
+<summary class="lc_m">
+
 - [**\[Medium\] LC 560. Subarray Sum Equals K**](https://trsong.github.io/python/java/2020/08/02/DailyQuestionsAug/#aug-24-2020-lc-560-medium-subarray-sum-equals-k) -- *Given a list of integers and a number K, return which contiguous elements of the list sum to K.* [*\(Try ME\)*](https://repl.it/@trsong/Find-Number-of-Sub-array-Sum-Equals-K-1)
 
 </summary>
