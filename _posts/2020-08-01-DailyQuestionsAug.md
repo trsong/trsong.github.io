@@ -25,6 +25,61 @@ categories: Python/Java
 >
 > For example, given `[(30, 75), (0, 50), (60, 150)]`, you should return `2`.
 
+**My thoughts:** whenever we enter an interval at time t, the total number of room at time t increment by 1 and whenever we leave an interval the total number of required room decrement by 1. For `(1, 10)`, `(5, 15)` and `(6, 15)`, `+1` at `t = 1, 5, 6` and `-1` at `t=10, 15, 15`. And at peak hour, the total room equals 3. 
+
+**Solution:** [https://repl.it/@trsong/Minimum-Required-Lecture-Rooms](https://repl.it/@trsong/Minimum-Required-Lecture-Rooms)
+```py
+import unittest
+
+def min_lecture_rooms(intervals):
+    start_times = map(lambda t: (t[0], 1), intervals)
+    end_times = map(lambda t: (t[1], -1), intervals)
+    times = sorted(start_times + end_times)
+
+    accu_rooms = 0
+    max_rooms = 0
+    for _, room_diff in times:
+        accu_rooms += room_diff
+        max_rooms = max(max_rooms, accu_rooms)
+    return max_rooms
+
+
+class MinLectureRoomSpec(unittest.TestCase):
+    def setUp(self):
+        self.t1 = (-10, 0)
+        self.t2 = (-5, 5)
+        self.t3 = (0, 10)
+        self.t4 = (5, 15)
+    
+    def test_overlapping_end_points(self):
+        intervals = [self.t1] * 3
+        expected = 3
+        self.assertEqual(expected, min_lecture_rooms(intervals))
+    
+    def test_overlapping_end_points2(self):
+        intervals = [self.t3, self.t1]
+        expected = 1
+        self.assertEqual(expected, min_lecture_rooms(intervals))
+
+    def test_not_all_overlapping_intervals(self):
+        intervals = [(30, 75), (0, 50), (60, 150)]
+        expected = 2
+        self.assertEqual(expected, min_lecture_rooms(intervals))
+
+    def test_not_all_overlapping_intervals2(self):
+        intervals = [self.t1, self.t3, self.t2, self.t4]
+        expected = 2
+        self.assertEqual(expected, min_lecture_rooms(intervals))
+
+    def test_not_all_overlapping_intervals3(self):
+        intervals = [self.t1, self.t3, self.t2, self.t4] * 2
+        expected = 4
+        self.assertEqual(expected, min_lecture_rooms(intervals))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
+```
 
 ### Aug 26, 2020 LC 1171 \[Medium\] Remove Consecutive Nodes that Sum to 0
 ---
