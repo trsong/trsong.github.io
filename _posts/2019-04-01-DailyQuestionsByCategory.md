@@ -654,6 +654,21 @@ B = 6 -> 3 -> 4
 ## Sort
 ---
 
+<details>
+<summary class="lc_e">
+
+- [**\[Easy\] LC 253. Minimum Lecture Rooms**](https://trsong.github.io/python/java/2020/08/02/DailyQuestionsAug/#aug-27-2020-lc-253-easy-minimum-lecture-rooms) -- *Given an array of time intervals (start, end) for classroom lectures (possibly overlapping), find the minimum number of rooms required.* [*\(Try ME\)*](https://repl.it/@trsong/Minimum-Required-Lecture-Rooms-1)
+
+</summary>
+<div>
+
+**Questions:** Given an array of time intervals `(start, end)` for classroom lectures (possibly overlapping), find the minimum number of rooms required.
+
+For example, given `[(30, 75), (0, 50), (60, 150)]`, you should return `2`.
+
+</div>
+</details>
+
 
 <details>
 <summary class="lc_e">
