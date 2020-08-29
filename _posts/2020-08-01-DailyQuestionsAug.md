@@ -19,6 +19,35 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
 
+### Aug 29, 2020 \[Easy\] Tree Isomorphism Problem
+---
+> **Question:** Write a function to detect if two trees are isomorphic. Two trees are called isomorphic if one of them can be obtained from other by a series of flips, i.e. by swapping left and right children of a number of nodes. Any number of nodes at any level can have their children swapped. Two empty trees are isomorphic.
+
+
+**Example:** 
+```py
+The following two trees are isomorphic with following sub-trees flipped: 2 and 3, NULL and 6, 7 and 8.
+
+Tree1:
+     1
+   /   \
+  2     3
+ / \   /
+4   5 6
+   / \
+  7   8
+
+Tree2:
+   1
+ /   \
+3     2
+ \   / \
+  6 4   5
+       / \
+      8   7
+```
+
+
 ### Aug 28, 2020  LC 86 \[Medium\] Partitioning Linked List
 ---
 > **Question:** Given a linked list and a value x, partition it such that all nodes less than x come before nodes greater than or equal to x.
