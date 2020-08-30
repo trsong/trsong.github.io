@@ -855,6 +855,45 @@ For example, given the string `tweet`, return `tteew`. `eettw` would also be acc
 <details>
 <summary class="lc_e">
 
+- [**\[Easy\] Tree Isomorphism Problem**](https://trsong.github.io/python/java/2020/08/02/DailyQuestionsAug/#aug-29-2020-easy-tree-isomorphism-problem) -- *Write a function to detect if two trees are isomorphic.* [*\(Try ME\)*](https://repl.it/@trsong/Is-Binary-Tree-Isomorphic-1)
+
+</summary>
+<div>
+
+**Question:** Write a function to detect if two trees are isomorphic. Two trees are called isomorphic if one of them can be obtained from other by a series of flips, i.e. by swapping left and right children of a number of nodes. Any number of nodes at any level can have their children swapped. Two empty trees are isomorphic.
+
+
+**Example:** 
+```py
+The following two trees are isomorphic with following sub-trees flipped: 2 and 3, NULL and 6, 7 and 8.
+
+Tree1:
+     1
+   /   \
+  2     3
+ / \   /
+4   5 6
+   / \
+  7   8
+
+Tree2:
+   1
+ /   \
+3     2
+ \   / \
+  6 4   5
+       / \
+      8   7
+```
+
+
+</div>
+</details>
+
+
+<details>
+<summary class="lc_e">
+
 - [**\[Easy\] Full Binary Tree**](https://trsong.github.io/python/java/2020/08/02/DailyQuestionsAug/#aug-11-2020-easy-full-binary-tree) -- *Given a binary tree, remove the nodes in which there is only 1 child, so that the binary tree is a full binary tree.* [*\(Try ME\)*](https://repl.it/@trsong/Prune-to-Full-Binary-Tree-1)
 
 </summary>
