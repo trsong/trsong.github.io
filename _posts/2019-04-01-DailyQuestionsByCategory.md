@@ -30,6 +30,40 @@ categories: Python/Java
 <details>
 <summary class="lc_m">
 
+- [**\[Medium\] LC 166. Fraction to Recurring Decimal**](https://trsong.github.io/python/java/2020/08/02/DailyQuestionsAug/#aug-30-2020-lc-166-medium-fraction-to-recurring-decimal) -- *Given two integers representing the numerator and denominator of a fraction, return the fraction in string format.* [*\(Try ME\)*](https://repl.it/@trsong/Convert-Fraction-to-Recurring-Decimal-1)
+
+</summary>
+<div>
+
+**Question:** Given two integers representing the numerator and denominator of a fraction, return the fraction in string format.
+
+If the fractional part is repeating, enclose the repeating part in parentheses.
+
+**Example 1:**
+```py
+Input: numerator = 1, denominator = 2
+Output: "0.5"
+```
+
+**Example 2:**
+```py
+Input: numerator = 2, denominator = 1
+Output: "2"
+```
+
+**Example 3:**
+```py
+Input: numerator = 2, denominator = 3
+Output: "0.(6)"
+```
+
+</div>
+</details>
+
+
+<details>
+<summary class="lc_m">
+
 - [**\[Medium\] LC 29. Divide Two Integers**](https://trsong.github.io/python/java/2020/08/02/DailyQuestionsAug/#aug-23-2020-lc-29-medium-divide-two-integers) -- *Implement integer division without using the division operator: take two numbers,  return a tuple of (dividend, remainder)* [*\(Try ME\)*](https://repl.it/@trsong/Divide-Two-Integers-1)
 
 </summary>
