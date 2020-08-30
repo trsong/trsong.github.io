@@ -60,6 +60,78 @@ Input: numerator = 2, denominator = 3
 Output: "0.(6)"
 ```
 
+**Solution:** [https://repl.it/@trsong/Convert-Fraction-to-Recurring-Decimal](https://repl.it/@trsong/Convert-Fraction-to-Recurring-Decimal)
+```py
+import unittest
+
+def fraction_to_decimal(numerator, denominator):
+    if numerator == 0:
+        return "0"
+
+    sign = "-" if (numerator > 0) ^ (denominator > 0) else ""
+    numerator, denominator = abs(numerator), abs(denominator)
+    quotient, remainder = numerator // denominator, numerator % denominator
+    if remainder == 0:
+        return "%s%d" % (sign, quotient)
+    
+    decimals = []
+    remainder_history = {}
+    i = 0
+
+    while remainder != 0 and remainder not in remainder_history:
+        remainder_history[remainder] = i
+        i += 1
+
+        remainder *= 10
+        decimals.append(remainder // denominator)
+        remainder %= denominator
+
+
+    if remainder == 0:
+        return "%s%d.%s" % (sign, quotient, "".join(map(str, decimals)))
+    else:
+        repeated_start = remainder_history[remainder]
+        non_repeat_decimals = "".join(map(str, decimals[:repeated_start]))
+        repeated_decimals = "".join(map(str, decimals[repeated_start:]))
+        return "%s%d.%s(%s)" % (sign, quotient, non_repeat_decimals, repeated_decimals)
+
+
+class FractionToDecimalSpec(unittest.TestCase):
+    def test_example(self):
+        self.assertEqual("0.5", fraction_to_decimal(1, 2))
+
+    def test_example2(self):
+        self.assertEqual("2", fraction_to_decimal(2, 1))
+
+    def test_example3(self):
+        self.assertEqual("0.(6)", fraction_to_decimal(2, 3))
+    
+    def test_decimal_has_duplicate_digits(self):
+        self.assertEqual("1011.(1011)", fraction_to_decimal(3370000, 3333))
+
+    def test_result_is_zero(self):
+        self.assertEqual("0", fraction_to_decimal(0, -42))
+
+    def test_negative_numerator_and_denominator(self):
+        self.assertEqual("1.75", fraction_to_decimal(-7, -4))
+
+    def test_negative_numerator(self):
+        self.assertEqual("-1.7(5)", fraction_to_decimal(-79, 45))
+
+    def test_negative_denominator(self):
+        self.assertEqual("-3", fraction_to_decimal(3, -1))
+
+    def test_non_recurring_decimal(self):
+        self.assertEqual("0.1234123", fraction_to_decimal(1234123, 10000000))
+
+    def test_recurring_decimal(self):
+        self.assertEqual("-0.03(571428)", fraction_to_decimal(-1, 28))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
+```
+
 ### Aug 29, 2020 \[Easy\] Tree Isomorphism Problem
 ---
 > **Question:** Write a function to detect if two trees are isomorphic. Two trees are called isomorphic if one of them can be obtained from other by a series of flips, i.e. by swapping left and right children of a number of nodes. Any number of nodes at any level can have their children swapped. Two empty trees are isomorphic.
