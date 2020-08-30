@@ -19,6 +19,30 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
 
+### Aug 30, 2020 LC 166 \[Medium\] Fraction to Recurring Decimal
+---
+> **Question:** Given two integers representing the numerator and denominator of a fraction, return the fraction in string format.
+>
+> If the fractional part is repeating, enclose the repeating part in parentheses.
+
+**Example 1:**
+```py
+Input: numerator = 1, denominator = 2
+Output: "0.5"
+```
+
+**Example 2:**
+```py
+Input: numerator = 2, denominator = 1
+Output: "2"
+```
+
+**Example 3:**
+```py
+Input: numerator = 2, denominator = 3
+Output: "0.(6)"
+```
+
 ### Aug 29, 2020 \[Easy\] Tree Isomorphism Problem
 ---
 > **Question:** Write a function to detect if two trees are isomorphic. Two trees are called isomorphic if one of them can be obtained from other by a series of flips, i.e. by swapping left and right children of a number of nodes. Any number of nodes at any level can have their children swapped. Two empty trees are isomorphic.
@@ -47,6 +71,117 @@ Tree2:
       8   7
 ```
 
+**Solution:** [https://repl.it/@trsong/Is-Binary-Tree-Isomorphic](https://repl.it/@trsong/Is-Binary-Tree-Isomorphic)
+```py
+import unittest
+
+class TreeNode(object):
+    def __init__(self, val, left=None, right=None):
+        self.val = val
+        self.left = left
+        self.right = right
+
+
+def is_isomorphic(t1, t2):
+    if not t1 and not t2:
+        return True
+    
+    if not t1 or not t2:
+        return False
+    
+    if t1.val != t2.val:
+        return False
+
+    return (is_isomorphic(t1.left, t2.left)
+            and is_isomorphic(t1.right, t2.right)
+            or is_isomorphic(t1.right, t2.left)
+            and is_isomorphic(t1.left, t2.right))
+
+
+class IsIsomorphicSpec(unittest.TestCase):
+    def test_example(self):
+        """
+        Tree1:
+             1
+           /   \
+          2     3
+         / \   /
+        4   5 6
+           / \
+          7   8
+
+        Tree2:
+           1
+         /   \
+        3     2
+         \   / \
+          6 4   5
+               / \
+              8   7
+        """
+        p5 = TreeNode(5, TreeNode(7), TreeNode(8))
+        p2 = TreeNode(2, TreeNode(4), p5)
+        p3 = TreeNode(3, TreeNode(6))
+        p1 = TreeNode(1, p2, p3)
+
+        q5 = TreeNode(5, TreeNode(8), TreeNode(7))
+        q2 = TreeNode(2, TreeNode(4), q5)
+        q3 = TreeNode(3, right=TreeNode(6))
+        q1 = TreeNode(1, q3, q2)
+
+        self.assertTrue(is_isomorphic(p1, q1))
+
+    def test_empty_trees(self):
+        self.assertTrue(is_isomorphic(None, None))
+
+    def test_empty_vs_nonempty_trees(self):
+        self.assertFalse(is_isomorphic(None, TreeNode(1)))
+
+    def test_same_tree_val(self):
+        """
+        Tree1:
+        1
+         \
+          1
+         /
+        1 
+
+        Tree2:
+            1
+           /
+          1
+           \
+            1
+        """
+        t1 = TreeNode(1, right=TreeNode(1, TreeNode(1)))
+        t2 = TreeNode(1, TreeNode(1, right=TreeNode(1)))
+        self.assertTrue(is_isomorphic(t1, t2))
+
+    def test_same_val_yet_not_isomorphic(self):
+        """
+        Tree1:
+          1
+         / \
+        1   1
+           / \
+          1   1
+
+        Tree2:
+            1
+           / \
+          1   1
+         /     \
+        1       1
+        """
+        t1 = TreeNode(1, TreeNode(1, TreeNode(1), TreeNode(1)))
+        t2 = TreeNode(1, TreeNode(1, TreeNode(1)),
+                      TreeNode(1, right=TreeNode(1)))
+        self.assertFalse(is_isomorphic(t1, t2))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
+```
 
 ### Aug 28, 2020  LC 86 \[Medium\] Partitioning Linked List
 ---
