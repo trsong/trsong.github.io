@@ -37,9 +37,7 @@ k = 1
 Output: 1
 ```
 
-
 **Example 2:**
-
 ```py
 Input: 
        5
@@ -54,6 +52,7 @@ k = 3
 Output: 3
 ```
 
+
 ### Aug 31, 2020 \[Easy\] Depth of Binary Tree in Peculiar String Representation
 ---
 > **Question:** You are given a binary tree in a peculiar string representation. Each node is written in the form `(lr)`, where `l` corresponds to the left child and `r` corresponds to the right child.
@@ -67,6 +66,97 @@ Output: 3
 A root node with no children: (00)
 A root node with two children: ((00)(00))
 An unbalanced tree with three consecutive left children: ((((00)0)0)0)
+```
+
+
+**Solution:** [https://repl.it/@trsong/Depth-of-Binary-Tree-in-Peculiar-String-Representation](https://repl.it/@trsong/Depth-of-Binary-Tree-in-Peculiar-String-Representation)
+```py
+import unittest
+
+def depth(tree_str):
+    depth_delta = {
+        '(': 1,
+        ')': -1,
+        '0': 0
+    }
+    max_accu = 0
+    accu = 0
+    for c in tree_str:
+        accu += depth_delta[c]
+        max_accu = max(max_accu, accu)
+    return max_accu
+
+
+class DepthSpec(unittest.TestCase):
+    def test_empty_tree(self):
+        self.assertEqual(0, depth("0"))
+    
+    def test_one_node_without_child(self):
+        self.assertEqual(1, depth("(00)"))
+    
+    def test_one_node_with_two_children(self):
+        """
+          .
+         / \
+        .   .
+        """
+        self.assertEqual(2, depth("((00)(00))"))
+
+    def test_left_heavy_tree(self):
+        """
+              .
+             / \
+            .   .
+           / \
+          .   .
+         /
+        . 
+        """
+        node = "(00)"
+        ll = "(%s0)" % node
+        l = "(%s%s)" % (ll, node)
+        root = "(%s0)" % l
+        self.assertEqual(4, depth(root))
+
+    def test_right_heavy_tree(self):
+        """
+            .
+           / \
+          .   .
+         / \   \
+        .   .   .
+               / \
+              .   .
+        """ 
+        node2 = "((00)(00))"
+        r = "(0%s)" % node2
+        root = "(%s%s)" % (node2, r)
+        self.assertEqual(4, depth(root))
+
+    def test_zig_zag_tree(self):
+        """
+          .
+         /
+        .
+         \
+          .
+         /
+        .
+         \
+          .
+        """
+        node = "(00)"
+        make_left = lambda n: "(%s0)" % n
+        make_right = lambda n: "(0%s)" % n
+        lrl = make_right(node)
+        lr = make_left(lrl)
+        l = make_right(lr)
+        root = make_left(l)
+        self.assertEqual(5, depth(root))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
 ```
 
 
