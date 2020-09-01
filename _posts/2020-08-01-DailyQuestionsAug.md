@@ -19,6 +19,40 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
 
+### Sep 1, 2020 LC 230 \[Medium\] Kth Smallest Element in a BST
+---
+> **Question:** Given a binary search tree, write a function kthSmallest to find the kth smallest element in it.
+
+**Example 1:**
+
+```py
+Input: 
+   3
+  / \
+ 1   4
+  \
+   2
+
+k = 1
+Output: 1
+```
+
+
+**Example 2:**
+
+```py
+Input: 
+       5
+      / \
+     3   6
+    / \
+   2   4
+  /
+ 1
+
+k = 3
+Output: 3
+```
 
 ### Aug 31, 2020 \[Easy\] Depth of Binary Tree in Peculiar String Representation
 ---
