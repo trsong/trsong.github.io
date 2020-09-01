@@ -853,6 +853,31 @@ For example, given the string `tweet`, return `tteew`. `eettw` would also be acc
 ## Tree
 ---
 
+<details>
+<summary class="lc_e">
+
+- [**\[Easy\] Depth of Binary Tree in Peculiar String Representation**](https://trsong.github.io/python/java/2020/08/02/DailyQuestionsAug/#aug-31-2020-easy-depth-of-binary-tree-in-peculiar-string-representation) -- *Given a binary tree in a peculiar string representation, determine the depth of the tree.* [*\(Try ME\)*](https://repl.it/@trsong/Depth-of-Binary-Tree-in-Peculiar-String-Representation-1)
+
+</summary>
+<div>
+
+**Question:** You are given a binary tree in a peculiar string representation. Each node is written in the form `(lr)`, where `l` corresponds to the left child and `r` corresponds to the right child.
+
+If either `l` or `r` is null, it will be represented as a zero. Otherwise, it will be represented by a new `(lr)` pair.
+ 
+Given this representation, determine the depth of the tree.
+
+**Here are a few examples:**
+```py
+A root node with no children: (00)
+A root node with two children: ((00)(00))
+An unbalanced tree with three consecutive left children: ((((00)0)0)0)
+```
+
+</div>
+</details>
+
+
 ### BST
 ---
 
