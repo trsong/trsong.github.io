@@ -67,6 +67,89 @@ k = 3
 Output: 3
 ```
 
+**Solution with In-order Traversal:** [https://repl.it/@trsong/Find-Kth-Smallest-Element-in-a-BST](https://repl.it/@trsong/Find-Kth-Smallest-Element-in-a-BST)
+```py
+import unittest
+
+def kth_smallest(root, k):
+    it = in_order_traversal(root)
+    for _ in xrange(k):
+        v = next(it)
+    return v
+
+
+def in_order_traversal(root):
+    p = root
+    stack = []
+    while p or stack:
+        if p:
+            stack.append(p)
+            p = p.left
+        else:
+            p = stack.pop()
+            yield p.val
+            p = p.right
+    
+
+class TreeNode(object):
+    def __init__(self, val, left=None, right=None):
+        self.val = val
+        self.left = left
+        self.right = right
+
+
+class KthSmallestSpec(unittest.TestCase):
+    def test_example1(self):
+        """
+           3
+          / \
+         1   4
+          \
+           2
+        """
+        n1 = TreeNode(1, right=TreeNode(2))
+        tree = TreeNode(3, n1, TreeNode(4))
+        check_expected = [1, 2, 3, 4]
+        for e in check_expected:
+            self.assertEqual(e, kth_smallest(tree, e))
+
+    def test_example2(self):
+        """
+              5
+             / \
+            3   6
+           / \
+          2   4
+         /
+        1
+        """
+        n2 = TreeNode(2, TreeNode(1))
+        n3 = TreeNode(3, n2, TreeNode(4))
+        tree = TreeNode(5, n3, TreeNode(6))
+        check_expected = [1, 2, 3, 4, 5, 6]
+        for e in check_expected:
+            self.assertEqual(e, kth_smallest(tree, e))
+
+    def test_full_BST(self):
+        """
+             4
+           /   \
+          2     6
+         / \   / \
+        1   3 5   7
+        """
+        n2 = TreeNode(2, TreeNode(1), TreeNode(3))
+        n6 = TreeNode(6, TreeNode(5), TreeNode(7))
+        tree = TreeNode(4, n2, n6)
+        check_expected = [1, 2, 3, 4, 5, 6, 7]
+        for e in check_expected:
+            self.assertEqual(e, kth_smallest(tree, e))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
+```
+
 
 ### Aug 31, 2020 \[Easy\] Depth of Binary Tree in Peculiar String Representation
 ---
