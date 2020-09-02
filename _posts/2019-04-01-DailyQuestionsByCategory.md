@@ -1019,6 +1019,49 @@ return 23 (5 + 4 + 6 + 8).
 <details>
 <summary class="lc_m">
 
+- [**\[Medium\] LC 230. Kth Smallest Element in a BST**](https://trsong.github.io/python/java/2020/08/02/DailyQuestionsAug/#sep-1-2020-lc-230-medium-kth-smallest-element-in-a-bst) -- *Given a binary search tree, write a function kthSmallest to find the kth smallest element in it.* [*\(Try ME\)*](https://repl.it/@trsong/Find-Kth-Smallest-Element-in-a-BST-1)
+
+</summary>
+<div>
+
+**Question:** Given a binary search tree, write a function kthSmallest to find the kth smallest element in it.
+
+**Example 1:**
+
+```py
+Input: 
+   3
+  / \
+ 1   4
+  \
+   2
+
+k = 1
+Output: 1
+```
+
+**Example 2:**
+```py
+Input: 
+       5
+      / \
+     3   6
+    / \
+   2   4
+  /
+ 1
+
+k = 3
+Output: 3
+```
+
+</div>
+</details>
+
+
+<details>
+<summary class="lc_m">
+
 - [**\[Medium\] Tree Serialization**](https://trsong.github.io/python/java/2020/08/02/DailyQuestionsAug/#aug-20-2020-medium-tree-serialization) -- *Given the root of a binary tree. You need to implement 2 functions: Serialize and Deserialize.* [*\(Try ME\)*](https://repl.it/@trsong/Serialize-and-Deserialize-the-Binary-Tree-1)
 
 </summary>
