@@ -19,6 +19,21 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
 
+### Sep 2, 2020 \[Easy\] Deepest Node in a Binary Tree
+---
+> **Question:** You are given the root of a binary tree. Return the deepest node (the furthest node from the root).
+
+**Example:**
+```py
+    a
+   / \
+  b   c
+ /
+d
+The deepest node in this tree is d at depth 3.
+```
+
+
 ### Sep 1, 2020 LC 230 \[Medium\] Kth Smallest Element in a BST
 ---
 > **Question:** Given a binary search tree, write a function kthSmallest to find the kth smallest element in it.
