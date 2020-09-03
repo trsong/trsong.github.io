@@ -47,6 +47,95 @@ d
 The deepest node in this tree is d at depth 3.
 ```
 
+**Solution with BFS:** [https://repl.it/@trsong/Find-Deepest-Node-in-a-Binary-Tree](https://repl.it/@trsong/Find-Deepest-Node-in-a-Binary-Tree)
+```py
+import unittest
+from collections import deque
+
+def find_deepest_node(root):
+    res = None
+    for res in bfs_traversal(root):
+        continue
+    return res
+
+
+def bfs_traversal(root):
+    queue = deque([root])
+    while queue:
+        cur = queue.popleft()
+        if not cur:
+            continue
+        yield cur
+        queue.extend([cur.left, cur.right])
+        
+
+class Node(object):
+    def __init__(self, val, left=None, right=None):
+        self.val = val
+        self.left = left
+        self.right = right
+
+    def __repr__(self):
+        return "Node(%d)" % self.val
+
+
+class FindDeepestNodeSpec(unittest.TestCase):
+    def test_example(self):
+        """
+            1
+           / \
+          2   3
+         /
+        4
+        """
+        deepest_node = Node(4)
+        root = Node(1, Node(2, deepest_node), Node(3))
+        self.assertEqual(deepest_node, find_deepest_node(root))
+
+    def test_empty_tree(self):
+        self.assertIsNone(find_deepest_node(None))
+
+    def test_root_only(self):
+        root = Node(1)
+        self.assertEqual(root, find_deepest_node(root))
+
+    def test_complete_tree(self):
+        """
+               1
+             /   \
+            2     3
+           / \   / \
+          4   5 6   7
+         /
+        8
+        """
+        deepest_node = Node(8)
+        left_tree = Node(2, Node(4, deepest_node), Node(5))
+        right_tree = Node(3, Node(6), Node(7))
+        root = Node(1, left_tree, right_tree)
+        self.assertEqual(deepest_node, find_deepest_node(root))
+
+    def test_has_more_than_one_answer(self):
+        """
+           1
+          / \
+         2   3
+        / \   \
+       4   5   6
+           /    \
+          7      8 
+        """
+        deepest_node1 = Node(7)
+        deepest_node2 = Node(8)
+        left_tree = Node(2, Node(4), Node(5, deepest_node1))
+        right_tree = Node(3, right=Node(6, right=deepest_node2))
+        root = Node(1, left_tree, right_tree)
+        self.assertIn(find_deepest_node(root), [deepest_node1, deepest_node2])
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
+```
 
 ### Sep 1, 2020 LC 230 \[Medium\] Kth Smallest Element in a BST
 ---

@@ -1595,6 +1595,29 @@ For example, if the list is `[1, 2, 3, 4, 5]` and `K` is `9`, then it should ret
 ### BFS
 ---
 
+<details>
+<summary class="lc_e">
+
+- [**\[Easy\] Deepest Node in a Binary Tree**](https://trsong.github.io/python/java/2020/08/02/DailyQuestionsAug/#sep-2-2020-easy-deepest-node-in-a-binary-tree) -- *You are given the root of a binary tree. Return the deepest node (the furthest node from the root).* [*\(Try ME\)*](https://repl.it/@trsong/Find-Deepest-Node-in-a-Binary-Tree-1)
+
+</summary>
+<div>
+
+**Question:** You are given the root of a binary tree. Return the deepest node (the furthest node from the root).
+
+**Example:**
+```py
+    a
+   / \
+  b   c
+ /
+d
+The deepest node in this tree is d at depth 3.
+```
+
+</div>
+</details>
+
 
 <details>
 <summary class="lc_m">
