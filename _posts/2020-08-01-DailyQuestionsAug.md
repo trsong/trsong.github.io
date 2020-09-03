@@ -50,7 +50,6 @@ The deepest node in this tree is d at depth 3.
 **Solution with BFS:** [https://repl.it/@trsong/Find-Deepest-Node-in-a-Binary-Tree](https://repl.it/@trsong/Find-Deepest-Node-in-a-Binary-Tree)
 ```py
 import unittest
-from collections import deque
 from functools import reduce
 
 def find_deepest_node(root):
@@ -59,9 +58,9 @@ def find_deepest_node(root):
 
 
 def bfs_traversal(root):
-    queue = deque([root])
+    queue = [root]
     while queue:
-        cur = queue.popleft()
+        cur = queue.pop(0)
         if not cur:
             continue
         yield cur
