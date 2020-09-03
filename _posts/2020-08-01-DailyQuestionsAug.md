@@ -51,12 +51,11 @@ The deepest node in this tree is d at depth 3.
 ```py
 import unittest
 from collections import deque
+from functools import reduce
 
 def find_deepest_node(root):
-    res = None
-    for res in bfs_traversal(root):
-        continue
-    return res
+    it = bfs_traversal(root)
+    return reduce(lambda _, x: x, it, None)
 
 
 def bfs_traversal(root):
