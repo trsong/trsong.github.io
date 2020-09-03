@@ -19,6 +19,20 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
 
+### Sep 3, 2020 \[Easy\] Level of tree with Maximum Sum
+---
+> **Question:** Given a binary tree, find the level in the tree where the sum of all nodes on that level is the greatest.
+
+**Example:**
+```py
+The following tree should return level 1:
+    1          Level 0 - Sum: 1
+   / \
+  4   5        Level 1 - Sum: 9 
+ / \ / \
+3  2 4 -1      Level 2 - Sum: 8
+```
+
 ### Sep 2, 2020 \[Easy\] Deepest Node in a Binary Tree
 ---
 > **Question:** You are given the root of a binary tree. Return the deepest node (the furthest node from the root).
