@@ -1771,6 +1771,29 @@ Output: 1
 <details>
 <summary class="lc_e">
 
+- [**\[Easy\] Level of tree with Maximum Sum**](https://trsong.github.io/python/java/2020/08/02/DailyQuestionsAug/#sep-3-2020-easy-level-of-tree-with-maximum-sum) -- *Given a binary tree, find the level in the tree where the sum of all nodes on that level is the greatest.* [*\(Try ME\)*](https://repl.it/@trsong/Find-Level-of-tree-with-Maximum-Sum-1)
+
+</summary>
+<div>
+
+**Question:** Given a binary tree, find the level in the tree where the sum of all nodes on that level is the greatest.
+
+**Example:**
+```py
+The following tree should return level 1:
+    1          Level 0 - Sum: 1
+   / \
+  4   5        Level 1 - Sum: 9 
+ / \ / \
+3  2 4 -1      Level 2 - Sum: 8
+```
+
+</div>
+</details>
+
+<details>
+<summary class="lc_e">
+
 - [**\[Easy\] Flatten a Nested Dictionary**](https://trsong.github.io/python/java/2020/08/02/DailyQuestionsAug/#aug-8-2020-easy-flatten-a-nested-dictionary) -- *Write a function to flatten a nested dictionary. Namespace the keys with a period.* [*\(Try ME\)*](https://repl.it/@trsong/Flatten-Nested-Dictionary-1)
 
 </summary>
