@@ -19,6 +19,20 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
 
+### Sep 4, 2020 \[Medium\] Zig-Zag String
+--- 
+> **Question:** Given a string and a number of lines k, print the string in zigzag form. In zigzag, characters are printed out diagonally from top left to bottom right until reaching the kth line, then back up to top right, and so on.
+
+**Example:**
+```py
+Given the sentence "thisisazigzag" and k = 4, you should print:
+t     a     g
+ h   s z   a
+  i i   i z
+   s     g
+```
+
+
 ### Sep 3, 2020 \[Easy\] Level of tree with Maximum Sum
 ---
 > **Question:** Given a binary tree, find the level in the tree where the sum of all nodes on that level is the greatest.
