@@ -47,7 +47,7 @@ The following tree should return level 1:
 3  2 4 -1      Level 2 - Sum: 8
 ```
 
-**Solution with BFS:** [https://repl.it/@trsong/Find-Level-of-tree-with-Maximum-Sum](https://repl.it/@trsong/Find-Level-of-tree-with-Maximum-Sum)
+**Solution with DFS:** [https://repl.it/@trsong/Find-Level-of-tree-with-Maximum-Sum](https://repl.it/@trsong/Find-Level-of-tree-with-Maximum-Sum)
 ```py
 import unittest
 
