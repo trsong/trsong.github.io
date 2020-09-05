@@ -2283,7 +2283,7 @@ Explanation: we choose the numbers 5 and 1.
 
 
 <details>
-<summary class="lc_e">
+<summary class="lc_m">
 
 - [**\[Medium\] Zig-Zag String**](http://trsong.github.io/python/java/2020/08/02/DailyQuestionsAug/#sep-4-2020-medium-zig-zag-string) -- *Given a string and a number of lines k, print the string in zigzag form.* [*\(Try ME\)*](https://repl.it/@trsong/Print-Zig-Zag-String-1)
 
