@@ -19,6 +19,43 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
 
+### Sep 5, 2020 \[Easy\] Print Matrix in Clockwise Spiral
+--- 
+> **Question:** Given a N by M matrix of numbers, print out the matrix in a clockwise spiral.
+>
+> For example, given the following matrix:
+```py
+[[1,  2,  3,  4,  5],
+ [6,  7,  8,  9,  10],
+ [11, 12, 13, 14, 15],
+ [16, 17, 18, 19, 20]]
+```
+
+> You should print out the following:
+
+```py
+1
+2
+3
+4
+5
+10
+15
+20
+19
+18
+17
+16
+11
+6
+7
+8
+9
+14
+13
+12
+```
+
 ### Sep 4, 2020 \[Medium\] Zig-Zag String
 --- 
 > **Question:** Given a string and a number of lines k, print the string in zigzag form. In zigzag, characters are printed out diagonally from top left to bottom right until reaching the kth line, then back up to top right, and so on.
@@ -30,6 +67,116 @@ t     a     g
  h   s z   a
   i i   i z
    s     g
+```
+
+**Solution:** [https://repl.it/@trsong/Print-Zig-Zag-String](https://repl.it/@trsong/Print-Zig-Zag-String)
+```py
+import unittest
+
+def zig_zag_format(sentence, k):
+    if not sentence:
+        return []
+    elif k == 1:
+        return [sentence]
+
+    res = [[] for _ in xrange(min(k, len(sentence)))]
+    direction = -1
+    row = 0
+
+    for i, ch in enumerate(sentence):
+        if i < k:
+            space = i
+        elif direction > 0:
+            space = 2 * row - 1
+        else:
+            space = 2 * (k - row - 1) - 1
+        res[row].append(space * " " + ch)
+
+        if row == 0 or row == k-1:
+            direction *= -1
+        row += direction
+
+    return map(lambda line: "".join(line), res)
+
+
+class ZigZagFormatSpec(unittest.TestCase):
+    def assert_result(self, expected, result):
+        self.assertEqual(len(expected), len(result))
+        for expected_line, result_line in zip(expected, result):
+            self.assertEqual(expected_line.rstrip(), result_line.rstrip())
+
+    def test_example(self):
+        k, sentence = 4, "thisisazigzag"
+        expected = [
+            "t     a     g",
+            " h   s z   a ",
+            "  i i   i z  ",
+            "   s     g   "
+        ]
+        self.assert_result(expected, zig_zag_format(sentence, k))
+
+    def test_empty_string(self):
+        k, sentence = 10, ""
+        expected = []
+        self.assert_result(expected, zig_zag_format(sentence, k))
+
+    def test_trivial_case(self):
+        k, sentence = 1, "lumberjack"
+        expected = ["lumberjack"]
+        self.assert_result(expected, zig_zag_format(sentence, k))
+
+    def test_split_into_2_rows(self):
+        k, sentence = 2, "cheese steak jimmy's"
+        expected = [
+            "c e s   t a   i m ' ",
+            " h e e s e k j m y s"
+        ]
+        self.assert_result(expected, zig_zag_format(sentence, k))
+
+    def test_k_large_than_sentence(self):
+        k, sentence = 10, "rock on"
+        expected = [
+           "r",
+           " o",
+           "  c",
+           "   k",
+           "     ",
+           "     o",
+           "      n"
+        ]
+        self.assert_result(expected, zig_zag_format(sentence, k)) 
+
+    def test_k_barely_make_two_folds(self):
+        k, sentence = 6, "robin hood"
+        expected = [
+            "r         ",
+            " o       d",
+            "  b     o ",
+            "   i   o  ",
+            "    n h   ",
+            "          "
+        ]
+        self.assert_result(expected, zig_zag_format(sentence, k))
+
+    def test_k_barely_make_three_folds(self):
+        k, sentence = 10, "how do you turn this on"
+        expected = [
+            "h                 i     ",
+            " o               h s    ",
+            "  w             t       ",
+            "                     o  ",
+            "    d         n       n ",
+            "     o       r          ",
+            "            u           ",
+            "       y   t            ",
+            "        o               ",
+            "         u              "
+        ]
+        self.assert_result(expected, zig_zag_format(sentence, k))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
 ```
 
 
