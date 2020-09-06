@@ -19,6 +19,18 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
 
+### Sep 6, 2020 LC 8 \[Medium\] String to Integer (atoi)
+---
+> **Question:** Given a string, convert it to an integer without using the builtin str function. You are allowed to use ord to convert a character to ASCII code.
+>
+> Consider all possible cases of an integer. In the case where the string is not a valid integer, return None.
+
+**Example:**
+```py
+atoi('-105')  # -105
+```
+
+
 ### Sep 5, 2020 LC 54 \[Medium\] Spiral Matrix 
 ---
 > **Question:** Given a matrix of n x m elements (n rows, m columns), return all elements of the matrix in spiral order.
