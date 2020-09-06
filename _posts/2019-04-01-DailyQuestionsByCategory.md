@@ -169,6 +169,43 @@ For example, if A is `'abcde'` and B is `'cdeab'`, return `True`. If A is `'abc'
 ---
 
 <details>
+<summary class="lc_m">
+
+- [**\[Medium\] LC 54. Spiral Matrix**](http://trsong.github.io/python/java/2020/08/02/DailyQuestionsAug/#sep-5-2020-lc-54-medium-spiral-matrix) -- *Given a matrix of n x m elements (n rows, m columns), return all elements of the matrix in spiral order.* [*\(Try ME\)*](https://repl.it/@trsong/Spiral-Matrix-Traversal-1)
+
+</summary>
+<div>
+
+**Question:** Given a matrix of n x m elements (n rows, m columns), return all elements of the matrix in spiral order.
+
+**Example 1:**
+
+```py
+Input:
+[
+ [ 1, 2, 3 ],
+ [ 4, 5, 6 ],
+ [ 7, 8, 9 ]
+]
+Output: [1, 2, 3, 6, 9, 8, 7, 4, 5]
+```
+
+**Example 2:**
+
+```py
+Input:
+[
+  [1,  2,  3,  4],
+  [5,  6,  7,  8],
+  [9, 10, 11, 12]
+]
+Output: [1, 2, 3, 4, 8, 12, 11, 10, 9, 5, 6, 7]
+```
+
+</div>
+</details>
+
+<details>
 <summary class="lc_e">
 
 - [**\[Easy\] Record the Last N Orders**](https://trsong.github.io/python/java/2020/08/02/DailyQuestionsAug/#aug-15-2020-easy-record-the-last-n-orders) -- *You run an e-commerce website and want to record the last N order ids in a log.* [*\(Try ME\)*](https://repl.it/@trsong/Record-the-Last-N-Orders-1)
@@ -1743,10 +1780,10 @@ Input:
     [0, 1, 0],
     [0, 0, 0],
     [0, 0, 1]
+
 ]
 Output: 2
 ```
-
 **Example 3:**
 ```py
 Input: 
