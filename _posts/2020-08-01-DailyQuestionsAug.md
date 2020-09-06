@@ -85,7 +85,7 @@ def spiral_order(matrix):
             r += 1
         r_max -= 1
 
-        # Is stuck and can neither move left or up
+        # Is stuck and can neither move left nor up
         if c_min > c_max or r_min > r_max:
             res.append(matrix[r][c])
             break
