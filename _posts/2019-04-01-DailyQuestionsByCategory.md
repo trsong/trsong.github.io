@@ -30,6 +30,28 @@ categories: Python/Java
 <details>
 <summary class="lc_m">
 
+- [**\[Medium\] LC 8. String to Integer (atoi)**](http://trsong.github.io/python/java/2020/08/02/DailyQuestionsAug/#sep-6-2020-lc-8-medium-string-to-integer-atoi) -- *Given a string, convert it to an integer without using the builtin str function.* [*\(Try ME\)*](https://repl.it/@trsong/String-to-Integer-atoi-1)
+
+</summary>
+<div>
+
+**Question:** Given a string, convert it to an integer without using the builtin str function. You are allowed to use ord to convert a character to ASCII code.
+
+Consider all possible cases of an integer. In the case where the string is not a valid integer, return `0`.
+
+**Example:**
+```py
+atoi('-105')  # -105
+```
+
+</div>
+</details>
+
+
+<details>
+<summary class="lc_m">
+
+
 - [**\[Medium\] LC 166. Fraction to Recurring Decimal**](https://trsong.github.io/python/java/2020/08/02/DailyQuestionsAug/#aug-30-2020-lc-166-medium-fraction-to-recurring-decimal) -- *Given two integers representing the numerator and denominator of a fraction, return the fraction in string format.* [*\(Try ME\)*](https://repl.it/@trsong/Convert-Fraction-to-Recurring-Decimal-1)
 
 </summary>

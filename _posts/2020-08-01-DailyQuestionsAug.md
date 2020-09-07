@@ -23,11 +23,118 @@ categories: Python/Java
 ---
 > **Question:** Given a string, convert it to an integer without using the builtin str function. You are allowed to use ord to convert a character to ASCII code.
 >
-> Consider all possible cases of an integer. In the case where the string is not a valid integer, return None.
+> Consider all possible cases of an integer. In the case where the string is not a valid integer, return `0`.
 
 **Example:**
 ```py
 atoi('-105')  # -105
+```
+
+**Solution:** [https://repl.it/@trsong/String-to-Integer-atoi](https://repl.it/@trsong/String-to-Integer-atoi)
+```py
+import unittest
+
+INT_MIN = -2 ** 31
+INT_MAX = 2 ** 31 - 1
+
+def atoi(s):
+    n = len(s)
+    pos = 0
+    while pos < n and s[pos] == ' ':
+        pos += 1
+    
+    sign = 1
+    if pos < n and (s[pos] == '+' or s[pos] == '-'):
+        sign = -1 if s[pos] == '-' else 1
+        pos += 1
+
+    res = 0
+    while pos < n and '0' <= s[pos] <= '9':
+        digit = ord(s[pos]) - ord('0')
+        if sign > 0 and res > (INT_MAX - digit) // 10:
+            return INT_MAX
+        if sign < 0 and res <= (INT_MIN + digit) // 10:
+            return INT_MIN
+        res = 10 * res + sign * digit
+        pos += 1
+
+    return res
+
+
+class AtoiSpec(unittest.TestCase):
+    def test_example(self):
+        s = '-105'
+        expected = -105
+        self.assertEqual(expected, atoi(s))
+
+    def test_empty_string(self):
+        s = ''
+        expected = 0
+        self.assertEqual(expected, atoi(s))
+
+    def test_positive_number(self):
+        s = '42'
+        expected = 42
+        self.assertEqual(expected, atoi(s))
+
+    def test_negative_number_with_space(self):
+        s = '    -42'
+        expected = -42
+        self.assertEqual(expected, atoi(s))
+
+    def test_invalid_string_as_suffix(self):
+        s = '4123 some words 2'
+        expected = 4123
+        self.assertEqual(expected, atoi(s))
+
+    def test_invalid_string_as_prefix(self):
+        s = 'some prefix and 1'
+        expected = 0
+        self.assertEqual(expected, atoi(s))
+
+    def test_number_out_of_range(self):
+        s = '-91283472332'
+        expected = INT_MIN
+        self.assertEqual(expected, atoi(s))
+
+    def test_number_out_of_range2(self):
+        s = '-2147483649'
+        expected = INT_MIN
+        self.assertEqual(expected, atoi(s))
+
+    def test_number_out_of_range3(self):
+        s = '-2147483647'
+        expected = -2147483647
+        self.assertEqual(expected, atoi(s))
+
+    def test_number_out_of_range4(self):
+        s = '2147483647'
+        expected = INT_MAX
+        self.assertEqual(expected, atoi(s))
+
+    def test_number_out_of_range5(self):
+        s = '2147483648'
+        expected = INT_MAX
+        self.assertEqual(expected, atoi(s))
+
+    def test_number_out_of_range6(self):
+        s = '2147483646'
+        expected = 2147483646
+        self.assertEqual(expected, atoi(s))
+
+    def test_prefix_with_zero(self):
+        s = '   00012345'
+        expected = 12345
+        self.assertEqual(expected, atoi(s))
+
+    def test_invalid_prefix(self):
+        s = '+-2'
+        expected = 0
+        self.assertEqual(expected, atoi(s))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
 ```
 
 
