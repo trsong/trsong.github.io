@@ -19,6 +19,20 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
 
+### Sep 7, 2020 LC 763 \[Medium\] Partition Labels
+---
+> **Question:** A string S of lowercase English letters is given. We want to partition this string into as many parts as possible so that each letter appears in at most one part, and return a list of integers representing the size of these parts.
+
+**Example:**
+```py
+Input: S = "ababcbacadefegdehijhklij"
+Output: [9, 7, 8]
+Explanation: The partition is "ababcbaca", "defegde", "hijhklij". 
+This is a partition so that each letter appears in at most one part.
+A partition like "ababcbacadefegde", "hijhklij" is incorrect, because it splits S into less parts.
+```
+
+
 ### Sep 6, 2020 LC 8 \[Medium\] String to Integer (atoi)
 ---
 > **Question:** Given a string, convert it to an integer without using the builtin str function. You are allowed to use ord to convert a character to ASCII code.
