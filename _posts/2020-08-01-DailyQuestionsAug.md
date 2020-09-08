@@ -19,6 +19,43 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
 
+
+### Sep 8, 2020 LC 13 \[Easy\] Convert Roman Numerals to Decimal
+--- 
+> **Question:** Given a Roman numeral, find the corresponding decimal value. Inputs will be between 1 and 3999.
+> 
+> **Note:** Numbers are strings of these symbols in descending order. In some cases, subtractive notation is used to avoid repeated characters. The rules are as follows:
+> 1. I placed before V or X is one less, so 4 = IV (one less than 5), and 9 is IX (one less than 10)
+> 2. X placed before L or C indicates ten less, so 40 is XL (10 less than 50) and 90 is XC (10 less than 100).
+> 3. C placed before D or M indicates 100 less, so 400 is CD (100 less than 500), and 900 is CM (100 less than 1000).
+
+**Example:**
+```py
+Input: IX
+Output: 9
+
+Input: VII
+Output: 7
+
+Input: MCMIV
+Output: 1904
+
+Roman numerals are based on the following symbols:
+I     1
+IV    4
+V     5
+IX    9 
+X     10
+XL    40
+L     50
+XC    90
+C     100
+CD    400
+D     500
+CM    900
+M     1000
+```
+
 ### Sep 7, 2020 LC 763 \[Medium\] Partition Labels
 ---
 > **Question:** A string S of lowercase English letters is given. We want to partition this string into as many parts as possible so that each letter appears in at most one part, and return a list of integers representing the size of these parts.
@@ -30,6 +67,68 @@ Output: [9, 7, 8]
 Explanation: The partition is "ababcbaca", "defegde", "hijhklij". 
 This is a partition so that each letter appears in at most one part.
 A partition like "ababcbacadefegde", "hijhklij" is incorrect, because it splits S into less parts.
+```
+
+**Solution:** [https://repl.it/@trsong/Partition-Labels](https://repl.it/@trsong/Partition-Labels)
+```py
+import unittest
+
+def partion_labels(s):
+    last_occur = {ch: pos for pos, ch in enumerate(s)}
+    res = []
+    cut_pos = -1
+    last_cut_pos = -1
+    for i, ch in enumerate(s):
+        cut_pos = max(cut_pos, last_occur[ch])
+        if i == cut_pos:
+            window_size = cut_pos - last_cut_pos
+            res.append(window_size)
+            last_cut_pos = cut_pos
+    return res
+
+
+class PartionLabelSpec(unittest.TestCase):
+    def test_example(self):
+        s = "ababcbacadefegdehijhklij"
+        expected = [9, 7, 8]  # "ababcbaca", "defegde", "hijhklij"
+        self.assertEqual(expected, partion_labels(s))
+
+    def test_empty_string(self):
+        self.assertEqual([], partion_labels(""))
+
+    def test_one_whole_string(self):
+        s = "aaaaa"
+        expected = [5]
+        self.assertEqual(expected, partion_labels(s))
+
+    def test_string_with_distinct_characters(self):
+        s = "abcde"
+        expected = [1, 1, 1, 1, 1]
+        self.assertEqual(expected, partion_labels(s))
+
+    def test_string_that_cannot_break(self):
+        s = "abca"
+        expected = [4]
+        self.assertEqual(expected, partion_labels(s))
+
+    def test_string_that_cannot_break2(self):
+        s = "abaca"
+        expected = [5]
+        self.assertEqual(expected, partion_labels(s))
+
+    def test_break_as_many_parts(self):
+        s = "abacddc"
+        expected = [3, 4]
+        self.assertEqual(expected, partion_labels(s))
+
+    def test_break_as_many_parts2(self):
+        s = "abacdde"
+        expected = [3, 1, 2, 1]
+        self.assertEqual(expected, partion_labels(s))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
 ```
 
 

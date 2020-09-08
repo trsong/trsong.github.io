@@ -1577,6 +1577,28 @@ Explanation: A -> B -> idle -> A -> B -> idle -> A -> B.
 <details>
 <summary class="lc_m">
 
+- [**\[Medium\] LC 763. Partition Labels**](https://trsong.github.io/python/java/2020/08/02/DailyQuestionsAug/#sep-7-2020-lc-763-medium-partition-labels) -- *Partition the given string into as many parts as possible so that each letter appears in at most one part. Return length for each part.* [*\(Try ME\)*](https://repl.it/@trsong/Partition-Labels-1)
+
+</summary>
+<div>
+
+**Question:** A string S of lowercase English letters is given. We want to partition this string into as many parts as possible so that each letter appears in at most one part, and return a list of integers representing the size of these parts.
+
+**Example:**
+```py
+Input: S = "ababcbacadefegdehijhklij"
+Output: [9, 7, 8]
+Explanation: The partition is "ababcbaca", "defegde", "hijhklij". 
+This is a partition so that each letter appears in at most one part.
+A partition like "ababcbacadefegde", "hijhklij" is incorrect, because it splits S into less parts.
+```
+
+</div>
+</details>
+
+<details>
+<summary class="lc_m">
+
 - [**\[Medium\] LC 1171. Remove Consecutive Nodes that Sum to 0**](https://trsong.github.io/python/java/2020/08/02/DailyQuestionsAug/#aug-26-2020-lc-1171-medium-remove-consecutive-nodes-that-sum-to-0) -- *Given a linked list of integers, remove all consecutive nodes that sum up to 0.* [*\(Try ME\)*](https://repl.it/@trsong/Remove-Consecutive-Nodes-that-Sum-to-Zero-1)
 
 </summary>
