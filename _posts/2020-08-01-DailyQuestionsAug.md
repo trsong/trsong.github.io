@@ -48,7 +48,6 @@ Input: s = "catsandog", wordDict = ["cats", "dog", "sand", "and", "cat"]
 Output: False
 ```
 
-
 ### Sep 8, 2020 LC 13 \[Easy\] Convert Roman Numerals to Decimal
 --- 
 > **Question:** Given a Roman numeral, find the corresponding decimal value. Inputs will be between 1 and 3999.
@@ -83,6 +82,63 @@ CD    400
 D     500
 CM    900
 M     1000
+```
+
+**Solution:** [https://repl.it/@trsong/Convert-Roman-Format-Number](https://repl.it/@trsong/Convert-Roman-Format-Number)
+```py
+import unittest
+
+roman_unit = {'I': 1, 'V': 5, 'X': 10, 'L': 50, 'C': 100, 'D': 500, 'M': 1000}
+
+def roman_to_decimal(roman_str):
+    prev = 0
+    res = 0
+    for ch in roman_str:
+        cur = roman_unit[ch]
+        if prev < cur:
+            res -= 2 * prev
+        res += cur
+        prev = cur
+    return res 
+
+
+class RomanToDecimalSpec(unittest.TestCase):
+    def test_example1(self):
+        self.assertEqual(9, roman_to_decimal("IX"))
+
+    def test_example2(self):
+        self.assertEqual(7, roman_to_decimal("VII"))
+
+    def test_example3(self):
+        self.assertEqual(1904, roman_to_decimal("MCMIV"))
+
+    def test_boundary(self):
+        self.assertEqual(3999, roman_to_decimal("MMMCMXCIX"))
+
+    def test_descending_order_rule1(self):
+        self.assertEqual(34, roman_to_decimal("XXXIV"))
+
+    def test_descending_order_rule2(self):
+        self.assertEqual(640, roman_to_decimal("DCXL"))
+
+    def test_descending_order_rule3(self):
+        self.assertEqual(912, roman_to_decimal("CMXII"))
+
+    def test_all_decending_rules_applied(self):
+        self.assertEqual(3949, roman_to_decimal("MMMCMXLIX"))
+
+    def test_all_decending_rules_applied2(self):
+        self.assertEqual(2994, roman_to_decimal("MMCMXCIV"))
+
+    def test_all_in_normal_order(self):
+        self.assertEqual(1666, roman_to_decimal("MDCLXVI"))
+
+    def test_all_in_normal_order2(self):
+        self.assertEqual(3888, roman_to_decimal("MMMDCCCLXXXVIII"))
+        
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
 ```
 
 ### Sep 7, 2020 LC 763 \[Medium\] Partition Labels
