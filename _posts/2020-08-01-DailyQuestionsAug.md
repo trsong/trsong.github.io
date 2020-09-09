@@ -19,6 +19,35 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
 
+### Sep 9, 2020 LC 139 \[Medium\] Word Break
+---
+> **Question:** Given a non-empty string s and a dictionary wordDict containing a list of non-empty words, determine if s can be segmented into a space-separated sequence of one or more dictionary words.
+>
+> **Note:**
+> * The same word in the dictionary may be reused multiple times in the segmentation.
+> * You may assume the dictionary does not contain duplicate words.
+
+**Example 1:**
+```py
+Input: s = "Pseudocode", wordDict = ["Pseudo", "code"]
+Output: True
+Explanation: Return true because "Pseudocode" can be segmented as "Pseudo code".
+```
+
+**Example 2:**
+```py
+Input: s = "applepenapple", wordDict = ["apple", "pen"]
+Output: True
+Explanation: Return true because "applepenapple" can be segmented as "apple pen apple".
+             Note that you are allowed to reuse a dictionary word.
+```
+
+**Example 3:**
+```py
+Input: s = "catsandog", wordDict = ["cats", "dog", "sand", "and", "cat"]
+Output: False
+```
+
 
 ### Sep 8, 2020 LC 13 \[Easy\] Convert Roman Numerals to Decimal
 --- 
