@@ -55,6 +55,67 @@ Input: s = "catsandog", wordDict = ["cats", "dog", "sand", "and", "cat"]
 Output: False
 ```
 
+**My thoughts:** This question feels almost the same as [LC 279 Minimum Number of Squares Sum to N](https://trsong.github.io/python/java/2019/08/02/DailyQuestionsAug/#sep-22-2019-lc-279-medium-minimum-number-of-squares-sum-to-n). The idea is to think about the problem backwards and you may want to ask yourself: what makes `s[:n]` to be `True`? There must exist some word with length `m` where `m < n` such that `s[:n-m]` is `True` and string `s[n-m:n]` is in the dictionary. Therefore, the problem size shrinks from `n` to  `m` and it will go all the way to empty string which definitely is `True`.
+
+**Solution with DP:** [https://repl.it/@trsong/Word-Break-Problem](https://repl.it/@trsong/Word-Break-Problem)
+```py
+import unittest
+
+def word_break(s, word_dict):
+    n = len(s)
+    # Let dp[i] indicates whether s[:i] is breakable
+    # dp[i] = dp[i-k] for s[i-k:i] in dictinary with length k
+    dp = [False] * (n + 1)
+    dp[0] = True
+    for i in xrange(1, n + 1):
+        for word in word_dict:
+            if dp[i]:
+                break
+            k = len(word)
+            dp[i] = i >= k and dp[i - k] and s[i - k:i] == word
+    return dp[n]
+
+
+class WordBreakSpec(unittest.TestCase):
+    def test_example1(self):
+        self.assertTrue(word_break("Pseudocode", ["Pseudo", "code"]))
+
+    def test_example2(self):
+        self.assertTrue(word_break("applepenapple", ["apple", "pen"]))
+
+    def test_example3(self):
+        self.assertFalse(
+            word_break("catsandog", ["cats", "dog", "sand", "and", "cat"]))
+
+    def test_word_in_dict_is_a_prefix(self):
+        self.assertTrue(word_break("123456", ["12", "123", "456"]))
+
+    def test_word_in_dict_is_a_prefix2(self):
+        self.assertTrue(word_break("123456", ["12", "123", "456"]))
+
+    def test_word_in_dict_is_a_prefix3(self):
+        self.assertFalse(word_break("123456", ["12", "12345", "456"]))
+
+    def test_empty_word(self):
+        self.assertTrue(word_break("", ['a']))
+
+    def test_empty_word2(self):
+        self.assertTrue(word_break("", []))
+
+    def test_empty_word3(self):
+        self.assertFalse(word_break("a", []))
+
+    def test_use_same_word_twice(self):
+        self.assertTrue(word_break("aaabaaa", ["aaa", "b"]))
+
+    def test_impossible_word_combination(self):
+        self.assertFalse(word_break("aaaaa", ["aaa", "aaaa"]))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
+```
+
 ### Sep 8, 2020 LC 13 \[Easy\] Convert Roman Numerals to Decimal
 --- 
 > **Question:** Given a Roman numeral, find the corresponding decimal value. Inputs will be between 1 and 3999.

@@ -2176,6 +2176,45 @@ For example, given `"2542540123"`, you should return `['254.25.40.123', '254.254
 <details>
 <summary class="lc_m">
 
+- [**\[Medium\] LC 139. Word Break**](https://trsong.github.io/python/java/2020/08/02/DailyQuestionsAug/#sep-9-2020-lc-139-medium-word-break) -- *Given a non-empty string s and a dictionary with a list of non-empty words, determine if s can be segmented into a space-separated sequence.* [*\(Try ME\)*](https://repl.it/@trsong/Word-Break-Problem-1)
+
+</summary>
+<div>
+
+**Question:** Given a non-empty string s and a dictionary wordDict containing a list of non-empty words, determine if s can be segmented into a space-separated sequence of one or more dictionary words.
+
+**Note:**
+* The same word in the dictionary may be reused multiple times in the segmentation.
+* You may assume the dictionary does not contain duplicate words.
+
+**Example 1:**
+```py
+Input: s = "Pseudocode", wordDict = ["Pseudo", "code"]
+Output: True
+Explanation: Return true because "Pseudocode" can be segmented as "Pseudo code".
+```
+
+**Example 2:**
+```py
+Input: s = "applepenapple", wordDict = ["apple", "pen"]
+Output: True
+Explanation: Return true because "applepenapple" can be segmented as "apple pen apple".
+             Note that you are allowed to reuse a dictionary word.
+```
+
+**Example 3:**
+```py
+Input: s = "catsandog", wordDict = ["cats", "dog", "sand", "and", "cat"]
+Output: False
+```
+
+</div>
+</details>
+
+
+<details>
+<summary class="lc_m">
+
 - [**\[Medium\] LC 91. Decode Ways**](https://trsong.github.io/python/java/2020/08/02/DailyQuestionsAug/#aug-19-2020-lc-91-medium-decode-ways) -- *A message containing letters from A-Z is being encoded to numbers using the following mapping: 'A' -> 1 'B' -> 2 ... 'Z' -> 26.* [*\(Try ME\)*](https://repl.it/@trsong/Number-of-Decode-Ways-1)
 
 </summary>
