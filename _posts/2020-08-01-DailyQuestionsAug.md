@@ -18,6 +18,13 @@ categories: Python/Java
 
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
+### Sep 10, 2020 \[Easy\] Remove Duplicates From Linked List
+---
+> **Question:** Given a linked list, remove all duplicate values from the linked list.
+>
+> For instance, given `1 -> 2 -> 3 -> 3 -> 4`, then we wish to return the linked list `1 -> 2 -> 4`.
+
+
 
 ### Sep 9, 2020 LC 139 \[Medium\] Word Break
 ---
