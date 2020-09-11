@@ -18,12 +18,137 @@ categories: Python/Java
 
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
+
+### Sep 11, 2020 LC 358 \[Hard\] Rearrange String K Distance Apart
+---
+> **Question:** Given a non-empty string str and an integer k, rearrange the string such that the same characters are at least distance k from each other.
+>
+> All input strings are given in lowercase letters. If it is not possible to rearrange the string, return an empty string "".
+
+**Example 1:**
+```py
+str = "aabbcc", k = 3
+Result: "abcabc"
+The same letters are at least distance 3 from each other.
+```
+
+**Example 2:**
+```py
+str = "aaabc", k = 3 
+Answer: ""
+It is not possible to rearrange the string.
+```
+
+**Example 3:**
+```py
+str = "aaadbbcc", k = 2
+Answer: "abacabcd"
+Another possible answer is: "abcabcda"
+The same letters are at least distance 2 from each other.
+```
+
+
 ### Sep 10, 2020 \[Easy\] Remove Duplicates From Linked List
 ---
 > **Question:** Given a linked list, remove all duplicate values from the linked list.
 >
 > For instance, given `1 -> 2 -> 3 -> 3 -> 4`, then we wish to return the linked list `1 -> 2 -> 4`.
 
+**Solution:** [https://repl.it/@trsong/Remove-Duplicates-From-Linked-List](https://repl.it/@trsong/Remove-Duplicates-From-Linked-List)
+```py
+import unittest
+
+def remove_duplicates(lst):
+    prev = dummy = ListNode(-1, lst)
+    p = lst
+    visited = set()
+    while p:
+        if p.val in visited:
+            prev.next = p.next
+        else:
+            visited.add(p.val)
+            prev = p
+        p = p.next
+    return dummy.next
+
+
+###################
+# Testing Utilities
+###################
+class ListNode(object):
+    def __init__(self, val, next=None):
+        self.val = val
+        self.next = next
+
+    def __eq__(self, other):
+        return other and self.val == other.val and self.next == other.next
+
+    def __repr__(self):
+        return "%d -> %s" % (self.val, self.next)
+
+    @staticmethod  
+    def List(*vals):
+        dummy = ListNode(-1)
+        p = dummy
+        for elem in vals:
+            p.next = ListNode(elem)
+            p = p.next
+        return dummy.next 
+
+
+class RemoveDuplicateSpec(unittest.TestCase):
+    def test_example(self):
+        source_list = ListNode.List(1, 2, 3, 3, 4)
+        expected = ListNode.List(1, 2, 3, 4)
+        self.assertEqual(expected, remove_duplicates(source_list))
+
+    def test_empty_list(self):
+        self.assertIsNone(remove_duplicates(None))
+    
+    def test_one_element_list(self):
+        source_list = ListNode.List(-1)
+        expected = ListNode.List(-1)
+        self.assertEqual(expected, remove_duplicates(source_list))
+
+    def test_list_with_unique_value(self):
+        source_list = ListNode.List(1, 1, 1, 1)
+        expected = ListNode.List(1)
+        self.assertEqual(expected, remove_duplicates(source_list))
+    
+    def test_list_with_duplicate_elements(self):
+        source_list = ListNode.List(11, 11, 11, 21, 43, 43, 60)
+        expected = ListNode.List(11, 21, 43, 60)
+        self.assertEqual(expected, remove_duplicates(source_list))
+    
+    def test_list_with_duplicate_elements2(self):
+        source_list = ListNode.List(1, 1, 1, 2, 2, 3, 3, 3, 4, 4, 4, 4, 5, 5)
+        expected = ListNode.List(1, 2, 3, 4, 5)
+        self.assertEqual(expected, remove_duplicates(source_list))
+
+    def test_list_without_duplicate_elements(self):
+        source_list = ListNode.List(1, 2)
+        expected = ListNode.List(1, 2)
+        self.assertEqual(expected, remove_duplicates(source_list))
+
+    def test_unsorted_list(self):
+        source_list = ListNode.List(2, 1, 1, 2, 1)
+        expected = ListNode.List(2, 1)
+        self.assertEqual(expected, remove_duplicates(source_list))
+
+    def test_unsorted_list2(self):
+        source_list = ListNode.List(3, 2, 1, 3, 2, 1)
+        expected = ListNode.List(3, 2, 1)
+        self.assertEqual(expected, remove_duplicates(source_list))
+
+    def test_unsorted_list3(self):
+        source_list = ListNode.List(1, 1, 1)
+        expected = ListNode.List(1)
+        self.assertEqual(expected, remove_duplicates(source_list))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
+```
 
 
 ### Sep 9, 2020 LC 139 \[Medium\] Word Break

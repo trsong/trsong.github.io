@@ -730,6 +730,22 @@ Output: False
 ---
 
 <details>
+<summary class="lc_e">
+
+- [**\[Easy\] Remove Duplicates From Linked List**](https://trsong.github.io/python/java/2020/08/02/DailyQuestionsAug/#sep-10-2020-easy-remove-duplicates-from-linked-list) -- *Given a linked list, remove all duplicate values from the linked list.* [*\(Try ME\)*](https://repl.it/@trsong/Remove-Duplicates-From-Linked-List-1)
+
+</summary>
+<div>
+
+**Question:** Given a linked list, remove all duplicate values from the linked list.
+
+For instance, given `1 -> 2 -> 3 -> 3 -> 4`, then we wish to return the linked list `1 -> 2 -> 4`.
+
+</div>
+</details>
+
+
+<details>
 <summary class="lc_m">
 
 - [**\[Medium\] LC 86. Partitioning Linked List**](https://trsong.github.io/python/java/2020/08/02/DailyQuestionsAug/#aug-28-2020--lc-86-medium-partitioning-linked-list) -- *Given a linked list and a value x, partition it such that all nodes less than x come before nodes greater than or equal to x.* [*\(Try ME\)*](https://repl.it/@trsong/Partitioning-Singly-Linked-List-1)
