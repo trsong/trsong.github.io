@@ -19,6 +19,33 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
 
+### Sep 12, 2020 \[Medium\] Count Attacking Bishop Pairs
+---
+> **Question:** On our special chessboard, two bishops attack each other if they share the same diagonal. This includes bishops that have another bishop located between them, i.e. bishops can attack through pieces.
+> 
+> You are given N bishops, represented as (row, column) tuples on a M by M chessboard. Write a function to count the number of pairs of bishops that attack each other. The ordering of the pair doesn't matter: `(1, 2)` is considered the same as `(2, 1)`.
+>
+> For example, given `M = 5` and the list of bishops:
+
+```py
+(0, 0)
+(1, 2)
+(2, 2)
+(4, 0)
+```
+> The board would look like this:
+
+```py
+[b 0 0 0 0]
+[0 0 b 0 0]
+[0 0 b 0 0]
+[0 0 0 0 0]
+[b 0 0 0 0]
+```
+
+> You should return 2, since bishops 1 and 3 attack each other, as well as bishops 3 and 4.
+
+
 ### Sep 11, 2020 LC 358 \[Hard\] Rearrange String K Distance Apart
 ---
 > **Question:** Given a non-empty string str and an integer k, rearrange the string such that the same characters are at least distance k from each other.
