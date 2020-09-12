@@ -47,6 +47,105 @@ Another possible answer is: "abcabcda"
 The same letters are at least distance 2 from each other.
 ```
 
+**My thoughts:** Greedily choose the character with max remaining number for each window k. If no such character satisfy return empty string directly. 
+
+**Solution with Greedy Approach:** [https://repl.it/@trsong/Rearrange-Strings-K-Distance-Apart](https://repl.it/@trsong/Rearrange-Strings-K-Distance-Apart)
+```py
+import unittest
+from Queue import PriorityQueue
+
+def rearrange_string(input_string, k):
+    if k <= 0:
+        return ""
+
+    histogram = {}
+    for ch in input_string:
+        histogram[ch] = histogram.get(ch, 0) + 1
+
+    pq = PriorityQueue()
+    for ch, count in histogram.items():
+        pq.put((-count, ch))
+
+    res = []
+    while not pq.empty():
+        remaining_chars = []
+        for _ in xrange(k):
+            if pq.empty() and not remaining_chars:
+                break
+            elif pq.empty():
+                return ""
+            
+            neg_count, ch = pq.get()
+            res.append(ch)
+            if abs(neg_count) > 1:
+                remaining_chars.append((abs(neg_count)-1, ch))
+        
+        for count, ch in remaining_chars:
+            pq.put((-count, ch))
+
+    return "".join(res)
+                
+
+class RearrangeStringSpec(unittest.TestCase):
+    def assert_k_distance_apart(self, rearranged_string, original_string, k):
+        # Test same length
+        self.assertTrue(len(original_string) == len(rearranged_string))
+
+        # Test containing all characters
+        self.assertTrue(sorted(original_string) == sorted(rearranged_string))
+
+        # Test K distance apart
+        last_occur_map = {}
+        for i, c in enumerate(rearranged_string):
+            last_occur = last_occur_map.get(c, float('-inf'))
+            self.assertTrue(i - last_occur >= k)
+            last_occur_map[c] = i
+    
+    def test_utility_function_is_correct(self):
+        original_string = "aaadbbcc"
+        k = 2
+        ans1 = "abacabcd"
+        ans2 = "abcabcda"
+        self.assert_k_distance_apart(ans1, original_string, k)
+        self.assert_k_distance_apart(ans2, original_string, k)
+        self.assertRaises(AssertionError, self.assert_k_distance_apart, original_string, original_string, k)
+
+    def test_example1(self):
+        original_string = "aabbcc"
+        k = 3
+        target_string = rearrange_string(original_string, k)
+        self.assert_k_distance_apart(target_string, original_string, k)
+    
+    def test_example2(self):
+        original_string = "aaabc"
+        self.assertEqual(rearrange_string(original_string, 3),"")
+    
+    def test_example3(self):
+        original_string = "aaadbbcc"
+        k = 2
+        target_string = rearrange_string(original_string, k)
+        self.assert_k_distance_apart(target_string, original_string, k)
+    
+    def test_large_distance(self):
+        original_string = "abcd"
+        k = 10
+        rearranged_string = rearrange_string(original_string, k)
+        self.assert_k_distance_apart(rearranged_string, original_string, k)
+
+    def test_empty_input_string(self):
+        self.assertEqual(rearrange_string("", 1),"")
+    
+    def test_impossible_to_rearrange(self):
+        self.assertEqual(rearrange_string("aaaabbbcc", 3), "")
+
+    def test_k_too_small(self):
+        self.assertEqual(rearrange_string("a", 0), "")
+        self.assertEqual(rearrange_string("a", -1), "")
+    
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
+```
 
 ### Sep 10, 2020 \[Easy\] Remove Duplicates From Linked List
 ---
