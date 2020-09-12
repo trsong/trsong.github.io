@@ -19,6 +19,44 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
 
+### Sep 13, 2020 LC 37 \[Hard\] Sudoku Solver
+---
+> **Question:** Write a program to solve a Sudoku puzzle by filling the empty cells.
+>
+> A sudoku solution must satisfy all of the following rules:
+> - Each of the digits `1-9` must occur exactly once in each row.
+> - Each of the digits `1-9` must occur exactly once in each column.
+> - Each of the the digits `1-9` must occur exactly once in each of the 9 `3x3` sub-boxes of the grid.
+> - Empty cells are indicated `0`.
+
+**Example:**
+```py
+Input: [
+    [3, 0, 6, 5, 0, 8, 4, 0, 0], 
+    [5, 2, 0, 0, 0, 0, 0, 0, 0], 
+    [0, 8, 7, 0, 0, 0, 0, 3, 1], 
+    [0, 0, 3, 0, 1, 0, 0, 8, 0], 
+    [9, 0, 0, 8, 6, 3, 0, 0, 5], 
+    [0, 5, 0, 0, 9, 0, 6, 0, 0], 
+    [1, 3, 0, 0, 0, 0, 2, 5, 0], 
+    [0, 0, 0, 0, 0, 0, 0, 7, 4], 
+    [0, 0, 5, 2, 0, 6, 3, 0, 0]
+]
+
+Possible output:
+[
+    [3, 1, 6, 5, 7, 8, 4, 9, 2],
+    [5, 2, 9, 1, 3, 4, 7, 6, 8],
+    [4, 8, 7, 6, 2, 9, 5, 3, 1],
+    [2, 6, 3, 4, 1, 5, 9, 8, 7],
+    [9, 7, 4, 8, 6, 3, 1, 2, 5],
+    [8, 5, 1, 7, 9, 2, 6, 4, 3],
+    [1, 3, 8, 9, 4, 7, 2, 5, 6],
+    [6, 9, 2, 3, 5, 1, 8, 7, 4],
+    [7, 4, 5, 2, 8, 6, 3, 1, 9]
+]
+```
+
 ### Sep 12, 2020 \[Medium\] Count Attacking Bishop Pairs
 ---
 > **Question:** On our special chessboard, two bishops attack each other if they share the same diagonal. This includes bishops that have another bishop located between them, i.e. bishops can attack through pieces.
