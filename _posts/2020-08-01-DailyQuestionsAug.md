@@ -84,6 +84,112 @@ Possible output:
 > You should return 2, since bishops 1 and 3 attack each other, as well as bishops 3 and 4.
 
 
+**My thoughts:** Cell on same diagonal has the following properties:
+
+- Major diagonal: col - row = constant
+- Minor diagonal: col + row = constant
+  
+
+**Example:**
+```py
+>>> [[r-c for c in xrange(5)] for r in xrange(5)]
+[
+    [0, -1, -2, -3, -4],
+    [1, 0, -1, -2, -3],
+    [2, 1, 0, -1, -2],
+    [3, 2, 1, 0, -1],
+    [4, 3, 2, 1, 0]
+]
+
+>>> [[r+c for c in xrange(5)] for r in xrange(5)]
+[
+    [0, 1, 2, 3, 4],
+    [1, 2, 3, 4, 5],
+    [2, 3, 4, 5, 6],
+    [3, 4, 5, 6, 7],
+    [4, 5, 6, 7, 8]
+]
+```
+Thus, we can store the number of bishop on the same diagonal and use the formula to calculate n-choose-2: `n(n-1)/2`
+
+
+**Solution:** [https://repl.it/@trsong/Count-Number-of-Attacking-Bishop-Pairs](https://repl.it/@trsong/Count-Number-of-Attacking-Bishop-Pairs)
+```py
+import unittest
+
+def count_attacking_pairs(bishop_positions):
+    diagonal_key1 = lambda pos: pos[0] - pos[1]
+    diagonal_key2 = lambda pos: pos[0] + pos[1]
+    return count_pairs_by(bishop_positions, diagonal_key1) + count_pairs_by(bishop_positions, diagonal_key2)
+
+
+def count_pairs_by(positions, key):
+    histogram = {}
+    for pos in positions:
+        pos_key = key(pos)
+        histogram[pos_key] = histogram.get(pos_key, 0) + 1
+    # n choos 2 = n * (n-1) / 2
+    return sum(map(lambda count: count * (count - 1) // 2, histogram.values()))
+
+
+class CountAttackingPairSpec(unittest.TestCase):
+    def test_zero_bishops(self):
+        self.assertEqual(0, count_attacking_pairs([]))
+
+    def test_bishops_everywhere(self):
+        """
+        b b
+        b b
+        """
+        self.assertEqual(2, count_attacking_pairs([(0, 0), (0, 1), (1, 0), (1, 1)]))
+
+    def test_zero_attacking_pairs(self):
+        """
+        0 b 0 0
+        0 b 0 0
+        0 b 0 0
+        0 b 0 0
+        """
+        self.assertEqual(0, count_attacking_pairs([(0, 1), (1, 1), (2, 1), (3, 1)]))
+        """
+        0 0 0 b
+        b 0 0 0
+        b 0 b 0
+        0 0 0 0
+        """
+        self.assertEqual(0, count_attacking_pairs([(0, 3), (1, 0), (2, 0), (2, 2)]))
+
+    def test_no_bishop_between_attacking_pairs(self):
+        """
+        b 0 b
+        b 0 b
+        b 0 b
+        """
+        self.assertEqual(2, count_attacking_pairs([(0, 0), (1, 0), (2, 0), (0, 2), (1, 2), (2, 2)]))
+    
+    def test_no_bishop_between_attacking_pairs2(self):
+        """
+        b 0 0 0 0
+        0 0 b 0 0
+        0 0 b 0 0
+        0 0 0 0 0
+        b 0 0 0 0
+        """
+        self.assertEqual(2, count_attacking_pairs([(0, 0), (1, 2), (2, 2), (4, 0)]))
+
+    def test_has_bishop_between_attacking_pairs(self):
+        """
+        b 0 b
+        0 b 0
+        b 0 b
+        """
+        self.assertEqual(6, count_attacking_pairs([(0, 0), (0, 2), (1, 1), (2, 0), (2, 2)]))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
+```
+
 ### Sep 11, 2020 LC 358 \[Hard\] Rearrange String K Distance Apart
 ---
 > **Question:** Given a non-empty string str and an integer k, rearrange the string such that the same characters are at least distance k from each other.

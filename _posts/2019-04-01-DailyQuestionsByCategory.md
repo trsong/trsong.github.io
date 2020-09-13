@@ -163,6 +163,42 @@ For example, calling `divide(10, 3)` should return `(3, 1)` since the divisor is
 <details>
 <summary class="lc_m">
 
+- [**\[Medium\] Count Attacking Bishop Pairs**](http://trsong.github.io/python/java/2020/08/02/DailyQuestionsAug/#sep-12-2020-medium-count-attacking-bishop-pairs) -- *Given N bishops, represented as (row, column) tuples on a M by M chessboard, count the number of pairs of bishops attacking each other.* [*\(Try ME\)*](https://repl.it/@trsong/Count-Number-of-Attacking-Bishop-Pairs-1)
+
+</summary>
+<div>
+
+**Question:** On our special chessboard, two bishops attack each other if they share the same diagonal. This includes bishops that have another bishop located between them, i.e. bishops can attack through pieces.
+ 
+You are given N bishops, represented as (row, column) tuples on a M by M chessboard. Write a function to count the number of pairs of bishops that attack each other. The ordering of the pair doesn't matter: `(1, 2)` is considered the same as `(2, 1)`.
+
+For example, given `M = 5` and the list of bishops:
+
+```py
+(0, 0)
+(1, 2)
+(2, 2)
+(4, 0)
+```
+The board would look like this:
+
+```py
+[b 0 0 0 0]
+[0 0 b 0 0]
+[0 0 b 0 0]
+[0 0 0 0 0]
+[b 0 0 0 0]
+```
+
+You should return 2, since bishops 1 and 3 attack each other, as well as bishops 3 and 4.
+
+</div>
+</details>
+
+
+<details>
+<summary class="lc_m">
+
 - [**\[Medium\] Find Next Biggest Integer**](https://trsong.github.io/python/java/2020/05/02/DailyQuestionsMay/#june-1-2020-medium-find-next-biggest-integer) -- *Given an integer n, find the next biggest integer with the same number of 1-bits on.* [*\(Try ME\)*](https://repl.it/@trsong/Find-the-Next-Biggest-Integer-1)
 
 </summary>
