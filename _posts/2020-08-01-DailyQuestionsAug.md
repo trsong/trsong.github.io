@@ -57,6 +57,183 @@ Possible output:
 ]
 ```
 
+**Solution with Backtracking:** [https://repl.it/@trsong/Sudoku-Solver](https://repl.it/@trsong/Sudoku-Solver)
+```py
+import unittest
+from functools import reduce
+from copy import deepcopy
+
+class SampleSudoku(object):
+    UNFINISHED1 = [
+        [3, 0, 6, 5, 0, 8, 4, 0, 0],
+        [5, 2, 0, 0, 0, 0, 0, 0, 0],
+        [0, 8, 7, 0, 0, 0, 0, 3, 1], 
+        [0, 0, 3, 0, 1, 0, 0, 8, 0],
+        [9, 0, 0, 8, 6, 3, 0, 0, 5], 
+        [0, 5, 0, 0, 9, 0, 6, 0, 0],
+        [1, 3, 0, 0, 0, 0, 2, 5, 0],
+        [0, 0, 0, 0, 0, 0, 0, 7, 4],
+        [0, 0, 5, 2, 0, 6, 3, 0, 0]
+    ]
+    
+    FINISHED1 = [
+        [3, 1, 6, 5, 7, 8, 4, 9, 2],
+        [5, 2, 9, 1, 3, 4, 7, 6, 8],
+        [4, 8, 7, 6, 2, 9, 5, 3, 1],
+        [2, 6, 3, 4, 1, 5, 9, 8, 7],
+        [9, 7, 4, 8, 6, 3, 1, 2, 5],
+        [8, 5, 1, 7, 9, 2, 6, 4, 3],
+        [1, 3, 8, 9, 4, 7, 2, 5, 6],
+        [6, 9, 2, 3, 5, 1, 8, 7, 4],
+        [7, 4, 5, 2, 8, 6, 3, 1, 9]
+    ]
+
+    UNFINISHED2 = [
+        [5, 3, 0, 0, 7, 0, 0, 0, 0],
+        [6, 0, 0, 1, 9, 5, 0, 0, 0],
+        [0, 9, 8, 0, 0, 0, 0, 6, 0],
+        [8, 0, 0, 0, 6, 0, 0, 0, 3],
+        [4, 0, 0, 8, 0, 3, 0, 0, 1],
+        [7, 0, 0, 0, 2, 0, 0, 0, 6],
+        [0, 6, 0, 0, 0, 0, 2, 8, 0],
+        [0, 0, 0, 4, 1, 9, 0, 0, 5],
+        [0, 0, 0, 0, 8, 0, 0, 7, 9]
+    ]
+
+    FINISHED2 = [
+        [5, 3, 4, 6, 7, 8, 9, 1, 2], 
+        [6, 7, 2, 1, 9, 5, 3, 4, 8],
+        [1, 9, 8, 3, 4, 2, 5, 6, 7],
+        [8, 5, 9, 7, 6, 1, 4, 2, 3],
+        [4, 2, 6, 8, 5, 3, 7, 9, 1], 
+        [7, 1, 3, 9, 2, 4, 8, 5, 6], 
+        [9, 6, 1, 5, 3, 7, 2, 8, 4], 
+        [2, 8, 7, 4, 1, 9, 6, 3, 5],
+        [3, 4, 5, 2, 8, 6, 1, 7, 9]
+    ]
+
+
+
+class SudokuSolver(object):
+    def __init__(self, grid):
+        self.grid = grid
+        self.row_occupied = [[False for _ in xrange(9)] for _ in xrange(9)]
+        self.col_occupied = [[False for _ in xrange(9)] for _ in xrange(9)]
+        self.reigon_occupied = [[[False for _ in xrange(9)] for _ in xrange(3)] for _ in xrange(3)]
+
+    def mark_position(self, r, c, num):
+        self.grid[r][c] = num
+        num_index = num - 1
+        self.row_occupied[r][num_index] = True
+        self.col_occupied[c][num_index] = True
+        self.reigon_occupied[r//3][c//3][num_index] = True
+    
+    def unmark_position(self, r, c):
+        num = self.grid[r][c]
+        self.grid[r][c] = 0
+        num_index = num - 1
+        self.row_occupied[r][num_index] = False
+        self.col_occupied[c][num_index] = False
+        self.reigon_occupied[r//3][c//3][num_index] = False
+
+    def is_valid_number(self, r, c, num):
+        num_index = num - 1
+        return not(self.row_occupied[r][num_index] 
+                or self.col_occupied[c][num_index]
+                or self.reigon_occupied[r//3][c//3][num_index])
+
+    def backtrack(self, index, blank_positions):
+        if index >= len(blank_positions):
+            return True
+            
+        r, c = blank_positions[index]
+        valid_numbers = filter(lambda num: self.is_valid_number(r, c, num), xrange(1, 10))
+        for num in valid_numbers:
+            self.mark_position(r, c, num)
+            if self.backtrack(index + 1, blank_positions):
+               return True
+            self.unmark_position(r, c)
+        return False
+
+    def solve(self):
+        blank_positions = []
+        for r in xrange(9):
+            for c in xrange(9):
+                num = self.grid[r][c]
+                if num == 0:
+                    blank_positions.append((r, c))
+                else:
+                    self.mark_position(r, c, num)
+        
+        self.backtrack(0, blank_positions)
+        return self.grid
+
+        
+class SudokuSolverSpec(unittest.TestCase):
+    def assert_result(self, input_grid, expected_grid):
+        grid = deepcopy(input_grid)
+        solver = SudokuSolver(grid)
+        finished_grid = solver.solve()
+        validation_res = SudokuValidator.validate(finished_grid)
+        msg = '\n' + '\n'.join(map(str, finished_grid)) + '\nPossible Solution: \n' + '\n'.join(map(str, expected_grid))
+        self.assertTrue(validation_res, msg)
+
+    def test_example(self):
+        self.assert_result(SampleSudoku.UNFINISHED1, SampleSudoku.FINISHED1)
+
+    def test_example2(self):
+        self.assert_result(SampleSudoku.UNFINISHED2, SampleSudoku.FINISHED2)
+
+
+##################
+# Testing Utility
+##################
+class SudokuValidator(object):
+    @staticmethod
+    def validate(grid):
+        return (SudokuValidator.validate_row(grid)
+                and SudokuValidator.validate_col(grid)
+                and SudokuValidator.validate_region(grid))
+
+    @staticmethod
+    def validate_row(grid):
+        rows = [[(r, c) for c in xrange(9)] for r in xrange(9)]
+        return all(map(lambda row: SudokuValidator.validate_uniq(grid, row), rows))
+
+    @staticmethod
+    def validate_col(grid):
+        cols = [[(r, c) for r in xrange(9)] for c in xrange(9)]
+        return all(map(lambda col: SudokuValidator.validate_uniq(grid, col), cols))
+
+    @staticmethod
+    def validate_region(grid):
+        indices = [0, 3, 6]
+        width = 3
+        reigons = [[(r + dr, c + dc) for dr in xrange(width)
+                    for dc in xrange(width)] for r in indices for c in indices]
+        return all(map(lambda reigon: SudokuValidator.validate_uniq(grid, reigon), reigons))
+
+    @staticmethod
+    def validate_uniq(grid, postions):
+        values = map(lambda pos: grid[pos[0]][pos[1]], postions)
+        count = sum(1 for _ in values)
+        bits = reduce(lambda accu, v: accu | (1 << v), values, 0)
+        return count == 9 and bits == 0b1111111110
+
+
+class SudokuValidatorSpec(unittest.TestCase):
+    def test_valid_grid(self):
+        self.assertTrue(SudokuValidator.validate(SampleSudoku.FINISHED1))
+
+    def test_invalid_grid(self):
+        self.assertFalse(SudokuValidator.validate(SampleSudoku.UNFINISHED1))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
+```
+
+
 ### Sep 12, 2020 \[Medium\] Count Attacking Bishop Pairs
 ---
 > **Question:** On our special chessboard, two bishops attack each other if they share the same diagonal. This includes bishops that have another bishop located between them, i.e. bishops can attack through pieces.
