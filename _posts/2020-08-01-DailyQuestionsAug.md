@@ -19,6 +19,26 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
 
+### Sep 14, 2020 LC 57 \[Hard\] Insert Interval
+---
+> **Question:** Given a set of non-overlapping intervals, insert a new interval into the intervals (merge if necessary).
+>
+> You may assume that the intervals were initially sorted according to their start times.
+
+**Example 1:**
+```py
+Input: intervals = [[1,3],[6,9]], newInterval = [2,5]
+Output: [[1,5],[6,9]]
+```
+
+**Example 2:**
+```py
+Input: intervals = [[1,2],[3,5],[6,7],[8,10],[12,16]], newInterval = [4,8]
+Output: [[1,2],[3,10],[12,16]]
+Explanation: Because the new interval [4,8] overlaps with [3,5],[6,7],[8,10].
+```
+
+
 ### Sep 13, 2020 LC 37 \[Hard\] Sudoku Solver
 ---
 > **Question:** Write a program to solve a Sudoku puzzle by filling the empty cells.
