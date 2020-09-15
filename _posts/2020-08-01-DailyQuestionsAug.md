@@ -38,6 +38,85 @@ Output: [[1,2],[3,10],[12,16]]
 Explanation: Because the new interval [4,8] overlaps with [3,5],[6,7],[8,10].
 ```
 
+**Solution:** [https://repl.it/@trsong/Insert-Interval](https://repl.it/@trsong/Insert-Interval)
+```py
+import unittest
+
+def insert_interval(intervals, newInterval):
+    res = []
+    cur_start, cur_end = newInterval
+    for start, end in intervals:
+        if end < cur_start:
+            res.append([start, end])
+        elif cur_end < start:
+            res.append([cur_start, cur_end])
+            cur_start, cur_end = start, end
+        else:
+            cur_start = min(cur_start, start)
+            cur_end = max(cur_end, end)
+    res.append([cur_start, cur_end])
+    return res
+
+
+class InsertIntervalSpec(unittest.TestCase):
+    def test_example(self):
+        intervals = [[1, 3], [6, 9]]
+        newInterval = [2, 5]
+        expected = [[1, 5], [6, 9]]
+        self.assertEqual(expected, insert_interval(intervals, newInterval))
+
+    def test_example2(self):
+        intervals = [[1, 2], [3, 5], [6, 7], [8, 10], [12, 16]]
+        newInterval = [4, 8]
+        expected = [[1, 2], [3, 10], [12, 16]]
+        self.assertEqual(expected, insert_interval(intervals, newInterval))
+
+    def test_insert_into_empty_intervals(self):
+        intervals = []
+        newInterval = [4, 8]
+        expected = [[4, 8]]
+        self.assertEqual(expected, insert_interval(intervals, newInterval))
+
+    def test_new_interval_overlaps_all(self):
+        intervals = [[1, 2], [3, 4], [5, 6]]
+        newInterval = [2, 10]
+        expected = [[1, 10]]
+        self.assertEqual(expected, insert_interval(intervals, newInterval))
+
+    def test_new_interval_does_not_expand_original(self):
+        intervals = [[1, 7], [9, 12]]
+        newInterval = [10, 11]
+        expected = [[1, 7], [9, 12]]
+        self.assertEqual(expected, insert_interval(intervals, newInterval))
+
+    def test_new_interval_before_all(self):
+        intervals = [[1, 2], [3, 4]]
+        newInterval = [0, 1]
+        expected = [[0, 2], [3, 4]]
+        self.assertEqual(expected, insert_interval(intervals, newInterval))
+
+    def test_new_interval_before_all2(self):
+        intervals = [[1, 2], [3, 4]]
+        newInterval = [0, 0]
+        expected = [[0, 0], [1, 2], [3, 4]]
+        self.assertEqual(expected, insert_interval(intervals, newInterval))
+
+    def test_new_interval_after_all(self):
+        intervals = [[1, 2], [3, 4]]
+        newInterval = [5, 6]
+        expected = [[1, 2], [3, 4], [5, 6]]
+        self.assertEqual(expected, insert_interval(intervals, newInterval))
+
+    def test_new_interval_after_all2(self):
+        intervals = [[1, 2], [3, 4]]
+        newInterval = [3, 8]
+        expected = [[1, 2], [3, 8]]
+        self.assertEqual(expected, insert_interval(intervals, newInterval))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
+```
 
 ### Sep 13, 2020 LC 37 \[Hard\] Sudoku Solver
 ---
