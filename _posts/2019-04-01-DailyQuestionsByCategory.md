@@ -271,6 +271,64 @@ For example, if A is `'abcde'` and B is `'cdeab'`, return `True`. If A is `'abc'
 ## Array
 ---
 
+### Interval
+---
+
+
+<details>
+<summary class="lc_e">
+
+- [**\[Easy\] Merge Overlapping Intervals**](https://trsong.github.io/python/java/2020/08/02/DailyQuestionsAug/#aug-18-2020-easy-merge-overlapping-intervals) -- *Given a list of possibly overlapping intervals, return a new list of intervals where all overlapping intervals have been merged.* [*\(Try ME\)*](https://repl.it/@trsong/Merge-All-Overlapping-Intervals-1)
+
+</summary>
+<div>
+
+**Question:** Given a list of possibly overlapping intervals, return a new list of intervals where all overlapping intervals have been merged.
+
+The input list is not necessarily ordered in any way.
+
+For example, given `[(1, 3), (5, 8), (4, 10), (20, 25)]`, you should return `[(1, 3), (4, 10), (20, 25)]`.
+
+</div>
+</details>
+
+<details>
+<summary class="lc_e">
+
+- [**\[Easy\] LC 253. Minimum Lecture Rooms**](https://trsong.github.io/python/java/2020/08/02/DailyQuestionsAug/#aug-27-2020-lc-253-easy-minimum-lecture-rooms) -- *Given an array of time intervals (start, end) for classroom lectures (possibly overlapping), find the minimum number of rooms required.* [*\(Try ME\)*](https://repl.it/@trsong/Minimum-Required-Lecture-Rooms-1)
+
+</summary>
+<div>
+
+**Questions:** Given an array of time intervals `(start, end)` for classroom lectures (possibly overlapping), find the minimum number of rooms required.
+
+For example, given `[(30, 75), (0, 50), (60, 150)]`, you should return `2`.
+
+</div>
+</details>
+
+
+<details>
+<summary class="lc_m">
+
+- [**\[Medium\] LC 986. Interval List Intersections**](https://trsong.github.io/python/java/2020/08/02/DailyQuestionsAug/#sep-15-2020-lc-986-medium-interval-list-intersections) -- *Given two lists of closed intervals, each list of intervals is pairwise disjoint and in sorted order.* [*\(Try ME\)*](https://repl.it/@trsong/Interval-List-Intersections-1)
+
+</summary>
+<div>
+
+**Question:** Given two lists of closed intervals, each list of intervals is pairwise disjoint and in sorted order.
+
+Return the intersection of these two interval lists.
+
+**Example:**
+```py
+Input: A = [[0,2],[5,10],[13,23],[24,25]], B = [[1,5],[8,12],[15,24],[25,26]]
+Output: [[1,2],[5,5],[8,10],[15,23],[24,24],[25,25]]
+```
+
+</div>
+</details>
+
 <details>
 <summary class="lc_h">
 
@@ -895,21 +953,6 @@ B = 6 -> 3 -> 4
 ## Sort
 ---
 
-<details>
-<summary class="lc_e">
-
-- [**\[Easy\] LC 253. Minimum Lecture Rooms**](https://trsong.github.io/python/java/2020/08/02/DailyQuestionsAug/#aug-27-2020-lc-253-easy-minimum-lecture-rooms) -- *Given an array of time intervals (start, end) for classroom lectures (possibly overlapping), find the minimum number of rooms required.* [*\(Try ME\)*](https://repl.it/@trsong/Minimum-Required-Lecture-Rooms-1)
-
-</summary>
-<div>
-
-**Questions:** Given an array of time intervals `(start, end)` for classroom lectures (possibly overlapping), find the minimum number of rooms required.
-
-For example, given `[(30, 75), (0, 50), (60, 150)]`, you should return `2`.
-
-</div>
-</details>
-
 
 <details>
 <summary class="lc_e">
@@ -1510,23 +1553,6 @@ s.autocomplete('do')  # Return ['dog', 'door', 'dodge']
 
 ## Stack
 ---
-
-<details>
-<summary class="lc_e">
-
-- [**\[Easy\] Merge Overlapping Intervals**](https://trsong.github.io/python/java/2020/08/02/DailyQuestionsAug/#aug-18-2020-easy-merge-overlapping-intervals) -- *Given a list of possibly overlapping intervals, return a new list of intervals where all overlapping intervals have been merged.* [*\(Try ME\)*](https://repl.it/@trsong/Merge-All-Overlapping-Intervals-1)
-
-</summary>
-<div>
-
-**Question:** Given a list of possibly overlapping intervals, return a new list of intervals where all overlapping intervals have been merged.
-
-The input list is not necessarily ordered in any way.
-
-For example, given `[(1, 3), (5, 8), (4, 10), (20, 25)]`, you should return `[(1, 3), (4, 10), (20, 25)]`.
-
-</div>
-</details>
 
 
 <details>

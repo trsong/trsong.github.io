@@ -31,6 +31,86 @@ Input: A = [[0,2],[5,10],[13,23],[24,25]], B = [[1,5],[8,12],[15,24],[25,26]]
 Output: [[1,2],[5,5],[8,10],[15,23],[24,24],[25,25]]
 ```
 
+**Solution:** [https://repl.it/@trsong/Interval-List-Intersections](https://repl.it/@trsong/Interval-List-Intersections)
+```py
+import unittest
+
+def interval_intersection(seq1, seq2):
+    stream1, stream2 = iter(seq1), iter(seq2)
+    res = []
+    interval1 = next(stream1, None)
+    interval2 = next(stream2, None)
+    while interval1 and interval2:
+        start1, end1 = interval1
+        start2, end2 = interval2
+        if end1 < start2:
+            interval1 = next(stream1, None)
+        elif end2 < start1:
+            interval2 = next(stream2, None)
+        else:
+            overlap_start = max(start1, start2)
+            overlap_end = min(end1, end2)  
+            res.append([overlap_start, overlap_end])
+            # cut off overlap and reuse
+            interval1 = [overlap_end + 1, end1]  
+            interval2 = [overlap_end + 1, end2]
+    return res
+
+
+class IntervalIntersectionSpec(unittest.TestCase):
+    def test_example(self):
+        seq1 = [[0, 2], [5, 10], [13, 23], [24, 25]]
+        seq2 = [[1, 5], [8, 12], [15, 24], [25, 26]]
+        expected = [[1, 2], [5, 5], [8, 10], [15, 23], [24, 24], [25, 25]]
+        self.assertEqual(expected, interval_intersection(seq1, seq2))
+
+    def test_empty_interval(self):
+        seq1 = []
+        seq2 = [[1, 2]]
+        expected = []
+        self.assertEqual(expected, interval_intersection(seq1, seq2))
+
+    def test_overlap_entire_interval(self):
+        seq1 = [[1, 1], [2, 2], [3, 3], [8, 8]]
+        seq2 = [[0, 5]]
+        expected = [[1, 1], [2, 2], [3, 3]]
+        self.assertEqual(expected, interval_intersection(seq1, seq2))
+
+    def test_overlap_entire_interval2(self):
+        seq1 = [[0, 5]]
+        seq2 = [[1, 2], [4, 7]]
+        expected = [[1, 2], [4, 5]]
+        self.assertEqual(expected, interval_intersection(seq1, seq2))
+
+    def test_overlap_one_interval(self):
+        seq1 = [[0, 2], [5, 7]]
+        seq2 = [[1, 3], [4, 6]]
+        expected = [[1, 2], [5, 6]]
+        self.assertEqual(expected, interval_intersection(seq1, seq2))
+
+    def test_same_start_time(self):
+        seq1 = [[0, 2], [3, 7]]
+        seq2 = [[0, 5]]
+        expected = [[0, 2], [3, 5]]
+        self.assertEqual(expected, interval_intersection(seq1, seq2))
+
+    def test_same_start_time2(self):
+        seq1 = [[0, 2], [5, 7]]
+        seq2 = [[5, 7], [8, 9]]
+        expected = [[5, 7]]
+        self.assertEqual(expected, interval_intersection(seq1, seq2))
+    
+    def test_no_overlapping(self):
+        seq1 = [[1, 2], [5, 7]]
+        seq2 = [[0, 0], [3, 4], [8, 9]]
+        expected = []
+        self.assertEqual(expected, interval_intersection(seq1, seq2))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
+```
+
 ### Sep 14, 2020 LC 57 \[Hard\] Insert Interval
 ---
 > **Question:** Given a set of non-overlapping intervals, insert a new interval into the intervals (merge if necessary).
