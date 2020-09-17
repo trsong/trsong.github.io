@@ -19,6 +19,22 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
 
+### Sep 17, 2020 \[Medium\] Construct BST from Post-order Traversal
+---
+> **Question:** Given the sequence of keys visited by a postorder traversal of a binary search tree, reconstruct the tree.
+
+**Example:**
+```py
+Given the sequence 2, 4, 3, 8, 7, 5, you should construct the following tree:
+
+    5
+   / \
+  3   7
+ / \   \
+2   4   8
+```
+
+
 ### Sep 16, 2020 LC 329 \[Hard\] Longest Increasing Path in a Matrix
 ---
 > **Question:** Given an integer matrix, find the length of the longest increasing path.
