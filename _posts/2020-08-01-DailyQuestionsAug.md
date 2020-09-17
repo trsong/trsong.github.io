@@ -49,6 +49,127 @@ Output: 4
 Explanation: The longest increasing path is [3, 4, 5, 6]. Moving diagonally is not allowed.
 ```
 
+**My thoughts:** From any node, a valid path can never decrease and won't form a cycle; that create a DAG. The longest path in DAG can be calculated based on topological order within linear time.
+
+**Solution with Topological Sort:** [https://repl.it/@trsong/Longest-Increasing-Path-in-a-Matrix](https://repl.it/@trsong/Longest-Increasing-Path-in-a-Matrix)
+```py
+import unittest
+
+DIRECTIONS = [(-1, 0), (1, 0), (0, 1), (0, -1)]
+
+
+def longest_path_length(grid):
+    if not grid or not grid[0]:
+        return 0
+
+    top_order = find_top_order(grid)
+    return get_longest_distance(grid, top_order)
+
+
+def find_top_order(grid):
+    class NodeState:
+        UNVISITED = 0
+        VISITING = 1
+        VISITED = 2
+
+    n, m = len(grid), len(grid[0])
+    node_states = [[NodeState.UNVISITED for _ in xrange(m)] for _ in xrange(n)]
+    reverse_top_order = []
+
+    for c in xrange(m):
+        for r in xrange(n):
+            if node_states[r][c] is not NodeState.UNVISITED:
+                continue
+
+            stack = [(r, c)]
+            while stack:
+                cur_r, cur_c = stack[-1]
+                cur_val = grid[cur_r][cur_c]
+                if node_states[cur_r][cur_c] is NodeState.VISITED:
+                    stack.pop()
+                elif node_states[cur_r][cur_c] is NodeState.VISITING:
+                    reverse_top_order.append((cur_r, cur_c))
+                    node_states[cur_r][cur_c] = NodeState.VISITED
+                else:
+                    node_states[cur_r][cur_c] = NodeState.VISITING
+                    for dr, dc in DIRECTIONS:
+                        new_r, new_c = cur_r + dr, cur_c + dc
+                        if (0 <= new_r < n and 0 <= new_c < m
+                                and node_states[new_r][new_c] is
+                                NodeState.UNVISITED and grid[new_r][new_c] > cur_val):
+                            stack.append((new_r, new_c))
+    return reverse_top_order[::-1]
+
+
+def get_longest_distance(grid, top_order):
+    n, m = len(grid), len(grid[0])
+    distances = [[1 for _ in xrange(m)] for _ in xrange(n)]
+    max_distance = 1
+    for r, c in top_order:
+        cur_val = grid[r][c]
+        for dr, dc in DIRECTIONS:
+            from_r, from_c = r + dr, c + dc
+            if 0 <= from_r < n and 0 <= from_c < m and grid[from_r][from_c] < cur_val:
+                distances[r][c] = max(distances[r][c], 1 + distances[from_r][from_c])
+                max_distance = max(max_distance, distances[r][c])
+    return max_distance
+
+
+class LongestPathLengthSpec(unittest.TestCase):
+    def test_example(self):
+        grid = [
+            [9, 9, 4],
+            [6, 6, 8],
+            [2, 1, 1]
+        ]
+        expected = 4  # 1, 2, 6, 9
+        self.assertEqual(expected, longest_path_length(grid))
+
+    def test_example2(self):
+        grid = [
+            [3, 4, 5],
+            [3, 2, 6],
+            [2, 2, 1]
+        ]
+        expected = 4  # 3, 4, 5, 6
+        self.assertEqual(expected, longest_path_length(grid))
+
+    def test_empty_grid(self):
+        self.assertEqual(0, longest_path_length([[]]))
+
+    def test_sping_around_entire_grid(self):
+        grid = [
+            [5, 6, 7],
+            [4, 1, 8],
+            [3, 2, 9]
+        ]
+        expected = 9  # 1, 2, 3, 4, 5, 6, 7, 8, 9
+        self.assertEqual(expected, longest_path_length(grid))
+
+    def test_no_path(self):
+        grid = [
+            [1, 1],
+            [1, 1],
+            [1, 1]
+        ]
+        expected = 1 
+        self.assertEqual(expected, longest_path_length(grid))
+
+    def test_two_paths(self):
+        grid = [
+            [4, 3, 2],
+            [5, 0, 1],
+            [3, 2, 3]
+        ]
+        expected = 6  # 0, 1, 2, 3, 4, 5 
+        self.assertEqual(expected, longest_path_length(grid))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
+```
+
+
 ### Sep 15, 2020 LC 986 \[Medium\] Interval List Intersections
 ---
 > **Question:** Given two lists of closed intervals, each list of intervals is pairwise disjoint and in sorted order.
