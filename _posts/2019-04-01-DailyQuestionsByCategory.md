@@ -1427,6 +1427,31 @@ For instance, the following two trees are considered leaf-similar because their 
 <details>
 <summary class="lc_m">
 
+- [**\[Medium\] Construct BST from Post-order Traversal**](https://trsong.github.io/python/java/2020/08/02/DailyQuestionsAug/#sep-17-2020-medium-construct-bst-from-post-order-traversal) -- *Given the sequence of keys visited by a postorder traversal of a binary search tree, reconstruct the tree.* [*\(Try ME\)*](https://repl.it/@trsong/Construct-Binary-Search-Tree-from-Post-order-Traversal-1)
+
+</summary>
+<div>
+
+**Question:** Given the sequence of keys visited by a postorder traversal of a binary search tree, reconstruct the tree.
+
+**Example:**
+```py
+Given the sequence 2, 4, 3, 8, 7, 5, you should construct the following tree:
+
+    5
+   / \
+  3   7
+ / \   \
+2   4   8
+```
+
+</div>
+</details>
+
+
+<details>
+<summary class="lc_m">
+
 - [**\[Medium\] In-order & Post-order Binary Tree Traversal**](https://trsong.github.io/python/java/2020/05/02/DailyQuestionsMay/#jul-29-2020-medium-in-order--post-order-binary-tree-traversal) -- *Given Postorder and Inorder traversals, construct the tree.* [*\(Try ME\)*](https://repl.it/@trsong/Test-Build-Binary-Tree-with-In-order-and-Post-order-Traversal)
 
 </summary>
