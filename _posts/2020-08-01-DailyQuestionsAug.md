@@ -19,6 +19,15 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
 
+### Sep 18, 2020 \[Hard\] Order of Course Prerequisites
+---
+> **Question:** We're given a hashmap associating each courseId key with a list of courseIds values, which represents that the prerequisites of courseId are courseIds. Return a sorted ordering of courses such that we can finish all courses.
+>
+> Return null if there is no such ordering.
+>
+> For example, given `{'CSC300': ['CSC100', 'CSC200'], 'CSC200': ['CSC100'], 'CSC100': []}`, should return `['CSC100', 'CSC200', 'CSC300']`.
+
+
 ### Sep 17, 2020 \[Medium\] Construct BST from Post-order Traversal
 ---
 > **Question:** Given the sequence of keys visited by a postorder traversal of a binary search tree, reconstruct the tree.
