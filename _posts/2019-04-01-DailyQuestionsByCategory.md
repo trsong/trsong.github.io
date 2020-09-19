@@ -2153,6 +2153,23 @@ The words in the order of ['apple', 'eggs', 'snack', 'karat', 'tuna'] creates a 
 <details>
 <summary class="lc_h">
 
+- [**\[Hard\] Order of Course Prerequisites**](http://trsong.github.io/python/java/2020/08/02/DailyQuestionsAug/#sep-18-2020-hard-order-of-course-prerequisites) -- *Given a hashmap of courseId key to a list of courseIds values. Return a sorted ordering of courses such that we can finish all courses.* [*\(Try ME\)*](https://repl.it/@trsong/Find-Order-of-Course-Prerequisites-1)
+
+</summary>
+<div>
+
+We're given a hashmap associating each courseId key with a list of courseIds values, which represents that the prerequisites of courseId are courseIds. Return a sorted ordering of courses such that we can finish all courses.
+
+Return null if there is no such ordering.
+
+For example, given `{'CSC300': ['CSC100', 'CSC200'], 'CSC200': ['CSC100'], 'CSC100': []}`, should return `['CSC100', 'CSC200', 'CSC300']`.
+
+</div>
+</details>
+
+<details>
+<summary class="lc_h">
+
 - [**\[Hard\] LC 329. Longest Increasing Path in a Matrix**](https://trsong.github.io/python/java/2020/08/02/DailyQuestionsAug/#sep-16-2020-lc-329-hard-longest-increasing-path-in-a-matrix) -- *Given an integer matrix, find the length of the longest increasing path.* [*\(Try ME\)*](https://repl.it/@trsong/Longest-Increasing-Path-in-a-Matrix-1)
 
 </summary>

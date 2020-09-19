@@ -28,6 +28,97 @@ categories: Python/Java
 > For example, given `{'CSC300': ['CSC100', 'CSC200'], 'CSC200': ['CSC100'], 'CSC100': []}`, should return `['CSC100', 'CSC200', 'CSC300']`.
 
 
+**My thoughts:** there are two ways to produce toplogical sort order: DFS or count inward edge as below. For DFS technique see this [post](http://trsong.github.io/python/java/2019/05/01/DailyQuestions/#jul-5-2019-hard-order-of-course-prerequisites). For below method, we count number of inward edges for each node and recursively remove edges of each node that has no inward egdes. The node removal order is what we call topological order.
+
+**Solution with Topological Sort:** [https://repl.it/@trsong/Find-Order-of-Course-Prerequisites](https://repl.it/@trsong/Find-Order-of-Course-Prerequisites)
+```py
+import unittest
+
+def sort_courses(prereq_map):
+    inward_edge = {course: len(prereqs) for course, prereqs in prereq_map.items()}
+    neighbours = {course: [] for course in prereq_map}
+    queue = []
+    for course, prereqs in prereq_map.items():
+        if not prereqs:
+            queue.append(course)
+        for prereq in prereqs:
+            neighbours[prereq].append(course)
+
+    top_order = []
+    while queue:
+        node = queue.pop(0)
+        top_order.append(node)
+
+        for nb in neighbours[node]:
+            inward_edge[nb] -= 1
+            if inward_edge[nb] == 0:
+                queue.append(nb)
+
+    return top_order if len(top_order) == len(prereq_map) else None
+
+
+class SortCourseSpec(unittest.TestCase):
+    def assert_course_order_with_prereq_map(self, prereq_map):
+        # Test utility for validation of the following properties for each course:
+        # 1. no courses can be taken before its prerequisites
+        # 2. order covers all courses
+        orders = sort_courses(prereq_map)
+        self.assertEqual(len(prereq_map), len(orders))
+
+        # build a quick courseId to index lookup 
+        course_priority_map = dict(zip(orders, xrange(len(orders))))
+        for course, prereq_list in prereq_map.iteritems():
+            for prereq in prereq_list:
+                # Any prereq course must be taken before the one that depends on it
+                self.assertTrue(course_priority_map[prereq] < course_priority_map[course])
+
+    def test_courses_with_mutual_dependencies(self):
+        prereq_map = {
+            'CS115': ['CS135'],
+            'CS135': ['CS115']
+        }
+        self.assertIsNone(sort_courses(prereq_map))
+
+    def test_courses_within_same_department(self):
+        prereq_map = {
+            'CS240': [],
+            'CS241': [],
+            'MATH239': [],
+            'CS350': ['CS240', 'CS241', 'MATH239'],
+            'CS341': ['CS240'],
+            'CS445': ['CS350', 'CS341']
+        }
+        self.assert_course_order_with_prereq_map(prereq_map)
+
+    def test_courses_in_different_departments(self):
+        prereq_map = {
+            'MATH137': [],
+            'CS116': ['MATH137', 'CS115'],
+            'JAPAN102': ['JAPAN101'],
+            'JAPAN101': [],
+            'MATH138': ['MATH137'],
+            'ENGL119': [],
+            'MATH237': ['MATH138'],
+            'CS246': ['MATH138', 'CS116'],
+            'CS115': []
+        }
+        self.assert_course_order_with_prereq_map(prereq_map)
+
+    def test_courses_without_dependencies(self):
+        prereq_map = {
+            'ENGL119': [],
+            'ECON101': [],
+            'JAPAN101': [],
+            'PHYS111': []
+        }
+        self.assert_course_order_with_prereq_map(prereq_map)
+   
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
+```
+
+
 ### Sep 17, 2020 \[Medium\] Construct BST from Post-order Traversal
 ---
 > **Question:** Given the sequence of keys visited by a postorder traversal of a binary search tree, reconstruct the tree.
