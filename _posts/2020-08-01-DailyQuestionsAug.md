@@ -318,7 +318,45 @@ Explanation: The longest increasing path is [3, 4, 5, 6]. Moving diagonally is n
 
 **My thoughts:** From any node, a valid path can never decrease and won't form a cycle; that create a DAG. The longest path in DAG can be calculated based on topological order within linear time.
 
-**Solution with Topological Sort:** [https://repl.it/@trsong/Longest-Increasing-Path-in-a-Matrix](https://repl.it/@trsong/Longest-Increasing-Path-in-a-Matrix)
+**Solution 1 with Topological Sort (Remove Edge):** [https://repl.it/@trsong/Longest-Increasing-Path-in-a-Matrix-Remove-Edge-Top-Sort](https://repl.it/@trsong/Longest-Increasing-Path-in-a-Matrix-Remove-Edge-Top-Sort)
+```py
+def longest_path_length(grid):
+    if not grid or not grid[0]:
+        return 0
+    
+    DIRECTIONS = [(0, -1), (0, 1), (1, 0), (-1, 0)]
+    n, m = len(grid), len(grid[0])
+    inward_edges = [[0 for _ in xrange(m)] for _ in xrange(n)]
+    queue = []
+    
+    for r in xrange(n):
+        for c in xrange(m):
+            cur_val = grid[r][c]
+            for dr, dc in DIRECTIONS:
+                from_r, from_c = r + dr, c + dc
+                if 0 <= from_r < n and 0 <=  from_c < m and grid[from_r][from_c] < cur_val:
+                    inward_edges[r][c] += 1
+            if inward_edges[r][c] == 0:
+                queue.append((r, c))
+                
+    max_distance = 0
+    distance_grid = [[1 for _ in xrange(m)] for _ in xrange(n)]
+    while queue:
+        r, c = queue.pop(0)
+        max_distance = max(max_distance, distance_grid[r][c])
+        cur_val = grid[r][c]
+        for dr, dc in DIRECTIONS:
+            to_r, to_c = r + dr, c + dc
+            if 0 <= to_r < n and 0 <= to_c < m and cur_val < grid[to_r][to_c]:
+                distance_grid[to_r][to_c] = max(distance_grid[to_r][to_c], 1 + distance_grid[r][c])
+                inward_edges[to_r][to_c] -= 1
+                if inward_edges[to_r][to_c] == 0:
+                    queue.append((to_r, to_c))
+                    
+    return max_distance
+```
+
+**Solution 2 with Topological Sort (DFS):** [https://repl.it/@trsong/Longest-Increasing-Path-in-a-Matrix](https://repl.it/@trsong/Longest-Increasing-Path-in-a-Matrix)
 ```py
 import unittest
 
