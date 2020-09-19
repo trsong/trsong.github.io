@@ -19,6 +19,24 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
 
+### Sep 19, 2020 \[Easy\] Two Sum in BST
+---
+> **Question:** Given the root of a binary search tree, and a target K, return two nodes in the tree whose sum equals K.
+
+**Example:**
+```py
+Given the following tree and K of 20:
+
+    10
+   /   \
+ 5      15
+       /  \
+     11    15
+
+Return the nodes 5 and 15.
+```
+
+
 ### Sep 18, 2020 \[Hard\] Order of Course Prerequisites
 ---
 > **Question:** We're given a hashmap associating each courseId key with a list of courseIds values, which represents that the prerequisites of courseId are courseIds. Return a sorted ordering of courses such that we can finish all courses.
