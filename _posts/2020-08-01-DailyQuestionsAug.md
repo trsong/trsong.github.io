@@ -19,7 +19,7 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
 
-### Sep 19, 2020 \[Easy\] Two Sum in BST
+### Sep 19, 2020 LC 653 \[Easy\] Two Sum in BST
 ---
 > **Question:** Given the root of a binary search tree, and a target K, return two nodes in the tree whose sum equals K.
 
@@ -34,6 +34,111 @@ Given the following tree and K of 20:
      11    15
 
 Return the nodes 5 and 15.
+```
+
+**Solution with In-order Traversal:** [https://repl.it/@trsong/Two-Sum-in-BST](https://repl.it/@trsong/Two-Sum-in-BST)
+```py
+import unittest
+
+def solve_two_sum_bst(root, k):
+    if not root:
+        return None
+    
+    it1 = find_inorder_traversal(root)
+    it2 = find_inorder_traversal(root, reverse=True)
+    p1 = next(it1)
+    p2 = next(it2)
+    while p1 != p2:
+        pair_sum = p1.val + p2.val
+        if pair_sum < k:
+            p1 = next(it1)
+        elif pair_sum > k:
+            p2 = next(it2)
+        else:
+            return [p1.val, p2.val]
+    return None
+
+
+def find_inorder_traversal(root, reverse=False):
+    p = root
+    stack = []
+    while p or stack:
+        if p:
+            stack.append(p)
+            p = p.right if reverse else p.left
+        else:
+            p = stack.pop()
+            yield p
+            p = p.left if reverse else p.right
+
+
+class TreeNode(object):
+    def __init__(self, val, left=None, right=None):
+        self.val = val
+        self.left = left
+        self.right = right
+
+
+class SolveTwoSumBSTSepc(unittest.TestCase):
+    def test_example(self):
+        """
+             10
+            /   \
+           5    15
+               /  \
+             11    15
+        """
+        root = TreeNode(10, TreeNode(5), TreeNode(15, TreeNode(11), TreeNode(15)))
+        k = 20
+        expected = [5, 15]
+        self.assertItemsEqual(expected, solve_two_sum_bst(root, k))
+
+    def test_empty_tree(self):
+        self.assertIsNone(solve_two_sum_bst(None, 0))
+
+    def test_left_heavy_tree(self):
+        """
+            5
+           / \
+          3   6
+         / \   \
+        2   4   7
+        """
+        left_tree = TreeNode(3, TreeNode(2), TreeNode(4))
+        right_tree = TreeNode(6, right=TreeNode(7))
+        root = TreeNode(5, left_tree, right_tree)
+        k = 9
+        expected = [2, 7]
+        self.assertItemsEqual(expected, solve_two_sum_bst(root, k))
+
+    def test_no_pair_exists(self):
+        """
+          5
+         / \
+        1   8
+        """
+        root = TreeNode(5, TreeNode(1), TreeNode(8))
+        k = 10
+        self.assertIsNone(solve_two_sum_bst(root, k))
+
+    def test_balanced_tree(self):
+        """
+             5
+           /   \
+          3     11
+         / \   /  \
+        0   4 10  25
+        """
+        left_tree = TreeNode(3, TreeNode(0), TreeNode(4))
+        right_tree = TreeNode(11, TreeNode(10), TreeNode(25))
+        root = TreeNode(5, left_tree, right_tree)
+        k = 13
+        expected = [3, 10]
+        self.assertItemsEqual(expected, solve_two_sum_bst(root, k))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
 ```
 
 

@@ -1243,6 +1243,32 @@ return 23 (5 + 4 + 6 + 8).
 ### Traversal
 ---
 
+<details>
+<summary class="lc_e">
+
+- [**\[Easy\] LC 653. Two Sum in BST**](http://trsong.github.io/python/java/2020/08/02/DailyQuestionsAug/#sep-19-2020-easy-two-sum-in-bst) -- *Given the root of a binary search tree, and a target K, return two nodes in the tree whose sum equals K.* [*\(Try ME\)*](https://repl.it/@trsong/Two-Sum-in-BST-1)
+
+</summary>
+<div>
+
+**Question:** Given the root of a binary search tree, and a target K, return two nodes in the tree whose sum equals K.
+
+**Example:**
+```py
+Given the following tree and K of 20:
+
+    10
+   /   \
+ 5      15
+       /  \
+     11    15
+
+Return the nodes 5 and 15.
+```
+
+</div>
+</details>
+
 
 <details>
 <summary class="lc_m">
