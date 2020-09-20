@@ -19,6 +19,18 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
 
+### Sep 20, 2020 LC 421 \[Easy\] Maximum XOR of Two Numbers in an Array
+---
+> **Question:** Given an array of integers, find the maximum XOR of any two elements.
+
+**Example:**
+```py
+Input: nums = [3,10,5,25,2,8]
+Output: 28
+Explanation: The maximum result is 5 XOR 25 = 28.
+```
+
+
 ### Sep 19, 2020 LC 653 \[Easy\] Two Sum in BST
 ---
 > **Question:** Given the root of a binary search tree, and a target K, return two nodes in the tree whose sum equals K.
