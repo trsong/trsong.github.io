@@ -1555,6 +1555,26 @@ d  e f  g
 ## Trie
 ---
 
+<details>
+<summary class="lc_m">
+
+- [**\[Medium\] LC 421. Maximum XOR of Two Numbers in an Array**]() -- *Given an array of integers, find the maximum XOR of any two elements.* [*\(Try ME\)*](https://repl.it/@trsong/Maximum-XOR-of-Two-Numbers-in-an-Array-1)
+
+</summary>
+<div>
+
+**Question:** Given an array of integers, find the maximum XOR of any two elements.
+
+**Example:**
+```py
+Input: nums = [3,10,5,25,2,8]
+Output: 28
+Explanation: The maximum result is 5 XOR 25 = 28.
+```
+
+</div>
+</details>
+
 
 <details>
 <summary class="lc_m">
