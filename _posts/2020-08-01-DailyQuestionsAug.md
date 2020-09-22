@@ -27,6 +27,79 @@ categories: Python/Java
 > Implement run-length encoding and decoding. You can assume the string to be encoded have no digits and consists solely of alphabetic characters. You can assume the string to be decoded is valid.
 
 
+**Solution:** [https://repl.it/@trsong/Run-length-String-Encode-and-Decode](https://repl.it/@trsong/Run-length-String-Encode-and-Decode)
+```py
+import unittest
+from collections import Counter
+
+class RunLengthProcessor(object):
+    @staticmethod
+    def encode(s):
+        if not s:
+            return ""
+
+        count = 0
+        prev = s[0]
+        res = []
+        for i, ch in enumerate(s):
+            if ch == prev:
+                count += 1
+            else:
+                res.extend([str(count), prev])
+                prev = ch
+                count = 1
+        res.extend([str(count), prev])
+        return ''.join(res)
+
+    @staticmethod
+    def decode(s):
+        i = 0
+        res = []
+        while i < len(s):
+            count = 0
+            while '0' <= s[i] <= '9':
+                count = 10 * count + int(s[i])
+                i += 1
+
+            res.append(s[i] * count)
+            i += 1
+        return ''.join(res)
+
+            
+class RunLengthProcessorSpec(unittest.TestCase):
+    def assert_encode_decode(self, original, encoded):
+        self.assertEqual(encoded, RunLengthProcessor.encode(original))
+        self.assertEqual(Counter(original), Counter(RunLengthProcessor.decode(encoded)))
+        self.assertEqual(original, RunLengthProcessor.decode(encoded))
+
+    def test_encode_example(self):
+        original = "AAAABBBCCDAA"
+        encoded = "4A3B2C1D2A"
+        self.assert_encode_decode(original, encoded)
+
+    def test_empty_string(self):
+        self.assert_encode_decode("", "")
+
+    def test_single_digit_chars(self):
+        original = "ABCD"
+        encoded = "1A1B1C1D"
+        self.assert_encode_decode(original, encoded)
+
+    def test_two_digit_chars(self):
+        original = 'a' * 10 + 'b' * 11 + 'c' * 21
+        encoded = "10a11b21c"
+        self.assert_encode_decode(original, encoded)
+
+    def test_multiple_digit_chars(self):
+        original = 'a' + 'b' * 100 + 'c' + 'd' * 2 + 'e' * 32
+        encoded = "1a100b1c2d32e"
+        self.assert_encode_decode(original, encoded)
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
+```
+
 ### Sep 20, 2020 LC 421 \[Medium\] Maximum XOR of Two Numbers in an Array
 ---
 > **Question:** Given an array of integers, find the maximum XOR of any two elements.
