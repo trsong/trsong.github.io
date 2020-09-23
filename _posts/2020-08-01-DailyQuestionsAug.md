@@ -19,6 +19,26 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
 
+### Sep 23, 2020 LC 236 \[Medium\] Lowest Common Ancestor of a Binary Tree
+---
+> **Question:** Given a binary tree, find the lowest common ancestor (LCA) of two given nodes in the tree.
+
+**Example:**
+
+```py
+     1
+   /   \
+  2     3
+ / \   / \
+4   5 6   7
+
+LCA(4, 5) = 2
+LCA(4, 6) = 1
+LCA(3, 4) = 1
+LCA(2, 4) = 2
+```
+
+
 ### Sep 22, 2020 \[Medium\] Is Bipartite
 ---
 > **Question:** Given an undirected graph G, check whether it is bipartite. Recall that a graph is bipartite if its vertices can be divided into two independent sets, U and V, such that no edge connects vertices of the same set.
@@ -28,6 +48,93 @@ categories: Python/Java
 is_bipartite(vertices=3, edges=[(0, 1), (1, 2), (2, 0)])  # returns False 
 is_bipartite(vertices=2, edges=[(0, 1), (1, 0)])  # returns True. U = {0}. V = {1}. 
 ```
+
+**My thoughts:** A graph is a bipartite if we can just use 2 colors to cover entire graph so that every other node have same color. Like this [solution with DFS](https://trsong.github.io/python/java/2020/02/02/DailyQuestionsFeb/#apr-15-2020-medium-is-bipartite). Or the following way with union-find. For each node `u`, just union all of its neihbors. And at the same time, `u` should not be connectted with any of its neihbor.
+
+**Solution with Union-Find (DisjointSet):** [https://repl.it/@trsong/Is-a-Graph-Bipartite](https://repl.it/@trsong/Is-a-Graph-Bipartite)
+```py
+import unittest
+
+class DisjointSet(object):
+    def __init__(self, n):
+        self.parent = range(n)
+
+    def find(self, v):
+        p = self.parent
+        while p[v] != v:
+            p[v] = p[p[v]]
+            v = p[v]
+        return v
+
+    def is_connected(self, u, v):
+        return self.find(u) == self.find(v)
+
+    def union(self, u, v):
+        p1 = self.find(u)
+        p2 = self.find(v)
+        if p1 != p2:
+            self.parent[p1] = p2
+
+
+def is_bipartite(vertices, edges):
+    neighbors = [None] * vertices
+    for u, v in edges:
+        neighbors[u] = neighbors[u] or []
+        neighbors[v] = neighbors[v] or []
+        neighbors[u].append(v)
+        neighbors[v].append(u)
+    
+    uf = DisjointSet(vertices)
+    for u in xrange(vertices):
+        if neighbors[u] is None:
+            continue
+        for v in neighbors[u]:
+            if uf.is_connected(u, v):
+                return False
+            uf.union(v, neighbors[u][0])
+    return True
+            
+
+class IsBipartiteSpec(unittest.TestCase):
+    def test_example1(self):
+        self.assertFalse(is_bipartite(vertices=3, edges=[(0, 1), (1, 2), (2, 0)]))
+
+    def test_example2(self):
+        self.assertTrue(is_bipartite(vertices=2, edges=[(0, 1), (1, 0)]))
+
+    def test_empty_graph(self):
+        self.assertTrue(is_bipartite(vertices=0, edges=[]))
+
+    def test_one_node_graph(self):
+        self.assertTrue(is_bipartite(vertices=1, edges=[]))
+    
+    def test_disconnect_graph1(self):
+        self.assertTrue(is_bipartite(vertices=10, edges=[(0, 1), (1, 0)]))
+
+    def test_disconnect_graph2(self):
+        self.assertTrue(is_bipartite(vertices=10, edges=[(0, 1), (1, 0), (2, 3), (3, 4), (4, 5), (5, 2)]))
+
+    def test_disconnect_graph3(self):
+        self.assertFalse(is_bipartite(vertices=10, edges=[(0, 1), (1, 0), (2, 3), (3, 4), (4, 2)])) 
+
+    def test_square(self):
+        self.assertTrue(is_bipartite(vertices=4, edges=[(0, 1), (1, 2), (2, 3), (3, 0)]))
+
+    def test_k5(self):
+        vertices = 5
+        edges = [
+            (0, 1), (0, 2), (0, 3), (0, 4),
+            (1, 2), (1, 3), (1, 4),
+            (2, 3), (2, 4), 
+            (3, 4)
+        ]
+        self.assertFalse(is_bipartite(vertices, edges))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
+```
+
 
 ### Sep 21, 2020 \[Easy\] Run-length String Encode and Decode
 ---

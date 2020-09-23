@@ -2295,6 +2295,26 @@ In this case, the shortest valid path would be 0 -> 2 -> 4 -> 0, with a distance
 <details>
 <summary class="lc_m">
 
+- [**\[Medium\] Is Bipartite**](https://trsong.github.io/python/java/2020/08/02/DailyQuestionsAug/#sep-22-2020-medium-is-bipartite) -- *Given an undirected graph G, check whether it is bipartite.* [*\(Try ME\)*](https://repl.it/@trsong/Is-a-Graph-Bipartite-1)
+
+</summary>
+<div>
+
+**Question:** Given an undirected graph G, check whether it is bipartite. Recall that a graph is bipartite if its vertices can be divided into two independent sets, U and V, such that no edge connects vertices of the same set.
+
+**Example:**
+```py
+is_bipartite(vertices=3, edges=[(0, 1), (1, 2), (2, 0)])  # returns False 
+is_bipartite(vertices=2, edges=[(0, 1), (1, 0)])  # returns True. U = {0}. V = {1}. 
+```
+
+</div>
+</details>
+
+
+<details>
+<summary class="lc_m">
+
 - [**\[Medium\] LC 261. Graph Valid Tree**](https://trsong.github.io/python/java/2020/08/02/DailyQuestionsAug/#aug-10-2020-lc-261-medium-graph-valid-tree) -- *Given n nodes and a list of undirected edges, write a function to check whether these edges make up a valid tree.* [*\(Try ME\)*](https://repl.it/@trsong/Graph-Valid-Tree-1)
 
 </summary>
