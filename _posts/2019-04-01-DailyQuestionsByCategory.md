@@ -1139,6 +1139,36 @@ An unbalanced tree with three consecutive left children: ((((00)0)0)0)
 ### Recursion
 ---
 
+
+<details>
+<summary class="lc_m">
+
+- [**\[Medium\] LC 236. Lowest Common Ancestor of a Binary Tree**](https://trsong.github.io/python/java/2020/08/02/DailyQuestionsAug/#sep-23-2020-lc-236-medium-lowest-common-ancestor-of-a-binary-tree) -- *Given a binary tree, find the lowest common ancestor (LCA) of two given nodes in the tree.* [*\(Try ME\)*](https://repl.it/@trsong/Find-the-Lowest-Common-Ancestor-of-a-Given-Binary-Tree-1)
+
+</summary>
+<div>
+
+**Question:** Given a binary tree, find the lowest common ancestor (LCA) of two given nodes in the tree.
+
+**Example:**
+
+```py
+     1
+   /   \
+  2     3
+ / \   / \
+4   5 6   7
+
+LCA(4, 5) = 2
+LCA(4, 6) = 1
+LCA(3, 4) = 1
+LCA(2, 4) = 2
+```
+
+</div>
+</details>
+
+
 <details>
 <summary class="lc_e">
 

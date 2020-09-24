@@ -38,7 +38,78 @@ LCA(3, 4) = 1
 LCA(2, 4) = 2
 ```
 
+**Solution:** [https://repl.it/@trsong/Find-the-Lowest-Common-Ancestor-of-a-Given-Binary-Tree](https://repl.it/@trsong/Find-the-Lowest-Common-Ancestor-of-a-Given-Binary-Tree)
+```py
+import unittest
 
+def find_lca(tree, n1, n2):    
+    if not tree or tree == n1 or tree == n2:
+        return tree
+    
+    left_res = find_lca(tree.left, n1, n2)
+    right_res = find_lca(tree.right, n1, n2)
+
+    if left_res and right_res:
+        return tree
+    else:
+        return left_res or right_res
+
+
+class TreeNode(object):
+    def __init__(self, val, left=None, right=None):
+        self.val = val
+        self.left = left
+        self.right = right
+
+    def __repr__(self):
+        return "NodeValue: " + str(self.val)
+
+
+class FindLCASpec(unittest.TestCase):
+    def setUp(self):
+        """
+             1
+           /   \
+          2     3
+         / \   / \
+        4   5 6   7
+        """
+        self.n4 = TreeNode(4)
+        self.n5 = TreeNode(5)
+        self.n6 = TreeNode(6)
+        self.n7 = TreeNode(7)
+        self.n2 = TreeNode(2, self.n4, self.n5)
+        self.n3 = TreeNode(3, self.n6, self.n7)
+        self.n1 = TreeNode(1, self.n2, self.n3)
+
+    def test_both_nodes_on_leaves(self):
+        self.assertEqual(self.n2, find_lca(self.n1, self.n4, self.n5))
+
+    def test_both_nodes_on_leaves2(self):
+        self.assertEqual(self.n3, find_lca(self.n1, self.n6, self.n7))
+    
+    def test_both_nodes_on_leaves3(self):
+        self.assertEqual(self.n1, find_lca(self.n1, self.n4, self.n6))
+
+    def test_nodes_on_different_levels(self):
+        self.assertEqual(self.n2, find_lca(self.n1, self.n4, self.n2))
+    
+    def test_nodes_on_different_levels2(self):
+        self.assertEqual(self.n2, find_lca(self.n1, self.n4, self.n2))
+    
+    def test_nodes_on_different_levels3(self):
+        self.assertEqual(self.n1, find_lca(self.n1, self.n4, self.n1))
+
+    def test_same_nodes(self):
+        self.assertEqual(self.n2, find_lca(self.n1, self.n2, self.n2))
+    
+    def test_same_nodes2(self):
+        self.assertEqual(self.n6, find_lca(self.n1, self.n6, self.n6))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
+```
 ### Sep 22, 2020 \[Medium\] Is Bipartite
 ---
 > **Question:** Given an undirected graph G, check whether it is bipartite. Recall that a graph is bipartite if its vertices can be divided into two independent sets, U and V, such that no edge connects vertices of the same set.
