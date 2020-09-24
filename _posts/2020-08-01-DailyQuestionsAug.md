@@ -19,6 +19,26 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
 
+
+### Sep 24, 2020 \[Hard\] De Bruijn Sequence 
+--- 
+> **Question:** Given a set of characters `C` and an integer `k`, a **De Bruijn** Sequence is a cyclic sequence in which every possible k-length string of characters in C occurs exactly once.
+> 
+> **Background:** De Bruijn Sequence can be used to shorten a brute-force attack on a PIN-like code lock that does not have an "enter" key and accepts the last n digits entered. For example, a digital door lock with a 4-digit code would have B (10, 4) solutions, with length 10000. Therefore, only at most 10000 + 3 = 10003 (as the solutions are cyclic) presses are needed to open the lock. Trying all codes separately would require 4 × 10000 = 40000 presses.
+
+**Example1:**
+```py
+Input: C = [0, 1], k = 3
+Output: 0011101000
+All possible strings of length three (000, 001, 010, 011, 100, 101, 110 and 111) appear exactly once as sub-strings in C.
+```
+
+**Example2:**
+```py
+Input: C = [0, 1], k = 2
+Output: 01100
+```
+
 ### Sep 23, 2020 LC 236 \[Medium\] Lowest Common Ancestor of a Binary Tree
 ---
 > **Question:** Given a binary tree, find the lowest common ancestor (LCA) of two given nodes in the tree.
