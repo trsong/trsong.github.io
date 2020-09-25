@@ -2140,6 +2140,35 @@ Output: 1
 ---
 
 <details>
+<summary class="lc_h">
+
+- [**\[Hard\] De Bruijn Sequence**](https://trsong.github.io/python/java/2020/08/02/DailyQuestionsAug/#sep-24-2020-hard-de-bruijn-sequence) -- *Given a set of characters C and an integer k,  find a De Bruijn Sequence.* [*\(Try ME\)*](https://repl.it/@trsong/Find-De-Bruijn-Sequence-1)
+
+</summary>
+<div>
+
+**Question:** Given a set of characters `C` and an integer `k`, a **De Bruijn** Sequence is a cyclic sequence in which every possible k-length string of characters in C occurs exactly once.
+ 
+**Background:** De Bruijn Sequence can be used to shorten a brute-force attack on a PIN-like code lock that does not have an "enter" key and accepts the last n digits entered. For example, a digital door lock with a 4-digit code would have B (10, 4) solutions, with length 10000. Therefore, only at most 10000 + 3 = 10003 (as the solutions are cyclic) presses are needed to open the lock. Trying all codes separately would require 4 × 10000 = 40000 presses.
+
+**Example1:**
+```py
+Input: C = [0, 1], k = 3
+Output: 0011101000
+All possible strings of length three (000, 001, 010, 011, 100, 101, 110 and 111) appear exactly once as sub-strings in C.
+```
+
+**Example2:**
+```py
+Input: C = [0, 1], k = 2
+Output: 01100
+```
+
+</div>
+</details>
+
+
+<details>
 <summary class="lc_e">
 
 - [**\[Easy\] Level of tree with Maximum Sum**](https://trsong.github.io/python/java/2020/08/02/DailyQuestionsAug/#sep-3-2020-easy-level-of-tree-with-maximum-sum) -- *Given a binary tree, find the level in the tree where the sum of all nodes on that level is the greatest.* [*\(Try ME\)*](https://repl.it/@trsong/Find-Level-of-tree-with-Maximum-Sum-1)
