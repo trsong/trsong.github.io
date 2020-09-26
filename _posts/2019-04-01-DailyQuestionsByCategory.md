@@ -27,6 +27,44 @@ categories: Python/Java
 ## Math
 ---
 
+
+<details>
+<summary class="lc_h">
+
+- [**\[Hard\] LC 273. Integer to English Words**](https://trsong.github.io/python/java/2020/08/02/DailyQuestionsAug/#sep-25-2020-lc-273-hard-integer-to-english-words) -- *Convert a non-negative integer to its English word representation.* [*\(Try ME\)*](https://repl.it/@trsong/Convert-Int-to-English-Words-1)
+
+</summary>
+<div>
+
+**Question:** Convert a non-negative integer to its English word representation. 
+
+**Example 1:**
+```py
+Input: 123
+Output: "One Hundred Twenty Three"
+```
+
+**Example 2:**
+```py
+Input: 12345
+Output: "Twelve Thousand Three Hundred Forty Five"
+```
+
+**Example 3:**
+```py
+Input: 1234567
+Output: "One Million Two Hundred Thirty Four Thousand Five Hundred Sixty Seven"
+```
+
+**Example 4:**
+```py
+Input: 1234567891
+Output: "One Billion Two Hundred Thirty Four Million Five Hundred Sixty Seven Thousand Eight Hundred Ninety One"
+```
+
+</div>
+</details>
+
 <details>
 <summary class="lc_e">
 
