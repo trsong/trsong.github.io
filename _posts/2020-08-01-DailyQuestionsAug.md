@@ -20,6 +20,20 @@ categories: Python/Java
 
 
 
+### Sep 28, 2020 \[Hard\] Largest Divisible Pairs Subset
+---
+> **Question:** Given a set of distinct positive integers, find the largest subset such that every pair of elements in the subset `(i, j)` satisfies either `i % j = 0` or `j % i = 0`.
+>
+> For example, given the set `[3, 5, 10, 20, 21]`, you should return `[5, 10, 20]`. Given `[1, 3, 6, 24]`, return `[1, 3, 6, 24]`.
+
+
+### Sep 27, 2020 \[Easy\] Find Corresponding Node in Cloned Tree
+--- 
+> **Question:** Given two binary trees that are duplicates of one another, and given a node in one tree, find that correponding node in the second tree. 
+> 
+> There can be duplicate values in the tree (so comparing node1.value == node2.value isn't going to work).
+
+
 ### Sep 26, 2020 \[Medium\] Multitasking
 --- 
 > **Question:** We have a list of tasks to perform, with a cooldown period. We can do multiple of these at the same time, but we cannot run the same task simultaneously.
