@@ -34,7 +34,7 @@ categories: Python/Java
 > There can be duplicate values in the tree (so comparing node1.value == node2.value isn't going to work).
 
 
-### Sep 26, 2020 \[Medium\] Fix Order Task Scheduler with Cooldown
+### Sep 26, 2020 \[Medium\] Fixed Order Task Scheduler with Cooldown
 --- 
 > **Question:** We have a list of tasks to perform, with a cooldown period. We can do multiple of these at the same time, but we cannot run the same task simultaneously.
 >
@@ -49,7 +49,7 @@ output: 7 (order is 1 _ _ 1 2 _ 1)
 
 **My thoughts:** Since we have to execute the task with specific order and each task has a cooldown time, we can use a map to record the last occurence of the same task and set up a threshold in order to make sure we will always wait at least the cooldown amount of time before proceed.
 
-**Solution:** [https://repl.it/@trsong/Fix-Order-Task-Scheduler-with-Cooldown](https://repl.it/@trsong/Fix-Order-Task-Scheduler-with-Cooldown)
+**Solution:** [https://repl.it/@trsong/Fixed-Order-Task-Scheduler-with-Cooldown](https://repl.it/@trsong/Fixed-Order-Task-Scheduler-with-Cooldown)
 ```py
 import unittest
 
