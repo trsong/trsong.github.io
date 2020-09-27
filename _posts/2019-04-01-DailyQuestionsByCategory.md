@@ -1865,6 +1865,30 @@ Explanation: A -> B -> idle -> A -> B -> idle -> A -> B.
 ## Hashmap
 ---
 
+
+<details>
+<summary class="lc_m">
+
+- [**\[Medium\] Fixed Order Task Scheduler with Cooldown**](https://trsong.github.io/python/java/2020/08/02/DailyQuestionsAug/#sep-26-2020-medium-fixed-order-task-scheduler-with-cooldown) -- *Given a list of tasks to perform, with a cooldown period. Return execution order.* [*\(Try ME\)*](Fixed Order Task Scheduler with Cooldown-1)
+
+</summary>
+<div>
+
+**Question:** We have a list of tasks to perform, with a cooldown period. We can do multiple of these at the same time, but we cannot run the same task simultaneously.
+
+Given a list of tasks, find how long it will take to complete the tasks in the order they are input.
+
+**Example:**
+```py
+tasks = [1, 1, 2, 1]
+cooldown = 2
+output: 7 (order is 1 _ _ 1 2 _ 1)
+```
+
+</div>
+</details>
+
+
 <details>
 <summary class="lc_m">
 
