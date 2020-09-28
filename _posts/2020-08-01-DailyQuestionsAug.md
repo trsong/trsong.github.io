@@ -29,9 +29,115 @@ categories: Python/Java
 
 ### Sep 27, 2020 \[Easy\] Find Corresponding Node in Cloned Tree
 --- 
-> **Question:** Given two binary trees that are duplicates of one another, and given a node in one tree, find that correponding node in the second tree. 
+> **Question:** Given two binary trees that are duplicates of one another, and given a node in one tree, find that corresponding node in the second tree. 
 > 
 > There can be duplicate values in the tree (so comparing node1.value == node2.value isn't going to work).
+
+
+**Solution with DFS:** [https://repl.it/@trsong/Find-Corresponding-Node-in-Cloned-Tree](https://repl.it/@trsong/Find-Corresponding-Node-in-Cloned-Tree)
+```py
+from copy import deepcopy
+import unittest
+
+def find_node(root1, root2, node1):
+    if not root1 or not root2 or not node1:
+        return None
+    
+    traversal1 = dfs_traversal(root1)
+    traversal2 = dfs_traversal(root2)
+    for n1, n2 in zip(traversal1, traversal2):
+        if n1 == node1:
+            return n2
+    return None
+
+
+def dfs_traversal(root):
+    stack = [root]
+    while stack:
+        cur = stack.pop()
+        yield cur
+        if cur.right:
+            stack.append(cur.right)
+        if cur.left:
+            stack.append(cur.left)
+
+
+class TreeNode(object):
+    def __init__(self, val, left=None, right=None):
+        self.val = val
+        self.left = left
+        self.right = right
+
+    def __repr__(self):
+        return "TreeNode(%d, %s, %s)" % (self.val, self.left, self.right)
+
+
+class FindNodeSpec(unittest.TestCase):
+    def test_empty_tree(self):
+        self.assertIsNone(find_node(None, None, None))
+
+    def test_one_node_tree(self):
+        root1 = TreeNode(1)
+        root2 = deepcopy(root1)
+        self.assertEqual(root2, find_node(root1, root2, root1))
+
+    def test_leaf_node(self):
+        """
+          1
+         / \
+        2   3
+             \
+              4
+        """
+        root1 = TreeNode(1, TreeNode(2), TreeNode(3, right=TreeNode(4)))
+        root2 = deepcopy(root1)
+        f = lambda root: root.right.right
+        self.assertEqual(f(root2), find_node(root1, root2, f(root1)))
+
+    def test_internal_node(self):
+        """
+            1
+           / \
+          2   3
+         /   /
+        0   1
+        """
+        left_tree = TreeNode(2, TreeNode(0))
+        right_tree = TreeNode(3, TreeNode(1))
+        root1 = TreeNode(1, left_tree, right_tree)
+        root2 = deepcopy(root1)
+        f = lambda root: root.left
+        self.assertEqual(f(root2), find_node(root1, root2, f(root1))) 
+
+    def test_duplicated_value_in_tree(self):
+        """
+          1
+           \
+            1
+           /
+          1
+         /
+        1
+        """
+        root1 = TreeNode(1, right=TreeNode(1, TreeNode(1, TreeNode(1))))
+        root2 = deepcopy(root1)
+        f = lambda root: root.right.left
+        self.assertEqual(f(root2), find_node(root1, root2, f(root1))) 
+    
+    def test_find_root_node(self):
+        """
+          1
+         / \
+        2   3
+        """
+        root1 = TreeNode(1, TreeNode(2), TreeNode(3))
+        root2 = deepcopy(root1)
+        self.assertEqual(root2, find_node(root1, root2, root1))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
+```
 
 
 ### Sep 26, 2020 \[Medium\] Fixed Order Task Scheduler with Cooldown
