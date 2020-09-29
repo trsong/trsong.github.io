@@ -2650,6 +2650,22 @@ For example, given `"2542540123"`, you should return `['254.25.40.123', '254.254
 ---
 
 <details>
+<summary class="lc_h">
+
+- [**\[Hard\] Largest Divisible Pairs Subset**](https://trsong.github.io/python/java/2020/08/02/DailyQuestionsAug/#sep-28-2020-hard-largest-divisible-pairs-subset) -- *Given a set of distinct positive integers, find the largest subset such that every pair of elements has divisible counterpart in the subset.* [*\(Try ME\)*](https://repl.it/@trsong/Find-Largest-Divisible-Pairs-Subset-1)
+
+</summary>
+<div>
+
+**Question:** Given a set of distinct positive integers, find the largest subset such that every pair of elements in the subset `(i, j)` satisfies either `i % j = 0` or `j % i = 0`.
+
+For example, given the set `[3, 5, 10, 20, 21]`, you should return `[5, 10, 20]`. Given `[1, 3, 6, 24]`, return `[1, 3, 6, 24]`.
+
+</div>
+</details>
+
+
+<details>
 <summary class="lc_m">
 
 - [**\[Medium\] LC 139. Word Break**](https://trsong.github.io/python/java/2020/08/02/DailyQuestionsAug/#sep-9-2020-lc-139-medium-word-break) -- *Given a non-empty string s and a dictionary with a list of non-empty words, determine if s can be segmented into a space-separated sequence.* [*\(Try ME\)*](https://repl.it/@trsong/Word-Break-Problem-1)
