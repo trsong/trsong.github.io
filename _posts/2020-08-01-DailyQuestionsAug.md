@@ -19,6 +19,24 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
 
+### Sep 30, 2020 \[Easy\] Witness of The Tall People
+---
+> **Question:** There are `n` people lined up, and each have a height represented as an integer. A murder has happened right in front of them, and only people who are taller than everyone in front of them are able to see what has happened. How many witnesses are there?
+
+**Example:**
+```py
+Input: [3, 6, 3, 4, 1]  
+Output: 3
+Explanation: Only [6, 4, 1] were able to see in front of them.
+ #
+ #
+ # #
+####
+####
+#####
+36341  
+```
+
 ### Sep 29, 2020 \[Medium\] Number of Smaller Elements to the Right
 ---
 > **Question:** Given an array of integers, return a new array where each element in the new array is the number of smaller elements to the right of that element in the original input array.
@@ -30,6 +48,111 @@ categories: Python/Java
 > * There are 2 smaller elements to the right of 9
 > * There is 1 smaller element to the right of 6
 > * There are no smaller elements to the right of 1
+
+**My thoughts:** we want a data structure to allow quick insert and query for number of value smaller. BST fit into our requirement. We just need to add two fields to each tree node: number of left child and frequency of current value. 
+
+While iterating through tree node, if we go right, then we accumulate all number on the left. If we go left, then we just need to accumulate the left number of last node. For example, given the follow BST, if we want to know number of elem less than 6, we just use node4, node6. `3 + 1 + 1 = 5`.
+
+```py
+     4 (3, 1)
+   /   \
+  2     6 (1, 1)
+ / \   / \
+1   3 5   7 (0, 1)
+
+Each node looks like node (a, b) where 
+- a is number in parenthese is the number of children on the left 
+- b is frequency
+```
+
+**Solution with BST:** [https://repl.it/@trsong/Find-Number-of-Smaller-Elements-to-the-Right](https://repl.it/@trsong/Find-Number-of-Smaller-Elements-to-the-Right)
+```py
+import unittest
+
+def count_right_smaller_numbers(nums):
+    root = BSTNode(float('inf'))
+    res = []
+    for num in reversed(nums):
+        res.append(root.insert(num))
+    res.reverse()
+    return res
+
+ 
+class BSTNode(object):
+    def __init__(self, val, left=None, right=None):
+        self.val = val
+        self.left = left
+        self.right = right
+        self.left_count = 0
+        self.freq = 0
+
+    def insert(self, v):
+        res = 0
+        cur = self
+        while True:
+            if cur.val == v:
+                res += cur.left_count
+                cur.freq += 1
+                break
+            elif cur.val < v:
+                res += cur.left_count + cur.freq
+                cur.right = cur.right or BSTNode(v)
+                cur = cur.right
+            else:
+                cur.left_count += 1
+                cur.left = cur.left or BSTNode(v)
+                cur = cur.left
+        return res
+ 
+
+class CountRightSmallerNuberSpec(unittest.TestCase):
+    def test_example(self):
+        nums = [3, 4, 9, 6, 1]
+        expected_result = [1, 1, 2, 1, 0]
+        self.assertEqual(expected_result, count_right_smaller_numbers(nums))
+
+    def test_empty_array(self):
+        self.assertEqual([], count_right_smaller_numbers([]))
+
+    def test_ascending_array(self):
+        nums = [0, 1, 2, 3, 4]
+        expected_result = [0, 0, 0, 0, 0]
+        self.assertEqual(expected_result, count_right_smaller_numbers(nums))
+
+    def test_array_with_unique_value(self):
+        nums = [1, 1, 1]
+        expected_result = [0, 0, 0]
+        self.assertEqual(expected_result, count_right_smaller_numbers(nums))
+
+    def test_descending_array(self):
+        nums = [4, 3, 2, 1]
+        expected_result = [3, 2, 1, 0]
+        self.assertEqual(expected_result, count_right_smaller_numbers(nums))
+
+    def test_increase_decrease_increase(self):
+        nums = [1, 4, 2, 5, 0, 4]
+        expected_result = [1, 2, 1, 2, 0, 0]
+        self.assertEqual(expected_result, count_right_smaller_numbers(nums))
+
+    def test_decrease_increase_decrease(self):
+        nums = [3, 1, 2, 0]
+        expected_result = [3, 1, 1, 0]
+        self.assertEqual(expected_result, count_right_smaller_numbers(nums))
+
+    def test_decrease_increase_decrease2(self):
+        nums = [12, 1, 2, 3, 0, 11, 4]
+        expected_result = [6, 1, 1, 1, 0, 1, 0]
+        self.assertEqual(expected_result, count_right_smaller_numbers(nums))
+
+    def test_negative_values(self):
+        nums = [8, -2, -1, -2, -1, 3]
+        expected_result = [5, 0, 1, 0, 0, 0]
+        self.assertEqual(expected_result, count_right_smaller_numbers(nums))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
+```
 
 
 ### Sep 28, 2020 \[Hard\] Largest Divisible Pairs Subset

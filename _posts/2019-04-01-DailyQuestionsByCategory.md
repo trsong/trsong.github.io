@@ -1148,6 +1148,28 @@ An unbalanced tree with three consecutive left children: ((((00)0)0)0)
 ---
 
 <details>
+<summary class="lc_m">
+
+- [**\[Medium\] Number of Smaller Elements to the Right**](https://repl.it/@trsong/Find-Number-of-Smaller-Elements-to-the-Right) -- *Given number array,  return the number of smaller elements to the right of each element in the original input array.* [*\(Try ME\)*](https://repl.it/@trsong/Find-Number-of-Smaller-Elements-to-the-Right-1)
+
+</summary>
+<div>
+
+**Question:** Given an array of integers, return a new array where each element in the new array is the number of smaller elements to the right of that element in the original input array.
+
+For example, given the array `[3, 4, 9, 6, 1]`, return `[1, 1, 2, 1, 0]`, since:
+
+* There is 1 smaller element to the right of 3
+* There is 1 smaller element to the right of 4
+* There are 2 smaller elements to the right of 9
+* There is 1 smaller element to the right of 6
+* There are no smaller elements to the right of 1
+ 
+</div>
+</details>
+
+
+<details>
 <summary class="lc_e">
 
 - [**\[Easy\] Generate Binary Search Trees**](https://trsong.github.io/python/java/2020/05/02/DailyQuestionsMay/#jul-11-2020-easy-generate-binary-search-trees) -- *Given an integer N, construct all possible binary search trees with N nodes.* [*\(Try ME\)*](https://repl.it/@trsong/Generate-Binary-Search-Trees-with-N-Nodes-1)
