@@ -23,7 +23,7 @@ categories: Python/Java
 ---
 > **Question:** Given a string, determine whether any permutation of it is a palindrome.
 >
-> For example, carrace should return true, since it can be rearranged to form racecar, which is a palindrome. daily should return false, since there's no rearrangement that can form a palindrome.
+> For example, `'carrace'` should return True, since it can be rearranged to form `'racecar'`, which is a palindrome. `'daily'` should return False, since there's no rearrangement that can form a palindrome.
 
 
 ### Sep 30, 2020 \[Easy\] Witness of The Tall People
