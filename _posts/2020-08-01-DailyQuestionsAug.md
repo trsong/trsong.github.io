@@ -89,6 +89,20 @@ class NumWitnessSpec(unittest.TestCase):
         expected = 3  # [1, 10, 20]
         self.assertEqual(expected, num_witness(heights))
 
+    def test_same_height(self):
+        heights = [1, 1, 1, 1]
+        expected = 1
+        self.assertEqual(expected, num_witness(heights))
+
+    def test_same_height2(self):
+        heights = [3, 3, 3, 2, 2, 1, 1]
+        expected = 3
+        self.assertEqual(expected, num_witness(heights))
+
+    def test_same_height3(self):
+        heights = [1, 1, 2, 2, 3, 3, 3, 3]
+        expected = 1
+        self.assertEqual(expected, num_witness(heights))
 
 if __name__ == '__main__':
     unittest.main(exit=False)
