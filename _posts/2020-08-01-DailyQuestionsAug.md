@@ -19,6 +19,13 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
 
+### Oct 1, 2020 \[Easy\] Is Anagram of Palindrome
+---
+> **Question:** Given a string, determine whether any permutation of it is a palindrome.
+>
+> For example, carrace should return true, since it can be rearranged to form racecar, which is a palindrome. daily should return false, since there's no rearrangement that can form a palindrome.
+
+
 ### Sep 30, 2020 \[Easy\] Witness of The Tall People
 ---
 > **Question:** There are `n` people lined up, and each have a height represented as an integer. A murder has happened right in front of them, and only people who are taller than everyone in front of them are able to see what has happened. How many witnesses are there?
@@ -35,6 +42,56 @@ Explanation: Only [6, 4, 1] were able to see in front of them.
 ####
 #####
 36341  
+```
+
+**Solution:** [https://repl.it/@trsong/Witness-of-The-Tall-People](https://repl.it/@trsong/Witness-of-The-Tall-People)
+```py
+import unittest
+
+def num_witness(heights):
+    local_max = 0 
+    res = 0
+    for height in reversed(heights):
+        if height > local_max:
+            local_max = height
+            res += 1
+    return res
+
+
+class NumWitnessSpec(unittest.TestCase):
+    def test_example(self):
+        heights = [3, 6, 3, 4, 1]
+        expected = 3  # [1, 4, 6]
+        self.assertEqual(expected, num_witness(heights))
+
+    def test_no_witness(self):
+        heights = []
+        expected = 0
+        self.assertEqual(expected, num_witness(heights))
+
+    def test_one_witness(self):
+        heights = [10]
+        expected = 1
+        self.assertEqual(expected, num_witness(heights))
+
+    def test_two_witnesses(self):
+        heights = [2, 1]
+        expected = 2
+        self.assertEqual(expected, num_witness(heights))
+
+    def test_height_up_down_up(self):
+        heights = [1, 10, 2, 20]
+        expected = 1
+        self.assertEqual(expected, num_witness(heights))
+
+    def test_height_down_up_down(self):
+        heights = [20, 2, 10, 1]
+        expected = 3  # [1, 10, 20]
+        self.assertEqual(expected, num_witness(heights))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
 ```
 
 ### Sep 29, 2020 \[Medium\] Number of Smaller Elements to the Right

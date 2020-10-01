@@ -311,6 +311,34 @@ For example, if A is `'abcde'` and B is `'cdeab'`, return `True`. If A is `'abc'
 
 
 <details>
+<summary class="lc_e">
+
+- [**\[Easy\] Is Anagram of Palindrome**](https://trsong.github.io/python/java/2020/08/02/DailyQuestionsAug/#sep-30-2020-easy-witness-of-the-tall-people) -- *There are n people lined up,  a murder has happened right in front of them. How many witnesses are there?* [*\(Try ME\)*](https://repl.it/@trsong/Witness-of-The-Tall-People-1)
+
+</summary>
+<div>
+
+**Question:** There are `n` people lined up, and each have a height represented as an integer. A murder has happened right in front of them, and only people who are taller than everyone in front of them are able to see what has happened. How many witnesses are there?
+
+**Example:**
+```py
+Input: [3, 6, 3, 4, 1]  
+Output: 3
+Explanation: Only [6, 4, 1] were able to see in front of them.
+ #
+ #
+ # #
+####
+####
+#####
+36341  
+```
+
+</div>
+</details>
+
+
+<details>
 <summary class="lc_m">
 
 - [**\[Medium\] LC 54. Spiral Matrix**](http://trsong.github.io/python/java/2020/08/02/DailyQuestionsAug/#sep-5-2020-lc-54-medium-spiral-matrix) -- *Given a matrix of n x m elements (n rows, m columns), return all elements of the matrix in spiral order.* [*\(Try ME\)*](https://repl.it/@trsong/Spiral-Matrix-Traversal-1)
