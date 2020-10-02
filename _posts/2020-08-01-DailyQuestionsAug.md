@@ -19,11 +19,73 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
 
+
+### Oct 2, 2020 LC 678 [Medium] Balanced Parentheses with Wildcard
+---
+> **Question:** You're given a string consisting solely of `(`, `)`, and `*`. `*` can represent either a `(`, `)`, or an empty string. Determine whether the parentheses are balanced.
+>
+> For example, `(()*` and `(*)` are balanced. `)*(` is not balanced.
+
+
 ### Oct 1, 2020 \[Easy\] Is Anagram of Palindrome
 ---
 > **Question:** Given a string, determine whether any permutation of it is a palindrome.
 >
 > For example, `'carrace'` should return True, since it can be rearranged to form `'racecar'`, which is a palindrome. `'daily'` should return False, since there's no rearrangement that can form a palindrome.
+
+**My thoughts:** An anagram of palindrome can have at most 1 character with odd counts. We can use xor to set each bit. And check if the final result is a power of 2. Mearning that, either there is only single digit of 1 in bit map or no 1 at all. 
+
+**Solution:** [https://repl.it/@trsong/EnchantingAnnualArchitecture](https://repl.it/@trsong/EnchantingAnnualArchitecture)
+```py
+import unittest
+from functools import reduce
+
+def is_palindrome_anagram(s):
+    set_bit = lambda accu, ch: accu ^ 1 << ord(ch)
+    bit_map = reduce(set_bit, s, 0)
+    return isPowerOfTwo(bit_map)
+
+
+def isPowerOfTwo(num):
+    return num & num - 1 == 0
+
+
+class IsPalindromeAnagramSpec(unittest.TestCase):
+    def test_example(self):
+        s = 'carrace'
+        self.assertTrue(is_palindrome_anagram(s))
+
+    def test_empty_string(self):
+        self.assertTrue(is_palindrome_anagram(''))
+
+    def test_even_number_of_string(self):
+        s = 'aa'
+        self.assertTrue(is_palindrome_anagram(s))
+
+    def test_even_number_of_string2(self):
+        s = 'aabbcc'
+        self.assertTrue(is_palindrome_anagram(s))
+
+    def test_odd_number_of_string(self):
+        s = 'a'
+        self.assertTrue(is_palindrome_anagram(s))
+
+    def test_odd_number_of_string2(self):
+        s = 'abb'
+        self.assertTrue(is_palindrome_anagram(s))
+
+    def test_odd_number_of_string3(self):
+        s = 'aaabbb'
+        self.assertFalse(is_palindrome_anagram(s))
+
+    def test_odd_number_of_string4(self):
+        s = 'abc'
+        self.assertFalse(is_palindrome_anagram(s))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
+```
 
 
 ### Sep 30, 2020 \[Easy\] Witness of The Tall People

@@ -313,7 +313,7 @@ For example, if A is `'abcde'` and B is `'cdeab'`, return `True`. If A is `'abc'
 <details>
 <summary class="lc_e">
 
-- [**\[Easy\] Is Anagram of Palindrome**](https://trsong.github.io/python/java/2020/08/02/DailyQuestionsAug/#sep-30-2020-easy-witness-of-the-tall-people) -- *There are n people lined up,  a murder has happened right in front of them. How many witnesses are there?* [*\(Try ME\)*](https://repl.it/@trsong/Witness-of-The-Tall-People-1)
+- [**\[Easy\] Witness of The Tall People**](https://trsong.github.io/python/java/2020/08/02/DailyQuestionsAug/#sep-30-2020-easy-witness-of-the-tall-people) -- *There are n people lined up,  a murder has happened right in front of them. How many witnesses are there?* [*\(Try ME\)*](https://repl.it/@trsong/Witness-of-The-Tall-People-1)
 
 </summary>
 <div>
@@ -3090,6 +3090,22 @@ Output:  Either ['bed', 'bath', 'and', 'beyond'] or ['bedbath', 'and', 'beyond']
 
 ### Anagram
 ---
+
+<details>
+<summary class="lc_e">
+
+- [**\[Easy\] Is Anagram of Palindrome**](https://trsong.github.io/python/java/2020/08/02/DailyQuestionsAug/#oct-1-2020-easy-is-anagram-of-palindrome) -- *Given a string, determine whether any permutation of it is a palindrome.* [*\(Try ME\)*](https://repl.it/@trsong/Is-Anagram-of-Palindrome-1)
+
+</summary>
+<div>
+
+**Question:** Given a string, determine whether any permutation of it is a palindrome.
+
+For example, `'carrace'` should return True, since it can be rearranged to form `'racecar'`, which is a palindrome. `'daily'` should return False, since there's no rearrangement that can form a palindrome.
+
+</div>
+</details>
+
 
 ### Palindrome
 ---
