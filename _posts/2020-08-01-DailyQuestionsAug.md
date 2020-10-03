@@ -19,6 +19,12 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
 
+### Oct 3, 2020  \[Hard\] Find Arbitrage Opportunities
+---
+> **Question:** Suppose you are given a table of currency exchange rates, represented as a 2D array. Determine whether there is a possible arbitrage: that is, whether there is some sequence of trades you can make, starting with some amount A of any currency, so that you can end up with some amount greater than A of that currency.
+>
+> There are no transaction costs and you can trade fractional quantities.
+
 
 ### Oct 2, 2020 LC 678 [Medium] Balanced Parentheses with Wildcard
 ---
