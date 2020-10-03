@@ -3028,6 +3028,23 @@ t     a     g
 </details>
 
 
+
+<details>
+<summary class="lc_m">
+
+- [**\[Medium\] LC 678. Balanced Parentheses with Wildcard**](http://trsong.github.io/python/java/2020/08/02/DailyQuestionsAug/#oct-2-2020-lc-678-medium-balanced-parentheses-with-wildcard) -- *Given string contains * that can represent either a (, ), or an empty string. Determine whether the parentheses are balanced.* [*\(Try ME\)*](https://repl.it/@trsong/Determine-Balanced-Parentheses-with-Wildcard-1)
+
+</summary>
+<div>
+
+**Question:** You're given a string consisting solely of `(`, `)`, and `*`. `*` can represent either a `(`, `)`, or an empty string. Determine whether the parentheses are balanced.
+
+For example, `(()*` and `(*)` are balanced. `)*(` is not balanced.
+
+</div>
+</details>
+
+
 <details>
 <summary class="lc_e">
 

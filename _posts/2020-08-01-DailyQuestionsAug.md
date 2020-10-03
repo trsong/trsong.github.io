@@ -27,6 +27,78 @@ categories: Python/Java
 > For example, `(()*` and `(*)` are balanced. `)*(` is not balanced.
 
 
+**My thoughts:** The wildcard `*` can represents `-1`, `0`, `1`, thus `x` number of `"*"`s can represents range from `-x` to `x`. Just like how we check balance without wildcard, but this time balance is a range: the wildcard just make any balance number within the range become possible. While keep the balance range in mind, we need to make sure each time the range can never go below 0 to become unbalanced, ie. number of open parentheses less than close ones.  
+
+
+**Solution:** [https://repl.it/@trsong/Determine-Balanced-Parentheses-with-Wildcard](https://repl.it/@trsong/Determine-Balanced-Parentheses-with-Wildcard)
+```py
+import unittest
+
+def balanced_parentheses(s):
+    lower_bound = higher_bound = 0
+    for ch in s:
+        lower_bound += 1 if ch == '(' else -1
+        higher_bound -= 1 if ch == ')' else -1
+                
+        if higher_bound < 0:
+            return False
+            
+        lower_bound = max(lower_bound, 0)
+        
+    return lower_bound == 0
+
+
+class BalancedParentheseSpec(unittest.TestCase):
+    def test_example(self):
+        self.assertTrue(balanced_parentheses("(()*"))
+
+    def test_example2(self):
+        self.assertTrue(balanced_parentheses("(*)"))
+
+    def test_example3(self):
+        self.assertFalse(balanced_parentheses(")*("))
+
+    def test_empty_string(self):
+        self.assertTrue(balanced_parentheses(""))
+
+    def test_contains_only_wildcard(self):
+        self.assertTrue(balanced_parentheses("*"))
+
+    def test_contains_only_wildcard2(self):
+        self.assertTrue(balanced_parentheses("**"))
+
+    def test_contains_only_wildcard3(self):
+        self.assertTrue(balanced_parentheses("***"))
+
+    def test_without_wildcard(self):
+        self.assertTrue(balanced_parentheses("()(()()())"))
+
+    def test_unbalanced_string(self):
+        self.assertFalse(balanced_parentheses("()()())()"))
+
+    def test_unbalanced_string2(self):
+        self.assertFalse(balanced_parentheses("*(***))))))))****"))
+
+    def test_unbalanced_string3(self):
+        self.assertFalse(balanced_parentheses("()((((*"))
+
+    def test_unbalanced_string4(self):
+        self.assertFalse(balanced_parentheses("((**)))))*"))
+    
+    def test_without_open_parentheses(self):
+        self.assertTrue(balanced_parentheses("*)**)*)*))"))
+    
+    def test_without_close_parentheses(self):
+        self.assertTrue(balanced_parentheses("(*((*(*(**"))
+
+    def test_wildcard_can_only_be_empty(self):
+        self.assertFalse(balanced_parentheses("((*)(*))((*"))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
+```
+
 ### Oct 1, 2020 \[Easy\] Is Anagram of Palindrome
 ---
 > **Question:** Given a string, determine whether any permutation of it is a palindrome.
