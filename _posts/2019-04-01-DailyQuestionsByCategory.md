@@ -2957,6 +2957,33 @@ You should return the following:
 ---
 
 <details>
+<summary class="lc_h">
+
+- [**\[Hard\] Find Arbitrage Opportunities**](http://trsong.github.io/python/java/2020/08/02/DailyQuestionsAug/#oct-3-2020--hard-find-arbitrage-opportunities) -- *Given a table of currency exchange rates, represented as a 2D array. Determine whether there is a possible arbitrage.* [*\(Try ME\)*](https://repl.it/@trsong/Find-Arbitrage-Opportunities-for-Currency-Exchange-1)
+
+</summary>
+<div>
+
+**Question:** Suppose you are given a table of currency exchange rates, represented as a 2D array. Determine whether there is a possible arbitrage: that is, whether there is some sequence of trades you can make, starting with some amount A of any currency, so that you can end up with some amount greater than A of that currency.
+>
+> There are no transaction costs and you can trade fractional quantities.
+
+**Example:**
+```py
+Given the following matrix:
+#       RMB,   USD,  CAD
+# RMB     1, 0.14, 0.19
+# USD  6.97,    1,  1.3
+# CAD  5.37, 0.77,    1
+
+# Since RMB -> CAD -> RMB:  1 Yuan * 0.19 * 5.37 = 1.02 Yuan
+# If we keep exchange RMB to CAD and exchange back, we can make a profit eventually.
+```
+
+</div>
+</details>
+
+<details>
 <summary class="lc_m">
 
 - [**\[Medium\] Maximum Circular Subarray Sum**](https://trsong.github.io/python/java/2020/08/02/DailyQuestionsAug/#aug-2-2020-medium-maximum-circular-subarray-sum) -- *Given a circular array, compute its maximum subarray sum in O(n) time. A subarray can be empty, and in this case the sum is 0.* [*\(Try ME\)*](https://repl.it/@trsong/Find-Maximum-Circular-Subarray-Sum-1)

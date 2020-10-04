@@ -25,6 +25,143 @@ categories: Python/Java
 >
 > There are no transaction costs and you can trade fractional quantities.
 
+**Example:**
+```py
+Given the following matrix:
+#       RMB,   USD,  CAD
+# RMB     1, 0.14, 0.19
+# USD  6.97,    1,  1.3
+# CAD  5.37, 0.77,    1
+
+# Since RMB -> CAD -> RMB:  1 Yuan * 0.19 * 5.37 = 1.02 Yuan
+# If we keep exchange RMB to CAD and exchange back, we can make a profit eventually.
+```
+
+**My thoughts:** The question ask if there exists a cycle that has edge weight multiplication > 1. 
+
+But how to efficiently find such a cycle? 
+
+The trick is to take advantage of the property of log function: `log(a*b) = log(a) + log(b)`. We can convert edge weights into negative log of original edge weights. As `a * b * c > 1 <=> -log(a*b*c) < 0 <=> -log(a) * -log(b) * -log(c) < 0`. We can use Bellman-ford Algorithm to detect if negative cycle exists or not. If so, there must be a cycle whose weight multiplication > 1.
+
+
+**Solution with Bellman-Ford Algorithm(DP):** [https://repl.it/@trsong/Find-Arbitrage-Opportunities-for-Currency-Exchange](https://repl.it/@trsong/Find-Arbitrage-Opportunities-for-Currency-Exchange)
+```py
+import unittest
+import math
+
+def has_arbitrage_opportunities(currency_exchange_matrix):
+    if not currency_exchange_matrix:
+        return False
+
+    n = len(currency_exchange_matrix)
+    transform = lambda rate: -math.log(rate) if rate > 0 else float('inf')
+    transformed_matrix = map(lambda row: map(transform, row), currency_exchange_matrix)
+
+    distance = [float('inf')] * n
+    distance[0] = 0
+    for _ in xrange(n-1):
+        # In each iteration, distance[v] is shortest distance from 0 to v
+        for u in xrange(n):
+            for v in xrange(n):
+                distance[v] = min(distance[v], distance[u] + transformed_matrix[u][v])
+    
+    for u in xrange(n):
+        for v in xrange(n):
+            if distance[v] > distance[u] + transformed_matrix[u][v]:
+                # Exists negative cycle that keeps shrinking shortest path
+                return True
+    return False
+
+
+class HasArbitrageOpportunitiesSpec(unittest.TestCase):
+    def test_empty_matrix(self):
+        self.assertFalse(has_arbitrage_opportunities([]))
+
+    def test_cannot_exchange_currencies(self):
+        currency_exchange_matrix = [
+        #    A, B
+            [1, 0], # A 
+            [0, 1]  # B
+        ]
+        self.assertFalse(has_arbitrage_opportunities(currency_exchange_matrix))
+
+    def test_benefit_from_any_exchange_action(self):
+        currency_exchange_matrix = [
+        #    A, B
+            [1, 2], # A 
+            [2, 1]  # B
+        ]
+        # A -> B -> A:  $1 * 2 * 2 = $4
+        self.assertTrue(has_arbitrage_opportunities(currency_exchange_matrix))
+
+    def test_benefit_from_one_exchange_action(self):
+        currency_exchange_matrix = [
+        #    A,   B
+            [1, 0.5], # A 
+            [4,   1]  # B
+        ]
+        # A -> B -> A:  $1 * 0.5 * 4 = $2
+        self.assertTrue(has_arbitrage_opportunities(currency_exchange_matrix))
+    
+    def test_system_glitch(self):
+        currency_exchange_matrix = [
+        #    A
+            [2]
+        ]
+        # A -> A':  $1 * 2 = $2
+        self.assertTrue(has_arbitrage_opportunities(currency_exchange_matrix))
+
+    def test_multi_currency_system(self):
+        currency_exchange_matrix = [
+        #    RMB,   USD,  CAD
+            [   1, 0.14, 0.19],  # RMB
+            [6.97,    1,  1.3],  # USD
+            [5.37, 0.77,    1]   # CAD
+        ]
+        # RMB -> CAD -> RMB:  1 Yuan * 0.19 * 5.37 = 1.02 Yuan
+        self.assertTrue(has_arbitrage_opportunities(currency_exchange_matrix))
+    
+    def test_multi_currency_system2(self):
+        currency_exchange_matrix = [
+        #     RMB,   USD,    JPY
+            [1   ,  0.14,  15.49],  # RMB
+            [6.97,     1, 108.02],  # USD
+            [0.06, 0.009,      1]   # JPY
+        ]
+        self.assertFalse(has_arbitrage_opportunities(currency_exchange_matrix))
+
+    def test_exists_a_glitch_path_involves_all_currencies(self):
+        currency_exchange_matrix = [
+            #  A, B,   C,   D
+            [  1, 1,   0,   0], # A
+            [0.9, 1, 0.7,   0], # B
+            [1.1, 0,   1, 0.2], # C
+            [10,  0,   0,   1]  # D
+        ]
+        # A -> B -> C -> D -> A:  $1 * 1 * 0.7 * 0.2 * 10 = $1.4 
+        # A -> B -> A: $1 * 1 * 0.9 = $0.9
+        # A -> B -> C -> A: $1 * 1 * 0.7 * 1.1 = $0.77
+        self.assertTrue(has_arbitrage_opportunities(currency_exchange_matrix))
+
+    def test_compliated_example(self):
+        currency_exchange_matrix = [
+        #      PLN,   EUR,   USD,   RUB,   INR,   MXN
+            [    1,  0.23,  0.25, 16.43, 18.21,  4.94],  # PLN
+            [ 4.34,     1,  1.11, 71.40, 79.09, 21.44],  # EUR
+            [ 3.93,  0.90,     1, 64.52, 71.48, 19.37],  # USD
+            [0.061, 0.014, 0.015,     1,  1.11,  0.30],  # RUB
+            [0.055, 0.013, 0.014,  0.90,     1,  0.27],  # INR
+            [ 0.20, 0.047, 0.052,  3.33,  3.69,     1]   # MXN   
+        ]
+        # RUB --> INR --> PLN --> RUB: 1 * 1.11 * 0.055 * 16.43 = 1.0031
+        # USD --> MXN --> USD --> RUB --> INR --> EUR --> PLN: 1 * 19.37 * 0.052 * 64.52 * 1.11 * 0.013 * 4.34 = 4.07
+        # USD --> MXN --> USD --> PLN: 1 * 19.37 * 0.052 * 3.93 = 3.96
+        self.assertTrue(has_arbitrage_opportunities(currency_exchange_matrix))
+    
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
+```
 
 ### Oct 2, 2020 LC 678 [Medium] Balanced Parentheses with Wildcard
 ---
