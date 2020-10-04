@@ -918,6 +918,28 @@ Output: False
 ### Singly Linked List
 ---
 
+
+<details>
+<summary class="lc_e">
+
+- [**\[Easy\] Add Two Numbers as a Linked List**](http://trsong.github.io/python/java/2020/08/02/DailyQuestionsAug/#oct-4-2020--easy-add-two-numbers-as-a-linked-list) -- *Given two linked-lists representing two non-negative integers. Add the two numbers and return it as a linked list.* [*\(Try ME\)*](https://repl.it/@trsong/Add-Two-Numbers-and-Return-as-a-Linked-List-1)
+
+</summary>
+<div>
+
+**Question:** You are given two linked-lists representing two non-negative integers. The digits are stored in reverse order and each of their nodes contain a single digit. Add the two numbers and return it as a linked list.
+
+**Example:**
+```py
+Input: (2 -> 4 -> 3) + (5 -> 6 -> 4)
+Output: 7 -> 0 -> 8
+Explanation: 342 + 465 = 807.
+```
+
+</div>
+</details>
+
+
 <details>
 <summary class="lc_e">
 
