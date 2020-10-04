@@ -19,7 +19,19 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
 
-### Oct 3, 2020  \[Hard\] Find Arbitrage Opportunities
+### Oct 4, 2020  \[Easy\] Add Two Numbers as a Linked List
+---
+> **Question:** You are given two linked-lists representing two non-negative integers. The digits are stored in reverse order and each of their nodes contain a single digit. Add the two numbers and return it as a linked list.
+
+**Example:**
+```py
+Input: (2 -> 4 -> 3) + (5 -> 6 -> 4)
+Output: 7 -> 0 -> 8
+Explanation: 342 + 465 = 807.
+```
+
+
+### Oct 3, 2020 \[Hard\] Find Arbitrage Opportunities
 ---
 > **Question:** Suppose you are given a table of currency exchange rates, represented as a 2D array. Determine whether there is a possible arbitrage: that is, whether there is some sequence of trades you can make, starting with some amount A of any currency, so that you can end up with some amount greater than A of that currency.
 >
