@@ -47,6 +47,147 @@ cache.get(4)  # returns None (pre-empted by 2)
 cache.get(3)  # returns 3
 ```
 
+**Solution:** [https://repl.it/@trsong/Design-LRU-Cache](https://repl.it/@trsong/Design-LRU-Cache)
+```py
+import unittest
+
+class ListNode(object):
+    def __init__(self, next=None):
+        self.update(None, None, next)
+        
+    def update(self, new_key, new_val, new_next):
+        self.key = new_key
+        self.val = new_val
+        self.next = new_next
+
+class LRUCache(object):
+    def __init__(self, capacity):
+        self.capacity = capacity  # assume capacity is always positive
+        self.lookup = {}
+        self.tail = ListNode()
+        self.head = ListNode(self.tail)
+
+    def get(self, key):
+        if key not in self.lookup:
+            return None
+        
+        # Duplicate the node and move to tail
+        node = self.lookup[key]
+        key, val = node.key, node.val
+        self.insert_node(key, val)
+        
+        # Remove original node
+        if node.next.key:
+            self.lookup[node.next.key] = node
+        node.update(node.next.key, node.next.val, node.next.next)
+        return val
+
+    def put(self, key, val):
+        if key not in self.lookup:
+            self.insert_node(key, val)
+        else:
+            node = self.lookup[key]
+            node.val = val
+            self.get(key)  # populate the entry
+            
+        if len(self.lookup) > self.capacity:
+            most_inactive_node = self.head.next
+            del self.lookup[most_inactive_node.key]
+            self.head.next = most_inactive_node.next
+            
+    def insert_node(self, key, val):
+        self.lookup[key] = self.tail
+        self.tail.update(key, val, ListNode())
+        self.tail = self.tail.next
+
+
+class LRUCacheSpec(unittest.TestCase):
+    def test_example(self):
+        cache = LRUCache(2)
+        cache.put(3, 3)
+        cache.put(4, 4)
+        self.assertEqual(3, cache.get(3))
+        self.assertIsNone(cache.get(2))
+
+        cache.put(2, 2)
+        self.assertIsNone(cache.get(4))  # returns None (pre-empted by 2)
+        self.assertEqual(3, cache.get(3))
+
+    def test_get_element_from_empty_cache(self):
+        cache = LRUCache(1)
+        self.assertIsNone(cache.get(-1))
+
+    def test_cachecapacity_is_one(self):
+        cache = LRUCache(1)
+        cache.put(-1, 42)
+        self.assertEqual(42, cache.get(-1))
+
+        cache.put(-1, 10)
+        self.assertEqual(10, cache.get(-1))
+
+        cache.put(2, 0)
+        self.assertIsNone(cache.get(-1))
+        self.assertEqual(0, cache.get(2))
+
+    def test_evict_most_inactive_element_when_cache_is_full(self):
+        cache = LRUCache(3)
+        cache.put(1, 1)
+        cache.put(1, 1)
+        cache.put(2, 1)
+        cache.put(3, 1)
+
+        cache.put(4, 1)
+        self.assertIsNone(cache.get(1))
+
+        cache.put(2, 1)
+        cache.put(5, 1)
+        self.assertIsNone(cache.get(3))
+
+    def test_update_element_should_get_latest_value(self):
+        cache = LRUCache(2)
+        cache.put(3, 10)
+        cache.put(3, 42)
+        cache.put(1, 1)
+        cache.put(1, 2)
+        self.assertEqual(42, cache.get(3))
+
+    def test_end_to_end_workflow(self):
+        cache = LRUCache(3)
+        cache.put(0, 0)  # Least Recent -> 0 -> Most Recent
+        cache.put(1, 1)  # Least Recent -> 0, 1 -> Most Recent
+        cache.put(2, 2)  # Least Recent -> 0, 1, 2 -> Most Recent
+        cache.put(3, 3)  # Least Recent -> 1, 2, 3 -> Most Recent. Evict 0
+        self.assertIsNone(cache.get(0))  
+        self.assertEqual(2, cache.get(2))  # Least Recent -> 1, 3, 2 -> Most Recent
+        cache.put(4, 4)  # Least Recent -> 3, 2, 4 -> Most Recent. Evict 1 
+        self.assertIsNone(cache.get(1))
+        self.assertEqual(2, cache.get(2))  # Least Recent -> 3, 4, 2 -> Most Recent 
+        self.assertEqual(3, cache.get(3))  # Least Recent -> 4, 2, 3 -> Most Recent
+        self.assertEqual(2, cache.get(2))  # Least Recent -> 4, 3, 2 -> Most Recent
+        cache.put(5, 5)  # Least Recent -> 3, 2, 5 -> Most Recent. Evict 4
+        cache.put(6, 6)  # Least Recent -> 2, 5, 6 -> Most Recent. Evict 3
+        self.assertIsNone(cache.get(4))
+        self.assertIsNone(cache.get(3))
+        cache.put(7, 7)  # Least Recent -> 5, 6, 7 -> Most Recent. Evict 2
+        self.assertIsNone(cache.get(2))
+
+    def test_end_to_end_workflow2(self):
+        cache = LRUCache(2)
+        cache.put(1, 1)
+        cache.put(2, 2)
+        self.assertEqual(cache.get(1), 1)
+        cache.put(3, 3)  # evicts key 2
+        self.assertIsNone(cache.get(2))
+        cache.put(4, 4)  # evicts key 1
+        self.assertIsNone(cache.get(1))
+        self.assertEqual(3, cache.get(3))
+        self.assertEqual(4, cache.get(4))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
+```
+
 
 ### Oct 4, 2020  \[Easy\] Add Two Numbers as a Linked List
 ---

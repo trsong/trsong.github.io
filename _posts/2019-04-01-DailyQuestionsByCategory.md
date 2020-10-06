@@ -1957,6 +1957,35 @@ Explanation: A -> B -> idle -> A -> B -> idle -> A -> B.
 <details>
 <summary class="lc_m">
 
+- [**\[Medium\] LRU Cache**](https://trsong.github.io/python/java/2020/08/02/DailyQuestionsAug/#oct-5-2020-medium-lru-cache) -- *Design and implement an LRU cache class with the 2 functions 'put' and 'get'.* [*\(Try ME\)*](https://repl.it/@trsong/Design-LRU-Cache-1)
+
+</summary>
+<div>
+
+**Question:** LRU cache is a cache data structure that has limited space, and once there are more items in the cache than available space, it will preempt the least recently used item. What counts as recently used is any item a key has `'get'` or `'put'` called on it.
+
+Implement an LRU cache class with the 2 functions `'put'` and `'get'`. `'put'` should place a value mapped to a certain key, and preempt items if needed. `'get'` should return the value for a given key if it exists in the cache, and return None if it doesn't exist.
+
+**Example:**
+```py
+cache = LRUCache(2)
+cache.put(3, 3)
+cache.put(4, 4)
+cache.get(3)  # returns 3
+cache.get(2)  # returns None
+
+cache.put(2, 2)
+cache.get(4)  # returns None (pre-empted by 2)
+cache.get(3)  # returns 3
+```
+
+</div>
+</details>
+
+
+<details>
+<summary class="lc_m">
+
 - [**\[Medium\] Fixed Order Task Scheduler with Cooldown**](https://trsong.github.io/python/java/2020/08/02/DailyQuestionsAug/#sep-26-2020-medium-fixed-order-task-scheduler-with-cooldown) -- *Given a list of tasks to perform, with a cooldown period. Return execution order.* [*\(Try ME\)*](Fixed Order Task Scheduler with Cooldown-1)
 
 </summary>
