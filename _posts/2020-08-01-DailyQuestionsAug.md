@@ -44,6 +44,177 @@ Output: [-1, -1]
 > - `get(key)`: gets the value at key. If no such key exists, return null.
 Each operation should run in O(1) time.
 
+**Solution:** [https://repl.it/@trsong/LFU-Cache](https://repl.it/@trsong/LFU-Cache)
+```py
+import unittest
+
+class FreqNode(object):
+    def __init__(self, count=0, lru=None, next=None):
+        self.update(count, lru, next)
+
+    def update(self, new_count, new_lru, new_next):
+        self.count = new_count
+        self.lru = new_lru
+        self.next = new_next
+
+
+class LFUCache(object):
+    def __init__(self, capacity):
+        self.capacity = capacity
+        self.lookup = {}
+        self.tail = FreqNode()
+        self.head = FreqNode(next=self.tail)
+        self.size = 0
+
+    def get(self, key):
+        if key not in self.lookup:
+            return None
+
+        freq_node = self.lookup[key]
+        val = freq_node.lru.get(key)
+        self.next_or_insert_node(freq_node, key, val)
+
+        if freq_node.lru.empty():
+            self.delete_node(freq_node)
+        return val
+
+    def put(self, key, val):
+        if self.capacity <= 0:
+            return
+        if key in self.lookup:
+            freq_node = self.lookup[key]
+            freq_node.lru.put(key, val)
+            self.get(key)
+        else:
+            if self.size >= self.capacity:
+                self.size -= 1
+                least_freq_node = self.head.next
+                least_freq_key = least_freq_node.lru.pop()
+                del self.lookup[least_freq_key]
+                if least_freq_node.lru.empty():
+                    self.delete_node(least_freq_node)
+            self.next_or_insert_node(self.head, key, val)
+            self.size += 1
+            
+    def delete_node(self, freq_node):
+        next_freq_node = freq_node.next
+        freq_node.update(next_freq_node.count, next_freq_node.lru, next_freq_node.next)
+        if next_freq_node == self.tail:
+            return
+        for key in next_freq_node.lru.keys():
+            self.lookup[key] = freq_node
+        
+    def next_or_insert_node(self, freq_node, key, val):
+        next_freq_node = freq_node.next
+        if next_freq_node == self.tail:
+            self.tail.update(freq_node.count+1, LRUCache(), FreqNode())
+            self.tail = self.tail.next
+        elif next_freq_node.count != freq_node.count + 1:
+            next_freq_node = FreqNode(freq_node.count + 1, LRUCache(), next_freq_node)
+            freq_node.next = next_freq_node
+
+        next_freq_node.lru.put(key, val)
+        self.lookup[key] = next_freq_node
+
+
+class ListNode(object):
+    def __init__(self, next=None):
+        self.update(None, None, next)
+        
+    def update(self, new_key, new_val, new_next):
+        self.key = new_key
+        self.val = new_val
+        self.next = new_next
+
+
+class LRUCache(object):
+    def __init__(self):
+        self.lookup = {}
+        self.tail = ListNode()
+        self.head = ListNode(self.tail)
+
+    def empty(self):
+        return not self.lookup
+
+    def keys(self):
+        return self.lookup.keys()
+
+    def get(self, key):
+        if key not in self.lookup:
+            return None
+        
+        node = self.lookup[key]
+        val = node.val
+        del self.lookup[key]
+        
+        # Remove original node
+        if node.next.key:
+            self.lookup[node.next.key] = node
+        node.update(node.next.key, node.next.val, node.next.next)
+        return val
+
+    def put(self, key, val):
+        self.get(key)
+        self.insert_node(key, val)
+
+    def pop(self):
+        most_inactive_node = self.head.next
+        del self.lookup[most_inactive_node.key]
+        self.head.next = most_inactive_node.next
+        return most_inactive_node.key
+            
+    def insert_node(self, key, val):
+        self.lookup[key] = self.tail
+        self.tail.update(key, val, ListNode())
+        self.tail = self.tail.next
+
+
+class LFUCacheSpec(unittest.TestCase):
+    def test_empty_cache(self):
+        cache = LFUCache(0)
+        self.assertIsNone(cache.get(0))
+        cache.put(0, 0)
+
+    def test_end_to_end_workflow(self):
+        cache = LFUCache(2)
+        cache.put(1, 1)
+        cache.put(2, 2)
+        self.assertEqual(1, cache.get(1))
+        cache.put(3, 3)  # remove key 2
+        self.assertIsNone(cache.get(2))  # key 2 not found
+        self.assertEqual(3, cache.get(3))
+        cache.put(4, 4)  # remove key 1
+        self.assertIsNone(cache.get(1))  # key 1 not found
+        self.assertEqual(3, cache.get(3))
+        self.assertEqual(4, cache.get(4))
+
+    def test_end_to_end_workflow2(self):
+        cache = LFUCache(3)
+        cache.put(2, 2)
+        cache.put(1, 1)
+        self.assertEqual(2, cache.get(2))
+        self.assertEqual(1, cache.get(1))
+        self.assertEqual(2, cache.get(2))
+        cache.put(3, 3)
+        cache.put(4, 4)  # remove key 3
+        self.assertIsNone(cache.get(3))
+        self.assertEqual(2, cache.get(2))
+        self.assertEqual(1, cache.get(1))
+        self.assertEqual(4, cache.get(4))
+
+    def test_end_to_end_workflow3(self):
+        cache = LFUCache(2)
+        cache.put(3, 1)
+        cache.put(2, 1)
+        cache.put(2, 2)
+        cache.put(4, 4)
+        self.assertEqual(2, cache.get(2))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
+```
+
 
 ### Oct 5, 2020 \[Medium\] LRU Cache
 ---
