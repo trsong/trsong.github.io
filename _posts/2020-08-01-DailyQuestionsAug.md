@@ -19,6 +19,16 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
 
+
+### Oct 9, 2020 LC 665 \[Medium\] Off-by-One Non-Decreasing Array
+---
+> **Question:** Given an array of integers, write a function to determine whether the array could become non-decreasing by modifying at most 1 element.
+>
+> For example, given the array `[10, 5, 7]`, you should return true, since we can modify the `10` into a `1` to make the array non-decreasing.
+>
+> Given the array `[10, 5, 1]`, you should return false, since we can't modify any one element to get a non-decreasing array.
+
+
 ### Oct 8, 2020 \[Easy\] Reverse a Linked List
 ---
 > **Question:** Given a singly-linked list, reverse the list. This can be done iteratively or recursively. Can you get both solutions?
@@ -29,6 +39,81 @@ Input: 4 -> 3 -> 2 -> 1 -> 0 -> NULL
 Output: 0 -> 1 -> 2 -> 3 -> 4 -> NULL
 ```
 
+**Solution:** [https://repl.it/@trsong/Reverse-a-Linked-List](https://repl.it/@trsong/Reverse-a-Linked-List)
+```py
+import unittest
+
+class ListUtil(object):
+    @staticmethod
+    def iterative_reverse(lst):
+        prev = None
+        while lst:
+            next = lst.next
+            lst.next = prev
+            prev = lst
+            lst = next
+        return prev
+
+    @staticmethod
+    def recursive_reverse(lst):
+        if not lst or not lst.next:
+            return lst
+        root = ListUtil.recursive_reverse(lst.next)
+        lst.next.next = lst
+        lst.next = None
+        return root
+    
+
+class ListNode(object):
+    def __init__(self, val, next=None):
+        self.val = val
+        self.next = next
+
+    def __eq__(self, other):
+        return other and self.val == other.val and self.next == other.next
+
+    def __repr__(self):
+        return "%d -> %s" % (self.val, self.next)
+    
+    @staticmethod
+    def List(*vals):
+        dummy = p = ListNode(-1)
+        for v in vals:
+            p.next = ListNode(v)
+            p = p.next
+        return dummy.next
+
+
+class ListUtilSpec(unittest.TestCase):
+    def assert_result(self, nums):
+        lst = ListNode.List(*nums)
+        lst2 = ListNode.List(*nums)
+        expected = ListNode.List(*reversed(nums))
+        self.assertEqual(expected, ListUtil.recursive_reverse(lst))
+        self.assertEqual(expected, ListUtil.iterative_reverse(lst2))
+
+    def test_empty_list(self):
+        self.assert_result([])
+
+    def test_one_elem_list(self):
+        self.assert_result([1])
+
+    def test_two_elem_list(self):
+        self.assert_result([1, 2])
+
+    def test_list_with_duplicate_elem(self):
+        self.assert_result([1, 2, 1, 1])
+
+    def test_list_with_duplicate_elem2(self):
+        self.assert_result([1, 1, 1, 1, 1, 1])
+
+    def test_unique_list(self):
+        self.assert_result([1, 2, 3, 4, 5, 6])
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
+```
 
 ### Oct 7, 2020 \[Easy\] First and Last Indices of an Element in a Sorted Array
 ---

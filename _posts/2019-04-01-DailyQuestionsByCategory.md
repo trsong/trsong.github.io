@@ -918,6 +918,25 @@ Output: False
 ### Singly Linked List
 ---
 
+<details>
+<summary class="lc_e">
+
+- [**\[Easy\] Reverse a Linked List**](https://trsong.github.io/python/java/2020/08/02/DailyQuestionsAug/#oct-8-2020-easy-reverse-a-linked-list) -- *Given a singly-linked list, reverse the list. This can be done iteratively or recursively. Can you get both solutions?* [*\(Try ME\)*](https://repl.it/@trsong/Reverse-a-Linked-List-1)
+
+</summary>
+<div>
+
+**Question:** Given a singly-linked list, reverse the list. This can be done iteratively or recursively. Can you get both solutions?
+
+**Example:**
+```py
+Input: 4 -> 3 -> 2 -> 1 -> 0 -> NULL
+Output: 0 -> 1 -> 2 -> 3 -> 4 -> NULL
+```
+
+</div>
+</details>
+
 
 <details>
 <summary class="lc_e">
