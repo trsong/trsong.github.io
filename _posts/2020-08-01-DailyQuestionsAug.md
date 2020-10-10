@@ -19,6 +19,12 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
 
+### Oct 10, 2020\[Hard\] Longest Palindromic Substring
+---
+> **Question:** Given a string, find the longest palindromic contiguous substring. If there are more than one with the maximum length, return any one.
+>
+> For example, the longest palindromic substring of `"aabcdcb"` is `"bcdcb"`. The longest palindromic substring of `"bananas"` is `"anana"`.
+
 
 ### Oct 9, 2020 LC 665 \[Medium\] Off-by-One Non-Decreasing Array
 ---
