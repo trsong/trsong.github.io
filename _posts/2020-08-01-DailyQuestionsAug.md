@@ -28,6 +28,76 @@ categories: Python/Java
 >
 > Given the array `[10, 5, 1]`, you should return false, since we can't modify any one element to get a non-decreasing array.
 
+**My thoughts:** try to identify the down postition. The problematic position prevents array from non-decreasing is either the down position or its previous position. Just remove either position and test array again, if it works then it's off-by-one array otherwise it's not since more positions need to be removed.
+
+**Solution:** [https://repl.it/@trsong/Determine-if-Off-by-One-Non-Decreasing-Array](https://repl.it/@trsong/Determine-if-Off-by-One-Non-Decreasing-Array)
+```py
+import unittest
+
+def is_off_by_one_array(nums):
+    n = len(nums)
+    if n <= 2:
+        return True
+
+    down_pos = None
+    for i in xrange(1, n):
+        if nums[i-1] <= nums[i]:
+            continue
+
+        if down_pos is not None:
+            return False
+        down_pos = i
+
+    if down_pos is None or down_pos == 1 or down_pos == n-1:
+        return True
+    else:
+        return nums[down_pos-1] <= nums[down_pos+1] or nums[down_pos-2] <= nums[down_pos] 
+
+
+class IsOffByOneArraySpec(unittest.TestCase):
+    def test_example(self):
+        self.assertTrue(is_off_by_one_array([10, 5, 7]))
+
+    def test_example2(self):
+        self.assertFalse(is_off_by_one_array([10, 5, 1]))
+
+    def test_empty_array(self):
+        self.assertTrue(is_off_by_one_array([]))
+
+    def test_one_element_array(self):
+        self.assertTrue(is_off_by_one_array([1]))
+
+    def test_two_elements_array(self):
+        self.assertTrue(is_off_by_one_array([1, 1]))
+        self.assertTrue(is_off_by_one_array([1, 0]))
+        self.assertTrue(is_off_by_one_array([0, 1]))
+
+    def test_decreasing_array(self):
+        self.assertFalse(is_off_by_one_array([8, 2, 0]))
+
+    def test_non_decreasing_array(self):
+        self.assertTrue(is_off_by_one_array([0, 0, 1, 2, 2]))
+        self.assertTrue(is_off_by_one_array([0, 1, 2]))
+        self.assertTrue(is_off_by_one_array([0, 0, 0, 0]))
+
+    def test_off_by_one_array(self):
+        self.assertTrue(is_off_by_one_array([2, 10, 0]))
+        self.assertTrue(is_off_by_one_array([5, 2, 10]))
+        self.assertTrue(is_off_by_one_array([0, 1, 0, 0]))
+        self.assertTrue(is_off_by_one_array([-1, 4, 2, 3]))
+        self.assertTrue(is_off_by_one_array([0, 1, 1, 0]))
+
+    def test_off_by_two_array(self):
+        self.assertFalse(is_off_by_one_array([5, 2, 10, 3, 4]))
+        self.assertTrue(is_off_by_one_array([0, 1, 0, 0, 0, 1]))
+        self.assertFalse(is_off_by_one_array([1, 1, 0, 0]))
+        self.assertFalse(is_off_by_one_array([0, 1, 1, 0, 0, 1]))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
+```
+
 
 ### Oct 8, 2020 \[Easy\] Reverse a Linked List
 ---

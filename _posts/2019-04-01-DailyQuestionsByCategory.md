@@ -311,6 +311,23 @@ For example, if A is `'abcde'` and B is `'cdeab'`, return `True`. If A is `'abc'
 
 
 <details>
+<summary class="lc_m">
+
+- [**\[Medium\] LC 665. Off-by-One Non-Decreasing Array**](http://trsong.github.io/python/java/2020/08/02/DailyQuestionsAug/#oct-9-2020-lc-665-medium-off-by-one-non-decreasing-array) -- *Given an array of integers, write a function to determine whether the array could become non-decreasing by modifying at most 1 element.* [*\(Try ME\)*](https://repl.it/@trsong/Determine-if-Off-by-One-Non-Decreasing-Array-1)
+
+</summary>
+<div>
+
+**Question:** Given an array of integers, write a function to determine whether the array could become non-decreasing by modifying at most 1 element.
+
+For example, given the array `[10, 5, 7]`, you should return true, since we can modify the `10` into a `1` to make the array non-decreasing.
+
+Given the array `[10, 5, 1]`, you should return false, since we can't modify any one element to get a non-decreasing array.
+
+</div>
+</details>
+
+<details>
 <summary class="lc_e">
 
 - [**\[Easy\] Witness of The Tall People**](https://trsong.github.io/python/java/2020/08/02/DailyQuestionsAug/#sep-30-2020-easy-witness-of-the-tall-people) -- *There are n people lined up,  a murder has happened right in front of them. How many witnesses are there?* [*\(Try ME\)*](https://repl.it/@trsong/Witness-of-The-Tall-People-1)
