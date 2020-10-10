@@ -19,7 +19,7 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
 
-### Oct 10, 2020\[Hard\] Longest Palindromic Substring
+### Oct 10, 2020 \[Hard\] Longest Palindromic Substring
 ---
 > **Question:** Given a string, find the longest palindromic contiguous substring. If there are more than one with the maximum length, return any one.
 >
