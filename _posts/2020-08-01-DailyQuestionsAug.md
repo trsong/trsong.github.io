@@ -19,12 +19,99 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
 
+
+### Oct 11, 2020 LC 668 \[Hard\] Kth Smallest Number in Multiplication Table
+---
+> **Question:** Find out the k-th smallest number quickly from the multiplication table.
+>
+> Given the height m and the length n of a m * n Multiplication Table, and a positive integer k, you need to return the k-th smallest number in this table.
+
+**Example 1:**
+```py
+Input: m = 3, n = 3, k = 5
+Output: 
+Explanation: 
+The Multiplication Table:
+1	2	3
+2	4	6
+3	6	9
+The 5-th smallest number is 3 (1, 2, 2, 3, 3).
+```
+
+**Example 2:**
+```py
+Input: m = 2, n = 3, k = 6
+Output: 
+Explanation: 
+The Multiplication Table:
+1	2	3
+2	4	6
+The 6-th smallest number is 6 (1, 2, 2, 3, 4, 6).
+```
+
+
 ### Oct 10, 2020 \[Hard\] Longest Palindromic Substring
 ---
 > **Question:** Given a string, find the longest palindromic contiguous substring. If there are more than one with the maximum length, return any one.
 >
 > For example, the longest palindromic substring of `"aabcdcb"` is `"bcdcb"`. The longest palindromic substring of `"bananas"` is `"anana"`.
 
+**Solution with DP:** [https://repl.it/@trsong/Find-the-Longest-Palindromic-Substring](https://repl.it/@trsong/Find-the-Longest-Palindromic-Substring)
+```py
+import unittest
+
+def find_longest_palindromic_substring(s):
+    if not s:
+        return ""
+
+    n = len(s)
+    # Let dp[i][j] represents whether substring[i:j+1] is palindromic or not
+    #     dp[i][j] = True if dp[i+1][j-1] and s[i]==s[j] 
+    dp = [[False for _ in xrange(n)] for _ in xrange(n)]
+
+    max_window = 1
+    max_window_start = 0
+
+    for window in xrange(1, n+1):
+        for start in xrange(n):
+            end = start + window - 1
+            if end >= n:
+                break
+                
+            sub_result = window <= 2 or dp[start+1][end-1]
+            dp[start][end] = sub_result and s[start] == s[end]
+
+            if dp[start][end]:
+                max_window = window
+                max_window_start = start
+    
+    return s[max_window_start: max_window_start + max_window]
+            
+
+class FindLongestPalindromicSubstringSpec(unittest.TestCase):
+    def test_example(self):
+        self.assertEqual("bcdcb", find_longest_palindromic_substring("aabcdcb"))
+
+    def test_example2(self):
+        self.assertEqual("anana", find_longest_palindromic_substring("bananas"))
+
+    def test_one_letter_palindrome(self):
+        word = "abcdef"
+        result = find_longest_palindromic_substring(word)
+        self.assertTrue(result in word and len(result) == 1)
+    
+    def test_multiple_length_2_palindrome(self):
+        result = find_longest_palindromic_substring("zaaqrebbqreccqreddz")
+        self.assertIn(result, ["aa", "bb", "cc", "dd"])
+
+    def test_multiple_length_3_palindrome(self):
+        result = find_longest_palindromic_substring("xxaza1xttv1xpqp1x")
+        self.assertIn(result, ["aza", "ttt", "pqp"])
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
+```
 
 ### Oct 9, 2020 LC 665 \[Medium\] Off-by-One Non-Decreasing Array
 ---

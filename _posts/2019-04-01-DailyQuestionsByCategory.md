@@ -2915,7 +2915,6 @@ make_change([1, 5, 10, 25], 36)  # gives 3 coins (25 + 10 + 1)
 ### 2D DP
 ---
 
-
 <details>
 <summary class="lc_h">
 
@@ -3258,6 +3257,22 @@ For example, `'carrace'` should return True, since it can be rearranged to form 
 
 ### Palindrome
 ---
+
+<details>
+<summary class="lc_h">
+
+- [**\[Hard\] Longest Palindromic Substring**](https://trsong.github.io/python/java/2020/08/02/DailyQuestionsAug/#oct-10-2020-hard-longest-palindromic-substring) -- *Given a string, find the longest palindromic contiguous substring. If there are more than one with the maximum length, return any one.* [*\(Try ME\)*](https://repl.it/@trsong/Find-the-Longest-Palindromic-Substring-1)
+
+</summary>
+<div>
+
+**Question:** Given a string, find the longest palindromic contiguous substring. If there are more than one with the maximum length, return any one.
+
+For example, the longest palindromic substring of `"aabcdcb"` is `"bcdcb"`. The longest palindromic substring of `"bananas"` is `"anana"`.
+
+
+</div>
+</details>
 
 <details>
 <summary class="lc_e">
