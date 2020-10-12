@@ -49,6 +49,77 @@ The Multiplication Table:
 The 6-th smallest number is 6 (1, 2, 2, 3, 4, 6).
 ```
 
+**Solution with Binary Search:** [https://repl.it/@trsong/Kth-Smallest-Number-in-Multiplication-Table](https://repl.it/@trsong/Kth-Smallest-Number-in-Multiplication-Table)
+```py
+import unittest
+
+def find_kth_num(m, n, k):
+    num_row, num_col = min(m, n), max(m, n)
+    # count smaller number row by row
+    count = lambda num: sum(map(lambda r: min(num // r, num_col), xrange(1, min(num, num_row)+1)))
+    
+    lo = 1
+    hi = m * n
+    while lo < hi:
+        mid = lo + (hi - lo) // 2
+        smaller_num = count(mid)
+        if smaller_num < k:
+            lo = mid + 1
+        else:
+            hi = mid
+    
+    return lo
+
+
+class FindKthNumSpec(unittest.TestCase):
+    def test_example(self):
+        """
+        1	2	3
+        2	4	6
+        3	6	9
+        """
+        m, n, k = 3, 3, 5
+        self.assertEqual(3, find_kth_num(m, n, k))
+
+    def test_example2(self):
+        """
+        1	2	3
+        2	4	6
+        """
+        m, n, k = 2, 3, 6
+        self.assertEqual(6, find_kth_num(m, n, k))
+
+    def test_single_row(self):
+        """
+        1	2	3   4   5
+        """
+        m, n, k = 1, 5, 5
+        self.assertEqual(5, find_kth_num(m, n, k))
+
+    def test_single_column(self):
+        """
+        1
+        2
+        3
+        """
+        m, n, k = 3, 1, 2
+        self.assertEqual(2, find_kth_num(m, n, k))
+
+    def test_single_cell(self):
+        """
+        1
+        """
+        m, n, k = 1, 1, 1
+        self.assertEqual(1, find_kth_num(m, n, k))
+
+    def test_large_table(self):
+        m, n, k = 42, 34, 401
+        self.assertEqual(126, find_kth_num(m, n, k))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
+```
 
 ### Oct 10, 2020 \[Hard\] Longest Palindromic Substring
 ---

@@ -643,6 +643,45 @@ Explanation: Because the new interval [4,8] overlaps with [3,5],[6,7],[8,10].
 ---
 
 <details>
+<summary class="lc_h">
+
+- [**\[Hard\] LC 668. Kth Smallest Number in Multiplication Table**](https://trsong.github.io/python/java/2020/08/02/DailyQuestionsAug/#oct-11-2020-lc-668-hard-kth-smallest-number-in-multiplication-table) -- *Find out the k-th smallest number quickly from the multiplication table.* [*\(Try ME\)*](https://repl.it/@trsong/Kth-Smallest-Number-in-Multiplication-Table-1)
+
+</summary>
+<div>
+
+**Question:** Find out the k-th smallest number quickly from the multiplication table.
+
+Given the height m and the length n of a m * n Multiplication Table, and a positive integer k, you need to return the k-th smallest number in this table.
+
+**Example 1:**
+```py
+Input: m = 3, n = 3, k = 5
+Output: 
+Explanation: 
+The Multiplication Table:
+1	2	3
+2	4	6
+3	6	9
+The 5-th smallest number is 3 (1, 2, 2, 3, 3).
+```
+
+**Example 2:**
+```py
+Input: m = 2, n = 3, k = 6
+Output: 
+Explanation: 
+The Multiplication Table:
+1	2	3
+2	4	6
+The 6-th smallest number is 6 (1, 2, 2, 3, 4, 6).
+```
+
+</div>
+</details>
+
+
+<details>
 <summary class="lc_e">
 
 - [**\[Easy\] First and Last Indices of an Element in a Sorted Array**](https://trsong.github.io/python/java/2020/05/02/DailyQuestionsMay/#june-6-2020-easy-first-and-last-indices-of-an-element-in-a-sorted-array) -- *Given a sorted array, A, with possibly duplicated elements, find the indices of the first and last occurrences of a target element.* [*\(Try ME\)*](https://repl.it/@trsong/Find-First-and-Last-Indices-of-an-Element-in-a-Sorted-Arr-1)
