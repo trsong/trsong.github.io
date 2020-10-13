@@ -18,6 +18,19 @@ categories: Python/Java
 
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
+### Oct 13, 2020 \[Medium\] Locking in Binary Tree
+---
+> **Question:** Implement locking in a binary tree. A binary tree node can be locked or unlocked only if all of its descendants or ancestors are not locked.
+> 
+> Design a binary tree node class with the following methods:
+>
+> - `is_locked`, which returns whether the node is locked
+> - `lock`, which attempts to lock the node. If it cannot be locked, then it should return false. Otherwise, it should lock it and return true.
+> - `unlock`, which unlocks the node. If it cannot be unlocked, then it should return false. Otherwise, it should unlock it and return true.
+>
+> You may augment the node to add parent pointers or any other property you would like. You may assume the class is used in a single-threaded program, so there is no need for actual locks or mutexes. Each method should run in O(h), where h is the height of the tree.
+
+
 
 ### Oct 12, 2020 \[Medium\] Searching in Rotated Array
 ---
@@ -27,6 +40,67 @@ categories: Python/Java
 > 
 > You can assume all the integers in the array are unique.
 
+**My thoughts:** In order to solve this problem, we will need the following properties:
+
+1. Multiple rotation can at most break array into two sorted subarrays. 
+2. All numbers on left sorted subarray are always larger than numbers on the right sorted subarray.
+
+The idea of binary search is about how to breaking the problem size into half instead of checking `arr[mid]` against target number. Two edge cases could happen while doing binary search:
+
+1. mid element is on the same part as the left-most element
+2. mid element is on different part
+
+
+**Solution with Binary Search:** [https://repl.it/@trsong/Searching-Elem-in-Rotated-Array](https://repl.it/@trsong/Searching-Elem-in-Rotated-Array)
+```py
+import unittest
+
+def rotated_array_search(nums, target):
+    if not nums:
+        return None
+    
+    lo = 0
+    hi = len(nums) - 1
+    while lo <= hi:
+        mid = lo + (hi - lo) // 2
+        if nums[mid] == target:
+            return mid
+        if nums[lo] < nums[mid] < target or nums[lo] > target:
+            lo = mid + 1
+        else:
+            hi = mid - 1
+    return None
+
+
+class RotatedArraySearchSpec(unittest.TestCase):
+    def test_array_without_rotation(self):
+        self.assertIsNone(rotated_array_search([], 0))
+    
+    def test_array_without_rotation2(self):
+        self.assertEqual(2, rotated_array_search([1, 2, 3], 3))
+    
+    def test_array_without_rotation3(self):
+        self.assertIsNone(rotated_array_search([1, 3], 2))
+
+    def test_array_with_one_rotation(self):
+        self.assertIsNone(rotated_array_search([4, 5, 6, 1, 2, 3], 0))
+        
+    def test_array_with_one_rotation2(self):
+        self.assertEqual(2, rotated_array_search([4, 5, 6, 1, 2, 3], 6))
+    
+    def test_array_with_one_rotation3(self):
+        self.assertEqual(4, rotated_array_search([13, 18, 25, 2, 8, 10], 8))
+
+    def test_array_with_two_rotations(self):
+        self.assertEqual(0, rotated_array_search([6, 1, 2, 3, 4, 5], 6))
+
+    def test_array_with_two_rotations2(self):
+        self.assertEqual(4, rotated_array_search([5, 6, 1, 2, 3, 4], 3))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
+```
 
 ### Oct 11, 2020 LC 668 \[Hard\] Kth Smallest Number in Multiplication Table
 ---

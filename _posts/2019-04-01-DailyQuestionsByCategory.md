@@ -643,6 +643,24 @@ Explanation: Because the new interval [4,8] overlaps with [3,5],[6,7],[8,10].
 ---
 
 <details>
+<summary class="lc_m">
+
+- [**\[Medium\] Searching in Rotated Array**](https://trsong.github.io/python/java/2020/08/02/DailyQuestionsAug/#oct-12-2020-medium-searching-in-rotated-array) -- *A sorted array of integers was rotated an unknown number of times. Find the index of the element in the array.* [*\(Try ME\)*](https://repl.it/@trsong/Searching-Elem-in-Rotated-Array-1)
+
+</summary>
+<div>
+
+**Question:** A sorted array of integers was rotated an unknown number of times. Given such an array, find the index of the element in the array in faster than linear time. If the element doesn't exist in the array, return null.
+ 
+ For example, given the array `[13, 18, 25, 2, 8, 10]` and the element 8, return 4 (the index of 8 in the array).
+ 
+ You can assume all the integers in the array are unique.
+ 
+</div>
+</details>
+
+
+<details>
 <summary class="lc_h">
 
 - [**\[Hard\] LC 668. Kth Smallest Number in Multiplication Table**](https://trsong.github.io/python/java/2020/08/02/DailyQuestionsAug/#oct-11-2020-lc-668-hard-kth-smallest-number-in-multiplication-table) -- *Find out the k-th smallest number quickly from the multiplication table.* [*\(Try ME\)*](https://repl.it/@trsong/Kth-Smallest-Number-in-Multiplication-Table-1)
