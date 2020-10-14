@@ -18,6 +18,8 @@ categories: Python/Java
 
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
+
+
 ### Oct 13, 2020 \[Medium\] Locking in Binary Tree
 ---
 > **Question:** Implement locking in a binary tree. A binary tree node can be locked or unlocked only if all of its descendants or ancestors are not locked.
@@ -30,6 +32,113 @@ categories: Python/Java
 >
 > You may augment the node to add parent pointers or any other property you would like. You may assume the class is used in a single-threaded program, so there is no need for actual locks or mutexes. Each method should run in O(h), where h is the height of the tree.
 
+**My thoughts:** Whether we can successfully lock or unlock a binary tree node depends on if there exist a locked node above or below. So for each node there is a reference to parent and a counter which stores the number of locked node below. Doing such can allow running time of `lock()` and `unlock()` to be `O(log n)`.
+
+**Solution:** [https://repl.it/@trsong/Locking-and-Unlocking-in-Binary-Tree](https://repl.it/@trsong/Locking-and-Unlocking-in-Binary-Tree)
+```py
+import unittest
+
+class TreeNode(object):
+    def __init__(self, left=None, right=None):
+        self.left = left
+        self.right = right
+        self.parent = None
+        self.locked = False
+        self.num_lock_below = 0
+
+        if self.left:
+            self.left.parent = self
+        if self.right:
+            self.right.parent = self
+
+    def lock(self):
+        ancesters = self.get_ancesters()
+        has_lock_below = self.num_lock_below > 0
+        has_lock_above = any(map(lambda p: p.locked, ancesters))
+        if self.locked or has_lock_below or has_lock_above:
+            return False
+
+        self.locked = True
+        for p in ancesters:
+            p.num_lock_below += 1
+        return True
+        
+    def unlock(self):
+        if not self.locked:
+            return False
+        
+        self.locked = False
+        for p in self.get_ancesters():
+            p.num_lock_below -= 1
+        return True
+
+    def is_locked(self):
+        return self.locked
+
+    def get_ancesters(self):
+        p = self.parent
+        res = []
+        while p:
+            res.append(p)
+            p = p.parent
+        return res
+
+
+class TreeNodeSpec(unittest.TestCase):
+    def setUp(self):
+        """
+            a
+           / \
+          b   c
+         / \ / \
+        d  e f  g
+        """
+        self.d = TreeNode()
+        self.e = TreeNode()
+        self.f = TreeNode()
+        self.g = TreeNode()
+        self.b = TreeNode(self.d, self.e)
+        self.c = TreeNode(self.f, self.g)
+        self.a = TreeNode(self.b, self.c)
+    
+    def assert_lock_node(self, node):
+        self.assertIsNotNone(node)
+        self.assertFalse(node.is_locked())
+        self.assertTrue(node.lock())
+        self.assertTrue(node.is_locked())
+
+    def assert_unlock_node(self, node):
+        self.assertIsNotNone(node)
+        self.assertTrue(node.is_locked())
+        self.assertTrue(node.unlock())
+        self.assertFalse(node.is_locked())
+
+    def test_non_overlapping_lock(self):
+        self.assert_lock_node(self.b)
+        self.assert_lock_node(self.f)
+        self.assert_lock_node(self.g)
+        self.assert_unlock_node(self.b)
+        self.assert_unlock_node(self.f)
+        self.assert_unlock_node(self.g)
+
+    def test_has_lock_above(self):
+        self.assert_lock_node(self.a)
+        self.assertFalse(self.b.is_locked())
+        self.assertFalse(self.b.lock())
+        self.assert_unlock_node(self.a)
+        self.assert_lock_node(self.b)
+
+    def test_has_lock_below(self):
+        self.assert_lock_node(self.e)
+        self.assertFalse(self.a.lock())
+        self.assertFalse(self.b.lock())
+        self.assert_unlock_node(self.e)
+        self.assert_lock_node(self.b)
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
+```
 
 
 ### Oct 12, 2020 \[Medium\] Searching in Rotated Array
