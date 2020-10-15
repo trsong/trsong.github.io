@@ -311,6 +311,54 @@ For example, if A is `'abcde'` and B is `'cdeab'`, return `True`. If A is `'abc'
 
 
 <details>
+<summary class="lc_e">
+
+- [**\[Easy\] Delete Columns to Make Sorted I**](https://trsong.github.io/python/java/2020/08/02/DailyQuestionsAug/#oct-14-2020-easy-delete-columns-to-make-sorted-i) -- *Given a 2D matrix of lowercase letters. Determine the minimum number of columns that can be removed to ensure that each column is sorted.* [*\(Try ME\)*](https://repl.it/@trsong/Delete-Columns-From-Table-to-Make-Sorted-I-1)
+
+</summary>
+<div>
+
+**Question:** You are given an N by M 2D matrix of lowercase letters. Determine the minimum number of columns that can be removed to ensure that each row is ordered from top to bottom lexicographically. That is, the letter at each column is lexicographically later as you go down each row. It does not matter whether each row itself is ordered lexicographically.
+
+**Example 1:**
+```py
+Given the following table:
+cba
+daf
+ghi
+
+This is not ordered because of the a in the center. We can remove the second column to make it ordered:
+ca
+df
+gi
+
+So your function should return 1, since we only needed to remove 1 column.
+```
+
+**Example 2:**
+```py
+Given the following table:
+abcdef
+
+Your function should return 0, since the rows are already ordered (there's only one row).
+```
+
+**Example 3:**
+```py
+Given the following table:
+zyx
+wvu
+tsr
+
+Your function should return 3, since we would need to remove all the columns to order it.
+```
+
+
+</div>
+</details>
+
+
+<details>
 <summary class="lc_m">
 
 - [**\[Medium\] LC 665. Off-by-One Non-Decreasing Array**](http://trsong.github.io/python/java/2020/08/02/DailyQuestionsAug/#oct-9-2020-lc-665-medium-off-by-one-non-decreasing-array) -- *Given an array of integers, write a function to determine whether the array could become non-decreasing by modifying at most 1 element.* [*\(Try ME\)*](https://repl.it/@trsong/Determine-if-Off-by-One-Non-Decreasing-Array-1)

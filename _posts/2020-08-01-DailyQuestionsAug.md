@@ -19,9 +19,32 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
 
-<!-- ### Oct 14, 2020 \[Medium\] Delete Columns to Make Sorted II
+### Oct 15, 2020 \[Medium\] Delete Columns to Make Sorted II
 ---
-> **Question:** You are given an N by M 2D matrix of lowercase letters. The task is to count the number of columns to be deleted so that all the rows are lexicographically sorted. -->
+> **Question:** You are given an N by M 2D matrix of lowercase letters. The task is to count the number of columns to be deleted so that all the rows are lexicographically sorted.
+
+**Example 1:**
+```
+Given the following table:
+hello
+geeks
+
+Your function should return 1 as deleting column 1 (index 0)
+Now both strings are sorted in lexicographical order:
+ello
+eeks
+```
+
+**Example 2:**
+```
+Given the following table:
+xyz
+lmn
+pqr
+
+Your function should return 0. All rows are already sorted lexicographically.
+```
+
 
 ### Oct 14, 2020 \[Easy\] Delete Columns to Make Sorted I
 ---
@@ -58,6 +81,53 @@ wvu
 tsr
 
 Your function should return 3, since we would need to remove all the columns to order it.
+```
+
+**Solution:** [https://repl.it/@trsong/Delete-Columns-From-Table-to-Make-Sorted-I](https://repl.it/@trsong/Delete-Columns-From-Table-to-Make-Sorted-I)
+```py
+import unittest
+
+def columns_to_delete(table):
+    if not table or not table[0]:
+        return 0
+
+    n, m = len(table), len(table[0])
+    count = 0
+    for c in xrange(m):
+        for r in xrange(1, n):
+            if table[r-1][c] > table[r][c]:
+                count += 1
+                break
+    return count
+
+
+class ColumnToDeleteSpec(unittest.TestCase):
+    def test_empty_table(self):
+        self.assertEqual(columns_to_delete([]), 0)
+        self.assertEqual(columns_to_delete([""]), 0)
+
+    def test_example1(self):
+        self.assertEqual(columns_to_delete([
+            'cba',
+            'daf',
+            'ghi'
+        ]), 1)
+
+    def test_example2(self):
+        self.assertEqual(columns_to_delete([
+            'abcdef'
+        ]), 0)
+
+    def test_example3(self):
+        self.assertEqual(columns_to_delete([
+            'zyx',
+            'wvu',
+            'tsr'
+        ]), 3)
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False) 
 ```
 
 
