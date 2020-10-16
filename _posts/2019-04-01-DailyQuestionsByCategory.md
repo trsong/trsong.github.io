@@ -2933,6 +2933,42 @@ For example, given `"2542540123"`, you should return `['254.25.40.123', '254.254
 ---
 
 <details>
+<summary class="lc_m">
+
+- [**\[Medium\] Delete Columns to Make Sorted II**](https://trsong.github.io/python/java/2020/08/02/DailyQuestionsAug/#oct-15-2020-medium-delete-columns-to-make-sorted-ii) -- *Given 2D matrix, the task is to count the number of columns to be deleted so that all the rows are lexicographically sorted.* [*\(Try ME\)*](https://repl.it/@trsong/Delete-Columns-to-Make-Row-Sorted-II-1)
+
+</summary>
+<div>
+
+**Question:** You are given an N by M 2D matrix of lowercase letters. The task is to count the number of columns to be deleted so that all the rows are lexicographically sorted.
+
+**Example 1:**
+```
+Given the following table:
+hello
+geeks
+
+Your function should return 1 as deleting column 1 (index 0)
+Now both strings are sorted in lexicographical order:
+ello
+eeks
+```
+
+**Example 2:**
+```
+Given the following table:
+xyz
+lmn
+pqr
+
+Your function should return 0. All rows are already sorted lexicographically.
+```
+
+</div>
+</details>
+
+
+<details>
 <summary class="lc_h">
 
 - [**\[Hard\] Largest Divisible Pairs Subset**](https://trsong.github.io/python/java/2020/08/02/DailyQuestionsAug/#sep-28-2020-hard-largest-divisible-pairs-subset) -- *Given a set of distinct positive integers, find the largest subset such that every pair of elements has divisible counterpart in the subset.* [*\(Try ME\)*](https://repl.it/@trsong/Find-Largest-Divisible-Pairs-Subset-1)

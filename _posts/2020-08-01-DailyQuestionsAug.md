@@ -63,6 +63,66 @@ pqr
 Your function should return 0. All rows are already sorted lexicographically.
 ```
 
+**My thoughts:** This problem feels like 2D version of ***The Longest Increasing Subsequence Problem*** (LIP). The LIP says find longest increasing subsequence. e.g. `01212342345` gives `01[2]1234[23]45`, with `2,2,3` removed. So if we only have 1 row, we can simply find longest increasing subsequence and use that to calculate how many columns to remove i.e. `# of columns to remove = m - LIP`. Similarly, for n by m table, we can first find longest increasing sub-columns and use that to calculate which columns to remove. Which can be done using DP:
+
+let `dp[i]` represents max number of columns to keep at ends at column i. 
+- `dp[i] = max(dp[j]) + 1 where j < i` if all characters in column `i` have lexicographical order larger than column `j`
+- `dp[0] = 1`
+
+**Solution with DP:** [https://repl.it/@trsong/Delete-Columns-to-Make-Row-Sorted-II](https://repl.it/@trsong/Delete-Columns-to-Make-Row-Sorted-II)
+```py
+import unittest
+
+def delete_column(table):
+    """
+    let dp[i] represents max number of columns to keep at ends at column i
+    i.e. column i is the last column to keep
+    dp[i] = max(dp[j]) + 1 where j < i  if all e in column i have lexicographical order larger than column j
+    """
+    if not table:
+        return 0
+    m = len(table[0])
+    dp = [1] * m
+    for i in xrange(1, m):
+        for j in xrange(i):
+            if all(row[j] <= row[i] for row in table):
+                dp[i] = max(dp[i], dp[j] + 1)
+    return m - max(dp)
+
+
+class DeleteColumnSpec(unittest.TestCase):
+    def test_example1(self):
+        self.assertEqual(1, delete_column([
+            'hello',
+            'geeks'
+        ]))
+
+    def test_example2(self):
+        self.assertEqual(0, delete_column([
+            'xyz',
+            'lmn',
+            'pqr'
+        ]))
+
+    def test_table_with_no_row(self):
+        self.assertEqual(0, delete_column([]))
+
+    def test_table_with_one_row(self):
+        self.assertEqual(3, delete_column([
+            '01212342345' # 01[2]1234[23]45   
+        ]))  
+
+    def test_table_with_two_rows(self):
+        self.assertEqual(2, delete_column([
+            '01012',  # [0] 1 [0] 1 2
+            '20101'   # [2] 0 [1] 0 1
+        ]))  
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
+```
+
 
 ### Oct 14, 2020 \[Easy\] Delete Columns to Make Sorted I
 ---
