@@ -19,6 +19,24 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
 
+### Oct 16, 2020 \[Medium\] Maximum In A Stack
+---
+> **Question:** Implement a class for a stack that supports all the regular functions (`push`, `pop`) and an additional function of `max()` which returns the maximum element in the stack (return None if the stack is empty). Each method should run in constant time.
+
+**Example**:
+```py
+s = MaxStack()
+s.push(1)
+s.push(2)
+s.push(3)
+s.push(2)
+print s.max()  # 3
+s.pop()
+s.pop()
+print s.max()  # 2
+```
+
+
 ### Oct 15, 2020 \[Medium\] Delete Columns to Make Sorted II
 ---
 > **Question:** You are given an N by M 2D matrix of lowercase letters. The task is to count the number of columns to be deleted so that all the rows are lexicographically sorted.
