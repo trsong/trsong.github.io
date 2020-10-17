@@ -19,6 +19,17 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
 
+
+### Oct 17, 2020 \[Hard\] Largest Sum of Non-adjacent Numbers
+---
+
+> **Question:** Given a list of integers, write a function that returns the largest sum of non-adjacent numbers. Numbers can be 0 or negative.
+>
+> For example, `[2, 4, 6, 2, 5]` should return 13, since we pick 2, 6, and 5. `[5, 1, 1, 5]` should return 10, since we pick 5 and 5.
+>
+> Follow-up: Can you do this in O(N) time and constant space?
+
+
 ### Oct 16, 2020 \[Medium\] Maximum In A Stack
 ---
 > **Question:** Implement a class for a stack that supports all the regular functions (`push`, `pop`) and an additional function of `max()` which returns the maximum element in the stack (return None if the stack is empty). Each method should run in constant time.
@@ -36,6 +47,82 @@ s.pop()
 print s.max()  # 2
 ```
 
+**Solution:** [https://repl.it/@trsong/Maximum-In-A-Stack](https://repl.it/@trsong/Maximum-In-A-Stack)
+```py
+import unittest
+
+
+class MaxStack(object):
+    def __init__(self):
+        self.val_stack = []
+        self.max_stack = []
+
+    def push(self, v):
+        self.val_stack.append(v)
+        local_max = max(v, self.max_stack[-1]) if self.max_stack else v
+        self.max_stack.append(local_max)
+
+    def pop(self):
+        self.max_stack.pop()
+        return self.val_stack.pop()
+
+    def max(self):
+        return self.max_stack[-1]
+
+
+class MaxStackSpec(unittest.TestCase):
+    def test_example(self):
+        s = MaxStack()
+        s.push(1)
+        s.push(2)
+        s.push(3)
+        s.push(2)
+        self.assertEqual(3, s.max())
+        self.assertEqual(2, s.pop())
+        self.assertEqual(3, s.pop())
+        self.assertEqual(2, s.max())
+
+    def test_ascending_stack(self):
+        s = MaxStack()
+        s.push(1)
+        s.push(2)
+        self.assertEqual(2, s.max())
+        s.push(3)
+        self.assertEqual(3, s.max())
+        self.assertEqual(3, s.pop())
+        self.assertEqual(2, s.max())
+        s.push(4)
+        self.assertEqual(4, s.pop())
+
+    def test_descending_stack(self):
+        s = MaxStack()
+        s.push(4)
+        self.assertEqual(4, s.pop())
+        s.push(3)
+        s.push(2)
+        s.push(1)
+        self.assertEqual(3, s.max())
+
+    def test_up_down_up_stack(self):
+        s = MaxStack()
+        s.push(1)
+        s.push(3)
+        s.push(5)
+        s.push(2)
+        s.push(6)
+        self.assertEqual(6, s.max())
+        self.assertEqual(6, s.pop())
+        self.assertEqual(5, s.max())
+        self.assertEqual(2, s.pop())
+        self.assertEqual(5, s.max())
+        self.assertEqual(5, s.pop())
+        self.assertEqual(3, s.max())
+        self.assertEqual(3, s.pop())
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
+```
 
 ### Oct 15, 2020 \[Medium\] Delete Columns to Make Sorted II
 ---

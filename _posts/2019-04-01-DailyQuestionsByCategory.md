@@ -1946,6 +1946,32 @@ s.autocomplete('do')  # Return ['dog', 'door', 'dodge']
 ## Stack
 ---
 
+<details>
+<summary class="lc_m">
+
+- [**\[Medium\] Maximum In A Stack**](https://trsong.github.io/python/java/2020/08/02/DailyQuestionsAug/#oct-16-2020-medium-maximum-in-a-stack) -- *Implement a class for a stack that supports all the regular functions (push, pop) and an additional function of max().* [*\(Try ME\)*](https://repl.it/@trsong/Maximum-In-A-Stack-1)
+
+</summary>
+<div>
+
+**Question:** Implement a class for a stack that supports all the regular functions (`push`, `pop`) and an additional function of `max()` which returns the maximum element in the stack (return None if the stack is empty). Each method should run in constant time.
+
+**Example**:
+```py
+s = MaxStack()
+s.push(1)
+s.push(2)
+s.push(3)
+s.push(2)
+print s.max()  # 3
+s.pop()
+s.pop()
+print s.max()  # 2
+```
+
+</div>
+</details>
+
 
 <details>
 <summary class="lc_m">
