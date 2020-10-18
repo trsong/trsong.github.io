@@ -2958,6 +2958,25 @@ For example, given `"2542540123"`, you should return `['254.25.40.123', '254.254
 ### 1D DP
 ---
 
+
+<details>
+<summary class="lc_h">
+
+- [**\[Hard\] Largest Sum of Non-adjacent Numbers**](http://trsong.github.io/python/java/2020/08/02/DailyQuestionsAug/#oct-17-2020-hard-largest-sum-of-non-adjacent-numbers) -- *Given a list of integers, write a function that returns the largest sum of non-adjacent numbers. Numbers can be 0 or negative.* [*\(Try ME\)*](https://repl.it/@trsong/Find-Largest-Sum-of-Non-adjacent-Numbers-1)
+
+</summary>
+<div>
+
+**Question:** Given a list of integers, write a function that returns the largest sum of non-adjacent numbers. Numbers can be 0 or negative.
+
+For example, `[2, 4, 6, 2, 5]` should return 13, since we pick 2, 6, and 5. `[5, 1, 1, 5]` should return 10, since we pick 5 and 5.
+
+Follow-up: Can you do this in O(N) time and constant space?
+
+</div>
+</details>
+
+
 <details>
 <summary class="lc_m">
 
