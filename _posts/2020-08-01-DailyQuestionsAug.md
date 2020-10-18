@@ -19,6 +19,30 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
 
+### Oct 18, 2020 LC 130 \[Medium\] Surrounded Regions
+---
+
+> **Question:**  Given a 2D board containing 'X' and 'O' (the letter O), capture all regions surrounded by 'X'.
+> A region is captured by flipping all 'O's into 'X's in that surrounded region.
+ 
+**Example:**
+```py
+X X X X
+X O O X
+X X O X
+X O X X
+
+After running your function, the board should be:
+
+X X X X
+X X X X
+X X X X
+X O X X
+
+Explanation:
+Surrounded regions shouldn’t be on the border, which means that any 'O' on the border of the board are not flipped to 'X'. Any 'O' that is not on the border and it is not connected to an 'O' on the border will be flipped to 'X'. Two cells are connected if they are adjacent cells connected horizontally or vertically.
+```
+
 
 ### Oct 17, 2020 \[Hard\] Largest Sum of Non-adjacent Numbers
 ---
@@ -29,6 +53,41 @@ categories: Python/Java
 >
 > Follow-up: Can you do this in O(N) time and constant space?
 
+**My thoughts:** Try to find the pattern by examples:
+
+Let keep it simple first, just assume all elements are positive:
+```py
+[] => 0  # Sum of none equals 0
+[2] => 2  # the only elem is 2
+[2, 4] => 4  # 2 and 4 we will choose 4
+[2, 4, 6] => 2+6 => 8  # The pattern is eithe choose all odd index numbers or all even index numbers. eg.  [_, 4, _] vs [2, _, 6]. We choose 2,6 which gives 8. If it's [1, 99, 1], we will choose 99 instead.
+[2, 4, 6, 2] => [_, 4, _, 2] vs [2, _, 6, _] => 6 vs 8 => 8
+
+# If we let f[lst] represents the max non-adjacent sum when input array is lst
+f[2, 4, 6] = max { f[2] + 6, f[4] } = max{6, 8} = 8
+f[2, 4, 6, 2] = max { f[2, 4] + 2, f[2, 4, 6] } = max{4, 8} = 8
+f[2, 4, 6, 2, 5] = max {f[2, 4, 6] + 5, f[2, 4, 6, 2]} = max{8 + 5, 8} = 13
+
+f[a1, a2, ...., an] = max {f[a1, ..., an-2] + an, f[a1, a2, ..., an-1]}
+```
+What if one of the element is negative? i.e. `[-1, -1, 1]`
+
+```py
+# if we continue apply the formula above, we will end up minus a number from max sum
+f[-1, -1, 1] = max{f[-1] + 1, f[-1, -1]} = max{-1+1, -1} = 0
+
+# we can choose to not include that number
+#f[-1, -1, 1] should equal to 1
+f[-1, -1, 1] = max{f[-1] + 1, f[-1, -1], 1} = max{-1+1, -1, 1} = 1
+
+# As all previous sum chould be a negative number, if that's the case, we can just include the positive number.
+f[a1, a2, ...., an] = max {f[a1, ..., an-2] + an, f[a1, a2, ..., an-1], an}
+
+# If we let dp[n] represents the max non-adjacent sum when input size is n, then 
+dp[i] = max(dp[i-1], dp[i-2] + numbers[i-1], numbers[i-1])
+
+# dp[n] will be the answer to f[a0, a2, ...., an-1]
+```
 
 **Solution with DP:** [https://repl.it/@trsong/Find-Largest-Sum-of-Non-adjacent-Numbers](https://repl.it/@trsong/Find-Largest-Sum-of-Non-adjacent-Numbers)
 ```py
