@@ -18,14 +18,22 @@ categories: Python/Java
 
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
-### Oct 19, 2020 LC 224 \[Medium\] Create a Simple Calculator
+### Oct 19, 2020 LC 224 \[Medium\] Expression Evaluation
 ---
-> **Question:** Given a mathematical expression with just single digits, plus signs, negative signs, and brackets, evaluate the expression. Assume the expression is properly formed.
+> **Questions:** Given a string consisting of parentheses, single digits, and positive and negative signs, convert the string into a mathematical expression to obtain the answer.
+>
+> Don't use eval or a similar built-in parser.
 
-**Example:**
+**Example 1:**
 ```py
 Input: - ( 3 + ( 2 - 1 ) )
 Output: -4
+```
+
+**Example 2:**
+```py
+Input: -1 + (2 + 3)
+Output: 4
 ```
 
 ### Oct 18, 2020 LC 130 \[Medium\] Surrounded Regions
