@@ -2741,6 +2741,39 @@ In this case, the shortest valid path would be 0 -> 2 -> 4 -> 0, with a distance
 <details>
 <summary class="lc_m">
 
+- [**\[Medium\] LC 130. Surrounded Regions**](http://trsong.github.io/python/java/2020/08/02/DailyQuestionsAug/#oct-18-2020-lc-130-medium-surrounded-regions) -- *A region is captured by flipping all ‘O’s into ‘X’s in that surrounded region.* [*\(Try ME\)*](https://repl.it/@trsong/Flip-Surrounded-Regions-1)
+
+</summary>
+<div>
+
+**Question:**  Given a 2D board containing 'X' and 'O' (the letter O), capture all regions surrounded by 'X'.
+A region is captured by flipping all 'O's into 'X's in that surrounded region.
+ 
+**Example:**
+```py
+X X X X
+X O O X
+X X O X
+X O X X
+
+After running your function, the board should be:
+
+X X X X
+X X X X
+X X X X
+X O X X
+
+Explanation:
+Surrounded regions shouldn’t be on the border, which means that any 'O' on the border of the board are not flipped to 'X'. Any 'O' that is not on the border and it is not connected to an 'O' on the border will be flipped to 'X'. Two cells are connected if they are adjacent cells connected horizontally or vertically.
+```
+
+</div>
+</details>
+
+
+<details>
+<summary class="lc_m">
+
 - [**\[Medium\] Is Bipartite**](https://trsong.github.io/python/java/2020/08/02/DailyQuestionsAug/#sep-22-2020-medium-is-bipartite) -- *Given an undirected graph G, check whether it is bipartite.* [*\(Try ME\)*](https://repl.it/@trsong/Is-a-Graph-Bipartite-1)
 
 </summary>

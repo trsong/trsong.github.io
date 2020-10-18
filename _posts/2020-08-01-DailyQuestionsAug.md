@@ -18,6 +18,15 @@ categories: Python/Java
 
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
+### Oct 19, 2020 LC 224 \[Medium\] Create a Simple Calculator
+---
+> **Question:** Given a mathematical expression with just single digits, plus signs, negative signs, and brackets, evaluate the expression. Assume the expression is properly formed.
+
+**Example:**
+```py
+Input: - ( 3 + ( 2 - 1 ) )
+Output: -4
+```
 
 ### Oct 18, 2020 LC 130 \[Medium\] Surrounded Regions
 ---
@@ -41,6 +50,184 @@ X O X X
 
 Explanation:
 Surrounded regions shouldn’t be on the border, which means that any 'O' on the border of the board are not flipped to 'X'. Any 'O' that is not on the border and it is not connected to an 'O' on the border will be flipped to 'X'. Two cells are connected if they are adjacent cells connected horizontally or vertically.
+```
+
+**My thoughts** The way we use Union-Find to conquer this question looks like the following:
+
+* Step 1: Init the parent arry:
+Orginal Grid:
+  ```py
+  [
+      ['X', 'O', 'X', 'X', 'O'],
+      ['X', 'X', 'O', 'O', 'X'],
+      ['X', 'O', 'X', 'X', 'O'],
+      ['O', 'O', 'O', 'X', 'O']
+  ]
+  ```
+
+  parent array
+  ```py
+  [
+      [-1, -1, -1, -1, -1],
+      [-1, -1, -1, -1, -1],
+      [-1, -1, -1, -1, -1],
+      [-1, -1, -1, -1, -1]
+      [-1]  <----------------- we also create a secret cell for future use
+  ]
+  ```
+* Step 2: Now connect all connected 'O' use Union-Find
+  
+  parent array: instead of using parent index, I use letter to represent different connected region
+  ```py
+  [
+      [-1,  A, -1, -1,  B],
+      [-1, -1,  C,  C, -1],
+      [-1,  E, -1, -1,  D],
+      [ E,  E,  E, -1,  D]
+      [-1]  <----------------- In the next step we will take advantage of this cell
+  ]
+  ```
+
+* Step 3: Let's connect the secret cell to all edge-connected 'O' cells 
+
+ parent array: instead of using parent index, I use letter to represent different connected region
+  ```py
+  [
+      [-1,  O, -1, -1,  O],
+      [-1, -1,  C,  C, -1],
+      [-1,  O, -1, -1,  O],
+      [ O,  O,  O, -1,  O]
+      [ O]  <----------------- this cell is used to connect to all 'O' on the edge of the grid
+  ]
+  ```
+
+* Step 4: Replace all 'O' with 'X', except for connected-to-secret-spot ones
+
+  ```py
+  [
+      ['X', 'O', 'X', 'X', 'O'],
+      ['X', 'X', 'X', 'X', 'X'],
+      ['X', 'O', 'X', 'X', 'O'],
+      ['O', 'O', 'O', 'X', 'O']
+  ]
+  ``` 
+  
+Note for my implementation of union-find, I flatten the parent 2D array into 1D array.
+
+
+**Solution with DisjointSet(Union-Find):** [https://repl.it/@trsong/Find-Surrounded-Regions](https://repl.it/@trsong/Find-Surrounded-Regions)
+```py
+import unittest
+
+X, O = 'X', 'O'
+
+def flip_region(grid):
+    if not grid or not grid[0]:
+        return grid
+    n, m = len(grid), len(grid[0])
+    uf = DisjointSet(n * m + 1)
+    cell_to_pos = lambda r, c: r * m + c
+    boundary_cell = n * m
+
+    for r in xrange(n):
+        for c in xrange(m):
+            if r > 0 and grid[r-1][c] == grid[r][c]:
+                uf.union(cell_to_pos(r-1, c), cell_to_pos(r, c))
+            if c > 0 and grid[r][c-1] == grid[r][c]:
+                uf.union(cell_to_pos(r, c-1), cell_to_pos(r, c))
+
+    for r in xrange(n):
+        uf.union(cell_to_pos(r, 0), boundary_cell)
+        uf.union(cell_to_pos(r, m-1), boundary_cell)
+    
+    for c in xrange(m):
+        uf.union(cell_to_pos(0, c), boundary_cell)
+        uf.union(cell_to_pos(n-1, c), boundary_cell)
+
+    for r in xrange(n):
+        for c in xrange(m):
+            if grid[r][c] == O and not uf.is_connected(cell_to_pos(r, c), boundary_cell):
+                grid[r][c] = X
+
+    return grid
+
+
+class DisjointSet(object):
+    def __init__(self, size):
+        self.parent = range(size)
+    
+    def find(self, pos):
+        while self.parent[pos] != pos:
+            self.parent[pos] = self.parent[self.parent[pos]]
+            pos = self.parent[pos]
+        return pos
+
+    def union(self, pos1, pos2):
+        root1 = self.find(pos1)
+        root2 = self.find(pos2)
+        if root1 != root2:
+            self.parent[root1] = root2
+
+    def is_connected(self, pos1, pos2):
+        return self.find(pos1) == self.find(pos2)
+
+
+class FlipRegionSpec(unittest.TestCase):
+    def test_example(self):
+        grid = [
+            [X, X, X, X], 
+            [X, O, O, X], 
+            [X, X, O, X], 
+            [X, O, X, X]]
+        expected = [
+            [X, X, X, X], 
+            [X, X, X, X], 
+            [X, X, X, X], 
+            [X, O, X, X]]
+        self.assertEqual(expected, flip_region(grid))
+    
+    def test_empty_grid(self):
+        self.assertEqual([], flip_region([]))
+        self.assertEqual([[]], flip_region([[]]))
+
+    def test_non_surrounded_region(self):
+        grid = [
+            [O, O, O, O, O], 
+            [O, O, O, O, O],
+            [O, O, O, O, O],
+            [O, O, O, O, O]]
+        expected = [
+            [O, O, O, O, O],
+            [O, O, O, O, O],
+            [O, O, O, O, O],
+            [O, O, O, O, O]]
+        self.assertEqual(expected, flip_region(grid))
+
+    def test_all_surrounded_region(self):
+        grid = [
+            [X, X, X], 
+            [X, X, X]]
+        expected = [
+            [X, X, X], 
+            [X, X, X]]
+        self.assertEqual(expected, flip_region(grid))
+
+    def test_region_touching_boundary(self):
+        grid = [
+            [X, O, X, X, O],
+            [X, X, O, O, X],
+            [X, O, X, X, O],
+            [O, O, O, X, O]]
+        expected = [
+            [X, O, X, X, O],
+            [X, X, X, X, X],
+            [X, O, X, X, O],
+            [O, O, O, X, O]]
+        self.assertEqual(expected, flip_region(grid))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
 ```
 
 
