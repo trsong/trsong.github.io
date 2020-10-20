@@ -18,6 +18,16 @@ categories: Python/Java
 
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
+
+### Oct 20, 2020 \[Easy\] Sorted Square of Integers
+---
+> **Question:** Given a sorted list of integers, square the elements and give the output in sorted order.
+>
+> For example, given `[-9, -2, 0, 2, 3]`, return `[0, 4, 4, 9, 81]`.
+>
+> Additonal Requirement: Do it in-place. i.e. Space Complexity O(1).  
+
+
 ### Oct 19, 2020 LC 224 \[Medium\] Expression Evaluation
 ---
 > **Questions:** Given a string consisting of parentheses, single digits, and positive and negative signs, convert the string into a mathematical expression to obtain the answer.
