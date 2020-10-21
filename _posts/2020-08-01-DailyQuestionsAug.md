@@ -28,6 +28,75 @@ categories: Python/Java
 > Additonal Requirement: Do it in-place. i.e. Space Complexity O(1).  
 
 
+**Solution:** [https://repl.it/@trsong/Calculate-Sorted-Square-of-Integers](https://repl.it/@trsong/Calculate-Sorted-Square-of-Integers)
+```py
+import unittest
+
+def sorted_square(nums):
+    non_neg_pos = find_non_neg_pos(nums)
+    swap_between(nums, 0, non_neg_pos - 1)
+    map_square(nums)
+    merge_inplace(nums, 0, non_neg_pos)
+    return nums
+
+
+def find_non_neg_pos(nums):
+    lo = 0
+    hi = len(nums)
+    while lo < hi:
+        mid = lo + (hi - lo) // 2
+        if nums[mid] < 0:
+            lo = mid + 1
+        else:
+            hi = mid
+    return lo
+
+
+def swap_between(nums, i, j):
+    while i < j:
+        nums[i], nums[j] = nums[j], nums[i]
+        i += 1
+        j -= 1
+
+
+def map_square(nums):
+    for i in xrange(len(nums)):
+        nums[i] *= nums[i] 
+
+
+def merge_inplace(nums, i, j):
+    n = len(nums)
+    while i < j < n:
+        if nums[i] < nums[j]:
+            i += 1
+        else:
+            nums[i], nums[i+1:j+1] = nums[j], nums[i:j]
+            i += 1
+            j += 1
+
+
+class SortedSquareSpec(unittest.TestCase):
+    def test_example(self):
+        self.assertEqual([0, 4, 4, 9, 81], sorted_square([-9, -2, 0, 2, 3]))
+
+    def test_array_with_duplicate_elements(self):
+        self.assertEqual([0, 0, 0, 1, 1, 1, 1, 1, 1], sorted_square([-1, -1, -1, 0, 0, 0, 1, 1, 1]))
+
+    def test_array_with_all_negative_elements(self):
+        self.assertEqual([1, 4, 9], sorted_square([-3, -2, -1]))
+
+    def test_array_with_positive_elements(self):
+        self.assertEqual([1, 4, 9], sorted_square([1, 2, 3]), )
+
+    def test_array_with_positive_elements2(self):
+        self.assertEqual([1, 4, 9, 36, 49, 81], sorted_square([-7, -6, 1, 2, 3, 9]))    
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
+```
+
+
 ### Oct 19, 2020 LC 224 \[Hard\] Expression Evaluation
 ---
 > **Questions:** Given a string consisting of parentheses, single digits, and positive and negative signs, convert the string into a mathematical expression to obtain the answer.

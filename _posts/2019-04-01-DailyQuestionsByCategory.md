@@ -1183,6 +1183,23 @@ B = 6 -> 3 -> 4
 ## Sort
 ---
 
+<details>
+<summary class="lc_e">
+
+- [**\[Easy\] Sorted Square of Integers**](https://trsong.github.io/python/java/2020/08/02/DailyQuestionsAug/#oct-20-2020-easy-sorted-square-of-integers) -- *Given a sorted list of integers, square the elements and give the output in sorted order.* [*\(Try ME\)*](https://repl.it/@trsong/Calculate-Sorted-Square-of-Integers-1)
+
+</summary>
+<div>
+
+**Question:** Given a sorted list of integers, square the elements and give the output in sorted order.
+
+For example, given `[-9, -2, 0, 2, 3]`, return `[0, 4, 4, 9, 81]`.
+
+Additonal Requirement: Do it in-place. i.e. Space Complexity O(1).  
+
+</div>
+</details>
+
 
 <details>
 <summary class="lc_e">
