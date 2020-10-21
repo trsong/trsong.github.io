@@ -19,6 +19,26 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
 
+
+### Oct 21, 2020 LT 640 \[Medium\] One Edit Distance
+---
+> **Question:** Given two strings S and T, determine if they are both one edit distance apart.
+
+**Example 1:**
+```
+Input: s = "aDb", t = "adb" 
+Output: True
+```
+
+**Example 2:**
+```
+Input: s = "ab", t = "ab" 
+Output: False
+Explanation:
+s=t, so they aren't one edit distance apart
+```
+
+
 ### Oct 20, 2020 \[Easy\] Sorted Square of Integers
 ---
 > **Question:** Given a sorted list of integers, square the elements and give the output in sorted order.
