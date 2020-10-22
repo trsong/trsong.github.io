@@ -869,6 +869,34 @@ missing_ranges(nums=[1, 3, 5, 10], lower=1, upper=10)
 ---
 
 <details>
+<summary class="lc_m">
+
+- [**\[Medium\] LT 640. One Edit Distance**](https://trsong.github.io/python/java/2020/08/02/DailyQuestionsAug/#oct-21-2020-lt-640-medium-one-edit-distance) -- *Given two strings S and T, determine if they are both one edit distance apart.* [*\(Try ME\)*](https://repl.it/@trsong/Is-One-Edit-Distance-1)
+
+</summary>
+<div>
+
+**Question:** Given two strings S and T, determine if they are both one edit distance apart.
+
+**Example 1:**
+```
+Input: s = "aDb", t = "adb" 
+Output: True
+```
+
+**Example 2:**
+```
+Input: s = "ab", t = "ab" 
+Output: False
+Explanation:
+s=t, so they aren't one edit distance apart
+```
+
+</div>
+</details>
+
+
+<details>
 <summary class="lc_e">
 
 - [**\[Easy\] Array of Equal Parts**](https://trsong.github.io/python/java/2020/08/02/DailyQuestionsAug/#aug-5-2020-easy-array-of-equal-parts) -- *Given an array with only positive integers, determine if exist two numbers such that removing them can break array into 3 equal-sum sub-arrays.* [*\(Try ME\)*](https://repl.it/@trsong/Array-of-Equal-Parts-1)

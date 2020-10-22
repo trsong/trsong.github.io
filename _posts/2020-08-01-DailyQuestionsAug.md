@@ -38,6 +38,65 @@ Explanation:
 s=t, so they aren't one edit distance apart
 ```
 
+**My thougths:** The trick for this problem is that one insertion of shorter string is equivalent to one removal of longer string. And if both string of same length, then we only allow one replacement. The other cases are treated as more than one edit distance between two strings.
+
+**Solution:** [https://repl.it/@trsong/Is-One-Edit-Distance](https://repl.it/@trsong/Is-One-Edit-Distance)
+```py
+import unittest
+
+def is_one_edit_distance_between(s, t):
+    if len(s) > len(t):
+        s, t = t, s
+
+    len1, len2 = len(s), len(t)
+    if len2 - len1 > 1:
+        return False
+    
+    edit_dist = 0
+    i = 0
+    for j in xrange(len2):
+        if edit_dist > 1:
+            break
+        
+        if i >= len1 or s[i] != t[j]:
+            edit_dist += 1
+            if len1 < len2:
+                continue
+        i += 1
+    return edit_dist == 1
+
+
+class IsOneEditDistanceBetweenSpec(unittest.TestCase):
+    def test_example1(self):
+        self.assertTrue(is_one_edit_distance_between('aDb', 'adb'))
+
+    def test_example2(self):
+        self.assertFalse(is_one_edit_distance_between('ab', 'ab'))
+
+    def test_empty_string(self):
+        self.assertFalse(is_one_edit_distance_between('', ''))
+        self.assertTrue(is_one_edit_distance_between('', 'a'))
+        self.assertFalse(is_one_edit_distance_between('', 'ab'))
+
+    def test_one_insert_between_two_strings(self):
+        self.assertTrue(is_one_edit_distance_between('abc', 'ac'))
+        self.assertFalse(is_one_edit_distance_between('abcd', 'ad'))
+
+    def test_one_remove_between_two_strings(self):
+        self.assertTrue(is_one_edit_distance_between('abcd', 'abd'))
+        self.assertFalse(is_one_edit_distance_between('abcd', 'cd'))
+
+    def test_one_replace_between_two_string(self):
+        self.assertTrue(is_one_edit_distance_between('abc', 'abd'))
+        self.assertFalse(is_one_edit_distance_between('abc', 'ddc'))
+
+    def test_length_difference_greater_than_one(self):
+        self.assertFalse(is_one_edit_distance_between('abcd', 'abcdef'))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
+```
 
 ### Oct 20, 2020 \[Easy\] Sorted Square of Integers
 ---
