@@ -19,6 +19,17 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
 
+### Oct 22, 2020 \[Medium\] Find Pythagorean Triplets
+---
+> **Question:** Given a list of numbers, find if there exists a pythagorean triplet in that list. A pythagorean triplet is `3` variables `a`, `b`, `c` where `a * a + b * b = c * c`.
+
+**Example:**
+```py
+Input: [3, 5, 12, 5, 13]
+Output: True
+Here, 5 * 5 + 12 * 12 = 13 * 13.
+```
+
 
 ### Oct 21, 2020 LT 640 \[Medium\] One Edit Distance
 ---
