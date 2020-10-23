@@ -19,6 +19,25 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
 
+### Oct 23, 2020 \[Easy\] Floor and Ceiling of BST
+---
+> **Question:** Given an integer `k` and a binary search tree, find the `floor` (less than or equal to) of `k`, and the `ceiling` (larger than or equal to) of `k`. If either does not exist, then print them as None.
+
+**Example:**
+```py
+          8
+        /   \    
+      4      12
+    /  \    /  \
+   2    6  10   14
+
+k: 11  Floor: 10  Ceil: 12
+k: 1   Floor: None  Ceil: 2
+k: 6   Floor: 6   Ceil: 6
+k: 15  Floor: 14  Ceil: None
+```
+
+
 ### Oct 22, 2020 \[Medium\] Find Pythagorean Triplets
 ---
 > **Question:** Given a list of numbers, find if there exists a pythagorean triplet in that list. A pythagorean triplet is `3` variables `a`, `b`, `c` where `a * a + b * b = c * c`.
@@ -28,6 +47,75 @@ categories: Python/Java
 Input: [3, 5, 12, 5, 13]
 Output: True
 Here, 5 * 5 + 12 * 12 = 13 * 13.
+```
+
+**Solution with Two Pointers:** [https://repl.it/@trsong/Find-Pythagorean-Triplets](https://repl.it/@trsong/Find-Pythagorean-Triplets)
+```py
+import unittest
+
+def contains_triplet(nums):
+    sqr_nums = map(lambda x: x * x, nums)
+    sqr_nums.sort()
+
+    for index in xrange(len(sqr_nums) - 1, 1, -1):
+        target = sqr_nums[index]
+        if exists_two_sums(sqr_nums, 0, index-1, target):
+            return True
+
+    return False
+
+
+def exists_two_sums(nums, start, end, target):
+    while start < end:
+        total = nums[start] + nums[end]
+        if total == target:
+            return True
+        elif total < target:
+            start += 1
+        else:
+            end -= 1
+
+    return False
+
+
+class ContainsTripletSpec(unittest.TestCase):
+    def test_empty_array(self):
+        self.assertFalse(contains_triplet([]))
+
+    def test_simple_array_with_triplet(self):
+        # 3, 4, 5
+        self.assertTrue(contains_triplet([3, 1, 4, 6, 5]))
+
+    def test_simple_array_with_triplet2(self):
+        # 5, 12, 13
+        self.assertTrue(contains_triplet([5, 7, 8, 12, 13]))
+
+    def test_simple_array_with_triplet3(self):
+        # 9, 12, 15
+        self.assertTrue(contains_triplet([9, 12, 15, 4, 5]))
+
+    def test_complicated_array_with_triplet(self):
+        # 28, 45, 53
+        self.assertTrue(contains_triplet([25, 28, 32, 45, 47, 48, 50, 53, 55, 60])) 
+
+    def test_array_without_triplet(self):
+        self.assertFalse(contains_triplet([10, 4, 6, 12, 5]))
+
+    def test_array_with_duplicated_numbers(self):
+        self.assertFalse(contains_triplet([0, 0]))
+    
+    def test_array_with_duplicated_numbers2(self):
+        self.assertTrue(contains_triplet([0, 0, 0]))
+    
+    def test_array_with_duplicated_numbers3(self):
+        self.assertTrue(contains_triplet([1, 1, 0]))
+    
+    def test_array_with_negative_numbers(self):
+        self.assertTrue(contains_triplet([-3, -5, -4]))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
 ```
 
 

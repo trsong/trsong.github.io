@@ -871,6 +871,27 @@ missing_ranges(nums=[1, 3, 5, 10], lower=1, upper=10)
 <details>
 <summary class="lc_m">
 
+- [**\[Medium\] Find Pythagorean Triplets**](https://trsong.github.io/python/java/2020/08/02/DailyQuestionsAug/#oct-22-2020-medium-find-pythagorean-triplets) -- *Given a list of numbers, find if there exists a Pythagorean triplet in that list. * [*\(Try ME\)*](https://repl.it/@trsong/Find-Pythagorean-Triplets-1)
+
+</summary>
+<div>
+
+**Question:** Given a list of numbers, find if there exists a pythagorean triplet in that list. A pythagorean triplet is `3` variables `a`, `b`, `c` where `a * a + b * b = c * c`.
+
+**Example:**
+```py
+Input: [3, 5, 12, 5, 13]
+Output: True
+Here, 5 * 5 + 12 * 12 = 13 * 13.
+```
+
+</div>
+</details>
+
+
+<details>
+<summary class="lc_m">
+
 - [**\[Medium\] LT 640. One Edit Distance**](https://trsong.github.io/python/java/2020/08/02/DailyQuestionsAug/#oct-21-2020-lt-640-medium-one-edit-distance) -- *Given two strings S and T, determine if they are both one edit distance apart.* [*\(Try ME\)*](https://repl.it/@trsong/Is-One-Edit-Distance-1)
 
 </summary>
