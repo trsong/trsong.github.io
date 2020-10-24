@@ -19,6 +19,22 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
 
+### Oct 24, 2020 \[Hard\] First Unique Character From a Stream
+---
+> **Question:** Given a stream of characters, find the first unique (non-repeating) character from stream. You need to tell the first unique character in O(1) time at any moment.
+
+**Example:**
+```py
+Input: Stream.of('abracadabra')
+Output: Stream.of('aaabbbbbrcc')
+Explanation:
+a => a
+abr => a
+abra => b
+abracadab => r
+abracadabra => c
+```
+
 ### Oct 23, 2020 \[Easy\] Floor and Ceiling of BST
 ---
 > **Question:** Given an integer `k` and a binary search tree, find the `floor` (less than or equal to) of `k`, and the `ceiling` (larger than or equal to) of `k`. If either does not exist, then print them as None.
