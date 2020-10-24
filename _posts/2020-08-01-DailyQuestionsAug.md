@@ -53,6 +53,86 @@ k: 6   Floor: 6   Ceil: 6
 k: 15  Floor: 14  Ceil: None
 ```
 
+**Solution:** [https://repl.it/@trsong/Floor-and-Ceiling-of-BST](https://repl.it/@trsong/Floor-and-Ceiling-of-BST)
+```py
+import unittest
+
+def find_floor_ceiling(k, bst):
+    floor = ceiling = None
+    while bst:
+        if bst.val == k:
+            return [k, k]
+        elif bst.val < k:
+            floor = bst.val
+            bst = bst.right
+        else:
+            ceiling = bst.val
+            bst = bst.left
+
+    return [floor, ceiling]
+   
+
+class TreeNode(object):
+    def __init__(self, val, left=None, right=None):
+        self.val = val
+        self.left = left
+        self.right = right
+
+
+class FindFloorCeilingSpec(unittest.TestCase):
+    def test_example(self):
+        """
+             8
+           /   \
+          4     12
+         / \   /  \
+        2   6 10  14
+        """
+        left_tree = TreeNode(4, TreeNode(2), TreeNode(6))
+        right_tree = TreeNode(12, TreeNode(10), TreeNode(14))
+        root = TreeNode(8, left_tree, right_tree)
+        self.assertEqual([10, 12], find_floor_ceiling(11, root))
+        self.assertEqual([None, 2], find_floor_ceiling(1, root))
+        self.assertEqual([6, 6], find_floor_ceiling(6, root))
+        self.assertEqual([14, None], find_floor_ceiling(15, root))
+
+    def test_empty_tree(self):
+        self.assertEqual([None, None], find_floor_ceiling(42, None))
+
+    def test_one_node_tree(self):
+        self.assertEqual([None, 42], find_floor_ceiling(41, TreeNode(42)))
+        self.assertEqual([42, 42], find_floor_ceiling(42, TreeNode(42)))
+        self.assertEqual([42, None], find_floor_ceiling(43, TreeNode(42)))
+
+    def test_floor_ceiling_between_root_and_leaf(self):
+        """
+           1
+            \
+             5
+            /
+           4
+          /
+         3
+        """
+        right_tree = TreeNode(5, TreeNode(4, TreeNode(3)))
+        root = TreeNode(1, right=right_tree)
+        self.assertEqual([1, 3], find_floor_ceiling(2, root))
+
+    def test_floor_ceiling_between_root_and_leaf2(self):
+        """
+          4
+         /
+        1
+         \
+          2
+        """
+        root = TreeNode(4, TreeNode(1, right=TreeNode(2)))
+        self.assertEqual([2, 4], find_floor_ceiling(3, root))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
+```
 
 ### Oct 22, 2020 \[Medium\] Find Pythagorean Triplets
 ---

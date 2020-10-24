@@ -1428,6 +1428,34 @@ An unbalanced tree with three consecutive left children: ((((00)0)0)0)
 ---
 
 <details>
+<summary class="lc_e">
+
+- [**\[Easy\] Floor and Ceiling of BST**](https://trsong.github.io/python/java/2020/08/02/DailyQuestionsAug/#oct-23-2020-easy-floor-and-ceiling-of-bst) -- *Given an integer k and a binary search tree, find the floor (less than or equal to) of k, and the ceiling (larger than or equal to) of k.* [*\(Try ME\)*](https://repl.it/@trsong/Floor-and-Ceiling-of-BST-1)
+
+</summary>
+<div>
+
+**Question:** Given an integer `k` and a binary search tree, find the `floor` (less than or equal to) of `k`, and the `ceiling` (larger than or equal to) of `k`. If either does not exist, then print them as None.
+
+**Example:**
+```py
+          8
+        /   \    
+      4      12
+    /  \    /  \
+   2    6  10   14
+
+k: 11  Floor: 10  Ceil: 12
+k: 1   Floor: None  Ceil: 2
+k: 6   Floor: 6   Ceil: 6
+k: 15  Floor: 14  Ceil: None
+```
+
+</div>
+</details>
+
+
+<details>
 <summary class="lc_m">
 
 - [**\[Medium\] Number of Smaller Elements to the Right**](https://repl.it/@trsong/Find-Number-of-Smaller-Elements-to-the-Right) -- *Given number array,  return the number of smaller elements to the right of each element in the original input array.* [*\(Try ME\)*](https://repl.it/@trsong/Find-Number-of-Smaller-Elements-to-the-Right-1)
