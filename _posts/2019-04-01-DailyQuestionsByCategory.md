@@ -1223,6 +1223,32 @@ B = 6 -> 3 -> 4
 ### Doubly Linked List
 ---
 
+<details>
+<summary class="lc_h">
+
+- [**\[Hard\] First Unique Character from a Stream**](https://trsong.github.io/python/java/2020/08/02/DailyQuestionsAug/#oct-24-2020-hard-first-unique-character-from-a-stream) -- *Given a stream of characters, find the first unique (non-repeating) character from stream.* [*\(Try ME\)*](https://repl.it/@trsong/First-Unique-Character-from-a-Stream-1)
+
+</summary>
+<div>
+
+**Question:** Given a stream of characters, find the first unique (non-repeating) character from stream. You need to tell the first unique character in O(1) time at any moment.
+
+**Example:**
+```py
+Input: Stream.of('abracadabra')
+Output: Stream.of('aaabbbbbrcc')
+Explanation:
+a => a
+abr => a
+abra => b
+abracadab => r
+abracadabra => c
+```
+
+</div>
+</details>
+
+
 ### Circular Linked List
 ---
 

@@ -26,7 +26,7 @@ categories: Python/Java
 > For example, given `['xww', 'wxyz', 'wxyw', 'ywx', 'ywz']`, you should return `['x', 'z', 'w', 'y']`.
 
 
-### Oct 24, 2020 \[Hard\] First Unique Character From a Stream
+### Oct 24, 2020 \[Hard\] First Unique Character from a Stream
 ---
 > **Question:** Given a stream of characters, find the first unique (non-repeating) character from stream. You need to tell the first unique character in O(1) time at any moment.
 
@@ -40,6 +40,87 @@ abr => a
 abra => b
 abracadab => r
 abracadabra => c
+```
+
+**Solution** [https://repl.it/@trsong/First-Unique-Character-from-a-Stream](https://repl.it/@trsong/First-Unique-Character-from-a-Stream)
+```py
+import unittest
+
+def find_first_unique_letter(char_stream):
+    head = Node()
+    tail = Node(prev=head)
+    head.next = tail
+    duplicated = set()
+    lookup = {}
+
+    for ch in char_stream:
+        if ch in lookup:
+            node = lookup[ch]
+            node.prev.next, node.next.prev = node.next, node.prev
+            duplicated.add(node.val)
+            del lookup[ch]
+        elif ch not in duplicated:
+            tail.val = ch
+            tail.next = Node(prev=tail)
+            lookup[ch] = tail
+            tail = tail.next
+        yield head.next.val if head.next != tail else None
+
+
+class Node(object):
+    def __init__(self, val=None, prev=None, next=None):
+        self.val = val
+        self.prev = prev
+        self.next = next
+
+
+class FindFirstUniqueLetter(unittest.TestCase):
+    def assert_result(self, expected, output):
+        self.assertEqual(list(expected), list(output))
+
+    def test_example(self):
+        char_stream = iter("abracadabra")
+        expected = iter("aaabbbbbrcc")
+        self.assert_result(expected, find_first_unique_letter(char_stream))
+
+    def test_empty_stream(self):
+        char_stream = iter("")
+        expected = iter("")
+        self.assert_result(expected, find_first_unique_letter(char_stream))
+
+    def test_duplicated_letter_stream(self):
+        char_stream = iter("aaa")
+        expected = iter(["a", None, None])
+        self.assert_result(expected, find_first_unique_letter(char_stream))
+
+    def test_duplicated_letter_stream2(self):
+        char_stream = iter("aaabbbccc")
+        expected = iter(["a", None, None, "b", None, None, "c", None, None])
+        self.assert_result(expected, find_first_unique_letter(char_stream))
+
+    def test_palindrome_stream(self):
+        char_stream = iter("abccba")
+        expected = iter(["a", "a", "a", "a", "a", None])
+        self.assert_result(expected, find_first_unique_letter(char_stream))
+
+    def test_repeated_pattern(self):
+        char_stream = iter("abcabc")
+        expected = iter(["a", "a", "a", "b", "c", None])
+        self.assert_result(expected, find_first_unique_letter(char_stream))
+
+    def test_repeated_pattern2(self):
+        char_stream = iter("aabbcc")
+        expected = iter(["a", None, "b", None, "c", None])
+        self.assert_result(expected, find_first_unique_letter(char_stream))
+
+    def test_unique_characters(self):
+        char_stream = iter("abcde")
+        expected = iter("aaaaa")
+        self.assert_result(expected, find_first_unique_letter(char_stream))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
 ```
 
 ### Oct 23, 2020 \[Easy\] Floor and Ceiling of BST
