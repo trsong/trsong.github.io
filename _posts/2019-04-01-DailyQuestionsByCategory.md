@@ -2765,6 +2765,23 @@ The words in the order of ['apple', 'eggs', 'snack', 'karat', 'tuna'] creates a 
 <details>
 <summary class="lc_h">
 
+- [**\[Hard\] Order of Alien Dictionary**](https://trsong.github.io/python/java/2020/08/02/DailyQuestionsAug/#oct-25-2020-hard-order-of-alien-dictionary) -- *Give a dictionary of sorted words in an alien language, returns the correct order of letters in this language.* [*\(Try ME\)*](https://repl.it/@trsong/Alien-Dictionary-Order-1)
+
+</summary>
+<div>
+
+**Question:** You come across a dictionary of sorted words in a language you've never seen before. Write a program that returns the correct order of letters in this language.
+
+For example, given `['xww', 'wxyz', 'wxyw', 'ywx', 'ywz']`, you should return `['x', 'z', 'w', 'y']`.
+
+
+</div>
+</details>
+
+
+<details>
+<summary class="lc_h">
+
 - [**\[Hard\] Order of Course Prerequisites**](http://trsong.github.io/python/java/2020/08/02/DailyQuestionsAug/#sep-18-2020-hard-order-of-course-prerequisites) -- *Given a hashmap of courseId key to a list of courseIds values. Return a sorted ordering of courses such that we can finish all courses.* [*\(Try ME\)*](https://repl.it/@trsong/Find-Order-of-Course-Prerequisites-1)
 
 </summary>
