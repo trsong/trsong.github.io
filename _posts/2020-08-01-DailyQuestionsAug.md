@@ -19,6 +19,21 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
 
+### Oct 26, 2020 \[Easy\] Add Digits
+--- 
+> **Question:** Given a number, add the digits repeatedly until you get a single number.
+
+**Example:**
+```py
+Input: 159
+Output: 6
+Explanation:
+1 + 5 + 9 = 15.
+1 + 5 = 6.
+So the answer is 6.
+```
+
+
 ### Oct 25, 2020 \[Hard\] Order of Alien Dictionary
 --- 
 > **Question:** You come across a dictionary of sorted words in a language you've never seen before. Write a program that returns the correct order of letters in this language.
