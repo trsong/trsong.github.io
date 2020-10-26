@@ -58,15 +58,14 @@ from collections import defaultdict
 def dictionary_order(sorted_words):
     neighbors = defaultdict(list)
     in_degree = defaultdict(int)
-    n = len(sorted_words)
-    for i, small_word in enumerate(sorted_words):
-        for j in xrange(i + 1, n):
-            large_word = sorted_words[j]
-            for small_ch, large_ch in zip(small_word, large_word):
-                if small_ch != large_ch:
-                    neighbors[small_ch].append(large_ch)
-                    in_degree[large_ch] += 1
-                    break
+    for i in xrange(1, len(sorted_words)):
+        small_word = sorted_words[i-1]
+        large_word = sorted_words[i]
+        for small_ch, large_ch in zip(small_word, large_word):
+            if small_ch != large_ch:
+                neighbors[small_ch].append(large_ch)
+                in_degree[large_ch] += 1
+                break
                     
     char_set = set()
     queue = deque()
