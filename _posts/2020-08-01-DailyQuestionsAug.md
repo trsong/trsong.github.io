@@ -19,6 +19,17 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
 
+### Oct 27, 2020 \[Medium\] Interleave Stacks
+---
+> **Question:** Given a stack of N elements, interleave the first half of the stack with the second half reversed using only one other queue. This should be done in-place.
+>
+> Recall that you can only push or pop from a stack, and enqueue or dequeue from a queue.
+>
+> For example, if the stack is `[1, 2, 3, 4, 5]`, it should become `[1, 5, 2, 4, 3]`. If the stack is `[1, 2, 3, 4]`, it should become `[1, 4, 2, 3]`.
+>
+> Hint: Try working backwards from the end state.
+
+
 ### Oct 26, 2020 \[Easy\] Add Digits
 --- 
 > **Question:** Given a number, add the digits repeatedly until you get a single number.
@@ -33,6 +44,62 @@ Explanation:
 So the answer is 6.
 ```
 
+**Solution:** [https://repl.it/@trsong/Add-Digits](https://repl.it/@trsong/Add-Digits)
+```py
+import unittest
+
+def add_digits(num):
+    accu = 0
+    while num + accu >= 10:
+        if num == 0:
+            num = accu
+            accu = 0
+        else:
+            accu += num % 10
+            num //= 10
+    return num + accu
+
+
+class AddDigitSpec(unittest.TestCase):
+    def test_example(self):
+        num = 159
+        expected = 6  # 159 -> 15 -> 6
+        self.assertEqual(expected, add_digits(num))
+
+    def test_zero(self):
+        num = 0
+        expected = 0
+        self.assertEqual(expected, add_digits(num))
+
+    def test_no_carryover_during_calculation(self):
+        num = 1024
+        expected = 7
+        self.assertEqual(expected, add_digits(num))
+
+    def test_with_carryover_during_calculation(self):
+        num = 199199
+        expected = 2  # 199199 -> 38 -> 11 -> 2
+        self.assertEqual(expected, add_digits(num))
+
+    def test_with_carryover_during_calculation2(self):
+        num = 10987654321
+        expected = 1  # 10987654321 -> 55 -> 10 -> 1
+        self.assertEqual(expected, add_digits(num))
+
+    def test_with_carryover_during_calculation3(self):
+        num = 1234
+        expected = 1  # 1234 -> 10 -> 1
+        self.assertEqual(expected, add_digits(num))
+
+    def test_with_carryover_during_calculation4(self):
+        num = 5674
+        expected = 4  # 5674 -> 22 -> 4
+        self.assertEqual(expected, add_digits(num))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
+```
 
 ### Oct 25, 2020 \[Hard\] Order of Alien Dictionary
 --- 

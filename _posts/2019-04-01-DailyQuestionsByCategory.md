@@ -27,6 +27,29 @@ categories: Python/Java
 ## Math
 ---
 
+<details>
+<summary class="lc_e">
+
+- [**\[Easy\] Add Digits**](https://trsong.github.io/python/java/2020/08/02/DailyQuestionsAug/#oct-26-2020-easy-add-digits) -- *Given a number, add the digits repeatedly until you get a single number.* [*\(Try ME\)*](https://repl.it/@trsong/Add-Digits-1)
+
+</summary>
+<div>
+
+**Question:** Given a number, add the digits repeatedly until you get a single number.
+
+**Example:**
+```py
+Input: 159
+Output: 6
+Explanation:
+1 + 5 + 9 = 15.
+1 + 5 = 6.
+So the answer is 6.
+```
+
+</div>
+</details>
+
 
 <details>
 <summary class="lc_h">
