@@ -38,6 +38,108 @@ categories: Python/Java
 >
 > Hint: Try working backwards from the end state.
 
+**Solution:** [https://repl.it/@trsong/Interleave-First-and-Second-Half-of-Stacks](https://repl.it/@trsong/Interleave-First-and-Second-Half-of-Stacks)
+```py
+import unittest
+from Queue import deque
+
+def interleave_stack(stack):
+    # Case 1: when stack size is even: 1 2 3 4 5 6.
+    # Work backwards:
+    # [5] stack: 1 6 2 5 3 4  queue: 
+    # [4] stack:              queue: 1 6 2 5 3 4
+    # [3] stack: 3 2 1        queue: 6 5 4
+    # [2] stack:              queue: 3 2 1 6 5 4
+    # [1] stack:              queue: 6 5 4 3 2 1
+    # [0] stack: 1 2 3 4 5 6  queue: 
+    #
+    # Case 2: when stack size is odd: 1 2 3 4 5
+    # Work backwards:
+    # [5] stack: 1 5 2 4 3  queue:
+    # [4] stack:            queue: 1 5 2 4    Last: 3
+    # [3] stack: 2 1        queue: 5 4        Last: 3
+    # [2] stack:            queue: 3 2 1 5 4
+    # [1] stack:            queue: 5 4 3 2 1
+    # [0] stack: 1 2 3 4 5  queue: 
+
+    n = len(stack)
+    half_n = n // 2
+    queue = deque()
+    # Step 1:
+    while stack:
+        queue.append(stack.pop())
+    
+    # Step 2:
+    for _ in xrange(half_n):
+        queue.append(queue.popleft())
+    
+    last = queue.popleft() if n % 2 == 1 else None
+
+    # Step 3:
+    for _ in xrange(half_n):
+        stack.append(queue.popleft())
+
+    # Step 4
+    for _ in xrange(half_n):
+        queue.append(stack.pop())
+        queue.append(queue.popleft())
+
+    # Step 5
+    while queue:
+        stack.append(queue.popleft())
+
+    if last is not None:
+        stack.append(last)
+    
+
+class InterleaveStackSpec(unittest.TestCase):
+    def test_example1(self):
+        stack = [1, 2, 3, 4, 5]
+        expected = [1, 5, 2, 4, 3]
+        interleave_stack(stack)
+        self.assertEqual(stack, expected)
+
+    def test_example2(self):
+        stack = [1, 2, 3, 4]
+        expected = [1, 4, 2, 3]
+        interleave_stack(stack)
+        self.assertEqual(stack, expected)
+
+    def test_empty_stack(self):
+        stack = []
+        expected = []
+        interleave_stack(stack)
+        self.assertEqual(stack, expected)
+
+    def test_size_one_stack(self):
+        stack = [1]
+        expected = [1]
+        interleave_stack(stack)
+        self.assertEqual(stack, expected)
+
+    def test_size_two_stack(self):
+        stack = [1, 2]
+        expected = [1, 2]
+        interleave_stack(stack)
+        self.assertEqual(stack, expected)
+
+    def test_size_three_stack(self):
+        stack = [1, 2, 3]
+        expected = [1, 3, 2]
+        interleave_stack(stack)
+        self.assertEqual(stack, expected)
+
+    def test_size_seven_stack(self):
+        stack = [1, 2, 3, 4, 5, 6, 7]
+        expected = [1, 7, 2, 6, 3, 5, 4]
+        interleave_stack(stack)
+        self.assertEqual(stack, expected)
+    
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
+```
+
 
 ### Oct 26, 2020 \[Easy\] Add Digits
 --- 

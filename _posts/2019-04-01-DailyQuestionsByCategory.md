@@ -2092,6 +2092,26 @@ s.autocomplete('do')  # Return ['dog', 'door', 'dodge']
 <details>
 <summary class="lc_m">
 
+- [**\[Medium\] Interleave Stacks**](https://trsong.github.io/python/java/2020/08/02/DailyQuestionsAug/#oct-27-2020-medium-interleave-stacks) -- *Given a stack of N elements, interleave the first half of the stack with the second half reversed using only one other queue.* [*\(Try ME\)*](https://repl.it/@trsong/Interleave-First-and-Second-Half-of-Stacks-1)
+
+</summary>
+<div>
+
+**Question:** Given a stack of N elements, interleave the first half of the stack with the second half reversed using only one other queue. This should be done in-place.
+
+Recall that you can only push or pop from a stack, and enqueue or dequeue from a queue.
+
+For example, if the stack is `[1, 2, 3, 4, 5]`, it should become `[1, 5, 2, 4, 3]`. If the stack is `[1, 2, 3, 4]`, it should become `[1, 4, 2, 3]`.
+
+Hint: Try working backwards from the end state.
+
+</div>
+</details>
+
+
+<details>
+<summary class="lc_m">
+
 - [**\[Medium\] Maximum In A Stack**](https://trsong.github.io/python/java/2020/08/02/DailyQuestionsAug/#oct-16-2020-medium-maximum-in-a-stack) -- *Implement a class for a stack that supports all the regular functions (push, pop) and an additional function of max().* [*\(Try ME\)*](https://repl.it/@trsong/Maximum-In-A-Stack-1)
 
 </summary>
