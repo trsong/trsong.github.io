@@ -19,7 +19,7 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
 
-### Oct 28, 2020 \[Hard\] Execlusive Product
+### Oct 28, 2020 \[Hard\] Exclusive Product
 ---
 > **Question:**  Given an array of integers, return a new array such that each element at index i of the new array is the product of all the numbers in the original array except the one at i.
 >
@@ -27,6 +27,70 @@ categories: Python/Java
 >
 > Follow-up: what if you can't use division?
 
+**Solution:** [https://repl.it/@trsong/Calculate-Exclusive-Product](https://repl.it/@trsong/Calculate-Exclusive-Product)
+```py
+import unittest
+
+def exclusive_product(nums):
+    n = len(nums)
+    left_product = right_product = 1
+    res = [1] * n
+    for i in xrange(n):
+        res[i] *= left_product
+        res[n-1-i] *= right_product
+        left_product *= nums[i]
+        right_product *= nums[n-1-i]
+    return res
+
+
+class ExclusiveProductSpec(unittest.TestCase):
+    def test_example(self):
+        nums = [1, 2, 3, 4, 5]
+        expected = [120, 60, 40, 30, 24]
+        self.assertEqual(expected, exclusive_product(nums))
+
+    def test_example2(self):
+        nums = [3, 2, 1]
+        expected = [2, 3, 6]
+        self.assertEqual(expected, exclusive_product(nums))
+
+    def test_empty_array(self):
+        self.assertEqual([], exclusive_product([]))
+    
+    def test_one_element_array(self):
+        nums = [2]
+        expected = [1]
+        self.assertEqual(expected, exclusive_product(nums))
+    
+    def test_two_elements_array(self):
+        nums = [42, 98]
+        expected = [98, 42]
+        self.assertEqual(expected, exclusive_product(nums))
+    
+    def test_array_with_negative_elements(self):
+        nums = [-2, 3, -5]
+        expected = [-15, 10, -6]
+        self.assertEqual(expected, exclusive_product(nums))
+    
+    def test_array_with_negative_elements2(self):
+        nums = [-1, -3, -4, -5]
+        expected = [-60, -20, -15, -12]
+        self.assertEqual(expected, exclusive_product(nums))
+    
+    def test_array_with_zero(self):
+        nums = [1, -1, 0, 3]
+        expected = [0, 0, -3, 0]
+        self.assertEqual(expected, exclusive_product(nums))
+    
+    def test_array_with_zero2(self):
+        nums = [1, -1, 0, 3, 0, 1]
+        expected = [0, 0, 0, 0, 0, 0]
+        self.assertEqual(expected, exclusive_product(nums))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
+```
 
 ### Oct 27, 2020 \[Medium\] Interleave Stacks
 ---
