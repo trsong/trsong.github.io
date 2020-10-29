@@ -19,6 +19,26 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
 
+### Oct 29, 2020 \[Hard\] Largest Rectangle
+---
+> **Question:** Given an N by M matrix consisting only of 1's and 0's, find the largest rectangle containing only 1's and return its area.
+
+**For Example:**
+
+```py
+Given the following matrix:
+
+[[1, 0, 0, 0],
+ [1, 0, 1, 1],
+ [1, 0, 1, 1],
+ [0, 1, 0, 0]]
+
+Return 4. As the following 1s form the largest rectangle containing only 1s:
+ [1, 1],
+ [1, 1]
+```
+
+
 ### Oct 28, 2020 \[Hard\] Exclusive Product
 ---
 > **Question:**  Given an array of integers, return a new array such that each element at index i of the new array is the product of all the numbers in the original array except the one at i.

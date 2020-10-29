@@ -332,6 +332,22 @@ For example, if A is `'abcde'` and B is `'cdeab'`, return `True`. If A is `'abc'
 ## Array
 ---
 
+<details>
+<summary class="lc_h">
+
+- [**\[Hard\] Exclusive Product**](https://trsong.github.io/python/java/2020/08/02/DailyQuestionsAug/#oct-28-2020-hard-exclusive-product) -- *Given an array of integers, return a new array such that each element at index i of the new array is the product of all the numbers except i.* [*\(Try ME\)*](https://repl.it/@trsong/Calculate-Exclusive-Product-1)
+
+</summary>
+<div>
+
+**Question:** Given an array of integers, return a new array such that each element at index i of the new array is the product of all the numbers in the original array except the one at i.
+
+For example, if our input was `[1, 2, 3, 4, 5]`, the expected output would be `[120, 60, 40, 30, 24]`. If our input was `[3, 2, 1]`, the expected output would be `[2, 3, 6]`.
+
+Follow-up: what if you can't use division?
+
+</div>
+</details>
 
 <details>
 <summary class="lc_e">
