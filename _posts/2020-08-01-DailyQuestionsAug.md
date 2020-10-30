@@ -19,6 +19,43 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
 
+### Oct 30, 2020 LC 652 \[Medium\] Find Duplicate Subtrees
+---
+> **Question:** Given a binary tree, find all duplicate subtrees (subtrees with the same value and same structure) and return them as a list of list `[subtree1, subtree2, ...]` where `subtree1` is a duplicate of `subtree2` etc.
+
+**Example1:**
+```py
+Given the following tree:
+     1
+    / \
+   2   2
+  /   /
+ 3   3
+
+The duplicate subtrees are 
+  2
+ /    And  3
+3
+```
+
+**Example2:**
+```py
+Given the following tree:
+        1
+       / \
+      2   3
+     /   / \
+    4   2   4
+       /
+      4
+      
+The duplicate subtrees are 
+      2
+     /  And  4
+    4
+```
+
+
 ### Oct 29, 2020 \[Hard\] Largest Rectangle
 ---
 > **Question:** Given an N by M matrix consisting only of 1's and 0's, find the largest rectangle containing only 1's and return its area.
