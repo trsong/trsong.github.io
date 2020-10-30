@@ -3501,7 +3501,7 @@ You should return the following:
 <details>
 <summary class="lc_h">
 
-- [**\[Hard\] Largest Rectangle**](https://trsong.github.io/python/java/2020/08/02/DailyQuestionsAug/#oct-29-2020-hard-largest-rectangle) -- *Given an N by M matrix consisting only of 1’s and 0’s, find the largest rectangle containing only 1’s and return its area.* [*\(Try ME\)*](https://repl.it/@trsong/Largest-Rectangle-in-a-Grid)
+- [**\[Hard\] Largest Rectangle**](https://trsong.github.io/python/java/2020/08/02/DailyQuestionsAug/#oct-29-2020-hard-largest-rectangle) -- *Given an N by M matrix consisting only of 1’s and 0’s, find the largest rectangle containing only 1’s and return its area.* [*\(Try ME\)*](https://repl.it/@trsong/Largest-Rectangle-in-a-Grid-1)
 
 </summary>
 <div>
