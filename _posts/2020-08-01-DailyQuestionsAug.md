@@ -76,6 +76,127 @@ Return 4. As the following 1s form the largest rectangle containing only 1s:
 ```
 
 
+**My thoughts:** Think in a DP way: scan through row by row to accumulate each cell above. We will have a historgram for each row. Then all we need to do is to find the ara for the largest rectangle in histogram on each row. 
+
+For example,
+```py
+Suppose the table looks like the following:
+
+[
+    [0, 1, 0, 1],
+    [1, 1, 1, 0],
+    [0, 1, 1, 0]
+]
+
+The histogram of first row is just itself:
+    [0, 1, 0, 1]  # largest_rectangle_in_histogram => 1 as max at height 1 * width 1
+The histogram of second row is:
+    [0, 1, 0, 1]
+    +
+    [1, 1, 1, 0]
+    =
+    [1, 2, 1, 0]  # largest_rectangle_in_histogram => 3 as max at height 1 * width 3
+              ^ will not accumulate 0
+The histogram of third row is:
+    [1, 2, 1, 0]       
+    +
+    [0, 1, 1, 0]
+    =
+    [0, 3, 2, 0]  # largest_rectangle_in_histogram => 4 as max at height 2 * width 2
+              ^ will not accumulate 0
+     ^ will not accumulate 0
+
+Therefore, the largest rectangle has 4 1s in it.
+```
+
+**Solution with DP:** [https://repl.it/@trsong/Largest-Rectangle-in-a-Grid](https://repl.it/@trsong/Largest-Rectangle-in-a-Grid)
+```py
+import unittest
+
+def largest_rectangle(table):
+    if not table or not table[0]: return 0
+    heights = [0] * len(table[0])
+    max_area = 0
+    for row in table:
+        for i, cell in enumerate(row):
+            # calculate the histogram of each row since last saw 1 at same column
+            if cell == 1:
+                heights[i] += 1
+            else:
+                heights[i] = 0
+        max_area = max(max_area, largest_rectangle_in_histogram(heights))
+    return max_area
+
+
+def largest_rectangle_in_histogram(histogram):
+    stack = []
+    i = 0
+    max_area = 0
+    while i < len(histogram) or stack:
+        if not stack or i < len(histogram) and histogram[
+                stack[-1]] <= histogram[i]:
+            # maintain an ascending stack
+            stack.append(i)
+            i += 1
+        else:
+            # if stack starts decreasing,
+            # then left boundary must be stack[-2] and right boundary must be i. Note both boundaries are exclusive
+            # and height is stack[-1]
+            height = histogram[stack.pop()]
+            left_boundary = stack[-1] if stack else -1
+            right_boundary = i
+            current_area = height * (right_boundary - left_boundary - 1)
+            max_area = max(max_area, current_area)
+    return max_area
+
+
+class LargestRectangleSpec(unittest.TestCase):
+    def test_empty_table(self):
+        self.assertEqual(0, largest_rectangle([]))
+        self.assertEqual(0, largest_rectangle([[]]))
+
+    def test_example(self):
+        self.assertEqual(4, largest_rectangle([
+            [1, 0, 0, 0],
+            [1, 0, 1, 1],
+            [1, 0, 1, 1],
+            [0, 1, 0, 0]
+        ]))
+
+    def test_table2(self):
+        self.assertEqual(4, largest_rectangle([
+            [0, 1, 0, 1],
+            [1, 1, 1, 0],
+            [0, 1, 1, 0]
+        ]))
+
+    def test_table3(self):
+        self.assertEqual(3, largest_rectangle([
+            [0, 1, 1, 1, 0],
+            [1, 1, 0, 1, 1],
+            [0, 1, 1, 1, 0],
+        ]))
+
+    def test_table4(self):
+        self.assertEqual(4, largest_rectangle([
+            [0, 0, 1, 0, 1],
+            [0, 1, 1, 1, 1],
+            [0, 0, 1, 0, 1],
+        ]))
+
+    def test_table5(self):
+        self.assertEqual(8, largest_rectangle([
+            [0, 1, 1, 0],
+            [1, 1, 1, 1],
+            [1, 1, 1, 1],
+            [1, 1, 0, 0]
+        ]))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
+```
+
 ### Oct 28, 2020 \[Hard\] Exclusive Product
 ---
 > **Question:**  Given an array of integers, return a new array such that each element at index i of the new array is the product of all the numbers in the original array except the one at i.

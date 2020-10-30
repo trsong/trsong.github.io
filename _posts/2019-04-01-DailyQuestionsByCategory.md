@@ -3501,6 +3501,35 @@ You should return the following:
 <details>
 <summary class="lc_h">
 
+- [**\[Hard\] Largest Rectangle**](https://trsong.github.io/python/java/2020/08/02/DailyQuestionsAug/#oct-29-2020-hard-largest-rectangle) -- *Given an N by M matrix consisting only of 1’s and 0’s, find the largest rectangle containing only 1’s and return its area.* [*\(Try ME\)*](https://repl.it/@trsong/Largest-Rectangle-in-a-Grid)
+
+</summary>
+<div>
+
+**Question:** Given an N by M matrix consisting only of 1's and 0's, find the largest rectangle containing only 1's and return its area.
+
+**For Example:**
+
+```py
+Given the following matrix:
+
+[[1, 0, 0, 0],
+ [1, 0, 1, 1],
+ [1, 0, 1, 1],
+ [0, 1, 0, 0]]
+
+Return 4. As the following 1s form the largest rectangle containing only 1s:
+ [1, 1],
+ [1, 1]
+```
+
+</div>
+</details>
+
+
+<details>
+<summary class="lc_h">
+
 - [**\[Hard\] Find Arbitrage Opportunities**](http://trsong.github.io/python/java/2020/08/02/DailyQuestionsAug/#oct-3-2020--hard-find-arbitrage-opportunities) -- *Given a table of currency exchange rates, represented as a 2D array. Determine whether there is a possible arbitrage.* [*\(Try ME\)*](https://repl.it/@trsong/Find-Arbitrage-Opportunities-for-Currency-Exchange-1)
 
 </summary>
