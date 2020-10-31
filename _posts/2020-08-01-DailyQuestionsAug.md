@@ -19,6 +19,11 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
 
+### Oct 31, 2020 LC 287 \[Medium\] Find the Duplicate Number
+---
+> **Question:** You are given an array of length `n + 1` whose elements belong to the set `{1, 2, ..., n}`. By the pigeonhole principle, there must be a duplicate. Find it in linear time and space.
+ 
+
 ### Oct 30, 2020 LC 652 \[Medium\] Find Duplicate Subtrees
 ---
 > **Question:** Given a binary tree, find all duplicate subtrees (subtrees with the same value and same structure) and return them as a list of list `[subtree1, subtree2, ...]` where `subtree1` is a duplicate of `subtree2` etc.
