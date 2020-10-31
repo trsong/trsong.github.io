@@ -55,6 +55,146 @@ The duplicate subtrees are
     4
 ```
 
+**Solution with Hash Post-order Traversal:** [https://repl.it/@trsong/Find-Duplicate-Subtree-Nodes](https://repl.it/@trsong/Find-Duplicate-Subtree-Nodes)
+```py
+import unittest
+import hashlib 
+
+def find_duplicate_subtree(tree):
+    histogram = {}
+    res = []
+    postorder_traverse(tree, histogram, res)
+    return res
+
+
+def postorder_traverse(root, histogram, duplicated_nodes):
+    if not root:
+        return '#'
+    
+    left_hash = postorder_traverse(root.left, histogram, duplicated_nodes)
+    right_hash = postorder_traverse(root.right, histogram, duplicated_nodes)
+    current_hash = hash(left_hash + str(root.val) + right_hash)
+    histogram[current_hash] = histogram.get(current_hash, 0) + 1
+    if histogram[current_hash] == 2:
+        duplicated_nodes.append(root)
+    return current_hash 
+    
+
+def hash(msg):
+    result = hashlib.sha256(msg.encode())
+    return result.hexdigest()
+
+
+###################
+# Testing Utilities
+###################
+class TreeNode(object):
+    def __init__(self, val, left=None, right=None):
+        self.val = val
+        self.left = left
+        self.right = right
+
+    def __eq__(self, other):
+        return (other and
+         other.val == self.val and
+         other.left == self.left and
+         other.right == self.right)
+
+
+class FindDuplicateSubtreeSpec(unittest.TestCase):
+    def assert_result(self, expected, result):
+        self.assertEqual(len(expected), len(result))
+        for item in expected:
+            self.assertIn(item, result)
+
+    def test_example(self):
+        """
+        Given the following tree:
+             1
+            / \
+           2   2
+          /   /
+         3   3
+
+        The duplicate subtrees are 
+          2
+         /    And  3
+        3
+        """
+        left_tree = TreeNode(2, TreeNode(3))
+        right_tree = TreeNode(2, TreeNode(3))
+        tree = TreeNode(1, left_tree, right_tree)
+
+        duplicate_tree1 = TreeNode(2, TreeNode(3))
+        duplicate_tree2 = TreeNode(3)
+        expected = [duplicate_tree1, duplicate_tree2]
+        self.assert_result(expected, find_duplicate_subtree(tree))
+
+    def test_example2(self):
+        """
+        Given the following tree:
+                1
+               / \
+              2   3
+             /   / \
+            4   2   4
+               /
+              4
+        The duplicate subtrees are 
+          2
+         /    And  4
+        4
+        """
+        left_tree = TreeNode(2, TreeNode(4))
+        right_tree = TreeNode(3, TreeNode(2, TreeNode(4)), TreeNode(4))
+        tree = TreeNode(1, left_tree, right_tree)
+
+        duplicate_tree1 = TreeNode(2, TreeNode(4))
+        duplicate_tree2 = TreeNode(4)
+        expected = [duplicate_tree1, duplicate_tree2]
+        self.assert_result(expected, find_duplicate_subtree(tree))
+
+    def test_empty_tree(self):
+        self.assertEqual([], find_duplicate_subtree(None))
+
+    def test_all_value_are_equal1(self):
+        """
+             1
+           /   \
+          1     1
+         / \   / \
+        1   1 1   1
+        """
+        left_tree = TreeNode(1, TreeNode(1), TreeNode(1))
+        right_tree = TreeNode(1, TreeNode(1), TreeNode(1))
+        tree = TreeNode(1, left_tree, right_tree)
+
+        duplicate_tree1 = TreeNode(1, TreeNode(1), TreeNode(1))
+        duplicate_tree2 = TreeNode(1)
+        expected = [duplicate_tree1, duplicate_tree2]
+        self.assert_result(expected, find_duplicate_subtree(tree))
+
+    def test_all_value_are_equal2(self):
+        """
+           1
+          / \
+         1   1
+              \
+               1
+              /
+             1
+        """
+        right_tree = TreeNode(1, right=TreeNode(1, TreeNode(1)))
+        tree = TreeNode(1, TreeNode(1), right_tree)
+
+        duplicate_tree = TreeNode(1)
+        expected = [duplicate_tree]
+        self.assert_result(expected, find_duplicate_subtree(tree))
+        
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
+```
 
 ### Oct 29, 2020 \[Hard\] Largest Rectangle
 ---

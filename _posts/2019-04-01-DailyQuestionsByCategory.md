@@ -315,6 +315,52 @@ Output: [4, 8] order does not matter
 ---
 
 <details>
+<summary class="lc_m">
+
+- [**LC 652 \[Medium\] Find Duplicate Subtrees**](https://trsong.github.io/python/java/2020/08/02/DailyQuestionsAug/#oct-30-2020-lc-652-medium-find-duplicate-subtrees) -- *Given a binary tree, find all duplicate subtrees (subtrees with the same value and same structure)* [*\(Try ME\)*](https://repl.it/@trsong/Find-Duplicate-Subtree-Nodes-1)
+
+</summary>
+<div>
+
+**Question:** Given a binary tree, find all duplicate subtrees (subtrees with the same value and same structure) and return them as a list of list `[subtree1, subtree2, ...]` where `subtree1` is a duplicate of `subtree2` etc.
+
+**Example1:**
+```py
+Given the following tree:
+     1
+    / \
+   2   2
+  /   /
+ 3   3
+
+The duplicate subtrees are 
+  2
+ /    And  3
+3
+```
+
+**Example2:**
+```py
+Given the following tree:
+        1
+       / \
+      2   3
+     /   / \
+    4   2   4
+       /
+      4
+      
+The duplicate subtrees are 
+      2
+     /  And  4
+    4
+```
+
+</div>
+</details>
+
+
+<details>
 <summary class="lc_e">
 
 - [**\[Easy\] LC 796. Shift-Equivalent Strings**](https://trsong.github.io/python/java/2020/08/02/DailyQuestionsAug/#aug-25-2020-lc-796-easy-shift-equivalent-strings) -- *Given two strings A and B, return whether or not A can be shifted some number of times to get B.* [*\(Try ME\)*](https://repl.it/@trsong/Check-if-Strings-are-Shift-Equivalent-1)
