@@ -1340,6 +1340,21 @@ abracadabra => c
 ### Fast-slow Pointers
 ---
 
+<details>
+<summary class="lc_m">
+
+- [**\[Medium\] LC 287. Find the Duplicate Number**](http://trsong.github.io/python/java/2020/08/02/DailyQuestionsAug/#oct-31-2020-lc-287-medium-find-the-duplicate-number) -- *Given an array of length `n + 1` whose elements belong to the set `{1, 2, ..., n}`. Find any duplicate element.* [*\(Try ME\)*](https://repl.it/@trsong/Find-the-Duplicate-Number-from-Array-1)
+
+</summary>
+<div>
+
+You are given an array of length `n + 1` whose elements belong to the set `{1, 2, ..., n}`. By the pigeonhole principle, there must be a duplicate. Find it in linear time and space.
+ 
+ 
+</div>
+</details>
+
+
 ## Sort
 ---
 

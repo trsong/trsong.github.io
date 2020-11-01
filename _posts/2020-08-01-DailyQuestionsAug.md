@@ -23,6 +23,73 @@ categories: Python/Java
 ---
 > **Question:** You are given an array of length `n + 1` whose elements belong to the set `{1, 2, ..., n}`. By the pigeonhole principle, there must be a duplicate. Find it in linear time and space.
  
+**My thoughts:** Use value as the 'next' element index which will form a loop evently. 
+
+Why? Because the following scenarios will happen:
+
+**Scenario 1:** If `a[i] != i for all i`, then since a[1] ... a[n] contains elements 1 to n, each time when interate to next index, one of the element within range 1 to n will be removed until no element is available and/or hit a previous used element and form a loop.  
+
+**Scenario 2:** If `a[i] == i for all i > 0`, then as `a[0] != 0`, we will have a loop 0 -> a[0] -> a[0]
+
+**Scenario 3:** If `a[i] == i for some i > 0`, then like scenario 2 we either we hit i evently or like scenario 1, for each iteration, we consume one element between 1 to n until all elements are used up and form a cycle. 
+
+So we can use a fast and slow pointer to find the element when loop begins. 
+
+**Solution with Fast-Slow Pointers:** [https://repl.it/@trsong/Find-the-Duplicate-Number-from-Array](https://repl.it/@trsong/Find-the-Duplicate-Number-from-Array)
+```py
+import unittest
+
+def find_duplicate(nums):
+    fast = slow = 0
+    while True:
+        fast = nums[nums[fast]]
+        slow = nums[slow]
+        if fast == slow:
+            break
+    
+    p = 0 
+    while p != slow:
+        p = nums[p]
+        slow = nums[slow]
+    return p
+
+
+class FindDuplicateSpec(unittest.TestCase):
+    def test_all_numbers_are_same(self):
+        self.assertEqual(2, find_duplicate([2, 2, 2, 2, 2]))
+
+    def test_number_duplicate_twice(self):
+        # index: 0 1 2 3 4 5 6
+        # value: 2 6 4 1 3 1 5
+        # chain: 0 -> 2 -> 4 -> 3 -> 1 -> 6 -> 5 -> 1
+        #                            ^              ^
+        self.assertEqual(1, find_duplicate([2, 6, 4, 1, 3, 1, 5]))
+
+    def test_rest_of_element_form_a_loop(self):
+        # index: 0 1 2 3 4
+        # value: 3 1 3 4 2
+        # chain: 0 -> 3 -> 4 -> 2 -> 3
+        #             ^              ^
+        self.assertEqual(3, find_duplicate([3, 1, 3, 4, 2]))
+
+    def test_rest_of_element_are_sorted(self):
+        # index: 0 1 2 3 4
+        # value: 4 1 2 3 4
+        # chain: 0 -> 4 -> 4
+        #             ^    ^
+        self.assertEqual(4, find_duplicate([4, 1, 2, 3, 4]))
+    
+    def test_number_duplicate_more_than_twice(self):
+        # index: 0 1 2 3 4 5 6 7 8 9
+        # value: 2 5 9 6 9 3 8 9 7 1
+        # chain: 0 -> 2 -> 9 -> 1 -> 5 -> 3 -> 6 -> 8 -> 7 -> 9
+        #                  ^                                  ^
+        self.assertEqual(9, find_duplicate([2, 5, 9, 6, 9, 3, 8, 9, 7, 1]))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
+```
 
 ### Oct 30, 2020 LC 652 \[Medium\] Find Duplicate Subtrees
 ---
