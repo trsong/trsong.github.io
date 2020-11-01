@@ -79,3 +79,116 @@ Move 2 to 1
 Move 2 to 3
 Move 1 to 3
 ```
+
+**My thoughts:** Think about the problem backwards, like what is the most significant states to reach the final state. There are three states coming into my mind: 
+
+- First state, we move all disks except for last one from rod 1 to rod 2. i.e. `[[3], [1, 2], []]`.
+- Second state, we move the last disk from rod 1 to rod 3. i.e. `[[], [1, 2], [3]]`
+- Third state, we move all disks from rod 2 to rod 3. i.e. `[[], [], [1, 2, 3]]`
+
+There is a clear recrusive relationship between game with size n and size n - 1. So we can perform above stategy recursively for game with size n - 1 which gives the following implementation.
+
+**Solution with Divide-and-Conquer:** [https://repl.it/@trsong/Solve-the-Tower-of-Hanoi-Problem](https://repl.it/@trsong/Solve-the-Tower-of-Hanoi-Problem)
+```py
+import unittest
+
+def hanoi_moves(n):
+    res = []
+
+    def hanoi_moves_recur(n, src, dst):
+        if n <= 0:
+            return 
+
+        bridge = 3 - src - dst
+        # use the unused rod as bridge rod
+        # Step1: move n - 1 disks from src to bridge to allow last disk move to dst
+        hanoi_moves_recur(n - 1, src, bridge)
+
+        # Step2: move last disk from src to dst
+        res.append((src, dst))
+
+        # Step3: move n - 1 disks from bridge to dst
+        hanoi_moves_recur(n - 1, bridge, dst)
+
+    hanoi_moves_recur(n, 0, 2)
+    return res
+
+
+class HanoiMoveSpec(unittest.TestCase):
+    def assert_hanoi_moves(self, n, moves):
+        game = HanoiGame(n)
+        # Turn on verbose for debugging
+        self.assertTrue(game.can_moves_finish_game(moves, verbose=False))
+
+    def test_three_disks(self):
+        moves = hanoi_moves(3)
+        self.assert_hanoi_moves(3, moves)
+
+    def test_one_disk(self):
+        moves = hanoi_moves(1)
+        self.assert_hanoi_moves(1, moves)
+
+    def test_ten_disks(self):
+        moves = hanoi_moves(10)
+        self.assert_hanoi_moves(10, moves)
+
+
+class HanoiGame(object):
+    def __init__(self, num_disks):
+        self.num_disks = num_disks
+        self.reset()
+        
+    def reset(self):
+        self.rods = [[disk for disk in xrange(self.num_disks, 0, -1)], [], []]
+
+    def move(self, src, dst):
+        disk = self.rods[src].pop()
+        self.rods[dst].append(disk)
+
+    def is_feasible_move(self, src, dst):
+        return 0 <= src <= 2 and 0 <= dst <= 2 and self.rods[src] and (not self.rods[dst] or self.rods[src][-1] < self.rods[dst][-1])
+
+    def is_game_finished(self):
+        return len(self.rods[-1]) == self.num_disks
+
+    def can_moves_finish_game(self, actions, verbose=False):
+        self.reset()
+        for step, action in enumerate(actions):
+            src, dst = action
+            if verbose:
+                self.display()
+                print "Step %d: %d -> %d" % (step, src, dst)
+            if not self.is_feasible_move(src, dst):
+                return False
+            else:
+                self.move(src, dst)
+        if verbose:
+            self.display()
+            
+        return self.is_game_finished()
+
+    def display(self):
+        for plates in self.rods:
+            print "- %s" % str(plates)
+    
+
+class HanoiGameSpec(unittest.TestCase):
+    def test_example_moves(self):
+        game = HanoiGame(3)
+        moves = [(0, 2), (0, 1), (2, 1), (0, 2), (1, 0), (1, 2), (0, 2)]
+        self.assertTrue(game.can_moves_finish_game(moves))
+
+    def test_invalid_moves(self):
+        game = HanoiGame(3)
+        moves = [(0, 1), (0, 1)]
+        self.assertFalse(game.can_moves_finish_game(moves))
+
+    def test_unfinished_moves(self):
+        game = HanoiGame(3)
+        moves = [(0, 1)]
+        self.assertFalse(game.can_moves_finish_game(moves))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
+```
