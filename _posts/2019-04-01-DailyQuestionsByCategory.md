@@ -378,6 +378,28 @@ For example, if A is `'abcde'` and B is `'cdeab'`, return `True`. If A is `'abc'
 ## Array
 ---
 
+
+<details>
+<summary class="lc_e">
+
+- [**\[Easy\] LC 121. Best Time to Buy and Sell Stock**](https://trsong.github.io/python/java/2020/11/02/DailyQuestionsAug/#nov-3-2020-lc-121-easy-best-time-to-buy-and-sell-stock) -- *Given an array of numbers representing the stock prices of a company, write a function that calculates the maximum profit.* [*\(Try ME\)*](https://repl.it/@trsong/Best-Time-to-Buy-and-Sell-Stock-1)
+
+</summary>
+<div>
+
+**Question:** You are given an array. Each element represents the price of a stock on that particular day. Calculate and return the maximum profit you can make from buying and selling that stock only once.
+
+**Example:**
+```py
+Input: [9, 11, 8, 5, 7, 10]
+Output: 5
+Explanation: Here, the optimal trade is to buy when the price is 5, and sell when it is 10, so the return value should be 5 (profit = 10 - 5 = 5).
+```
+
+</div>
+</details>
+
+
 <details>
 <summary class="lc_h">
 

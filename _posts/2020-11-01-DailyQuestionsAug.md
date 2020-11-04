@@ -19,6 +19,21 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
 
+### Nov 4, 2020 \[Easy\] Largest Path Sum from Root To Leaf
+---
+> **Question:** Given a binary tree, find and return the largest path from root to leaf.
+
+**Example:**
+```py
+Input:
+    1
+  /   \
+ 3     2
+  \   /
+   5 4
+Output: [1, 3, 5]
+```
+
 ### Nov 3, 2020 LC 121 \[Easy\] Best Time to Buy and Sell Stock
 ---
 > **Question:** You are given an array. Each element represents the price of a stock on that particular day. Calculate and return the maximum profit you can make from buying and selling that stock only once.
@@ -30,6 +45,59 @@ Output: 5
 Explanation: Here, the optimal trade is to buy when the price is 5, and sell when it is 10, so the return value should be 5 (profit = 10 - 5 = 5).
 ```
 
+**Solution:** [https://repl.it/@trsong/Best-Time-to-Buy-and-Sell-Stock](https://repl.it/@trsong/Best-Time-to-Buy-and-Sell-Stock)
+```py
+import unittest
+
+def max_profit(stock_data):
+    if not stock_data:
+        return 0
+    local_min = stock_data[0]
+    res = 0
+    for price in stock_data:
+        if price < local_min:
+            local_min = price
+        else:
+            res = max(res, price - local_min)
+    return res
+
+
+class MaxProfitSpec(unittest.TestCase):
+    def test_blank_data(self):
+        self.assertEqual(max_profit([]), 0)
+    
+    def test_1_day_data(self):
+        self.assertEqual(max_profit([9]), 0)
+        self.assertEqual(max_profit([-1]), 0)
+
+    def test_monotonically_increase(self):
+        self.assertEqual(max_profit([1, 2, 3]), 2)
+        self.assertEqual(max_profit([1, 1, 1, 2, 2, 3, 3, 3]), 2)
+    
+    def test_monotonically_decrease(self):
+        self.assertEqual(max_profit([3, 2, 1]), 0)
+        self.assertEqual(max_profit([3, 3, 3, 2, 2, 1, 1, 1]), 0)
+
+    def test_raise_suddenly(self):
+        self.assertEqual(max_profit([3, 2, 1, 1, 2]), 1)
+        self.assertEqual(max_profit([3, 2, 1, 1, 9]), 8)
+
+    def test_drop_sharply(self):
+        self.assertEqual(max_profit([1, 3, 0]), 2)
+        self.assertEqual(max_profit([1, 3, -1]), 2)
+
+    def test_bear_market(self):
+        self.assertEqual(max_profit([10, 11, 5, 7, 1, 2]), 2)
+        self.assertEqual(max_profit([10, 11, 1, 4, 2, 7, 5]), 6)
+
+    def test_bull_market(self):
+        self.assertEqual(max_profit([1, 5, 3, 7, 2, 14, 10]), 13)
+        self.assertEqual(max_profit([5, 1, 11, 10, 12]), 11)
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
+```
  
 ### Nov 2, 2020 LC 403 \[Hard\] Frog Jump
 ---
