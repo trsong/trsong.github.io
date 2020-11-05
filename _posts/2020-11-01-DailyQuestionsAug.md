@@ -19,6 +19,15 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
 
+### Nov 5, 2020 \[Easy\] Maximum Subarray Sum 
+---
+> **Question:** You are given a one dimensional array that may contain both positive and negative integers, find the sum of contiguous subarray of numbers which has the largest sum.
+>
+> For example, if the given array is `[-2, -5, 6, -2, -3, 1, 5, -6]`, then the maximum subarray sum is 7 as sum of `[6, -2, -3, 1, 5]` equals 7
+>
+> Solve this problem with Divide and Conquer as well as DP separately.
+
+
 ### Nov 4, 2020 \[Easy\] Largest Path Sum from Root To Leaf
 ---
 > **Question:** Given a binary tree, find and return the largest path from root to leaf.
@@ -32,6 +41,114 @@ Input:
   \   /
    5 4
 Output: [1, 3, 5]
+```
+
+**Solution with DFS:** [https://repl.it/@trsong/Find-Largest-Path-Sum-from-Root-To-Leaf](https://repl.it/@trsong/Find-Largest-Path-Sum-from-Root-To-Leaf)
+```py
+import unittest
+
+class TreeNode(object):
+    def __init__(self, val, left=None, right=None):
+        self.val = val
+        self.left = left
+        self.right = right
+
+
+def largest_sum_path(root):
+    if not root:
+        return []
+    parent_lookup = {}
+    stack = [(root, 0)]
+    max_sum = float('-inf')
+    max_sum_node = root
+
+    while stack:
+        cur, prev_sum = stack.pop()
+        cur_sum = prev_sum + cur.val
+        if not cur.left and not cur.right and cur_sum > max_sum:
+            max_sum = cur_sum
+            max_sum_node = cur
+        else:
+            for child in [cur.left, cur.right]:
+                if not child:
+                    continue
+                parent_lookup[child] = cur
+                stack.append((child, cur_sum))
+    
+    res = []
+    node = max_sum_node
+    while node:
+        res.append(node.val)
+        node = parent_lookup.get(node, None)
+    return res[::-1]
+
+
+class LargestSumPathSpec(unittest.TestCase):
+    def test_example(self):
+        """
+            1
+          /   \
+         3     2
+          \   /
+           5 4
+        """
+        left_tree = TreeNode(3, right=TreeNode(5))
+        right_tree = TreeNode(2, TreeNode(4))
+        root = TreeNode(1, left_tree, right_tree)
+        expected_path = [1, 3, 5]
+        self.assertEqual(expected_path, largest_sum_path(root))
+
+    def test_negative_nodes(self):
+        """
+             10
+            /  \
+          -2    7
+         /  \     
+        8   -4    
+        """
+        left_tree = TreeNode(-2, TreeNode(8), TreeNode(-4))
+        root = TreeNode(10, left_tree, TreeNode(7))
+        expected_path = [10, 7]
+        self.assertEqual(expected_path, largest_sum_path(root))
+
+    def test_empty_tree(self):
+        self.assertEqual([], largest_sum_path(None))
+
+    def test_heavy_right_tree(self):
+        """
+          1
+         / \
+        2   3
+       /   / \
+      8   4   5
+         / \   \
+        6   7   9
+        """
+        n5 = TreeNode(5, right=TreeNode(9))
+        n4 = TreeNode(4, TreeNode(6), TreeNode(7))
+        n3 = TreeNode(3, n4, n5)
+        n2 = TreeNode(2, TreeNode(8))
+        n1 = TreeNode(1, n2, n3)
+        expected_path = [1, 3, 5, 9]
+        self.assertEqual(expected_path, largest_sum_path(n1))
+
+    def test_all_paths_are_negative(self):
+        """
+              -1
+            /     \
+          -2      -3
+          / \    /  \
+        -4  -5 -6   -7
+        """
+        left_tree = TreeNode(-2, TreeNode(-4), TreeNode(-5))
+        right_tree = TreeNode(-3, TreeNode(-6), TreeNode(-7))
+        root = TreeNode(-1, left_tree, right_tree)
+        expected_path = [-1, -2, -4]
+        self.assertEqual(expected_path, largest_sum_path(root))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
 ```
 
 ### Nov 3, 2020 LC 121 \[Easy\] Best Time to Buy and Sell Stock

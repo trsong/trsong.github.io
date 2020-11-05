@@ -2826,6 +2826,30 @@ Output: 1
 ---
 
 <details>
+<summary class="lc_e">
+
+- [**\[Easy\] Largest Path Sum from Root To Leaf**](https://trsong.github.io/python/java/2020/11/02/DailyQuestionsAug/#nov-4-2020-easy-largest-path-sum-from-root-to-leaf) -- *Given a binary tree, find and return the largest path from root to leaf.* [*\(Try ME\)*](https://repl.it/@trsong/Find-Largest-Path-Sum-from-Root-To-Leaf-1)
+
+</summary>
+<div>
+
+**Question:** Given a binary tree, find and return the largest path from root to leaf.
+
+**Example:**
+```py
+Input:
+    1
+  /   \
+ 3     2
+  \   /
+   5 4
+Output: [1, 3, 5]
+```
+
+</div>
+</details>
+
+<details>
 <summary class="lc_h">
 
 - [**\[Hard\] LC 403. Frog Jump**](https://trsong.github.io/python/java/2020/11/02/DailyQuestionsAug/#nov-2-2020-lc-403-hard-frog-jump) -- *A frog is crossing a river. The river is divided into x units and at each unit there may or may not exist a stone.* [*\(Try ME\)*](https://repl.it/@trsong/Solve-Frog-Jump-Problem-1)
