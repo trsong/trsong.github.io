@@ -19,6 +19,30 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
 
+### Nov 6, 2020 \[Medium\] M Smallest in K Sorted Lists
+---
+> **Question:** Given k sorted arrays of possibly different sizes, find m-th smallest value in the merged array.
+
+**Example 1:**
+```py
+Input: [[1, 3], [2, 4, 6], [0, 9, 10, 11]], m = 5
+Output: 4
+Explanation: The merged array would be [0, 1, 2, 3, 4, 6, 9, 10, 11].  
+The 5-th smallest element in this merged array is 4.
+```
+
+**Example 2:**
+```py
+Input: [[1, 3, 20], [2, 4, 6]], m = 2
+Output: 2
+```
+
+**Example 3:**
+```py
+Input: [[1, 3, 20], [2, 4, 6]], m = 6
+Output: 20
+```
+
 ### Nov 5, 2020 \[Easy\] Maximum Subarray Sum 
 ---
 > **Question:** You are given a one dimensional array that may contain both positive and negative integers, find the sum of contiguous subarray of numbers which has the largest sum.
@@ -27,6 +51,96 @@ categories: Python/Java
 >
 > Solve this problem with Divide and Conquer as well as DP separately.
 
+
+**Solution with Divide and Conquer:** [https://repl.it/@trsong/Maximum-Subarray-Sum-Divide-and-Conquer](https://repl.it/@trsong/Maximum-Subarray-Sum-Divide-and-Conquer)
+```py
+def max_sub_array_sum(nums):
+    if not nums:
+        return 0
+    res = max_sub_array_sum_recur(nums, 0, len(nums) - 1)
+    return res.max
+
+
+def max_sub_array_sum_recur(nums, lo, hi):
+    if lo == hi:
+        return Result(nums[lo])
+    
+    mid = lo + (hi - lo) // 2
+    left_res = max_sub_array_sum_recur(nums, lo, mid)
+    right_res = max_sub_array_sum_recur(nums, mid+1, hi)
+
+    res = Result(0)
+    # From left to right, expand range
+    res.prefix = max(0, left_res.prefix, left_res.sum + right_res.prefix, left_res.sum + right_res.sum)
+    # From right to left, expand range
+    res.suffix = max(0, right_res.suffix, right_res.sum + left_res.suffix, right_res.sum + left_res.sum)
+    res.sum = left_res.sum + right_res.sum
+    res.max = max(res.prefix, res.suffix, left_res.suffix + right_res.prefix, left_res.max, right_res.max)
+    return res
+
+
+class Result(object):
+    def __init__(self, res):
+        self.prefix = res
+        self.suffix = res
+        self.sum = res
+        self.max = res
+```
+
+**Solution with DP:** [https://repl.it/@trsong/Maximum-Subarray-Sum-DP](https://repl.it/@trsong/Maximum-Subarray-Sum-DP)
+```py
+import unittest
+
+def max_sub_array_sum(nums):
+    n = len(nums)
+    # Let dp[i] represents max sub array sum ends at nums[i-1]
+    # dp[i] = max(0, dp[i-1] + nums[i-1])
+    dp = [0] * (n + 1)
+    res = 0
+    for i in xrange(1, n+1):
+        dp[i] = max(0, dp[i-1] + nums[i-1])
+        res = max(res, dp[i])
+    return res
+
+
+class MaxSubArraySum(unittest.TestCase):
+    def test_empty_array(self):
+        self.assertEqual(0, max_sub_array_sum([]))
+
+    def test_ascending_array(self):
+        self.assertEqual(6, max_sub_array_sum([-3, -2, -1, 0, 1, 2, 3]))
+        
+    def test_descending_array(self):
+        self.assertEqual(6, max_sub_array_sum([3, 2, 1, 0, -1]))
+
+    def test_example_array(self):
+        self.assertEqual(7, max_sub_array_sum([-2, -5, 6, -2, -3, 1, 5, -6]))
+
+    def test_negative_array(self):
+        self.assertEqual(0, max_sub_array_sum([-2, -1]))
+
+    def test_positive_array(self):
+        self.assertEqual(3, max_sub_array_sum([1, 2]))
+
+    def test_swing_array(self):
+        self.assertEqual(5, max_sub_array_sum([-3, 3, -2, 2, -5, 5]))
+        self.assertEqual(1, max_sub_array_sum([-1, 1, -1, 1, -1]))
+        self.assertEqual(2, max_sub_array_sum([-100, 1, -100, 2, -100]))
+
+    def test_converging_array(self):
+        self.assertEqual(4, max_sub_array_sum([-3, 3, -2, 2, 1, 0]))
+
+    def test_positive_negative_positive_array(self):
+        self.assertEqual(8, max_sub_array_sum([7, -1, -2, 3, 1]))
+        self.assertEqual(7, max_sub_array_sum([7, -1, -2, 0, 1, 1]))
+
+    def test_negative_positive_array(self):
+        self.assertEqual(3, max_sub_array_sum([-100, 1, 0, 2, -100]))
+  
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
+```
 
 ### Nov 4, 2020 \[Easy\] Largest Path Sum from Root To Leaf
 ---
