@@ -2611,6 +2611,24 @@ The same letters are at least distance 2 from each other.
 <details>
 <summary class="lc_m">
 
+- [**\[Medium\] Maximum Subarray Sum**](https://trsong.github.io/python/java/2020/11/02/DailyQuestionsAug/#nov-5-2020-easy-maximum-subarray-sum) -- *Given array that may contain both positive and negative integers, find the sum of contiguous subarray of numbers which has the largest sum.* [*\(Try ME\)*](https://repl.it/@trsong/Maximum-Subarray-Sum-Divide-and-Conquer-1)
+
+</summary>
+<div>
+
+**Question:** You are given a one dimensional array that may contain both positive and negative integers, find the sum of contiguous subarray of numbers which has the largest sum.
+
+For example, if the given array is `[-2, -5, 6, -2, -3, 1, 5, -6]`, then the maximum subarray sum is 7 as sum of `[6, -2, -3, 1, 5]` equals 7
+
+Solve this problem with Divide and Conquer as well as DP separately.
+
+
+</div>
+</details>
+
+<details>
+<summary class="lc_m">
+
 - [**\[Medium\] The Tower of Hanoi**](http://trsong.github.io/python/java/2020/11/02/DailyQuestionsAug/#nov-1-2020-medium-the-tower-of-hanoi) -- *The Tower of Hanoi is a puzzle game with three rods.Write a function that prints out all the steps necessary to complete the Tower of Hanoi.* [*\(Try ME\)*](https://repl.it/@trsong/Solve-the-Tower-of-Hanoi-Problem-1)
 
 </summary>
@@ -3374,6 +3392,24 @@ For example, given `"2542540123"`, you should return `['254.25.40.123', '254.254
 
 ### 1D DP
 ---
+
+<details>
+<summary class="lc_e">
+
+- [**\[Easy\] Maximum Subarray Sum**](https://trsong.github.io/python/java/2020/11/02/DailyQuestionsAug/#nov-5-2020-easy-maximum-subarray-sum) -- *Given array that may contain both positive and negative integers, find the sum of contiguous subarray of numbers which has the largest sum.* [*\(Try ME\)*](https://repl.it/@trsong/Maximum-Subarray-Sum-Divide-and-Conquer-1)
+
+</summary>
+<div>
+
+**Question:** You are given a one dimensional array that may contain both positive and negative integers, find the sum of contiguous subarray of numbers which has the largest sum.
+
+For example, if the given array is `[-2, -5, 6, -2, -3, 1, 5, -6]`, then the maximum subarray sum is 7 as sum of `[6, -2, -3, 1, 5]` equals 7
+
+Solve this problem with Divide and Conquer as well as DP separately.
+
+
+</div>
+</details>
 
 
 <details>
