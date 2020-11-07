@@ -19,6 +19,25 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
 
+### Nov 7, 2020 \[Medium\] Largest Square
+---
+> **Question:** Given an N by M matrix consisting only of 1's and 0's, find the largest square matrix containing only 1's and return its dimension size.
+
+**Example:**
+```py
+Given the following matrix:
+
+[[1, 0, 0, 0],
+ [1, 1, 1, 1],
+ [1, 1, 1, 1],
+ [0, 1, 0, 0]]
+
+Return 2. As the following 1s form the largest square matrix containing only 1s:
+ [1, 1],
+ [1, 1]
+```
+
+
 ### Nov 6, 2020 \[Medium\] M Smallest in K Sorted Lists
 ---
 > **Question:** Given k sorted arrays of possibly different sizes, find m-th smallest value in the merged array.
@@ -41,6 +60,86 @@ Output: 2
 ```py
 Input: [[1, 3, 20], [2, 4, 6]], m = 6
 Output: 20
+```
+
+**Solution:** [https://repl.it/@trsong/Find-the-M-thSmallest-in-K-Sorted-Lists](https://repl.it/@trsong/Find-the-M-thSmallest-in-K-Sorted-Lists)
+```py
+import unittest
+from Queue import PriorityQueue
+
+def find_m_smallest(ksorted_list, m):
+    pq = PriorityQueue()
+    for lst in ksorted_list:
+        if not lst:
+            continue
+        it = iter(lst)
+        pq.put((it.next(), it))
+
+    while not pq.empty():
+        num, it = pq.get()
+        if m == 1:
+            return num
+        m -= 1
+
+        next_num = next(it, None)
+        if next_num is not None:
+            pq.put((next_num, it))
+    
+    return None
+        
+
+class FindMSmallestSpec(unittest.TestCase):
+    def test_example1(self):
+        m, ksorted_list = 5, [
+            [1, 3],
+            [2, 4, 6],
+            [0, 9, 10, 11]
+        ]
+        expected = 4
+        self.assertEqual(expected, find_m_smallest(ksorted_list, m))
+
+    def test_example2(self):
+        m, ksorted_list = 2, [
+            [1, 3, 20],
+            [2, 4, 6]
+        ]
+        expected = 2
+        self.assertEqual(expected, find_m_smallest(ksorted_list, m))
+
+    def test_example3(self):
+        m, ksorted_list = 6, [
+            [1, 3, 20],
+            [2, 4, 6]
+        ]
+        expected = 20
+        self.assertEqual(expected, find_m_smallest(ksorted_list, m))
+
+    def test_empty_sublist(self):
+        m, ksorted_list = 2, [
+            [1],
+            [],
+            [0, 2]
+        ]
+        expected = 1
+        self.assertEqual(expected, find_m_smallest(ksorted_list, m))
+
+    def test_one_sublist(self):
+        m, ksorted_list = 5, [
+            [1, 2, 3, 4, 5],
+        ]
+        expected = 5
+        self.assertEqual(expected, find_m_smallest(ksorted_list, m))
+
+    def test_target_out_of_boundary(self):
+        m, ksorted_list = 7, [
+            [1, 2, 3],
+            [4, 5, 6]
+        ]
+        self.assertIsNone(find_m_smallest(ksorted_list, m))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
 ```
 
 ### Nov 5, 2020 \[Easy\] Maximum Subarray Sum 
