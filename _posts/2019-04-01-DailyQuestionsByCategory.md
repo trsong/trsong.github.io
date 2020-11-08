@@ -3578,6 +3578,34 @@ make_change([1, 5, 10, 25], 36)  # gives 3 coins (25 + 10 + 1)
 ---
 
 <details>
+<summary class="lc_m">
+
+- [**\[Medium\] Largest Square**](http://trsong.github.io/python/java/2020/11/02/DailyQuestionsAug/#nov-7-2020-medium-largest-square) -- *Given matrix with 1 and 0. Find the largest square matrix containing only 1’s and return its dimension size.* [*\(Try ME\)*](https://repl.it/@trsong/Largest-Square-1)
+
+</summary>
+<div>
+
+**Question:** Given an N by M matrix consisting only of 1's and 0's, find the largest square matrix containing only 1's and return its dimension size.
+
+**Example:**
+```py
+Given the following matrix:
+
+[[1, 0, 0, 0],
+ [1, 1, 1, 1],
+ [1, 1, 1, 1],
+ [0, 1, 0, 0]]
+
+Return 2. As the following 1s form the largest square matrix containing only 1s:
+ [1, 1],
+ [1, 1]
+```
+
+</div>
+</details>
+
+
+<details>
 <summary class="lc_h">
 
 - [**\[Hard\] LC 76. Minimum Window Substring**](https://trsong.github.io/python/java/2020/05/02/DailyQuestionsMay/#june-12-2020-lc-76-hard-minimum-window-substring) -- *Given a string and a set of characters, return the shortest substring containing all the characters in the set.* [*\(Try ME\)*](https://repl.it/@trsong/Find-Minimum-Window-Substring-1)

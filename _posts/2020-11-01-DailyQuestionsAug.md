@@ -37,6 +37,98 @@ Return 2. As the following 1s form the largest square matrix containing only 1s:
  [1, 1]
 ```
 
+**Solution with DP:** [https://repl.it/@trsong/Largest-Square](https://repl.it/@trsong/Largest-Square)
+```py
+import unittest
+
+def largest_square_dimension(grid):
+    if not grid or not grid[0]:
+        return 0
+    n, m = len(grid), len(grid[0])
+
+    # Let dp[r][c] represents max dimension of square matrix with bottom right corner at (r, c)
+    # dp[r][c] = min(dp[r-1][c], dp[r][c-1], dp[r-1][c-1]) + 1 if (r, c) is 1
+    #          = 0 otherwise
+    dp = [[grid[r][c] for c in xrange(m)] for r in xrange(n)]
+
+    for r in xrange(1, n):
+        for c in xrange(1, m):
+            if grid[r][c] == 0:
+                continue
+            dp[r][c] = 1 + min(dp[r-1][c], dp[r][c-1], dp[r-1][c-1])
+    
+    return max(map(max, dp))
+
+
+class LargestSquareDimensionSpec(unittest.TestCase):
+    def test_example(self):
+        self.assertEqual(2, largest_square_dimension([
+            [1, 0, 0, 0],
+            [1, 1, 1, 1],
+            [1, 1, 1, 1],
+            [0, 1, 0, 0]
+        ]))
+
+    def test_empty_grid(self):
+        self.assertEqual(0, largest_square_dimension([]))
+
+    def test_1d_grid(self):
+        self.assertEqual(1, largest_square_dimension([
+            [0, 0, 0, 0, 1, 0, 0]
+        ]))
+
+    def test_1d_grid2(self):
+        self.assertEqual(0, largest_square_dimension([
+            [0],
+            [0],
+            [0]
+        ]))
+
+    def test_dimond_shape(self):
+        self.assertEqual(3, largest_square_dimension([
+            [0, 0, 0, 0, 1, 0, 0, 0, 0],
+            [0, 0, 0, 0, 1, 0, 0, 0, 0],
+            [0, 0, 0, 1, 1, 1, 0, 0, 0],
+            [1, 1, 1, 1, 1, 1, 1, 1, 0],
+            [0, 0, 0, 1, 1, 1, 0, 0, 0],
+            [0, 0, 0, 0, 1, 0, 0, 0, 0],
+            [0, 0, 0, 0, 1, 0, 0, 0, 0]
+        ]))
+
+    def test_dimond_shape2(self):
+        self.assertEqual(3, largest_square_dimension([
+            [0, 1, 0, 0, 1, 0, 0, 1, 0],
+            [0, 0, 1, 0, 1, 0, 1, 0, 0],
+            [0, 0, 0, 1, 1, 1, 0, 0, 0],
+            [1, 1, 1, 1, 1, 1, 1, 1, 0],
+            [0, 0, 0, 1, 1, 1, 0, 0, 0],
+            [0, 0, 1, 0, 1, 0, 1, 0, 0],
+            [0, 1, 0, 0, 1, 0, 0, 1, 0]
+        ]))
+
+    def test_square_on_edge(self):
+        self.assertEqual(2, largest_square_dimension([
+            [0, 1, 0],
+            [1, 1, 0],
+            [1, 1, 0]
+        ]))
+
+    def test_dense_matrix(self):
+        self.assertEqual(3, largest_square_dimension([
+            [0, 1, 1, 0, 1], 
+            [1, 1, 0, 1, 0], 
+            [0, 1, 1, 1, 0], 
+            [1, 1, 1, 1, 0], 
+            [1, 1, 1, 1, 1], 
+            [0, 0, 0, 0, 0]
+        ]))
+
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
+```
+
 
 ### Nov 6, 2020 \[Medium\] M Smallest in K Sorted Lists
 ---
