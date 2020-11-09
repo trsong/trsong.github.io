@@ -19,6 +19,28 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
 
+### Nov 9, 2020 \[Medium\] Invert a Binary Tree
+---
+> **Question:** You are given the root of a binary tree. Invert the binary tree in place. That is, all left children should become right children, and all right children should become left children.
+
+**Example:**
+```py
+Given the following tree:
+
+     a
+   /   \
+  b     c
+ / \   /
+d   e f
+
+should become:
+   a
+ /   \
+c     b
+ \   / \
+  f e   d
+```
+
 ### Nov 8, 2020 \[Medium\] Similar Websites
 ---
 > **Question:** You are given a list of (website, user) pairs that represent users visiting websites. Come up with a program that identifies the top k pairs of websites with the greatest similarity.
@@ -33,7 +55,7 @@ Suppose k = 1, and the list of tuples is:
  ('b', 2), ('b', 6),
  ('c', 1), ('c', 2), ('c', 3), ('c', 4), ('c', 5),
  ('d', 4), ('d', 5), ('d', 6), ('d', 7),
- ('e', 1), ('e', 3), ('e': 5), ('e', 6)]
+ ('e', 1), ('e', 3), ('e', 5), ('e', 6)]
  
 Then a reasonable similarity metric would most likely conclude that a and e are the most similar, so your program should return [('a', 'e')].
 ```
