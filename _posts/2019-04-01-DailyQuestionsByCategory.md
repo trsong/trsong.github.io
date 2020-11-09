@@ -2320,6 +2320,35 @@ Given a list of `N` people and the above operation, find a way to identify the c
 <details>
 <summary class="lc_m">
 
+- [**\[Medium\] Similar Websites**](http://trsong.github.io/python/java/2020/11/02/DailyQuestionsAug/#nov-8-2020-medium-similar-websites) -- *You are given a list of (website, user) pairs that represent users visiting websites. Come up with a program that identifies the top k pairs* [*\(Try ME\)*](https://repl.it/@trsong/Find-Similar-Websites-1)
+
+</summary>
+<div>
+
+**Question:** You are given a list of (website, user) pairs that represent users visiting websites. Come up with a program that identifies the top k pairs of websites with the greatest similarity.
+
+**Note:** The similarity metric bewtween two sets equals intersection / union. 
+
+**Example:**
+```py
+Suppose k = 1, and the list of tuples is:
+
+[('a', 1), ('a', 3), ('a', 5),
+ ('b', 2), ('b', 6),
+ ('c', 1), ('c', 2), ('c', 3), ('c', 4), ('c', 5),
+ ('d', 4), ('d', 5), ('d', 6), ('d', 7),
+ ('e', 1), ('e', 3), ('e', 5), ('e', 6)]
+ 
+Then a reasonable similarity metric would most likely conclude that a and e are the most similar, so your program should return [('a', 'e')].
+```
+
+</div>
+</details>
+
+
+<details>
+<summary class="lc_m">
+
 - [**\[Medium\] M Smallest in K Sorted Lists**](https://trsong.github.io/python/java/2020/08/02/DailyQuestionsAug/#aug-4-2020-medium-m-smallest-in-k-sorted-lists) -- *Given k sorted arrays of possibly different sizes, find m-th smallest value in the merged array.* [*\(Try ME\)*](https://repl.it/@trsong/Find-M-Smallest-in-K-Sorted-Lists-1)
 
 </summary>
