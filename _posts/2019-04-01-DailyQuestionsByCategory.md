@@ -1527,6 +1527,38 @@ For example, given the string `tweet`, return `tteew`. `eettw` would also be acc
 <details>
 <summary class="lc_m">
 
+- [**\[Medium\] Invert a Binary Tree**](http://trsong.github.io/python/java/2020/11/02/DailyQuestionsAug/#nov-9-2020-medium-invert-a-binary-tree) -- *Given the root of a binary tree. Invert the binary tree in place.* [*\(Try ME\)*](https://repl.it/@trsong/Invert-All-Nodes-in-Binary-Tree-1)
+
+</summary>
+<div>
+
+**Question:** You are given the root of a binary tree. Invert the binary tree in place. That is, all left children should become right children, and all right children should become left children.
+
+**Example:**
+```py
+Given the following tree:
+
+     a
+   /   \
+  b     c
+ / \   /
+d   e f
+
+should become:
+   a
+ /   \
+c     b
+ \   / \
+  f e   d
+```
+
+</div>
+</details>
+
+
+<details>
+<summary class="lc_m">
+
 - [**\[Medium\] Locking in Binary Tree**](https://trsong.github.io/python/java/2020/08/02/DailyQuestionsAug/#oct-13-2020-medium-locking-in-binary-tree) -- *Implement locking in a binary tree. A binary tree node can be locked or unlocked only if all of its descendants or ancestors are not locked.* [*\(Try ME\)*](https://repl.it/@trsong/Locking-and-Unlocking-in-Binary-Tree-1)
 
 </summary>

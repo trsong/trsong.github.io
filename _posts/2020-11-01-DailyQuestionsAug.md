@@ -19,6 +19,23 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
 
+### Nov 10, 2020 \[Medium\] All Root to Leaf Paths in Binary Tree
+---
+> **Question:** Given a binary tree, return all paths from the root to leaves.
+
+**Example:** 
+```py
+Given the tree:
+   1
+  / \
+ 2   3
+    / \
+   4   5
+
+Return [[1, 2], [1, 3, 4], [1, 3, 5]]
+```
+
+
 ### Nov 9, 2020 \[Medium\] Invert a Binary Tree
 ---
 > **Question:** You are given the root of a binary tree. Invert the binary tree in place. That is, all left children should become right children, and all right children should become left children.
@@ -39,6 +56,114 @@ should become:
 c     b
  \   / \
   f e   d
+```
+
+**Solution:** [https://repl.it/@trsong/Invert-All-Nodes-in-Binary-Tree](https://repl.it/@trsong/Invert-All-Nodes-in-Binary-Tree)
+```py
+import unittest
+
+def invert_tree(root):
+    if root:
+        root.left, root.right = invert_tree(root.right), invert_tree(root.left)
+    return root
+
+
+class TreeNode(object):
+    def __init__(self, val, left=None, right=None):
+        self.val = val
+        self.left = left
+        self.right = right
+
+    def __eq__(self, other):
+        return (other and
+            self.val == other.val and 
+            self.left == other.left and 
+            self.right == other.right)
+
+    def __repr__(self):
+        stack = [(self, 0)]
+        res = []
+        while stack:
+            node, depth = stack.pop()
+            res.append("\n" + "\t" * depth)
+            if not node:
+                res.append("* None")
+                continue
+
+            res.append("* " + str(node.val))
+            for child in [node.right, node.left]:
+                stack.append((child, depth+1))
+        return "\n" + "".join(res) + "\n"
+
+
+class InvertTreeSpec(unittest.TestCase):
+    def test_empty_tree(self):
+        self.assertIsNone(invert_tree(None))
+
+    def test_heavy_left_tree(self):
+        """
+            1
+           /
+          2
+         /
+        3
+        """
+        tree = TreeNode(1, TreeNode(2, TreeNode(3)))
+        """
+        1
+         \
+          2
+           \
+            3
+        """
+        expected_tree = TreeNode(1, right=TreeNode(2, right=TreeNode(3)))
+        self.assertEqual(invert_tree(tree), expected_tree)
+
+    def test_heavy_right_tree(self):
+        """
+          1
+         / \
+        2   3
+           /
+          4 
+        """
+        tree = TreeNode(1, TreeNode(2), TreeNode(3, TreeNode(4)))
+        """
+          1
+         / \
+        3   2
+         \ 
+          4         
+        """
+        expected_tree = TreeNode(1, TreeNode(3, right=TreeNode(4)), TreeNode(2))
+        self.assertEqual(invert_tree(tree), expected_tree)
+
+    def test_sample_tree(self):
+        """
+             1
+           /   \
+          2     3
+         / \   /
+        4   5 6
+        """
+        n2 = TreeNode(2, TreeNode(4), TreeNode(5))
+        n3 = TreeNode(3, TreeNode(6))
+        n1 = TreeNode(1, n2, n3)
+        """
+            1
+          /   \
+         3     2
+          \   / \
+           6 5   4
+        """
+        en2 = TreeNode(2, TreeNode(5), TreeNode(4))
+        en3 = TreeNode(3, right=TreeNode(6))
+        en1 = TreeNode(1, en3, en2)
+        self.assertEqual(invert_tree(n1), en1)
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
 ```
 
 ### Nov 8, 2020 \[Medium\] Similar Websites
