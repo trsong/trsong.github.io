@@ -19,6 +19,41 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
 
+### Nov 11, 2020 LC 859 \[Easy\] Buddy Strings
+---
+> **Question:** Given two strings A and B of lowercase letters, return true if and only if we can swap two letters in A so that the result equals B.
+
+**Example 1:**
+```py
+Input: A = "ab", B = "ba"
+Output: true
+```
+
+**Example 2:**
+```py
+Input: A = "ab", B = "ab"
+Output: false
+```
+
+**Example 3:**
+```py
+Input: A = "aa", B = "aa"
+Output: true
+```
+
+**Example 4:**
+```py
+Input: A = "aaaaaaabc", B = "aaaaaaacb"
+Output: true
+```
+
+**Example 5:**
+```py
+Input: A = "", B = "aa"
+Output: false
+```
+
+
 ### Nov 10, 2020 \[Medium\] All Root to Leaf Paths in Binary Tree
 ---
 > **Question:** Given a binary tree, return all paths from the root to leaves.
@@ -35,6 +70,85 @@ Given the tree:
 Return [[1, 2], [1, 3, 4], [1, 3, 5]]
 ```
 
+**Solution with Backtracking:** [https://repl.it/@trsong/Print-All-Root-to-Leaf-Paths-in-Binary-Tree](https://repl.it/@trsong/Print-All-Root-to-Leaf-Paths-in-Binary-Tree)
+```py
+import unittest
+
+def path_to_leaves(tree):
+    if not tree:
+        return []
+    res = []
+    backtrack(res, tree, [])
+    return res
+
+
+def backtrack(res, current_node, path):
+    if not current_node.left and not current_node.right:
+        res.append(path + [current_node.val])
+    else:
+        for child in [current_node.left, current_node.right]:
+            if not child:
+                continue
+            path.append(current_node.val)
+            backtrack(res, child, path)
+            path.pop()
+
+    
+class TreeNode(object):
+    def __init__(self, val, left=None, right=None):
+        self.val = val
+        self.left = left
+        self.right= right
+
+
+class PathToLeavesSpec(unittest.TestCase):
+    def test_empty_tree(self):
+        self.assertEqual([], path_to_leaves(None))
+
+    def test_one_level_tree(self):
+        self.assertEqual([[1]], path_to_leaves(TreeNode(1)))
+
+    def test_two_level_tree(self):
+        """
+          1
+         / \
+        2   3
+        """
+        tree = TreeNode(1, TreeNode(2), TreeNode(3))
+        expected = [[1, 2], [1, 3]]
+        self.assertEqual(expected, path_to_leaves(tree))
+
+    def test_example(self):
+        """
+          1
+         / \
+        2   3
+           / \
+          4   5
+        """
+        n3 = TreeNode(3, TreeNode(4), TreeNode(5))
+        tree = TreeNode(1, TreeNode(2), n3)
+        expected = [[1, 2], [1, 3, 4], [1, 3, 5]]
+        self.assertEqual(expected, path_to_leaves(tree))
+
+    def test_complete_tree(self):
+        """
+               1
+             /   \
+            2     3
+           / \   /
+          4   5 6
+        """
+        left_tree = TreeNode(2, TreeNode(4), TreeNode(5))
+        right_tree = TreeNode(3, TreeNode(6))
+        tree = TreeNode(1, left_tree, right_tree)
+        expected = [[1, 2, 4], [1, 2, 5], [1, 3, 6]]
+        self.assertEqual(expected, path_to_leaves(tree))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
+```
 
 ### Nov 9, 2020 \[Medium\] Invert a Binary Tree
 ---

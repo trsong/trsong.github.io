@@ -3308,6 +3308,32 @@ For example, given `100`, you can reach `1` in five steps with the following rou
 ---
 
 <details>
+<summary class="lc_m">
+
+- [**\[Medium\] All Root to Leaf Paths in Binary Tree**](http://trsong.github.io/python/java/2020/11/02/DailyQuestionsAug/#nov-10-2020-medium-all-root-to-leaf-paths-in-binary-tree) -- *Given a binary tree, return all paths from the root to leaves.* [*\(Try ME\)*](https://repl.it/@trsong/Print-All-Root-to-Leaf-Paths-in-Binary-Tree-1)
+
+</summary>
+<div>
+
+**Question:** Given a binary tree, return all paths from the root to leaves.
+
+**Example:** 
+```py
+Given the tree:
+   1
+  / \
+ 2   3
+    / \
+   4   5
+
+Return [[1, 2], [1, 3, 4], [1, 3, 5]]
+```
+
+</div>
+</details>
+
+
+<details>
 <summary class="lc_h">
 
 - [**\[Hard\] LC 37. Sudoku Solver**](http://trsong.github.io/python/java/2020/08/02/DailyQuestionsAug/#sep-13-2020-lc-37-hard-sudoku-solver) -- *Write a program to solve a Sudoku puzzle by filling the empty cells.* [*\(Try ME\)*](https://repl.it/@trsong/Sudoku-Solver-1)
