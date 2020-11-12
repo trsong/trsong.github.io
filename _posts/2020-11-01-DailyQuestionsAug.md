@@ -19,6 +19,23 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
 
+### Nov 12, 2020 \[Medium\] Max Value of Coins to Collect in a Matrix
+---
+> **Question:** You are given a 2-d matrix where each cell represents number of coins in that cell. Assuming we start at `matrix[0][0]`, and can only move right or down, find the maximum number of coins you can collect by the bottom right corner.
+
+**Example:**
+
+```py
+Given below matrix:
+
+0 3 1 1
+2 0 0 4
+1 5 3 1
+
+The most we can collect is 0 + 2 + 1 + 5 + 3 + 1 = 12 coins.
+```
+
+
 ### Nov 11, 2020 LC 859 \[Easy\] Buddy Strings
 ---
 > **Question:** Given two strings A and B of lowercase letters, return true if and only if we can swap two letters in A so that the result equals B.
@@ -51,6 +68,83 @@ Output: true
 ```py
 Input: A = "", B = "aa"
 Output: false
+```
+
+**Solution:** [https://repl.it/@trsong/Buddy-Strings](https://repl.it/@trsong/Buddy-Strings)
+```py
+import unittest
+
+def is_buddy_string(s1, s2):
+    if len(s1) != len(s2):
+        return False
+
+    unmatches = []
+    for c1, c2 in zip(s1, s2):
+        if c1 != c2:
+            unmatches.append((c1, c2))
+        if len(unmatches) > 2:
+            return False
+
+    if len(unmatches) == 2:
+        return unmatches[0] == unmatches[1][::-1]
+    elif len(unmatches) == 0:
+        return has_duplicates(s1)
+    else:
+        return False 
+
+
+def has_duplicates(s):
+    visited = set()
+    for c in s:
+        if c in visited:
+            return True
+        visited.add(c)
+    return False
+
+
+class IsBuddyString(unittest.TestCase):
+    def test_example(self):
+        self.assertTrue(is_buddy_string('ab', 'ba'))
+
+    def test_example2(self):
+        self.assertFalse(is_buddy_string('ab', 'ab'))
+
+    def test_example3(self):
+        self.assertTrue(is_buddy_string('aa', 'aa'))
+
+    def test_example4(self):
+        self.assertTrue(is_buddy_string('aaaaaaabc', 'aaaaaaacb'))
+
+    def test_example5(self):
+        self.assertFalse(is_buddy_string('ab', 'aa'))
+
+    def test_empty_string(self):
+        self.assertFalse(is_buddy_string('', ''))
+
+    def test_single_char_string(self):
+        self.assertFalse(is_buddy_string('a', 'b'))
+
+    def test_same_string_without_duplicates(self):
+        self.assertFalse(is_buddy_string('abc', 'abc'))
+
+    def test_string_with_duplicates(self):
+        self.assertFalse(is_buddy_string('aba', 'abc'))
+
+    def test_different_length_string(self):
+        self.assertFalse(is_buddy_string('aa', 'aaa'))
+
+    def test_different_length_string2(self):
+        self.assertFalse(is_buddy_string('ab', 'baa'))
+
+    def test_different_length_string3(self):
+        self.assertFalse(is_buddy_string('ab', 'abba'))
+
+    def test_swap_failure(self):
+        self.assertFalse(is_buddy_string('abcaa', 'abcbb'))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
 ```
 
 

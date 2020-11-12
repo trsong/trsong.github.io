@@ -976,6 +976,51 @@ missing_ranges(nums=[1, 3, 5, 10], lower=1, upper=10)
 ---
 
 <details>
+<summary class="lc_e">
+
+- [**\[Easy\] LC 859. Buddy Strings**](https://trsong.github.io/python/java/2020/11/02/DailyQuestionsAug/#nov-11-2020-lc-859-easy-buddy-strings) -- *Given two string A, B. Return true if and only if we can swap two letters in A so that the result equals B.* [*\(Try ME\)*](https://repl.it/@trsong/Buddy-Strings-1)
+
+</summary>
+<div>
+
+**Question:** Given two strings A and B of lowercase letters, return true if and only if we can swap two letters in A so that the result equals B.
+
+**Example 1:**
+```py
+Input: A = "ab", B = "ba"
+Output: true
+```
+
+**Example 2:**
+```py
+Input: A = "ab", B = "ab"
+Output: false
+```
+
+**Example 3:**
+```py
+Input: A = "aa", B = "aa"
+Output: true
+```
+
+**Example 4:**
+```py
+Input: A = "aaaaaaabc", B = "aaaaaaacb"
+Output: true
+```
+
+**Example 5:**
+```py
+Input: A = "", B = "aa"
+Output: false
+```
+
+
+</div>
+</details>
+
+
+<details>
 <summary class="lc_m">
 
 - [**\[Medium\] Find Pythagorean Triplets**](https://trsong.github.io/python/java/2020/08/02/DailyQuestionsAug/#oct-22-2020-medium-find-pythagorean-triplets) -- *Given a list of numbers, find if there exists a Pythagorean triplet in that list. * [*\(Try ME\)*](https://repl.it/@trsong/Find-Pythagorean-Triplets-1)
