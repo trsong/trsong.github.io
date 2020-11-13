@@ -19,6 +19,22 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
 
+### Nov 13, 2020 \[Medium\] Find Missing Positive
+---
+> **Question:** Given an unsorted integer array, find the first missing positive integer.
+
+**Example 1:**
+```py
+Input: [1, 2, 0]
+Output: 3
+```
+
+**Example 2:**
+```py
+Input: [3, 4, -1, 1]
+Output: 2
+```
+
 ### Nov 12, 2020 \[Medium\] Max Value of Coins to Collect in a Matrix
 ---
 > **Question:** You are given a 2-d matrix where each cell represents number of coins in that cell. Assuming we start at `matrix[0][0]`, and can only move right or down, find the maximum number of coins you can collect by the bottom right corner.
@@ -33,6 +49,73 @@ Given below matrix:
 1 5 3 1
 
 The most we can collect is 0 + 2 + 1 + 5 + 3 + 1 = 12 coins.
+```
+
+**My thoughts:** This problem gives you a strong feeling that this must be a DP question. 'coz for each step you can either move right or down, that is, max number of coins you can collect so far at current cell depends on top and left solution gives the following recurrence formula: 
+
+```py
+Let dp[i][j] be the max coin value collect when reach cell (i, j) in grid.
+dp[i][j] = grid[i][j] + max(dp[i-1][j], dp[i][j-1])
+```
+
+You can also do it in-place using original grid. However, mutating input params in general is a bad habit as those parameters may be used in other place and might be immutable.
+
+
+**Solution with DP:** [https://repl.it/@trsong/Find-Max-Value-of-Coins-to-Collect-in-a-Matrix](https://repl.it/@trsong/Find-Max-Value-of-Coins-to-Collect-in-a-Matrix)
+```py
+import unittest
+
+def max_coins(grid):
+    if not grid or not grid[0]:
+        return 0
+
+    n, m = len(grid), len(grid[0])
+    dp = [[0 for _ in xrange(m)] for _ in xrange(n)]
+
+    for r in xrange(n):
+        for c in xrange(m):
+            left_max = dp[r-1][c] if r > 0 else 0
+            top_max = dp[r][c-1] if c > 0 else 0
+            dp[r][c] = grid[r][c] + max(left_max, top_max)
+
+    return dp[n-1][m-1]
+
+
+class MaxCoinSpec(unittest.TestCase):
+    def test_example(self):
+        self.assertEqual(max_coins([
+            [0, 3, 1, 1],
+            [2, 0, 0, 4],
+            [1, 5, 3, 1]
+        ]), 12)
+
+    def test_empty_grid(self):
+        self.assertEqual(max_coins([]), 0)
+        self.assertEqual(max_coins([[]]), 0)
+
+    def test_one_way_or_the_other(self):
+        self.assertEqual(max_coins([
+            [0, 3],
+            [2, 0]
+        ]), 3)
+
+    def test_until_the_last_moment_knows(self):
+        self.assertEqual(max_coins([
+            [0, 1, 0, 1],
+            [0, 0, 0, 1],
+            [2, 0, 3, 0]
+        ]), 5)
+
+    def test_try_to_get_most_coins(self):
+        self.assertEqual(max_coins([
+            [1, 1, 1],
+            [2, 3, 1],
+            [1, 4, 5]
+        ]), 15)
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
 ```
 
 

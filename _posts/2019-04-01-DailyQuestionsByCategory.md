@@ -3712,6 +3712,32 @@ make_change([1, 5, 10, 25], 36)  # gives 3 coins (25 + 10 + 1)
 <details>
 <summary class="lc_m">
 
+- [**\[Medium\] Max Value of Coins to Collect in a Matrix**](https://trsong.github.io/python/java/2020/11/02/DailyQuestionsAug/#nov-12-2020-medium-max-value-of-coins-to-collect-in-a-matrix) -- *You are given a 2-d matrix. Find the maximum number of coins you can collect by the bottom right corner.* [*\(Try ME\)*](https://repl.it/@trsong/Find-Max-Value-of-Coins-to-Collect-in-a-Matrix-1)
+
+</summary>
+<div>
+
+**Question:** You are given a 2-d matrix where each cell represents number of coins in that cell. Assuming we start at `matrix[0][0]`, and can only move right or down, find the maximum number of coins you can collect by the bottom right corner.
+
+**Example:**
+
+```py
+Given below matrix:
+
+0 3 1 1
+2 0 0 4
+1 5 3 1
+
+The most we can collect is 0 + 2 + 1 + 5 + 3 + 1 = 12 coins.
+```
+
+</div>
+</details>
+
+
+<details>
+<summary class="lc_m">
+
 - [**\[Medium\] Largest Square**](http://trsong.github.io/python/java/2020/11/02/DailyQuestionsAug/#nov-7-2020-medium-largest-square) -- *Given matrix with 1 and 0. Find the largest square matrix containing only 1’s and return its dimension size.* [*\(Try ME\)*](https://repl.it/@trsong/Largest-Square-1)
 
 </summary>
