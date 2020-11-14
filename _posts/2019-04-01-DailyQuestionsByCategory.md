@@ -378,6 +378,31 @@ For example, if A is `'abcde'` and B is `'cdeab'`, return `True`. If A is `'abc'
 ## Array
 ---
 
+<details>
+<summary class="lc_m">
+
+- [**\[Medium\] Find Missing Positive**](http://trsong.github.io/python/java/2020/11/02/DailyQuestionsAug/#nov-13-2020-medium-find-missing-positive) -- *Given an unsorted integer array, find the first missing positive integer.* [*\(Try ME\)*](https://repl.it/@trsong/Find-First-Missing-Positive-1)
+
+</summary>
+<div>
+
+**Question:** Given an unsorted integer array, find the first missing positive integer.
+
+**Example 1:**
+```py
+Input: [1, 2, 0]
+Output: 3
+```
+
+**Example 2:**
+```py
+Input: [3, 4, -1, 1]
+Output: 2
+```
+
+</div>
+</details>
+
 
 <details>
 <summary class="lc_e">

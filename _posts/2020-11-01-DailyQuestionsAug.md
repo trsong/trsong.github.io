@@ -19,6 +19,22 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
 
+### Nov 14, 2020 \[Medium\] Isolated Islands
+---
+> **Question:** Given a matrix of 1s and 0s, return the number of "islands" in the matrix. A 1 represents land and 0 represents water, so an island is a group of 1s that are neighboring whose perimeter is surrounded by water.
+>
+> For example, this matrix has 4 islands.
+
+```py
+1 0 0 0 0
+0 0 1 1 0
+0 1 1 0 0
+0 0 0 0 0
+1 1 0 0 1
+1 1 0 0 1
+```
+
+
 ### Nov 13, 2020 \[Medium\] Find Missing Positive
 ---
 > **Question:** Given an unsorted integer array, find the first missing positive integer.
@@ -34,6 +50,83 @@ Output: 3
 Input: [3, 4, -1, 1]
 Output: 2
 ```
+
+**My thougths:** Ideally each positive number should map to the same index as its `value - 1`. So all we need to do is for each postion, use its value as index and swap with that element until we find correct number. Keep doing this and each postive should store in postion of its `value - 1`.  Now we just scan through the entire array until find the first missing number by checking each element's value against index. 
+
+
+**Soluion:** [https://repl.it/@trsong/Find-First-Missing-Positive](https://repl.it/@trsong/Find-First-Missing-Positive)
+```py
+import unittest
+
+def find_missing_positive(nums):
+    n = len(nums)
+    value_to_index = lambda value: value - 1
+
+    for i in xrange(n):
+        while 1 <= nums[i] <= n and value_to_index(nums[i]) != i:
+            target_index = value_to_index(nums[i])
+            if nums[i] == nums[target_index]:
+                break
+            nums[i], nums[target_index] = nums[target_index], nums[i]
+
+    for i, num in enumerate(nums):
+        if value_to_index(num) != i:
+            return i + 1
+
+    return n + 1
+    
+
+class FindMissingPositiveSpec(unittest.TestCase):
+    def test_example(self):
+        nums = [1, 2, 0]
+        expected = 3
+        self.assertEqual(expected, find_missing_positive(nums))
+
+    def test_example2(self):
+        nums = [3, 4, -1, 1]
+        expected = 2
+        self.assertEqual(expected, find_missing_positive(nums))
+    
+    def test_empty_array(self):
+        nums = []
+        expected = 1
+        self.assertEqual(expected, find_missing_positive(nums))
+
+    def test_all_non_positives(self):
+        nums = [-1, 0, -1, -2, -1, -3, -4]
+        expected = 1
+        self.assertEqual(expected, find_missing_positive(nums))
+
+    def test_number_out_of_range(self):
+        nums = [101, 102, 103]
+        expected = 1
+        self.assertEqual(expected, find_missing_positive(nums))
+
+    def test_duplicated_numbers(self):
+        nums = [1, 1, 3, 3, 2, 2, 5]
+        expected = 4
+        self.assertEqual(expected, find_missing_positive(nums))
+
+    def test_missing_positive_falls_out_of_range(self):
+        nums = [5, 4, 3, 2, 1]
+        expected = 6
+        self.assertEqual(expected, find_missing_positive(nums))
+
+    def test_number_off_by_one_position(self):
+        nums = [0, 2, 3, 4, 7, 6, 1]
+        expected = 5
+        self.assertEqual(expected, find_missing_positive(nums))
+
+    def test_positive_and_negative_numbers(self):
+        nums = [-1, -3, -2, 0, 1, 2, 4, -4, 5, -6, 7]
+        expected = 3
+        self.assertEqual(expected, find_missing_positive(nums))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
+```
+
 
 ### Nov 12, 2020 \[Medium\] Max Value of Coins to Collect in a Matrix
 ---
