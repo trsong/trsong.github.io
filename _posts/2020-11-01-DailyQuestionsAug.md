@@ -41,6 +41,101 @@ categories: Python/Java
 1 1 0 0 1
 ```
 
+**Solution with DFS:** [https://repl.it/@trsong/Count-Number-of-Isolated-Islands](https://repl.it/@trsong/Count-Number-of-Isolated-Islands)
+```py
+import unittest
+
+DIRECTIONS = [-1, 0, 1]
+
+def calc_islands(area_map):
+    if not area_map or not area_map[0]:
+        return 0
+
+    n, m = len(area_map), len(area_map[0])
+    visited = set()
+    res = 0
+    for r in xrange(n):
+        for c in xrange(m):
+            if area_map[r][c] == 0 or (r, c) in visited:
+                continue
+            res += 1
+            dfs_island(area_map, (r, c), visited)
+    return res
+
+
+def dfs_island(area_map, pos, visited):
+    n, m = len(area_map), len(area_map[0])
+    stack = [pos]
+    while stack:
+        cur_r, cur_c = stack.pop()
+        if (cur_r, cur_c) in visited:
+            continue
+        visited.add((cur_r, cur_c))
+            
+        for dr in DIRECTIONS:
+            for dc in DIRECTIONS:
+                new_r, new_c = cur_r + dr, cur_c + dc
+                if (0 <= new_r < n and 0 <= new_c < m and 
+                    area_map[new_r][new_c] == 1 and 
+                    (new_r, new_c) not in visited):
+                    stack.append((new_r, new_c))
+
+
+class CalcIslandSpec(unittest.TestCase):
+    def test_sample_area_map(self):
+        self.assertEqual(4, calc_islands([
+            [1, 0, 0, 0, 0],
+            [0, 0, 1, 1, 0],
+            [0, 1, 1, 0, 0],
+            [0, 0, 0, 0, 0],
+            [1, 1, 0, 0, 1],
+            [1, 1, 0, 0, 1]
+        ]))
+    
+    def test_some_random_area_map(self):
+        self.assertEqual(5, calc_islands([
+            [1, 1, 0, 0, 0],
+            [0, 1, 0, 0, 1],
+            [1, 0, 0, 1, 1],
+            [0, 0, 0, 0, 0],
+            [1, 0, 1, 0, 1] 
+        ]))
+
+    def test_island_edge_of_map(self):
+        self.assertEqual(5, calc_islands([
+            [1, 0, 0, 1, 0],
+            [0, 1, 0, 1, 0],
+            [0, 0, 0, 0, 0],
+            [1, 0, 1, 0, 1],
+            [1, 0, 1, 0, 1] 
+        ]))
+
+    def test_huge_water(self):
+        self.assertEqual(0, calc_islands([
+            [0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0]
+        ]))
+
+    def test_huge_island(self):
+        self.assertEqual(1, calc_islands([
+            [1, 0, 1, 0, 1],
+            [1, 0, 0, 1, 0],
+            [1, 1, 1, 0, 1]
+        ]))
+
+    def test_non_square_island(self):
+        self.assertEqual(1, calc_islands([
+            [1],
+            [1],
+            [1]
+        ]))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
+```
+
 
 ### Nov 13, 2020 \[Medium\] Find Missing Positive
 ---

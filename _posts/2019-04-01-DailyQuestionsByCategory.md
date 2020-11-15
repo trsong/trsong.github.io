@@ -2975,6 +2975,30 @@ Output: 1
 ---
 
 <details>
+<summary class="lc_m">
+
+- [**\[Medium\] Isolated Islands**](http://trsong.github.io/python/java/2020/11/02/DailyQuestionsAug/#nov-14-2020-medium-isolated-islands) -- *Given a matrix of 1s and 0s, return the number of "islands" in the matrix.* [*\(Try ME\)*](https://repl.it/@trsong/Count-Number-of-Isolated-Islands-1)
+
+</summary>
+<div>
+
+**Question:** Given a matrix of 1s and 0s, return the number of "islands" in the matrix. A 1 represents land and 0 represents water, so an island is a group of 1s that are neighboring whose perimeter is surrounded by water.
+
+For example, this matrix has 4 islands.
+```py
+1 0 0 0 0
+0 0 1 1 0
+0 1 1 0 0
+0 0 0 0 0
+1 1 0 0 1
+1 1 0 0 1
+```
+
+</div>
+</details>
+
+
+<details>
 <summary class="lc_e">
 
 - [**\[Easy\] Largest Path Sum from Root To Leaf**](https://trsong.github.io/python/java/2020/11/02/DailyQuestionsAug/#nov-4-2020-easy-largest-path-sum-from-root-to-leaf) -- *Given a binary tree, find and return the largest path from root to leaf.* [*\(Try ME\)*](https://repl.it/@trsong/Find-Largest-Path-Sum-from-Root-To-Leaf-1)
