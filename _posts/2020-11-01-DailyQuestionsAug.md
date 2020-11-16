@@ -19,12 +19,104 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
 
+### Nov 16, 2020 LC 1647 \[Medium\] Minimum Deletions to Make Character Frequencies Unique
+---
+> **Question:** A string s is called good if there are no two different characters in s that have the same frequency.
+>
+> Given a string s, return the minimum number of characters you need to delete to make s good.
+>
+> The frequency of a character in a string is the number of times it appears in the string. For example, in the string "aab", the frequency of 'a' is 2, while the frequency of 'b' is 1.
+
+
+**Example 1:**
+```py
+Input: s = "aab"
+Output: 0
+Explanation: s is already good.
+```
+**Example 2:**
+```py
+Input: s = "aaabbbcc"
+Output: 2
+Explanation: You can delete two 'b's resulting in the good string "aaabcc".
+Another way it to delete one 'b' and one 'c' resulting in the good string "aaabbc".
+```
+**Example 3:**
+```py
+Input: s = "ceabaacb"
+Output: 2
+Explanation: You can delete both 'c's resulting in the good string "eabaab".
+Note that we only care about characters that are still in the string at the end (i.e. frequency of 0 is ignored).
+```
+
 ### Nov 15, 2020 \[Medium\] Number of Flips to Make Binary String
 ---
 > **Question:** You are given a string consisting of the letters `x` and `y`, such as `xyxxxyxyy`. In addition, you have an operation called flip, which changes a single `x` to `y` or vice versa.
 >
 > Determine how many times you would need to apply this operation to ensure that all x's come before all y's. In the preceding example, it suffices to flip the second and sixth characters, so you should return 2.
 
+**My thoughts:** Basically, the question is about finding a sweet cutting spot so that # flip on left plus # flip on right is minimized. We can simply scan through the array from left and right to allow constant time query for number of flip need on the left and right for a given spot. And the final answer is just the min of sum of left and right flips.
+
+
+**Solution with DP:** [https://repl.it/@trsong/Find-Number-of-Flips-to-Make-Binary-String](https://repl.it/@trsong/Find-Number-of-Flips-to-Make-Binary-String)
+```py
+import unittest
+
+def min_flip_to_make_binary(s):
+    if not s:
+        return 0
+
+    n = len(s)
+    left_y_count = 0 
+    right_x_count = 0
+    left_accu = [0] * n
+    right_accu = [0] * n
+    for i in xrange(n):
+        left_accu[i] = left_y_count
+        left_y_count += 1 if s[i] == 'y' else 0
+
+        right_accu[n - 1 - i] = right_x_count
+        right_x_count += 1 if s[n - 1 - i] == 'x' else 0
+    
+    res = float('inf')
+    for left_y, right_x in zip(left_accu, right_accu):
+        res = min(res, left_y + right_x)
+
+    return res
+
+
+class MinFlipToMakeBinarySpec(unittest.TestCase):
+    def test_example(self):
+        self.assertEqual(2, min_flip_to_make_binary('xyxxxyxyy'))  # xxxxxxxyy
+
+    def test_empty_string(self):
+        self.assertEqual(0, min_flip_to_make_binary(''))
+    
+    def test_already_binary(self):
+        self.assertEqual(0, min_flip_to_make_binary('xxxxxxxyy'))
+
+    def test_flipped_string(self):
+        self.assertEqual(3, min_flip_to_make_binary('yyyxxx'))  # yyyyyy
+
+    def test_flip_all_x(self):
+        self.assertEqual(1, min_flip_to_make_binary('yyx'))  # yyy
+
+    def test_flip_all_y(self):
+        self.assertEqual(2, min_flip_to_make_binary('yyxxx'))  # xxxxx
+
+    def test_flip_all_y2(self):
+        self.assertEqual(4, min_flip_to_make_binary('xyxxxyxyyxxx'))  # xxxxxxxxxxxx
+
+    def test_flip_y(self):
+        self.assertEqual(2, min_flip_to_make_binary('xyxxxyxyyy'))  # xxxxxxxyyy
+
+    def test_flip_x_and_y(self):
+        self.assertEqual(3, min_flip_to_make_binary('xyxxxyxyyx'))  # xxxxxyyyyy
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
+```
 
 ### Nov 14, 2020 \[Medium\] Isolated Islands
 ---

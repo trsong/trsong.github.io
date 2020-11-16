@@ -3575,6 +3575,22 @@ For example, given `"2542540123"`, you should return `['254.25.40.123', '254.254
 ---
 
 <details>
+<summary class="lc_m">
+
+- [**\[Medium\] Number of Flips to Make Binary String**](http://trsong.github.io/python/java/2020/11/02/DailyQuestionsAug/#nov-15-2020-medium-number-of-flips-to-make-binary-string) -- *You are given a string consisting of the letters x and y, such as xyxxxyxyy. Find min flip so that all x goes before y.* [*\(Try ME\)*](https://repl.it/@trsong/Find-Number-of-Flips-to-Make-Binary-String-1)
+
+</summary>
+<div>
+
+**Question:** You are given a string consisting of the letters `x` and `y`, such as `xyxxxyxyy`. In addition, you have an operation called flip, which changes a single `x` to `y` or vice versa.
+
+Determine how many times you would need to apply this operation to ensure that all x's come before all y's. In the preceding example, it suffices to flip the second and sixth characters, so you should return 2.
+
+</div>
+</details>
+
+
+<details>
 <summary class="lc_e">
 
 - [**\[Easy\] Maximum Subarray Sum**](https://trsong.github.io/python/java/2020/11/02/DailyQuestionsAug/#nov-5-2020-easy-maximum-subarray-sum) -- *Given array that may contain both positive and negative integers, find the sum of contiguous subarray of numbers which has the largest sum.* [*\(Try ME\)*](https://repl.it/@trsong/Maximum-Subarray-Sum-Divide-and-Conquer-1)
