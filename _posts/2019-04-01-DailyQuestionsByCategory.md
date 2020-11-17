@@ -2699,6 +2699,49 @@ For example, if the list is `[1, 2, 3, 4, 5]` and `K` is `9`, then it should ret
 ---
 
 <details>
+<summary class="lc_m">
+
+- [**\[Medium\] LC 1647. Minimum Deletions to Make Character Frequencies Unique**](https://trsong.github.io/python/java/2020/11/02/DailyQuestionsAug/#nov-16-2020-lc-1647-medium-minimum-deletions-to-make-character-frequencies-unique) -- *Given a string s, return the minimum number of characters you need to delete to make s good. s is good if no two letters have same count.* [*\(Try ME\)*](https://repl.it/@trsong/Minimum-Deletions-to-Make-Character-Frequencies-Unique-1)
+
+</summary>
+<div>
+
+
+**Question:** A string s is called good if there are no two different characters in s that have the same frequency.
+
+Given a string s, return the minimum number of characters you need to delete to make s good.
+
+The frequency of a character in a string is the number of times it appears in the string. For example, in the string "aab", the frequency of 'a' is 2, while the frequency of 'b' is 1.
+
+
+**Example 1:**
+```py
+Input: s = "aab"
+Output: 0
+Explanation: s is already good.
+```
+
+**Example 2:**
+```py
+Input: s = "aaabbbcc"
+Output: 2
+Explanation: You can delete two 'b's resulting in the good string "aaabcc".
+Another way it to delete one 'b' and one 'c' resulting in the good string "aaabbc".
+```
+
+**Example 3:**
+```py
+Input: s = "ceabaacb"
+Output: 2
+Explanation: You can delete both 'c's resulting in the good string "eabaab".
+Note that we only care about characters that are still in the string at the end (i.e. frequency of 0 is ignored).
+```
+
+</div>
+</details>
+
+
+<details>
 <summary class="lc_h">
 
 - [**\[Hard\] LC 358. Rearrange String K Distance Apart**](http://trsong.github.io/python/java/2020/08/02/DailyQuestionsAug/#sep-11-2020-lc-358-hard-rearrange-string-k-distance-apart) -- *Given a non-empty string str and an integer k, rearrange the string such that the same characters are at least distance k from each other.* [*\(Try ME\)*](https://repl.it/@trsong/Rearrange-Strings-K-Distance-Apart-1)

@@ -19,6 +19,53 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
 
+### Nov 17, 2020 \[Easy\] Count Number of Unival Subtrees
+---
+> **Question:** A unival tree is a tree where all the nodes have the same value. Given a binary tree, return the number of unival subtrees in the tree.
+
+**Example 1:**
+```py
+The following tree should return 5:
+
+   0
+  / \
+ 1   0
+    / \
+   1   0
+  / \
+ 1   1
+
+The 5 trees are:
+- The three single '1' leaf nodes. (+3)
+- The single '0' leaf node. (+1)
+- The [1, 1, 1] tree at the bottom. (+1)
+```
+
+**Example 2:**
+```py
+Input: root of below tree
+              5
+             / \
+            1   5
+           / \   \
+          5   5   5
+Output: 4
+There are 4 subtrees with single values.
+```
+
+**Example 3:**
+```py
+Input: root of below tree
+              5
+             / \
+            4   5
+           / \   \
+          4   4   5                
+Output: 5
+There are five subtrees with single values.
+```
+
+
 ### Nov 16, 2020 LC 1647 \[Medium\] Minimum Deletions to Make Character Frequencies Unique
 ---
 > **Question:** A string s is called good if there are no two different characters in s that have the same frequency.
@@ -47,6 +94,72 @@ Input: s = "ceabaacb"
 Output: 2
 Explanation: You can delete both 'c's resulting in the good string "eabaab".
 Note that we only care about characters that are still in the string at the end (i.e. frequency of 0 is ignored).
+```
+
+**My thoughts:** sort frequency in descending order, while iterate through all frequencies, keep track of biggest next frequency we can take. Then the min deletion for that letter is `freq - biggestNextFreq`. Remember to reduce the biggest next freq by 1 for each step.  
+
+**Greedy Solution**: [https://repl.it/@trsong/Minimum-Deletions-to-Make-Character-Frequencies-Unique](https://repl.it/@trsong/Minimum-Deletions-to-Make-Character-Frequencies-Unique)
+```py
+import unittest
+
+CHAR_SIZE = 26
+
+def min_deletions(s):
+    histogram = [0] * CHAR_SIZE
+    ord_a = ord('a')
+    for ch in s:
+        histogram[ord(ch) - ord_a] += 1
+
+    histogram.sort(reverse=True)
+    next_count = histogram[0]
+    res = 0
+
+    for count in histogram:
+        if count <= next_count:
+            next_count = count - 1
+        else:
+            # reduce count to next_count
+            res += count - next_count
+            next_count -= 1    
+        next_count = max(0, next_count)
+    return res
+
+
+class MinDeletionSpec(unittest.TestCase):
+    def test_example(self):
+        self.assertEqual(0, min_deletions("aab"))
+        
+    def test_example2(self):
+        # remove 2b's
+        self.assertEqual(2, min_deletions("aaabbbcc"))
+        
+    def test_example3(self):
+        # remove 2b's
+        self.assertEqual(2, min_deletions("ceabaacb"))
+        
+    def test_empty_string(self):
+        self.assertEqual(0, min_deletions(""))
+        
+    def test_string_with_same_char_freq(self):
+        s = 'a' * 100 + 'b' * 100 + 'c' * 2 + 'd' * 1
+        self.assertEqual(1, min_deletions(s))
+        
+    def test_remove_all_other_string(self):
+        self.assertEqual(4, min_deletions("abcde"))
+        
+    def test_collision_after_removing(self):
+        # remove 1b, 1c, 2d, 2e, 1f 
+        s = 'a' * 10 + 'b' * 10 + 'c' * 9 + 'd' * 9 + 'e' * 8 + 'f' * 6
+        self.assertEqual(7, min_deletions(s))
+
+    def test_remove_all_of_certain_letters(self):
+        # remove 3b, 1f
+        s = 'a' * 3 + 'b' * 3 + 'c' * 2 + 'd' + 'f' 
+        self.assertEqual(4, min_deletions(s))
+    
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
 ```
 
 ### Nov 15, 2020 \[Medium\] Number of Flips to Make Binary String
