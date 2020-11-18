@@ -1894,6 +1894,62 @@ return 23 (5 + 4 + 6 + 8).
 <details>
 <summary class="lc_e">
 
+- [**\[Easy\] Count Number of Unival Subtrees**](https://trsong.github.io/python/java/2020/11/02/DailyQuestionsAug/#nov-17-2020-easy-count-number-of-unival-subtrees) -- *A unival tree is a tree where all the nodes have the same value. Given a binary tree, return the number of unival subtrees in the tree.* [*\(Try ME\)*](https://repl.it/@trsong/Count-Total-Number-of-Uni-val-Subtrees-1)
+
+</summary>
+<div>
+
+**Question:** A unival tree is a tree where all the nodes have the same value. Given a binary tree, return the number of unival subtrees in the tree.
+
+**Example 1:**
+```py
+The following tree should return 5:
+
+   0
+  / \
+ 1   0
+    / \
+   1   0
+  / \
+ 1   1
+
+The 5 trees are:
+- The three single '1' leaf nodes. (+3)
+- The single '0' leaf node. (+1)
+- The [1, 1, 1] tree at the bottom. (+1)
+```
+
+**Example 2:**
+```py
+Input: root of below tree
+              5
+             / \
+            1   5
+           / \   \
+          5   5   5
+Output: 4
+There are 4 subtrees with single values.
+```
+
+**Example 3:**
+```py
+Input: root of below tree
+              5
+             / \
+            4   5
+           / \   \
+          4   4   5                
+Output: 5
+There are five subtrees with single values.
+```
+
+
+</div>
+</details>
+
+<details>
+<summary class="lc_e">
+
 - [**\[Easy\] Find Corresponding Node in Cloned Tree**](https://trsong.github.io/python/java/2020/08/02/DailyQuestionsAug/#sep-27-2020-easy-find-corresponding-node-in-cloned-tree) -- *Given two binary trees that are duplicates of one another, and given a node in one tree, find that corresponding node in the second tree.* [*\(Try ME\)*](https://repl.it/@trsong/Find-Corresponding-Node-in-Cloned-Tree-1)
 
 </summary>
