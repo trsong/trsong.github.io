@@ -19,6 +19,36 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
 
+### Nov 19, 2020 \[Easy\] Count Visible Nodes in Binary Tree
+---
+> **Question:** In a binary tree, if in the path from root to the node A, there is no node with greater value than A’s, this node A is visible. We need to count the number of visible nodes in a binary tree.
+
+**Example 1:**
+```py
+Input:
+        5
+     /     \
+   3        10
+  /  \     /
+20   21   1
+
+Output: 4
+Explanation: There are 4 visible nodes: 5, 20, 21, and 10.
+```
+
+**Example 2:**
+```py
+Input:
+  -10
+	\
+	-15
+	   \
+	   -1
+
+Output: 2
+Explanation: Visible nodes are -10 and -1.
+```
+
 
 ### Nov 18, 2020 \[Hard\] Non-adjacent Subset Sum
 ---
@@ -31,6 +61,95 @@ check if there exists a combination of elements in the array satisfying both of 
 ```py
 Input: K = 14, arr = [1, 9, 8, 3, 6, 7, 5, 11, 12, 4]
 Output: [3, 7, 4]
+```
+
+**Solution with DP:** [https://repl.it/@trsong/Non-adjacent-Subset-Sum](https://repl.it/@trsong/Non-adjacent-Subset-Sum)
+```py
+import unittest
+
+def non_adj_subset_sum(nums, k):
+    if not nums:
+        return None
+
+    n = len(nums)
+    # Let dp[k][n] represents whether exists subset sum k for nums[:n]
+    # dp[k][n] = dp[k][n-1] or dp[k - nums[n-1]][n-2]
+    dp = [[False for _ in xrange(n + 1)] for _ in xrange(k + 1)]
+    for s in xrange(1, k+1):
+        for i in xrange(1, n+1):
+            if s == nums[i-1] or dp[s][i-1]:
+                dp[s][i] = True
+                continue
+            if i > 2 and s >= nums[i-1]:
+                dp[s][i] = dp[s - nums[i-1]][i-2]
+
+    if not dp[k][n]:
+        return None
+    res = []
+    for i in xrange(n, 0, -1):
+        if dp[k][i-1]:
+            continue
+
+        num = nums[i-1]
+        if k == num or i > 2 and dp[k - num][i - 2]:
+            res.append(num)
+            k -= num
+    return res[::-1]
+            
+
+class NonAdjSubsetSumSpec(unittest.TestCase):
+    def assert_result(self, k, nums, res):
+        self.assertEqual(set(), set(res) - set(nums))
+        self.assertEqual(k, sum(res))
+
+    def test_example(self):
+        k, nums = 14, [1, 9, 8, 3, 6, 7, 5, 11, 12, 4]
+        # Possible solution [3, 7, 4]
+        res = non_adj_subset_sum(nums, k) 
+        self.assert_result(k, nums, res)
+
+    def test_multiple_solution(self):
+        k, nums = 12, [1, 2, 3, 4, 5, 6, 7]
+        # Possible solution [2, 4, 6]
+        res = non_adj_subset_sum(nums, k)
+        self.assert_result(k, nums, res)
+
+    def test_no_subset_satisfied(self):
+        k, nums = 100, [1, 2]
+        self.assertIsNone(non_adj_subset_sum(nums, k))
+
+    def test_no_subset_satisfied2(self):
+        k, nums = 3, [1, 2]
+        self.assertIsNone(non_adj_subset_sum(nums, k))
+
+    def test_should_not_pick_adjacent_elements(self):
+        k, nums = 3, [1, 2, 3]
+        expected = [3]
+        self.assertEqual(expected, non_adj_subset_sum(nums, k))
+
+    def test_should_not_pick_adjacent_elements2(self):
+        k, nums = 4, [1, 2, 3]
+        expected = [1, 3]
+        self.assertEqual(expected, non_adj_subset_sum(nums, k))
+
+    def test_pick_every_other_elements(self):
+        k, nums = 11, [1, 90, 2, 80, 3, 100, 5]
+        expected = [1, 2, 3, 5]
+        self.assertEqual(expected, non_adj_subset_sum(nums, k))
+
+    def test_pick_first_and_last(self):
+        k, nums = 3, [1, 10, 11, 7, 4, 12, 2]
+        expected = [1, 2]
+        self.assertEqual(expected, non_adj_subset_sum(nums, k))
+
+    def test_pick_every_three_elements(self):
+        k, nums = 6, [1, 100, 109, 2, 101, 110, 3]
+        expected = [1, 2, 3]
+        self.assertEqual(expected, non_adj_subset_sum(nums, k))
+  
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
 ```
 
 ### Nov 17, 2020 \[Easy\] Count Number of Unival Subtrees

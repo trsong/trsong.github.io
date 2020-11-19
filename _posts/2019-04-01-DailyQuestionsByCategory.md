@@ -3874,6 +3874,29 @@ make_change([1, 5, 10, 25], 36)  # gives 3 coins (25 + 10 + 1)
 ---
 
 <details>
+<summary class="lc_h">
+
+- [**\[Hard\] Non-adjacent Subset Sum**](https://trsong.github.io/python/java/2020/11/02/DailyQuestionsAug/#nov-18-2020-hard-non-adjacent-subset-sum) -- *Given an array of unique positive numbers. Find non-adjacent subset of elements sum up to k.* [*\(Try ME\)*](https://repl.it/@trsong/Non-adjacent-Subset-Sum-1)
+
+</summary>
+<div>
+
+**Question:** Given an array of size n with unique positive integers and a positive integer K,
+check if there exists a combination of elements in the array satisfying both of below constraints:
+- The sum of all such elements is K
+- None of those elements are adjacent in the original array
+
+**Example:**
+```py
+Input: K = 14, arr = [1, 9, 8, 3, 6, 7, 5, 11, 12, 4]
+Output: [3, 7, 4]
+```
+
+</div>
+</details>
+
+
+<details>
 <summary class="lc_m">
 
 - [**\[Medium\] Max Value of Coins to Collect in a Matrix**](https://trsong.github.io/python/java/2020/11/02/DailyQuestionsAug/#nov-12-2020-medium-max-value-of-coins-to-collect-in-a-matrix) -- *You are given a 2-d matrix. Find the maximum number of coins you can collect by the bottom right corner.* [*\(Try ME\)*](https://repl.it/@trsong/Find-Max-Value-of-Coins-to-Collect-in-a-Matrix-1)
