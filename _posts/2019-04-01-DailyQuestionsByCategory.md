@@ -3074,6 +3074,46 @@ Output: 1
 ---
 
 <details>
+<summary class="lc_e">
+
+- [**\[Easy\] Count Visible Nodes in Binary Tree**](https://trsong.github.io/python/java/2020/11/02/DailyQuestionsAug/#nov-19-2020-easy-count-visible-nodes-in-binary-tree) -- *https://repl.it/@trsong/Count-Visible-Nodes-in-Binary-Tree* [*\(Try ME\)*](https://repl.it/@trsong/Count-Visible-Nodes-in-Binary-Tree-1)
+
+</summary>
+<div>
+
+**Question:** In a binary tree, if in the path from root to the node A, there is no node with greater value than A’s, this node A is visible. We need to count the number of visible nodes in a binary tree.
+
+**Example 1:**
+```py
+Input:
+        5
+     /     \
+   3        10
+  /  \     /
+20   21   1
+
+Output: 4
+Explanation: There are 4 visible nodes: 5, 20, 21, and 10.
+```
+
+**Example 2:**
+```py
+Input:
+  -10
+    \
+    -15
+      \
+      -1
+
+Output: 2
+Explanation: Visible nodes are -10 and -1.
+```
+
+</div>
+</details>
+
+
+<details>
 <summary class="lc_m">
 
 - [**\[Medium\] Isolated Islands**](http://trsong.github.io/python/java/2020/11/02/DailyQuestionsAug/#nov-14-2020-medium-isolated-islands) -- *Given a matrix of 1s and 0s, return the number of "islands" in the matrix.* [*\(Try ME\)*](https://repl.it/@trsong/Count-Number-of-Isolated-Islands-1)

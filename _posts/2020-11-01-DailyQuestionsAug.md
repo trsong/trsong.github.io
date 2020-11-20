@@ -19,6 +19,30 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
 
+### Nov 20, 2020 \[Easy\] Word Ordering in a Different Alphabetical Order
+---
+> **Question:**Given a list of words, and an arbitrary alphabetical order, verify that the words are in order of the alphabetical order.
+
+**Example 1:**
+```py
+Input: 
+words = ["abcd", "efgh"]
+order="zyxwvutsrqponmlkjihgfedcba"
+
+Output: False
+Explanation: 'e' comes before 'a' so 'efgh' should come before 'abcd'
+```
+
+**Example 2:**
+```py
+Input:
+words = ["zyx", "zyxw", "zyxwy"]
+order="zyxwvutsrqponmlkjihgfedcba"
+
+Output: True
+Explanation: The words are in increasing alphabetical order
+```
+
 ### Nov 19, 2020 \[Easy\] Count Visible Nodes in Binary Tree
 ---
 > **Question:** In a binary tree, if in the path from root to the node A, there is no node with greater value than A’s, this node A is visible. We need to count the number of visible nodes in a binary tree.
@@ -40,15 +64,106 @@ Explanation: There are 4 visible nodes: 5, 20, 21, and 10.
 ```py
 Input:
   -10
-	\
-	-15
-	   \
-	   -1
+    \
+    -15
+      \
+      -1
 
 Output: 2
 Explanation: Visible nodes are -10 and -1.
 ```
 
+**Solution with DFS:** [https://repl.it/@trsong/Count-Visible-Nodes-in-Binary-Tree](https://repl.it/@trsong/Count-Visible-Nodes-in-Binary-Tree)
+```py
+import unittest
+
+def count_visible_nodes(root):
+    if not root:
+        return 0
+
+    stack = [(root, float('-inf'))]
+    res = 0
+    while stack:
+        cur, prev_max = stack.pop()
+        if cur.val > prev_max:
+            res += 1
+        
+        for child in [cur.left, cur.right]:
+            if not child:
+                continue
+            stack.append((child, max(prev_max, cur.val)))
+    
+    return res
+
+
+class TreeNode(object):
+    def __init__(self, val, left=None, right=None):
+        self.val = val
+        self.left = left
+        self.right = right
+
+
+class CountVisibleNodeSpec(unittest.TestCase):
+    def test_example(self):
+        """
+                5*
+             /     \
+           3        10*
+          /  \     /
+        20*  21*  1
+        """
+        left_tree = TreeNode(3, TreeNode(20), TreeNode(21))
+        right_tree = TreeNode(10, TreeNode(1))
+        root = TreeNode(5, left_tree, right_tree)
+        self.assertEqual(4, count_visible_nodes(root))
+
+    def test_example2(self):
+        """
+         -10*
+           \
+           -15
+             \
+             -1*
+        """
+        root = TreeNode(-10, right=TreeNode(-15, TreeNode(-1)))
+        self.assertEqual(2, count_visible_nodes(root))
+
+    def test_empty_tree(self):
+        self.assertEqual(0, count_visible_nodes(None))
+
+    def test_full_tree(self):
+        """
+             1*
+           /    \
+          2*     3*
+         / \    / \
+        4*  5* 6*  7*
+        """
+        left_tree = TreeNode(2, TreeNode(4), TreeNode(5))
+        right_tree = TreeNode(3, TreeNode(6), TreeNode(7))
+        root = TreeNode(1, left_tree, right_tree)
+        self.assertEqual(7, count_visible_nodes(root))
+
+    def test_one_node_tree(self):
+        self.assertEqual(1, count_visible_nodes(TreeNode(42)))
+
+    def test_complete_tree(self):
+        """
+            10*
+           /   \
+          9     8
+         / \   /
+        7   6 5
+        """
+        left_tree = TreeNode(9, TreeNode(7), TreeNode(6))
+        right_tree = TreeNode(8, TreeNode(5))
+        root = TreeNode(10, left_tree, right_tree)
+        self.assertEqual(1, count_visible_nodes(root))
+    
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
+```
 
 ### Nov 18, 2020 \[Hard\] Non-adjacent Subset Sum
 ---
