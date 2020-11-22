@@ -19,9 +19,18 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
 
+### Nov 21, 2020 \[Hard\] Find the Element That Appears Once While Others Occurs 3 Times
+---
+> **Question:** Given an array of integers where every integer occurs three times except for one integer, which only occurs once, find and return the non-duplicated integer.
+>
+> For example, given `[6, 1, 3, 3, 3, 6, 6]`, return `1`. Given `[13, 19, 13, 13]`, return `19`.
+>
+> Do this in `O(N)` time and `O(1)` space.
+
+
 ### Nov 20, 2020 \[Easy\] Word Ordering in a Different Alphabetical Order
 ---
-> **Question:**Given a list of words, and an arbitrary alphabetical order, verify that the words are in order of the alphabetical order.
+> **Question:** Given a list of words, and an arbitrary alphabetical order, verify that the words are in order of the alphabetical order.
 
 **Example 1:**
 ```py
@@ -41,6 +50,71 @@ order="zyxwvutsrqponmlkjihgfedcba"
 
 Output: True
 Explanation: The words are in increasing alphabetical order
+```
+
+**Solution:** [https://repl.it/@trsong/Determine-Word-Ordering-in-a-Different-Alphabetical-Order](https://repl.it/@trsong/Determine-Word-Ordering-in-a-Different-Alphabetical-Order)
+```py
+import unittest
+
+def is_sorted(words, order):
+    char_rank = {ch: rank for rank, ch in enumerate(order)}
+    prev = ""
+    for word in words:
+        is_smaller = False
+        for ch1, ch2 in zip(prev, word):
+            if char_rank[ch1] > char_rank[ch2]:
+                return False
+
+            if char_rank[ch1] < char_rank[ch2]:
+                is_smaller = True
+                break
+
+        if not is_smaller and len(prev) > len(word):
+            return False
+
+        prev = word
+    return True
+
+
+class IsSortedSpec(unittest.TestCase):
+    def test_example1(self):
+        words = ["abcd", "efgh"]
+        order = "zyxwvutsrqponmlkjihgfedcba"
+        self.assertFalse(is_sorted(words, order))
+
+    def test_example2(self):
+        words = ["zyx", "zyxw", "zyxwy"]
+        order = "zyxwvutsrqponmlkjihgfedcba"
+        self.assertTrue(is_sorted(words, order))
+
+    def test_empty_list(self):
+        self.assertTrue(is_sorted([], ""))
+        self.assertTrue(is_sorted([], "abc"))
+
+    def test_one_elem_list(self):
+        self.assertTrue(is_sorted(["z"], "xyz"))
+
+    def test_empty_words(self):
+        self.assertTrue(is_sorted(["", "", ""], ""))
+
+    def test_word_of_different_length(self):
+        words = ["", "1", "11", "111", "1111"]
+        order = "4321"
+        self.assertTrue(is_sorted(words, order))
+
+    def test_word_of_different_length2(self):
+        words = ["", "11", "", "111", "1111"]
+        order = "1"
+        self.assertFalse(is_sorted(words, order))
+
+    def test_large_word_dictionary(self):
+        words = ["123", "1a1b1A2ca", "ABC", "Aaa", "aaa", "bbb", "c11", "cCa"]
+        order = "".join(map(chr, range(256)))
+        self.assertTrue(is_sorted(words, order))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
 ```
 
 ### Nov 19, 2020 \[Easy\] Count Visible Nodes in Binary Tree

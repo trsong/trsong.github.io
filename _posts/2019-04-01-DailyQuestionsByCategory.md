@@ -1677,6 +1677,54 @@ An unbalanced tree with three consecutive left children: ((((00)0)0)0)
 ### BST
 ---
 
+
+<details>
+<summary class="lc_m">
+
+- [**\[Medium\] Largest BST in a Binary Tree**](https://trsong.github.io/python/java/2020/05/02/DailyQuestionsMay/#jul-3-2020-medium-largest-bst-in-a-binary-tree) -- *You are given the root of a binary tree. Find and return the largest subtree of that tree, which is a valid binary search tree.* [*\(Try ME\)*](https://repl.it/@trsong/Find-Largest-BST-in-a-Binary-Tree-1)
+
+</summary>
+<div>
+
+**Question:** You are given the root of a binary tree. Find and return the largest subtree of that tree, which is a valid binary search tree.
+
+**Example1:**
+```py
+Input: 
+      5
+    /  \
+   2    4
+ /  \
+1    3
+
+Output:
+   2  
+ /  \
+1    3
+```
+
+**Example2:**
+```py
+Input: 
+       50
+     /    \
+  30       60
+ /  \     /  \ 
+5   20   45    70
+              /  \
+            65    80
+            
+Output: 
+      60
+     /  \ 
+   45    70
+        /  \
+      65    80
+```
+
+</div>
+</details>
+
 <details>
 <summary class="lc_e">
 
@@ -2060,53 +2108,6 @@ serialize(tree)
 # returns "1 3 2 # # 5 # # 4 # 7 # #"
 ```
 
-
-</div>
-</details>
-
-<details>
-<summary class="lc_m">
-
-- [**\[Medium\] Largest BST in a Binary Tree**](https://trsong.github.io/python/java/2020/05/02/DailyQuestionsMay/#jul-3-2020-medium-largest-bst-in-a-binary-tree) -- *You are given the root of a binary tree. Find and return the largest subtree of that tree, which is a valid binary search tree.* [*\(Try ME\)*](https://repl.it/@trsong/Find-Largest-BST-in-a-Binary-Tree-1)
-
-</summary>
-<div>
-
-**Question:** You are given the root of a binary tree. Find and return the largest subtree of that tree, which is a valid binary search tree.
-
-**Example1:**
-```py
-Input: 
-      5
-    /  \
-   2    4
- /  \
-1    3
-
-Output:
-   2  
- /  \
-1    3
-```
-
-**Example2:**
-```py
-Input: 
-       50
-     /    \
-  30       60
- /  \     /  \ 
-5   20   45    70
-              /  \
-            65    80
-            
-Output: 
-      60
-     /  \ 
-   45    70
-        /  \
-      65    80
-```
 
 </div>
 </details>
@@ -2591,6 +2592,39 @@ Explanation: A -> B -> idle -> A -> B -> idle -> A -> B.
 
 ## Hashmap
 ---
+
+<details>
+<summary class="lc_e">
+
+- [**\[Easy\] Word Ordering in a Different Alphabetical Order**](http://trsong.github.io/python/java/2020/11/02/DailyQuestionsAug/#nov-20-2020-easy-word-ordering-in-a-different-alphabetical-order) -- *Given a list of words, and an arbitrary alphabetical order, verify that the words are in order of the alphabetical order.* [*\(Try ME\)*](https://repl.it/@trsong/Determine-Word-Ordering-in-a-Different-Alphabetical-Order-1)
+
+</summary>
+<div>
+
+**Question:** Given a list of words, and an arbitrary alphabetical order, verify that the words are in order of the alphabetical order.
+
+**Example 1:**
+```py
+Input: 
+words = ["abcd", "efgh"]
+order="zyxwvutsrqponmlkjihgfedcba"
+
+Output: False
+Explanation: 'e' comes before 'a' so 'efgh' should come before 'abcd'
+```
+
+**Example 2:**
+```py
+Input:
+words = ["zyx", "zyxw", "zyxwy"]
+order="zyxwvutsrqponmlkjihgfedcba"
+
+Output: True
+Explanation: The words are in increasing alphabetical order
+```
+
+</div>
+</details>
 
 
 <details>
