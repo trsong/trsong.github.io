@@ -19,7 +19,7 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
 
-### Nov 21, 2020 \[Hard\] Find the Element That Appears Once While Others Occurs 3 Times
+### Nov 21, 2020 \[Hard\] Find the Element That Appears Once While Others Occur 3 Times
 ---
 > **Question:** Given an array of integers where every integer occurs three times except for one integer, which only occurs once, find and return the non-duplicated integer.
 >
