@@ -28,6 +28,24 @@ categories: Python/Java
 ---
 
 <details>
+<summary class="lc_h">
+
+- [**\[Hard\] Find the Element That Appears Once While Others Occur 3 Times*](http://trsong.github.io/python/java/2020/11/02/DailyQuestionsAug/#nov-21-2020-hard-find-the-element-that-appears-once-while-others-occur-3-times) -- *Given an array of integers where every integer occurs three times except for one integer, which only occurs once, find that element.* [*\(Try ME\)*](https://repl.it/@trsong/Find-the-Element-That-Appears-Once-While-Others-Occur-3-Ti-1)
+
+</summary>
+<div>
+
+**Question:** Given an array of integers where every integer occurs three times except for one integer, which only occurs once, find and return the non-duplicated integer.
+
+For example, given `[6, 1, 3, 3, 3, 6, 6]`, return `1`. Given `[13, 19, 13, 13]`, return `19`.
+
+Do this in `O(N)` time and `O(1)` space.
+
+</div>
+</details>
+
+
+<details>
 <summary class="lc_e">
 
 - [**\[Easy\] Add Digits**](https://trsong.github.io/python/java/2020/08/02/DailyQuestionsAug/#oct-26-2020-easy-add-digits) -- *Given a number, add the digits repeatedly until you get a single number.* [*\(Try ME\)*](https://repl.it/@trsong/Add-Digits-1)
