@@ -19,6 +19,30 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
 
+### Nov 22, 2020 LC 212 [Hard\] Word Search II
+---
+> **Question:** Given an m x n board of characters and a list of strings words, return all words on the board.
+>
+> Each word must be constructed from letters of sequentially adjacent cells, where adjacent cells are horizontally or vertically neighboring. The same letter cell may not be used more than once in a word.
+ 
+**Example 1:**
+```py
+Input: words = ["oath","pea","eat","rain"], board = [
+    ["o","a","a","n"],
+    ["e","t","a","e"],
+    ["i","h","k","r"],
+    ["i","f","l","v"]]
+Output: ["eat", "oath"]
+```
+
+**Example 2:**
+```py
+Input: words = ["abcb"], board = [
+    ["a","b"],
+    ["c","d"]]
+Output: []
+```
+
 ### Nov 21, 2020 \[Hard\] Find the Element That Appears Once While Others Occur 3 Times
 ---
 > **Question:** Given an array of integers where every integer occurs three times except for one integer, which only occurs once, find and return the non-duplicated integer.
