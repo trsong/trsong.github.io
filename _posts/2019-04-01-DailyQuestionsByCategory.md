@@ -2295,6 +2295,41 @@ d  e f  g
 ---
 
 <details>
+<summary class="lc_h">
+
+- [**\[Hard\] LC 212. Word Search II**](https://trsong.github.io/python/java/2020/11/02/DailyQuestionsAug/#nov-22-2020-lc-212-hard-word-search-ii) -- *Given an m x n board of characters and a list of strings words, return all words on the board.* [*\(Try ME\)*](https://repl.it/@trsong/Word-Search-II-1)
+
+</summary>
+<div>
+
+**Question:** Given an m x n board of characters and a list of strings words, return all words on the board.
+
+Each word must be constructed from letters of sequentially adjacent cells, where adjacent cells are horizontally or vertically neighboring. The same letter cell may not be used more than once in a word.
+ 
+**Example 1:**
+```py
+Input: words = ["oath","pea","eat","rain"], board = [
+    ["o","a","a","n"],
+    ["e","t","a","e"],
+    ["i","h","k","r"],
+    ["i","f","l","v"]]
+Output: ["eat", "oath"]
+```
+
+**Example 2:**
+```py
+Input: words = ["abcb"], board = [
+    ["a","b"],
+    ["c","d"]]
+Output: []
+```
+
+
+</div>
+</details>
+
+
+<details>
 <summary class="lc_m">
 
 - [**\[Medium\] LC 421. Maximum XOR of Two Numbers in an Array**](https://trsong.github.io/python/java/2020/08/02/DailyQuestionsAug/#sep-20-2020-lc-421-medium-maximum-xor-of-two-numbers-in-an-array) -- *Given an array of integers, find the maximum XOR of any two elements.* [*\(Try ME\)*](https://repl.it/@trsong/Maximum-XOR-of-Two-Numbers-in-an-Array-1)
@@ -3591,6 +3626,41 @@ For example, given `100`, you can reach `1` in five steps with the following rou
 
 ## Backtracking
 ---
+
+<details>
+<summary class="lc_h">
+
+- [**\[Hard\] LC 212. Word Search II**](https://trsong.github.io/python/java/2020/11/02/DailyQuestionsAug/#nov-22-2020-lc-212-hard-word-search-ii) -- *Given an m x n board of characters and a list of strings words, return all words on the board.* [*\(Try ME\)*](https://repl.it/@trsong/Word-Search-II-1)
+
+</summary>
+<div>
+
+**Question:** Given an m x n board of characters and a list of strings words, return all words on the board.
+
+Each word must be constructed from letters of sequentially adjacent cells, where adjacent cells are horizontally or vertically neighboring. The same letter cell may not be used more than once in a word.
+ 
+**Example 1:**
+```py
+Input: words = ["oath","pea","eat","rain"], board = [
+    ["o","a","a","n"],
+    ["e","t","a","e"],
+    ["i","h","k","r"],
+    ["i","f","l","v"]]
+Output: ["eat", "oath"]
+```
+
+**Example 2:**
+```py
+Input: words = ["abcb"], board = [
+    ["a","b"],
+    ["c","d"]]
+Output: []
+```
+
+
+</div>
+</details>
+
 
 <details>
 <summary class="lc_m">
