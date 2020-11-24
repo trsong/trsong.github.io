@@ -19,6 +19,13 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
 
+### Nov 24, 2020 \[Medium\] Reconstruct a Jumbled Array
+---
+> **Question:** The sequence `[0, 1, ..., N]` has been jumbled, and the only clue you have for its order is an array representing whether each number is larger or smaller than the last. 
+> 
+> Given this information, reconstruct an array that is consistent with it. For example, given `[None, +, +, -, +]`, you could return `[1, 2, 3, 0, 4]`.
+
+
 ### Nov 23, 2020 LC 286 \[Medium\] Walls and Gates
 ---
 > **Question:** You are given a m x n 2D grid initialized with these three possible values.
@@ -45,6 +52,146 @@ After running your function, the 2D grid should be:
   1  -1   2  -1
   0  -1   3   4
   ```
+
+**My thoughts:** Most of time, the BFS you are familiar with has only one starting point and searching from that point onward will produce the shortest path from start to visited points. For multi-starting points, it works exactly as single starting point. All you need to do is to imagine a single vitual starting point connecting to all starting points. Moreover, the way we achieve that is to put all starting point into the queue before doing BFS. 
+
+
+**Solution with BFS:** [https://repl.it/@trsong/Identify-Walls-and-Gates](https://repl.it/@trsong/Identify-Walls-and-Gates)
+```py
+import unittest
+import sys
+from Queue import Queue
+
+INF = sys.maxint
+
+def nearest_gate(grid):
+    if not grid or not grid[0]:
+        return
+
+    n, m = len(grid), len(grid[0])
+    queue = Queue()
+    for r in xrange(n):
+        for c in xrange(m):
+            if grid[r][c] == 0:
+                queue.put((r, c))
+
+    depth = 0
+    DIRECTIONS = [(-1, 0), (1, 0), (0, 1), (0, -1)]
+    while not queue.empty():
+        for _ in xrange(queue.qsize()):
+            r, c = queue.get()
+            if 0 < grid[r][c] < INF:
+                continue
+            grid[r][c] = depth
+
+            for dr, dc in DIRECTIONS:
+                new_r, new_c = r + dr, c + dc
+                if 0 <= new_r < n and 0 <= new_c < m and grid[new_r][new_c] == INF:
+                    queue.put((new_r, new_c))
+
+        depth += 1
+
+
+class NearestGateSpec(unittest.TestCase):
+    def test_example(self):
+        grid = [
+            [INF,  -1,   0, INF],
+            [INF, INF, INF,  -1],
+            [INF,  -1, INF,  -1],
+            [  0,  -1, INF, INF]
+        ]
+        expected_grid = [
+            [  3,  -1,   0,   1],
+            [  2,   2,   1,  -1],
+            [  1,  -1,   2,  -1],
+            [  0,  -1,   3,   4]
+        ]
+        nearest_gate(grid)
+        self.assertEqual(expected_grid, grid)
+
+    def test_unreachable_room(self):
+        grid = [
+            [INF, -1],
+            [ -1,  0]
+        ]
+        expected_grid = [
+            [INF, -1],
+            [ -1,  0]
+        ]
+        nearest_gate(grid)
+        self.assertEqual(expected_grid, grid)
+
+    def test_no_gate_exists(self):
+        grid = [
+            [-1,   -1],
+            [INF, INF]
+        ]
+        expected_grid = [
+            [-1,   -1],
+            [INF, INF]
+        ]
+        nearest_gate(grid)
+        self.assertEqual(expected_grid, grid)
+
+    def test_all_gates_no_room(self):
+        grid = [
+            [0, 0, 0],
+            [0, 0, 0]
+        ]
+        expected_grid = [
+            [0, 0, 0],
+            [0, 0, 0]
+        ]
+        nearest_gate(grid)
+        self.assertEqual(expected_grid, grid)
+
+    def test_empty_grid(self):
+        grid = []
+        nearest_gate(grid)
+        self.assertEqual([], grid)
+
+    def test_1D_grid(self):
+        grid = [[INF, 0, INF, INF, INF, 0, INF, 0, 0, -1, INF]]
+        expected_grid = [[1, 0, 1, 2, 1, 0, 1, 0, 0, -1, INF]]
+        nearest_gate(grid)
+        self.assertEqual(expected_grid, grid)
+
+    def test_multi_gates(self):
+        grid = [
+            [INF, INF,  -1,   0, INF],
+            [INF, INF, INF, INF, INF],
+            [  0, INF, INF, INF,   0],
+            [INF, INF,  -1, INF, INF]
+        ]
+        expected_grid = [
+            [  2,   3,  -1,   0,   1],
+            [  1,   2,   2,   1,   1],
+            [  0,   1,   2,   1,   0],
+            [  1,   2,  -1,   2,   1]
+        ]
+        nearest_gate(grid)
+        self.assertEqual(expected_grid, grid)
+
+    def test_at_center(self):
+        grid = [
+            [INF, INF, INF, INF, INF],
+            [INF, INF, INF, INF, INF],
+            [INF, INF,   0, INF, INF],
+            [INF, INF, INF, INF, INF]
+        ]
+        expected_grid = [
+            [  4,   3,   2,   3,   4],
+            [  3,   2,   1,   2,   3],
+            [  2,   1,   0,   1,   2],
+            [  3,   2,   1,   2,   3]
+        ]
+        nearest_gate(grid)
+        self.assertEqual(expected_grid, grid)
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
+```
 
 
 ### Nov 22, 2020 LC 212 \[Hard\] Word Search II

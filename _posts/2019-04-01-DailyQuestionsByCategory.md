@@ -2988,6 +2988,43 @@ Move 1 to 3
 ---
 
 <details>
+<summary class="lc_m">
+
+- [**\[Medium\] LC 286. Walls and Gates**](https://trsong.github.io/python/java/2020/11/02/DailyQuestionsAug/#nov-23-2020-lc-286-medium-walls-and-gates) -- *Given a m x n 2D grid, fill each empty room with the distance to its nearest gate.* [*\(Try ME\)*](https://repl.it/@trsong/Identify-Walls-and-Gates-1)
+
+</summary>
+<div>
+
+**Question:** You are given a m x n 2D grid initialized with these three possible values.
+
+* -1 - A wall or an obstacle.
+* 0 - A gate.
+* INF - Infinity means an empty room. We use the value `2^31 - 1 = 2147483647` to represent INF as you may assume that the distance to a gate is less than 2147483647.
+ 
+Fill each empty room with the distance to its nearest gate. If it is impossible to reach a gate, it should be filled with INF.
+
+**Example:**
+```py
+Given the 2D grid:
+
+INF  -1  0  INF
+INF INF INF  -1
+INF  -1 INF  -1
+  0  -1 INF INF
+
+After running your function, the 2D grid should be:
+
+  3  -1   0   1
+  2   2   1  -1
+  1  -1   2  -1
+  0  -1   3   4
+```
+
+</div>
+</details>
+
+
+<details>
 <summary class="lc_e">
 
 - [**\[Easy\] Deepest Node in a Binary Tree**](https://trsong.github.io/python/java/2020/08/02/DailyQuestionsAug/#sep-2-2020-easy-deepest-node-in-a-binary-tree) -- *You are given the root of a binary tree. Return the deepest node (the furthest node from the root).* [*\(Try ME\)*](https://repl.it/@trsong/Find-Deepest-Node-in-a-Binary-Tree-1)
