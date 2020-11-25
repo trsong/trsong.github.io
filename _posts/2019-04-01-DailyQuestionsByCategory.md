@@ -27,6 +27,7 @@ categories: Python/Java
 ## Math
 ---
 
+
 <details>
 <summary class="lc_h">
 
@@ -238,6 +239,23 @@ For example, calling `divide(10, 3)` should return `(3, 1)` since the divisor is
 
 ### Puzzle
 ---
+
+
+<details>
+<summary class="lc_e">
+
+- [**\[Easy\] Reconstruct a Jumbled Array**](https://trsong.github.io/python/java/2020/11/02/DailyQuestionsAug/#nov-24-2020-easy-reconstruct-a-jumbled-array) -- *The sequence 0 to N is jumbled, and given its order is an array with each number is larger or smaller than the previous one. Return an array.* [*\(Try ME\)*](https://repl.it/@trsong/Reconstruct-a-Jumbled-Array-1)
+
+</summary>
+<div>
+
+**Question:** The sequence `[0, 1, ..., N]` has been jumbled, and the only clue you have for its order is an array representing whether each number is larger or smaller than the last. 
+ 
+Given this information, reconstruct an array that is consistent with it. For example, given `[None, +, +, -, +]`, you could return `[1, 2, 3, 0, 4]`.
+
+</div>
+</details>
+
 
 <details>
 <summary class="lc_m">
