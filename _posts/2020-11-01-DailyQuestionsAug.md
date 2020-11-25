@@ -19,12 +19,109 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
 
-### Nov 24, 2020 \[Medium\] Reconstruct a Jumbled Array
+### Nov 24, 2020 \[Easy\] Reconstruct a Jumbled Array
 ---
 > **Question:** The sequence `[0, 1, ..., N]` has been jumbled, and the only clue you have for its order is an array representing whether each number is larger or smaller than the last. 
 > 
 > Given this information, reconstruct an array that is consistent with it. For example, given `[None, +, +, -, +]`, you could return `[1, 2, 3, 0, 4]`.
 
+**My thoughts:** enumerate `+` as `+1`, `+2`, `+3` and `-` as `-1`, `-2` from `0` you can generate an array with satisfied condition yet incorrect range. Then all we need to do is to shift to range from `0` to `N` by minusing each element with global minimum value. 
+
+**Solution:** [https://repl.it/@trsong/Reconstruct-a-Jumbled-Array](https://repl.it/@trsong/Reconstruct-a-Jumbled-Array)
+```py
+import unittest
+
+def build_jumbled_array(clues):
+    res = [0] * len(clues)
+    upper = lower = 0
+
+    for i in xrange(1, len(clues)):
+        if clues[i] == '+':
+            res[i] = upper + 1
+            upper += 1
+        elif clues[i] == '-':
+            res[i] = lower - 1
+            lower -= 1
+
+    return map(lambda num: num - lower, res)
+
+
+class BuildJumbledArraySpec(unittest.TestCase):
+    @staticmethod
+    def generate_clues(nums):
+        nums_signs = [None] * len(nums)
+        for i in xrange(1, len(nums)):
+            nums_signs[i] = '+' if nums[i] > nums[i-1] else '-'
+        return nums_signs
+
+    def validate_result(self, cludes, res):
+        res_set = set(res)
+        res_signs = BuildJumbledArraySpec.generate_clues(res)
+        msg = "Incorrect result %s. Expect %s but gives %s." % (res, cludes, res_signs)
+        self.assertEqual(len(cludes), len(res_set), msg)
+        self.assertEqual(0, min(res), msg)
+        self.assertEqual(len(cludes) - 1, max(res), msg)
+        self.assertEqual(cludes, res_signs, msg)
+
+    def test_example(self):
+        clues = [None, '+', '+', '-', '+']
+        # possible solution: [1, 2, 3, 0, 4]
+        res = build_jumbled_array(clues)
+        self.validate_result(clues, res)
+
+    def test_empty_array(self):
+        self.assertEqual([], build_jumbled_array([]))
+
+    def test_one_element_array(self):
+        self.assertEqual([0], build_jumbled_array([None]))
+
+    def test_two_elements_array(self):
+        self.assertEqual([1, 0], build_jumbled_array([None, '-']))
+
+    def test_ascending_array(self):
+        clues = [None, '+', '+', '+']
+        expected = [0, 1, 2, 3]
+        self.assertEqual(expected, build_jumbled_array(clues))
+
+    def test_descending_array(self):
+        clues = [None, '-', '-', '-', '-']
+        expected = [4, 3, 2, 1, 0]
+        self.assertEqual(expected, build_jumbled_array(clues))
+
+    def test_random_array(self):
+        clues = [None, '+', '-', '+', '-']
+        # possible solution: [1, 4, 2, 3, 0]
+        res = build_jumbled_array(clues)
+        self.validate_result(clues, res)
+
+    def test_random_array2(self):
+        clues = [None, '-', '+', '-', '-', '+']
+        # possible solution: [3, 1, 4, 2, 0, 5]
+        res = build_jumbled_array(clues)
+        self.validate_result(clues, res)
+
+    def test_random_array3(self):
+        clues = [None, '+', '-', '+', '-', '+', '+', '+']
+        # possible solution: [1, 7, 0, 6, 2, 3, 4, 5]
+        res = build_jumbled_array(clues)
+        self.validate_result(clues, res)
+    
+    def test_random_array4(self):
+        clues = [None, '+', '+', '-', '+']
+        # possible solution: [1, 2, 3, 0, 4]
+        res = build_jumbled_array(clues)
+        self.validate_result(clues, res)
+
+    def test_random_array5(self):
+        clues = [None, '-', '-', '-', '+']
+        # possible solution: [3, 2, 1, 0, 4]
+        res = build_jumbled_array(clues)
+        self.validate_result(clues, res)
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
+```
 
 ### Nov 23, 2020 LC 286 \[Medium\] Walls and Gates
 ---
