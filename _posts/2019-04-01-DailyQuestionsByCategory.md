@@ -1566,6 +1566,21 @@ Explanation: Sorting the window (2, 4) which is [7, 5, 6] will also means that t
 ---
 
 <details>
+<summary class="lc_h">
+
+- [**\[Hard\] Inversion Pairs**](http://trsong.github.io/python/java/2020/11/02/DailyQuestionsAug/#nov-26-2020-hard-inversion-pairs) -- *Count total number of pairs such that a smaller element appears after a larger element.* [*\(Try ME\)*](https://repl.it/@trsong/Count-Inversion-Pairs-1)
+
+</summary>
+<div>
+
+**Question:**  We can determine how "out of order" an array A is by counting the number of inversions it has. Two elements `A[i]` and `A[j]` form an inversion if `A[i] > A[j]` but `i < j`. That is, a smaller element appears after a larger element. Given an array, count the number of inversions it has. Do this faster than `O(N^2)` time. You may assume each element in the array is distinct.
+
+For example, a sorted list has zero inversions. The array `[2, 4, 1, 3, 5]` has three inversions: `(2, 1)`, `(4, 1)`, and `(4, 3)`. The array `[5, 4, 3, 2, 1]` has ten inversions: every distinct pair forms an inversion.
+
+</div>
+</details>
+
+<details>
 <summary class="lc_m">
 
 - [**\[Medium\] Sort Linked List**](https://trsong.github.io/python/java/2020/08/02/DailyQuestionsAug/#aug-14-2020-medium-sort-linked-list) -- *Given a linked list, sort it in O(n log n) time and constant space.* [*\(Try ME\)*](https://repl.it/@trsong/Sort-Linked-List-1)
