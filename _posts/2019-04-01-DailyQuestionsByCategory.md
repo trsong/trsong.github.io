@@ -31,7 +31,7 @@ categories: Python/Java
 <details>
 <summary class="lc_h">
 
-- [**\[Hard\] Find the Element That Appears Once While Others Occur 3 Times*](http://trsong.github.io/python/java/2020/11/02/DailyQuestionsAug/#nov-21-2020-hard-find-the-element-that-appears-once-while-others-occur-3-times) -- *Given an array of integers where every integer occurs three times except for one integer, which only occurs once, find that element.* [*\(Try ME\)*](https://repl.it/@trsong/Find-the-Element-That-Appears-Once-While-Others-Occur-3-Ti-1)
+- [**\[Hard\] Find the Element That Appears Once While Others Occur 3 Times**](http://trsong.github.io/python/java/2020/11/02/DailyQuestionsAug/#nov-21-2020-hard-find-the-element-that-appears-once-while-others-occur-3-times) -- *Given an array of integers where every integer occurs three times except for one integer, which only occurs once, find that element.* [*\(Try ME\)*](https://repl.it/@trsong/Find-the-Element-That-Appears-Once-While-Others-Occur-3-Ti-1)
 
 </summary>
 <div>
@@ -239,6 +239,23 @@ For example, calling `divide(10, 3)` should return `(3, 1)` since the divisor is
 
 ### Puzzle
 ---
+
+<details>
+<summary class="lc_h">
+
+- [**\[Hard\] Minimum Cost to Construct Pyramid with Stones**](http://trsong.github.io/python/java/2020/11/02/DailyQuestionsAug/#nov-25-2020-hard-minimum-cost-to-construct-pyramid-with-stones) -- *Given N stones in a row, you can change the height of any stone by paying a cost of 1 unit. Determine the lowest cost  or produce a pyramid.* [*\(Try ME\)*](https://repl.it/@trsong/Minimum-Cost-to-Construct-Pyramid-with-Stones-1)
+
+</summary>
+<div>
+
+**Question:** You have `N` stones in a row, and would like to create from them a pyramid. This pyramid should be constructed such that the height of each stone increases by one until reaching the tallest stone, after which the heights decrease by one. In addition, the start and end stones of the pyramid should each be one stone high.
+
+You can change the height of any stone by paying a cost of `1` unit to lower its height by `1`, as many times as necessary. Given this information, determine the lowest cost method to produce this pyramid.
+
+For example, given the stones `[1, 1, 3, 3, 2, 1]`, the optimal solution is to pay `2` to create `[0, 1, 2, 3, 2, 1]`.
+
+</div>
+</details>
 
 
 <details>

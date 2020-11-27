@@ -34,6 +34,95 @@ categories: Python/Java
 >
 > For example, given the stones `[1, 1, 3, 3, 2, 1]`, the optimal solution is to pay `2` to create `[0, 1, 2, 3, 2, 1]`.
 
+**My thoughts:** To find min cost is equivalent to find max pyramid we can construct. With that being said, all we need is to figure out each position's max possible height. 
+
+A position's height can only be 1 greater than prvious one on the left and right position. We can scan from left and right to figure out the max height for each position. 
+
+After that, we need to find center location of pyramid. That is just the max height. And the total number of stones equals `1 + 2 + .. + n + ... + 1 = n * n`.
+
+Therefore the `min cost` is just `sum of all stones - total stones of max pyramid`. 
+
+**Solution:** [https://repl.it/@trsong/Minimum-Cost-to-Construct-Pyramid-with-Stones](https://repl.it/@trsong/Minimum-Cost-to-Construct-Pyramid-with-Stones)
+```py
+import unittest
+
+def min_cost_pyramid(stones):
+    n = len(stones)
+    left_trim_heights = [None] * n
+    right_trim_heights = [None] * n
+
+    left_trim_heights[0] = min(1, stones[0])
+    right_trim_heights[n - 1] = min(1, stones[n - 1])
+
+    for i in xrange(1, n):
+        left_trim_heights[i] = min(left_trim_heights[i - 1] + 1, stones[i])
+        right_trim_heights[n - i - 1] = min(right_trim_heights[n - i] + 1, stones[n - i - 1])
+
+    trim_heights = map(min, zip(left_trim_heights, right_trim_heights))
+    pyramid_height = max(trim_heights)
+
+    total_pyramid_stones = pyramid_height * pyramid_height  # 1 + 2 + ... + 2 + 1
+    return sum(stones) - total_pyramid_stones
+
+
+class MinCostPyramidSpec(unittest.TestCase):
+    def test_example(self):
+        stones = [1, 1, 3, 3, 2, 1]
+        expected = 2  # [0, 1, 2, 3, 2, 1]
+        self.assertEqual(expected, min_cost_pyramid(stones))
+
+    def test_small_pyramid(self):
+        stones = [1, 2, 1]
+        expected = 0
+        self.assertEqual(expected, min_cost_pyramid(stones))
+
+    def test_small_pyramid2(self):
+        stones = [1, 1, 1]
+        expected = 2  # [0, 1, 0]
+        self.assertEqual(expected, min_cost_pyramid(stones))
+
+    def test_almost_pyramid(self):
+        stones = [1, 2, 3, 4, 2, 1]
+        expected = 4  # [1, 2, 3, 2, 1, 0]
+        self.assertEqual(expected, min_cost_pyramid(stones))
+
+    def test_choice_between_different_pyramid(self):
+        stones = [1, 2, 1, 0, 0, 1, 2, 3, 2, 1, 0, 1, 0]
+        expected = 5  # [0, 0, 0, 0, 0, 1, 2, 3, 2, 1, 0, 0, 0]
+        self.assertEqual(expected, min_cost_pyramid(stones))
+
+    def test_build_from_flat_plane(self):
+        stones = [5, 5, 5, 5, 5]
+        expected = 16  # [1, 2, 3, 2, 1]
+        self.assertEqual(expected, min_cost_pyramid(stones))
+
+    def test_concave_array(self):
+        stones = [0, 0, 3, 2, 3, 0]
+        expected = 4  # [0, 0, 1, 2, 1, 0]
+        self.assertEqual(expected, min_cost_pyramid(stones))
+
+    def test_multiple_layer_platforms(self):
+        stones = [2, 2, 5, 5, 5, 5, 5, 5, 5, 5, 5, 9, 9, 9, 5, 5, 5, 5, 5, 5, 2, 2]
+        #        [0, 0, 0, 0, 0, 0, 1, 2, 3, 4, 5, 6, 7, 6, 5, 4, 3, 2, 1, 0, 0, 0]
+        expected = 61
+        self.assertEqual(expected, min_cost_pyramid(stones))
+
+    def test_multiple_layer_platforms2(self):
+        stones = [0, 0, 0, 1, 1, 1, 2, 2, 2, 3, 3, 3, 2, 2, 1, 1, 1, 0]
+        expected = 16  # [0, 0, 0, 0, 0, 0, 0, 1, 2, 3, 2, 1, 0, 0, 0, 0, 0, 0]
+        self.assertEqual(expected, min_cost_pyramid(stones))
+
+    def test_choose_between_two_pyramids(self):
+        stones = [1, 2, 3, 2, 1, 0, 0, 1, 6, 1, 0]
+        expected = 8  # [1, 2, 3, 2, 1, 0, 0, 0, 0, 0, 0]
+        self.assertEqual(expected, min_cost_pyramid(stones))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
+```
+
+
 ### Nov 24, 2020 \[Easy\] Reconstruct a Jumbled Array
 ---
 > **Question:** The sequence `[0, 1, ..., N]` has been jumbled, and the only clue you have for its order is an array representing whether each number is larger or smaller than the last. 
