@@ -3248,6 +3248,46 @@ Output: 1
 ---
 
 <details>
+<summary class="lc_m">
+
+- [**\[Medium\] Direction and Position Rule Verification**](http://trsong.github.io/python/java/2020/11/02/DailyQuestionsAug/#nov-27-2020-medium-direction-and-position-rule-verification) -- *Given a list of rules, check if the sum of the rules validate.* [*\(Try ME\)*](https://repl.it/@trsong/Verify-List-of-Direction-and-Position-Rules-1)
+
+</summary>
+<div>
+
+**Question:** A rule looks like this:
+
+```py
+A NE B
+``` 
+This means this means point A is located northeast of point B.
+ 
+```
+A SW C
+```
+means that point A is southwest of C.
+
+Given a list of rules, check if the sum of the rules validate. For example:
+
+```
+A N B
+B NE C
+C N A
+```
+
+does not validate, since A cannot be both north and south of C.
+
+```
+A NW B
+A N B
+```
+ 
+is considered valid.
+
+</div>
+</details>
+
+<details>
 <summary class="lc_e">
 
 - [**\[Easy\] Count Visible Nodes in Binary Tree**](https://trsong.github.io/python/java/2020/11/02/DailyQuestionsAug/#nov-19-2020-easy-count-visible-nodes-in-binary-tree) -- *https://repl.it/@trsong/Count-Visible-Nodes-in-Binary-Tree* [*\(Try ME\)*](https://repl.it/@trsong/Count-Visible-Nodes-in-Binary-Tree-1)
