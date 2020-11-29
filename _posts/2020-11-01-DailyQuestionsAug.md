@@ -19,6 +19,43 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
 
+
+### Nov 30, 2020 \[Easy\] Extract Range
+---
+> **Question:** Given a sorted list of numbers, return a list of strings that represent all of the consecutive numbers.
+
+**Example:**
+```py
+Input: [0, 1, 2, 5, 7, 8, 9, 9, 10, 11, 15]
+Output: ['0->2', '5', '7->11', '15->15']
+```
+
+### Nov 29, 2020 \[Medium\] Implement Soundex
+---
+> **Question:** **Soundex** is an algorithm used to categorize phonetically, such that two names that sound alike but are spelled differently have the same representation.
+>
+> **Soundex** maps every name to a string consisting of one letter and three numbers, like M460.
+>
+> One version of the algorithm is as follows:
+>
+> 1. Remove consecutive consonants with the same sound (for example, change ck -> c).
+> 2. Keep the first letter. The remaining steps only apply to the rest of the string.
+> 3. Remove all vowels, including y, w, and h.
+> 4. Replace all consonants with the following digits:
+>    - b, f, p, v → 1
+>    - c, g, j, k, q, s, x, z → 2
+>    - d, t → 3
+>    - l → 4
+>    - m, n → 5
+>    - r → 6
+> 5. If you don't have three numbers yet, append zeros until you do. Keep the first three numbers.
+>
+> Using this scheme, Jackson and Jaxen both map to J250.
+
+
+
+
+
 ### Nov 28, 2020 LC 151 \[Medium\] Reverse Words in a String
 ---
 > **Question:** Given an input string, reverse the string word by word.
