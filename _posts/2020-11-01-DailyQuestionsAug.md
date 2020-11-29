@@ -52,8 +52,112 @@ Output: ['0->2', '5', '7->11', '15->15']
 >
 > Using this scheme, Jackson and Jaxen both map to J250.
 
+**Solution:** [https://repl.it/@trsong/Implement-Soundex](https://repl.it/@trsong/Implement-Soundex)
+```py
+import unittest
+
+def soundex_code(s):
+    skip_letters = {'y', 'w', 'h'}
+    score_to_letter = {
+        '1': 'bfpv',
+        '2': 'cgjkqsxz',
+        '3': 'dt',
+        '4': 'l',
+        '5': 'mn',
+        '6': 'r'
+    }
+    letter_to_score = {ch: score for score, chs in score_to_letter.items() for ch in chs}
+    
+    initial = s[0].upper()
+    res = [initial]
+    prev = None
+    for ch in s:
+        lower_case = ch.lower()
+        if lower_case in skip_letters:
+            continue
+
+        code = letter_to_score.get(lower_case, '0')
+        if prev is not None and code != '0' and code != prev:
+            res.append(code)
+        prev = code
+
+        if len(res) == 4:
+            break
+
+    res.extend('0000')
+    return ''.join(res[:4])
 
 
+class SoundexCodeSpec(unittest.TestCase):
+    def test_example(self):
+        # J, 2 for the C, K ignored, S ignored, 5 for the N, 0 added
+        self.assertEqual('J250', soundex_code('Jackson'))
+
+    def test_example2(self):
+        self.assertEqual('J250', soundex_code('Jaxen'))
+
+    def test_name_with_double_letters(self):
+        # G, 3 for the T, 6 for the first R, second R ignored, 2 for the Z
+        self.assertEqual('G362', soundex_code('Gutierrez'))
+
+    def test_side_by_side_same_code(self):
+        # P, F ignored, 2 for the S, 3 for the T, 6 for the R
+        self.assertEqual('P236', soundex_code('Pfister'))
+
+    def test_side_by_side_same_code2(self):
+        # T, 5 for the M, 2 for the C, Z ignored, 2 for the K
+        self.assertEqual('T522', soundex_code('Tymczak'))
+
+    def test_append_zero_to_end(self):
+        self.assertEqual('L000', soundex_code('Lee'))
+
+    def test_discard_extra_letters(self):
+        # W, 2 for the S, 5 for the N, 2 for the G, remaining letters disregarded
+        self.assertEqual('W252', soundex_code('Washington')) 
+
+    def test_separate_consonant_with_same_code(self):
+        self.assertEqual('A261', soundex_code('Ashcraft'))
+
+    def test_more_example(self):
+        self.assertEqual('K530', soundex_code('Knuth'))
+
+    def test_more_example2(self):
+        self.assertEqual('K530', soundex_code('Kant'))
+
+    def test_more_example3(self):
+        self.assertEqual('J612', soundex_code('Jarovski'))
+
+    def test_more_example4(self):
+        self.assertEqual('R252', soundex_code('Resnik'))
+
+    def test_more_example5(self):
+        self.assertEqual('R252', soundex_code('Reznick'))
+
+    def test_more_example6(self):
+        self.assertEqual('E460', soundex_code('Euler'))
+
+    def test_more_example7(self):
+        self.assertEqual('P362', soundex_code('Peterson'))
+
+    def test_more_example8(self):
+        self.assertEqual('J162', soundex_code('Jefferson'))
+
+    def test_more_example9(self):
+        self.assertEqual('T526', soundex_code('Tangrui'))
+
+    def test_more_example10(self):
+        self.assertEqual('S520', soundex_code('Song'))
+
+    def test_more_example11(self):
+        self.assertEqual('J520', soundex_code('Jing'))
+
+    def test_more_example12(self):
+        self.assertEqual('Z520', soundex_code('Zhang'))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
+```
 
 
 ### Nov 28, 2020 LC 151 \[Medium\] Reverse Words in a String

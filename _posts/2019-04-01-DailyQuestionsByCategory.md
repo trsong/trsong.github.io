@@ -4474,6 +4474,38 @@ Explanation: we choose the numbers 5 and 1.
 
 
 <details>
+<summary class="lc_m">
+
+- [**\[Medium\] Implement Soundex**](http://trsong.github.io/python/java/2020/11/02/DailyQuestionsAug/#nov-29-2020-medium-implement-soundex) -- *Soundex is an algorithm used to categorize phonetically, such that two names that sound alike but are spelled differently have the same repr...* [*\(Try ME\)*](https://repl.it/@trsong/Implement-Soundex-1)
+
+</summary>
+<div>
+
+**Question:** **Soundex** is an algorithm used to categorize phonetically, such that two names that sound alike but are spelled differently have the same representation.
+
+**Soundex** maps every name to a string consisting of one letter and three numbers, like M460.
+
+One version of the algorithm is as follows:
+
+1. Remove consecutive consonants with the same sound (for example, change ck -> c).
+2. Keep the first letter. The remaining steps only apply to the rest of the string.
+3. Remove all vowels, including y, w, and h.
+4. Replace all consonants with the following digits:
+   - b, f, p, v → 1
+   - c, g, j, k, q, s, x, z → 2
+   - d, t → 3
+   - l → 4
+   - m, n → 5
+   - r → 6
+5. If you don't have three numbers yet, append zeros until you do. Keep the first three numbers.
+
+Using this scheme, Jackson and Jaxen both map to J250.
+
+
+</div>
+</details>
+
+<details>
 <summary class="lc_e">
 
 - [**\[Easy\] Run-length String Encode and Decode**](https://trsong.github.io/python/java/2020/08/02/DailyQuestionsAug/#sep-21-2020-easy-run-length-string-encode-and-decode) -- *Implement run-length encoding and decoding.* [*\(Try ME\)*](https://repl.it/@trsong/Run-length-String-Encode-and-Decode-1)
