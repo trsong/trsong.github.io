@@ -191,6 +191,107 @@ Explanation: You need to reduce multiple spaces between two words to a single sp
 ```
 
 
+**My thoughts:** Suppose after strip out extra whitespaces the string is `"the sky is blue"`. We just need to do the following steps:
+1. reverse entire sentence. `"eulb si yks eht"`
+2. reverse each word in that sentence. `"blue is sky the"`
+
+**Solution:** [https://repl.it/@trsong/Reverse-words-in-a-string](https://repl.it/@trsong/Reverse-words-in-a-string)
+```py
+import unittest
+
+def reverse_word(s):
+    char_arr = remove_white_spaces(s)
+    reverse_section(char_arr, 0, len(char_arr) - 1)
+    reverse_each_word(char_arr)
+    return ''.join(char_arr)
+
+
+def remove_white_spaces(s):
+    prev = ' '
+    res = []
+    
+    for ch in s:
+        if prev == ch == ' ':
+            continue
+        res.append(ch)
+        prev = ch
+    
+    if res and res[-1] == ' ':
+        res.pop()
+    
+    return res
+
+
+def reverse_each_word(arr):
+    i = 0
+    n = len(arr)
+
+    while i < n:
+        if arr[i] == ' ':
+            i += 1
+            continue
+        
+        start = i
+        while i < n and arr[i] != ' ':
+            i += 1
+        
+        reverse_section(arr, start, i-1)
+
+
+def reverse_section(arr, start, end):
+    while start < end:
+        arr[start], arr[end] = arr[end], arr[start]
+        start += 1
+        end -= 1
+
+
+class ReverseWordSpec(unittest.TestCase):
+    def test_example1(self):
+        s = "the sky is blue"
+        expected = "blue is sky the"
+        self.assertEqual(expected, reverse_word(s))
+
+    def test_example2(self):
+        s = "  hello world!  "
+        expected = "world! hello"
+        self.assertEqual(expected, reverse_word(s))
+
+    def test_example3(self):
+        s = "a good   example"
+        expected = "example good a"
+        self.assertEqual(expected, reverse_word(s))
+
+    def test_mutliple_whitespaces(self):
+        s = "      "
+        expected = ""
+        self.assertEqual(expected, reverse_word(s))
+    
+    def test_mutliple_whitespaces2(self):
+        s = "the sky is blue"
+        expected = "blue is sky the"
+        self.assertEqual(expected, reverse_word(s))
+
+    def test_even_number_of_words(self):
+        s = " car cat"
+        expected = "cat car"
+        self.assertEqual(expected, reverse_word(s))
+
+    def test_even_number_of_words2(self):
+        s = "car cat "
+        expected = "cat car"
+        self.assertEqual(expected, reverse_word(s))
+
+    def test_no_whitespaces(self):
+        s = "asparagus"
+        expected = "asparagus"
+        self.assertEqual(expected, reverse_word(s))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
+```
+
+
 ### Nov 27, 2020 \[Medium\] Direction and Position Rule Verification
 ---
 > **Question:** A rule looks like this:

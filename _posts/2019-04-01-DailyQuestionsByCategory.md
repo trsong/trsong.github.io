@@ -4472,6 +4472,47 @@ Explanation: we choose the numbers 5 and 1.
 ## String
 ---
 
+<details>
+<summary class="lc_m">
+
+- [**\[Medium\] LC 151. Reverse Words in a String**](http://trsong.github.io/python/java/2020/11/02/DailyQuestionsAug/#nov-28-2020-lc-151-medium-reverse-words-in-a-string) -- *Given an input string, reverse the string word by word.* [*\(Try ME\)*](https://repl.it/@trsong/Reverse-words-in-a-string-1)
+
+</summary>
+<div>
+
+
+**Question:** Given an input string, reverse the string word by word.
+
+Note:
+
+- A word is defined as a sequence of non-space characters.
+- Input string may contain leading or trailing spaces. However, your reversed string should not contain leading or trailing spaces.
+- You need to reduce multiple spaces between two words to a single space in the reversed string.
+
+**Example 1:**
+```py
+Input: "the sky is blue"
+Output: "blue is sky the"
+```
+
+**Example 2:**
+```py
+Input: "  hello world!  "
+Output: "world! hello"
+Explanation: Your reversed string should not contain leading or trailing spaces.
+```
+
+**Example 3:**
+```py
+Input: "a good   example"
+Output: "example good a"
+Explanation: You need to reduce multiple spaces between two words to a single space in the reversed string.
+```
+
+
+
+</div>
+</details>
 
 <details>
 <summary class="lc_m">
