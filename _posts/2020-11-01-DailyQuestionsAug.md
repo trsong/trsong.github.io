@@ -19,6 +19,14 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
 
+### Dec 1, 2020 \[Easy\] Intersection of N Arrays
+---
+> **Question:** Given n Arrays, find the intersection of them.
+
+**Example:**
+```py
+intersection([1, 2, 3, 4], [2, 4, 6, 8], [3, 4, 5])  # returns [4]
+```
 
 ### Nov 30, 2020 \[Easy\] Extract Range
 ---
