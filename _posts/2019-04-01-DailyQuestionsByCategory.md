@@ -789,6 +789,25 @@ Follow-up: What if you couldn't use any extra space?
 ### Interval
 ---
 
+<details>
+<summary class="lc_e">
+
+- [**\[Easy\] LC 228. Extract Range**](https://trsong.github.io/python/java/2020/11/02/DailyQuestionsAug/#nov-30-2020-lc-228-easy-extract-range) -- *Given a sorted list of numbers, return a list of strings that represent all of the consecutive numbers.* [*\(Try ME\)*](https://repl.it/@trsong/Extract-Range-1)
+
+</summary>
+<div>
+
+**Question:** Given a sorted list of numbers, return a list of strings that represent all of the consecutive numbers.
+
+**Example:**
+```py
+Input: [0, 1, 2, 5, 7, 8, 9, 9, 10, 11, 15]
+Output: ['0->2', '5', '7->11', '15']
+```
+
+</div>
+</details>
+
 
 <details>
 <summary class="lc_e">

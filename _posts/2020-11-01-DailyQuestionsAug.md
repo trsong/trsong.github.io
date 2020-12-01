@@ -38,6 +38,100 @@ Input: [0, 1, 2, 5, 7, 8, 9, 9, 10, 11, 15]
 Output: ['0->2', '5', '7->11', '15']
 ```
 
+**Solution:** [https://repl.it/@trsong/Extract-Range](https://repl.it/@trsong/Extract-Range)
+```py
+import unittest
+
+def extract_range(nums):
+    if not nums:
+        return []
+
+    res = []
+    base = nums[0]
+    n = len(nums)
+
+    for i in xrange(1, n+1):
+        if i < n and (nums[i] - nums[i-1]) <= 1:
+            continue
+
+        if base == nums[i-1]:
+            res.append(str(base))
+        else:
+            res.append("%d->%d" % (base, nums[i-1]))
+
+        if i < n:
+            base = nums[i]
+
+    return res
+
+
+class ExtractRangeSpec(unittest.TestCase):
+    def test_example(self):
+        nums = [0, 1, 2, 5, 7, 8, 9, 9, 10, 11, 15]
+        expected = ['0->2', '5', '7->11', '15']
+        self.assertEqual(expected, extract_range(nums))
+
+    def test_empty_array(self):
+        self.assertEqual([], extract_range([]))
+
+    def test_one_elem_array(self):
+        self.assertEqual(['42'], extract_range([42]))
+
+    def test_duplicates(self):
+        nums = [1, 1, 1, 1]
+        expected = ['1']
+        self.assertEqual(expected, extract_range(nums))
+
+    def test_duplicates2(self):
+        nums = [1, 1, 2, 2]
+        expected = ['1->2']
+        self.assertEqual(expected, extract_range(nums))
+
+    def test_duplicates3(self):
+        nums = [1, 1, 3, 3, 5, 5, 5]
+        expected = ['1', '3', '5']
+        self.assertEqual(expected, extract_range(nums))
+
+    def test_first_elem_in_range(self):
+        nums = [1, 2, 3, 10, 11]
+        expected = ['1->3', '10->11']
+        self.assertEqual(expected, extract_range(nums))
+
+    def test_first_elem_not_in_range(self):
+        nums = [-5, -3, -2]
+        expected = ['-5', '-3->-2']
+        self.assertEqual(expected, extract_range(nums))
+
+    def test_last_elem_in_range(self):
+        nums = [0, 15, 16, 17]
+        expected = ['0', '15->17']
+        self.assertEqual(expected, extract_range(nums))
+
+    def test_last_elem_not_in_range(self):
+        nums = [-42, -1, 0, 1, 2, 15]
+        expected = ['-42', '-1->2', '15']
+        self.assertEqual(expected, extract_range(nums))
+
+    def test_entire_array_in_range(self):
+        nums = list(range(-10, 10))
+        expected = ['-10->9']
+        self.assertEqual(expected, extract_range(nums))
+
+    def test_no_range_at_all(self):
+        nums = [1, 3, 5]
+        expected = ['1', '3', '5']
+        self.assertEqual(expected, extract_range(nums))
+
+    def test_range_and_not_range(self):
+        nums = [0, 1, 3, 5, 7, 8, 9, 11, 13, 14, 15]
+        expected = ['0->1', '3', '5', '7->9', '11', '13->15']
+        self.assertEqual(expected, extract_range(nums))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
+```
+
 ### Nov 29, 2020 \[Medium\] Implement Soundex
 ---
 > **Question:** **Soundex** is an algorithm used to categorize phonetically, such that two names that sound alike but are spelled differently have the same representation.
