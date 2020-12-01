@@ -21,21 +21,21 @@ categories: Python/Java
 
 ### Dec 1, 2020 \[Easy\] Intersection of N Arrays
 ---
-> **Question:** Given n Arrays, find the intersection of them.
+> **Question:** Given n arrays, find the intersection of them.
 
 **Example:**
 ```py
 intersection([1, 2, 3, 4], [2, 4, 6, 8], [3, 4, 5])  # returns [4]
 ```
 
-### Nov 30, 2020 \[Easy\] Extract Range
+### Nov 30, 2020 LC 228 \[Easy\] Extract Range
 ---
 > **Question:** Given a sorted list of numbers, return a list of strings that represent all of the consecutive numbers.
 
 **Example:**
 ```py
 Input: [0, 1, 2, 5, 7, 8, 9, 9, 10, 11, 15]
-Output: ['0->2', '5', '7->11', '15->15']
+Output: ['0->2', '5', '7->11', '15']
 ```
 
 ### Nov 29, 2020 \[Medium\] Implement Soundex
