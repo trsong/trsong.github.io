@@ -37,6 +37,109 @@ categories: Python/Java
 intersection([1, 2, 3, 4], [2, 4, 6, 8], [3, 4, 5])  # returns [4]
 ```
 
+**Solution:** [https://repl.it/@trsong/Intersection-of-N-Arrays](https://repl.it/@trsong/Intersection-of-N-Arrays)
+```py
+import unittest
+
+def intersection(*num_lsts):
+    if not num_lsts:
+        return []
+
+    n = len(num_lsts)
+    sorted_lsts = map(sorted, num_lsts)
+    positions = [0] * n
+
+    res = []
+    while True:
+        min_val = float('inf')
+        for i, pos in enumerate(positions):
+            if pos >= len(sorted_lsts[i]):
+                return res
+            min_val = min(min_val, sorted_lsts[i][pos])
+
+        count = 0
+        for i, pos in enumerate(positions):
+            if sorted_lsts[i][pos] == min_val:
+                count += 1
+                positions[i] += 1
+        
+        if count == n:
+            res.append(min_val)
+
+    return None
+
+
+class IntersectionSpec(unittest.TestCase):
+    def test_example(self):
+        list1 = [1, 2, 3, 4]
+        list2 = [2, 4, 6, 8]
+        list3 = [3, 4, 5]
+        expected = [4]
+        self.assertEqual(expected, intersection(list1, list2, list3))
+
+    def test_example2(self):
+        list1 = [1, 5, 10, 20, 40, 80]
+        list2 = [6, 7, 20, 80, 100]
+        list3 = [3, 4, 15, 20, 30, 70, 80, 120]
+        expected = [20, 80]
+        self.assertEqual(expected, intersection(list1, list2, list3))
+
+    def test_example3(self):
+        list1 = [1, 5, 6, 7, 10, 20]
+        list2 = [6, 7, 20, 80]
+        list3 = [3, 4, 5, 7, 15, 20]
+        expected = [7, 20]
+        self.assertEqual(expected, intersection(list1, list2, list3))
+    
+    def test_empty_array(self):
+        self.assertEqual([], intersection())
+
+    def test_one_array(self):
+        self.assertEqual([1, 2], intersection([1, 2]))
+
+    def test_two_arrays(self):
+        list1 = [1, 2, 3]
+        list2 = [5, 3, 1]
+        expected = [1, 3]
+        self.assertEqual(expected, intersection(list1, list2))
+
+    def test_reverse_order(self):
+        list1 = [4, 3, 2, 1]
+        list2 = [2, 4, 6, 8]
+        list3 = [5, 4, 3]
+        expected = [4]
+        self.assertEqual(expected, intersection(list1, list2, list3))
+
+    def test_contains_duplicate(self):
+        list1 = [1, 5, 5]
+        list2 = [3, 4, 5, 5, 10]
+        list3 = [5, 5, 10, 20]
+        expected = [5, 5]
+        self.assertEqual(expected, intersection(list1, list2, list3))
+
+    def test_different_length_lists(self):
+        list1 = [1, 5, 10, 20, 30]
+        list2 = [5, 13, 15, 20]
+        list3 = [5, 20]
+        expected = [5, 20]
+        self.assertEqual(expected, intersection(list1, list2, list3))
+    
+    def test_empty_list(self):
+        list1 = [1, 2, 3, 4, 5]
+        list2 = [4, 5, 6, 7]
+        list3 = []
+        expected = []
+        self.assertEqual(expected, intersection(list1, list2, list3))
+
+    def test_empty_list2(self):
+        self.assertEqual([], intersection([], [], []))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
+```
+
+
 ### Nov 30, 2020 LC 228 \[Easy\] Extract Range
 ---
 > **Question:** Given a sorted list of numbers, return a list of strings that represent all of the consecutive numbers.

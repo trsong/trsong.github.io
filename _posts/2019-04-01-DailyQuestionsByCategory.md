@@ -1452,6 +1452,25 @@ Output: 1->2->2->4->3->5
 <details>
 <summary class="lc_e">
 
+- [**\[Easy\] Intersection of N Arrays**](https://trsong.github.io/python/java/2020/11/02/DailyQuestionsAug/#dec-1-2020-easy-intersection-of-n-arrays) -- *Given n arrays, find the intersection of them.* [*\(Try ME\)*](https://repl.it/@trsong/Intersection-of-N-Arrays-1)
+
+</summary>
+<div>
+
+**Question:** Given n arrays, find the intersection of them.
+
+**Example:**
+```py
+intersection([1, 2, 3, 4], [2, 4, 6, 8], [3, 4, 5])  # returns [4]
+```
+
+</div>
+</details>
+
+
+<details>
+<summary class="lc_e">
+
 - [**\[Easy\] Intersection of Linked Lists**](https://trsong.github.io/python/java/2020/05/02/DailyQuestionsMay/#jul-19-2020-easy-intersection-of-linked-lists) -- *Given two singly linked lists. The lists intersect at some node. Find, and return the node. Note: the lists are non-cyclical.* [*\(Try ME\)*](https://repl.it/@trsong/Intersection-of-Linked-Lists-1)
 
 </summary>
