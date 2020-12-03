@@ -19,6 +19,13 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
 
+### Dec 3, 2020 \[Hard\] Knight's Tour Problem
+---
+> **Question:** A knight's tour is a sequence of moves by a knight on a chessboard such that all squares are visited once.
+>
+> Given N, write a function to return the number of knight's tours on an N by N chessboard.
+
+
 ### Dec 2, 2020 LC 127 \[Medium\] Word Ladder
 ---
 > **Question:** Given a `start` word, an `end` word, and a dictionary of valid words, find the shortest transformation sequence from `start` to `end` such that only one letter is changed at each step of the sequence, and each transformed word exists in the dictionary. If there is no possible transformation, return null. Each word in the dictionary have the same length as start and end and is lowercase.
@@ -27,6 +34,111 @@ categories: Python/Java
 >
 > Given `start = "dog"`, `end = "cat"`, and `dictionary = {"dot", "tod", "dat", "dar"}`, return `null` as there is no possible transformation from `dog` to `cat`.
 
+**Solution with BFS:** [https://repl.it/@trsong/Word-Ladder](https://repl.it/@trsong/Word-Ladder)
+```py
+import unittest
+from Queue import Queue
+
+def word_ladder(start, end, word_set):
+    parents = {}
+    visited = set()
+    queue = Queue()
+    queue.put((start, None))
+
+    while not queue.empty():
+        for _ in xrange(queue.qsize()):
+            cur, prev = queue.get()
+            if cur in visited:
+                continue
+            visited.add(cur)
+
+            parents[cur] = prev
+            if cur == end:
+                return find_path(parents, end)
+
+            for word in word_set:
+                if word in visited or not is_neighbor(cur, word):
+                    continue
+                queue.put((word, cur))
+    
+    return None
+
+
+def find_path(parents, start):
+    res = []
+    while start:
+        res.append(start)
+        start = parents.get(start, None)
+    res.reverse()
+    return res
+
+
+def is_neighbor(word1, word2):
+    count = 0
+    for c1, c2 in zip(word1, word2):
+        if c1 != c2:
+            count += 1
+        if count > 1:
+            return False
+    return count == 1
+
+
+class WordLadderSpec(unittest.TestCase):
+    def test_example(self):
+        start = 'dog'
+        end = 'cat'
+        word_set = {'dot', 'dop', 'dat', 'cat'}
+        expected = ['dog', 'dot', 'dat', 'cat']
+        self.assertEqual(expected, word_ladder(start, end, word_set))
+
+    def test_example2(self):
+        start = 'dog'
+        end = 'cat'
+        word_set = {'dot', 'tod', 'dat', 'dar'}
+        self.assertIsNone(word_ladder(start, end, word_set))
+
+    def test_empty_dict(self):
+        self.assertIsNone(word_ladder('start', 'end', {}))
+
+    def test_example3(self):
+        start = 'hit'
+        end = 'cog'
+        word_set = {'hot', 'dot', 'dog', 'lit', 'log', 'cog'}
+        expected = ['hit', 'hot', 'dot', 'dog', 'cog']
+        self.assertEqual(expected, word_ladder(start, end, word_set))
+
+    def test_end_word_not_in_dictionary(self):
+        start = 'hit'
+        end = 'cog'
+        word_set = ['hot', 'dot', 'dog', 'lot', 'log']
+        self.assertIsNone(word_ladder(start, end, word_set))
+
+    def test_long_example(self):
+        start = 'coder'
+        end = 'goner'
+        word_set = {
+            'lover', 'coder', 'comer', 'toner', 'cover', 'tower', 'coyer',
+            'bower', 'honer', 'poles', 'hover', 'lower', 'homer', 'boyer',
+            'goner', 'loner', 'boner', 'cower', 'never', 'sower', 'asian'
+        }
+        expected = ['coder', 'cower', 'lower', 'loner', 'goner']
+        self.assertEqual(expected, word_ladder(start, end, word_set))
+
+    def test_long_example2(self):
+        start = 'coder'
+        end = 'goner'
+        word_set = {
+            'lover', 'coder', 'comer', 'toner', 'cover', 'tower', 'coyer',
+            'bower', 'honer', 'poles', 'hover', 'lower', 'homer', 'boyer',
+            'goner', 'loner', 'boner', 'cower', 'never', 'sower', 'asian'
+        }
+        expected = ['coder', 'cower', 'lower', 'loner', 'goner']
+        self.assertEqual(expected, word_ladder(start, end, word_set))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
+```
 
 ### Dec 1, 2020 \[Easy\] Intersection of N Arrays
 ---
