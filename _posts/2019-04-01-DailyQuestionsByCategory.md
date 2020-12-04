@@ -3815,6 +3815,22 @@ For example, given `100`, you can reach `1` in five steps with the following rou
 <details>
 <summary class="lc_h">
 
+- [**\[Hard\] Knight's Tour Problem**](https://trsong.github.io/python/java/2020/11/02/DailyQuestionsAug/#dec-3-2020-hard-knights-tour-problem) -- *A knight’s tour is a sequence of moves by a knight on a chessboard such that all squares are visited once.* [*\(Try ME\)*](https://repl.it/@trsong/Knights-Tour-Problem-1)
+
+</summary>
+<div>
+
+**Question:** A knight's tour is a sequence of moves by a knight on a chessboard such that all squares are visited once.
+
+Given N, write a function to return the number of knight's tours on an N by N chessboard.
+
+</div>
+</details>
+
+
+<details>
+<summary class="lc_h">
+
 - [**\[Hard\] LC 212. Word Search II**](https://trsong.github.io/python/java/2020/11/02/DailyQuestionsAug/#nov-22-2020-lc-212-hard-word-search-ii) -- *Given an m x n board of characters and a list of strings words, return all words on the board.* [*\(Try ME\)*](https://repl.it/@trsong/Word-Search-II-1)
 
 </summary>

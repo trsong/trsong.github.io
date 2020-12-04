@@ -19,12 +19,90 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
 
+
+### Dec 4, 2020 \[Hard\] Sliding Puzzle 
+---
+> **Question:**  An 8-puzzle is a game played on a 3 x 3 board of tiles, with the ninth tile missing. The remaining tiles are labeled 1 through 8 but shuffled randomly. Tiles may slide horizontally or vertically into an empty space, but may not be removed from the board.
+>
+> Design a class to represent the board, and find a series of steps to bring the board to the state `[[1, 2, 3], [4, 5, 6], [7, 8, None]]`.
+
+
 ### Dec 3, 2020 \[Hard\] Knight's Tour Problem
 ---
 > **Question:** A knight's tour is a sequence of moves by a knight on a chessboard such that all squares are visited once.
 >
 > Given N, write a function to return the number of knight's tours on an N by N chessboard.
 
+
+**Solution with Backtracking:** [https://repl.it/@trsong/Knights-Tour-Problem](https://repl.it/@trsong/Knights-Tour-Problem)
+```py
+import unittest
+
+KNIGHT_MOVES = [
+    (1, 2), (2, 1), 
+    (-1, 2), (-2, 1), 
+    (-1, -2), (-2, -1),
+    (1, -2), (2, -1)
+]
+
+
+def knights_tours(n):
+    if n == 0:
+        return 0
+
+    grid = [[False for _ in xrange(n)] for _ in xrange(n)]
+    count = 0
+    for r in xrange(n):
+        for c in xrange(n):
+            grid[r][c] = True
+            count += backtrack(1, grid, (r, c))
+            grid[r][c] = False
+    return count
+
+
+def backtrack(step, grid, pos):
+    n = len(grid)
+    if step == n * n:
+        return 1
+    else:
+        count = 0
+        r, c = pos
+        for dr, dc in KNIGHT_MOVES:
+            new_r, new_c = r + dr, c + dc
+            if 0 <= new_r < n and 0 <= new_c < n and not grid[new_r][new_c]:
+                grid[new_r][new_c] = True
+                count += backtrack(step + 1, grid, (new_r, new_c))
+                grid[new_r][new_c] = False
+        return count
+                
+
+class KnightsTourSpec(unittest.TestCase):
+    """
+    Kngiths Tours answer adapts from wiki: https://en.wikipedia.org/wiki/Knight%27s_tour
+    """
+    def test_size_zero_grid(self):
+        self.assertEqual(0, knights_tours(0))
+
+    def test_size_one_grid(self):
+        self.assertEqual(1, knights_tours(1))
+
+    def test_size_two_grid(self):
+        self.assertEqual(0, knights_tours(2))
+
+    def test_size_three_grid(self):
+        self.assertEqual(0, knights_tours(3))
+
+    def test_size_four_grid(self):
+        self.assertEqual(0, knights_tours(4))
+        
+    # Long running execution: took 235 sec
+    def test_size_five_grid(self):
+        self.assertEqual(1728, knights_tours(5))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
+```
 
 ### Dec 2, 2020 LC 127 \[Medium\] Word Ladder
 ---
