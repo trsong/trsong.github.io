@@ -20,6 +20,21 @@ categories: Python/Java
 
 
 
+### Dec 5, 2020 LC 274 \[Medium\] H-Index
+---
+> **Question:** The h-index is a metric that attempts to measure the productivity and citation impact of the publication of a scholar. The definition of the h-index is if a scholar has at least h of their papers cited h times.
+>
+> Given a list of publications of the number of citations a scholar has, find their h-index.
+
+**Example:**
+```py
+Input: [3, 5, 0, 1, 3]
+Output: 3
+Explanation:
+There are 3 publications with 3 or more citations, hence the h-index is 3.
+```
+
+
 ### Dec 4, 2020 \[Hard\] Sliding Puzzle 
 ---
 > **Question:**  An 8-puzzle is a game played on a 3 x 3 board of tiles, with the ninth tile missing. The remaining tiles are labeled 1 through 8 but shuffled randomly. Tiles may slide horizontally or vertically into an empty space, but may not be removed from the board.
