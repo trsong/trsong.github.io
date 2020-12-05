@@ -41,6 +41,165 @@ There are 3 publications with 3 or more citations, hence the h-index is 3.
 >
 > Design a class to represent the board, and find a series of steps to bring the board to the state `[[1, 2, 3], [4, 5, 6], [7, 8, None]]`.
 
+**Solution with A-Star Search:** [https://repl.it/@trsong/Solve-Sliding-Puzzle](https://repl.it/@trsong/Solve-Sliding-Puzzle)
+```py
+import unittest
+from copy import deepcopy
+from Queue import PriorityQueue
+
+class SlidingPuzzle(object):
+    BLANK_VALUE = 9
+    GOAL_STATE = [
+        [1, 2, 3],
+        [4, 5, 6],
+        [7, 8, None]
+    ]
+    DIRECTIONS = [(-1, 0), (1, 0), (0, 1), (0, -1)]
+
+    @staticmethod
+    def solve(grid):
+        """
+        Given a grid and returns a sequence of moves to reach to goal state
+        """
+        pq = PriorityQueue()
+        end_hash = SlidingPuzzle.hash(SlidingPuzzle.GOAL_STATE)
+        start_hash = SlidingPuzzle.hash(grid)
+
+        visited = set()
+        pq.put((0, start_hash))
+        prev_states = {start_hash: (None, None)}
+        actual_cost = {start_hash: 0}
+
+        while not pq.empty():
+            _, cur_hash = pq.get()
+            if cur_hash == end_hash:
+                break
+            if cur_hash in visited:
+                continue
+            visited.add(cur_hash)
+
+            for neihbor_hash, neighbor_heuristic, move in SlidingPuzzle.neighbor_costs(cur_hash):
+                if neihbor_hash in visited:
+                    continue
+                actual_cost[neihbor_hash] = actual_cost[cur_hash] + 1
+                pq.put((actual_cost[neihbor_hash] + neighbor_heuristic, neihbor_hash))
+                prev_states[neihbor_hash] = (cur_hash, move)
+
+        moves = []
+        while end_hash:
+            prev_hash, move = prev_states[end_hash]
+            if move:
+                moves.append(move)
+            end_hash = prev_hash
+        moves.reverse()
+        return moves
+
+    @staticmethod
+    def neighbor_costs(grid_hash):
+        """
+        Given a grid hash, returns next grid's hash value, cost and move 
+        """
+        blank_row, blank_col = 0, 0
+        grid = [[None for _ in xrange(3)] for _ in xrange(3)]
+        for r in xrange(2, -1, -1):
+            for c in xrange(2, -1, -1):
+                grid[r][c] = grid_hash % 10
+                grid_hash //= 10
+                if grid[r][c] == SlidingPuzzle.BLANK_VALUE:
+                    grid[r][c] = None
+                    blank_row, blank_col = r, c
+
+        for dr, dc in SlidingPuzzle.DIRECTIONS:
+            new_r, new_c = blank_row + dr, blank_col + dc
+            if 0 <= new_r < 3 and 0 <= new_c < 3:
+                move = grid[new_r][new_c]
+                grid[new_r][new_c] = None
+                grid[blank_row][blank_col] = move
+                yield SlidingPuzzle.hash(grid), SlidingPuzzle.heuristc(grid), move
+                grid[new_r][new_c] = move
+                grid[blank_row][blank_col] = None
+
+    @staticmethod
+    def hash(grid):
+        """
+        Flatten grid and then convert to an integer
+        """
+        res = 0
+        for row in grid:
+            for num in row:
+                # treat None as 9
+                res = res * 10 + (num or SlidingPuzzle.BLANK_VALUE)
+        return res
+
+    @staticmethod
+    def heuristc(grid):
+        """
+        Estimation of remaining cost based on current grid
+        """
+        cost = 0
+        for r in xrange(3):
+            for c in xrange(3):
+                # treat None as 9
+                num = grid[r][c] or SlidingPuzzle.BLANK_VALUE
+                expected_r = (num - 1) // 3
+                expected_c = (num - 1) % 3
+                cost += abs(r - expected_r) + abs(c - expected_c)
+        return cost
+        
+
+class SlidingPuzzleSpec(unittest.TestCase):
+    ###################
+    # Testing Utility
+    ###################
+    @staticmethod
+    def validate(grid, steps):
+        blank_row = map(lambda row: None in row, grid).index(True)
+        blank_col = grid[blank_row].index(None)
+
+        for num in steps:
+            for dr, dc in SlidingPuzzle.DIRECTIONS:
+                new_r, new_c = blank_row + dr, blank_col + dc
+                if 0 <= new_r < 3 and 0 <= new_c < 3 and grid[new_r][new_c] == num:
+                    grid[blank_row][blank_col] = grid[new_r][new_c]
+                    grid[new_r][new_c] = None
+                    blank_row = new_r
+                    blank_col = new_c
+                    break
+        
+        return grid == SlidingPuzzle.GOAL_STATE
+
+    def assert_result(self, grid):
+        user_grid = deepcopy(grid)
+        steps = SlidingPuzzle.solve(user_grid)
+        self.assertTrue(SlidingPuzzleSpec.validate(grid, steps), user_grid)
+
+    def test_heuristic_function_should_not_overestimate(self):
+        # Optimial solution: [1, 2, 3, 6, 5, 4, 7, 8]
+        self.assert_result([
+            [None, 1, 2],
+            [5, 6, 3],
+            [4, 7, 8],
+        ])
+
+    def test_random_grid(self):
+        # Optimial solution: [1, 2, 3, 6, 5, 4, 7, 8]
+        self.assert_result([
+            [6, 2, 3],
+            [5, 4, 8],
+            [1, 7, None]
+        ])
+
+    def test_random_grid2(self):
+        self.assert_result([
+            [1, 2, 5],
+            [8, 4, 7],
+            [6, 3, None]
+        ])
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
+```
 
 ### Dec 3, 2020 \[Hard\] Knight's Tour Problem
 ---
