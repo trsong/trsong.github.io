@@ -182,7 +182,7 @@ class SlidingPuzzleSpec(unittest.TestCase):
         ])
 
     def test_random_grid(self):
-        # Optimial solution: [1, 2, 3, 6, 5, 4, 7, 8]
+        # Optimial solution: [7, 4, 5, 6, 2, 5, 6, 1, 4, 7, 8, 6, 5, 2, 1, 4, 7, 8]
         self.assert_result([
             [6, 2, 3],
             [5, 4, 8],
@@ -190,6 +190,7 @@ class SlidingPuzzleSpec(unittest.TestCase):
         ])
 
     def test_random_grid2(self):
+        # Optimial solution: [3, 6, 8, 4, 7, 5, 2, 1, 4, 7, 5, 3, 6, 8, 7, 4, 1, 2, 3, 6]
         self.assert_result([
             [1, 2, 5],
             [8, 4, 7],
