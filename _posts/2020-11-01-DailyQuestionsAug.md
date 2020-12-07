@@ -42,6 +42,85 @@ mapsum.insert("column", 2)
 assert mapsum.sum("col") == 5
 ```
 
+**Solution with Trie:** [https://repl.it/@trsong/Implement-Prefix-Map-Sum](https://repl.it/@trsong/Implement-Prefix-Map-Sum)
+```py
+import unittest
+
+
+class PrefixMap(object):
+    def __init__(self):
+        self.count = 0
+        self.children = None
+    
+    def insert(self, word, val):
+        p = self
+        for ch in word:
+            p.count += val
+            p.children = p.children or {}
+            if ch not in p.children:
+                p.children[ch] = PrefixMap()
+            p = p.children[ch]
+        p.count += val
+
+    def sum(self, word):
+        p = self
+        for ch in word:
+            if not p or not p.children:
+                return 0
+            p = p.children.get(ch, None)
+        return p.count if p else 0
+            
+
+class PrefixMapSpec(unittest.TestCase):
+    def test_example(self):
+        prefix_map = PrefixMap()
+        prefix_map.insert("columnar", 3)
+        self.assertEqual(3, prefix_map.sum("col"))
+        prefix_map.insert("column", 2)
+        self.assertEqual(5, prefix_map.sum("col"))
+
+    def test_empty_map(self):
+        prefix_map = PrefixMap()
+        self.assertEqual(0, prefix_map.sum(""))
+        self.assertEqual(0, prefix_map.sum("unknown"))
+
+    def test_same_prefix(self):
+        prefix_map = PrefixMap()
+        prefix_map.insert("a", 1)
+        prefix_map.insert("aa", 2)
+        prefix_map.insert("aaa", 3)
+        self.assertEqual(0, prefix_map.sum("aaaa"))
+        self.assertEqual(3, prefix_map.sum("aaa"))
+        self.assertEqual(5, prefix_map.sum("aa"))
+        self.assertEqual(6, prefix_map.sum("a"))
+        self.assertEqual(6, prefix_map.sum(""))
+
+    def test_same_prefix2(self):
+        prefix_map = PrefixMap()
+        prefix_map.insert("aa", 1)
+        prefix_map.insert("a", 2)
+        prefix_map.insert("b", 1)
+        self.assertEqual(0, prefix_map.sum("aaa"))
+        self.assertEqual(1, prefix_map.sum("aa"))
+        self.assertEqual(3, prefix_map.sum("a"))
+        self.assertEqual(4, prefix_map.sum(""))
+
+    def test_double_prefix(self):
+        prefix_map = PrefixMap()
+        prefix_map.insert("abc", 1)
+        prefix_map.insert("abd", 2)
+        prefix_map.insert("abzz", 1)
+        prefix_map.insert("bazz", 1)
+        self.assertEqual(4, prefix_map.sum("ab"))
+        self.assertEqual(0, prefix_map.sum("abq"))
+        self.assertEqual(4, prefix_map.sum("a"))
+        self.assertEqual(1, prefix_map.sum("b"))
+
+
+if __name__ == '__main__':
+    unittest.main(verbosity=2, exit=False)
+```
+
 
 ### Dec 5, 2020 LC 274 \[Medium\] H-Index
 ---

@@ -2407,6 +2407,32 @@ d  e f  g
 ---
 
 <details>
+<summary class="lc_e">
+
+- [**\[Easy\] Implement Prefix Map Sum**](http://trsong.github.io/python/java/2020/11/02/DailyQuestionsAug/#dec-6-2020-easy-implement-prefix-map-sum) -- *Implement a PrefixMapSum class with the following methods: insert(key: str, value: int), sum(prefix: str)* [*\(Try ME\)*](https://repl.it/@trsong/Implement-Prefix-Map-Sum-1)
+
+</summary>
+<div>
+
+**Question:** Implement a PrefixMapSum class with the following methods:
+
+- `insert(key: str, value: int)`: Set a given key's value in the map. If the key already exists, overwrite the value.
+- `sum(prefix: str)`: Return the sum of all values of keys that begin with a given prefix.
+
+**Example:**
+```py
+mapsum.insert("columnar", 3)
+assert mapsum.sum("col") == 3
+
+mapsum.insert("column", 2)
+assert mapsum.sum("col") == 5
+```
+
+</div>
+</details>
+
+
+<details>
 <summary class="lc_h">
 
 - [**\[Hard\] LC 212. Word Search II**](https://trsong.github.io/python/java/2020/11/02/DailyQuestionsAug/#nov-22-2020-lc-212-hard-word-search-ii) -- *Given an m x n board of characters and a list of strings words, return all words on the board.* [*\(Try ME\)*](https://repl.it/@trsong/Word-Search-II-1)
