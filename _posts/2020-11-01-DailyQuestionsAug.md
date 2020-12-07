@@ -46,24 +46,32 @@ assert mapsum.sum("col") == 5
 ```py
 import unittest
 
-
-class PrefixMap(object):
+class Trie(object):
     def __init__(self):
         self.count = 0
         self.children = None
     
+
+class PrefixMap(object):
+    def __init__(self):
+        self.root = Trie()
+        self.record = {}
+
     def insert(self, word, val):
-        p = self
+        updated_val = val - self.record.get(word, 0)
+        self.record[word] = val
+
+        p = self.root
         for ch in word:
-            p.count += val
+            p.count += updated_val
             p.children = p.children or {}
             if ch not in p.children:
-                p.children[ch] = PrefixMap()
+                p.children[ch] = Trie()
             p = p.children[ch]
-        p.count += val
+        p.count += updated_val
 
     def sum(self, word):
-        p = self
+        p = self.root
         for ch in word:
             if not p or not p.children:
                 return 0
@@ -115,6 +123,14 @@ class PrefixMapSpec(unittest.TestCase):
         self.assertEqual(0, prefix_map.sum("abq"))
         self.assertEqual(4, prefix_map.sum("a"))
         self.assertEqual(1, prefix_map.sum("b"))
+
+    def test_update_value(self):
+        prefix_map = PrefixMap()
+        prefix_map.insert('a', 1)
+        prefix_map.insert('ab', 1)
+        prefix_map.insert('abc', 1)
+        prefix_map.insert('ab', 100)
+        self.assertEqual(102, prefix_map.sum('a'))
 
 
 if __name__ == '__main__':
