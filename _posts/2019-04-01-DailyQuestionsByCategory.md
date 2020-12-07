@@ -1542,6 +1542,30 @@ You are given an array of length `n + 1` whose elements belong to the set `{1, 2
 ---
 
 <details>
+<summary class="lc_m">
+
+- [**\[Medium\] LC 274. H-Index**](http://trsong.github.io/python/java/2020/11/02/DailyQuestionsAug/#dec-5-2020-lc-274-medium-h-index) -- *The definition of the h-index is if a scholar has at least h of their papers cited h times.* [*\(Try ME\)*](https://repl.it/@trsong/Calculate-H-Index-1)
+
+</summary>
+<div>
+
+**Question:** The h-index is a metric that attempts to measure the productivity and citation impact of the publication of a scholar. The definition of the h-index is if a scholar has at least h of their papers cited h times.
+
+Given a list of publications of the number of citations a scholar has, find their h-index.
+
+**Example:**
+```py
+Input: [3, 5, 0, 1, 3]
+Output: 3
+Explanation:
+There are 3 publications with 3 or more citations, hence the h-index is 3.
+```
+
+</div>
+</details>
+
+
+<details>
 <summary class="lc_e">
 
 - [**\[Easy\] Sorted Square of Integers**](https://trsong.github.io/python/java/2020/08/02/DailyQuestionsAug/#oct-20-2020-easy-sorted-square-of-integers) -- *Given a sorted list of integers, square the elements and give the output in sorted order.* [*\(Try ME\)*](https://repl.it/@trsong/Calculate-Sorted-Square-of-Integers-1)

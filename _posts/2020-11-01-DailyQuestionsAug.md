@@ -20,6 +20,23 @@ categories: Python/Java
 
 
 
+### Dec 6, 2020 \[Easy\] Implement Prefix Map Sum
+---
+> **Question:** Implement a PrefixMapSum class with the following methods:
+>
+> - `insert(key: str, value: int)`: Set a given key's value in the map. If the key already exists, overwrite the value.
+> - `sum(prefix: str)`: Return the sum of all values of keys that begin with a given prefix.
+
+**Example:**
+```py
+mapsum.insert("columnar", 3)
+assert mapsum.sum("col") == 3
+
+mapsum.insert("column", 2)
+assert mapsum.sum("col") == 5
+```
+
+
 ### Dec 5, 2020 LC 274 \[Medium\] H-Index
 ---
 > **Question:** The h-index is a metric that attempts to measure the productivity and citation impact of the publication of a scholar. The definition of the h-index is if a scholar has at least h of their papers cited h times.
@@ -32,6 +49,56 @@ Input: [3, 5, 0, 1, 3]
 Output: 3
 Explanation:
 There are 3 publications with 3 or more citations, hence the h-index is 3.
+```
+
+**Solution:** [https://repl.it/@trsong/Calculate-H-Index](https://repl.it/@trsong/Calculate-H-Index)
+```py
+import unittest
+
+def calculate_h_index(citations):
+    citations.sort(reverse=True)
+    count = 0
+    for num in citations:
+        if num <= count:
+            return count
+        count += 1
+    return count
+
+
+class CalculateHIndexSpec(unittest.TestCase):
+    def test_example(self):
+        self.assertEqual(3, calculate_h_index([3, 5, 0, 1, 3]))
+
+    def test_another_citation_array(self):
+        self.assertEqual(3, calculate_h_index([3, 0, 6, 1, 5]))
+
+    def test_empty_citations(self):
+        self.assertEqual(0, calculate_h_index([]))
+
+    def test_only_one_publications(self):
+        self.assertEqual(1, calculate_h_index([42]))
+    
+    def test_h_index_appear_once(self):
+        self.assertEqual(5, calculate_h_index([5, 10, 10, 10, 10]))
+
+    def test_balanced_citation_counts(self):
+        self.assertEqual(5, calculate_h_index([9, 8, 7, 6, 5, 4, 3, 2, 1]))
+
+    def test_duplicated_citations(self):
+        self.assertEqual(3, calculate_h_index([3, 3, 3, 2, 2, 2, 2, 2]))
+    
+    def test_zero_citations_not_count(self):
+        self.assertEqual(2, calculate_h_index([10, 0, 0, 0, 0, 10]))
+    
+    def test_citations_number_greater_than_publications(self):
+        self.assertEqual(4, calculate_h_index([9, 8, 7, 6]))
+
+    def test_citations_number_greater_than_publications2(self):
+        self.assertEqual(3, calculate_h_index([1, 7, 9, 4]))   
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
 ```
 
 
