@@ -2727,6 +2727,43 @@ Explanation: the largest product can be made by multiplying -4 * -4 * 8 = 128.
 ### Scheduling
 ---
 
+<details>
+<summary class="lc_h">
+
+- [**\[Hard\] LC 358. Rearrange String K Distance Apart**](http://trsong.github.io/python/java/2020/08/02/DailyQuestionsAug/#sep-11-2020-lc-358-hard-rearrange-string-k-distance-apart) -- *Given a non-empty string str and an integer k, rearrange the string such that the same characters are at least distance k from each other.* [*\(Try ME\)*](https://repl.it/@trsong/Rearrange-Strings-K-Distance-Apart-1)
+
+</summary>
+<div>
+
+**Question:** Given a non-empty string str and an integer k, rearrange the string such that the same characters are at least distance k from each other.
+
+All input strings are given in lowercase letters. If it is not possible to rearrange the string, return an empty string "".
+
+**Example 1:**
+```py
+str = "aabbcc", k = 3
+Result: "abcabc"
+The same letters are at least distance 3 from each other.
+```
+
+**Example 2:**
+```py
+str = "aaabc", k = 3 
+Answer: ""
+It is not possible to rearrange the string.
+```
+
+**Example 3:**
+```py
+str = "aaadbbcc", k = 2
+Answer: "abacabcd"
+Another possible answer is: "abcabcda"
+The same letters are at least distance 2 from each other.
+```
+
+</div>
+</details>
+
 
 <details>
 <summary class="lc_m">
@@ -2996,42 +3033,6 @@ Note that we only care about characters that are still in the string at the end 
 </details>
 
 
-<details>
-<summary class="lc_h">
-
-- [**\[Hard\] LC 358. Rearrange String K Distance Apart**](http://trsong.github.io/python/java/2020/08/02/DailyQuestionsAug/#sep-11-2020-lc-358-hard-rearrange-string-k-distance-apart) -- *Given a non-empty string str and an integer k, rearrange the string such that the same characters are at least distance k from each other.* [*\(Try ME\)*](https://repl.it/@trsong/Rearrange-Strings-K-Distance-Apart-1)
-
-</summary>
-<div>
-
-**Question:** Given a non-empty string str and an integer k, rearrange the string such that the same characters are at least distance k from each other.
-
-All input strings are given in lowercase letters. If it is not possible to rearrange the string, return an empty string "".
-
-**Example 1:**
-```py
-str = "aabbcc", k = 3
-Result: "abcabc"
-The same letters are at least distance 3 from each other.
-```
-
-**Example 2:**
-```py
-str = "aaabc", k = 3 
-Answer: ""
-It is not possible to rearrange the string.
-```
-
-**Example 3:**
-```py
-str = "aaadbbcc", k = 2
-Answer: "abacabcd"
-Another possible answer is: "abcabcda"
-The same letters are at least distance 2 from each other.
-```
-
-</div>
-</details>
 
 
 ## Divide and Conquer
