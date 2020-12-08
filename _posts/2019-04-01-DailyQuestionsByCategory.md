@@ -2754,6 +2754,22 @@ Explanation: the largest product can be made by multiplying -4 * -4 * 8 = 128.
 ---
 
 <details>
+<summary class="lc_m">
+
+- [**\[Medium\] Rearrange String with Repeated Characters**](https://trsong.github.io/python/java/2020/11/02/DailyQuestionsAug/#dec-7-2020-medium-rearrange-string-with-repeated-characters) -- *Given a string with repeated characters, rearrange the string so that no two adjacent characters are the same.* [*\(Try ME\)*](https://repl.it/@trsong/Rearrange-String-with-Repeated-Characters-1)
+
+</summary>
+<div>
+
+**Question:** Given a string with repeated characters, rearrange the string so that no two adjacent characters are the same. If this is not possible, return None.
+
+For example, given `"aaabbc"`, you could return `"ababac"`. Given `"aaab"`, return `None`.
+
+</div>
+</details>
+
+
+<details>
 <summary class="lc_h">
 
 - [**\[Hard\] LC 358. Rearrange String K Distance Apart**](http://trsong.github.io/python/java/2020/08/02/DailyQuestionsAug/#sep-11-2020-lc-358-hard-rearrange-string-k-distance-apart) -- *Given a non-empty string str and an integer k, rearrange the string such that the same characters are at least distance k from each other.* [*\(Try ME\)*](https://repl.it/@trsong/Rearrange-Strings-K-Distance-Apart-1)

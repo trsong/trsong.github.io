@@ -19,12 +19,114 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
 
+### Dec 8, 2020 LC 743 \[Medium\] Network Delay Time
+---
+> **Question:** A network consists of nodes labeled 0 to N. You are given a list of edges `(a, b, t)`, describing the time `t` it takes for a message to be sent from node `a` to node `b`. Whenever a node receives a message, it immediately passes the message on to a neighboring node, if possible.
+>
+> Assuming all nodes are connected, determine how long it will take for every node to receive a message that begins at node 0.
+
+**Example:** 
+```py
+given N = 5, and the following edges:
+
+edges = [
+    (0, 1, 5),
+    (0, 2, 3),
+    (0, 5, 4),
+    (1, 3, 8),
+    (2, 3, 1),
+    (3, 5, 10),
+    (3, 4, 5)
+]
+
+You should return 9, because propagating the message from 0 -> 2 -> 3 -> 4 will take that much time.
+```
+
 ### Dec 7, 2020 \[Medium\] Rearrange String with Repeated Characters
 ---
 > **Question:** Given a string with repeated characters, rearrange the string so that no two adjacent characters are the same. If this is not possible, return None.
 >
 > For example, given `"aaabbc"`, you could return `"ababac"`. Given `"aaab"`, return `None`.
 
+**My thoughts:** This prblem is a special case of [Rearrange String K Distance Apart](https://trsong.github.io/python/java/2020/08/02/DailyQuestionsAug/#sep-11-2020-lc-358-hard-rearrange-string-k-distance-apart). Just Greedily choose the character with max remaining number for each window size 2. If no such character satisfy return None instead.
+
+**Solution with Greedy Algorithm:** [https://repl.it/@trsong/Rearrange-String-with-Repeated-Characters](https://repl.it/@trsong/Rearrange-String-with-Repeated-Characters)
+```py
+import unittest
+from Queue import PriorityQueue
+
+def rearrange_string(s):
+    histogram = {}
+    for ch in s:
+        histogram[ch] = histogram.get(ch, 0) + 1
+
+    max_heap = PriorityQueue()
+    for ch, count in histogram.items():
+        max_heap.put((-count, ch))
+
+    res = []
+    while not max_heap.empty():
+        remainings = []
+        for _ in xrange(2):
+            if max_heap.empty() and not remainings:
+                break
+            if max_heap.empty():
+                return None
+            
+            neg_count, ch = max_heap.get()
+            res.append(ch)
+            if abs(neg_count) > 1:
+                remainings.append((ch, abs(neg_count) - 1))
+
+        for ch, count in remainings:
+            max_heap.put((-count, ch))
+
+    return "".join(res)
+
+
+class RearrangeStringSpec(unittest.TestCase):
+    def assert_result(self, original):
+        res = rearrange_string(original)
+        self.assertEqual(sorted(original), sorted(res))
+        for i in xrange(1, len(res)):
+            self.assertNotEqual(res[i], res[i-1])
+
+    def test_example1(self):
+        # possible solution: ababac
+        self.assert_result("aaabbc")
+    
+    def test_example2(self):
+        self.assertIsNone(rearrange_string("aaab"))
+    
+    def test_example3(self):
+        # possible solution: ababacdc
+        self.assert_result("aaadbbcc")
+    
+    def test_unable_to_rearrange(self):
+        self.assertIsNone(rearrange_string("aaaaaaaaa"))
+    
+    def test_unable_to_rearrange2(self):
+        self.assertIsNone(rearrange_string("121211"))
+
+    def test_empty_input_string(self):
+        self.assert_result("")
+    
+    def test_possible_to_arrange(self):
+        # possible solution: ababababab
+        self.assert_result("aaaaabbbbb")
+    
+    def test_possible_to_arrange2(self):
+        # possible solution: 1213141
+        self.assert_result("1111234")
+    
+    def test_possible_to_arrange3(self):
+        # possible solution: 1212
+        self.assert_result("1122")
+    
+
+if __name__ == '__main__':
+    unittest.main(verbosity=2, exit=False)
+```
 
 ### Dec 6, 2020 \[Easy\] Implement Prefix Map Sum
 ---
