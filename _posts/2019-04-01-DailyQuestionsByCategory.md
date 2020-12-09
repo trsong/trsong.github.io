@@ -1721,6 +1721,270 @@ For example, given the string `tweet`, return `tteew`. `eettw` would also be acc
 </details>
 
 
+## String
+---
+
+<details>
+<summary class="lc_m">
+
+- [**\[Medium\] LC 151. Reverse Words in a String**](http://trsong.github.io/python/java/2020/11/02/DailyQuestionsAug/#nov-28-2020-lc-151-medium-reverse-words-in-a-string) -- *Given an input string, reverse the string word by word.* [*\(Try ME\)*](https://repl.it/@trsong/Reverse-words-in-a-string-1)
+
+</summary>
+<div>
+
+
+**Question:** Given an input string, reverse the string word by word.
+
+Note:
+
+- A word is defined as a sequence of non-space characters.
+- Input string may contain leading or trailing spaces. However, your reversed string should not contain leading or trailing spaces.
+- You need to reduce multiple spaces between two words to a single space in the reversed string.
+
+**Example 1:**
+```py
+Input: "the sky is blue"
+Output: "blue is sky the"
+```
+
+**Example 2:**
+```py
+Input: "  hello world!  "
+Output: "world! hello"
+Explanation: Your reversed string should not contain leading or trailing spaces.
+```
+
+**Example 3:**
+```py
+Input: "a good   example"
+Output: "example good a"
+Explanation: You need to reduce multiple spaces between two words to a single space in the reversed string.
+```
+
+
+
+</div>
+</details>
+
+<details>
+<summary class="lc_m">
+
+- [**\[Medium\] Implement Soundex**](http://trsong.github.io/python/java/2020/11/02/DailyQuestionsAug/#nov-29-2020-medium-implement-soundex) -- *Soundex is an algorithm used to categorize phonetically, such that two names that sound alike but are spelled differently have the same repr...* [*\(Try ME\)*](https://repl.it/@trsong/Implement-Soundex-1)
+
+</summary>
+<div>
+
+**Question:** **Soundex** is an algorithm used to categorize phonetically, such that two names that sound alike but are spelled differently have the same representation.
+
+**Soundex** maps every name to a string consisting of one letter and three numbers, like M460.
+
+One version of the algorithm is as follows:
+
+1. Remove consecutive consonants with the same sound (for example, change ck -> c).
+2. Keep the first letter. The remaining steps only apply to the rest of the string.
+3. Remove all vowels, including y, w, and h.
+4. Replace all consonants with the following digits:
+   - b, f, p, v → 1
+   - c, g, j, k, q, s, x, z → 2
+   - d, t → 3
+   - l → 4
+   - m, n → 5
+   - r → 6
+5. If you don't have three numbers yet, append zeros until you do. Keep the first three numbers.
+
+Using this scheme, Jackson and Jaxen both map to J250.
+
+
+</div>
+</details>
+
+<details>
+<summary class="lc_e">
+
+- [**\[Easy\] Run-length String Encode and Decode**](https://trsong.github.io/python/java/2020/08/02/DailyQuestionsAug/#sep-21-2020-easy-run-length-string-encode-and-decode) -- *Implement run-length encoding and decoding.* [*\(Try ME\)*](https://repl.it/@trsong/Run-length-String-Encode-and-Decode-1)
+
+</summary>
+<div>
+
+**Question:** Run-length encoding is a fast and simple method of encoding strings. The basic idea is to represent repeated successive characters as a single count and character. For example, the string `"AAAABBBCCDAA"` would be encoded as `"4A3B2C1D2A"`.
+
+Implement run-length encoding and decoding. You can assume the string to be encoded have no digits and consists solely of alphabetic characters. You can assume the string to be decoded is valid.
+
+</div>
+</details>
+
+
+<details>
+<summary class="lc_m">
+
+- [**\[Medium\] Zig-Zag String**](http://trsong.github.io/python/java/2020/08/02/DailyQuestionsAug/#sep-4-2020-medium-zig-zag-string) -- *Given a string and a number of lines k, print the string in zigzag form.* [*\(Try ME\)*](https://repl.it/@trsong/Print-Zig-Zag-String-1)
+
+</summary>
+<div>
+
+**Question:** Given a string and a number of lines k, print the string in zigzag form. In zigzag, characters are printed out diagonally from top left to bottom right until reaching the kth line, then back up to top right, and so on.
+
+**Example:**
+```py
+Given the sentence "thisisazigzag" and k = 4, you should print:
+t     a     g
+ h   s z   a
+  i i   i z
+   s     g
+```
+
+</div>
+</details>
+
+
+
+<details>
+<summary class="lc_m">
+
+- [**\[Medium\] LC 678. Balanced Parentheses with Wildcard**](http://trsong.github.io/python/java/2020/08/02/DailyQuestionsAug/#oct-2-2020-lc-678-medium-balanced-parentheses-with-wildcard) -- *Given string contains * that can represent either a (, ), or an empty string. Determine whether the parentheses are balanced.* [*\(Try ME\)*](https://repl.it/@trsong/Determine-Balanced-Parentheses-with-Wildcard-1)
+
+</summary>
+<div>
+
+**Question:** You're given a string consisting solely of `(`, `)`, and `*`. `*` can represent either a `(`, `)`, or an empty string. Determine whether the parentheses are balanced.
+
+For example, `(()*` and `(*)` are balanced. `)*(` is not balanced.
+
+</div>
+</details>
+
+
+<details>
+<summary class="lc_e">
+
+- [**\[Easy\] LC 1021. Remove One Layer of Parenthesis**](https://trsong.github.io/python/java/2020/08/02/DailyQuestionsAug/#aug-12-2020-lc-1021-easy-remove-one-layer-of-parenthesis) -- *Given a valid parenthesis string, remove the outermost layers of the parenthesis string and return the new parenthesis string.* [*\(Try ME\)*](https://repl.it/@trsong/Remove-One-Layer-of-Parenthesis-1)
+
+</summary>
+<div>
+
+**Question:** Given a valid parenthesis string (with only '(' and ')', an open parenthesis will always end with a close parenthesis, and a close parenthesis will never start first), remove the outermost layers of the parenthesis string and return the new parenthesis string.
+
+If the string has multiple outer layer parenthesis (ie (())()), remove all outer layers and construct the new string. So in the example, the string can be broken down into (()) + (). By removing both components outer layer we are left with () + '' which is simply (), thus the answer for that input would be ().
+
+**Example 1:**
+```py
+Input: '(())()'
+Output: '()'
+```
+
+**Example 2:**
+```py
+Input: '(()())'
+Output: '()()'
+```
+
+**Example 3:**
+```py
+Input: '()()()'
+Output: ''
+```
+
+
+</div>
+</details>
+
+
+<details>
+<summary class="lc_m">
+
+- [**\[Medium\] Tokenization**](https://trsong.github.io/python/java/2020/05/02/DailyQuestionsMay/#jul-20-2020-medium-tokenization) -- *Given a dictionary of words and a string made up of those words (no spaces), return the original sentence in a list.* [*\(Try ME\)*](https://repl.it/@trsong/String-Tokenization-1)
+
+</summary>
+<div>
+
+**Questions:** Given a dictionary of words and a string made up of those words (no spaces), return the original sentence in a list. If there is more than one possible reconstruction, return any of them. If there is no possible reconstruction, then return null.
+
+**Example 1:**
+```py
+Input: ['quick', 'brown', 'the', 'fox'], 'thequickbrownfox'
+Output: ['the', 'quick', 'brown', 'fox']
+```
+
+**Example 2:**
+```py
+Input: ['bed', 'bath', 'bedbath', 'and', 'beyond'], 'bedbathandbeyond'
+Output:  Either ['bed', 'bath', 'and', 'beyond'] or ['bedbath', 'and', 'beyond']
+```
+
+</div>
+</details>
+
+### Anagram
+---
+
+<details>
+<summary class="lc_e">
+
+- [**\[Easy\] Is Anagram of Palindrome**](https://trsong.github.io/python/java/2020/08/02/DailyQuestionsAug/#oct-1-2020-easy-is-anagram-of-palindrome) -- *Given a string, determine whether any permutation of it is a palindrome.* [*\(Try ME\)*](https://repl.it/@trsong/Is-Anagram-of-Palindrome-1)
+
+</summary>
+<div>
+
+**Question:** Given a string, determine whether any permutation of it is a palindrome.
+
+For example, `'carrace'` should return True, since it can be rearranged to form `'racecar'`, which is a palindrome. `'daily'` should return False, since there's no rearrangement that can form a palindrome.
+
+</div>
+</details>
+
+
+### Palindrome
+---
+
+<details>
+<summary class="lc_h">
+
+- [**\[Hard\] Longest Palindromic Substring**](https://trsong.github.io/python/java/2020/08/02/DailyQuestionsAug/#oct-10-2020-hard-longest-palindromic-substring) -- *Given a string, find the longest palindromic contiguous substring. If there are more than one with the maximum length, return any one.* [*\(Try ME\)*](https://repl.it/@trsong/Find-the-Longest-Palindromic-Substring-1)
+
+</summary>
+<div>
+
+**Question:** Given a string, find the longest palindromic contiguous substring. If there are more than one with the maximum length, return any one.
+
+For example, the longest palindromic substring of `"aabcdcb"` is `"bcdcb"`. The longest palindromic substring of `"bananas"` is `"anana"`.
+
+
+</div>
+</details>
+
+<details>
+<summary class="lc_e">
+
+- [**\[Easy\] LC 680. Remove Character to Create Palindrome**](https://trsong.github.io/python/java/2020/05/02/DailyQuestionsMay/#jul-1-2020-lc-680-easy-remove-character-to-create-palindrome) -- *Given a string, determine if you can remove any character to create a palindrome.* [*\(Try ME\)*](https://repl.it/@trsong/Remove-Character-to-Create-Palindrome-1)
+
+</summary>
+<div>
+
+**Question:** Given a string, determine if you can remove any character to create a palindrome.
+
+**Example 1:**
+```py
+Input: "abcdcbea"
+Output: True 
+Explanation: Remove 'e' gives "abcdcba"
+```
+
+**Example 2:**
+```py
+Input: "abccba"
+Output: True
+```
+
+**Example 3:**
+```py
+Input: "abccaa"
+Output: False
+```
+
+</div>
+</details>
+
+
 ## Tree
 ---
 
@@ -3415,7 +3679,7 @@ is considered valid.
 <details>
 <summary class="lc_e">
 
-- [**\[Easy\] Count Visible Nodes in Binary Tree**](https://trsong.github.io/python/java/2020/11/02/DailyQuestionsAug/#nov-19-2020-easy-count-visible-nodes-in-binary-tree) -- *https://repl.it/@trsong/Count-Visible-Nodes-in-Binary-Tree* [*\(Try ME\)*](https://repl.it/@trsong/Count-Visible-Nodes-in-Binary-Tree-1)
+- [**\[Easy\] Count Visible Nodes in Binary Tree**](https://trsong.github.io/python/java/2020/11/02/DailyQuestionsAug/#nov-19-2020-easy-count-visible-nodes-in-binary-tree) -- *In a binary tree, if no node with greater value than A’s along the path, this node is visible. Count total number of such nodes.* [*\(Try ME\)*](https://repl.it/@trsong/Count-Visible-Nodes-in-Binary-Tree-1)
 
 </summary>
 <div>
@@ -4659,268 +4923,5 @@ Explanation: we choose the numbers 5 and 1.
 </div>
 </details>
 
-
-## String
----
-
-<details>
-<summary class="lc_m">
-
-- [**\[Medium\] LC 151. Reverse Words in a String**](http://trsong.github.io/python/java/2020/11/02/DailyQuestionsAug/#nov-28-2020-lc-151-medium-reverse-words-in-a-string) -- *Given an input string, reverse the string word by word.* [*\(Try ME\)*](https://repl.it/@trsong/Reverse-words-in-a-string-1)
-
-</summary>
-<div>
-
-
-**Question:** Given an input string, reverse the string word by word.
-
-Note:
-
-- A word is defined as a sequence of non-space characters.
-- Input string may contain leading or trailing spaces. However, your reversed string should not contain leading or trailing spaces.
-- You need to reduce multiple spaces between two words to a single space in the reversed string.
-
-**Example 1:**
-```py
-Input: "the sky is blue"
-Output: "blue is sky the"
-```
-
-**Example 2:**
-```py
-Input: "  hello world!  "
-Output: "world! hello"
-Explanation: Your reversed string should not contain leading or trailing spaces.
-```
-
-**Example 3:**
-```py
-Input: "a good   example"
-Output: "example good a"
-Explanation: You need to reduce multiple spaces between two words to a single space in the reversed string.
-```
-
-
-
-</div>
-</details>
-
-<details>
-<summary class="lc_m">
-
-- [**\[Medium\] Implement Soundex**](http://trsong.github.io/python/java/2020/11/02/DailyQuestionsAug/#nov-29-2020-medium-implement-soundex) -- *Soundex is an algorithm used to categorize phonetically, such that two names that sound alike but are spelled differently have the same repr...* [*\(Try ME\)*](https://repl.it/@trsong/Implement-Soundex-1)
-
-</summary>
-<div>
-
-**Question:** **Soundex** is an algorithm used to categorize phonetically, such that two names that sound alike but are spelled differently have the same representation.
-
-**Soundex** maps every name to a string consisting of one letter and three numbers, like M460.
-
-One version of the algorithm is as follows:
-
-1. Remove consecutive consonants with the same sound (for example, change ck -> c).
-2. Keep the first letter. The remaining steps only apply to the rest of the string.
-3. Remove all vowels, including y, w, and h.
-4. Replace all consonants with the following digits:
-   - b, f, p, v → 1
-   - c, g, j, k, q, s, x, z → 2
-   - d, t → 3
-   - l → 4
-   - m, n → 5
-   - r → 6
-5. If you don't have three numbers yet, append zeros until you do. Keep the first three numbers.
-
-Using this scheme, Jackson and Jaxen both map to J250.
-
-
-</div>
-</details>
-
-<details>
-<summary class="lc_e">
-
-- [**\[Easy\] Run-length String Encode and Decode**](https://trsong.github.io/python/java/2020/08/02/DailyQuestionsAug/#sep-21-2020-easy-run-length-string-encode-and-decode) -- *Implement run-length encoding and decoding.* [*\(Try ME\)*](https://repl.it/@trsong/Run-length-String-Encode-and-Decode-1)
-
-</summary>
-<div>
-
-**Question:** Run-length encoding is a fast and simple method of encoding strings. The basic idea is to represent repeated successive characters as a single count and character. For example, the string `"AAAABBBCCDAA"` would be encoded as `"4A3B2C1D2A"`.
-
-Implement run-length encoding and decoding. You can assume the string to be encoded have no digits and consists solely of alphabetic characters. You can assume the string to be decoded is valid.
-
-</div>
-</details>
-
-
-<details>
-<summary class="lc_m">
-
-- [**\[Medium\] Zig-Zag String**](http://trsong.github.io/python/java/2020/08/02/DailyQuestionsAug/#sep-4-2020-medium-zig-zag-string) -- *Given a string and a number of lines k, print the string in zigzag form.* [*\(Try ME\)*](https://repl.it/@trsong/Print-Zig-Zag-String-1)
-
-</summary>
-<div>
-
-**Question:** Given a string and a number of lines k, print the string in zigzag form. In zigzag, characters are printed out diagonally from top left to bottom right until reaching the kth line, then back up to top right, and so on.
-
-**Example:**
-```py
-Given the sentence "thisisazigzag" and k = 4, you should print:
-t     a     g
- h   s z   a
-  i i   i z
-   s     g
-```
-
-</div>
-</details>
-
-
-
-<details>
-<summary class="lc_m">
-
-- [**\[Medium\] LC 678. Balanced Parentheses with Wildcard**](http://trsong.github.io/python/java/2020/08/02/DailyQuestionsAug/#oct-2-2020-lc-678-medium-balanced-parentheses-with-wildcard) -- *Given string contains * that can represent either a (, ), or an empty string. Determine whether the parentheses are balanced.* [*\(Try ME\)*](https://repl.it/@trsong/Determine-Balanced-Parentheses-with-Wildcard-1)
-
-</summary>
-<div>
-
-**Question:** You're given a string consisting solely of `(`, `)`, and `*`. `*` can represent either a `(`, `)`, or an empty string. Determine whether the parentheses are balanced.
-
-For example, `(()*` and `(*)` are balanced. `)*(` is not balanced.
-
-</div>
-</details>
-
-
-<details>
-<summary class="lc_e">
-
-- [**\[Easy\] LC 1021. Remove One Layer of Parenthesis**](https://trsong.github.io/python/java/2020/08/02/DailyQuestionsAug/#aug-12-2020-lc-1021-easy-remove-one-layer-of-parenthesis) -- *Given a valid parenthesis string, remove the outermost layers of the parenthesis string and return the new parenthesis string.* [*\(Try ME\)*](https://repl.it/@trsong/Remove-One-Layer-of-Parenthesis-1)
-
-</summary>
-<div>
-
-**Question:** Given a valid parenthesis string (with only '(' and ')', an open parenthesis will always end with a close parenthesis, and a close parenthesis will never start first), remove the outermost layers of the parenthesis string and return the new parenthesis string.
-
-If the string has multiple outer layer parenthesis (ie (())()), remove all outer layers and construct the new string. So in the example, the string can be broken down into (()) + (). By removing both components outer layer we are left with () + '' which is simply (), thus the answer for that input would be ().
-
-**Example 1:**
-```py
-Input: '(())()'
-Output: '()'
-```
-
-**Example 2:**
-```py
-Input: '(()())'
-Output: '()()'
-```
-
-**Example 3:**
-```py
-Input: '()()()'
-Output: ''
-```
-
-
-</div>
-</details>
-
-
-<details>
-<summary class="lc_m">
-
-- [**\[Medium\] Tokenization**](https://trsong.github.io/python/java/2020/05/02/DailyQuestionsMay/#jul-20-2020-medium-tokenization) -- *Given a dictionary of words and a string made up of those words (no spaces), return the original sentence in a list.* [*\(Try ME\)*](https://repl.it/@trsong/String-Tokenization-1)
-
-</summary>
-<div>
-
-**Questions:** Given a dictionary of words and a string made up of those words (no spaces), return the original sentence in a list. If there is more than one possible reconstruction, return any of them. If there is no possible reconstruction, then return null.
-
-**Example 1:**
-```py
-Input: ['quick', 'brown', 'the', 'fox'], 'thequickbrownfox'
-Output: ['the', 'quick', 'brown', 'fox']
-```
-
-**Example 2:**
-```py
-Input: ['bed', 'bath', 'bedbath', 'and', 'beyond'], 'bedbathandbeyond'
-Output:  Either ['bed', 'bath', 'and', 'beyond'] or ['bedbath', 'and', 'beyond']
-```
-
-</div>
-</details>
-
-### Anagram
----
-
-<details>
-<summary class="lc_e">
-
-- [**\[Easy\] Is Anagram of Palindrome**](https://trsong.github.io/python/java/2020/08/02/DailyQuestionsAug/#oct-1-2020-easy-is-anagram-of-palindrome) -- *Given a string, determine whether any permutation of it is a palindrome.* [*\(Try ME\)*](https://repl.it/@trsong/Is-Anagram-of-Palindrome-1)
-
-</summary>
-<div>
-
-**Question:** Given a string, determine whether any permutation of it is a palindrome.
-
-For example, `'carrace'` should return True, since it can be rearranged to form `'racecar'`, which is a palindrome. `'daily'` should return False, since there's no rearrangement that can form a palindrome.
-
-</div>
-</details>
-
-
-### Palindrome
----
-
-<details>
-<summary class="lc_h">
-
-- [**\[Hard\] Longest Palindromic Substring**](https://trsong.github.io/python/java/2020/08/02/DailyQuestionsAug/#oct-10-2020-hard-longest-palindromic-substring) -- *Given a string, find the longest palindromic contiguous substring. If there are more than one with the maximum length, return any one.* [*\(Try ME\)*](https://repl.it/@trsong/Find-the-Longest-Palindromic-Substring-1)
-
-</summary>
-<div>
-
-**Question:** Given a string, find the longest palindromic contiguous substring. If there are more than one with the maximum length, return any one.
-
-For example, the longest palindromic substring of `"aabcdcb"` is `"bcdcb"`. The longest palindromic substring of `"bananas"` is `"anana"`.
-
-
-</div>
-</details>
-
-<details>
-<summary class="lc_e">
-
-- [**\[Easy\] LC 680. Remove Character to Create Palindrome**](https://trsong.github.io/python/java/2020/05/02/DailyQuestionsMay/#jul-1-2020-lc-680-easy-remove-character-to-create-palindrome) -- *Given a string, determine if you can remove any character to create a palindrome.* [*\(Try ME\)*](https://repl.it/@trsong/Remove-Character-to-Create-Palindrome-1)
-
-</summary>
-<div>
-
-**Question:** Given a string, determine if you can remove any character to create a palindrome.
-
-**Example 1:**
-```py
-Input: "abcdcbea"
-Output: True 
-Explanation: Remove 'e' gives "abcdcba"
-```
-
-**Example 2:**
-```py
-Input: "abccba"
-Output: True
-```
-
-**Example 3:**
-```py
-Input: "abccaa"
-Output: False
-```
-
-</div>
-</details>
 
 {::options parse_block_html="false" /}
