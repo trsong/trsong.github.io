@@ -19,6 +19,39 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
 
+
+### Dec 9, 2020 \[Hard\] Power Supply to All Cities
+---
+> **Question:** Given a graph of possible electricity connections (each with their own cost) between cities in an area, find the cheapest way to supply power to all cities in the area. 
+
+**Example 1:**
+```py
+Input: cities = ['Vancouver', 'Richmond', 'Burnaby']
+       cost_btw_cities = [
+           ('Vancouver', 'Richmond', 1),
+           ('Vancouver', 'Burnaby', 1),
+           ('Richmond', 'Burnaby', 2)]
+Output: 2  
+Explanation: 
+Min cost to supply all cities is to connect the following cities with total cost 1 + 1 = 2: 
+(Vancouver, Burnaby), (Vancouver, Richmond)
+```
+
+**Example 2:**
+```py
+Input: cities = ['Toronto', 'Mississauga', 'Waterloo', 'Hamilton']
+       cost_btw_cities = [
+           ('Mississauga', 'Toronto', 1),
+           ('Toronto', 'Waterloo', 2),
+           ('Waterloo', 'Hamilton', 3),
+           ('Toronto', 'Hamilton', 2),
+           ('Mississauga', 'Hamilton', 1),
+           ('Mississauga', 'Waterloo', 2)]
+Output: 4
+Explanation: Min cost to connect to all cities is 4:
+(Toronto, Mississauga), (Toronto, Waterloo), (Mississauga, Hamilton)
+```
+
 ### Dec 8, 2020 LC 743 \[Medium\] Network Delay Time
 ---
 > **Question:** A network consists of nodes labeled 0 to N. You are given a list of edges `(a, b, t)`, describing the time `t` it takes for a message to be sent from node `a` to node `b`. Whenever a node receives a message, it immediately passes the message on to a neighboring node, if possible.
@@ -40,6 +73,130 @@ edges = [
 ]
 
 You should return 9, because propagating the message from 0 -> 2 -> 3 -> 4 will take that much time.
+```
+
+**Solution with Dijkstra’s Algorithm:** [https://repl.it/@trsong/Find-Network-Delay-Time](https://repl.it/@trsong/Find-Network-Delay-Time)
+```py
+import unittest
+import sys
+from Queue import PriorityQueue
+
+def max_network_delay(times, nodes):
+    neighbors = [None] * (1 + nodes)
+    for u, v, t in times:
+        neighbors[u] = neighbors[u] or []
+        neighbors[u].append((v, t))
+    
+    distance = [sys.maxint] * (1 + nodes)
+    pq = PriorityQueue()
+    pq.put((0, 0))
+
+    while not pq.empty():
+        cur_time, cur = pq.get()
+        if distance[cur] != sys.maxint:
+            continue
+        distance[cur] = cur_time
+        
+        if neighbors[cur] is None:
+            continue
+
+        for nb, t in neighbors[cur]:
+            alt_time = distance[cur] + t
+            if distance[nb] > alt_time:
+                pq.put((alt_time, nb))
+
+    max_delay = max(distance)
+    return max_delay if max_delay != sys.maxint else -1
+
+
+class MaxNetworkDelay(unittest.TestCase):
+    def test_example(self):
+        times = [
+            (0, 1, 5), (0, 2, 3), (0, 5, 4), (1, 3, 8), 
+            (2, 3, 1), (3, 5, 10), (3, 4, 5)
+        ]
+        self.assertEqual(9, max_network_delay(times, nodes=5))  # max path: 0 - 2 - 3 - 4
+
+    def test_discounted_graph(self):
+        self.assertEqual(-1, max_network_delay([], nodes=2))
+
+    def test_disconnected_graph2(self):
+        """
+        0(start)    3
+        |           |
+        v           v
+        2           1
+        """
+        times = [(0, 2, 1), (3, 1, 2)]
+        self.assertEqual(-1, max_network_delay(times, nodes=3))
+
+    def test_unreachable_node(self):
+        """
+        1
+        |
+        v
+        2 
+        |
+        v
+        0 (start)
+        |
+        v
+        3
+        """
+        times = [(1, 2, 1), (2, 0, 2), (0, 3, 3)]
+        self.assertEqual(-1, max_network_delay(times, nodes=3))
+
+    def test_given_example(self):
+        """
+    (start)
+        0 --> 3
+        |     |
+        v     v
+        1     2
+        """
+        times = [(0, 1, 1), (0, 3, 1), (3, 2, 1)]
+        self.assertEqual(2, max_network_delay(times, nodes=3))
+
+    def test_exist_alternative_path(self):
+        """
+    (start)  1
+        0 ---> 3
+      1 | \ 4  | 2
+        v  \   v
+        2   -> 1
+        """
+        times = [(0, 2, 1), (0, 3, 1), (0, 1, 4), (3, 1, 2)]
+        self.assertEqual(3, max_network_delay(times, nodes=3))  # max path: 0 - 3 - 1
+
+    def test_graph_with_cycle(self):
+        """
+    (start) 
+        0 --> 2
+        ^     |
+        |     v
+        1 <-- 3
+        """
+        times = [(0, 2, 1), (2, 3, 1), (3, 1, 1), (1, 0, 1)]
+        self.assertEqual(3, max_network_delay(times, nodes=3))  # max path: 0 - 2 - 3
+
+    def test_multiple_paths(self):
+        """
+            0 (start)
+           /|\
+          / | \
+        1| 2| 3|
+         v  v  v
+         2  3  4
+        2| 3| 1|
+         v  v  v
+         5  6  1
+        """
+        times = [(0, 2, 1), (0, 3, 2), (0, 4, 3), (2, 5, 2), (3, 6, 3), (4, 1, 1)]
+        self.assertEqual(5, max_network_delay(times, nodes=6))  # max path: 0 - 3 - 6
+
+    
+if __name__ == '__main__':
+    unittest.main(exit=False)
 ```
 
 ### Dec 7, 2020 \[Medium\] Rearrange String with Repeated Characters

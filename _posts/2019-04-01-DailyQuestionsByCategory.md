@@ -2664,7 +2664,7 @@ Given a list of `N` people and the above operation, find a way to identify the c
 </details>
 
 
-## Priority Queue
+## Heap / Priority Queue
 ---
 
 <details>
@@ -3852,7 +3852,42 @@ Output: False
 </details>
 
 
-### A-Star
+
+### Uniform-Cost Search / Dijkstra
+
+<details>
+<summary class="lc_m">
+
+- [**\[Medium\] LC 743. Network Delay Time**](https://trsong.github.io/python/java/2020/11/02/DailyQuestionsAug/#dec-8-2020-lc-743-medium-network-delay-time) -- *A network consists of nodes labeled 0 to N. Determine how long it will take for every node to receive a message that begins at node 0.* [*\(Try ME\)*](https://repl.it/@trsong/Find-Network-Delay-Time-1)
+
+</summary>
+<div>
+
+**Question:** A network consists of nodes labeled 0 to N. You are given a list of edges `(a, b, t)`, describing the time `t` it takes for a message to be sent from node `a` to node `b`. Whenever a node receives a message, it immediately passes the message on to a neighboring node, if possible.
+
+Assuming all nodes are connected, determine how long it will take for every node to receive a message that begins at node 0.
+
+**Example:** 
+```py
+given N = 5, and the following edges:
+
+edges = [
+    (0, 1, 5),
+    (0, 2, 3),
+    (0, 5, 4),
+    (1, 3, 8),
+    (2, 3, 1),
+    (3, 5, 10),
+    (3, 4, 5)
+]
+
+You should return 9, because propagating the message from 0 -> 2 -> 3 -> 4 will take that much time.
+```
+
+</div>
+</details>
+
+### A-Star Search
 ---
 
 <details>
