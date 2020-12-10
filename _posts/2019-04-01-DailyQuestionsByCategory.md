@@ -4038,6 +4038,48 @@ In this case, the shortest valid path would be 0 -> 2 -> 4 -> 0, with a distance
 ---
 
 <details>
+<summary class="lc_h">
+
+- [**\[Hard\] Power Supply to All Cities**](https://trsong.github.io/python/java/2020/11/02/DailyQuestionsAug/#dec-9-2020-hard-power-supply-to-all-cities) -- *Given a graph of possible electricity connections(each with their own cost)between cities in an area, find the cheapest way to supply power.* [*\(Try ME\)*](https://repl.it/@trsong/Design-Power-Supply-to-All-Cities-1)
+
+</summary>
+<div>
+
+**Question:** Given a graph of possible electricity connections (each with their own cost) between cities in an area, find the cheapest way to supply power to all cities in the area. 
+
+**Example 1:**
+```py
+Input: cities = ['Vancouver', 'Richmond', 'Burnaby']
+       cost_btw_cities = [
+           ('Vancouver', 'Richmond', 1),
+           ('Vancouver', 'Burnaby', 1),
+           ('Richmond', 'Burnaby', 2)]
+Output: 2  
+Explanation: 
+Min cost to supply all cities is to connect the following cities with total cost 1 + 1 = 2: 
+(Vancouver, Burnaby), (Vancouver, Richmond)
+```
+
+**Example 2:**
+```py
+Input: cities = ['Toronto', 'Mississauga', 'Waterloo', 'Hamilton']
+       cost_btw_cities = [
+           ('Mississauga', 'Toronto', 1),
+           ('Toronto', 'Waterloo', 2),
+           ('Waterloo', 'Hamilton', 3),
+           ('Toronto', 'Hamilton', 2),
+           ('Mississauga', 'Hamilton', 1),
+           ('Mississauga', 'Waterloo', 2)]
+Output: 4
+Explanation: Min cost to connect to all cities is 4:
+(Toronto, Mississauga), (Toronto, Waterloo), (Mississauga, Hamilton)
+```
+
+
+</div>
+</details>
+
+<details>
 <summary class="lc_m">
 
 - [**\[Medium\] LC 130. Surrounded Regions**](http://trsong.github.io/python/java/2020/08/02/DailyQuestionsAug/#oct-18-2020-lc-130-medium-surrounded-regions) -- *A region is captured by flipping all ‘O’s into ‘X’s in that surrounded region.* [*\(Try ME\)*](https://repl.it/@trsong/Flip-Surrounded-Regions-1)

@@ -19,6 +19,17 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
 
+### Dec 10, 2020 \[Easy\] Distribute Bonuses
+---
+> **Question:** MegaCorp wants to give bonuses to its employees based on how many lines of codes they have written. They would like to give the smallest positive amount to each worker consistent with the constraint that if a developer has written more lines of code than their neighbor, they should receive more money.
+>
+> Given an array representing a line of seats of employees at MegaCorp, determine how much each one should get paid.
+
+**Example:**
+```py
+Input: [10, 40, 200, 1000, 60, 30]
+Output: [1, 2, 3, 4, 2, 1].
+```
 
 ### Dec 9, 2020 \[Hard\] Power Supply to All Cities
 ---
@@ -50,6 +61,91 @@ Input: cities = ['Toronto', 'Mississauga', 'Waterloo', 'Hamilton']
 Output: 4
 Explanation: Min cost to connect to all cities is 4:
 (Toronto, Mississauga), (Toronto, Waterloo), (Mississauga, Hamilton)
+```
+
+**My thoughts:** This question is an undirected graph problem asking for total cost of minimum spanning tree. Both of the follwing algorithms can solve this problem: Kruskal’s and Prim’s MST Algorithm. First one keeps choosing edges whereas second one starts from connecting vertices. Either one will work. 
+
+**Solution with Kruskal’s MST Algorithm:** [https://repl.it/@trsong/Design-Power-Supply-to-All-Cities](https://repl.it/@trsong/Design-Power-Supply-to-All-Cities)
+```py
+import unittest
+
+class DisjointSet(object):
+    def __init__(self, size):
+        self.parent = range(size)
+
+    def find(self, p):
+        while self.parent[p] != p:
+            self.parent[p] = self.parent[self.parent[p]]
+            p = self.parent[p]
+        return p
+    
+    def union(self, p1, p2):
+        root1 = self.find(p1)
+        root2 = self.find(p2)
+        if root1 != root2:
+            self.parent[root1] = root2
+
+    def is_connected(self, p1, p2):
+        return self.find(p1) == self.find(p2)
+
+
+def min_cost_power_supply(cities, cost_btw_cities):
+    city_id_lookup = {city: index for index, city in enumerate(cities)}
+    uf = DisjointSet(len(cities))
+
+    cost_btw_cities.sort(key=lambda uvw: uvw[-1])
+    res = 0
+    for city1, city2, cost in cost_btw_cities:
+        id1, id2 = city_id_lookup[city1], city_id_lookup[city2]
+        if uf.is_connected(id1, id2):
+            continue
+
+        uf.union(id1, id2)
+        res += cost
+    return res
+
+
+class MinCostPowerSupplySpec(unittest.TestCase):
+    def test_k3_graph(self):
+        cities = ['Vancouver', 'Richmond', 'Burnaby']
+        cost_btw_cities = [
+            ('Vancouver', 'Richmond', 1),
+            ('Vancouver', 'Burnaby', 1),
+            ('Richmond', 'Burnaby', 2)
+        ]
+        # (Vancouver, Burnaby), (Vancouver, Richmond)
+        self.assertEqual(2, min_cost_power_supply(cities, cost_btw_cities))  
+
+    def test_k4_graph(self):
+        cities = ['Toronto', 'Mississauga', 'Waterloo', 'Hamilton']
+        cost_btw_cities = [
+            ('Mississauga', 'Toronto', 1),
+            ('Toronto', 'Waterloo', 2),
+            ('Waterloo', 'Hamilton', 3),
+            ('Toronto', 'Hamilton', 2),
+            ('Mississauga', 'Hamilton', 1),
+            ('Mississauga', 'Waterloo', 2)
+        ]
+        # (Toronto, Mississauga), (Toronto, Waterloo), (Mississauga, Hamilton)
+        self.assertEqual(4, min_cost_power_supply(cities, cost_btw_cities)) 
+
+    def test_connected_graph(self):
+        cities = ['Shanghai', 'Nantong', 'Suzhou', 'Hangzhou', 'Ningbo']
+        cost_btw_cities = [
+            ('Shanghai', 'Nantong', 1),
+            ('Nantong', 'Suzhou', 1),
+            ('Suzhou', 'Shanghai', 1),
+            ('Suzhou', 'Hangzhou', 3),
+            ('Hangzhou', 'Ningbo', 2),
+            ('Hangzhou', 'Shanghai', 2),
+            ('Ningbo', 'Shanghai', 2)
+        ]
+        # (Shanghai, Nantong), (Shanghai, Suzhou), (Shanghai, Hangzhou), (Shanghai, Nantong)
+        self.assertEqual(6, min_cost_power_supply(cities, cost_btw_cities)) 
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
 ```
 
 ### Dec 8, 2020 LC 743 \[Medium\] Network Delay Time
