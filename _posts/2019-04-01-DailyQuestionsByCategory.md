@@ -432,6 +432,27 @@ For example, if A is `'abcde'` and B is `'cdeab'`, return `True`. If A is `'abc'
 ---
 
 <details>
+<summary class="lc_e">
+
+- [**\[Easy\] Distribute Bonuses**](https://trsong.github.io/python/java/2020/11/02/DailyQuestionsAug/#dec-10-2020-easy-distribute-bonuses) -- *Give the smallest positive amount to each worker and if a developer has written more lines of code than their neighbors that dev earns more.* [*\(Try ME\)*](https://repl.it/@trsong/Distribute-Bonuses-1)
+
+</summary>
+<div>
+
+**Question:** MegaCorp wants to give bonuses to its employees based on how many lines of codes they have written. They would like to give the smallest positive amount to each worker consistent with the constraint that if a developer has written more lines of code than their neighbor, they should receive more money.
+
+Given an array representing a line of seats of employees at MegaCorp, determine how much each one should get paid.
+
+**Example:**
+```py
+Input: [10, 40, 200, 1000, 60, 30]
+Output: [1, 2, 3, 4, 2, 1].
+```
+
+</div>
+</details>
+
+<details>
 <summary class="lc_m">
 
 - [**\[Medium\] Find Missing Positive**](http://trsong.github.io/python/java/2020/11/02/DailyQuestionsAug/#nov-13-2020-medium-find-missing-positive) -- *Given an unsorted integer array, find the first missing positive integer.* [*\(Try ME\)*](https://repl.it/@trsong/Find-First-Missing-Positive-1)

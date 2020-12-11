@@ -31,6 +31,75 @@ Input: [10, 40, 200, 1000, 60, 30]
 Output: [1, 2, 3, 4, 2, 1].
 ```
 
+**Solution:** [https://repl.it/@trsong/Distribute-Bonuses](https://repl.it/@trsong/Distribute-Bonuses)
+```py
+import unittest
+
+def distribute_bonus(line_of_codes):
+    n = len(line_of_codes)
+    res = [1] * n
+
+    for i in xrange(1, n):
+        if line_of_codes[i] == line_of_codes[i-1]:
+            res[i] = max(res[i],  res[i-1])
+        elif line_of_codes[i] > line_of_codes[i-1]:
+            res[i] = max(res[i], 1 + res[i-1])
+
+        j = n - 1 - i
+        if line_of_codes[j] == line_of_codes[j+1]:
+            res[j] = max(res[j], res[j+1])
+        elif line_of_codes[j] > line_of_codes[j+1]:
+            res[j] = max(res[j], 1 + res[j+1])
+    return res
+
+
+class DistributeBonusSpec(unittest.TestCase):
+    def test_example(self):
+        line_of_codes = [10, 40, 200, 1000, 60, 30]
+        expected = [1, 2, 3, 4, 2, 1]
+        self.assertEqual(expected, distribute_bonus(line_of_codes))
+
+    def test_example2(self):
+        line_of_codes = [10, 40, 200, 1000, 900, 800, 30]
+        expected = [1, 2, 3, 4, 3, 2, 1]
+        self.assertEqual(expected, distribute_bonus(line_of_codes))
+
+    def test_empty_array(self):
+        line_of_codes = []
+        expected = []
+        self.assertEqual(expected, distribute_bonus(line_of_codes))
+
+    def test_one_employee(self):
+        line_of_codes = [42]
+        expected = [1]
+        self.assertEqual(expected, distribute_bonus(line_of_codes))
+
+    def test_two_employees(self):
+        line_of_codes = [99, 42]
+        expected = [2, 1]
+        self.assertEqual(expected, distribute_bonus(line_of_codes))
+
+    def test_reach_tie_on_lines_of_code(self):
+        line_of_codes = [3, 3, 3, 4, 4, 4, 2, 2, 2]
+        expected = [1, 1, 1, 2, 2, 2, 1, 1, 1]
+        self.assertEqual(expected, distribute_bonus(line_of_codes))
+
+    def test_reach_tie_on_lines_of_code2(self):
+        line_of_codes = [1, 1, 2, 2, 2, 3, 3, 3, 4, 4, 4]
+        expected = [1, 1, 2, 2, 2, 3, 3, 3, 4, 4, 4]
+        self.assertEqual(expected, distribute_bonus(line_of_codes))
+
+    def test_reach_tie_on_lines_of_code4(self):
+        line_of_codes = [4, 4, 3, 3, 2, 2, 1, 1]
+        expected = [4, 4, 3, 3, 2, 2, 1, 1]
+        self.assertEqual(expected, distribute_bonus(line_of_codes))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False, verbosity=2)
+```
+
+
 ### Dec 9, 2020 \[Hard\] Power Supply to All Cities
 ---
 > **Question:** Given a graph of possible electricity connections (each with their own cost) between cities in an area, find the cheapest way to supply power to all cities in the area. 
