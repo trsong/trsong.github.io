@@ -19,6 +19,15 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
 
+### Dec 11, 2020 \[Hard\] Find Next Sparse Number
+---
+> **Question:** We say a number is sparse if there are no adjacent ones in its binary representation. For example, `21 (10101)` is sparse, but `22 (10110)` is not. 
+> 
+> For a given input `N`, find the smallest sparse number greater than or equal to `N`.
+>
+> Do this in faster than `O(N log N)` time.
+
+
 ### Dec 10, 2020 \[Easy\] Distribute Bonuses
 ---
 > **Question:** MegaCorp wants to give bonuses to its employees based on how many lines of codes they have written. They would like to give the smallest positive amount to each worker consistent with the constraint that if a developer has written more lines of code than their neighbor, they should receive more money.
