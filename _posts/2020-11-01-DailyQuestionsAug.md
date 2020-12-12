@@ -27,6 +27,58 @@ categories: Python/Java
 >
 > Do this in faster than `O(N log N)` time.
 
+**My thoughts:** Whenever we see sub-binary string `011` mark it as `100` and set all bit on the right to 0. eg. `100110` => `101000`, `101101` => `1000000`
+
+**Solution:** [https://repl.it/@trsong/Find-the-Next-Spare-Number](https://repl.it/@trsong/Find-the-Next-Spare-Number)
+```py
+import unittest
+
+def next_sparse_number(num):
+    target_pattern = 0b011
+    window = 0b111
+    i = 0
+    last_adj = 0
+    while num >= (target_pattern << i):
+        if num & (window << i) == (target_pattern << i):
+            # Change window from 011 to 100
+            num ^= (window << i)
+            last_adj = i
+        i += 1
+
+    # Set all bits on the right to 0
+    num &= ~0 << last_adj
+    return num
+
+
+class NextSparseNumberSpec(unittest.TestCase):
+    def test_example(self):
+        self.assertEqual(0b10101, next_sparse_number(0b10101))
+
+    def test_no_bit_is_set(self):
+        self.assertEqual(0, next_sparse_number(0))
+
+    def test_next_sparse_is_itself(self):
+        self.assertEqual(0b100, next_sparse_number(0b100))
+
+    def test_adjacent_bit_is_set(self):
+        self.assertEqual(0b1000, next_sparse_number(0b110))
+    
+    def test_adjacent_bit_is_set2(self):
+        self.assertEqual(0b101000, next_sparse_number(0b100110))
+
+    def test_bit_shift_cause_another_bit_shift(self):
+        self.assertEqual(0b1000000, next_sparse_number(0b101101))
+    
+    def test_complicated_number(self):
+        self.assertEqual(0b1010010000000, next_sparse_number(0b1010001011101))
+
+    def test_all_bit_is_one(self):
+        self.assertEqual(0b1000, next_sparse_number(0b111))
+
+
+if __name__ == '__main__':
+    unittest.main(verbosity=2, exit=False)
+```
 
 ### Dec 10, 2020 \[Easy\] Distribute Bonuses
 ---
