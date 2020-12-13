@@ -19,6 +19,26 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
 
+### Dec 12, 2020 \[Hard\] Construct Cartesian Tree from Inorder Traversal
+---
+> **Question:**  A Cartesian tree with sequence S is a binary tree defined by the following two properties:
+>
+> - It is heap-ordered, so that each parent value is strictly less than that of its children.
+> - An in-order traversal of the tree produces nodes with values that correspond exactly to S.
+>
+> Given a sequence S, construct the corresponding Cartesian tree.
+
+**Example:**
+```py
+Given the sequence [3, 2, 6, 1, 9], the resulting Cartesian tree would be:
+      1
+    /   \   
+  2       9
+ / \
+3   6
+```
+
+
 ### Dec 11, 2020 \[Hard\] Find Next Sparse Number
 ---
 > **Question:** We say a number is sparse if there are no adjacent ones in its binary representation. For example, `21 (10101)` is sparse, but `22 (10110)` is not. 
