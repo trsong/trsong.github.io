@@ -19,9 +19,32 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
 
+### Dec 13, 2020 LC 240 \[Medium\] Search a 2D Matrix II
+---
+> **Question:** Write an efficient algorithm that searches for a value in an m x n matrix. This matrix has the following properties:
+
+- Integers in each row are sorted in ascending from left to right.
+- Integers in each column are sorted in ascending from top to bottom.
+
+**Example:**
+
+```py
+Consider the following matrix:
+
+[
+  [ 1,  4,  7, 11, 15],
+  [ 2,  5,  8, 12, 19],
+  [ 3,  6,  9, 16, 22],
+  [10, 13, 14, 17, 24],
+  [18, 21, 23, 26, 30]
+]
+Given target = 5, return True.
+Given target = 20, return False.
+```
+
 ### Dec 12, 2020 \[Hard\] Construct Cartesian Tree from Inorder Traversal
 ---
-> **Question:**  A Cartesian tree with sequence S is a binary tree defined by the following two properties:
+> **Question:** A Cartesian tree with sequence S is a binary tree defined by the following two properties:
 >
 > - It is heap-ordered, so that each parent value is strictly less than that of its children.
 > - An in-order traversal of the tree produces nodes with values that correspond exactly to S.
@@ -36,6 +59,172 @@ Given the sequence [3, 2, 6, 1, 9], the resulting Cartesian tree would be:
   2       9
  / \
 3   6
+```
+
+**My thoughts:** The root of min heap is always the smallest element. In order to maintain the given inorder traversal order: we can find the min element and recursively build the tree based on subarray on the left and right.
+
+**Solution with Inorder Traversal:** [https://repl.it/@trsong/Construct-Cartesian-Tree-from-Inorder-Traversal](https://repl.it/@trsong/Construct-Cartesian-Tree-from-Inorder-Traversal)
+```py
+import unittest
+
+def construct_cartesian_tree(nums):
+    return construct_cartesian_tree_recur(nums, 0, len(nums) - 1)
+
+
+def construct_cartesian_tree_recur(nums, start, end):
+    if start > end:
+        return None
+
+    local_min, local_min_index = find_local_min_and_index(nums, start, end)
+    left_res = construct_cartesian_tree_recur(nums, start, local_min_index - 1)
+    right_res = construct_cartesian_tree_recur(nums, local_min_index + 1, end)
+    return TreeNode(local_min, left_res, right_res)
+
+
+def find_local_min_and_index(nums, start, end):
+    min_val, min_index = nums[start], start
+    for i in xrange(start + 1, end + 1):
+        if nums[i] < min_val:
+            min_val = nums[i]
+            min_index = i
+    return min_val, min_index
+
+
+#####################
+# Testing Utilities
+#####################
+class TreeNode(object):
+    def __init__(self, val, left=None, right=None):
+        self.val = val
+        self.left = left
+        self.right = right
+
+    def __repr__(self):
+        stack = [(self, 0)]
+        res = []
+        while stack:
+            node, depth = stack.pop()
+            res.append("\n" + "\t" * depth)
+            if not node:
+                res.append("* None")
+                continue
+
+            res.append("* " + str(node.val))
+            for child in [node.right, node.left]:
+                stack.append((child, depth + 1))
+        return "\n" + "".join(res) + "\n"
+
+    def is_heap(self):
+        for child in [self.left, self.right]:
+            if child and (self.val > child.val or not child.is_heap()):
+                return False
+        return True
+
+    def traversal(self):
+        res = []
+        if self.left:
+            res.extend(self.left.traversal())
+        res.append(self.val)
+        if self.right:
+            res.extend(self.right.traversal())
+        return res
+
+
+class ConstructCartesianTree(unittest.TestCase):
+    def assert_result(self, res, nums):
+        self.assertEqual(nums, res.traversal())
+        self.assertTrue(res.is_heap(), res)
+
+    def test_example(self):
+        """
+             1
+            / \
+           2   9
+          / \
+         3   6
+        """
+        nums = [3, 2, 6, 1, 9]
+        res = construct_cartesian_tree(nums)
+        self.assert_result(res, nums)
+
+    def test_example2(self):
+        """
+             1
+           /   \
+          3     5
+         / \   /
+        9   7 8
+               \
+                10
+               /  \
+              12  15
+                  / \
+                20  18
+        """
+        nums = [9, 3, 7, 1, 8, 12, 10, 20, 15, 18, 5]
+        res = construct_cartesian_tree(nums)
+        self.assert_result(res, nums)
+
+    def test_empty_array(self):
+        self.assertEqual(None, construct_cartesian_tree([]))
+
+    def test_ascending_array(self):
+        """
+        1
+         \
+          2
+           \
+            3
+        """
+        nums = [1, 2, 3]
+        res = construct_cartesian_tree(nums)
+        self.assert_result(res, nums)
+
+    def test_descending_array(self):
+        """
+              1
+             /
+            2
+           /
+          3
+         / 
+        4
+        """
+        nums = [1, 2, 3, 4]
+        res = construct_cartesian_tree(nums)
+        self.assert_result(res, nums)
+
+    def test_ascending_descending_array(self):
+        """
+          1
+         / 
+        1   
+         \
+          2
+           \
+            2
+           /
+          3  
+        """
+        nums = [1, 2, 3, 2, 1]
+        res = construct_cartesian_tree(nums)
+        self.assert_result(res, nums)
+
+    def test_descending_ascending_array(self):
+        """
+           1
+          / \
+         2   2
+        /     \
+       3       3
+        """
+        nums = [3, 2, 1, 2, 3]
+        res = construct_cartesian_tree(nums)
+        self.assert_result(res, nums)   
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
 ```
 
 

@@ -2372,6 +2372,36 @@ return 23 (5 + 4 + 6 + 8).
 ---
 
 <details>
+<summary class="lc_h">
+
+- [**\[Hard\] Construct Cartesian Tree from Inorder Traversal**](https://trsong.github.io/python/java/2020/11/02/DailyQuestionsAug/#dec-12-2020-hard-construct-cartesian-tree-from-inorder-traversal) -- *Given in-order traversal, construct a Cartesian tree. A Cartesian tree is heap-ordered, so that each parent value is smaller than children.* [*\(Try ME\)*](https://repl.it/@trsong/Construct-Cartesian-Tree-from-Inorder-Traversal-1)
+
+</summary>
+<div>
+
+**Question:** A Cartesian tree with sequence S is a binary tree defined by the following two properties:
+
+- It is heap-ordered, so that each parent value is strictly less than that of its children.
+- An in-order traversal of the tree produces nodes with values that correspond exactly to S.
+
+Given a sequence S, construct the corresponding Cartesian tree.
+
+**Example:**
+```py
+Given the sequence [3, 2, 6, 1, 9], the resulting Cartesian tree would be:
+      1
+    /   \   
+  2       9
+ / \
+3   6
+```
+
+
+</div>
+</details>
+
+
+<details>
 <summary class="lc_e">
 
 - [**\[Easy\] Count Number of Unival Subtrees**](https://trsong.github.io/python/java/2020/11/02/DailyQuestionsAug/#nov-17-2020-easy-count-number-of-unival-subtrees) -- *A unival tree is a tree where all the nodes have the same value. Given a binary tree, return the number of unival subtrees in the tree.* [*\(Try ME\)*](https://repl.it/@trsong/Count-Total-Number-of-Uni-val-Subtrees-1)
