@@ -3415,6 +3415,38 @@ Note that we only care about characters that are still in the string at the end 
 <details>
 <summary class="lc_m">
 
+- [**\[Medium\] LC 240. Search a 2D Matrix II**](https://trsong.github.io/python/java/2020/11/02/DailyQuestionsAug/#dec-13-2020-lc-240-medium-search-a-2d-matrix-ii) -- *Write an efficient algorithm that searches for a value in an m x n matrix.* [*\(Try ME\)*](https://repl.it/@trsong/Search-in-a-Sorted-2D-Matrix-1)
+
+</summary>
+<div>
+
+**Question:** Write an efficient algorithm that searches for a value in an m x n matrix. This matrix has the following properties:
+
+- Integers in each row are sorted in ascending from left to right.
+- Integers in each column are sorted in ascending from top to bottom.
+
+**Example:**
+```py
+Consider the following matrix:
+
+[
+  [ 1,  4,  7, 11, 15],
+  [ 2,  5,  8, 12, 19],
+  [ 3,  6,  9, 16, 22],
+  [10, 13, 14, 17, 24],
+  [18, 21, 23, 26, 30]
+]
+Given target = 5, return True.
+Given target = 20, return False.
+```
+
+</div>
+</details>
+
+
+<details>
+<summary class="lc_m">
+
 - [**\[Medium\] Maximum Subarray Sum**](https://trsong.github.io/python/java/2020/11/02/DailyQuestionsAug/#nov-5-2020-easy-maximum-subarray-sum) -- *Given array that may contain both positive and negative integers, find the sum of contiguous subarray of numbers which has the largest sum.* [*\(Try ME\)*](https://repl.it/@trsong/Maximum-Subarray-Sum-Divide-and-Conquer-1)
 
 </summary>

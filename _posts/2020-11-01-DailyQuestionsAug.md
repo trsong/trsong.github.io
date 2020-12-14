@@ -42,6 +42,114 @@ Given target = 5, return True.
 Given target = 20, return False.
 ```
 
+**My thoughts:** This problem can be solved using Divide and Conquer. First we find a mid-point (mid of row and column point). We break the matrix into 4 sub-matrices: top-left, top-right, bottom-left, bottom-right. And notice the following properties:
+1. number in top-left matrix is strictly is **less** than mid-point 
+2. number in bottom-right matrix is strictly **greater** than mid-point
+3. number in the other two could be **greater** or **smaller** than mid-point, we cannot say until find out
+
+So each time when we find a mid-point in recursion, if target number is greater than mid-point then we can say that it cannot be in top-left matrix (property 1). So we check all other 3 matrices except top-left.
+
+Or if the target number is smaller than mid-point then we can say it cannot be in bottom-right matrix (property 2). We check all other 3 matrices except bottom-right.
+
+Therefore we have `T(mn) = 3/4 * (mn/4) + O(1)`. By Master Theorem, the time complexity is `O(log(mn)) = O(log(m) + log(n))`
+
+**Solution with Divide and Conquer:** [https://repl.it/@trsong/Search-in-a-Sorted-2D-Matrix](https://repl.it/@trsong/Search-in-a-Sorted-2D-Matrix)
+```py
+import unittest
+
+class Square(object):
+    def __init__(self, rlo, rhi, clo, chi):
+        self.rlo = rlo
+        self.rhi = rhi
+        self.clo = clo
+        self.chi = chi
+
+def search_matrix(matrix, target):
+    if not matrix or not matrix[0]:
+        return False
+
+    n, m = len(matrix), len(matrix[0])
+    stack = [Square(0, n - 1, 0, m - 1)]
+    while stack:
+        sqr = stack.pop()
+        if sqr.rlo > sqr.rhi or sqr.clo > sqr.chi:
+            continue
+
+        rmid = sqr.rlo + (sqr.rhi - sqr.rlo) // 2
+        cmid = sqr.clo + (sqr.chi - sqr.clo) // 2
+
+        if matrix[rmid][cmid] == target:
+            return True
+        elif matrix[rmid][cmid] < target:
+            # target not in top left
+            bottom_left = Square(rmid + 1, sqr.rhi, sqr.clo, cmid)
+            right = Square(sqr.rlo, sqr.rhi, cmid + 1, sqr.chi)
+            stack.extend([bottom_left, right])
+        else:
+            # target not in bottom right
+            top_right = Square(sqr.rlo, rmid - 1, cmid, sqr.chi)
+            left = Square(sqr.rlo, sqr.rhi, sqr.clo, cmid - 1)
+            stack.extend([top_right, left])
+
+    return False
+
+
+class SearchMatrixSpec(unittest.TestCase):
+    def test_empty_matrix(self):
+        self.assertFalse(search_matrix([], target=0))
+        self.assertFalse(search_matrix([[]], target=0))
+
+    def test_example(self):
+        matrix = [
+            [ 1, 4, 7,11,15],
+            [ 2, 5, 8,12,19],
+            [ 3, 6, 9,16,22],
+            [10,13,14,17,24],
+            [18,21,23,26,30]
+        ]
+        self.assertTrue(search_matrix(matrix, target=5))
+        self.assertFalse(search_matrix(matrix, target=20))
+
+    def test_mid_less_than_top_right(self):
+        matrix = [
+            [ 1, 2, 3, 4, 5],
+            [ 6, 7, 8, 9,10],
+            [11,12,13,14,15],
+            [16,17,18,19,20],
+            [21,22,23,24,25]
+        ]
+        self.assertTrue(search_matrix(matrix, target=5))
+
+    def test_mid_greater_than_top_right(self):
+        matrix = [
+            [5 , 6,10,14],
+            [6 ,10,13,18],
+            [10,13,18,19]
+        ]
+        self.assertTrue(search_matrix(matrix, target=14))
+
+    def test_mid_less_than_bottom_right(self):
+        matrix = [
+            [1,4],
+            [2,5]
+        ]
+        self.assertTrue(search_matrix(matrix, target=5))
+
+    def test_element_out_of_matrix_range(self):
+        matrix = [
+            [ 1, 4, 7,11,15],
+            [ 2, 5, 8,12,19],
+            [ 3, 6, 9,16,22],
+            [10,13,14,17,24],
+            [18,21,23,26,30]
+        ]
+        self.assertFalse(search_matrix(matrix, target=-1))
+        self.assertFalse(search_matrix(matrix, target=31))
+
+if __name__ == '__main__':
+    unittest.main(verbosity=2, exit=False)
+```
+
 ### Dec 12, 2020 \[Hard\] Construct Cartesian Tree from Inorder Traversal
 ---
 > **Question:** A Cartesian tree with sequence S is a binary tree defined by the following two properties:
