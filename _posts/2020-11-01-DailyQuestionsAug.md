@@ -19,6 +19,22 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
 
+### Dec 15, 2020 LC 307 \[Medium\] Range Sum Query - Mutable
+---
+> **Question:** Given an integer array nums, find the sum of the elements between indices i and j (i ≤ j), inclusive.
+>
+> The update(i, val) function modifies nums by updating the element at index i to val.
+
+**Example:**
+```py
+Given nums = [1, 3, 5]
+
+sumRange(0, 2) -> 9
+update(1, 2)
+sumRange(0, 2) -> 8
+```
+
+
 ### Dec 14, 2020 LC 554 \[Medium\] Brick Wall
 ---
 > **Question:** A wall consists of several rows of bricks of various integer lengths and uniform height. Your goal is to find a vertical line going from the top to the bottom of the wall that cuts through the fewest number of bricks. If the line goes through the edge between two bricks, this does not count as a cut.
@@ -38,6 +54,66 @@ categories: Python/Java
 >
 > Given an input consisting of brick lengths for each row such as the one above, return the fewest number of bricks that must be cut to create a vertical line.
 
+
+**Solution:** [https://repl.it/@trsong/Min-Cut-of-Wall-Bricks](https://repl.it/@trsong/Min-Cut-of-Wall-Bricks)
+```py
+import unittest
+
+def least_cut_bricks(wall):
+    histogram = {}
+    for row in wall:
+        pos = 0
+        for i in xrange(len(row) - 1):
+            pos += row[i]
+            histogram[pos] = histogram.get(pos, 0) + 1
+
+    max_pos = max(histogram.values()) if histogram else 0
+    return len(wall) - max_pos
+    
+
+class LeastCutBrickSpec(unittest.TestCase):
+    def test_example(self):
+        wall = [
+            [3, 5, 1, 1],
+            [2, 3, 3, 2],
+            [5, 5],
+            [4, 4, 2],
+            [1, 3, 3, 3],
+            [1, 1, 6, 1, 1]]
+        self.assertEqual(2, least_cut_bricks(wall))  # cut at col 8
+    
+    def test_empty_wall(self):
+        self.assertEqual(0, least_cut_bricks([]))
+    
+    def test_properly_align_all_bricks(self):
+        wall = [
+            [1, 2, 3],
+            [1, 2, 3],
+            [1, 2, 3]
+        ]
+        self.assertEqual(0, least_cut_bricks(wall))
+
+    def test_one_column_properly_aligned(self):
+        wall = [
+            [1, 1, 1, 1],
+            [2, 2],
+            [1, 1, 2],
+            [2, 1, 1]
+        ]
+        self.assertEqual(0, least_cut_bricks(wall))  # cut at col 2
+
+    def test_local_answer_is_not_optimal(self):
+        wall = [
+            [1, 1, 2, 1],
+            [3, 2],
+            [2, 3]
+        ]
+        self.assertEqual(1, least_cut_bricks(wall))  # cut at col 2
+
+
+if __name__ == '__main__':
+    unittest.main(verbosity=2, exit=False)
+```
 
 ### Dec 13, 2020 LC 240 \[Medium\] Search a 2D Matrix II
 ---
