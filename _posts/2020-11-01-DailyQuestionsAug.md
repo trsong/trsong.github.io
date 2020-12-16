@@ -19,6 +19,18 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
 
+
+### Dec 16, 2020 \[Easy\] Max and Min with Limited Comparisons
+---
+> **Question:** Given a list of numbers of size `n`, where `n` is greater than `3`, find the maximum and minimum of the list using less than `2 * (n - 1)` comparisons.
+
+**Example:**
+```py
+Input: [3, 5, 1, 2, 4, 8]
+Output: (1, 8)
+```
+
+
 ### Dec 15, 2020 LC 307 \[Medium\] Range Sum Query - Mutable
 ---
 > **Question:** Given an integer array nums, find the sum of the elements between indices i and j (i ≤ j), inclusive.
