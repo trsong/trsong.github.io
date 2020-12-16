@@ -2766,6 +2766,33 @@ d  e f  g
 </div>
 </details>
 
+### Range Query
+
+<details>
+<summary class="lc_m">
+
+- [**\[Medium\] LC 307. Range Sum Query - Mutable**](https://trsong.github.io/python/java/2020/11/02/DailyQuestionsAug/#dec-15-2020-lc-307-medium-range-sum-query---mutable) -- *Given an integer array nums, find the sum of the elements between indices i and j (i ≤ j), inclusive.* [*\(Try ME\)*](https://repl.it/@trsong/Mutable-Range-Sum-Query-1)
+
+</summary>
+<div>
+
+**Question:** Given an integer array nums, find the sum of the elements between indices i and j (i ≤ j), inclusive.
+
+The update(i, val) function modifies nums by updating the element at index i to val.
+
+**Example:**
+```py
+Given nums = [1, 3, 5]
+
+sumRange(0, 2) -> 9
+update(1, 2)
+sumRange(0, 2) -> 8
+```
+
+</div>
+</details>
+
+
 ## Trie
 ---
 

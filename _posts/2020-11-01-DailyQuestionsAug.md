@@ -19,7 +19,6 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
 
-
 ### Dec 16, 2020 \[Easy\] Max and Min with Limited Comparisons
 ---
 > **Question:** Given a list of numbers of size `n`, where `n` is greater than `3`, find the maximum and minimum of the list using less than `2 * (n - 1)` comparisons.
@@ -29,7 +28,6 @@ categories: Python/Java
 Input: [3, 5, 1, 2, 4, 8]
 Output: (1, 8)
 ```
-
 
 ### Dec 15, 2020 LC 307 \[Medium\] Range Sum Query - Mutable
 ---
@@ -46,6 +44,108 @@ update(1, 2)
 sumRange(0, 2) -> 8
 ```
 
+**Solution with Segment Tree:** [https://repl.it/@trsong/Mutable-Range-Sum-Query](https://repl.it/@trsong/Mutable-Range-Sum-Query)
+```py
+import unittest
+
+class RangeSumQuery(object):
+    def __init__(self, nums):
+        self.size = len(nums)
+        self.tree = RangeSumQuery.build_segment_tree(nums)
+
+    @staticmethod
+    def build_segment_tree(nums):
+        if not nums:
+            return []
+        
+        n = len(nums)
+        tree = [0] * n + nums
+        for i in xrange(n-1, -1, -1):
+            tree[i] = tree[2 * i] + tree[2 * i + 1]
+
+        return tree
+
+    def update(self, i, val):
+        pos = i + self.size
+        self.tree[pos] = val
+        while pos > 0:
+            left = pos
+            right = pos
+            if pos % 2 == 0:
+                # pos is left child
+                right = pos + 1
+            else:
+                # pos is right child
+                left = pos - 1
+            
+            # parent is updated after child is updated
+            self.tree[pos // 2] = self.tree[left] + self.tree[right]
+            pos //= 2
+
+    def range_sum(self, i, j):
+        #              1~7
+        #           /       \  
+        #          /         \
+        #         1~3        4~7
+        #        /   \      /   \
+        #       1    2~3  4~5   6~7
+        #           /  |  | |  /   \
+        #          2   3  4 5 6     7
+        n = self.size
+        l, r = i + n, j + n
+        sum = 0
+
+        while l <= r:
+            # case1: suppose l is right child that represents 2~3, we sum value(2~3) then move l right to 4~5
+            # case2: suppose l is left child do nothing
+            if l % 2 == 1:
+                # l bound is right child
+                sum += self.tree[l]
+                l += 1
+            
+            # case3: suppose r is right child that represents 6~7, do nothing
+            # case4: suppose r is left child that represents 4~5, we sum value(4~5) then move r left to 2~3
+            if r % 2 == 0:
+                # r bound is left child
+                sum += self.tree[r]
+                r -= 1
+            
+            # Mov l and r to parent and continue
+            l //=2
+            r //=2
+        return sum
+
+
+class RangeSumQuerySpec(unittest.TestCase):
+    def test_example(self):
+        rsq = RangeSumQuery([1, 3, 5])
+        self.assertEqual(rsq.range_sum(0, 2), 9)
+        rsq.update(1, 2)
+        self.assertEqual(rsq.range_sum(0, 2), 8)
+
+    def test_one_elem_array(self):
+        rsq = RangeSumQuery([8])
+        rsq.update(0, 2)
+        self.assertEqual(rsq.range_sum(0, 0), 2)
+
+    def test_update_all_elements(self):
+        req = RangeSumQuery([1, 4, 2, 3])
+        self.assertEqual(req.range_sum(0, 3), 10)
+        req.update(0, 0)
+        req.update(2, 0)
+        req.update(1, 0)
+        req.update(3, 0)
+        self.assertEqual(req.range_sum(0, 3), 0)
+        req.update(2, 1)
+        self.assertEqual(req.range_sum(0, 1), 0)
+        self.assertEqual(req.range_sum(1, 2), 1)
+        self.assertEqual(req.range_sum(2, 3), 1)
+        self.assertEqual(req.range_sum(3, 3), 0)
+
+
+if __name__ == '__main__':
+    unittest.main(verbosity=2, exit=False)
+```
 
 ### Dec 14, 2020 LC 554 \[Medium\] Brick Wall
 ---
