@@ -19,6 +19,20 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
 
+### Dec 17, 2020 LC 352 \[Hard\] Data Stream as Disjoint Intervals
+---
+> **Question:** Given a data stream input of non-negative integers `a1, a2, ..., an, ...`, summarize the numbers seen so far as a list of disjoint intervals.
+>
+> For example, suppose the integers from the data stream are `1, 3, 7, 2, 6, ...`, then the summary will be:
+
+```py
+[1, 1]
+[1, 1], [3, 3]
+[1, 1], [3, 3], [7, 7]
+[1, 3], [7, 7]
+[1, 3], [6, 7]
+```
+
 ### Dec 16, 2020 \[Easy\] Max and Min with Limited Comparisons
 ---
 > **Question:** Given a list of numbers of size `n`, where `n` is greater than `3`, find the maximum and minimum of the list using less than `2 * (n - 1)` comparisons.
@@ -28,6 +42,68 @@ categories: Python/Java
 Input: [3, 5, 1, 2, 4, 8]
 Output: (1, 8)
 ```
+
+**My thoughts:** The idea is to use Tournament Method. Think about each number as a team in the tournament. One team, zero matches. Two team, one match. N team, let's break them into half and use two matches to get best of best and worest of worest:
+
+```
+T(n) = 2 * T(n/2) + 2
+T(1) = 0
+T(2) = 1
+
+=>
+T(n) = 3n/2 - 2 
+```
+
+**Solution with Divide And Conquer:** [https://repl.it/@trsong/Find-the-Max-and-Min-with-Limited-Comparisons](https://repl.it/@trsong/Find-the-Max-and-Min-with-Limited-Comparisons)
+```py
+import unittest
+
+
+def find_min_max(nums):
+    if not nums:
+        return None
+    return find_min_max_recur(nums, 0, len(nums) - 1)
+
+
+def find_min_max_recur(nums, i, j):
+    if j - i <= 1:
+        return (nums[i], nums[j]) if nums[i] < nums[j] else (nums[j], nums[i])
+
+    mid = i + (j - i) // 2
+    left_min, left_max = find_min_max_recur(nums, i, mid)
+    right_min, right_max = find_min_max_recur(nums, mid + 1, j)
+
+    return min(left_min, right_min), max(left_max, right_max)
+
+
+class GetMinMaxSpec(unittest.TestCase):
+    def assert_find_min_max(self, nums):
+        min_val, max_val = min(nums), max(nums)
+        self.assertEqual((min_val, max_val), find_min_max(nums))
+
+    def test_empty_list(self):
+        self.assertIsNone(find_min_max([]))
+
+    def test_list_with_one_element(self):
+        self.assert_find_min_max([-1])
+
+    def test_list_with_two_elements(self):
+        self.assert_find_min_max([1, 2])
+
+    def test_increasing_list(self):
+        self.assert_find_min_max([1, 2, 3, 4])
+
+    def test_list_with_duplicated_element(self):
+        self.assert_find_min_max([-1, 1, -1, 1])
+
+    def test_long_list(self):
+        self.assert_find_min_max([1, 2, 3, 4, 5, 6, 7, 7, 6, 5, 4, 3, 2, 1])
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
+```
+
 
 ### Dec 15, 2020 LC 307 \[Medium\] Range Sum Query - Mutable
 ---

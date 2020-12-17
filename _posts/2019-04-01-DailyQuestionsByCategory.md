@@ -3471,6 +3471,26 @@ Note that we only care about characters that are still in the string at the end 
 ---
 
 <details>
+<summary class="lc_e">
+
+- [**\[Easy\] Max and Min with Limited Comparisons**](https://trsong.github.io/python/java/2020/11/02/DailyQuestionsAug/#dec-16-2020-easy-max-and-min-with-limited-comparisons) -- *Find the maximum and minimum of the list using less than `2 * (n - 1)` comparisons.* [*\(Try ME\)*](https://repl.it/@trsong/Find-the-Max-and-Min-with-Limited-Comparisons-1)
+
+</summary>
+<div>
+
+**Question:** Given a list of numbers of size `n`, where `n` is greater than `3`, find the maximum and minimum of the list using less than `2 * (n - 1)` comparisons.
+
+**Example:**
+```py
+Input: [3, 5, 1, 2, 4, 8]
+Output: (1, 8)
+```
+
+</div>
+</details>
+
+
+<details>
 <summary class="lc_m">
 
 - [**\[Medium\] LC 240. Search a 2D Matrix II**](https://trsong.github.io/python/java/2020/11/02/DailyQuestionsAug/#dec-13-2020-lc-240-medium-search-a-2d-matrix-ii) -- *Write an efficient algorithm that searches for a value in an m x n matrix.* [*\(Try ME\)*](https://repl.it/@trsong/Search-in-a-Sorted-2D-Matrix-1)
