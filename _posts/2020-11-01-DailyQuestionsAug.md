@@ -19,6 +19,13 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
 
+### Dec 18, 2020 \[Medium\] Reverse Coin Change
+---
+> **Question:** You are given an array of length `N`, where each element `i` represents the number of ways we can produce `i` units of change. For example, `[1, 0, 1, 1, 2]` would indicate that there is only one way to make `0, 2, or 3` units, and two ways of making `4` units.
+>
+> Given such an array, determine the denominations that must be in use. In the case above, for example, there must be coins with value `2, 3, and 4`.
+
+
 ### Dec 17, 2020 LC 352 \[Hard\] Data Stream as Disjoint Intervals
 ---
 > **Question:** Given a data stream input of non-negative integers `a1, a2, ..., an, ...`, summarize the numbers seen so far as a list of disjoint intervals.
