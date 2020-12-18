@@ -40,6 +40,90 @@ categories: Python/Java
 [1, 3], [6, 7]
 ```
 
+**My thoughts:** Using heap to store all intervals. When get intervals, pop element with smallest start time one by one, there are only 3 cases:
+- Element Overlapping w/ previous interval, then we do nothing
+- Element will update existing interval's start or end time, then we update the interval
+- Element will cause two intervals to merge.
+
+**Solution with Priority Queue:** [https://repl.it/@trsong/Print-Data-Stream-as-Disjoint-Intervals](https://repl.it/@trsong/Print-Data-Stream-as-Disjoint-Intervals)
+```py
+import unittest
+from Queue import PriorityQueue
+
+class SummaryRanges(object):
+    def __init__(self):
+      self.min_heap = PriorityQueue()  
+      self.num_set = set()
+
+    def add_num(self, val):
+        if val not in self.num_set:
+            self.num_set.add(val)
+            self.min_heap.put((val, [val, val]))
+
+    def get_intervals(self):
+        res = []
+        while not self.min_heap.empty():
+            _, interval = self.min_heap.get()
+            prev = res[-1] if res else None
+            if prev is None or prev[1] + 1 < interval[0]:
+                res.append(interval)
+            else:
+                prev[1] = max(prev[1], interval[1])
+
+        for interval in res:
+            self.min_heap.put((interval[0], interval))
+        return res
+
+
+class SummaryRangesSpec(unittest.TestCase):
+    def test_sample(self):
+        sr = SummaryRanges()
+        sr.add_num(1)
+        self.assertEqual([[1, 1]], sr.get_intervals())
+        sr.add_num(3)
+        self.assertEqual([[1, 1], [3, 3]], sr.get_intervals())
+        sr.add_num(7)
+        self.assertEqual([[1, 1], [3, 3], [7, 7]], sr.get_intervals())
+        sr.add_num(2)
+        self.assertEqual([[1, 3], [7, 7]], sr.get_intervals())
+        sr.add_num(6)
+        self.assertEqual([[1, 3], [6, 7]], sr.get_intervals())
+
+    def test_none_overlapping(self):
+        sr = SummaryRanges()
+        sr.add_num(3)
+        sr.add_num(1)
+        sr.add_num(5)
+        self.assertEqual([[1, 1], [3, 3], [5, 5]], sr.get_intervals())
+
+    def test_val_in_existing_intervals(self):
+        sr = SummaryRanges()
+        sr.add_num(3)
+        sr.add_num(2)
+        sr.add_num(1)
+        sr.add_num(5)
+        sr.add_num(6)
+        sr.add_num(7)
+        self.assertEqual([[1, 3], [5, 7]], sr.get_intervals())
+        sr.add_num(6)
+        self.assertEqual([[1, 3], [5, 7]], sr.get_intervals())
+
+    def test_val_join_two_intervals(self):
+        sr = SummaryRanges()
+        sr.add_num(3)
+        sr.add_num(2)
+        sr.add_num(1)
+        sr.add_num(5)
+        sr.add_num(6)
+        self.assertEqual([[1, 3], [5, 6]], sr.get_intervals())
+        sr.add_num(4)
+        self.assertEqual([[1, 6]], sr.get_intervals())
+
+
+if __name__ == '__main__':
+    unittest.main(verbosity=2, exit=False)
+```
+
 ### Dec 16, 2020 \[Easy\] Max and Min with Limited Comparisons
 ---
 > **Question:** Given a list of numbers of size `n`, where `n` is greater than `3`, find the maximum and minimum of the list using less than `2 * (n - 1)` comparisons.

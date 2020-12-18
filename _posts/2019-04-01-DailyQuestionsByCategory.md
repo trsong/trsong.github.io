@@ -859,6 +859,31 @@ Follow-up: What if you couldn't use any extra space?
 ---
 
 <details>
+<summary class="lc_h">
+
+- [**\[Hard\] LC 352. Data Stream as Disjoint Intervals**](https://trsong.github.io/python/java/2020/11/02/DailyQuestionsAug/#dec-17-2020-lc-352-hard-data-stream-as-disjoint-intervals) -- *Given a data stream input of non-negative integers a1, a2, ..., an, ..., summarize the numbers seen so far as a list of disjoint intervals.* [*\(Try ME\)*](https://repl.it/@trsong/Print-Data-Stream-as-Disjoint-Intervals-1)
+
+</summary>
+<div>
+
+**Question:** Given a data stream input of non-negative integers `a1, a2, ..., an, ...`, summarize the numbers seen so far as a list of disjoint intervals.
+
+For example, suppose the integers from the data stream are `1, 3, 7, 2, 6, ...`, then the summary will be:
+
+```py
+[1, 1]
+[1, 1], [3, 3]
+[1, 1], [3, 3], [7, 7]
+[1, 3], [7, 7]
+[1, 3], [6, 7]
+```
+
+</div>
+</details>
+
+
+
+<details>
 <summary class="lc_e">
 
 - [**\[Easy\] LC 228. Extract Range**](https://trsong.github.io/python/java/2020/11/02/DailyQuestionsAug/#nov-30-2020-lc-228-easy-extract-range) -- *Given a sorted list of numbers, return a list of strings that represent all of the consecutive numbers.* [*\(Try ME\)*](https://repl.it/@trsong/Extract-Range-1)
