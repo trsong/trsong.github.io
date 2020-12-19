@@ -46,6 +46,85 @@ categories: Python/Java
 > Given such an array, determine the denominations that must be in use. In the case above, for example, there must be coins with value `2, 3, and 4`.
 
 
+**Thoughts:** Thinking backwards. Given a base, we use `dp[num] += dp[num - base_num] for all base_num in base`. Likewise, whenver we discover a base_num, `dp[num] -= dp[num - base_num]` to eliminate base's effect.
+
+**Solution with DP:** [https://repl.it/@trsong/Reverse-Coin-Change](https://repl.it/@trsong/Reverse-Coin-Change)
+```py
+import unittest
+
+def reverse_coin_change(coin_ways):
+    if not coin_ways:
+        return []
+
+    n = len(coin_ways)
+    base = []
+    for base_num in xrange(1, n):
+        if coin_ways[base_num] == 0:
+            continue
+        base.append(base_num)
+
+        for num in xrange(n - 1, base_num - 1, -1):
+            coin_ways[num] -= coin_ways[num - base_num]
+    return base
+
+
+class ReverseCoinChangeSpec(unittest.TestCase):
+    @staticmethod
+    def generate_coin_ways(base, size=None):
+        max_num = size if size is not None else max(base)
+        coin_ways = [0] * (max_num + 1)
+        coin_ways[0] = 1
+        for base_num in base:
+            for num in xrange(base_num, max_num + 1):
+                coin_ways[num] += coin_ways[num - base_num]
+        return coin_ways  
+
+    def test_example(self):
+        coin_ways = [1, 0, 1, 1, 2]
+        # 0: 0
+        # 1: 
+        # 2: one 2
+        # 3: one 3
+        # 4: two 2's or one 4
+        # Therefore: [2, 3, 4] as base produces above coin ways
+        expected = [2, 3, 4]
+        self.assertEqual(expected, reverse_coin_change(coin_ways))
+
+    def test_empty_input(self):
+        self.assertEqual([], reverse_coin_change([]))
+
+    def test_empty_base(self):
+        self.assertEqual([], reverse_coin_change([1, 0, 0, 0, 0, 0]))
+
+    def test_one_number_base(self):
+        coin_ways = [1, 1, 1, 1, 1, 1]
+        expected = [1]
+        self.assertEqual(expected, reverse_coin_change(coin_ways))
+
+    def test_prime_number_base(self):
+        # ReverseCoinChangeSpec.generate_coin_ways([2, 3, 5, 7], 10)
+        coin_ways = [1, 0, 1, 1, 1, 2, 2, 3, 3, 4, 5]
+        expected = [2, 3, 5, 7]
+        self.assertEqual(expected, reverse_coin_change(coin_ways))
+
+    def test_composite_base(self):
+        # ReverseCoinChangeSpec.generate_coin_ways([2, 4, 6], 10)
+        coin_ways = [1, 0, 1, 0, 2, 0, 3, 0, 5, 0, 6]
+        expected = [2, 4, 6, 8]
+        self.assertEqual(expected, reverse_coin_change(coin_ways))
+
+    def test_all_number_bases(self):
+        # ReverseCoinChangeSpec.generate_coin_ways([1, 2, 3, 4, 5, 6, 7, 8, 9, 10])
+        coin_ways = [1, 1, 2, 3, 5, 7, 11, 15, 22, 30, 42]
+        expected = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+        self.assertEqual(expected, reverse_coin_change(coin_ways))
+
+
+if __name__ == '__main__':
+    unittest.main(verbosity=2, exit=False)
+```
+
+
 ### Dec 17, 2020 LC 352 \[Hard\] Data Stream as Disjoint Intervals
 ---
 > **Question:** Given a data stream input of non-negative integers `a1, a2, ..., an, ...`, summarize the numbers seen so far as a list of disjoint intervals.

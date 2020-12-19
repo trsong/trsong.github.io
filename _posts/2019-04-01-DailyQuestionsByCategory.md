@@ -4662,6 +4662,7 @@ For example, given `"2542540123"`, you should return `['254.25.40.123', '254.254
 ### 1D DP
 ---
 
+
 <details>
 <summary class="lc_m">
 
@@ -4854,6 +4855,23 @@ Output: 1
 ```py
 make_change([1, 5, 10, 25], 36)  # gives 3 coins (25 + 10 + 1) 
 ```
+
+</div>
+</details>
+
+
+<details>
+<summary class="lc_m">
+
+- [**\[Medium\] Reverse Coin Change**](https://trsong.github.io/python/java/2020/11/02/DailyQuestionsAug/#dec-18-2020-medium-reverse-coin-change) -- *Given an array represents the number of ways we can produce `i` units of change, determine the denominations that must be in use.* [*\(Try ME\)*](https://repl.it/@trsong/Reverse-Coin-Change-1)
+
+</summary>
+<div>
+
+**Question:** You are given an array of length `N`, where each element `i` represents the number of ways we can produce `i` units of change. For example, `[1, 0, 1, 1, 2]` would indicate that there is only one way to make `0, 2, or 3` units, and two ways of making `4` units.
+
+Given such an array, determine the denominations that must be in use. In the case above, for example, there must be coins with value `2, 3, and 4`.
+
 
 </div>
 </details>
