@@ -19,6 +19,26 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
 
+
+### Dec 19, 2020 \[Medium\] Craft Sentence
+---
+> **Question:** Write an algorithm to justify text. Given a sequence of words and an integer line length k, return a list of strings which represents each line, fully justified.
+> 
+> More specifically, you should have as many words as possible in each line. There should be at least one space between each word. Pad extra spaces when necessary so that each line has exactly length k. Spaces should be distributed as equally as possible, with the extra spaces, if any, distributed starting from the left.
+> 
+> If you can only fit one word on a line, then you should pad the right-hand side with spaces.
+> 
+> Each word is guaranteed not to be longer than k.
+>
+> For example, given the list of words `["the", "quick", "brown", "fox", "jumps", "over", "the", "lazy", "dog"]` and `k = 16`, you should return the following:
+
+```py
+["the  quick brown",
+ "fox  jumps  over",
+ "the   lazy   dog"]
+```
+
+
 ### Dec 18, 2020 \[Medium\] Reverse Coin Change
 ---
 > **Question:** You are given an array of length `N`, where each element `i` represents the number of ways we can produce `i` units of change. For example, `[1, 0, 1, 1, 2]` would indicate that there is only one way to make `0, 2, or 3` units, and two ways of making `4` units.
