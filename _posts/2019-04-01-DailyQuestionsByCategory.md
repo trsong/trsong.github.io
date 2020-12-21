@@ -1931,6 +1931,35 @@ t     a     g
 </details>
 
 
+<details>
+<summary class="lc_m">
+
+- [**\[Medium\] Tokenization**](https://trsong.github.io/python/java/2020/05/02/DailyQuestionsMay/#jul-20-2020-medium-tokenization) -- *Given a dictionary of words and a string made up of those words (no spaces), return the original sentence in a list.* [*\(Try ME\)*](https://repl.it/@trsong/String-Tokenization-1)
+
+</summary>
+<div>
+
+**Questions:** Given a dictionary of words and a string made up of those words (no spaces), return the original sentence in a list. If there is more than one possible reconstruction, return any of them. If there is no possible reconstruction, then return null.
+
+**Example 1:**
+```py
+Input: ['quick', 'brown', 'the', 'fox'], 'thequickbrownfox'
+Output: ['the', 'quick', 'brown', 'fox']
+```
+
+**Example 2:**
+```py
+Input: ['bed', 'bath', 'bedbath', 'and', 'beyond'], 'bedbathandbeyond'
+Output:  Either ['bed', 'bath', 'and', 'beyond'] or ['bedbath', 'and', 'beyond']
+```
+
+</div>
+</details>
+
+
+#### Parenthesis
+---
+
 
 <details>
 <summary class="lc_m">
@@ -1983,30 +2012,7 @@ Output: ''
 </details>
 
 
-<details>
-<summary class="lc_m">
 
-- [**\[Medium\] Tokenization**](https://trsong.github.io/python/java/2020/05/02/DailyQuestionsMay/#jul-20-2020-medium-tokenization) -- *Given a dictionary of words and a string made up of those words (no spaces), return the original sentence in a list.* [*\(Try ME\)*](https://repl.it/@trsong/String-Tokenization-1)
-
-</summary>
-<div>
-
-**Questions:** Given a dictionary of words and a string made up of those words (no spaces), return the original sentence in a list. If there is more than one possible reconstruction, return any of them. If there is no possible reconstruction, then return null.
-
-**Example 1:**
-```py
-Input: ['quick', 'brown', 'the', 'fox'], 'thequickbrownfox'
-Output: ['the', 'quick', 'brown', 'fox']
-```
-
-**Example 2:**
-```py
-Input: ['bed', 'bath', 'bedbath', 'and', 'beyond'], 'bedbathandbeyond'
-Output:  Either ['bed', 'bath', 'and', 'beyond'] or ['bedbath', 'and', 'beyond']
-```
-
-</div>
-</details>
 
 ### Anagram
 ---
