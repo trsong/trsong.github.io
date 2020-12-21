@@ -300,6 +300,28 @@ Can you perform the operation without allocating extra memory (disregarding the 
 
 
 <details>
+<summary class="lc_e">
+
+- [**\[Easy\] Longest Consecutive 1s in Binary Representation**](https://trsong.github.io/python/java/2020/11/02/DailyQuestionsAug/#dec-20-2020-easy-longest-consecutive-1s-in-binary-representation) -- *Given an integer n, return the length of the longest consecutive run of 1s in its binary representation.* [*\(Try ME\)*](https://repl.it/@trsong/Longest-Consecutive-1s-in-Binary-Representation-1)
+
+</summary>
+<div>
+
+**Question:**  Given an integer n, return the length of the longest consecutive run of 1s in its binary representation.
+
+**Example:**
+```py
+Input: 156
+Output: 3
+Exaplanation: 156 in binary is 10011100
+```
+
+
+</div>
+</details>
+
+
+<details>
 <summary class="lc_m">
 
 - [**\[Medium\] LC 29. Divide Two Integers**](https://trsong.github.io/python/java/2020/08/02/DailyQuestionsAug/#aug-23-2020-lc-29-medium-divide-two-integers) -- *Implement integer division without using the division operator: take two numbers,  return a tuple of (dividend, remainder)* [*\(Try ME\)*](https://repl.it/@trsong/Divide-Two-Integers-1)

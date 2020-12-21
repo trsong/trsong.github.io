@@ -103,6 +103,68 @@ Output: 3
 Exaplanation: 156 in binary is 10011100
 ```
 
+**My thoughts:** For any number `x`, bitwise AND itself with `x << 1` eliminates last 1 for each consecutive 1's:
+
+```py
+   10011100 & 
+  10011100
+= 000011000
+
+And 
+
+   11000 &
+  1100
+= 010000 
+``` 
+
+We can keep doing this until all 1's are exhausted. 
+
+**Solution:** [https://repl.it/@trsong/Longest-Consecutive-1s-in-Binary-Representation](https://repl.it/@trsong/Longest-Consecutive-1s-in-Binary-Representation)
+```py
+import unittest
+
+def count_longest_consecutive_ones(num):
+    count = 0
+    while num > 0:
+        num &= num << 1
+        count += 1
+    return count
+
+
+class CountLongestConsecutiveOneSpec(unittest.TestCase):
+    def test_example(self):
+        expected, num = 3, 0b10011100
+        self.assertEqual(expected, count_longest_consecutive_ones(num))
+
+    def test_zero(self):
+        expected, num = 0, 0b0
+        self.assertEqual(expected, count_longest_consecutive_ones(num))
+
+    def test_one(self):
+        expected, num = 1, 0b1
+        self.assertEqual(expected, count_longest_consecutive_ones(num))
+
+    def test_every_other_one(self):
+        expected, num = 1, 0b1010101
+        self.assertEqual(expected, count_longest_consecutive_ones(num))
+
+    def test_all_ones(self):
+        expected, num = 5, 0b11111
+        self.assertEqual(expected, count_longest_consecutive_ones(num))
+
+    def test_should_return_longest(self):
+        expected, num = 4, 0b10110111011110111010101
+        self.assertEqual(expected, count_longest_consecutive_ones(num))
+
+    def test_consecutive_zeros(self):
+        expected, num = 2, 0b100010001100010010001001
+        self.assertEqual(expected, count_longest_consecutive_ones(num))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
+```
+
 ### Dec 19, 2020 \[Medium\] Craft Sentence
 ---
 > **Question:** Write an algorithm to justify text. Given a sequence of words and an integer line length k, return a list of strings which represents each line, fully justified.
