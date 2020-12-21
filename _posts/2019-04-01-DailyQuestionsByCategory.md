@@ -3171,6 +3171,35 @@ Explanation: the largest product can be made by multiplying -4 * -4 * 8 = 128.
 <details>
 <summary class="lc_m">
 
+- [**\[Medium\] Craft Sentence**](https://trsong.github.io/python/java/2020/11/02/DailyQuestionsAug/#dec-19-2020-medium-craft-sentence) -- *Given a sequence of words and an integer line length k, write an algorithm to justify text.* [*\(Try ME\)*](https://repl.it/@trsong/Craft-Sentence-and-Adjust-Text-Width-1)
+
+</summary>
+<div>
+
+**Question:** Write an algorithm to justify text. Given a sequence of words and an integer line length k, return a list of strings which represents each line, fully justified.
+
+More specifically, you should have as many words as possible in each line. There should be at least one space between each word. Pad extra spaces when necessary so that each line has exactly length k. Spaces should be distributed as equally as possible, with the extra spaces, if any, distributed starting from the left.
+
+If you can only fit one word on a line, then you should pad the right-hand side with spaces.
+
+Each word is guaranteed not to be longer than k.
+
+For example, given the list of words `["the", "quick", "brown", "fox", "jumps", "over", "the", "lazy", "dog"]` and `k = 16`, you should return the following:
+
+```py
+["the  quick brown",
+ "fox  jumps  over",
+ "the   lazy   dog"]
+```
+
+
+</div>
+</details>
+
+
+<details>
+<summary class="lc_m">
+
 - [**\[Medium\] Rearrange String with Repeated Characters**](https://trsong.github.io/python/java/2020/11/02/DailyQuestionsAug/#dec-7-2020-medium-rearrange-string-with-repeated-characters) -- *Given a string with repeated characters, rearrange the string so that no two adjacent characters are the same.* [*\(Try ME\)*](https://repl.it/@trsong/Rearrange-String-with-Repeated-Characters-1)
 
 </summary>

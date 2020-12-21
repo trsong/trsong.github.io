@@ -38,6 +38,133 @@ categories: Python/Java
  "the   lazy   dog"]
 ```
 
+**Solution:** [https://repl.it/@trsong/Craft-Sentence-and-Adjust-Text-Width](https://repl.it/@trsong/Craft-Sentence-and-Adjust-Text-Width)
+```py
+
+import unittest
+
+def craft_sentence(words, k):
+    buffer = []
+    res = []
+    sentence_size = 0
+    for word in words:
+        if sentence_size + len(word) > k:
+            sentence = craft_one_sentence(buffer, k)
+            res.append(sentence)
+            buffer = []
+            sentence_size = 0
+        
+        buffer.append(word)
+        sentence_size += len(word) + 1
+    
+    if buffer:
+        res.append(craft_one_sentence(buffer, k))
+
+    return res
+
+
+def craft_one_sentence(words, k):
+    n = len(words)
+    if n == 1:
+        return words[0] + " " * (k - len(words[0]))
+
+    num_char = sum(map(len, words))
+    white_spaces = k - num_char
+    padding = white_spaces // (n - 1) 
+    extra_padding = white_spaces % (n - 1)
+
+    res = [words[0]]
+    for i in xrange(1, n):
+        res.append(" " * padding)
+        if extra_padding > 0:
+            res.append(" ")
+            extra_padding -= 1
+        res.append(words[i])
+    return ''.join(res)
+
+
+class CraftSentenceSpec(unittest.TestCase):
+    def test_fit_only_one_word(self):
+        k, words = 7, ["test", "same", "length", "string"]
+        expected = [
+            "test   ",
+            "same   ",
+            "length ",
+            "string "]
+        self.assertEqual(expected, craft_sentence(words, k))
+    
+    def test_fit_only_one_word2(self):
+        k, words = 6, ["test", "same", "length", "string"]
+        expected = [
+            "test  ",
+            "same  ",
+            "length",
+            "string"]
+        self.assertEqual(expected, craft_sentence(words, k))
+
+    def test_no_padding(self):
+        k, words = 2, ["to", "be"]
+        expected = ["to", "be"]
+        self.assertEqual(expected, craft_sentence(words, k))
+
+    def test_fit_two_words(self):
+        k, words = 6, ["To", "be", "or", "not", "to", "be"]
+        expected = [
+            "To  be",
+            "or not",
+            "to  be"]
+        self.assertEqual(expected, craft_sentence(words, k))
+
+    def test_fit_two_words2(self):
+        k, words = 11, ["Greed", "is", "not", "good"]
+        expected = [
+            "Greed    is",
+            "not    good"]
+        self.assertEqual(expected, craft_sentence(words, k))
+
+    def test_fit_more_words(self):
+        k, words = 16, ["the", "quick", "brown", "fox", "jumps",
+        "over", "the", "lazy", "dog"]
+        expected = [
+            "the  quick brown",
+            "fox  jumps  over",
+            "the   lazy   dog"]
+        self.assertEqual(expected, craft_sentence(words, k))
+
+    def test_longer_sentence(self):
+        k, words = 16, ["This", "is", "an", "example", "of", "text", "justification."]
+        expected = [
+            "This    is    an",
+            "example  of text",
+            "justification.  "]
+        self.assertEqual(expected, craft_sentence(words, k))
+
+    def test_longer_sentence2(self):
+        k, words = 16, ["What", "must", "be", "acknowledgment",
+         "shall", "be"]
+        expected = [
+            "What   must   be",
+            "acknowledgment  ",
+            "shall         be"]
+        self.assertEqual(expected, craft_sentence(words, k))
+
+    def test_longer_sentence3(self):
+        k, words = 20, ["Science", "is", "what", "we", "understand", 
+        "well", "enough", "to", "explain", "to", "a", "computer.", 
+        "Art", "is", "everything", "else", "we", "do"]
+        expected = [
+            "Science  is  what we",
+            "understand      well",
+            "enough to explain to",
+            "a  computer.  Art is",
+            "everything  else  we",
+            "do                  "]
+        self.assertEqual(expected, craft_sentence(words, k))
+
+
+if __name__ == '__main__':
+    unittest.main(verbosity=2, exit=False)
+```
 
 ### Dec 18, 2020 \[Medium\] Reverse Coin Change
 ---
