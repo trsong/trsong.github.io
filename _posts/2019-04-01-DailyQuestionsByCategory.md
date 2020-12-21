@@ -312,6 +312,28 @@ You should return 2, since bishops 1 and 3 attack each other, as well as bishops
 <details>
 <summary class="lc_h">
 
+- [**\[Hard\] Find Next Greater Permutation**](https://trsong.github.io/python/java/2020/05/02/DailyQuestionsMay/#june-2-2020-hard-find-next-greater-permutation) -- *Given a number represented by a list of digits, find the next greater permutation of a number, in terms of lexicographic ordering.* [*\(Try ME\)*](https://repl.it/@trsong/Find-the-Next-Greater-Permutation-1)
+
+</summary>
+<div>
+
+**Question:** Given a number represented by a list of digits, find the next greater permutation of a number, in terms of lexicographic ordering. If there is not greater permutation possible, return the permutation with the lowest value/ordering.
+
+For example, the list `[1,2,3]` should return `[1,3,2]`. The list `[1,3,2]` should return `[2,1,3]`. The list `[3,2,1]` should return `[1,2,3]`.
+
+Can you perform the operation without allocating extra memory (disregarding the input memory)?
+
+</div>
+</details>
+
+
+### Bitwise Operations
+---
+
+
+<details>
+<summary class="lc_h">
+
 - [**\[Hard\] Find Next Sparse Number**](https://trsong.github.io/python/java/2020/11/02/DailyQuestionsAug/#dec-11-2020-hard-find-next-sparse-number) -- *For a given input N, find the smallest sparse number greater than or equal to N.* [*\(Try ME\)*](https://repl.it/@trsong/Find-the-Next-Spare-Number-1)
 
 </summary>
@@ -340,27 +362,6 @@ Do this in faster than `O(N log N)` time.
 </div>
 </details>
 
-
-<details>
-<summary class="lc_h">
-
-- [**\[Hard\] Find Next Greater Permutation**](https://trsong.github.io/python/java/2020/05/02/DailyQuestionsMay/#june-2-2020-hard-find-next-greater-permutation) -- *Given a number represented by a list of digits, find the next greater permutation of a number, in terms of lexicographic ordering.* [*\(Try ME\)*](https://repl.it/@trsong/Find-the-Next-Greater-Permutation-1)
-
-</summary>
-<div>
-
-**Question:** Given a number represented by a list of digits, find the next greater permutation of a number, in terms of lexicographic ordering. If there is not greater permutation possible, return the permutation with the lowest value/ordering.
-
-For example, the list `[1,2,3]` should return `[1,3,2]`. The list `[1,3,2]` should return `[2,1,3]`. The list `[3,2,1]` should return `[1,2,3]`.
-
-Can you perform the operation without allocating extra memory (disregarding the input memory)?
-
-</div>
-</details>
-
-
-### XOR
----
 
 <details>
 <summary class="lc_m">
