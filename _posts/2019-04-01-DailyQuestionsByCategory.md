@@ -28,23 +28,6 @@ categories: Python/Java
 ---
 
 
-<details>
-<summary class="lc_h">
-
-- [**\[Hard\] Find the Element That Appears Once While Others Occur 3 Times**](http://trsong.github.io/python/java/2020/11/02/DailyQuestionsAug/#nov-21-2020-hard-find-the-element-that-appears-once-while-others-occur-3-times) -- *Given an array of integers where every integer occurs three times except for one integer, which only occurs once, find that element.* [*\(Try ME\)*](https://repl.it/@trsong/Find-the-Element-That-Appears-Once-While-Others-Occur-3-Ti-1)
-
-</summary>
-<div>
-
-**Question:** Given an array of integers where every integer occurs three times except for one integer, which only occurs once, find and return the non-duplicated integer.
-
-For example, given `[6, 1, 3, 3, 3, 6, 6]`, return `1`. Given `[13, 19, 13, 13]`, return `19`.
-
-Do this in `O(N)` time and `O(1)` space.
-
-</div>
-</details>
-
 
 <details>
 <summary class="lc_e">
@@ -208,21 +191,6 @@ Output: "0.(6)"
 </details>
 
 
-<details>
-<summary class="lc_m">
-
-- [**\[Medium\] LC 29. Divide Two Integers**](https://trsong.github.io/python/java/2020/08/02/DailyQuestionsAug/#aug-23-2020-lc-29-medium-divide-two-integers) -- *Implement integer division without using the division operator: take two numbers,  return a tuple of (dividend, remainder)* [*\(Try ME\)*](https://repl.it/@trsong/Divide-Two-Integers-1)
-
-</summary>
-<div>
-
-**Question:** Implement integer division without using the division operator. Your function should return a tuple of `(dividend, remainder)` and it should take two numbers, the product and divisor.
-
-For example, calling `divide(10, 3)` should return `(3, 1)` since the divisor is `3` and the remainder is `1`.
-
-</div>
-</details>
-
 
 <details>
 <summary class="lc_e">
@@ -329,6 +297,39 @@ Can you perform the operation without allocating extra memory (disregarding the 
 
 ### Bitwise Operations
 ---
+
+
+<details>
+<summary class="lc_m">
+
+- [**\[Medium\] LC 29. Divide Two Integers**](https://trsong.github.io/python/java/2020/08/02/DailyQuestionsAug/#aug-23-2020-lc-29-medium-divide-two-integers) -- *Implement integer division without using the division operator: take two numbers,  return a tuple of (dividend, remainder)* [*\(Try ME\)*](https://repl.it/@trsong/Divide-Two-Integers-1)
+
+</summary>
+<div>
+
+**Question:** Implement integer division without using the division operator. Your function should return a tuple of `(dividend, remainder)` and it should take two numbers, the product and divisor.
+
+For example, calling `divide(10, 3)` should return `(3, 1)` since the divisor is `3` and the remainder is `1`.
+
+</div>
+</details>
+
+<details>
+<summary class="lc_h">
+
+- [**\[Hard\] Find the Element That Appears Once While Others Occur 3 Times**](http://trsong.github.io/python/java/2020/11/02/DailyQuestionsAug/#nov-21-2020-hard-find-the-element-that-appears-once-while-others-occur-3-times) -- *Given an array of integers where every integer occurs three times except for one integer, which only occurs once, find that element.* [*\(Try ME\)*](https://repl.it/@trsong/Find-the-Element-That-Appears-Once-While-Others-Occur-3-Ti-1)
+
+</summary>
+<div>
+
+**Question:** Given an array of integers where every integer occurs three times except for one integer, which only occurs once, find and return the non-duplicated integer.
+
+For example, given `[6, 1, 3, 3, 3, 6, 6]`, return `1`. Given `[13, 19, 13, 13]`, return `19`.
+
+Do this in `O(N)` time and `O(1)` space.
+
+</div>
+</details>
 
 
 <details>
