@@ -20,6 +20,17 @@ categories: Python/Java
 
 
 
+### Dec 20, 2020 \[Easy\] Longest Consecutive 1s in Binary Representation
+---
+> **Question:**  Given an integer n, return the length of the longest consecutive run of 1s in its binary representation.
+
+**Example:**
+```py
+Input: 156
+Output: 3
+Exaplanation: 156 in binary is 10011100
+```
+
 ### Dec 19, 2020 \[Medium\] Craft Sentence
 ---
 > **Question:** Write an algorithm to justify text. Given a sequence of words and an integer line length k, return a list of strings which represents each line, fully justified.
