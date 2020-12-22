@@ -1984,6 +1984,21 @@ Output:  Either ['bed', 'bath', 'and', 'beyond'] or ['bedbath', 'and', 'beyond']
 ### Parenthesis
 ---
 
+<details>
+<summary class="lc_e">
+
+- [**\[Easy\] Invalid Parentheses to Remove**](https://trsong.github.io/python/java/2020/11/02/DailyQuestionsAug/#dec-21-2020-easy-invalid-parentheses-to-remove) -- *Write a function to compute the minimum number of parentheses to be removed to make the string valid.* [*\(Try ME\)*](https://repl.it/@trsong/Count-Invalid-Parentheses-to-Remove-1)
+
+</summary>
+<div>
+
+**Question:** Given a string of parentheses, write a function to compute the minimum number of parentheses to be removed to make the string valid (i.e. each open parenthesis is eventually closed).
+
+For example, given the string `"()())()"`, you should return `1`. Given the string `")("`, you should return `2`, since we must remove all of them.
+
+</div>
+</details>
+
 
 <details>
 <summary class="lc_m">

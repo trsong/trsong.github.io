@@ -57,9 +57,9 @@ Explanation:
   Third round: (((1,8),(4,5)),((2,7),(3,6)))
 ```
 
+-->
 
-
-### Dec 21, 2020 LC 301 \[Hard\] Remove Invalid Parentheses
+### Dec 22, 2020 LC 301 \[Hard\] Remove Invalid Parentheses
 --- 
 > **Question:** Remove the minimum number of invalid parentheses in order to make the input string valid. Return all possible results.
 >
@@ -82,7 +82,6 @@ Output: ["(a)()()", "(a())()"]
 Input: ")("
 Output: [""]
 ```
---> 
 
 
 ### Dec 21, 2020 \[Easy\] Invalid Parentheses to Remove 
@@ -90,6 +89,54 @@ Output: [""]
 > **Question:** Given a string of parentheses, write a function to compute the minimum number of parentheses to be removed to make the string valid (i.e. each open parenthesis is eventually closed).
 >
 > For example, given the string `"()())()"`, you should return `1`. Given the string `")("`, you should return `2`, since we must remove all of them.
+
+**Solution:** [https://repl.it/@trsong/Count-Invalid-Parentheses-to-Remove](https://repl.it/@trsong/Count-Invalid-Parentheses-to-Remove)
+```py
+
+import unittest
+
+def count_invalid_parentheses(input_str):
+    balance = 0
+    invalid = 0
+    for ch in input_str:
+        if ch == '(':
+            balance += 1
+        elif balance > 0:
+            balance -= 1
+        else:
+            invalid += 1
+    return balance + invalid
+
+
+class CountInvalidParentheseSpec(unittest.TestCase):
+    def test_incomplete_parentheses(self):
+        self.assertEqual(1, count_invalid_parentheses("(()"))
+    
+    def test_incomplete_parentheses2(self):
+        self.assertEqual(2, count_invalid_parentheses("(()("))
+    
+    def test_overflown_close_parentheses(self):
+        self.assertEqual(2, count_invalid_parentheses("()))"))
+    
+    def test_overflown_close_parentheses2(self):
+        self.assertEqual(2, count_invalid_parentheses(")()("))
+
+    def test_valid_parentheses(self):
+        self.assertEqual(0, count_invalid_parentheses("((()))"))
+    
+    def test_valid_parentheses2(self):
+        self.assertEqual(0, count_invalid_parentheses("()()()"))
+    
+    def test_valid_parentheses3(self):
+        self.assertEqual(0, count_invalid_parentheses("((())(()))"))
+
+    def test_valid_parentheses4(self):
+        self.assertEqual(0, count_invalid_parentheses(""))
+
+
+if __name__ == '__main__':
+    unittest.main(verbosity=2, exit=False) 
+```
 
 
 ### Dec 20, 2020 \[Easy\] Longest Consecutive 1s in Binary Representation
