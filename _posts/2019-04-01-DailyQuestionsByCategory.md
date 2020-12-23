@@ -2001,6 +2001,40 @@ For example, given the string `"()())()"`, you should return `1`. Given the stri
 
 
 <details>
+<summary class="lc_h">
+
+- [**\[Hard\] LC 301. Remove Invalid Parentheses**](https://trsong.github.io/python/java/2020/11/02/DailyQuestionsAug/#dec-22-2020-lc-301-hard-remove-invalid-parentheses) -- *Remove the minimum number of invalid parentheses in order to make the input string valid. Return all possible results.* [*\(Try ME\)*](https://repl.it/@trsong/Ways-to-Remove-Invalid-Parentheses-1)
+
+</summary>
+<div>
+
+**Question:** Remove the minimum number of invalid parentheses in order to make the input string valid. Return all possible results.
+
+**Note:** The input string may contain letters other than the parentheses `(` and `)`.
+
+**Example 1:**
+```py
+Input: "()())()"
+Output: ["()()()", "(())()"]
+```
+
+**Example 2:**
+```py
+Input: "(a)())()"
+Output: ["(a)()()", "(a())()"]
+```
+
+**Example 3:**
+```py
+Input: ")("
+Output: [""]
+```
+
+</div>
+</details>
+
+
+<details>
 <summary class="lc_m">
 
 - [**\[Medium\] LC 678. Balanced Parentheses with Wildcard**](http://trsong.github.io/python/java/2020/08/02/DailyQuestionsAug/#oct-2-2020-lc-678-medium-balanced-parentheses-with-wildcard) -- *Given string contains * that can represent either a (, ), or an empty string. Determine whether the parentheses are balanced.* [*\(Try ME\)*](https://repl.it/@trsong/Determine-Balanced-Parentheses-with-Wildcard-1)
@@ -4511,6 +4545,40 @@ For example, given `100`, you can reach `1` in five steps with the following rou
 
 ## Backtracking
 ---
+
+<details>
+<summary class="lc_h">
+
+- [**\[Hard\] LC 301. Remove Invalid Parentheses**](https://trsong.github.io/python/java/2020/11/02/DailyQuestionsAug/#dec-22-2020-lc-301-hard-remove-invalid-parentheses) -- *Remove the minimum number of invalid parentheses in order to make the input string valid. Return all possible results.* [*\(Try ME\)*](https://repl.it/@trsong/Ways-to-Remove-Invalid-Parentheses-1)
+
+</summary>
+<div>
+
+**Question:** Remove the minimum number of invalid parentheses in order to make the input string valid. Return all possible results.
+
+**Note:** The input string may contain letters other than the parentheses `(` and `)`.
+
+**Example 1:**
+```py
+Input: "()())()"
+Output: ["()()()", "(())()"]
+```
+
+**Example 2:**
+```py
+Input: "(a)())()"
+Output: ["(a)()()", "(a())()"]
+```
+
+**Example 3:**
+```py
+Input: ")("
+Output: [""]
+```
+
+</div>
+</details>
+
 
 <details>
 <summary class="lc_h">
