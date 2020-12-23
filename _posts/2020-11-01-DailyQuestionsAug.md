@@ -20,8 +20,7 @@ categories: Python/Java
 
 
 
-<!-- 
-### Dec 22, 2020 LT 879 \[Medium\] NBA Playoff Matches
+### Dec 23, 2020 LT 879 \[Medium\] NBA Playoff Matches
 ---
 > **Question:** During the NBA playoffs, we always arrange the rather strong team to play with the rather weak team, like make the rank 1 team play with the rank nth team, which is a good strategy to make the contest more interesting. Now, you're given n teams, and you need to output their final contest matches in the form of a string.
 >
@@ -57,7 +56,6 @@ Explanation:
   Third round: (((1,8),(4,5)),((2,7),(3,6)))
 ```
 
--->
 
 ### Dec 22, 2020 LC 301 \[Hard\] Remove Invalid Parentheses
 --- 
