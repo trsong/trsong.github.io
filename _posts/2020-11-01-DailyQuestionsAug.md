@@ -20,6 +20,18 @@ categories: Python/Java
 
 
 
+### Dec 24, 2020 \[Easy\] Smallest Sum Not Subset Sum
+---
+> **Question:** Given a sorted list of positive numbers, find the smallest positive number that cannot be a sum of any subset in the list.
+
+**Example:**
+```py
+Input: [1, 2, 3, 8, 9, 10]
+Output: 7
+Numbers 1 to 6 can all be summed by a subset of the list of numbers, but 7 cannot.
+```
+
+
 ### Dec 23, 2020 LT 879 \[Medium\] NBA Playoff Matches
 ---
 > **Question:** During the NBA playoffs, we always arrange the rather strong team to play with the rather weak team, like make the rank 1 team play with the rank nth team, which is a good strategy to make the contest more interesting. Now, you're given n teams, and you need to output their final contest matches in the form of a string.
