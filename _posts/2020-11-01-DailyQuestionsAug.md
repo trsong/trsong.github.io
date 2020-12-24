@@ -68,6 +68,43 @@ Explanation:
   Third round: (((1,8),(4,5)),((2,7),(3,6)))
 ```
 
+**Solution:** [https://repl.it/@trsong/Print-NBA-Playoff-Matches](https://repl.it/@trsong/Print-NBA-Playoff-Matches)
+```py
+import unittest
+
+def NBA_Playoff_Matches(n):
+    res = map(str, range(1, n + 1))
+    while n > 1:
+        for i in xrange(n):
+            res[i] = "(%s,%s)" % (res[i], res[n - i - 1])
+        n //= 2
+    return res[0]
+
+
+class NBAPlayoffMatcheSpec(unittest.TestCase):
+    def test_2_teams(self):
+        expected = "(1,2)"
+        self.assertEqual(expected, NBA_Playoff_Matches(2))
+
+    def test_4_teams(self):
+        expected = "((1,4),(2,3))"
+        self.assertEqual(expected, NBA_Playoff_Matches(4))
+
+    def test_8_teams(self):
+        expected = "(((1,8),(4,5)),((2,7),(3,6)))"
+        self.assertEqual(expected, NBA_Playoff_Matches(8))
+
+    def test_16_teams(self):
+        # round1: (1, 16), (2, 15), (3, 14), (4, 13), (5, 12), (6, 11), (7, 10), (8, 9)
+        # round2: ((1, 16), (8, 9)), ((2, 15), (7, 10)), ((3, 14), (6, 11)), ((4, 13), (5, 12))
+        # round3: ((((1,16),(8,9)),((4,13),(5,12))),(((2,15),(7,10)),((3,14),(6,11))))
+        expected = "((((1,16),(8,9)),((4,13),(5,12))),(((2,15),(7,10)),((3,14),(6,11))))"
+        self.assertEqual(expected, NBA_Playoff_Matches(16))
+
+
+if __name__ == '__main__':
+    unittest.main(verbosity=2, exit=False)
+```
 
 ### Dec 22, 2020 LC 301 \[Hard\] Remove Invalid Parentheses
 --- 
