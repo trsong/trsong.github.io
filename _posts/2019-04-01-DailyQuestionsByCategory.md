@@ -4805,6 +4805,28 @@ For example, given `"2542540123"`, you should return `['254.25.40.123', '254.254
 ---
 
 <details>
+<summary class="lc_e">
+
+- [**\[Easy\] Smallest Sum Not Subset Sum**](https://trsong.github.io/python/java/2020/11/02/DailyQuestionsAug/#dec-24-2020-easy-smallest-sum-not-subset-sum) -- *Given a sorted list of positive numbers, find the smallest positive number that cannot be a sum of any subset in the list.* [*\(Try ME\)*](https://repl.it/@trsong/Smallest-Sum-Not-Subset-Sum-1)
+
+</summary>
+<div>
+
+**Question:** Given a sorted list of positive numbers, find the smallest positive number that cannot be a sum of any subset in the list.
+
+**Example:**
+```py
+Input: [1, 2, 3, 8, 9, 10]
+Output: 7
+Numbers 1 to 6 can all be summed by a subset of the list of numbers, but 7 cannot.
+```
+
+
+</div>
+</details>
+
+
+<details>
 <summary class="lc_m">
 
 - [**\[Medium\] LT 879. NBA Playoff Matches**](https://trsong.github.io/python/java/2020/11/02/DailyQuestionsAug/#dec-23-2020-lt-879-medium-nba-playoff-matches) -- *Now, you're given n teams, and you need to output their final contest matches in the form of a string.* [*\(Try ME\)*](https://repl.it/@trsong/Print-NBA-Playoff-Matches-1)
