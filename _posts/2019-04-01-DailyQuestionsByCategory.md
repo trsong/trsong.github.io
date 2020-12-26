@@ -3542,16 +3542,6 @@ For example, if the list is `[1, 2, 3, 4, 5]` and `K` is `9`, then it should ret
 </details>
 
 
-## Set
----
-
-### Basic
----
-
-### Advance
----
-
-
 ## Greedy
 ---
 
