@@ -3937,6 +3937,23 @@ Output: 1
 ### DFS
 ---
 
+
+<details>
+<summary class="lc_m">
+
+- [**\[Medium\] Longest Consecutive Sequence in an Unsorted Array**](https://trsong.github.io/python/java/2020/11/02/DailyQuestionsAug/#dec-25-2020-medium-longest-consecutive-sequence-in-an-unsorted-array) -- *Given an array of integers, return the largest range, inclusive, of integers that are all included in the array.* [*\(Try ME\)*](https://repl.it/@trsong/Longest-Consecutive-Sequence-1)
+
+</summary>
+<div>
+
+**Question:** Given an array of integers, return the largest range, inclusive, of integers that are all included in the array.
+
+For example, given the array `[9, 6, 1, 3, 8, 10, 12, 11]`, return `(8, 12)` since `8, 9, 10, 11, and 12` are all in the array.
+
+</div>
+</details>
+
+
 <details>
 <summary class="lc_m">
 

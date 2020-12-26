@@ -43,6 +43,82 @@ For the diagram above, for example, this would be six, representing the 2 x 3 ar
 > For example, given the array `[9, 6, 1, 3, 8, 10, 12, 11]`, return `(8, 12)` since `8, 9, 10, 11, and 12` are all in the array.
 
 
+**My thoughts:** We can use DFS to find max length of consecutive sequence. Two number are neighbor if they differ by 1. Thus for any number we can scan though its left-most and right-most neighbor recursively. 
+
+**Solution with DFS:** [https://repl.it/@trsong/Longest-Consecutive-Sequence](https://repl.it/@trsong/Longest-Consecutive-Sequence)
+```py
+import unittest
+
+def longest_consecutive_seq(nums):
+    if not nums:
+        return None
+
+    num_set = set(nums)
+    max_len = 0
+    res = None
+    for center in nums:
+        if center not in num_set:
+            continue
+        num_set.remove(center)
+        lower = center - 1
+        higher = center + 1
+        while lower in num_set:
+            lower -= 1
+
+        while higher in num_set:
+            higher += 1
+
+        len = higher - lower - 1
+        if len > max_len:
+            res = (lower + 1, higher - 1)
+            max_len = len
+    return res
+        
+
+class LongestConsecutiveSeqSpec(unittest.TestCase):
+    def test_example(self):
+        nums = [9, 6, 1, 3, 8, 10, 12, 11]
+        expected = (8, 12)
+        self.assertEqual(expected, longest_consecutive_seq(nums))
+
+    def test_example2(self):
+        nums = [2, 10, 3, 12, 5, 4, 11, 8, 7, 6, 15]
+        expected = (2, 8)
+        self.assertEqual(expected, longest_consecutive_seq(nums))
+
+    def test_empty_array(self):
+        self.assertIsNone(longest_consecutive_seq([]))
+
+    def test_no_consecutive_sequence(self):
+        nums = [1, 3, 5, 7]
+        possible_solutions = [(1, 1), (3, 3), (5, 5), (7, 7)]
+        self.assertIn(longest_consecutive_seq(nums), possible_solutions)
+
+    def test_more_than_one_solution(self):
+        nums = [0, 3, 4, 5, 9, 10, 13, 14, 15, 19, 20, 1]
+        possible_solutions = [(3, 5), (13, 15)]
+        self.assertIn(longest_consecutive_seq(nums), possible_solutions)
+
+    def test_longer_array(self):
+        nums = [10, 21, 45, 22, 7, 2, 67, 19, 13, 45, 12, 11, 18, 16, 17, 100, 201, 20, 101]
+        expected = (16, 22)
+        self.assertEqual(expected, longest_consecutive_seq(nums))
+
+    def test_entire_array_is_continous(self):
+        nums = [0, 1, 2, 3, 4, 5]
+        expected = (0, 5)
+        self.assertEqual(expected, longest_consecutive_seq(nums))
+
+    def test_array_with_duplicated_numbers(self):
+        nums = [0, 0, 3, 3, 2, 2, 1, 4, 7, 8, 10]
+        expected = (0, 4)
+        self.assertEqual(expected, longest_consecutive_seq(nums))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False, verbosity=2)
+```
+
 ### Dec 24, 2020 \[Easy\] Smallest Sum Not Subset Sum
 ---
 > **Question:** Given a sorted list of positive numbers, find the smallest positive number that cannot be a sum of any subset in the list.
