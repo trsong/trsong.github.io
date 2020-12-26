@@ -19,6 +19,23 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
 
+### Dec 26, 2020 \[Medium\] Largest Rectangular Area in a Histogram
+---
+> **Question:** You are given a histogram consisting of rectangles of different heights. Determine the area of the largest rectangle that can be formed only from the bars of the histogram.
+
+**Example:**
+```py
+These heights are represented in an input list, such that [1, 3, 2, 5] corresponds to the following diagram:
+
+      x
+      x  
+  x   x
+  x x x
+x x x x
+
+For the diagram above, for example, this would be six, representing the 2 x 3 area at the bottom right.
+```
+
 ### Dec 25, 2020 \[Medium\] Longest Consecutive Sequence in an Unsorted Array
 ---
 > **Question:** Given an array of integers, return the largest range, inclusive, of integers that are all included in the array.
