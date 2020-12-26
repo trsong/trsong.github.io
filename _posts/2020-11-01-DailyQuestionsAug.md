@@ -41,12 +41,12 @@ Numbers 1 to 6 can all be summed by a subset of the list of numbers, but 7 canno
 
 We can prove above statement by Math Induction. 
 
-Case 1: We want to show that if each elem is less than `prefix_sum`, the subset sum range from `0` to `prefix_sum` of array: 
+**Case 1:** We want to show that if each elem is less than `prefix_sum`, the subset sum range from `0` to `prefix_sum` of array: 
 - Base case: for empty array, subset sum max is `0` which equals prefix sum `0`. 
 - Inductive Hypothesis: for the `i-th element`, if i-th element smaller than prefix sum, then subset sum range is `0` to `prefix_sum[i]` ie. sum(nums[0..i]).
 - Induction Step: upon `i-th` step, the range is `0` to `prefix_sum[i]`. If the `(i + 1)-th` element `nums[i + 1]` is within that range, then smaller subset sum is still `0`. Largest subset sum is `prefix_sum[i] + nums[i + 1]` which equals `prefix_sum[i + 1]`
 
-Case 2: If the i-th element is greater than `prefix_sum`, then we can omit the result of element as there is a hole in that range. 
+**Case 2:** If the i-th element is greater than `prefix_sum`, then we can omit the result of element as there is a hole in that range. 
 Because the previous subset sum ranges from `[0, prefix_sum]`, then for `nums[i] > prefix_sum`, there is a hole that `prefix sum + 1` cannot be covered with the introduction of new element.
 
 As the max positive sum we can reach is prefix sum, the min positive subset sum we cannot reach is prefix sum + 1. 
