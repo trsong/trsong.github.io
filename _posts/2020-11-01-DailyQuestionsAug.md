@@ -19,6 +19,27 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
 
+### Dec 27, 2020  LC 218 \[Hard\] City Skyline
+---
+> **Question:** Given a list of building in the form of `(left, right, height)`, return what the skyline should look like. The skyline should be in the form of a list of `(x-axis, height)`, where x-axis is the next point where there is a change in height starting from 0, and height is the new height starting from the x-axis.
+
+**Example:**
+```py
+Input: [(2, 8, 3), (4, 6, 5)]
+Output: [(2, 3), (4, 5), (7, 3), (9, 0)]
+Explanation:
+           2 2 2
+           2   2
+       1 1 2 1 2 1 1
+       1   2   2   1
+       1   2   2   1      
+pos: 0 1 2 3 4 5 6 7 8 9
+We have two buildings: one has height 3 and the other 5. The city skyline is just the outline of combined looking. 
+The result represents the scanned height of city skyline from left to right.
+```
+
+
+
 ### Dec 26, 2020 \[Medium\] Largest Rectangular Area in a Histogram
 ---
 > **Question:** You are given a histogram consisting of rectangles of different heights. Determine the area of the largest rectangle that can be formed only from the bars of the histogram.
@@ -34,6 +55,132 @@ These heights are represented in an input list, such that [1, 3, 2, 5] correspon
 x x x x
 
 For the diagram above, for example, this would be six, representing the 2 x 3 area at the bottom right.
+```
+
+**Solution with Stack:** [https://repl.it/@trsong/Find-Largest-Rectangular-Area-in-a-Histogram](https://repl.it/@trsong/Find-Largest-Rectangular-Area-in-a-Histogram)
+```py
+import unittest
+
+def largest_rectangle_in_histogram(histogram):
+    stack = []
+    res = 0
+    n = len(histogram)
+    i = 0
+
+    while i < n or stack:
+        if not stack or i < n and histogram[stack[-1]] < histogram[i]:
+            # mantain stack in non-descending order
+            stack.append(i)
+            i += 1
+        else:
+            # if stack starts decreasing,
+            # then left boundary must be stack[-2] and right boundary must be i. Note both boundaries are exclusive
+            # and height is stack[-1]
+            height = histogram[stack.pop()]
+            left_bound = stack[-1] if stack else -1  #
+            width = i - left_bound - 1
+            area = height * width
+            res = max(res, area)
+    return res
+
+
+class LargestRectangleInHistogramSpec(unittest.TestCase):
+    def test_example(self):
+        """
+              x
+              x  
+          x   x
+          X X X
+        x X X X
+        """
+        histogram = [1, 3, 2, 5]
+        expected = 2 * 3
+        self.assertEqual(expected, largest_rectangle_in_histogram(histogram))
+
+    def test_empty_histogram(self):
+        self.assertEqual(0, largest_rectangle_in_histogram([]))
+
+    def test_width_one_rectangle(self):
+        """
+              X
+              X
+              X
+              X 
+          x   X
+          x x X
+        x x x X
+        """
+        histogram = [1, 3, 2, 7]
+        expected = 7 * 1
+        self.assertEqual(expected, largest_rectangle_in_histogram(histogram))
+
+    def test_ascending_sequence(self):
+        """
+                x  
+              x x
+            X X X
+          x X X X
+        """
+        histogram = [0, 1, 2, 3, 4]
+        expected = 2 * 3
+        self.assertEqual(expected, largest_rectangle_in_histogram(histogram))
+
+    def test_descending_sequence(self):
+        """
+        x  
+        X X
+        X X x    
+        X X x x
+        """
+        histogram = [4, 3, 2, 1, 0]
+        expected = 3 * 2
+        self.assertEqual(expected, largest_rectangle_in_histogram(histogram))
+
+    def test_sequence3(self):
+        """
+            x
+          x x x 
+        X X X X X 
+        X X X X X
+        X X X X X
+        """       
+        histogram = [3, 4, 5, 4, 3]
+        expected = 3 * 5
+        self.assertEqual(expected, largest_rectangle_in_histogram(histogram))
+
+    def test_sequence4(self):
+        """
+          x   x   x   x
+          x   x   x   x
+          x   x   x   x
+          x   x   x   x
+          x   x x x   x
+          x   x x x   x
+          X X X X X X X 
+        x X X X X X X X x
+        x X X X X X X X x
+        x X X X X X X X x
+        """      
+        histogram = [3, 10, 4, 10, 5, 10, 4, 10, 3]
+        expected = 4 * 7
+        self.assertEqual(expected, largest_rectangle_in_histogram(histogram))
+
+    def test_sequence5(self):
+        """
+        x           x
+        x   x   x   x
+        x   X X X   x
+        x   X X X   x
+        x x X X X   x
+        x x X X X x x 
+        """
+        histogram = [6, 2, 5, 4, 5, 1, 6]
+        expected = 4 * 3
+        self.assertEqual(expected, largest_rectangle_in_histogram(histogram))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False, verbosity=2)
 ```
 
 ### Dec 25, 2020 \[Medium\] Longest Consecutive Sequence in an Unsorted Array

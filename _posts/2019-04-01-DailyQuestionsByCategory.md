@@ -3032,6 +3032,35 @@ s.autocomplete('do')  # Return ['dog', 'door', 'dodge']
 ## Stack
 ---
 
+
+<details>
+<summary class="lc_m">
+
+- [**\[Medium\] Largest Rectangular Area in a Histogram**](http://trsong.github.io/python/java/2020/11/02/DailyQuestionsAug/#dec-26-2020-medium-largest-rectangular-area-in-a-histogram) -- *Given a histogram consisting of rectangles of different heights. Determine the area of the largest rectangle that can be formed.* [*\(Try ME\)*](https://repl.it/@trsong/Find-Largest-Rectangular-Area-in-a-Histogram-1)
+
+</summary>
+<div>
+
+**Question:** You are given a histogram consisting of rectangles of different heights. Determine the area of the largest rectangle that can be formed only from the bars of the histogram.
+
+**Example:**
+```py
+These heights are represented in an input list, such that [1, 3, 2, 5] corresponds to the following diagram:
+
+      x
+      x  
+  x   x
+  x x x
+x x x x
+
+For the diagram above, for example, this would be six, representing the 2 x 3 area at the bottom right.
+```
+
+
+</div>
+</details>
+
+
 <details>
 <summary class="lc_m">
 
