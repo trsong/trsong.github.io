@@ -8791,18 +8791,18 @@ if __name__ == '__main__':
 
 ### Feb 12, 2020 LC 218 \[Hard\] City Skyline
 ---
-> **Question:** Given a list of building in the form of `(left, right, height)`, return what the skyline should look like. The skyline should be in the form of a list of `(x-axis, height)`, where x-axis is the next point where there is a change in height starting from 0, and height is the new height starting from the x-axis.
+> **Question:** Given a list of building in the form of `(left, right, height)`, return what the skyline should look like. The skyline should be in the form of a list of `(x-axis, height)`, where x-axis is the point where there is a change in height starting from 0, and height is the new height starting from the x-axis.
 
 **Example:**
 ```py
 Input: [(2, 8, 3), (4, 6, 5)]
 Output: [(2, 3), (4, 5), (7, 3), (9, 0)]
 Explanation:
-           2 2 2
-           2   2
-       1 1 2 1 2 1 1
-       1   2   2   1
-       1   2   2   1      
+             2 2 2
+             2   2
+         1 1 2 1 2 1 1
+         1   2   2   1
+         1   2   2   1      
 pos: 0 1 2 3 4 5 6 7 8 9
 We have two buildings: one has height 3 and the other 5. The city skyline is just the outline of combined looking. 
 The result represents the scanned height of city skyline from left to right.

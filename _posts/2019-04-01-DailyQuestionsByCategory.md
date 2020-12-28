@@ -3191,6 +3191,36 @@ Given a list of `N` people and the above operation, find a way to identify the c
 ---
 
 <details>
+<summary class="lc_h">
+
+- [**\[Hard\] LC 218. City Skyline**](http://trsong.github.io/python/java/2020/11/02/DailyQuestionsAug/#dec-27-2020--lc-218-hard-city-skyline) -- *Given a list of building in the form of (left, right, height), return what the skyline should look like.* [*\(Try ME\)*](https://repl.it/@trsong/Find-City-Skyline-1)
+
+</summary>
+<div>
+
+**Question:** Given a list of building in the form of `(left, right, height)`, return what the skyline should look like. The skyline should be in the form of a list of `(x-axis, height)`, where x-axis is the point where there is a change in height starting from 0, and height is the new height starting from the x-axis.
+
+**Example:**
+```py
+Input: [(2, 8, 3), (4, 6, 5)]
+Output: [(2, 3), (4, 5), (7, 3), (9, 0)]
+Explanation:
+             2 2 2
+             2   2
+         1 1 2 1 2 1 1
+         1   2   2   1
+         1   2   2   1      
+
+pos: 0 1 2 3 4 5 6 7 8 9
+We have two buildings: one has height 3 and the other 5. The city skyline is just the outline of combined looking. 
+The result represents the scanned height of city skyline from left to right.
+```
+
+</div>
+</details>
+
+
+<details>
 <summary class="lc_m">
 
 - [**\[Medium\] Similar Websites**](http://trsong.github.io/python/java/2020/11/02/DailyQuestionsAug/#nov-8-2020-medium-similar-websites) -- *You are given a list of (website, user) pairs that represent users visiting websites. Come up with a program that identifies the top k pairs* [*\(Try ME\)*](https://repl.it/@trsong/Find-Similar-Websites-1)
