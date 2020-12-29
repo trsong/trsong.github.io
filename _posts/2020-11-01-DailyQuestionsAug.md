@@ -19,6 +19,13 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
 
+### Dec 29, 2020 \[Easy\] Permutations
+---
+> **Question:** Given a number in the form of a list of digits, return all possible permutations.
+>
+> For example, given `[1,2,3]`, return `[[1,2,3],[1,3,2],[2,1,3],[2,3,1],[3,1,2],[3,2,1]]`.
+
+
 ### Dec 28, 2020 \[Medium\] Index of Larger Next Number
 ---
 > **Question:** Given a list of numbers, for each element find the next element that is larger than the current element. Return the answer as a list of indices. If there are no elements larger than the current element, then use `-1` instead.
