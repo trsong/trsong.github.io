@@ -19,6 +19,25 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
 
+### Dec 30, 2020 LC 77 \[Medium\] Combinations
+---
+> **Question:** Given two integers `n` and `k`, return all possible combinations of `k` numbers out of `1 ... n`.
+
+**Example:**
+```py
+Input: n = 4, k = 2
+Output:
+[
+  [2,4],
+  [3,4],
+  [2,3],
+  [1,2],
+  [1,3],
+  [1,4],
+]
+```
+
+
 ### Dec 29, 2020 \[Easy\] Permutations
 ---
 > **Question:** Given a number in the form of a list of digits, return all possible permutations.

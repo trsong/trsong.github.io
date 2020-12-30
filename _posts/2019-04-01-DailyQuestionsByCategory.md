@@ -4613,6 +4613,22 @@ For example, given `100`, you can reach `1` in five steps with the following rou
 ---
 
 <details>
+<summary class="lc_e">
+
+- [**\[Easy\] Permutations**](https://trsong.github.io/python/java/2020/11/02/DailyQuestionsAug/#dec-29-2020-easy-permutations) -- *Given a number in the form of a list of digits, return all possible permutations.* [*\(Try ME\)*](https://repl.it/@trsong/Generate-Permutations-1)
+
+</summary>
+<div>
+
+**Question:** Given a number in the form of a list of digits, return all possible permutations.
+
+For example, given `[1,2,3]`, return `[[1,2,3],[1,3,2],[2,1,3],[2,3,1],[3,1,2],[3,2,1]]`.
+
+</div>
+</details>
+
+
+<details>
 <summary class="lc_h">
 
 - [**\[Hard\] LC 301. Remove Invalid Parentheses**](https://trsong.github.io/python/java/2020/11/02/DailyQuestionsAug/#dec-22-2020-lc-301-hard-remove-invalid-parentheses) -- *Remove the minimum number of invalid parentheses in order to make the input string valid. Return all possible results.* [*\(Try ME\)*](https://repl.it/@trsong/Ways-to-Remove-Invalid-Parentheses-1)
