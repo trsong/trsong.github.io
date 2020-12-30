@@ -25,6 +25,70 @@ categories: Python/Java
 >
 > For example, given `[1,2,3]`, return `[[1,2,3],[1,3,2],[2,1,3],[2,3,1],[3,1,2],[3,2,1]]`.
 
+**My thoughts:** total number of permutations equals `n * n-1 * n-2 * ... * 2 * 1`. So in **Step 1**: swap all `n` number with index `0`. And in **Step 2**: swap the rest `n - 1` numbers with index `1` ... and so on.
+
+For problem with size `k`, we swap the `n - k` th element with the result from problem with size `n - k`. 
+
+**Example:**
+```py
+Suppose the input is [0, 1, 2]
+├ swap(0, 0) 
+│ ├ swap(1, 1) 
+│ │ └ swap(2, 2)  gives [0, 1, 2]
+│ └ swap(1, 2)  
+│   └ swap(2, 2)  gives [0, 2, 1]
+├ swap(0, 1) 
+│ ├ swap(1, 1) 
+│ │ └ swap(2, 2)  gives [1, 0, 2]
+│ └ swap(1, 2)  
+│   └ swap(2, 2)  gives [1, 2, 0]
+└ swap(0, 2)  
+  ├ swap(1, 1)
+  │ └ swap(2, 2)  gives [2, 1, 0]
+  └ swap(1, 2)
+    └ swap(2, 2)  gives [2, 0, 1]
+```
+
+**Solution with Backtracking:** [https://repl.it/@trsong/Generate-Permutations](https://repl.it/@trsong/Generate-Permutations)
+```py
+import unittest
+
+def generate_permutations(nums):
+    res = []
+    backtrack(res, 0, nums)
+    return res
+
+
+def backtrack(res, current_index, nums):
+    n = len(nums)
+    if current_index >= n :
+        res.append(nums[:])
+    else:
+        for i in xrange(current_index, n):
+            nums[current_index], nums[i] = nums[i], nums[current_index]
+            backtrack(res, current_index + 1, nums)
+            nums[current_index], nums[i] = nums[i], nums[current_index]
+
+
+class CalculatePermutationSpec(unittest.TestCase):
+    def test_permuation_of_empty_array(self):
+        self.assertEqual( [[]], generate_permutations([]))
+
+    def test_permuation_of_2(self):
+        self.assertEqual(
+            sorted([[0, 1], [1, 0]]),
+            sorted(generate_permutations([0, 1])))
+
+    def test_permuation_of_3(self):
+        self.assertEqual(
+            sorted([[1, 2, 3], [1, 3, 2], [2, 1, 3], [2, 3, 1], [3, 1, 2], [3, 2, 1]]),
+            sorted(generate_permutations([1, 2, 3])))
+    
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
+```
+
 
 ### Dec 28, 2020 \[Medium\] Index of Larger Next Number
 ---
