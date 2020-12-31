@@ -19,6 +19,13 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
 
+### Dec 31, 2020 \[Medium\] Find Minimum Element in a Sorted and Rotated Array
+---
+> **Question:** Suppose an array sorted in ascending order is rotated at some pivot unknown to you beforehand. Find the minimum element in `O(log N)` time. You may assume the array does not contain duplicates.
+>
+> For example, given `[5, 7, 10, 3, 4]`, return `3`.
+
+
 ### Dec 30, 2020 LC 77 \[Medium\] Combinations
 ---
 > **Question:** Given two integers `n` and `k`, return all possible combinations of `k` numbers out of `1 ... n`.
@@ -35,6 +42,69 @@ Output:
   [1,3],
   [1,4],
 ]
+```
+
+
+**Solution with Backtracking:** [https://repl.it/@trsong/Combinations](https://repl.it/@trsong/Combinations)
+```py
+import unittest
+
+def generate_combinations(n, k):
+    if k > n or k <= 0:
+        return []
+    res = []
+    nums = range(1, n + 1)
+    backtrack(res, [], 0, k, nums)
+    return res
+
+
+def backtrack(res, chosen, current_index, k, nums):
+    n = len(nums)
+    if k == 0:
+        res.append(chosen[:])
+    elif n - current_index >= k:
+        # Case 1: choose current num
+        chosen.append(nums[current_index])
+        backtrack(res, chosen, current_index + 1, k - 1, nums)
+        chosen.pop()
+        # Case 2: not choose current num
+        backtrack(res, chosen, current_index + 1, k, nums)
+
+
+class GenerateCombinationSpec(unittest.TestCase):
+    def test_example(self):
+        n, k = 4, 2
+        expected = [[2, 4], [3, 4], [2, 3], [1, 2], [1, 3], [1, 4]]
+        self.assertEqual(sorted(expected), generate_combinations(n, k))
+
+    def test_choose_zero(self):
+        n, k = 10, 0
+        expected = []
+        self.assertEqual(sorted(expected), generate_combinations(n, k))
+
+    def test_choose_one(self):
+        n, k = 6, 1
+        expected = [[1], [2], [3], [4], [5], [6]]
+        self.assertEqual(sorted(expected), generate_combinations(n, k))
+
+    def test_choose_all(self):
+        n, k = 6, 6
+        expected = [[1, 2, 3, 4, 5, 6]]
+        self.assertEqual(sorted(expected), generate_combinations(n, k))
+
+    def test_choose_three(self):
+        n, k = 4, 3
+        expected = [[1, 2, 3], [1, 2, 4], [1, 3, 4], [2, 3, 4]]
+        self.assertEqual(sorted(expected), generate_combinations(n, k))
+
+    def test_choose_more_than_supply(self):
+        n, k = 4, 10
+        expected = []
+        self.assertEqual(sorted(expected), generate_combinations(n, k))
+
+
+if __name__ == '__main__':
+    unittest.main(verbosity=2, exit=False)
 ```
 
 

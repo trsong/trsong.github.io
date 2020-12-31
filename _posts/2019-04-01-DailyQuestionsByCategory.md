@@ -4613,6 +4613,34 @@ For example, given `100`, you can reach `1` in five steps with the following rou
 ---
 
 <details>
+<summary class="lc_m">
+
+- [**\[Medium\] LC 77. Combinations**](https://trsong.github.io/python/java/2020/11/02/DailyQuestionsAug/#dec-30-2020-lc-77-medium-combinations) -- *Given two integers n and k, return all possible combinations of k numbers out of 1 ... n.* [*\(Try ME\)*](https://repl.it/@trsong/Combinations-1)
+
+</summary>
+<div>
+
+**Question:** Given two integers `n` and `k`, return all possible combinations of `k` numbers out of `1 ... n`.
+
+**Example:**
+```py
+Input: n = 4, k = 2
+Output:
+[
+  [2,4],
+  [3,4],
+  [2,3],
+  [1,2],
+  [1,3],
+  [1,4],
+]
+```
+
+</div>
+</details>
+
+
+<details>
 <summary class="lc_e">
 
 - [**\[Easy\] Permutations**](https://trsong.github.io/python/java/2020/11/02/DailyQuestionsAug/#dec-29-2020-easy-permutations) -- *Given a number in the form of a list of digits, return all possible permutations.* [*\(Try ME\)*](https://repl.it/@trsong/Generate-Permutations-1)
