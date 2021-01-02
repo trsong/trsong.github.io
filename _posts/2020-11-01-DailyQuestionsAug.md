@@ -19,6 +19,16 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
 
+### Jan 1, 2021 \[Easy\] Map Digits to Letters
+---
+> **Question:** Given a mapping of digits to letters (as in a phone number), and a digit string, return all possible letters the number could represent. You can assume each valid number in the mapping is a single digit.
+
+**Example:**
+```py
+Input: {'2': ['a', 'b', 'c'], '3': ['d', 'e', 'f']}, '23'
+Output: ['ad', 'ae', 'af', 'bd', 'be', 'bf', 'cd', 'ce', 'cf']
+```
+
 ### Dec 31, 2020 \[Medium\] Find Minimum Element in a Sorted and Rotated Array
 ---
 > **Question:** Suppose an array sorted in ascending order is rotated at some pivot unknown to you beforehand. Find the minimum element in `O(log N)` time. You may assume the array does not contain duplicates.
