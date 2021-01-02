@@ -19,6 +19,11 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
 
+### Jan 2, 2021 \[Easy\] Determine If Linked List is Palindrome
+---
+> **Question:** You are given a doubly linked list. Determine if it is a palindrome. 
+
+
 ### Jan 1, 2021 \[Easy\] Map Digits to Letters
 ---
 > **Question:** Given a mapping of digits to letters (as in a phone number), and a digit string, return all possible letters the number could represent. You can assume each valid number in the mapping is a single digit.
