@@ -29,6 +29,64 @@ Input: {'2': ['a', 'b', 'c'], '3': ['d', 'e', 'f']}, '23'
 Output: ['ad', 'ae', 'af', 'bd', 'be', 'bf', 'cd', 'ce', 'cf']
 ```
 
+**Soltion with Backtracking:** [https://repl.it/@trsong/Map-Digits-to-All-Possible-Letters](https://repl.it/@trsong/Map-Digits-to-All-Possible-Letters)
+```py
+import unittest
+
+def digits_to_letters(digits, dictionary):
+    if not digits:
+        return []
+
+    res = []
+    backtrack(res, [], digits, 0, dictionary)
+    return res
+
+
+def backtrack(res, accu, digits, digit_index, dictionary):
+    if digit_index >= len(digits):
+        res.append(''.join(accu))
+    else:
+        for ch in dictionary[digits[digit_index]]:
+            accu.append(ch)
+            backtrack(res, accu, digits, digit_index + 1, dictionary)
+            accu.pop()
+
+
+class DigitsToLetterSpec(unittest.TestCase):
+    def assert_letters(self, res, expected):
+        self.assertEqual(sorted(res), sorted(expected))
+
+    def test_empty_digits(self):
+        self.assert_letters(digits_to_letters("", {}), [])
+
+    def test_one_digit(self):
+        dictionary = {'2': ['a', 'b', 'c'], '3': ['d', 'e', 'f']}
+        self.assert_letters(
+            ['a', 'b', 'c'],
+            digits_to_letters("2", dictionary))
+
+    def test_repeated_digits(self):
+        dictionary = {'2': ['a', 'b']}
+        self.assert_letters(
+            ['aa', 'ab', 'ba', 'bb'],
+            digits_to_letters("22", dictionary))
+
+    def test_example(self):
+        dictionary = {'2': ['a', 'b', 'c'], '3': ['d', 'e', 'f']}
+        self.assert_letters(
+            ['ad', 'ae', 'af', 'bd', 'be', 'bf', 'cd', 'ce', 'cf'],
+            digits_to_letters("23", dictionary))
+
+    def test_early_google_url(self):
+        dictionary = {'2': ['a', 'b', 'c'], '3': ['d', 'e', 'f'], '4': ['g', 'h', 'i'], '5': ['j', 'k', 'l'], '6': ['m', 'n', 'o']}
+        self.assertTrue('google' in digits_to_letters("466453", dictionary))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
+```
+
+
 ### Dec 31, 2020 \[Medium\] Find Minimum Element in a Sorted and Rotated Array
 ---
 > **Question:** Suppose an array sorted in ascending order is rotated at some pivot unknown to you beforehand. Find the minimum element in `O(log N)` time. You may assume the array does not contain duplicates.

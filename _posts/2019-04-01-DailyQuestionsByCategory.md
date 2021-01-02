@@ -4630,6 +4630,25 @@ For example, given `100`, you can reach `1` in five steps with the following rou
 ---
 
 <details>
+<summary class="lc_e">
+
+- [**\[Easy\] Map Digits to Letters*](http://trsong.github.io/python/java/2020/11/02/DailyQuestionsAug/#jan-1-2021-easy-map-digits-to-letters) -- *Given a mapping of digits to letters (as in a phone number), and a digit string, return all possible letters the number could represent.* [*\(Try ME\)*](https://repl.it/@trsong/Map-Digits-to-All-Possible-Letters-1)
+
+</summary>
+<div>
+
+**Question:** Given a mapping of digits to letters (as in a phone number), and a digit string, return all possible letters the number could represent. You can assume each valid number in the mapping is a single digit.
+
+**Example:**
+```py
+Input: {'2': ['a', 'b', 'c'], '3': ['d', 'e', 'f']}, '23'
+Output: ['ad', 'ae', 'af', 'bd', 'be', 'bf', 'cd', 'ce', 'cf']
+```
+
+</div>
+</details>
+
+<details>
 <summary class="lc_m">
 
 - [**\[Medium\] LC 77. Combinations**](https://trsong.github.io/python/java/2020/11/02/DailyQuestionsAug/#dec-30-2020-lc-77-medium-combinations) -- *Given two integers n and k, return all possible combinations of k numbers out of 1 ... n.* [*\(Try ME\)*](https://repl.it/@trsong/Combinations-1)
