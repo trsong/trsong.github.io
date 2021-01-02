@@ -1015,6 +1015,23 @@ Explanation: Because the new interval [4,8] overlaps with [3,5],[6,7],[8,10].
 <details>
 <summary class="lc_m">
 
+- [**\[Medium\] Find Minimum Element in a Sorted and Rotated Array**](http://trsong.github.io/python/java/2020/11/02/DailyQuestionsAug/#dec-31-2020-medium-find-minimum-element-in-a-sorted-and-rotated-array) -- *Suppose an array sorted in ascending order is rotated at some pivot unknown to you beforehand. Find the minimum element.* [*\(Try ME\)*](https://repl.it/@trsong/Find-Minimum-Element-in-a-Sorted-and-Rotated-Array-1)
+
+</summary>
+<div>
+
+**Question:** Suppose an array sorted in ascending order is rotated at some pivot unknown to you beforehand. Find the minimum element in `O(log N)` time. You may assume the array does not contain duplicates.
+
+For example, given `[5, 7, 10, 3, 4]`, return `3`.
+
+
+</div>
+</details>
+
+
+<details>
+<summary class="lc_m">
+
 - [**\[Medium\] Searching in Rotated Array**](https://trsong.github.io/python/java/2020/08/02/DailyQuestionsAug/#oct-12-2020-medium-searching-in-rotated-array) -- *A sorted array of integers was rotated an unknown number of times. Find the index of the element in the array.* [*\(Try ME\)*](https://repl.it/@trsong/Searching-Elem-in-Rotated-Array-1)
 
 </summary>
