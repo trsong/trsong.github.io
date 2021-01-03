@@ -1627,6 +1627,20 @@ B = 6 -> 3 -> 4
 ---
 
 <details>
+<summary class="lc_e">
+
+- [**\[Easy\] Determine If Linked List is Palindrome**](http://trsong.github.io/python/java/2020/11/02/DailyQuestionsAug/#jan-2-2021-easy-determine-if-linked-list-is-palindrome) -- *You are given a doubly linked list. Determine if it is a palindrome.* [*\(Try ME\)*](https://repl.it/@trsong/Determine-If-Linked-List-is-Palindrome-1)
+
+</summary>
+<div>
+
+**Question:** You are given a doubly linked list. Determine if it is a palindrome. 
+
+</div>
+</details>
+
+
+<details>
 <summary class="lc_h">
 
 - [**\[Hard\] First Unique Character from a Stream**](https://trsong.github.io/python/java/2020/08/02/DailyQuestionsAug/#oct-24-2020-hard-first-unique-character-from-a-stream) -- *Given a stream of characters, find the first unique (non-repeating) character from stream.* [*\(Try ME\)*](https://repl.it/@trsong/First-Unique-Character-from-a-Stream-1)

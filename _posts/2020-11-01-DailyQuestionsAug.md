@@ -19,9 +19,104 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
 
+### Jan 3, 2021 \[Medium\] Detect Linked List Cycle
+---
+> **Question:** Given a linked list, determine if the linked list has a cycle in it. 
+
+**Example:**
+```py
+Input: 4 -> 3 -> 2 -> 1 -> 3 ... 
+Output: True
+```
+
+
 ### Jan 2, 2021 \[Easy\] Determine If Linked List is Palindrome
 ---
 > **Question:** You are given a doubly linked list. Determine if it is a palindrome. 
+
+**Solution:** [https://repl.it/@trsong/Determine-If-Linked-List-is-Palindrome](https://repl.it/@trsong/Determine-If-Linked-List-is-Palindrome)
+```py
+import unittest
+
+def is_palindrome(lst):
+    if not lst:
+        return True
+
+    first = last = lst
+    length = 1
+    while last.next:
+        last = last.next
+        length += 1
+
+    for _ in xrange(length // 2):
+        if first.val != last.val:
+            return False
+        first = first.next
+        last = last.prev
+
+    return True
+
+
+class ListNode(object):
+    def __init__(self, val, prev=None, next=None):
+        self.val = val
+        self.prev = prev
+        self.next = next
+    
+    @staticmethod
+    def List(*vals):
+        dummy = cur = ListNode(-1)
+        for val in vals:
+            cur.next = ListNode(val, cur)
+            cur = cur.next
+        dummy.next.prev = None
+        return dummy.next
+
+
+class IsPalindromeSpec(unittest.TestCase):
+    def test_empty_list(self):
+        self.assertTrue(is_palindrome(None))
+
+    def test_one_element_list(self):
+        self.assertTrue(is_palindrome(ListNode.List(42)))
+
+    def test_two_element_list(self):
+        self.assertFalse(is_palindrome(ListNode.List(1, 2)))
+
+    def test_two_element_palindrome(self):
+        self.assertTrue(is_palindrome(ListNode.List(6, 6)))
+
+    def test_three_element_list(self):
+        self.assertFalse(is_palindrome(ListNode.List(1, 2, 3)))
+
+    def test_three_element_list2(self):
+        self.assertFalse(is_palindrome(ListNode.List(1, 1, 2)))
+
+    def test_three_element_list3(self):
+        self.assertFalse(is_palindrome(ListNode.List(1, 2, 2)))
+
+    def test_three_element_palindrome(self):
+        self.assertTrue(is_palindrome(ListNode.List(1, 2, 1)))
+
+    def test_three_element_palindrome2(self):
+        self.assertTrue(is_palindrome(ListNode.List(1, 1, 1)))
+
+    def test_even_element_list(self):
+        self.assertFalse(is_palindrome(ListNode.List(1, 2, 3, 4, 2, 1)))
+
+    def test_even_element_list2(self):
+        self.assertTrue(is_palindrome(ListNode.List(1, 2, 3, 3, 2, 1)))
+
+    def test_odd_element_list(self):
+        self.assertTrue(is_palindrome(ListNode.List(1, 2, 3, 2, 1)))
+
+    def test_odd_element_list2(self):
+        self.assertFalse(is_palindrome(ListNode.List(1, 2, 3, 3, 1)))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False, verbosity=2)
+```
 
 
 ### Jan 1, 2021 \[Easy\] Map Digits to Letters
