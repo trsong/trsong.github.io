@@ -19,6 +19,13 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
 
+### Jan 4, 2021 \[Medium\] Sort a K-Sorted Array
+---
+> **Question:** You are given a list of `N` numbers, in which each number is located at most `k` places away from its sorted position. For example, if `k = 1`, a given element at index `4` might end up at indices `3`, `4`, or `5`.
+>
+> Come up with an algorithm that sorts this list in O(N log k) time.
+
+
 ### Jan 3, 2021 \[Medium\] Detect Linked List Cycle
 ---
 > **Question:** Given a linked list, determine if the linked list has a cycle in it. 
