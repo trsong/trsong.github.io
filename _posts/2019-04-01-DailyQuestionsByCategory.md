@@ -1673,6 +1673,25 @@ abracadabra => c
 ---
 
 <details>
+<summary class="lc_m>
+
+- [**\[Medium\] Detect Linked List Cycle**](http://trsong.github.io/python/java/2020/11/02/DailyQuestionsAug/#jan-3-2021-medium-detect-linked-list-cycle) -- *Given a linked list, determine if the linked list has a cycle in it.* [*\(Try ME\)*](https://repl.it/@trsong/Detect-Linked-List-Cycle-1)
+
+</summary>
+<div>
+
+**Question:** Given a linked list, determine if the linked list has a cycle in it. 
+
+**Example:**
+```py
+Input: 4 -> 3 -> 2 -> 1 -> 3 ... 
+Output: True
+```
+
+</div>
+</details>
+
+<details>
 <summary class="lc_m">
 
 - [**\[Medium\] LC 287. Find the Duplicate Number**](http://trsong.github.io/python/java/2020/08/02/DailyQuestionsAug/#oct-31-2020-lc-287-medium-find-the-duplicate-number) -- *Given an array of length `n + 1` whose elements belong to the set `{1, 2, ..., n}`. Find any duplicate element.* [*\(Try ME\)*](https://repl.it/@trsong/Find-the-Duplicate-Number-from-Array-1)
