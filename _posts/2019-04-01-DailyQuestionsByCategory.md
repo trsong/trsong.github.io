@@ -3240,6 +3240,30 @@ Given a list of `N` people and the above operation, find a way to identify the c
 ## Heap / Priority Queue
 ---
 
+
+<details>
+<summary class="lc_m">
+
+- [**\[Medium\] Sort a K-Sorted Array**](https://trsong.github.io/python/java/2020/11/02/DailyQuestionsAug/#jan-4-2021-medium-sort-a-k-sorted-array) -- *Given a list of N numbers, in which each number is located at most k places away from its sorted position. Sort this array in O(N log k).* [*\(Try ME\)*](https://repl.it/@trsong/Sort-a-K-Sorted-Array-1)
+
+</summary>
+<div>
+
+**Question:** You are given a list of `N` numbers, in which each number is located at most `k` places away from its sorted position. For example, if `k = 1`, a given element at index `4` might end up at indices `3`, `4`, or `5`.
+
+Come up with an algorithm that sorts this list in O(N log k) time.
+
+**Example:**
+```py
+Input: [3, 2, 6, 5, 4], k=2
+Output: [2, 3, 4, 5, 6]
+As seen above, every number is at most 2 indexes away from its proper sorted index.
+``` 
+
+</div>
+</details>
+
+
 <details>
 <summary class="lc_h">
 

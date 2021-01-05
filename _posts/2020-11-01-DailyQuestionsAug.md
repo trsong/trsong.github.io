@@ -19,12 +19,83 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
 
+### Jan 5, 2021 \[Easy\] Anagram to Integer
+---
+> **Question:** You are given a string formed by concatenating several words corresponding to the integers `zero` through `nine` and then anagramming.
+>
+> For example, the input could be `'niesevehrtfeev'`, which is an anagram of `'threefiveseven'`. Note that there can be multiple instances of each integer.
+>
+> Given this string, return the original integers in sorted order. In the example above, this would be `357`.
+
+
 ### Jan 4, 2021 \[Medium\] Sort a K-Sorted Array
 ---
 > **Question:** You are given a list of `N` numbers, in which each number is located at most `k` places away from its sorted position. For example, if `k = 1`, a given element at index `4` might end up at indices `3`, `4`, or `5`.
 >
 > Come up with an algorithm that sorts this list in O(N log k) time.
 
+**Example:**
+```py
+Input: [3, 2, 6, 5, 4], k=2
+Output: [2, 3, 4, 5, 6]
+As seen above, every number is at most 2 indexes away from its proper sorted index.
+``` 
+
+**Solution with Priority Queue:** [https://repl.it/@trsong/Sort-a-K-Sorted-Array](https://repl.it/@trsong/Sort-a-K-Sorted-Array)
+```py
+import unittest
+from Queue import PriorityQueue
+
+def sort_partial_list(nums, k):
+    pq = PriorityQueue()
+    n = len(nums)
+    for i in xrange(min(n, k + 1)):
+        pq.put(nums[i])
+
+    res = []
+    for i in xrange(k + 1, n):
+        res.append(pq.get())
+        pq.put(nums[i])
+
+    while not pq.empty():
+        res.append(pq.get())
+
+    return res
+    
+
+class SortPartialListSpec(unittest.TestCase):
+    def test_example(self):
+        k, nums = 2, [3, 2, 6, 5, 4]
+        self.assertEqual(sorted(nums), sort_partial_list(nums, k))
+
+    def test_empty_list(self):
+        self.assertEqual([], sort_partial_list([], 0))
+        self.assertEqual([], sort_partial_list([], 3))
+    
+    def test_unsorted_list(self):
+        k, nums = 10, [8, 7, 6, 5, 3, 1, 2, 4]
+        self.assertEqual(sorted(nums), sort_partial_list(nums, k))
+
+    def test_k_is_3(self):
+        k, nums = 3, [6, 5, 3, 2, 8, 10, 9]
+        self.assertEqual(sorted(nums), sort_partial_list(nums, k))
+
+    def test_another_example_k_is_3(self):
+        k, nums = 3, [2, 6, 3, 12, 56, 8]
+        self.assertEqual(sorted(nums), sort_partial_list(nums, k))
+
+    def test_k_is_4(self):
+        k, nums = 4, [10, 9, 8, 7, 4, 70, 60, 50]
+        self.assertEqual(sorted(nums), sort_partial_list(nums, k))
+
+    def test_list_with_duplicated_values(self):
+        k, nums = 3, [3, 2, 2, 4, 4, 3]
+        self.assertEqual(sorted(nums), sort_partial_list(nums, k))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False, verbosity=2)
+```
 
 ### Jan 3, 2021 \[Medium\] Detect Linked List Cycle
 ---
