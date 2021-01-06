@@ -19,13 +19,137 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
 
-### Jan 5, 2021 \[Easy\] Anagram to Integer
+
+### Jan 6, 2021 LC 692 \[Medium\] Top K Frequent words
+--- 
+> **Question:** Given a non-empty list of words, return the k most frequent words. The output should be sorted from highest to lowest frequency, and if two words have the same frequency, the word with lower alphabetical order comes first. Input will contain only lower-case letters.
+
+**Example 1:**
+```py
+Input: ["i", "love", "leapcode", "i", "love", "coding"], k = 2
+Output: ["i", "love"]
+Explanation: "i" and "love" are the two most frequent words.
+    Note that "i" comes before "love" due to a lower alphabetical order.
+```
+
+**Example 2:**
+```py
+Input: ["the", "day", "is", "sunny", "the", "the", "the", "sunny", "is", "is"], k = 4
+Output: ["the", "is", "sunny", "day"]
+Explanation: "the", "is", "sunny" and "day" are the four most frequent words,
+    with the number of occurrence being 4, 3, 2 and 1 respectively.
+```
+
+### Jan 5, 2021 \[Hard\] Anagram to Integer
 ---
 > **Question:** You are given a string formed by concatenating several words corresponding to the integers `zero` through `nine` and then anagramming.
 >
 > For example, the input could be `'niesevehrtfeev'`, which is an anagram of `'threefiveseven'`. Note that there can be multiple instances of each integer.
 >
 > Given this string, return the original integers in sorted order. In the example above, this would be `357`.
+
+**Solution with Backtracking:** [https://repl.it/@trsong/Convert-Anagram-to-Integer](https://repl.it/@trsong/Convert-Anagram-to-Integer)
+```py
+import unittest
+
+DIGITS = ['zero', 'one', 'two', 'three', 'four',
+    'five', 'six', 'seven', 'eight', 'nine']
+
+
+def anagram_to_integer(s):
+    if not s:
+        return 0
+
+    input_freq = calculate_char_freq(s)
+    digit_freq_map = map(calculate_char_freq, DIGITS)
+    return int(backtrack([], 0, input_freq, digit_freq_map))
+
+
+def calculate_char_freq(s):
+    char_freq = {}
+    for ch in s:
+        char_freq[ch] = char_freq.get(ch, 0) + 1
+    return char_freq
+
+
+def backtrack(accu, digit_index, input_freq, digit_freq_map):
+    if digit_index >= len(DIGITS):
+        return None
+    elif not input_freq:
+        return "".join(accu)
+    else:
+        for digit in xrange(digit_index, len(DIGITS)):
+            max_repeats = float('inf')
+            for ch, ch_count in digit_freq_map[digit].items():
+                max_repeats = min(max_repeats, input_freq.get(ch, 0) // ch_count)
+
+            for repeats in xrange(max_repeats, 0, -1):
+                for ch, ch_count in digit_freq_map[digit].items():
+                    input_freq[ch] -= ch_count * repeats
+                    if input_freq[ch] == 0:
+                        del input_freq[ch]
+
+                accu.append(str(digit) * repeats)
+
+                res = backtrack(accu, digit_index + 1, input_freq, digit_freq_map)
+                if res is not None:
+                    return res
+
+                accu.pop()
+
+                for ch, ch_count in digit_freq_map[digit].items():
+                    input_freq[ch] = input_freq.get(ch, 0) + ch_count * repeats
+        return None
+    
+        
+class AnagramToIntegerSpec(unittest.TestCase):
+    def test_example(self):
+        s = 'niesevehrtfeev'
+        expected = 357
+        self.assertEqual(expected, anagram_to_integer(s))
+
+    def test_empty_string(self):
+        self.assertEqual(0, anagram_to_integer(''))
+
+    def test_contains_duplicate_characters(self):
+        s = 'nininene'
+        expected = 99
+        self.assertEqual(expected, anagram_to_integer(s))
+
+    def test_contains_duplicate_characters2(self):
+        s = 'twoonefourfourtwoone'
+        expected = 112244
+        self.assertEqual(expected, anagram_to_integer(s))
+    
+    def test_char_in_sorted_order(self):
+        s = 'eeeffhioorrttuvw'
+        expected = 2345
+        self.assertEqual(expected, anagram_to_integer(s))
+
+    def test_zero(self):
+        s = 'zero'
+        expected = 0
+        self.assertEqual(expected, anagram_to_integer(s))
+    
+    def test_should_omit_zero(self):
+        s = 'onetwothreefourfivesixseveneightnine'
+        expected = 123456789
+        self.assertEqual(expected, anagram_to_integer(s))
+
+    def test_unique_character(self):
+        s = 'oneoneoneone'
+        expected = 1111
+        self.assertEqual(expected, anagram_to_integer(s))
+
+    def test_one_not_exists(self):
+        s = 'twonine'
+        expected = 29
+        self.assertEqual(expected, anagram_to_integer(s))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False, verbosity=2)
+```
 
 
 ### Jan 4, 2021 \[Medium\] Sort a K-Sorted Array

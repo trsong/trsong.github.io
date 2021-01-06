@@ -4686,6 +4686,7 @@ For example, given `100`, you can reach `1` in five steps with the following rou
 ## Backtracking
 ---
 
+
 <details>
 <summary class="lc_e">
 
