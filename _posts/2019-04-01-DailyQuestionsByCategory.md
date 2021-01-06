@@ -4688,6 +4688,24 @@ For example, given `100`, you can reach `1` in five steps with the following rou
 
 
 <details>
+<summary class="lc_h">
+
+- [**\[Hard\] Anagram to Integer**](https://trsong.github.io/python/java/2020/11/02/DailyQuestionsAug/#jan-5-2021-hard-anagram-to-integer) -- *Given a string formed by concatenating several words corresponding to the integers zero through nine and then anagramming,return the integer* [*\(Try ME\)*](https://repl.it/@trsong/Convert-Anagram-to-Integer-1)
+
+</summary>
+<div>
+
+**Question:** You are given a string formed by concatenating several words corresponding to the integers `zero` through `nine` and then anagramming.
+
+For example, the input could be `'niesevehrtfeev'`, which is an anagram of `'threefiveseven'`. Note that there can be multiple instances of each integer.
+
+Given this string, return the original integers in sorted order. In the example above, this would be `357`.
+
+</div>
+</details>
+
+
+<details>
 <summary class="lc_e">
 
 - [**\[Easy\] Map Digits to Letters*](http://trsong.github.io/python/java/2020/11/02/DailyQuestionsAug/#jan-1-2021-easy-map-digits-to-letters) -- *Given a mapping of digits to letters (as in a phone number), and a digit string, return all possible letters the number could represent.* [*\(Try ME\)*](https://repl.it/@trsong/Map-Digits-to-All-Possible-Letters-1)
