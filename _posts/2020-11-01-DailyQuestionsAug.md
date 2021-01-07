@@ -40,6 +40,56 @@ Explanation: "the", "is", "sunny" and "day" are the four most frequent words,
     with the number of occurrence being 4, 3, 2 and 1 respectively.
 ```
 
+**Solution with Priority Queue:** [https://repl.it/@trsong/Find-Top-K-Frequent-Elements](https://repl.it/@trsong/Find-Top-K-Frequent-Elements)
+```py
+import unittest
+from Queue import PriorityQueue
+
+def top_k_freq_words(words, k):
+    histogram = {}
+    for word in words:
+        histogram[word] = histogram.get(word, 0) + 1
+    
+    max_heap = PriorityQueue()
+    for word, count in histogram.items():
+        max_heap.put((-count, word))
+
+    res = []
+    for _ in xrange(k):
+        _, word = max_heap.get()
+        res.append(word)
+    return res
+
+
+class TopKFreqWordSpec(unittest.TestCase):
+    def test_example1(self):
+        input = ["i", "love", "leapcode", "i", "love", "coding"]
+        k = 2
+        expected = ["i", "love"]
+        self.assertEqual(expected, top_k_freq_words(input, k))
+
+    def test_example2(self):
+        input =  ["the", "day", "is", "sunny", "the", "the", "the", "sunny", "is", "is"]
+        k = 4
+        expected = ["the", "is", "sunny", "day"]
+        self.assertEqual(expected, top_k_freq_words(input, k))
+
+    def test_same_count_words(self):
+        input =  ["c", "cb", "cba", "cdbaa"]
+        k = 3
+        expected = ["c", "cb", "cba"]
+        self.assertEqual(expected, top_k_freq_words(input, k))
+
+    def test_same_count_words2(self):
+        input =  ["a", "c", "b", "d"]
+        k = 3
+        expected = ["a", "b", "c"]
+        self.assertEqual(expected, top_k_freq_words(input, k))
+    
+if __name__ == '__main__':
+    unittest.main(exit=False)
+```
+
 ### Jan 5, 2021 \[Hard\] Anagram to Integer
 ---
 > **Question:** You are given a string formed by concatenating several words corresponding to the integers `zero` through `nine` and then anagramming.

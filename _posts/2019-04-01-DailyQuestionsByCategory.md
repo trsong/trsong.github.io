@@ -3240,6 +3240,35 @@ Given a list of `N` people and the above operation, find a way to identify the c
 ## Heap / Priority Queue
 ---
 
+<details>
+<summary class="lc_m">
+
+- [**\[Medium\] LC 692. Top K Frequent words**](https://trsong.github.io/python/java/2020/11/02/DailyQuestionsAug/#jan-6-2021-lc-692-medium-top-k-frequent-words) -- *Given a non-empty list of words, return the k most frequent words.* [*\(Try ME\)*](https://repl.it/@trsong/Find-Top-K-Frequent-Elements-1)
+
+</summary>
+<div>
+
+**Question:** Given a non-empty list of words, return the k most frequent words. The output should be sorted from highest to lowest frequency, and if two words have the same frequency, the word with lower alphabetical order comes first. Input will contain only lower-case letters.
+
+**Example 1:**
+```py
+Input: ["i", "love", "leapcode", "i", "love", "coding"], k = 2
+Output: ["i", "love"]
+Explanation: "i" and "love" are the two most frequent words.
+    Note that "i" comes before "love" due to a lower alphabetical order.
+```
+
+**Example 2:**
+```py
+Input: ["the", "day", "is", "sunny", "the", "the", "the", "sunny", "is", "is"], k = 4
+Output: ["the", "is", "sunny", "day"]
+Explanation: "the", "is", "sunny" and "day" are the four most frequent words,
+    with the number of occurrence being 4, 3, 2 and 1 respectively.
+```
+
+</div>
+</details>
+
 
 <details>
 <summary class="lc_m">
