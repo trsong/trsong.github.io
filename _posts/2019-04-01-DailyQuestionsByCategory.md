@@ -411,7 +411,7 @@ Output: [4, 8] order does not matter
 <details>
 <summary class="lc_m">
 
-- [**LC 652 \[Medium\] Find Duplicate Subtrees**](https://trsong.github.io/python/java/2020/08/02/DailyQuestionsAug/#oct-30-2020-lc-652-medium-find-duplicate-subtrees) -- *Given a binary tree, find all duplicate subtrees (subtrees with the same value and same structure)* [*\(Try ME\)*](https://repl.it/@trsong/Find-Duplicate-Subtree-Nodes-1)
+- [**\[Medium\] LC 652. Find Duplicate Subtrees**](https://trsong.github.io/python/java/2020/08/02/DailyQuestionsAug/#oct-30-2020-lc-652-medium-find-duplicate-subtrees) -- *Given a binary tree, find all duplicate subtrees (subtrees with the same value and same structure)* [*\(Try ME\)*](https://repl.it/@trsong/Find-Duplicate-Subtree-Nodes-1)
 
 </summary>
 <div>
