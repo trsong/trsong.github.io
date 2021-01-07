@@ -19,6 +19,11 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
 
+### Jan 7, 2021 \[Medium\] Normalize Pathname
+---
+> **Question:** Given an absolute pathname that may have `"."` or `".."` as part of it, return the shortest standardized path.
+>
+> For example, given `"/usr/bin/../bin/./scripts/../"`, return `"/usr/bin"`.
 
 ### Jan 6, 2021 LC 692 \[Medium\] Top K Frequent words
 --- 
