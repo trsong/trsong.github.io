@@ -3086,6 +3086,22 @@ s.autocomplete('do')  # Return ['dog', 'door', 'dodge']
 <details>
 <summary class="lc_m">
 
+- [**\[Medium\] Normalize Pathname**](https://trsong.github.io/python/java/2020/11/02/DailyQuestionsAug/#jan-7-2021-medium-normalize-pathname) -- *Given an absolute pathname that may have . or .. as part of it, return the shortest standardized path.* [*\(Try ME\)*](https://repl.it/@trsong/Normalize-to-Absolute-Pathname-1)
+
+</summary>
+<div>
+
+**Question:** Given an absolute pathname that may have `"."` or `".."` as part of it, return the shortest standardized path.
+
+For example, given `"/usr/bin/../bin/./scripts/../"`, return `"/usr/bin"`.
+
+</div>
+</details>
+
+
+<details>
+<summary class="lc_m">
+
 - [**\[Medium\] Largest Rectangular Area in a Histogram**](http://trsong.github.io/python/java/2020/11/02/DailyQuestionsAug/#dec-26-2020-medium-largest-rectangular-area-in-a-histogram) -- *Given a histogram consisting of rectangles of different heights. Determine the area of the largest rectangle that can be formed.* [*\(Try ME\)*](https://repl.it/@trsong/Find-Largest-Rectangular-Area-in-a-Histogram-1)
 
 </summary>
