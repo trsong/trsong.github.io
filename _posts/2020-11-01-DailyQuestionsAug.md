@@ -19,12 +19,129 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
 
+### Jan 9, 2021 \[Easy\] Compare Version Numbers
+--- 
+> **Question:** Version numbers are strings that are used to identify unique states of software products. A version number is in the format a.b.c.d. and so on where a, b, etc. are numeric strings separated by dots. These generally represent a hierarchy from major to minor changes. 
+> 
+> Given two version numbers version1 and version2, conclude which is the latest version number. Your code should do the following:
+> - If version1 > version2 return 1.
+> - If version1 < version2 return -1.
+> - Otherwise return 0.
+>
+> Note that the numeric strings such as a, b, c, d, etc. may have leading zeroes, and that the version strings do not start or end with dots. Unspecified level revision numbers default to 0.
+
+**Example 1:**
+```py
+Input: 
+version1 = "1.0.33"
+version2 = "1.0.27"
+Output: 1 
+#version1 > version2
+```
+
+**Example 2:**
+```py
+Input:
+version1 = "0.1"
+version2 = "1.1"
+Output: -1
+#version1 < version2
+```
+
+**Example 3:**
+```py
+Input: 
+version1 = "1.01"
+version2 = "1.001"
+Output: 0
+#ignore leading zeroes, 01 and 001 represent the same number. 
+```
+
+**Example 4:**
+```py
+Input:
+version1 = "1.0"
+version2 = "1.0.0"
+Output: 0
+#version1 does not have a 3rd level revision number, which
+defaults to "0"
+```
+
 ### Jan 8, 2021 \[Easy\] Step Word Anagram
 ---
 > **Question:** A step word is formed by taking a given word, adding a letter, and anagramming the result. For example, starting with the word `"APPLE"`, you can add an `"A"` and anagram to get `"APPEAL"`.
 >
 > Given a dictionary of words and an input word, create a function that returns all valid step words.
 
+**Solution:** [https://repl.it/@trsong/Step-Word-Anagram](https://repl.it/@trsong/Step-Word-Anagram)
+```py
+import unittest
+
+def find_step_anagrams(word, dictionary):
+    word_histogram = generate_histogram(word)
+    step_anagram_distance = 1
+    is_step_anagram = lambda w: (
+        step_anagram_distance == 
+        len(w) - len(word) ==  
+        histogram_distance_between(generate_histogram(w), word_histogram))
+    return filter(is_step_anagram, dictionary)
+
+
+def generate_histogram(word):
+    histogram = {}
+    for ch in word:
+        histogram[ch] = histogram.get(ch, 0) + 1
+    return histogram
+
+
+def histogram_distance_between(hst1, hst2):
+    dist = 0
+    for key in hst1.keys():
+        dist += max(0, hst1[key] - hst2.get(key, 0))
+    return dist
+
+
+class FindStepAnagramSpec(unittest.TestCase):
+    def test_example(self):
+        word = 'APPLE'
+        dictionary = ['APPEAL', 'CAPPLE', 'PALPED']
+        expected = ['APPEAL', 'CAPPLE', 'PALPED']
+        self.assertEqual(sorted(expected), sorted(find_step_anagrams(word, dictionary)))
+
+    def test_empty_word(self):
+        word = ''
+        dictionary = ['A', 'B', 'AB', 'ABC']
+        expected = ['A', 'B']
+        self.assertEqual(sorted(expected), sorted(find_step_anagrams(word, dictionary)))
+
+    def test_empty_dictionary(self):
+        word = 'ABC'
+        dictionary = []
+        expected = []
+        self.assertEqual(sorted(expected), sorted(find_step_anagrams(word, dictionary)))
+
+    def test_no_match(self):
+        word = 'ABC'
+        dictionary = ['BBB', 'ACCC']
+        expected = []
+        self.assertEqual(sorted(expected), sorted(find_step_anagrams(word, dictionary)))
+
+    def test_no_match2(self):
+        word = 'AA'
+        dictionary = ['ABB']
+        expected = []
+        self.assertEqual(sorted(expected), sorted(find_step_anagrams(word, dictionary)))
+
+    def test_repeated_chars(self):
+        word = 'AAA'
+        dictionary = ['A', 'AA', 'AAA', 'AAAA', 'AAAAB', 'AAB', 'AABA']
+        expected = ['AAAA', 'AABA']
+        self.assertEqual(sorted(expected), sorted(find_step_anagrams(word, dictionary)))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False, verbosity=2)
+```
 
 ### Jan 7, 2021 \[Medium\] Normalize Pathname
 ---

@@ -2143,6 +2143,22 @@ Output: ''
 <details>
 <summary class="lc_e">
 
+- [**\[Easy\] Step Word Anagram**](https://trsong.github.io/python/java/2020/11/02/DailyQuestionsAug/#jan-8-2021-easy-step-word-anagram) -- *Given a dictionary of words and an input word, create a function that returns all valid step words (word adding a letter, and anagramming).* [*\(Try ME\)*](https://repl.it/@trsong/Step-Word-Anagram-1)
+
+</summary>
+<div>
+
+**Question:** A step word is formed by taking a given word, adding a letter, and anagramming the result. For example, starting with the word `"APPLE"`, you can add an `"A"` and anagram to get `"APPEAL"`.
+
+Given a dictionary of words and an input word, create a function that returns all valid step words.
+
+</div>
+</details>
+
+
+<details>
+<summary class="lc_e">
+
 - [**\[Easy\] Is Anagram of Palindrome**](https://trsong.github.io/python/java/2020/08/02/DailyQuestionsAug/#oct-1-2020-easy-is-anagram-of-palindrome) -- *Given a string, determine whether any permutation of it is a palindrome.* [*\(Try ME\)*](https://repl.it/@trsong/Is-Anagram-of-Palindrome-1)
 
 </summary>
