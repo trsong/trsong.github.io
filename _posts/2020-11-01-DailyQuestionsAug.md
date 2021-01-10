@@ -76,6 +76,87 @@ Output: 0
 defaults to "0"
 ```
 
+**Solution:** [https://repl.it/@trsong/Compare-Two-Version-Numbers](https://repl.it/@trsong/Compare-Two-Version-Numbers)
+```py
+import unittest
+
+def compare(v1, v2):
+    version_seq1 = map(int, (v1 or '0').split('.'))
+    version_seq2 = map(int, (v2 or '0').split('.'))
+    len1, len2 = len(version_seq1), len(version_seq2)
+
+    for i in xrange(max(len1, len2)):
+        num1 = version_seq1[i] if i < len1 else 0
+        num2 = version_seq2[i] if i < len2 else 0
+        if num1 < num2:
+            return -1
+        elif num1 > num2:
+            return 1
+    
+    return 0
+
+
+class VersionNumberCompareSpec(unittest.TestCase):
+    def test_example1(self):
+        version1 = "1.0.33"
+        version2 = "1.0.27"
+        self.assertEqual(1, compare(version1, version2))
+
+    def test_example2(self):
+        version1 = "0.1"
+        version2 = "1.1"
+        self.assertEqual(-1, compare(version1, version2))
+
+    def test_example3(self):
+        version1 = "1.01"
+        version2 = "1.001"
+        self.assertEqual(0, compare(version1, version2))
+
+    def test_example4(self):
+        version1 = "1.0"
+        version2 = "1.0.0"
+        self.assertEqual(0, compare(version1, version2))
+
+    def test_unspecified_version_numbers(self):
+        self.assertEqual(0, compare("", ""))
+        self.assertEqual(-1, compare("", "1"))
+        self.assertEqual(1, compare("2", ""))
+
+    def test_unaligned_zeros(self):
+        version1 = "00000.00000.00000.0"
+        version2 = "0.00000.000.00.00000.000.000.0"
+        self.assertEqual(0, compare(version1, version2))
+
+    def test_same_version_yet_unaligned(self):
+        version1 = "00001.001"
+        version2 = "1.000001.0000000.0000"
+        self.assertEqual(0, compare(version1, version2))
+
+    def test_different_version_numbers(self):
+        version1 = "1.2.3.4"
+        version2 = "1.2.3.4.5"
+        self.assertEqual(-1, compare(version1, version2))
+
+    def test_different_version_numbers2(self):
+        version1 = "3.2.1"
+        version2 = "3.1.2.3"
+        self.assertEqual(1, compare(version1, version2))
+
+    def test_different_version_numbers3(self):
+        version1 = "00001.001.0.1"
+        version2 = "1.000001.0000000.0000"
+        self.assertEqual(1, compare(version1, version2))
+
+    def test_without_dots(self):
+        version1 = "32123"
+        version2 = "3144444"
+        self.assertEqual(-1, compare(version1, version2))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False, verbosity=2)
+```
+
 ### Jan 8, 2021 \[Easy\] Step Word Anagram
 ---
 > **Question:** A step word is formed by taking a given word, adding a letter, and anagramming the result. For example, starting with the word `"APPLE"`, you can add an `"A"` and anagram to get `"APPEAL"`.

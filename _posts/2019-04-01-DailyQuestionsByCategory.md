@@ -473,6 +473,64 @@ For example, if A is `'abcde'` and B is `'cdeab'`, return `True`. If A is `'abc'
 ---
 
 <details>
+<summary class="lc_e">
+
+- [**\[Easy\] Compare Version Numbers**](https://trsong.github.io/python/java/2020/11/02/DailyQuestionsAug/#jan-9-2021-easy-compare-version-numbers) -- *Given two version numbers version1 and version2, conclude which is the latest version number.* [*\(Try ME\)*](https://repl.it/@trsong/Compare-Two-Version-Numbers-1)
+
+</summary>
+<div>
+
+**Question:** Version numbers are strings that are used to identify unique states of software products. A version number is in the format a.b.c.d. and so on where a, b, etc. are numeric strings separated by dots. These generally represent a hierarchy from major to minor changes. 
+ 
+Given two version numbers version1 and version2, conclude which is the latest version number. Your code should do the following:
+- If version1 > version2 return 1.
+- If version1 < version2 return -1.
+- Otherwise return 0.
+
+Note that the numeric strings such as a, b, c, d, etc. may have leading zeroes, and that the version strings do not start or end with dots. Unspecified level revision numbers default to 0.
+
+**Example 1:**
+```py
+Input: 
+version1 = "1.0.33"
+version2 = "1.0.27"
+Output: 1 
+#version1 > version2
+```
+
+**Example 2:**
+```py
+Input:
+version1 = "0.1"
+version2 = "1.1"
+Output: -1
+#version1 < version2
+```
+
+**Example 3:**
+```py
+Input: 
+version1 = "1.01"
+version2 = "1.001"
+Output: 0
+#ignore leading zeroes, 01 and 001 represent the same number. 
+```
+
+**Example 4:**
+```py
+Input:
+version1 = "1.0"
+version2 = "1.0.0"
+Output: 0
+#version1 does not have a 3rd level revision number, which
+defaults to "0"
+```
+
+</div>
+</details>
+
+
+<details>
 <summary class="lc_m">
 
 - [**\[Medium\] LC 554. Brick Wall**](https://trsong.github.io/python/java/2020/11/02/DailyQuestionsAug/#dec-14-2020-lc-554-medium-brick-wall) -- *Find a vertical line going from the top to the bottom of the wall that cuts through the fewest* [*\(Try ME\)*](https://repl.it/@trsong/Min-Cut-of-Wall-Bricks-1)
