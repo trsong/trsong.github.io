@@ -5146,6 +5146,24 @@ For example, given `"2542540123"`, you should return `['254.25.40.123', '254.254
 ---
 
 <details>
+<summary class="lc_m">
+
+- [**\[Medium\] Multiset Partition**](https://repl.it/@trsong/Multiset-Partition-into-Equal-Sum) -- *Given a multiset of integers, return whether it can be partitioned into two subsets whose sums are the same.* [*\(Try ME\)*](https://repl.it/@trsong/Multiset-Partition-into-Equal-Sum-1)
+
+</summary>
+<div>
+
+**Question:** Given a multiset of integers, return whether it can be partitioned into two subsets whose sums are the same.
+
+For example, given the multiset `{15, 5, 20, 10, 35, 15, 10}`, it would return true, since we can split it up into `{15, 5, 10, 15, 10}` and `{20, 35}`, which both add up to `55`.
+
+Given the multiset `{15, 5, 20, 10, 35}`, it would return `false`, since we can't split it up into two subsets that add up to the same sum.
+
+</div>
+</details>
+
+
+<details>
 <summary class="lc_e">
 
 - [**\[Easy\] Smallest Sum Not Subset Sum**](https://trsong.github.io/python/java/2020/11/02/DailyQuestionsAug/#dec-24-2020-easy-smallest-sum-not-subset-sum) -- *Given a sorted list of positive numbers, find the smallest positive number that cannot be a sum of any subset in the list.* [*\(Try ME\)*](https://repl.it/@trsong/Smallest-Sum-Not-Subset-Sum-1)
@@ -5429,6 +5447,7 @@ Given such an array, determine the denominations that must be in use. In the cas
 
 ### 2D DP
 ---
+
 
 <details>
 <summary class="lc_h">

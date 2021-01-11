@@ -19,6 +19,24 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
 
+### Jan 11, 2021 \[Easy\] Spreadsheet Columns
+--- 
+> **Question:** In many spreadsheet applications, the columns are marked with letters. From the 1st to the 26th column the letters are A to Z. Then starting from the 27th column it uses AA, AB, ..., ZZ, AAA, etc.
+>
+> Given a number n, find the n-th column name.
+
+**Examples:**
+```py
+Input          Output
+ 26             Z
+ 51             AY
+ 52             AZ
+ 80             CB
+ 676            YZ
+ 702            ZZ
+ 705            AAC
+```
+
 ### Jan 10, 2021 \[Medium\] Multiset Partition
 ---
 > **Question:** Given a multiset of integers, return whether it can be partitioned into two subsets whose sums are the same.
@@ -27,6 +45,60 @@ categories: Python/Java
 >
 > Given the multiset {15, 5, 20, 10, 35}, it would return false, since we can't split it up into two subsets that add up to the same sum.
 
+**Solution with DP:** [https://repl.it/@trsong/Multiset-Partition-into-Equal-Sum](https://repl.it/@trsong/Multiset-Partition-into-Equal-Sum)
+```py
+import unittest
+
+def has_equal_sum_partition(multiset):
+    num_sum = sum(multiset)
+    return num_sum % 2 == 0 and has_subset_sum(multiset, num_sum // 2)
+
+
+def has_subset_sum(nums, target):
+    n = len(nums)
+    # Let dp[target] represents if there exists a subset sum target
+    dp = [False] * (target + 1)
+    dp[0] = True
+
+    for i in xrange(1, n + 1):
+        cur_num = nums[i - 1]
+        for sum in xrange(target, cur_num - 1, -1):
+            dp[sum] |= dp[sum - cur_num]
+    
+    return dp[target]
+
+
+class HasEqualSumPartitionSpec(unittest.TestCase):
+    def test_example(self):
+        nums = [15, 5, 20, 10, 35, 15, 10]
+        # Partition into [15, 5, 10, 15, 10] and [20, 35]
+        self.assertTrue(has_equal_sum_partition(nums))
+
+    def test_example2(self):
+        nums = [15, 5, 20, 10, 35]
+        self.assertFalse(has_equal_sum_partition(nums))
+
+    def test_empty_sets(self):
+        nums = []
+        self.assertTrue(has_equal_sum_partition(nums))
+
+    def test_partition_set_has_same_elements(self):
+        nums = [5, 1, 5, 1]
+        self.assertTrue(has_equal_sum_partition(nums))
+
+    def test_unable_to_partition(self):
+        nums = [1, 2, 2]
+        self.assertFalse(has_equal_sum_partition(nums))
+
+    def test_has_distinct_elements(self):
+        nums = [1, 2, 4, 3, 8]
+        # Partition into [1, 8] and [2, 4, 3]
+        self.assertTrue(has_equal_sum_partition(nums))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False, verbosity=2)
+```
 
 ### Jan 9, 2021 \[Easy\] Compare Version Numbers
 --- 
