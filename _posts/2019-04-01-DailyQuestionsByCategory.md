@@ -28,6 +28,33 @@ categories: Python/Java
 ---
 
 
+<details>
+<summary class="lc_e">
+
+- [**\[Easy\] Spreadsheet Columns**](https://trsong.github.io/python/java/2020/11/02/DailyQuestionsAug/#jan-11-2021-easy-spreadsheet-columns) -- *Given a number n, find the n-th column name. From the 1st to the 26th column the letters are A to Z.* [*\(Try ME\)*](https://repl.it/@trsong/Find-Spreadsheet-Columns-1)
+
+</summary>
+<div>
+
+**Question:** In many spreadsheet applications, the columns are marked with letters. From the 1st to the 26th column the letters are A to Z. Then starting from the 27th column it uses AA, AB, ..., ZZ, AAA, etc.
+
+Given a number n, find the n-th column name.
+
+**Examples:**
+```py
+Input          Output
+ 26             Z
+ 51             AY
+ 52             AZ
+ 80             CB
+ 676            YZ
+ 702            ZZ
+ 705            AAC
+```
+
+</div>
+</details>
+
 
 <details>
 <summary class="lc_e">

@@ -19,6 +19,22 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
 
+### Jan 12, 2021 LC 138 \[Medium\] Deepcopy List with Random Pointer
+--- 
+> **Question:** A linked list is given such that each node contains an additional random pointer which could point to any node in the list or null.
+>
+> Return a deep copy of the list.
+
+ **Example:**
+```py
+Input:
+{"$id":"1","next":{"$id":"2","next":null,"random":{"$ref":"2"},"val":2},"random":{"$ref":"2"},"val":1}
+
+Explanation:
+Node 1's value is 1, both of its next and random pointer points to Node 2.
+Node 2's value is 2, its next pointer points to null and its random pointer points to itself.
+```
+
 ### Jan 11, 2021 \[Easy\] Spreadsheet Columns
 --- 
 > **Question:** In many spreadsheet applications, the columns are marked with letters. From the 1st to the 26th column the letters are A to Z. Then starting from the 27th column it uses AA, AB, ..., ZZ, AAA, etc.
@@ -35,6 +51,57 @@ Input          Output
  676            YZ
  702            ZZ
  705            AAC
+```
+
+**My thoughts:** Map each digit to letter with value of digit - 1 won't work. E.g. `1 - 1 = 0 -> 'A'`. But `27 - 1 = 26 -> "AB" != 'AA'`. The trick is to treat `'Z'` as zero while printing and treat it as 26 while doing calculations. e.g. 1 -> A. 2 -> B. 25 -> Y. 0 -> Z.  
+
+**Solution:** [https://repl.it/@trsong/Find-Spreadsheet-Columns](https://repl.it/@trsong/Find-Spreadsheet-Columns)
+```py
+import unittest
+
+def spreadsheet_columns(n):
+    base = 26
+    res = []
+    while n > 0:
+        remainder = n % base
+        letter_index = (remainder - 1) % base
+        letter = chr(ord('A') + letter_index)
+        res.append(letter)
+        n //= base
+        if remainder == 0:
+            n -= 1
+    res.reverse()
+    return "".join(res)
+
+    
+class SpreadsheetColumnSpec(unittest.TestCase):
+    def test_trivial_example(self):
+        self.assertEqual("A", spreadsheet_columns(1))
+    
+    def test_example1(self):
+        self.assertEqual("Z", spreadsheet_columns(26))
+    
+    def test_example2(self):
+        self.assertEqual("AY", spreadsheet_columns(51))
+    
+    def test_example3(self):
+        self.assertEqual("AZ", spreadsheet_columns(52))
+    
+    def test_example4(self):
+        self.assertEqual("CB", spreadsheet_columns(80))
+    
+    def test_example5(self):
+        self.assertEqual("YZ", spreadsheet_columns(676))
+    
+    def test_example6(self):
+        self.assertEqual("ZZ", spreadsheet_columns(702))
+    
+    def test_example7(self):
+        self.assertEqual("AAC", spreadsheet_columns(705))
+
+
+if __name__ == '__main__':
+    unittest.main(verbosity=2, exit=False)
 ```
 
 ### Jan 10, 2021 \[Medium\] Multiset Partition
