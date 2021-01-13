@@ -19,7 +19,7 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
 
-### Jan 13, 2021 \[Hard\] Longest Common Subsequence
+### Jan 13, 2021 \[Hard\] Longest Common Subsequence of 3 Strings
 ---
 > **Question:** Write a program that computes the length of the longest common subsequence of three given strings. 
 > 
