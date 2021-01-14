@@ -19,6 +19,16 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
 
+### Jan 14, 2021 LC 1344 \[Easy\] Angle between Clock Hands
+---
+> **Question:** Given a clock time in `hh:mm` format, determine, to the nearest degree, the angle between the hour and the minute hands.
+
+**Example:**
+```py
+Input: "9:00"
+Output: 90
+```
+
 ### Jan 13, 2021 \[Hard\] Longest Common Subsequence of 3 Strings
 ---
 > **Question:** Write a program that computes the length of the longest common subsequence of three given strings. 
