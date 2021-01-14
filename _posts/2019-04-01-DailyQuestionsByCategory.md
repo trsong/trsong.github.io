@@ -5500,6 +5500,21 @@ Given such an array, determine the denominations that must be in use. In the cas
 ### 2D DP
 ---
 
+<details>
+<summary class="lc_h">
+
+- [**\[Hard\] Longest Common Subsequence of 3 Strings**](https://trsong.github.io/python/java/2020/11/02/DailyQuestionsAug/#jan-13-2021-hard-longest-common-subsequence-of-3-strings) -- *Write a program that computes the length of the longest common subsequence of three given strings.* [*\(Try ME\)*](https://repl.it/@trsong/Longest-Common-Subsequence-of-3-Strings-1)
+
+</summary>
+<div>
+
+**Question:** Write a program that computes the length of the longest common subsequence of three given strings. 
+ 
+For example, given `"epidemiologist"`, `"refrigeration"`, and `"supercalifragilisticexpialodocious"`, it should return `5`, since the longest common subsequence is `"eieio"`.
+
+
+</div>
+</details>
 
 <details>
 <summary class="lc_h">

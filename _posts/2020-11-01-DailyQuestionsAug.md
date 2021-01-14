@@ -35,6 +35,74 @@ Output: 90
 > 
 > For example, given `"epidemiologist"`, `"refrigeration"`, and `"supercalifragilisticexpialodocious"`, it should return `5`, since the longest common subsequence is `"eieio"`.
 
+**Solution with DP:** [https://repl.it/@trsong/Longest-Common-Subsequence-of-3-Strings](https://repl.it/@trsong/Longest-Common-Subsequence-of-3-Strings)
+```py
+import unittest
+
+def lcs(seq1, seq2, seq3):
+    n, m, k = len(seq1), len(seq2), len(seq3)
+    # Let dp[n][m][k] represents lcs for seq1[:n], seq2[:m], seq3[:k]
+    # dp[n][m][k] = dp[n-1][m-1][k-1] + 1  if all of following matches: seq[n-1], seq2[m-1], seq3[k-1]
+    #          = max(dp[n-1][m][k], dp[n][m-1][k], dp[n][m][k-1]) otherwise
+    dp = [[[0 for _ in xrange(k + 1)] for _ in xrange(m + 1)] for _ in xrange(n + 1)]
+    for i in xrange(1, n + 1):
+        for j in xrange(1, m + 1):
+            for t in xrange(1, k + 1):
+                if seq1[i-1] == seq2[j-1] == seq3[t-1]:
+                    dp[i][j][t] = dp[i-1][j-1][t-1] + 1
+                else:
+                    dp[i][j][t] = max(dp[i-1][j][t], dp[i][j-1][t], dp[i][j][t-1])
+    return dp[n][m][k]
+
+
+class LCSSpec(unittest.TestCase):
+    def test_empty_sequences(self):
+        self.assertEqual(0, lcs("", "", ""))
+    
+    def test_example(self):
+        self.assertEqual(5, lcs(
+            "epidemiologist",
+            "refrigeration",
+            "supercalifragilisticexpialodocious"))  # "eieio"
+
+    def test_match_last_position(self):
+        self.assertEqual(1, lcs("abcdz", "efghijz", "123411111z"))  # z
+
+    def test_match_first_position(self):
+        self.assertEqual(1, lcs("aefgh", "aijklmnop", "a12314213"))  # a
+
+    def test_off_by_one_position(self):
+        self.assertEqual(4, lcs("10101", "01010", "0010101"))  # 0101
+
+    def test_off_by_one_position2(self):
+        self.assertEqual(3, lcs("12345", "1235", "2535"))  # 235
+
+    def test_off_by_one_position3(self):
+        self.assertEqual(2, lcs("1234", "1243", "2431"))  # 24
+
+    def test_off_by_one_position4(self):
+        self.assertEqual(4, lcs("12345", "12340", "102030400"))  # 1234
+
+    def test_multiple_matching(self):
+        self.assertEqual(5, lcs("afbgchdie",
+                                "__a__b_c__de___f_g__h_i___", "/a/b/c/d/e"))  # abcde
+
+    def test_ascending_vs_descending(self):
+        self.assertEqual(1, lcs("01234", "_4__3___2_1_0__", "4_3_2_1_0"))  # 0
+
+    def test_multiple_ascending(self):
+        self.assertEqual(5, lcs("012312342345", "012345", "0123401234"))  # 01234
+
+    def test_multiple_descending(self):
+        self.assertEqual(5, lcs("54354354421", "5432432321", "54321"))  # 54321
+
+    def test_same_length_strings(self):
+        self.assertEqual(2, lcs("ABCD", "EACB", "AFBC"))  # AC
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False, verbosity=2)
+```
 
 ### Jan 12, 2021 LC 138 \[Medium\] Deepcopy List with Random Pointer
 --- 
