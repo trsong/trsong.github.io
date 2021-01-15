@@ -38,6 +38,68 @@ Input: "9:00"
 Output: 90
 ```
 
+**Solution:** [https://repl.it/@trsong/Calculate-Angle-between-Clock-Hands](https://repl.it/@trsong/Calculate-Angle-between-Clock-Hands)
+```py
+import unittest
+
+def clock_angle(hhmm):
+    h, m = map(int, hhmm.split(':'))
+    h %= 12
+    unit_hr = 360 / 12.0
+    unit_min = 360 / 60.0
+
+    hr_hand = h * unit_hr + m * unit_hr / 60.0 
+    min_hand = m * unit_min
+    angle = abs(min_hand - hr_hand)
+    return min(angle, 360 - angle)
+
+
+class ClockAngleSpec(unittest.TestCase):
+    def test_minute_point_zero(self):
+        hhmm = "12:00"
+        angle = 0
+        self.assertEqual(angle, clock_angle(hhmm))
+        
+    def test_minute_point_zero2(self):
+        hhmm = "1:00"
+        angle = 30
+        self.assertEqual(angle, clock_angle(hhmm))
+        
+    def test_minute_point_zero3(self):
+        hhmm = "9:00"
+        angle = 90
+        self.assertEqual(angle, clock_angle(hhmm))
+        
+    def test_minute_point_zero4(self):
+        hhmm = "6:00"
+        angle = 180
+        self.assertEqual(angle, clock_angle(hhmm))
+        
+    def test_half_pass_hour(self):
+        hhmm = "12:30"
+        angle = 165
+        self.assertEqual(angle, clock_angle(hhmm))
+        
+    def test_half_pass_hour2(self):
+        hhmm = "3:30"
+        angle = 75
+        self.assertEqual(angle, clock_angle(hhmm))
+
+    def test_irregular_time(self):
+        hhmm = "16:20"
+        angle = 10
+        self.assertEqual(angle, clock_angle(hhmm))
+
+    def test_irregular_time3(self):
+        hhmm = "3:15"
+        angle = 7.5
+        self.assertEqual(angle, clock_angle(hhmm))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False, verbosity=2)
+```
+
 ### Jan 13, 2021 \[Hard\] Longest Common Subsequence of 3 Strings
 ---
 > **Question:** Write a program that computes the length of the longest common subsequence of three given strings. 

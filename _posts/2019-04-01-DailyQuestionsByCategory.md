@@ -27,6 +27,26 @@ categories: Python/Java
 ## Math
 ---
 
+<details>
+
+<summary class="lc_e">
+
+- [**\[Easy\] LC 1344. Angle between Clock Hands**](https://trsong.github.io/python/java/2020/11/02/DailyQuestionsAug/#jan-14-2021-lc-1344-easy-angle-between-clock-hands) -- *Given a clock time in `hh:mm` format, determine, to the nearest degree, the angle between the hour and the minute hands.* [*\(Try ME\)*](https://repl.it/@trsong/Calculate-Angle-between-Clock-Hands-1)
+
+</summary>
+<div>
+
+**Question:** Given a clock time in `hh:mm` format, determine, to the nearest degree, the angle between the hour and the minute hands.
+
+**Example:**
+```py
+Input: "9:00"
+Output: 90
+```
+
+</div>
+</details>
+
 
 <details>
 <summary class="lc_e">
