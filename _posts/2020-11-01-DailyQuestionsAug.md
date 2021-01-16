@@ -19,6 +19,28 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
 
+### Jan 16, 2021 \[Easy\] Exists Overlap Rectangle
+--- 
+> **Question:** You are given a list of rectangles represented by min and max x- and y-coordinates. Compute whether or not a pair of rectangles overlap each other. If one rectangle completely covers another, it is considered overlapping.
+>
+> For example, given the following rectangles:
+```py
+{
+    "top_left": (1, 4),
+    "dimensions": (3, 3) # width, height
+},
+{
+    "top_left": (-1, 3),
+    "dimensions": (2, 1)
+},
+{
+    "top_left": (0, 5),
+    "dimensions": (4, 3)
+}
+```
+> return true as the first and third rectangle overlap each other.
+
+
 ### Jan 15, 2021 \[Medium\] Satisfactory Playlist
 ---
 > **Question:** You have access to ranked lists of songs for various users. Each song is represented as an integer, and more preferred songs appear earlier in each list. For example, the list `[4, 1, 7]` indicates that a user likes song `4` the best, followed by songs `1` and `7`.
