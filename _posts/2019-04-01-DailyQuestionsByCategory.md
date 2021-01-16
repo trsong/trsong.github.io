@@ -4567,6 +4567,24 @@ The words in the order of ['apple', 'eggs', 'snack', 'karat', 'tuna'] creates a 
 ---
 
 <details>
+<summary class="lc_m">
+
+- [**\[Medium\] Satisfactory Playlist**](https://trsong.github.io/python/java/2020/11/02/DailyQuestionsAug/#jan-15-2021-medium-satisfactory-playlist) -- *Given a set of these ranked lists, interleave them to create a playlist that satisfies everyone’s priorities.* [*\(Try ME\)*](https://repl.it/@trsong/Satisfactory-Playlist-for-Everyone-1)
+
+</summary>
+<div>
+
+**Question:** You have access to ranked lists of songs for various users. Each song is represented as an integer, and more preferred songs appear earlier in each list. For example, the list `[4, 1, 7]` indicates that a user likes song `4` the best, followed by songs `1` and `7`.
+
+Given a set of these ranked lists, interleave them to create a playlist that satisfies everyone's priorities.
+
+For example, suppose your input is `[[1, 7, 3], [2, 1, 6, 7, 9], [3, 9, 5]]`. In this case a satisfactory playlist could be `[2, 1, 6, 7, 3, 9, 5]`.
+
+</div>
+</details>
+
+
+<details>
 <summary class="lc_h">
 
 - [**\[Hard\] Order of Alien Dictionary**](https://trsong.github.io/python/java/2020/08/02/DailyQuestionsAug/#oct-25-2020-hard-order-of-alien-dictionary) -- *Give a dictionary of sorted words in an alien language, returns the correct order of letters in this language.* [*\(Try ME\)*](https://repl.it/@trsong/Alien-Dictionary-Order-1)

@@ -49,6 +49,106 @@ categories: Python/Java
 >
 > For example, suppose your input is `[[1, 7, 3], [2, 1, 6, 7, 9], [3, 9, 5]]`. In this case a satisfactory playlist could be `[2, 1, 6, 7, 3, 9, 5]`.
 
+**My thoughts:** create a graph with vertex being song and edge `(u, v)` representing that u is more preferred than v. A topological order will make sure that all more preferred song will go before less preferred ones. Thus gives a list that satisfies everyone's priorities, if there is one (no cycle).
+
+**Solution with Topological Sort:** [https://repl.it/@trsong/Satisfactory-Playlist-for-Everyone](https://repl.it/@trsong/Satisfactory-Playlist-for-Everyone)
+```py
+import unittest
+
+def calculate_satisfactory_playlist(preference):
+    neighbors = {}
+    inbound = {}
+    for songs in preference:
+        prev = None
+        for cur_song in songs:
+            inbound[cur_song] = inbound.get(cur_song, 0)
+            if prev:
+                neighbors[prev] = neighbors.get(prev, set())
+                if cur_song not in neighbors[prev]:
+                    neighbors[prev].add(cur_song)
+                    inbound[cur_song] += 1
+            prev = cur_song
+
+    queue = []
+    for song, count in inbound.items():
+        if count == 0:
+            queue.append(song)
+
+    res = []
+    while queue:
+        cur = queue.pop(0)
+        res.append(cur)
+
+        if cur not in neighbors:
+            continue
+
+        for nb in neighbors[cur]:
+            inbound[nb] -= 1
+            if inbound[nb] == 0:
+                queue.append(nb)
+            
+    return res if len(res) == len(inbound) else None
+        
+
+class CalculateSatisfactoryPlaylistSpec(unittest.TestCase):
+    def validate_result(self, preference, suggested_order):
+        song_set = set([song for songs in preference for song in songs])
+        self.assertEqual(
+            song_set,
+            set(suggested_order),
+            "Missing song: " + str(str(song_set - set(suggested_order))))
+
+        for i in xrange(len(suggested_order)):
+            for j in xrange(i+1, len(suggested_order)):
+                for lst in preference:
+                    song1, song2 = suggested_order[i], suggested_order[j]
+                    if song1 in lst and song2 in lst:
+                        self.assertLess(
+                            lst.index(song1), 
+                            lst.index(song2),
+                            "Suggested order {} conflict: {} cannot be more popular than {}".format(suggested_order, song1, song2))
+
+    def test_example(self):
+        preference = [[1, 7, 3], [2, 1, 6, 7, 9], [3, 9, 5]]
+        # possible order: 2, 1, 6, 7, 3, 9, 5
+        suggested_order = calculate_satisfactory_playlist(preference) 
+        self.validate_result(preference, suggested_order)
+    
+    def test_preference_contains_duplicate(self):
+        preference = [[1, 2], [1, 2], [1, 2]]
+        # possible order: 1, 2
+        suggested_order = calculate_satisfactory_playlist(preference) 
+        self.validate_result(preference, suggested_order)
+
+    def test_empty_graph(self):
+        self.assertEqual([], calculate_satisfactory_playlist([]))
+
+    def test_cyclic_graph(self):
+        preference = [[1, 2, 3], [1, 3, 2]]
+        self.assertIsNone(calculate_satisfactory_playlist(preference))
+
+    def test_acyclic_graph(self):
+        preference = [[1, 2], [2, 3], [1, 3, 5], [2, 5], [2, 4]]
+        # possible order: 1, 2, 3, 4, 5
+        suggested_order = calculate_satisfactory_playlist(preference)
+        self.validate_result(preference, suggested_order)
+
+    def test_disconnected_graph(self):
+        preference = [[0, 1], [2, 3], [3, 4]]
+        # possible order: 0, 1, 2, 3, 4
+        suggested_order = calculate_satisfactory_playlist(preference)
+        self.validate_result(preference, suggested_order)
+
+    def test_disconnected_graph2(self):
+        preference = [[0, 1], [2], [3]]
+        # possible order: 0, 1, 2, 3
+        suggested_order = calculate_satisfactory_playlist(preference)
+        self.validate_result(preference, suggested_order)
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False, verbosity=2)
+```
 
 ### Jan 14, 2021 LC 1344 \[Easy\] Angle between Clock Hands
 ---
