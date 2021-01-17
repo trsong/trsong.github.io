@@ -19,6 +19,25 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
 
+### Jan 17, 2021 \[Hard\] Exists Overlap Rectangle
+--- 
+> **Question:** Let A be an `N` by `M` matrix in which every row and every column is sorted.
+>
+> Given `i1`, `j1`, `i2`, and `j2`, compute the number of elements smaller than `A[i1, j1]` and larger than `A[i2, j2]`.
+
+**Example:**
+```py
+Given the following matrix:
+[[ 1,  3,  6, 10, 15, 20],
+ [ 2,  7,  9, 14, 22, 25],
+ [ 3,  8, 10, 15, 25, 30],
+ [10, 11, 12, 23, 30, 35],
+ [20, 25, 30, 35, 40, 45]]
+And i1 = 1, j1 = 1, i2 = 3, j2 = 3
+ 
+return 15 as there are 15 numbers in the matrix smaller than 7 or greater than 23.
+```
+
 ### Jan 16, 2021 \[Easy\] Exists Overlap Rectangle
 --- 
 > **Question:** You are given a list of rectangles represented by min and max x- and y-coordinates. Compute whether or not a pair of rectangles overlap each other. If one rectangle completely covers another, it is considered overlapping.
