@@ -252,6 +252,37 @@ Output: "0.(6)"
 </div>
 </details>
 
+<details>
+<summary class="lc_e">
+
+- [**\[Easy\] Exists Overlap Rectangle**](https://trsong.github.io/python/java/2020/11/02/DailyQuestionsAug/#jan-16-2021-easy-exists-overlap-rectangle) -- *Given a list of rectangles represented by min and max x- and y-coordinates. Compute whether or not a pair of rectangles overlap each other.* [*\(Try ME\)*](https://repl.it/@trsong/Exists-Overlap-Rectangles-1)
+
+</summary>
+<div>
+
+**Question:** You are given a list of rectangles represented by min and max x- and y-coordinates. Compute whether or not a pair of rectangles overlap each other. If one rectangle completely covers another, it is considered overlapping.
+
+For example, given the following rectangles:
+```py
+{
+    "top_left": (1, 4),
+    "dimensions": (3, 3) # width, height
+},
+{
+    "top_left": (-1, 3),
+    "dimensions": (2, 1)
+},
+{
+    "top_left": (0, 5),
+    "dimensions": (4, 3)
+}
+```
+Return true as the first and third rectangle overlap each other.
+ 
+</div>
+</details>
+
+
 ### Puzzle
 ---
 

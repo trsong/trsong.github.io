@@ -40,6 +40,156 @@ categories: Python/Java
 ```
 > return true as the first and third rectangle overlap each other.
 
+**Solution:** [https://repl.it/@trsong/Exists-Overlap-Rectangles](https://repl.it/@trsong/Exists-Overlap-Rectangles)
+```py
+import unittest
+
+def exists_overlap_rectangle(rectangles):
+    rects = map(Rectangle.from_object, rectangles)
+    # sort by x_min, then y_min
+    rects.sort(key=Rectangle.get_bottom_left)
+    n = len(rects)
+    for i, rect1 in enumerate(rects):
+        for j in xrange(i + 1, n):
+            rect2 = rects[j]
+            if rect2.x_min >= rect1.x_max:
+                break
+            if rect1.is_overlapped(rect2):
+                return True
+    
+    return False
+
+
+class Rectangle(object):
+    def __init__(self, top_left, dimension):
+        self.x_min = top_left[0]
+        self.x_max = top_left[0] + dimension[0]
+        self.y_min = top_left[1] - dimension[1]
+        self.y_max = top_left[1]
+
+    def __repr__(self):
+        return "Rectangle(x_min=%d, x_max=%d, y_min=%d, y_max=%d)" % (self.x_min, self.x_max, self.y_min, self.y_max)
+
+    def is_overlapped(self, other):
+        return (max(self.x_min, other.x_min) < min(self.x_max, other.x_max) and
+                max(self.y_min, other.y_min) < min(self.y_max, other.y_max))
+
+    @staticmethod
+    def from_object(obj):
+        return Rectangle(obj.get("top_left"), obj.get("dimensions"))
+    
+    @staticmethod
+    def get_bottom_left(rect):
+        return (rect.x_min, rect.y_min)
+
+
+class ExistsOverlapRectangleSpec(unittest.TestCase):
+    def test_example(self):
+        rectangles = [
+            {
+                "top_left": (1, 4),
+                "dimensions": (3, 3)  # width, height
+            },
+            {
+                "top_left": (-1, 3),
+                "dimensions": (2, 1)
+            },
+            {
+                "top_left": (0, 5),
+                "dimensions": (4, 3)
+            }
+        ]
+        self.assertTrue(exists_overlap_rectangle(rectangles))
+
+    def test_empty_rectangle_list(self):
+        self.assertFalse(exists_overlap_rectangle([]))
+
+    def test_two_overlap_rectangle(self):
+        rectangles = [
+            {
+                "top_left": (0, 1),
+                "dimensions": (1, 3)  # width, height
+            },
+            {
+                "top_left": (-1, 0),
+                "dimensions": (3, 1)
+            }
+        ]
+        self.assertTrue(exists_overlap_rectangle(rectangles))
+
+    def test_two_overlap_rectangle_form_a_cross(self):
+        rectangles = [
+            {
+                "top_left": (-1, 1),
+                "dimensions": (3, 2)  # width, height
+            },
+            {
+                "top_left": (0, 0),
+                "dimensions": (1, 1)
+            }
+        ]
+        self.assertTrue(exists_overlap_rectangle(rectangles))
+
+    def test_same_y_coord_not_overlap(self):
+        rectangles = [
+            {
+                "top_left": (0, 0),
+                "dimensions": (1, 1)  # width, height
+            },
+            {
+                "top_left": (1, 0),
+                "dimensions": (2, 2)
+            },
+            {
+                "top_left": (3, 0),
+                "dimensions": (5, 2)
+            }
+        ]
+        self.assertFalse(exists_overlap_rectangle(rectangles))
+
+    def test_same_y_coord_overlap(self):
+        rectangles = [
+            {
+                "top_left": (0, 0),
+                "dimensions": (1, 1)  # width, height
+            },
+            {
+                "top_left": (1, 0),
+                "dimensions": (2, 2)
+            },
+            {
+                "top_left": (3, 0),
+                "dimensions": (5, 2)
+            }
+        ]
+        self.assertFalse(exists_overlap_rectangle(rectangles))
+
+    def test_rectangles_in_different_quadrant(self):
+        rectangles = [
+            {
+                "top_left": (1, 1),
+                "dimensions": (2, 2)  # width, height
+            },
+            {
+                "top_left": (-1, 1),
+                "dimensions": (2, 2)
+            },
+            {
+                "top_left": (1, -1),
+                "dimensions": (2, 2)
+            },
+            {
+                "top_left": (-1, -1),
+                "dimensions": (2, 2)
+            }
+        ]
+        self.assertFalse(exists_overlap_rectangle(rectangles))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
+```
+
 
 ### Jan 15, 2021 \[Medium\] Satisfactory Playlist
 ---
