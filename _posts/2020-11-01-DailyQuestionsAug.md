@@ -38,6 +38,92 @@ And i1 = 1, j1 = 1, i2 = 3, j2 = 3
 return 15 as there are 15 numbers in the matrix smaller than 7 or greater than 23.
 ```
 
+**My thoughts:** The trick is to start from top-right cell. Either go left or go down, we can quickly figure out smaller elements within linear time `O(N + M)`. Once know how to find smaller, finding greater is just using total elements minus smaller.
+
+**Solution with Two-Pointers:** [https://repl.it/@trsong/Count-Elements-in-Sorted-Matrix](https://repl.it/@trsong/Count-Elements-in-Sorted-Matrix)
+```py
+import unittest
+
+def count_elements(matrix, pos1, pos2):
+    n, m = len(matrix), len(matrix[0])
+    v1 = matrix[pos1[0]][pos1[1]]
+    v2 = matrix[pos2[0]][pos2[1]]
+    if v1 > v2:
+        return n * m
+
+    less_than_v1 = count_smaller_elements(matrix, v1)
+    not_greater_than_v2 = count_smaller_elements(matrix, v2, exclusive=False)
+    return less_than_v1 + n * m - not_greater_than_v2
+
+
+def count_smaller_elements(matrix, target, exclusive=True):
+    n, m = len(matrix), len(matrix[0])
+    res = 0
+    row = 0
+    for col in xrange(m - 1, -1, -1):
+        while row < n:
+            if matrix[row][col] > target or exclusive and matrix[row][col] == target:
+                break
+            row += 1
+        res += row
+    return res
+
+
+class CountElementSpec(unittest.TestCase):
+    def test_example(self):
+        matrix = [
+            [1, 3, 6, 10, 15, 20], 
+            [2, 7, 9, 14, 22, 25],
+            [3, 8, 10, 15, 25, 30], 
+            [10, 11, 12, 23, 30, 35],
+            [20, 25, 30, 35, 40, 45]]
+        pos1, pos2 = (1, 1), (3, 3)
+        expected = 15
+        self.assertEqual(expected, count_elements(matrix, pos1, pos2))
+
+    def test_no_elem_found(self):
+        matrix = [
+            [1, 2],
+            [3, 6]
+        ]
+        pos1, pos2 = (0, 0), (1, 1)
+        expected = 0
+        self.assertEqual(expected, count_elements(matrix, pos1, pos2))
+
+    def test_top_right_bottom_left(self):
+        matrix = [
+            [1, 2, 3],
+            [4, 5, 6],
+            [7, 8, 9]]
+        pos1, pos2 = (0, 2), (2, 0)
+        expected = 4
+        self.assertEqual(expected, count_elements(matrix, pos1, pos2))
+
+    def test_covers_entire_matrix(self):
+        matrix = [
+            [1, 2, 3],
+            [2, 3, 4],
+            [9, 10, 11]
+        ]
+        pos1, pos2 = (2, 2), (0, 0)
+        expected = 9
+        self.assertEqual(expected, count_elements(matrix, pos1, pos2))
+
+    def test_identical_pos(self):
+        matrix = [
+            [1, 2, 3],
+            [2, 3, 4],
+            [9, 10, 11]
+        ]
+        pos1, pos2 = (1, 1), (1, 1)
+        expected = 7
+        self.assertEqual(expected, count_elements(matrix, pos1, pos2))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False, verbosity=2)
+```
+
 ### Jan 16, 2021 \[Easy\] Exists Overlap Rectangle
 --- 
 > **Question:** You are given a list of rectangles represented by min and max x- and y-coordinates. Compute whether or not a pair of rectangles overlap each other. If one rectangle completely covers another, it is considered overlapping.

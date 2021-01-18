@@ -1344,6 +1344,35 @@ missing_ranges(nums=[1, 3, 5, 10], lower=1, upper=10)
 ---
 
 <details>
+<summary class="lc_h">
+
+- [**\[Hard\] Count Elements in Sorted Matrix**](https://trsong.github.io/python/java/2020/11/02/DailyQuestionsAug/#jan-17-2021-hard-count-elements-in-sorted-matrix) -- *Let A be a sorted matrix. Given i1, j1, i2, and j2, compute the number of elements smaller than A[i1, j1] and larger than A[i2, j2].* [*\(Try ME\)*](https://repl.it/@trsong/Count-Elements-in-Sorted-Matrix-1)
+
+</summary>
+<div>
+
+**Question:** Let A be an `N` by `M` matrix in which every row and every column is sorted.
+
+Given `i1`, `j1`, `i2`, and `j2`, compute the number of elements smaller than `A[i1, j1]` and larger than `A[i2, j2]`.
+
+**Example:**
+```py
+Given the following matrix:
+[[ 1,  3,  6, 10, 15, 20],
+ [ 2,  7,  9, 14, 22, 25],
+ [ 3,  8, 10, 15, 25, 30],
+ [10, 11, 12, 23, 30, 35],
+ [20, 25, 30, 35, 40, 45]]
+And i1 = 1, j1 = 1, i2 = 3, j2 = 3
+ 
+return 15 as there are 15 numbers in the matrix smaller than 7 or greater than 23.
+```
+
+</div>
+</details>
+
+
+<details>
 <summary class="lc_e">
 
 - [**\[Easy\] LC 859. Buddy Strings**](https://trsong.github.io/python/java/2020/11/02/DailyQuestionsAug/#nov-11-2020-lc-859-easy-buddy-strings) -- *Given two string A, B. Return true if and only if we can swap two letters in A so that the result equals B.* [*\(Try ME\)*](https://repl.it/@trsong/Buddy-Strings-1)
