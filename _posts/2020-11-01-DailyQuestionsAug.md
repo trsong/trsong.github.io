@@ -19,6 +19,16 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
 
+
+### Jan 18, 2021 \[Medium\] Regular Numbers
+--- 
+> **Question:**  A regular number in mathematics is defined as one which evenly divides some power of `60`. Equivalently, we can say that a regular number is one whose only prime divisors are `2`, `3`, and `5`.
+>
+> These numbers have had many applications, from helping ancient Babylonians keep time to tuning instruments according to the diatonic scale.
+>
+> Given an integer N, write a program that returns, in order, the first N regular numbers.
+ 
+
 ### Jan 17, 2021 \[Hard\] Count Elements in Sorted Matrix
 --- 
 > **Question:** Let A be an `N` by `M` matrix in which every row and every column is sorted.
