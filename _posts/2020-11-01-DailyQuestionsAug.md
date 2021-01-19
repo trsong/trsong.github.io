@@ -46,6 +46,60 @@ categories: Python/Java
 > Given an integer N, write a program that returns, in order, the first N regular numbers.
  
 
+**Solution:** [https://repl.it/@trsong/Regular-Numbers](https://repl.it/@trsong/Regular-Numbers)
+```py
+import unittest
+
+def generate_regular_numbers(n):
+    if n == 0:
+        return []
+
+    res = [1]
+    i, j, k = 0, 0, 0
+    for _ in xrange(n - 1):
+        num = min(2 * res[i], 3 * res[j], 5 * res[k])
+        res.append(num)
+
+        if num % 2 == 0:
+            i += 1
+
+        if num % 3 == 0:
+            j += 1
+
+        if num % 5 == 0:
+            k += 1
+    return res
+
+
+# Source: https://en.wikipedia.org/wiki/Regular_number
+REGULAR_NUMBERS = [
+    1, 2, 3, 4, 5, 6, 8, 9, 10, 12, 15, 16, 18, 20, 24, 25, 27, 30, 32, 36, 40,
+    45, 48, 50, 54, 60, 64, 72, 75, 80, 81, 90, 96, 100, 108, 120, 125, 128,
+    135, 144, 150, 160, 162, 180, 192, 200, 216, 225, 240, 243, 250, 256, 270,
+    288, 300, 320, 324, 360, 375, 384, 400, 405
+]
+
+
+class GenerateRegularNumberSpec(unittest.TestCase):
+    def test_empty_result(self):
+        self.assertEqual([], generate_regular_numbers(0))
+
+    def test_5_elements(self):
+        self.assertEqual(REGULAR_NUMBERS[:5], generate_regular_numbers(5))
+
+    def test_10_elements(self):
+        self.assertEqual(REGULAR_NUMBERS[:10], generate_regular_numbers(10))
+
+    def test_15_elements(self):
+        self.assertEqual(REGULAR_NUMBERS[:15], generate_regular_numbers(15))
+
+    def test_20_elements(self):
+        self.assertEqual(REGULAR_NUMBERS[:20], generate_regular_numbers(20))
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
+```
+
 ### Jan 17, 2021 \[Hard\] Count Elements in Sorted Matrix
 --- 
 > **Question:** Let A be an `N` by `M` matrix in which every row and every column is sorted.

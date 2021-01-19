@@ -27,6 +27,26 @@ categories: Python/Java
 ## Math
 ---
 
+
+<details>
+<summary class="lc_m">
+
+- [**\[Medium\] Regular Numbers**](https://trsong.github.io/python/java/2020/11/02/DailyQuestionsAug/#jan-18-2021-medium-regular-numbers) -- *A regular number in mathematics is defined as one which evenly divides some power of 60.  Returns, in order, the first N regular numbers.* [*\(Try ME\)*](https://repl.it/@trsong/Regular-Numbers-1)
+
+</summary>
+<div>
+
+**Question:**  A regular number in mathematics is defined as one which evenly divides some power of `60`. Equivalently, we can say that a regular number is one whose only prime divisors are `2`, `3`, and `5`.
+
+These numbers have had many applications, from helping ancient Babylonians keep time to tuning instruments according to the diatonic scale.
+
+Given an integer N, write a program that returns, in order, the first N regular numbers.
+
+
+</div>
+</details>
+
+
 <details>
 
 <summary class="lc_e">
