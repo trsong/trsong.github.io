@@ -37,6 +37,87 @@ categories: Python/Java
 > Given a friendship list such as the one above, determine the number of friend groups in the class.
 
 
+**Solution with DisjointSet(Union-Find):** [https://repl.it/@trsong/Friend-Cycle-Problem](https://repl.it/@trsong/Friend-Cycle-Problem)
+```py
+import unittest
+
+def find_cycles(friendships):
+    capacity = len(friendships)
+    uf = DisjointSet(capacity)
+    for p1, friends in friendships.items():
+        for p2 in friends:
+            uf.union(p1, p2)
+    return uf.groups
+
+
+class DisjointSet(object):
+    def __init__(self, capacity):
+        self.parent = range(capacity)
+        self.groups = capacity
+
+    def find(self, p):
+        while p != self.parent[p]:
+            self.parent[p] = self.find(self.parent[p])
+            p = self.parent[p]
+        return p
+
+    def union(self, p1, p2):
+        parent1 = self.find(p1)
+        parent2 = self.find(p2)
+        if parent1 != parent2:
+            self.parent[parent1] = parent2
+            self.groups -= 1
+
+
+class FindCycleSpec(unittest.TestCase):
+    def test_example(self):
+        friendships = {
+            0: [1, 2],
+            1: [0, 5],
+            2: [0],
+            3: [6],
+            4: [],
+            5: [1],
+            6: [3]
+        }
+        expected = 3  # [0, 1, 2, 5], [3, 6], [4]
+        self.assertEqual(expected, find_cycles(friendships))
+
+    def test_no_friends(self):
+        friendships = {
+            0: [],
+            1: [],
+            2: []
+        }
+        expected = 3  # [0], [1], [2]
+        self.assertEqual(expected, find_cycles(friendships))
+
+    def test_all_friends(self):
+        friendships = {
+            0: [1, 2],
+            1: [0, 2],
+            2: [0, 1]
+        }
+        expected = 1  # [0, 1, 2]
+        self.assertEqual(expected, find_cycles(friendships))
+    
+    def test_common_friend(self):
+        friendships = {
+            0: [1],
+            1: [0, 2, 3],
+            2: [1],
+            3: [1],
+            4: []
+        }
+        expected = 2  # [0, 1, 2, 3], [4]
+        self.assertEqual(expected, find_cycles(friendships))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False, verbosity=2)
+```
+
+
 ### Jan 18, 2021 \[Medium\] Regular Numbers
 --- 
 > **Question:**  A regular number in mathematics is defined as one which evenly divides some power of `60`. Equivalently, we can say that a regular number is one whose only prime divisors are `2`, `3`, and `5`.
