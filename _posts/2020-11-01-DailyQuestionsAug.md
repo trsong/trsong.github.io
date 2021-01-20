@@ -19,6 +19,25 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
 
+### Jan 20, 2021 \[Medium\] Most Frequent Subtree Sum
+--- 
+> **Question:** Given a binary tree, find the most frequent subtree sum.
+> 
+> If there is a tie between the most frequent sum, return the smaller one.
+
+**Example:**
+```
+   3
+  / \
+ 1   -3
+
+The above tree has 3 subtrees.:
+The root node with 3, and the 2 leaf nodes, which gives us a total of 3 subtree sums.
+The root node has a sum of 1 (3 + 1 + -3).
+The left leaf node has a sum of 1, and the right leaf node has a sum of -3. 
+Therefore the most frequent subtree sum is 1.
+```
+
 ### Jan 19, 2021 \[Medium\] Friend Cycle Problem
 --- 
 > **Question:** A classroom consists of `N` students, whose friendships can be represented in an adjacency list. For example, the following descibes a situation where `0` is friends with `1` and `2`, `3` is friends with `6`, and so on.
