@@ -19,6 +19,13 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
 
+### Jan 21, 2021 \[Easy\] Power Set
+---
+> **Question:** The power set of a set is the set of all its subsets. Write a function that, given a set, generates its power set.
+>
+> For example, given a set represented by a list `[1, 2, 3]`, it should return `[[], [1], [2], [3], [1, 2], [1, 3], [2, 3], [1, 2, 3]]` representing the power set.
+
+
 ### Jan 20, 2021 \[Medium\] Most Frequent Subtree Sum
 --- 
 > **Question:** Given a binary tree, find the most frequent subtree sum.
