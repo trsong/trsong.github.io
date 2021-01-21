@@ -2648,6 +2648,34 @@ For example, given the array `[3, 4, 9, 6, 1]`, return `[1, 1, 2, 1, 0]`, since:
 ### Recursion
 ---
 
+<details>
+<summary class="lc_m">
+
+- [**\[Medium\] Most Frequent Subtree Sum**](https://trsong.github.io/python/java/2020/11/02/DailyQuestionsAug/#jan-20-2021-medium-most-frequent-subtree-sum) -- *Given the root of a binary tree, find the most frequent subtree sum.* [*\(Try ME\)*](https://repl.it/@trsong/Find-Most-Frequent-Subtree-Sum-1)
+
+</summary>
+<div>
+
+**Question:** Given a binary tree, find the most frequent subtree sum.
+
+If there is a tie between the most frequent sum, return the smaller one.
+
+**Example:**
+```
+   3
+  / \
+ 1   -3
+
+The above tree has 3 subtrees.:
+The root node with 3, and the 2 leaf nodes, which gives us a total of 3 subtree sums.
+The root node has a sum of 1 (3 + 1 + -3).
+The left leaf node has a sum of 1, and the right leaf node has a sum of -3. 
+Therefore the most frequent subtree sum is 1.
+```
+
+</div>
+</details>
+
 
 <details>
 <summary class="lc_m">

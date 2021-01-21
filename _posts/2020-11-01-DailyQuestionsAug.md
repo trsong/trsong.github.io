@@ -38,6 +38,102 @@ The left leaf node has a sum of 1, and the right leaf node has a sum of -3.
 Therefore the most frequent subtree sum is 1.
 ```
 
+**Solution:** [https://repl.it/@trsong/Find-Most-Frequent-Subtree-Sum](https://repl.it/@trsong/Find-Most-Frequent-Subtree-Sum)
+```py
+import unittest
+
+def most_freq_tree_sum(tree):
+    if not tree:
+        return None
+
+    freq = {}
+    node_sum(tree, freq)
+    return max(freq.keys(), key=lambda k: (freq[k], -k))
+
+
+def node_sum(node, freq):
+    if not node:
+        return 0
+    
+    left_res = node_sum(node.left, freq)
+    right_res = node_sum(node.right, freq)
+    res = node.val + left_res + right_res
+    freq[res] = freq.get(res, 0) + 1
+    return res
+
+
+class TreeNode(object):
+    def __init__(self, val, left=None, right=None):
+        self.val = val
+        self.left = left
+        self.right = right
+
+
+class MostFreqTreeSumSpec(unittest.TestCase):
+    def test_example1(self):
+        """
+           3
+          / \
+         2  -3
+        """
+        t = TreeNode(3, TreeNode(2), TreeNode(-3))
+        self.assertEqual(2, most_freq_tree_sum(t))
+
+    def test_empty_tree(self):
+        self.assertIsNone(most_freq_tree_sum(None))
+
+    def test_tree_with_unique_value(self):
+        """
+          0
+         / \
+        0   0
+         \
+          0
+        """
+        l = TreeNode(0, right=TreeNode(0))
+        t = TreeNode(0, l, TreeNode(0))
+        self.assertEqual(0, most_freq_tree_sum(t))
+
+    def test_depth_3_tree(self):
+        """
+           _0_ 
+          /   \
+         0     -3  
+        / \   /  \   
+       1  -1 3   -1  
+        """
+        l = TreeNode(0, TreeNode(1), TreeNode(-1))
+        r = TreeNode(-3, TreeNode(3), TreeNode(-1))
+        t = TreeNode(0, l, r)
+        self.assertEqual(-1, most_freq_tree_sum(t))
+
+    def test_return_smaller_freq_when_there_is_a_tie(self):
+        """
+            -2
+           /   \
+          0     1
+         / \   / \
+        0   0 1   1
+        """
+        l = TreeNode(0, TreeNode(0), TreeNode(0))
+        r = TreeNode(1, TreeNode(1), TreeNode(1))
+        t = TreeNode(-2, l, r)
+        self.assertEqual(0, most_freq_tree_sum(t))
+
+    def test_return_smaller_freq_when_there_is_a_tie2(self):
+        """
+           3
+          / \
+         2   -1
+        """
+        t = TreeNode(3, TreeNode(2), TreeNode(-1))
+        self.assertEqual(-1, most_freq_tree_sum(t))
+        
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
+```
+
 ### Jan 19, 2021 \[Medium\] Friend Cycle Problem
 --- 
 > **Question:** A classroom consists of `N` students, whose friendships can be represented in an adjacency list. For example, the following descibes a situation where `0` is friends with `1` and `2`, `3` is friends with `6`, and so on.
