@@ -19,6 +19,11 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
 
+### Jan 22, 2021 \[Easy\] Palindrome Integers
+--- 
+> **Question:** Write a program that checks whether an integer is a palindrome. For example, `121` is a palindrome, as well as `888`. But neither `678` nor `80` is a palindrome. Do not convert the integer into a string.
+
+
 ### Jan 21, 2021 \[Easy\] Power Set
 ---
 > **Question:** The power set of a set is the set of all its subsets. Write a function that, given a set, generates its power set.
