@@ -5070,6 +5070,22 @@ Output: ['ad', 'ae', 'af', 'bd', 'be', 'bf', 'cd', 'ce', 'cf']
 </details>
 
 <details>
+<summary class="lc_e">
+
+- [**\[Easy\] Power Set**](https://trsong.github.io/python/java/2020/11/02/DailyQuestionsAug/#jan-21-2021-easy-power-set) -- *Given a set, generate its power set.* [*\(Try ME\)*](https://repl.it/@trsong/Power-Set-1)
+
+</summary>
+<div>
+
+**Question:** The power set of a set is the set of all its subsets. Write a function that, given a set, generates its power set.
+
+For example, given a set represented by a list `[1, 2, 3]`, it should return `[[], [1], [2], [3], [1, 2], [1, 3], [2, 3], [1, 2, 3]]` representing the power set.
+
+</div>
+</details>
+
+
+<details>
 <summary class="lc_m">
 
 - [**\[Medium\] LC 77. Combinations**](https://trsong.github.io/python/java/2020/11/02/DailyQuestionsAug/#dec-30-2020-lc-77-medium-combinations) -- *Given two integers n and k, return all possible combinations of k numbers out of 1 ... n.* [*\(Try ME\)*](https://repl.it/@trsong/Combinations-1)
