@@ -27,6 +27,18 @@ categories: Python/Java
 ## Math
 ---
 
+<details>
+<summary class="lc_e">
+
+- [**\[Easy\] Palindrome Integers**](https://trsong.github.io/python/java/2020/11/02/DailyQuestionsAug/#jan-22-2021-easy-palindrome-integers) -- *Write a program that checks whether an integer is a palindrome.* [*\(Try ME\)*](https://repl.it/@trsong/Determine-Palindrome-Integer-1)
+
+</summary>
+<div>
+
+**Question:** Write a program that checks whether an integer is a palindrome. For example, `121` is a palindrome, as well as `888`. But neither `678` nor `80` is a palindrome. Do not convert the integer into a string.
+
+</div>
+</details>
 
 <details>
 <summary class="lc_m">

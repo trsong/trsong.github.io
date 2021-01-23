@@ -23,6 +23,57 @@ categories: Python/Java
 --- 
 > **Question:** Write a program that checks whether an integer is a palindrome. For example, `121` is a palindrome, as well as `888`. But neither `678` nor `80` is a palindrome. Do not convert the integer into a string.
 
+**Solution:** [https://repl.it/@trsong/Determine-Palindrome-Integer](https://repl.it/@trsong/Determine-Palindrome-Integer)
+```py
+import unittest
+
+def is_palindrome_integer(num):
+    return num >= 0 and num == reverse_number(num)
+
+
+def reverse_number(num):
+    res = 0
+    while num > 0:
+        res = 10 * res + num % 10
+        num //= 10
+    return res
+
+
+class IsPalindromeIntegerSpec(unittest.TestCase):
+    def test_example1(self):
+        self.assertTrue(is_palindrome_integer(121))
+
+    def test_example2(self):
+        self.assertTrue(is_palindrome_integer(88))
+
+    def test_example3(self):
+        self.assertFalse(is_palindrome_integer(678))
+
+    def test_example4(self):
+        self.assertFalse(is_palindrome_integer(80))
+
+    def test_zero(self):
+        self.assertTrue(is_palindrome_integer(0))
+
+    def test_single_digit_number(self):
+        self.assertTrue(is_palindrome_integer(7))
+
+    def test_non_palindrome1(self):
+        self.assertFalse(is_palindrome_integer(123421))
+
+    def test_non_palindrome2(self):
+        self.assertFalse(is_palindrome_integer(21010112))
+
+    def test_negative_number1(self):
+        self.assertFalse(is_palindrome_integer(-1))
+
+    def test_negative_number2(self):
+        self.assertFalse(is_palindrome_integer(-222))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False, verbosity=2)
+```
 
 ### Jan 21, 2021 \[Easy\] Power Set
 ---
