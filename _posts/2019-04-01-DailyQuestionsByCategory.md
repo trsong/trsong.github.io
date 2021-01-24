@@ -412,6 +412,38 @@ Can you perform the operation without allocating extra memory (disregarding the 
 <details>
 <summary class="lc_e">
 
+- [**\[Easy\] Valid UTF-8 Encoding**](https://trsong.github.io/python/java/2020/11/02/DailyQuestionsAug/#jan-23-2021-easy-valid-utf-8-encoding) -- *Takes in an array of integers representing byte values, and returns whether it is a valid UTF-8 encoding.* [*\(Try ME\)*](https://repl.it/@trsong/Valid-UTF-8-Encoding-1)
+
+</summary>
+<div>
+
+**Question:** UTF-8 is a character encoding that maps each symbol to one, two, three, or four bytes.
+
+Write a program that takes in an array of integers representing byte values, and returns whether it is a valid UTF-8 encoding.
+ 
+For example, the Euro sign, `€`, corresponds to the three bytes 11100010 10000010 10101100. The rules for mapping characters are as follows:
+
+- For a single-byte character, the first bit must be zero.
+- For an n-byte character, the first byte starts with n ones and a zero. The other n - 1 bytes all start with 10.
+
+Visually, this can be represented as follows.
+
+```py
+ Bytes   |           Byte format
+-----------------------------------------------
+   1     | 0xxxxxxx
+   2     | 110xxxxx 10xxxxxx
+   3     | 1110xxxx 10xxxxxx 10xxxxxx
+   4     | 11110xxx 10xxxxxx 10xxxxxx 10xxxxxx
+```   
+
+
+</div>
+</details>
+
+<details>
+<summary class="lc_e">
+
 - [**\[Easy\] Longest Consecutive 1s in Binary Representation**](https://trsong.github.io/python/java/2020/11/02/DailyQuestionsAug/#dec-20-2020-easy-longest-consecutive-1s-in-binary-representation) -- *Given an integer n, return the length of the longest consecutive run of 1s in its binary representation.* [*\(Try ME\)*](https://repl.it/@trsong/Longest-Consecutive-1s-in-Binary-Representation-1)
 
 </summary>
