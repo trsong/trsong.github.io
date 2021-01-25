@@ -4022,6 +4022,21 @@ For example, if the list is `[1, 2, 3, 4, 5]` and `K` is `9`, then it should ret
 ---
 
 <details>
+<summary class="lc_h">
+
+- [**\[Hard\] Smallest Stab Set**](https://trsong.github.io/python/java/2020/11/02/DailyQuestionsAug/#jan-24-2021-hard-smallest-stab-set) -- *P “stabs” X if every interval in X contains at least one point in P. Compute the smallest set of points that stabs X.* [*\(Try ME\)*](https://repl.it/@trsong/Smallest-Stab-Set-1)
+
+</summary>
+<div>
+
+**Question:** Let `X` be a set of `n` intervals on the real line. We say that a set of points `P` "stabs" `X` if every interval in `X` contains at least one point in `P`. Compute the smallest set of points that stabs X.
+
+For example, given the intervals `[(1, 4), (4, 5), (7, 9), (9, 12)]`, you should return `[4, 9]`.
+
+</div>
+</details>
+
+<details>
 <summary class="lc_m">
 
 - [**\[Medium\] LC 1647. Minimum Deletions to Make Character Frequencies Unique**](https://trsong.github.io/python/java/2020/11/02/DailyQuestionsAug/#nov-16-2020-lc-1647-medium-minimum-deletions-to-make-character-frequencies-unique) -- *Given a string s, return the minimum number of characters you need to delete to make s good. s is good if no two letters have same count.* [*\(Try ME\)*](https://repl.it/@trsong/Minimum-Deletions-to-Make-Character-Frequencies-Unique-1)

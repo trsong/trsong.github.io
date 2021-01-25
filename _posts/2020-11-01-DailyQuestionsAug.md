@@ -27,6 +27,72 @@ categories: Python/Java
 > For example, given the intervals `[(1, 4), (4, 5), (7, 9), (9, 12)]`, you should return `[4, 9]`.
  
 
+**My thoughts:** Sort intevals by end time. Greedily choose earlist end time of a interval. Skip all intervals that covers that end time unless not covered, then move onto earilst end time of next interval. 
+
+
+**Solution with Greedy Approach:** [https://repl.it/@trsong/Smallest-Stab-Set](https://repl.it/@trsong/Smallest-Stab-Set)
+```py
+import unittest
+
+def smallest_stub_set(intervals):
+    intervals.sort(key=lambda interval: (interval[1], interval[0]))
+
+    smallest_end = None
+    res = []
+    for start, end in intervals:
+        if start > smallest_end:
+            res.append(end)
+            smallest_end = end
+    return res
+
+
+class SmallestStubSetSpec(unittest.TestCase):
+    def assert_result(self, expected, intervals):
+        res = smallest_stub_set(intervals)
+        self.assertEqual(len(expected), len(res), "Expected result like {} but given {}".format(expected, res))
+        for num in res:
+            self.assertTrue(any(lo <= num <= hi for lo, hi in intervals))
+
+    def test_example(self):
+        intervals = [(1, 4), (4, 5), (7, 9), (9, 12)]
+        expected = [4, 9]
+        self.assert_result(expected, intervals)
+
+    def test_empty_intervals(self):
+        self.assertEqual([], smallest_stub_set([]))
+
+    def test_optimal_result(self):
+        intervals = [(1, 5), (5, 10), (2, 9)]
+        expected = [5]
+        self.assert_result(expected, intervals)
+
+    def test_optimal_result2(self):
+        intervals = [(2, 8), (8, 15), (1, 5), (5, 10), (10, 20)]
+        expected = [5, 10]
+        self.assert_result(expected, intervals)
+
+    def test_have_to_include_all_ends(self):
+        intervals = [(2, 2), (8, 8), (1, 1), (5, 5), (2, 2)]
+        expected = [1, 2, 5, 8]
+        self.assert_result(expected, intervals)
+
+    def test_multiple_solutions(self):
+        intervals = [(1, 2), (1, 3), (1, 4), (3, 5)]
+        expected = [2, 5]  # other solution also work
+        self.assert_result(expected, intervals)
+    
+    def test_multiple_solutions2(self):
+        intervals = [(1, 5), (2, 5), (3, 5), (4, 10)]
+        expected = [5]  # other solution also work
+        self.assert_result(expected, intervals)
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False, verbosity=2)
+```
+
+
+
 ### Jan 23, 2021 \[Easy\] Valid UTF-8 Encoding
 --- 
 > **Question:** UTF-8 is a character encoding that maps each symbol to one, two, three, or four bytes.
