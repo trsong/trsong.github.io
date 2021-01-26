@@ -26,6 +26,83 @@ categories: Python/Java
 > For example, given `[5, 10, 15, 20, 25]`, return the sets `[10, 25]` and `[5, 15, 20]`, which has a difference of `5`, which is the smallest possible difference.
 
 
+**Solution with DP:** [https://repl.it/@trsong/Partition-Array-to-Reach-Min-Difference](https://repl.it/@trsong/Partition-Array-to-Reach-Min-Difference)
+```py
+import unittest
+
+def min_partition_difference(nums):
+    nums_sum = sum(nums)
+    n = len(nums)
+
+    # Let dp[i][sum] represents exists subset sum for nums[:i]
+    # dp[i][sum] = dp[i-1][sum]              if exclude nums[i - 1]
+    #            = dp[i-1][sum - nums[i-1]]  if include nums[i - 1]
+    dp = [[False for _ in xrange(nums_sum // 2 + 1)] for _ in xrange(n + 1)]
+    for i in xrange(n + 1):
+        dp[i][0] = True
+
+    for i in xrange(1, n + 1):
+        elem = nums[i-1]
+        for s in xrange(1, nums_sum // 2 + 1):
+            # Exclude current element, as we can already reach sum s
+            dp[i][s] = dp[i - 1][s]
+
+            if s -  elem >= 0:
+                # As all number are positive, include current elem cannot exceed current sum
+                dp[i][s] = dp[i - 1][s - elem]
+    
+    """
+     Let's do some math here:
+     Let s1, s2 be the size to two subsets after partition and assume s1 >= s2
+     We can have s1 + s2 = sum_nums and we want to get min{s1 - s2} where s1 >= s2:
+
+     min{s1 - s2}
+     = min{s1 + s2 - s2 - s2}
+     = min{sum_nums - 2 * s2}  in this step sum_nums - 2 * s2 >=0, gives s2 <= sum_nums/ 2
+     = sum_nums - 2 * max{s2}  where s2 <= sum_nums/2
+    """
+    for s in xrange(nums_sum // 2, -1, -1):
+        if dp[n][s]:
+            return nums_sum - 2 * s
+
+    return None
+
+
+class MinPartitionDifferenceSpec(unittest.TestCase):
+    def test_example(self):
+        # Partition: [10, 25] and [5, 15, 20]
+        self.assertEqual(5, min_partition_difference([5, 10, 15, 20, 25]))
+
+    def test_empty_array(self):
+        self.assertEqual(0, min_partition_difference([]))
+
+    def test_array_with_one_element(self):
+        self.assertEqual(42, min_partition_difference([42]))
+
+    def test_array_with_two_elements(self):
+        self.assertEqual(0, min_partition_difference([42, 42]))
+
+    def test_unsorted_array_with_duplicated_numbers(self):
+        # Partition: [3, 4] and [1, 2, 2, 1]
+        self.assertEqual(1, min_partition_difference([3, 1, 4, 2, 2, 1]))
+
+    def test_unsorted_array_with_unique_numbers(self):
+        # Partition: [11] and [1, 5, 6]
+        self.assertEqual(1, min_partition_difference([1, 6, 11, 5]))
+
+    def test_sorted_array_with_duplicated_numbers(self):
+        # Partition: [1, 2, 2] and [4]
+        self.assertEqual(1, min_partition_difference([1, 2, 2, 4]))
+
+    def test_min_partition_difference_is_zero(self):
+        # Partition: [1, 8, 2, 7] and [3, 6, 4, 5]
+        self.assertEqual(0, min_partition_difference([1, 2, 3, 4, 5, 6, 7, 8]))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False, verbosity=2)
+```
+
 ### Jan 24, 2021 \[Hard\] Smallest Stab Set
 --- 
 > **Question:** Let `X` be a set of `n` intervals on the real line. We say that a set of points `P` "stabs" `X` if every interval in `X` contains at least one point in `P`. Compute the smallest set of points that stabs X.
