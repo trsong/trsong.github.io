@@ -19,6 +19,15 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
 
+### Jan 26, 2021 \[Easy\] Rotate Linked List
+---
+> **Question:** Given a linked list and a positive integer `k`, rotate the list to the right by k places.
+>
+> For example, given the linked list `7 -> 7 -> 3 -> 5` and `k = 2`, it should become `3 -> 5 -> 7 -> 7`.
+>
+> Given the linked list `1 -> 2 -> 3 -> 4 -> 5` and `k = 3`, it should become `3 -> 4 -> 5 -> 1 -> 2`.
+
+
 ### Jan 25, 2021 \[Hard\] Partition Array to Reach Mininum Difference
 ---
 > **Question:** Given an array of positive integers, divide the array into two subsets such that the difference between the sum of the subsets is as small as possible.
