@@ -19,6 +19,19 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
 
+### Jan 27, 2021 LC 89 \[Medium\] Generate Gray Code
+---
+> **Question:**  Gray code is a binary code where each successive value differ in only one bit, as well as when wrapping around. Gray code is common in hardware so that we don't see temporary spurious values during transitions.
+>
+> Given a number of bits n, generate a possible gray code for it.
+
+**Example:**
+
+```py
+For n = 2, one gray code would be [00, 01, 11, 10].
+```
+
+
 ### Jan 26, 2021 \[Easy\] Rotate Linked List
 ---
 > **Question:** Given a linked list and a positive integer `k`, rotate the list to the right by k places.
