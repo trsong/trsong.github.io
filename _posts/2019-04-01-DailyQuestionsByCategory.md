@@ -1927,6 +1927,24 @@ abracadabra => c
 ---
 
 <details>
+<summary class="lc_e">
+
+- [**\[Easy\] Rotate Linked List**](https://trsong.github.io/python/java/2020/11/02/DailyQuestionsAug/#jan-26-2021-easy-rotate-linked-list) -- *Given a linked list and a number k, rotate the linked list by k places.* [*\(Try ME\)*](https://repl.it/@trsong/Rotate-Singly-Linked-List-1)
+
+</summary>
+<div>
+
+**Question:** Given a linked list and a positive integer `k`, rotate the list to the right by k places.
+
+For example, given the linked list `7 -> 7 -> 3 -> 5` and `k = 2`, it should become `3 -> 5 -> 7 -> 7`.
+
+Given the linked list `1 -> 2 -> 3 -> 4 -> 5` and `k = 3`, it should become `3 -> 4 -> 5 -> 1 -> 2`.
+
+</div>
+</details>
+
+
+<details>
 <summary class="lc_m>
 
 - [**\[Medium\] Detect Linked List Cycle**](http://trsong.github.io/python/java/2020/11/02/DailyQuestionsAug/#jan-3-2021-medium-detect-linked-list-cycle) -- *Given a linked list, determine if the linked list has a cycle in it.* [*\(Try ME\)*](https://repl.it/@trsong/Detect-Linked-List-Cycle-1)
