@@ -31,6 +31,71 @@ categories: Python/Java
 For n = 2, one gray code would be [00, 01, 11, 10].
 ```
 
+**My thoughts:** Test Grey Code under different size. Try to find the pattern:
+- For n = 0, [0]
+- For n = 1, [00, 01]
+- For n = 2, [00, 01, 11, 10]
+- For n = 3, [000, 001, 011, 010, 110, 111, 101, 100]
+
+Notice that `00 => 000, 001`.   `01 => 011, 010`.  `11 => 110, 111`. So the pattern is if original value is of even index, append 0 and then append 1. Otherwise if it's on odd index, append 1 then append 0. And we do that for all elements.
+
+**Solution:** [https://repl.it/@trsong/Generate-the-Gray-Code](https://repl.it/@trsong/Generate-the-Gray-Code)
+```py
+import unittest
+
+def gray_code(n):
+    """
+                      0
+                  /       \
+              0                 1
+            /   \              /  \
+         00       01        11       10
+       /  \      /  \      /  \     /  \
+     000  001  011  010  110  111  101  100
+    """
+    res = [0] * (2 ** n)
+    for step in xrange(n):
+        for i in xrange(2 ** step - 1, -1, -1):
+            prev = res[i]
+            prev_append_zero = prev << 1
+            prev_append_one = prev_append_zero + 1 
+            if i % 2 == 0:
+                res[2 * i] = prev_append_zero
+                res[2 * i + 1] = prev_append_one
+            else:
+                res[2 * i] = prev_append_one
+                res[2 * i + 1] = prev_append_zero
+    return res
+
+
+class GrayCodeSpec(unittest.TestCase):
+    def validate_grey_code(self, code_arr):
+        for i in xrange(1, len(code_arr)):
+            cur = code_arr[i]
+            prev = code_arr[i-1]
+            xor_val = cur ^ prev
+            if xor_val & (xor_val - 1) != 0:
+                # make sure the current value is 1 bit different from the previous value
+                return False
+        return True
+
+    def test_zero_bit_grey_code(self):
+        self.assertTrue(self.validate_grey_code(gray_code(0)))
+
+    def test_one_bit_grey_code(self):
+        self.assertTrue(self.validate_grey_code(gray_code(1)))
+
+    def test_two_bits_grey_code(self):
+        self.assertTrue(self.validate_grey_code(gray_code(2)))
+
+    def test_three_bits_grey_code(self):
+        self.assertTrue(self.validate_grey_code(gray_code(3)))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False, verbosity=2)
+```
+
 
 ### Jan 26, 2021 \[Easy\] Rotate Linked List
 ---

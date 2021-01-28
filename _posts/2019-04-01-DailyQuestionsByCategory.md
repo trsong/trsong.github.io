@@ -319,6 +319,27 @@ Return true as the first and third rectangle overlap each other.
 ---
 
 <details>
+<summary class="lc_m">
+
+- [**\[Medium\] LC 89. Generate Gray Code**](https://trsong.github.io/python/java/2020/11/02/DailyQuestionsAug/#jan-27-2021-lc-89-medium-generate-gray-code) -- *Gray code is a binary code where each successive value differ in only one bit* [*\(Try ME\)*](https://repl.it/@trsong/Generate-the-Gray-Code-1)
+
+</summary>
+<div>
+
+**Question:**  Gray code is a binary code where each successive value differ in only one bit, as well as when wrapping around. Gray code is common in hardware so that we don't see temporary spurious values during transitions.
+
+Given a number of bits n, generate a possible gray code for it.
+
+**Example:**
+```py
+For n = 2, one gray code would be [00, 01, 11, 10].
+```
+
+</div>
+</details>
+
+
+<details>
 <summary class="lc_h">
 
 - [**\[Hard\] Minimum Cost to Construct Pyramid with Stones**](http://trsong.github.io/python/java/2020/11/02/DailyQuestionsAug/#nov-25-2020-hard-minimum-cost-to-construct-pyramid-with-stones) -- *Given N stones in a row, you can change the height of any stone by paying a cost of 1 unit. Determine the lowest cost  or produce a pyramid.* [*\(Try ME\)*](https://repl.it/@trsong/Minimum-Cost-to-Construct-Pyramid-with-Stones-1)
