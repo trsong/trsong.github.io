@@ -19,6 +19,25 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
 
+
+### Jan 29, 2021 \[Medium\] Running Median of a Number Stream
+---
+> **Question:** Compute the running median of a sequence of numbers. That is, given a stream of numbers, print out the median of the list so far on each new element.
+> 
+> Recall that the median of an even-numbered list is the average of the two middle numbers.
+> 
+> For example, given the sequence `[2, 1, 5, 7, 2, 0, 5]`, your algorithm should print out:
+
+```py
+2
+1.5
+2
+3.5
+2
+2
+2
+```
+
 ### Jan 28, 2021 \[Easy\] URL Shortener
 ---
 > **Question:** Implement a URL shortener with the following methods:
