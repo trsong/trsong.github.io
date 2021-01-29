@@ -28,6 +28,76 @@ categories: Python/Java
 >
 > **Follow-up:** What if we enter the same URL twice?
 
+**Solution:** [https://repl.it/@trsong/URL-Shortener](https://repl.it/@trsong/URL-Shortener)
+```py
+import unittest
+import random
+
+class URLShortener(object):
+    CHAR_SET = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
+
+    def __init__(self):
+        self.short_to_long = {}
+        self.long_to_short = {}
+
+    def shorten(self, url):
+        if url in self.long_to_short:
+            return self.long_to_short[url]
+
+        short = None
+        while not short or short in self.short_to_long:
+            short = URLShortener.encode(url)
+        self.long_to_short[url] = short
+        self.short_to_long[short] = url
+        return short
+
+    def restore(self, short):
+        return self.short_to_long.get(short, None)
+
+    @staticmethod
+    def encode(url):
+        return "".join(random.choice(URLShortener.CHAR_SET) for _ in xrange(6))
+
+
+class URLShortenerSpec(unittest.TestCase):
+    def test_should_be_able_to_init(self):
+        URLShortener()
+
+    def test_restore_should_not_fail_when_url_not_exists(self):
+        url_shortener = URLShortener()
+        self.assertIsNone(url_shortener.restore("oKImts"))
+
+    def test_shorten_result_into_six_letters(self):
+        url_shortener = URLShortener()
+        res = url_shortener.shorten("http://magic_url")
+        self.assertEqual(6, len(res))
+
+    def test_restore_short_url_gives_original(self):
+        url_shortener = URLShortener()
+        original_url = "http://magic_url"
+        short_url = url_shortener.shorten(original_url)
+        self.assertEqual(original_url, url_shortener.restore(short_url))
+
+    def test_shorten_different_url_gives_different_results(self):
+        url_shortener = URLShortener()
+        url1 = "http://magic_url_1"
+        res1 = url_shortener.shorten(url1)
+        url2 = "http://magic_url_2"
+        res2 = url_shortener.shorten(url2)
+        self.assertNotEqual(res1, res2)
+
+    def test_shorten_same_url_gives_same_result(self):
+        url_shortener = URLShortener()
+        url = "http://magic_url_1"
+        res1 = url_shortener.shorten(url)
+        res2 = url_shortener.shorten(url)
+        self.assertEqual(res1, res2)
+        
+
+if __name__ == '__main__':
+    unittest.main(exit=False, verbosity=2)
+```
+
 ### Jan 27, 2021 LC 89 \[Medium\] Generate Gray Code
 ---
 > **Question:**  Gray code is a binary code where each successive value differ in only one bit, as well as when wrapping around. Gray code is common in hardware so that we don't see temporary spurious values during transitions.

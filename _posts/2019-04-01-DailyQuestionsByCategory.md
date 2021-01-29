@@ -572,6 +572,26 @@ Output: [4, 8] order does not matter
 ---
 
 <details>
+<summary class="lc_e">
+
+- [**\[Easy\] URL Shortener**](https://trsong.github.io/python/java/2020/11/02/DailyQuestionsAug/#jan-28-2021-easy-url-shortener) -- *Implement a URL shortener with the following methods: shorten(url), restore(short).* [*\(Try ME\)*](https://repl.it/@trsong/URL-Shortener-1)
+
+</summary>
+<div>
+
+
+**Question:** Implement a URL shortener with the following methods:
+
+- `shorten(url)`, which shortens the url into a six-character alphanumeric string, such as `zLg6wl`.
+- `restore(short)`, which expands the shortened string into the original url. If no such shortened string exists, return `null`.
+
+**Follow-up:** What if we enter the same URL twice?
+
+</div>
+</details>
+
+
+<details>
 <summary class="lc_m">
 
 - [**\[Medium\] LC 652. Find Duplicate Subtrees**](https://trsong.github.io/python/java/2020/08/02/DailyQuestionsAug/#oct-30-2020-lc-652-medium-find-duplicate-subtrees) -- *Given a binary tree, find all duplicate subtrees (subtrees with the same value and same structure)* [*\(Try ME\)*](https://repl.it/@trsong/Find-Duplicate-Subtree-Nodes-1)
