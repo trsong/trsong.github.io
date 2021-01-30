@@ -20,6 +20,24 @@ categories: Python/Java
 
 
 
+### Jan 30, 2021 LC 65 \[Hard\] Valid Number
+---
+> **Question:** Given a string, return whether it represents a number. Here are the different kinds of numbers:
+>
+> - "10", a positive integer
+> - "-10", a negative integer
+> - "10.1", a positive real number
+> - "-10.1", a negative real number
+> - "1e5", a number in scientific notation
+>
+> And here are examples of non-numbers:
+>
+> - "a"
+> - "x 1"
+> - "a -2"
+> - "-"
+
+
 ### Jan 29, 2021 \[Medium\] Running Median of a Number Stream
 ---
 > **Question:** Compute the running median of a sequence of numbers. That is, given a stream of numbers, print out the median of the list so far on each new element.
