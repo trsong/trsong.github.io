@@ -38,6 +38,78 @@ categories: Python/Java
 2
 ```
 
+**My thoughts:** Given a sorted list, the median of a list is either the element in the middle of the list or average of left-max and right-min if we break the original list into left and right part:
+
+```py
+* 1, [2], 3
+* 1, [2], [3], 4
+```
+
+Notice that, as we get elem from stream 1-by-1, we don't need to keep the list sorted. If only we could partition the list into two equally large list and mantain the max of the left part and min of right part. We should be good to go.
+
+i,e,
+
+```py
+[5, 1, 7]            [8 , 20, 10]
+       ^ left-max     ^ right-min
+```
+
+A max-heap plus a min-heap will make it a lot easier to mantain the value we are looking for: A max-heap on the left mantaining the largest on left half and a min-heap on the right holding the smallest on right half. And most importantly, we mantain the size of max-heap and min-heap while reading data. (Left and right can at most off by 1).
+
+**Solution with Priority Queue:** [https://repl.it/@trsong/Running-Median-of-a-Number-Stream](https://repl.it/@trsong/Running-Median-of-a-Number-Stream)
+```py
+import unittest
+from Queue import PriorityQueue
+
+def generate_running_median(num_stream):
+    min_heap = PriorityQueue()
+    max_heap = PriorityQueue()
+
+    for num in num_stream:
+        min_heap.put(num)
+        if min_heap.qsize() - max_heap.qsize() > 1:
+            max_heap.put(-min_heap.get())
+        
+        if min_heap.qsize() == max_heap.qsize():
+            yield (-max_heap.queue[0] + min_heap.queue[0]) / 2.0
+        else:
+            yield min_heap.queue[0]
+
+
+class GenerateRunningMedian(unittest.TestCase):
+    def test_example(self):
+        num_stream = iter([2, 1, 5, 7, 2, 0, 5])
+        expected = [2, 1.5, 2, 3.5, 2, 2, 2]
+        self.assertEqual(expected, list(generate_running_median(num_stream)))
+
+    def test_empty_stream(self):
+        self.assertEqual([], list(generate_running_median(iter([]))))
+
+    def test_unique_value(self):
+        num_stream = iter([1, 1, 1, 1, 1])
+        expected = [1, 1, 1, 1, 1]
+        self.assertEqual(expected, list(generate_running_median(num_stream)))
+
+    def test_contains_zero(self):
+        num_stream = iter([0, 1, 1, 0, 0])
+        expected = [0, 0.5, 1, 0.5, 0]
+        self.assertEqual(expected, list(generate_running_median(num_stream)))
+
+    def test_contains_zero2(self):
+        num_stream = iter([2, 0, 1])
+        expected = [2, 1, 1]
+        self.assertEqual(expected, list(generate_running_median(num_stream)))
+
+    def test_even_iteration_gives_average(self):
+        num_stream = iter([3, 0, 1, 2])
+        expected = [3, 1.5, 1, 1.5]
+        self.assertEqual(expected, list(generate_running_median(num_stream)))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False, verbosity=2)
+```
+
 ### Jan 28, 2021 \[Easy\] URL Shortener
 ---
 > **Question:** Implement a URL shortener with the following methods:

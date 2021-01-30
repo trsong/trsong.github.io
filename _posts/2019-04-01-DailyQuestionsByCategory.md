@@ -3616,6 +3616,34 @@ Given a list of `N` people and the above operation, find a way to identify the c
 <details>
 <summary class="lc_m">
 
+- [**\[Medium\] Running Median of a Number Stream**](https://trsong.github.io/python/java/2020/11/02/DailyQuestionsAug/#jan-29-2021-medium-running-median-of-a-number-stream) -- *Print the running median of a number stream* [*\(Try ME\)*](https://repl.it/@trsong/Running-Median-of-a-Number-Stream-1)
+
+</summary>
+<div>
+
+**Question:** Compute the running median of a sequence of numbers. That is, given a stream of numbers, print out the median of the list so far on each new element.
+ 
+Recall that the median of an even-numbered list is the average of the two middle numbers.
+ 
+For example, given the sequence `[2, 1, 5, 7, 2, 0, 5]`, your algorithm should print out:
+
+```py
+2
+1.5
+2
+3.5
+2
+2
+2
+```
+
+</div>
+</details>
+
+
+<details>
+<summary class="lc_m">
+
 - [**\[Medium\] LC 692. Top K Frequent words**](https://trsong.github.io/python/java/2020/11/02/DailyQuestionsAug/#jan-6-2021-lc-692-medium-top-k-frequent-words) -- *Given a non-empty list of words, return the k most frequent words.* [*\(Try ME\)*](https://repl.it/@trsong/Find-Top-K-Frequent-Elements-1)
 
 </summary>
