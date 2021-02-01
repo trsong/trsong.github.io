@@ -37,6 +37,143 @@ categories: Python/Java
 > - "a -2"
 > - "-"
 
+**Solution:** [https://repl.it/@trsong/Valid-Number](https://repl.it/@trsong/Valid-Number)
+```py
+import unittest
+
+def is_valid_number(raw_num):
+    """
+    (WHITE_SPACE) (SIGN) DIGITS (DOT DIGITS) (e (SIGN) DIGITS) (WHITE_SPACE)
+    or
+     (WHITE_SPACE) (SIGN) DOT DIGITS (e (SIGN) DIGITS) (WHITE_SPACE)
+    """
+    start = 0
+    end = len(raw_num) - 1
+    while start < len(raw_num) and raw_num[start].isspace():
+        start += 1
+
+    while end >= 0 and raw_num[end].isspace():
+        end -= 1
+
+    if start > end:
+        return False
+    
+    has_sign = False
+    has_dot = False
+    has_exp = False
+    has_digits = False
+
+    for i in xrange(start, end + 1):
+        ch = raw_num[i]
+        if ch in ('-', '+'):
+            if has_sign or has_digits or has_dot:
+                return False
+            has_sign = True
+        elif ch.isdigit():
+            has_digits = True
+        elif ch in ('e', 'E'):
+            if has_exp or not has_digits:
+                return False
+            has_exp = True
+            has_sign = False
+            has_dot = False
+            has_digits = False
+        elif ch == '.':
+            if has_dot or has_exp:
+                return False
+            has_dot = True
+        else:
+            return False
+    
+    return has_digits
+
+
+class IsValidNumberSpec(unittest.TestCase):
+    def test_example1(self):
+        self.assertTrue(is_valid_number("123"))  # Integer
+
+    def test_example2(self):
+        self.assertTrue(is_valid_number("12.3"))  # Floating point
+    
+    def test_example3(self):
+        self.assertTrue(is_valid_number("-123"))  # Negative numbers
+    
+    def test_example4(self):
+        self.assertTrue(is_valid_number("-.3"))  # Negative floating point
+    
+    def test_example5(self):
+        self.assertTrue(is_valid_number("1.5e5")) # Scientific notation
+    
+    def test_example6(self):
+        self.assertFalse(is_valid_number("12a"))  # No letters
+    
+    def test_example7(self):
+        self.assertFalse(is_valid_number("1 2")) # No space between numbers
+    
+    def test_example8(self):
+        self.assertFalse(is_valid_number("1e1.2"))  # Exponent can only be an integer (positive or negative or 0)
+        
+    def test_empty_string(self):
+        self.assertFalse(is_valid_number(""))
+
+    def test_blank_string(self):
+        self.assertFalse(is_valid_number("   "))
+
+    def test_just_signs(self):
+        self.assertFalse(is_valid_number("+"))
+
+    def test_zero(self):
+        self.assertTrue(is_valid_number("0"))
+
+    def test_contains_no_number(self):
+        self.assertFalse(is_valid_number("e"))
+
+    def test_contains_white_spaces(self):
+        self.assertTrue(is_valid_number(" -123.456  "))
+
+    def test_scientific_notation(self):
+        self.assertTrue(is_valid_number("2e10"))
+
+    def test_scientific_notation2(self):
+        self.assertFalse(is_valid_number("10e5.4"))
+
+    def test_scientific_notation3(self):
+        self.assertTrue(is_valid_number("-24.35e-10"))
+
+    def test_scientific_notation4(self):
+        self.assertFalse(is_valid_number("1e1e1"))
+
+    def test_scientific_notation5(self):
+        self.assertTrue(is_valid_number("+.5e-23"))
+
+    def test_scientific_notation6(self):
+        self.assertFalse(is_valid_number("+e-23"))
+
+    def test_scientific_notation7(self):
+        self.assertFalse(is_valid_number("0e"))
+
+    def test_scientific_notation8(self):
+        self.assertTrue(is_valid_number("1E9"))
+
+    def test_multiple_signs(self):
+        self.assertFalse(is_valid_number("+-2"))
+
+    def test_multiple_signs2(self):
+        self.assertFalse(is_valid_number("-2-2-2-2"))
+
+    def test_multiple_signs3(self):
+        self.assertFalse(is_valid_number("6+1"))
+
+    def test_multiple_dots(self):
+        self.assertFalse(is_valid_number("10.24.25"))
+
+    def test_sign_and_dot(self):
+        self.assertFalse(is_valid_number(".-4"))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False, verbosity=2)
+```
 
 ### Jan 29, 2021 \[Medium\] Running Median of a Number Stream
 ---

@@ -2205,6 +2205,34 @@ For example, given the string `tweet`, return `tteew`. `eettw` would also be acc
 ## String
 ---
 
+
+<details>
+<summary class="lc_h">
+
+- [**\[Hard\] LC 65. Valid Number**](http://trsong.github.io/python/java/2020/11/02/DailyQuestionsAug/#jan-30-2021-lc-65-hard-valid-number) -- *Given a string that may represent a number, determine if it is a number.* [*\(Try ME\)*](https://repl.it/@trsong/Valid-Number-1)
+
+</summary>
+<div>
+
+**Question:** Given a string, return whether it represents a number. Here are the different kinds of numbers:
+
+- "10", a positive integer
+- "-10", a negative integer
+- "10.1", a positive real number
+- "-10.1", a negative real number
+- "1e5", a number in scientific notation
+
+And here are examples of non-numbers:
+
+- "a"
+- "x 1"
+- "a -2"
+- "-"
+
+</div>
+</details>
+
+
 <details>
 <summary class="lc_m">
 
