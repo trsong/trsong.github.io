@@ -319,6 +319,30 @@ Return true as the first and third rectangle overlap each other.
 ---
 
 <details>
+<summary class="lc_e">
+
+- [**\[Easy\] LC 766. Toeplitz Matrix**](http://trsong.github.io/python/java/2020/11/02/DailyQuestionsAug/#jan-31-2021-lc-766-easy-toeplitz-matrix) -- *Write a program to determine whether a given input is a Toeplitz matrix whose diagonal elements are the same.* [*\(Try ME\)*](https://repl.it/@trsong/Toeplitz-Matrix-1)
+
+</summary>
+<div>
+
+**Question:** In linear algebra, a Toeplitz matrix is one in which the elements on any given diagonal from top left to bottom right are identical.
+
+Write a program to determine whether a given input is a Toeplitz matrix.
+
+**Example of Toeplitz Matrix:**
+```py
+1 2 3 4 8
+5 1 2 3 4
+4 5 1 2 3
+7 4 5 1 2
+```
+
+</div>
+</details>
+
+
+<details>
 <summary class="lc_m">
 
 - [**\[Medium\] LC 89. Generate Gray Code**](https://trsong.github.io/python/java/2020/11/02/DailyQuestionsAug/#jan-27-2021-lc-89-medium-generate-gray-code) -- *Gray code is a binary code where each successive value differ in only one bit* [*\(Try ME\)*](https://repl.it/@trsong/Generate-the-Gray-Code-1)

@@ -33,6 +33,78 @@ categories: Python/Java
 7 4 5 1 2
 ```
 
+**Solution:** [https://repl.it/@trsong/Toeplitz-Matrix](https://repl.it/@trsong/Toeplitz-Matrix)
+```py
+import unittest
+
+def is_valid_toeplitz(matrix):
+    if not matrix or not matrix[0]:
+        return True
+
+    n, m = len(matrix), len(matrix[0])
+    for r in xrange(1, n):
+        for c in xrange(1, m):
+            if matrix[r][c] != matrix[r - 1][c - 1]:
+                return False
+    
+    return True
+
+
+class IsValidToeplitz(unittest.TestCase):
+    def test_example(self):
+        matrix = [
+            [1, 2, 3, 4, 8],
+            [5, 1, 2, 3, 4],
+            [4, 5, 1, 2, 3],
+            [7, 4, 5, 1, 2]]
+        self.assertTrue(is_valid_toeplitz(matrix))
+
+    def test_empty_matrix(self):
+        self.assertTrue(is_valid_toeplitz([]))
+        self.assertTrue(is_valid_toeplitz([[]]))
+    
+    def test_one_elem_matrix(self):
+        matrix = [[1]]
+        self.assertTrue(is_valid_toeplitz(matrix))
+
+    def test_matrix_of_one_row(self):
+        matrix = [[1, 2, 3]]
+        self.assertTrue(is_valid_toeplitz(matrix))
+    
+    def test_matrix_of_one_column(self):
+        matrix = [
+            [1],
+            [2],
+            [3]]
+        self.assertTrue(is_valid_toeplitz(matrix))
+    
+    def test_valid_toeplitz(self):
+        matrix = [
+            [1, 1, 0],
+            [1, 1, 1]
+        ]
+        self.assertTrue(is_valid_toeplitz(matrix))
+
+    def test_invalid_toeplitz(self):
+        matrix = [
+            [1, 1, 1],
+            [1, 1, 0],
+            [1, 1, 1]
+        ]
+        self.assertFalse(is_valid_toeplitz(matrix))
+
+    def test_invalid_toeplitz2(self):
+        matrix = [
+            [1, 0, 1],
+            [0, 1, 1]
+        ]
+        self.assertFalse(is_valid_toeplitz(matrix))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False, verbosity=2)
+```
+
 ### Jan 30, 2021 LC 65 \[Hard\] Valid Number
 ---
 > **Question:** Given a string, return whether it represents a number. Here are the different kinds of numbers:
