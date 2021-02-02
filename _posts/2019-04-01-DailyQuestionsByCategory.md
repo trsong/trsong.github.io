@@ -2806,6 +2806,34 @@ For example, given the array `[3, 4, 9, 6, 1]`, return `[1, 1, 2, 1, 0]`, since:
 <details>
 <summary class="lc_m">
 
+- [**\[Medium\] Maximum Path Sum in Binary Tree**](https://trsong.github.io/python/java/2021/02/02/DailyQuestionsFeb/#feb-1-2021-medium-maximum-path-sum-in-binary-tree) -- *Given the root of a binary tree. Find the path between 2 nodes that maximizes the sum of all the nodes in the path, and return the sum.* [*\(Try ME\)*](https://repl.it/@trsong/Find-Maximum-Path-Sum-in-Binary-Tree-1)
+
+</summary>
+<div>
+
+**Question:** You are given the root of a binary tree. Find the path between 2 nodes that maximizes the sum of all the nodes in the path, and return the sum. The path does not necessarily need to go through the root.
+
+**Example:**
+```py
+Given the following binary tree, the result should be 42 = 20 + 2 + 10 + 10.
+       *10
+       /  \
+     *2   *10
+     / \     \
+   *20  1    -25
+             /  \
+            3    4
+(* denotes the max path)
+```
+
+
+</div>
+</details>
+
+
+<details>
+<summary class="lc_m">
+
 - [**\[Medium\] Most Frequent Subtree Sum**](https://trsong.github.io/python/java/2020/11/02/DailyQuestionsAug/#jan-20-2021-medium-most-frequent-subtree-sum) -- *Given the root of a binary tree, find the most frequent subtree sum.* [*\(Try ME\)*](https://repl.it/@trsong/Find-Most-Frequent-Subtree-Sum-1)
 
 </summary>

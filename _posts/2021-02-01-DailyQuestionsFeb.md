@@ -35,3 +35,169 @@ Given the following binary tree, the result should be 42 = 20 + 2 + 10 + 10.
             3    4
 (* denotes the max path)
 ```
+
+**My thoughts:** The maximum path sum can either roll up from maximum of recursive children value or calculate based on maximum left path sum and right path sum.
+
+Example1: Final result rolls up from children
+```py
+     0
+   /   \
+  2     0
+ / \   /
+4   5 0
+```
+
+Example2: Final result is calculated based on max left path sum and right path sum
+
+```py
+    1
+   / \
+  2   3
+ /   / \
+8   0   5
+   / \   \
+  0   0   9
+```
+
+**Solution:** [https://repl.it/@trsong/Find-Maximum-Path-Sum-in-Binary-Tree](https://repl.it/@trsong/Find-Maximum-Path-Sum-in-Binary-Tree)
+```py
+import unittest
+
+def max_path_sum(tree):
+    return max_path_sum_recur(tree)[0]
+
+
+def max_path_sum_recur(node):
+    if not node:
+        return 0, 0
+    
+    left_max_sum, left_max_path = max_path_sum_recur(node.left)
+    right_max_sum, right_max_path = max_path_sum_recur(node.right)
+    max_path = node.val + max(left_max_path, right_max_path)
+    max_sum = node.val + left_max_path + right_max_path 
+    return max(left_max_sum, right_max_sum, max_sum), max_path
+
+
+class TreeNode(object):
+    def __init__(self, val, left=None, right=None):
+        self.val = val
+        self.left = left
+        self.right = right
+
+
+class MaxPathSumSpec(unittest.TestCase):
+    def test_example(self):
+        """
+                10
+               /  \
+              2    10
+             / \     \
+            20  1    -25
+                     /  \
+                    3    4
+        """
+        n2 = TreeNode(2, TreeNode(20), TreeNode(1))
+        n25 = TreeNode(-25, TreeNode(3), TreeNode(4))
+        n10 = TreeNode(10, right=n25)
+        root = TreeNode(10, n2, n10)
+        self.assertEqual(42, max_path_sum(root))  # Path: 20, 2, 10, 10
+
+    def test_empty_tree(self):
+        self.assertEqual(0, max_path_sum(None))
+
+    def test_result_rolling_up_from_children(self):
+        """
+             0
+           /   \
+          2     0
+         / \     \
+        4   5     0
+        """
+        n2 = TreeNode(2, TreeNode(4), TreeNode(5))
+        n0 = TreeNode(0, right=TreeNode(0))
+        root = TreeNode(0, n2, n0)
+        self.assertEqual(11, max_path_sum(root))  # Path: 4 - 2 - 5
+    
+    def test_result_calculated_based_on_max_left_path_sum_and_right_path_sum(self):
+        """
+            1
+           / \
+          2   3
+         /   / \
+        8   0   5
+           / \   \
+          0   0   9
+        """
+        n0 = TreeNode(0, TreeNode(0), TreeNode(0))
+        n5 = TreeNode(5, right=TreeNode(9))
+        n3 = TreeNode(3, n0, n5)
+        n2 = TreeNode(2, TreeNode(8))
+        root = TreeNode(1, n2, n3)
+        self.assertEqual(28, max_path_sum(root))  # Path: 8 - 2 - 1 - 3 - 5 - 9
+
+    def test_max_path_sum_not_pass_root(self):
+        """
+             1
+           /   \
+          2     0
+         / \   /
+        4   5 1
+        """
+        n2 = TreeNode(2, TreeNode(4), TreeNode(5))
+        n0 = TreeNode(0, TreeNode(1))
+        root = TreeNode(1, n2, n0)
+        self.assertEqual(11, max_path_sum(root)) # Path: 4 - 2 - 5
+
+    def test_max_path_sum_pass_root(self):
+        """
+              1
+             /
+            2
+           /
+          3
+         /
+        4
+        """
+        n3 = TreeNode(3, TreeNode(4))
+        n2 = TreeNode(2, n3)
+        n1 = TreeNode(1, n2)
+        self.assertEqual(10, max_path_sum(n1))  # Path: 1 - 2 - 3 - 4
+
+    def test_heavy_right_tree(self):
+        """
+          1
+         / \
+        2   3
+       /   / \
+      8   4   5
+         / \   \
+        6   7   9
+        """
+        n5 = TreeNode(5, right=TreeNode(9))
+        n4 = TreeNode(4, TreeNode(6), TreeNode(7))
+        n3 = TreeNode(3, n4, n5)
+        n2 = TreeNode(2, TreeNode(8))
+        n1 = TreeNode(1, n2, n3)
+        self.assertEqual(28, max_path_sum(n1))  # Path: 8 - 2 - 1 - 3 - 5 - 9 
+
+    def test_tree_with_negative_nodes(self):
+        """
+            -1
+           /  \
+         -2   -3
+         /    / \
+       -8   -4  -5
+            / \   \
+          -6  -7  -9
+        """
+        n5 = TreeNode(-5, right=TreeNode(-9))
+        n4 = TreeNode(-4, TreeNode(-6), TreeNode(-7))
+        n3 = TreeNode(-3, n4, n5)
+        n2 = TreeNode(-2, TreeNode(-8))
+        n1 = TreeNode(-1, n2, n3)
+        self.assertEqual(0, max_path_sum(n1))  # Path: 8 - 2 - 1 - 3 - 5 - 9 
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False, verbosity=2)
+```
