@@ -19,6 +19,24 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
 
+### Feb 2, 2021 \[Easy\] ZigZag Binary Tree
+---
+> **Questions:** In Ancient Greece, it was common to write text with the first line going left to right, the second line going right to left, and continuing to go back and forth. This style was called "boustrophedon".
+>
+> Given a binary tree, write an algorithm to print the nodes in boustrophedon order.
+
+**Example:**
+```py
+Given the following tree:
+       1
+    /     \
+  2         3
+ / \       / \
+4   5     6   7
+You should return [1, 3, 2, 4, 5, 6, 7].
+```
+
+
 ### Feb 1, 2021 \[Medium\] Maximum Path Sum in Binary Tree
 --- 
 > **Question:** You are given the root of a binary tree. Find the path between 2 nodes that maximizes the sum of all the nodes in the path, and return the sum. The path does not necessarily need to go through the root.
