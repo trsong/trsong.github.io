@@ -4365,6 +4365,34 @@ Move 1 to 3
 ### BFS
 ---
 
+<details>
+<summary class="lc_e">
+
+- [**\[Easy\] ZigZag Binary Tree**](https://trsong.github.io/python/java/2021/02/02/DailyQuestionsFeb/#feb-2-2021-easy-zigzag-binary-tree) -- *Given a binary tree, write an algorithm to print the nodes in zigzag order.* [*\(Try ME\)*](https://repl.it/@trsong/ZigZag-Order-of-Binary-Tree-1)
+
+</summary>
+<div>
+
+**Questions:** In Ancient Greece, it was common to write text with the first line going left to right, the second line going right to left, and continuing to go back and forth. This style was called "boustrophedon".
+
+Given a binary tree, write an algorithm to print the nodes in boustrophedon order.
+
+**Example:**
+```py
+Given the following tree:
+       1
+    /     \
+  2         3
+ / \       / \
+4   5     6   7
+You should return [1, 3, 2, 4, 5, 6, 7].
+```
+
+
+</div>
+</details>
+
+
 
 <details>
 <summary class="lc_m">
