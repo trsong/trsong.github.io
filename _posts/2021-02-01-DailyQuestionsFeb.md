@@ -42,7 +42,72 @@ categories: Python/Java
 ```
 > And there are `4` 12's in the table.
  
- 
+**My thoughts:** Sometimes, it is against intuitive to solve a grid searching question without using grid searching stategies. But it could happen. As today's question is just a math problem features integer factorization.
+
+**Solution:** [https://repl.it/@trsong/Count-Occurrence-in-Multiplication-Table](https://repl.it/@trsong/Count-Occurrence-in-Multiplication-Table)
+ ```py
+import unittest
+import math
+
+def count_number_in_table(N, X):
+    if X <= 0:
+        return 0
+
+    sqrt_x = int(math.sqrt(X))
+    res = 0
+    for factor in xrange(1, min(sqrt_x, N) + 1):
+        if X % factor == 0 and X / factor <= N:
+            res += 2
+
+    if sqrt_x * sqrt_x == X and sqrt_x <= N:
+        # When candidate and its coefficient are the same, we double-count the result. Therefore take it off.
+        res -= 1
+
+    return res
+
+
+class CountNumberInTableSpec(unittest.TestCase):
+    def test_target_out_of_boundary(self):
+        self.assertEqual(0, count_number_in_table(1, 100))
+
+    def test_target_out_of_boundary2(self):
+        self.assertEqual(0, count_number_in_table(2, -100))
+    
+    def test_target_range_from_N_to_N_Square(self):
+        self.assertEqual(0, count_number_in_table(3, 7))
+    
+    def test_target_range_from_N_to_N_Square2(self):
+        self.assertEqual(1, count_number_in_table(3, 4))
+    
+    def test_target_range_from_N_to_N_Square3(self):
+        self.assertEqual(2, count_number_in_table(3, 6))
+
+    def test_target_range_from_Zero_to_N(self):
+        self.assertEqual(0, count_number_in_table(4, 0))
+
+    def test_target_range_from_Zero_to_N2(self):
+        self.assertEqual(2, count_number_in_table(4, 2))
+
+    def test_target_range_from_Zero_to_N3(self):
+        self.assertEqual(2, count_number_in_table(4, 3))
+    
+    def test_target_range_from_Zero_to_N4(self):
+        self.assertEqual(3, count_number_in_table(4, 4))
+    
+    def test_target_range_from_Zero_to_N5(self):
+        self.assertEqual(6, count_number_in_table(12, 12))
+    
+    def test_target_range_from_Zero_to_N6(self):
+        self.assertEqual(3, count_number_in_table(27, 25))
+    
+    def test_target_range_from_Zero_to_N7(self):
+        self.assertEqual(1, count_number_in_table(4, 1))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False, verbosity=2)
+ ```
+
 ### Feb 2, 2021 \[Easy\] ZigZag Binary Tree
 ---
 > **Questions:** In Ancient Greece, it was common to write text with the first line going left to right, the second line going right to left, and continuing to go back and forth. This style was called "boustrophedon".
