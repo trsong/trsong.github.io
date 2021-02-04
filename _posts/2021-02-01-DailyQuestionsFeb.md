@@ -19,6 +19,15 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
 
+### Feb 4, 2021 \[Medium\] Minimum Squares Sum to N
+---
+> **Question:**  Given a positive integer `n`, find the smallest number of squared integers which sum to `n`.
+>
+> For example, given `n = 13`, return `2` since `13 = 3^2 + 2^2 = 9 + 4`.
+>
+> Given `n = 27`, return `3` since `27 = 3^2 + 3^2 + 3^2 = 9 + 9 + 9`.
+
+
 ### Feb 3, 2021 \[Medium\] Count Occurrence in Multiplication Table
 ---
 > **Question:**  Suppose you have a multiplication table that is `N` by `N`. That is, a 2D array where the value at the `i-th` row and `j-th` column is `(i + 1) * (j + 1)` (if 0-indexed) or `i * j` (if 1-indexed).
