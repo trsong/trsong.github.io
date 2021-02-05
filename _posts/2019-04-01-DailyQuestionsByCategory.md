@@ -5677,6 +5677,24 @@ For example, given `"2542540123"`, you should return `['254.25.40.123', '254.254
 <details>
 <summary class="lc_m">
 
+- [**\[Medium\] LC 279. Minimum Number of Squares Sum to N**](http://trsong.github.io/python/java/2021/02/02/DailyQuestionsFeb/#feb-4-2021-lc-279-medium-minimum-number-of-squares-sum-to-n) -- *Given a positive integer n, find the smallest number of squared integers which sum to n.* [*\(Try ME\)*](https://repl.it/@trsong/Minimum-Squares-Sum-to-N-1)
+
+</summary>
+<div>
+
+**Question:** Given a positive integer n, find the smallest number of squared integers which sum to n.
+
+For example, given `n = 13`, return `2` since `13 = 3^2 + 2^2 = 9 + 4`.
+ 
+Given `n = 27`, return `3` since `27 = 3^2 + 3^2 + 3^2 = 9 + 9 + 9`.
+
+
+</div>
+</details>
+
+<details>
+<summary class="lc_m">
+
 - [**\[Medium\] Multiset Partition**](https://repl.it/@trsong/Multiset-Partition-into-Equal-Sum) -- *Given a multiset of integers, return whether it can be partitioned into two subsets whose sums are the same.* [*\(Try ME\)*](https://repl.it/@trsong/Multiset-Partition-into-Equal-Sum-1)
 
 </summary>
