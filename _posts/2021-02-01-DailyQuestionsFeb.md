@@ -19,14 +19,62 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
 
-### Feb 4, 2021 \[Medium\] Minimum Squares Sum to N
+### Feb 4, 2021 LC 279 \[Medium\] Minimum Number of Squares Sum to N
 ---
-> **Question:**  Given a positive integer `n`, find the smallest number of squared integers which sum to `n`.
+> **Question:** Given a positive integer n, find the smallest number of squared integers which sum to n.
 >
 > For example, given `n = 13`, return `2` since `13 = 3^2 + 2^2 = 9 + 4`.
->
+> 
 > Given `n = 27`, return `3` since `27 = 3^2 + 3^2 + 3^2 = 9 + 9 + 9`.
 
+
+**Solution with DP:** [https://repl.it/@trsong/Minimum-Squares-Sum-to-N](https://repl.it/@trsong/Minimum-Squares-Sum-to-N)
+```py
+import unittest
+import math
+
+def min_square_sum(n):
+    # Let dp[n] represents min num sqr sum to n
+    # dp[n] = min(dp[n - i * i]) + 1 for all i such that i * i <= n
+    dp = [float('inf')] * (n + 1)
+    dp[0] = 0
+
+    for num in xrange(1, n + 1):
+        for i in xrange(1, int(math.sqrt(num) + 1)):
+            dp[num] = min(dp[num], 1 + dp[num - i * i])
+
+    return dp[n]
+
+
+class MinSquareSumSpec(unittest.TestCase):
+    def test_example(self):
+        # 13 = 3^2 + 2^2
+        self.assertEqual(2, min_square_sum(13))
+
+    def test_example2(self):
+        # 27 = 3^2 + 3^2 + 3^2
+        self.assertEqual(3, min_square_sum(27))
+
+    def test_perfect_square(self):
+        # 100 = 10^2
+        self.assertEqual(min_square_sum(100), 1) 
+
+    def test_random_number(self):
+        # 63 = 7^2+ 3^2 + 2^2 + 1^2
+        self.assertEqual(min_square_sum(63), 4) 
+
+    def test_random_number2(self):
+        # 12 = 4 + 4 + 4
+        self.assertEqual(min_square_sum(12), 3) 
+
+    def test_random_number3(self):
+        # 6 = 2 + 2 + 2
+        self.assertEqual(3, min_square_sum(6)) 
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False, verbosity=2)
+```
 
 ### Feb 3, 2021 \[Medium\] Count Occurrence in Multiplication Table
 ---
