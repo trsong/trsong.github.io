@@ -5675,6 +5675,31 @@ For example, given `"2542540123"`, you should return `['254.25.40.123', '254.254
 ---
 
 <details>
+<summary class="lc_e">
+
+- [**\[Easy\] LC 120. Max Path Sum in Triangle**](http://trsong.github.io/python/java/2021/02/02/DailyQuestionsFeb/#feb-5-2021-lc-120-easy-max-path-sum-in-triangle) -- *Given an array of arrays of integers, where each array corresponds to a row in a triangle of number, returns the weight of the maximum path.* [*\(Try ME\)*](https://repl.it/@trsong/Max-Path-Sum-in-Triangle-1)
+
+</summary>
+<div>
+
+**Question:** You are given an array of arrays of integers, where each array corresponds to a row in a triangle of numbers. For example, `[[1], [2, 3], [1, 5, 1]]` represents the triangle:
+
+```py
+  1
+ 2 3
+1 5 1
+```
+
+We define a path in the triangle to start at the top and go down one row at a time to an adjacent value, eventually ending with an entry on the bottom row. For example, `1 -> 3 -> 5`. The weight of the path is the sum of the entries.
+
+Write a program that returns the weight of the maximum weight path.
+
+
+</div>
+</details>
+
+
+<details>
 <summary class="lc_m">
 
 - [**\[Medium\] LC 279. Minimum Number of Squares Sum to N**](http://trsong.github.io/python/java/2021/02/02/DailyQuestionsFeb/#feb-4-2021-lc-279-medium-minimum-number-of-squares-sum-to-n) -- *Given a positive integer n, find the smallest number of squared integers which sum to n.* [*\(Try ME\)*](https://repl.it/@trsong/Minimum-Squares-Sum-to-N-1)

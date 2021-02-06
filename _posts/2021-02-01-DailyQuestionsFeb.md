@@ -35,6 +35,75 @@ categories: Python/Java
 > Write a program that returns the weight of the maximum weight path.
 
 
+**Solution with DP:** [https://repl.it/@trsong/Max-Path-Sum-in-Triangle](https://repl.it/@trsong/Max-Path-Sum-in-Triangle)
+```py
+import unittest
+
+def max_path_sum(triangle):
+    if not triangle or not triangle[0]:
+        return 0
+
+    for r in xrange(len(triangle) - 2, -1, -1):
+        for c in xrange(r + 1):
+            left_child = triangle[r + 1][c]
+            right_child = triangle[r + 1][c + 1]
+            triangle[r][c] += max(left_child, right_child)
+
+    return triangle[0][0]
+        
+
+class MathPathSumSpec(unittest.TestCase):
+    def test_example(self):
+        triangle = [
+            [1], 
+            [2, 3],
+            [1, 5, 1]]
+        expected = 9  # 1 -> 3 -> 5
+        self.assertEqual(expected, max_path_sum(triangle))
+
+    def test_empty_triangle(self):
+        self.assertEqual(0, max_path_sum([]))
+
+    def test_one_elem_triangle(self):
+        triangle = [
+            [-1]
+        ]
+        expected = -1
+        self.assertEqual(expected, max_path_sum(triangle))
+    
+    def test_two_level_trianlge(self):
+        triangle = [
+            [1],
+            [2, -1]
+        ]
+        expected = 3
+        self.assertEqual(expected, max_path_sum(triangle))
+    
+    def test_all_negative_trianlge(self):
+        triangle = [
+            [-1],
+            [-2, -3],
+            [-4, -5, -6]
+        ]
+        expected = -7  # -1 -> -2 -> -4
+        self.assertEqual(expected, max_path_sum(triangle))
+    
+    def test_greedy_solution_not_work(self):
+        triangle = [
+            [0],
+            [2, 0],
+            [3, 0, 0],
+            [-10, -100, -100, 30]
+        ]
+        expected = 30
+        self.assertEqual(expected, max_path_sum(triangle))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False, verbosity=2)
+```
+
+
 ### Feb 4, 2021 LC 279 \[Medium\] Minimum Number of Squares Sum to N
 ---
 > **Question:** Given a positive integer n, find the smallest number of squared integers which sum to n.
