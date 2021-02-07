@@ -19,6 +19,21 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
 
+### Feb 7, 2021 \[Hard\] Regular Expression: Period and Asterisk
+---
+> **Question:** Implement regular expression matching with the following special characters:
+>
+> - `.` (period) which matches any single character
+> 
+> - `*` (asterisk) which matches zero or more of the preceding element
+> 
+> That is, implement a function that takes in a string and a valid regular expression and returns whether or not the string matches the regular expression.
+>
+> For example, given the regular expression "ra." and the string "ray", your function should return true. The same regular expression on the string "raymond" should return false.
+>
+> Given the regular expression ".*at" and the string "chat", your function should return true. The same regular expression on the string "chats" should return false.
+
+
 ### Feb 6, 2021 LC 388 \[Medium\] Longest Absolute File Path
 ---
 > **Question:** Suppose we represent our file system by a string in the following manner:
