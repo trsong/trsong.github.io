@@ -57,6 +57,108 @@ dir
 - The name of a directory or sub-directory will not contain a period.
 
 
+**Solution:** [https://repl.it/@trsong/Longest-Absolute-File-Path](https://repl.it/@trsong/Longest-Absolute-File-Path)
+```py
+import unittest
+
+def longest_abs_file_path(fs):
+    lines = fs.split('\n')
+    res = 0
+    prev_indent_len = [0] * len(lines)
+    for line in lines:
+        indent = line.count('\t')
+        parent_line_size = prev_indent_len[indent - 1] if indent > 0 else -1
+        line_size = parent_line_size + 1 + len(line) - indent
+        prev_indent_len[indent] = line_size
+
+        if '.' in line:
+            res = max(res, line_size)
+
+    return res
+        
+
+class LongestAbsFilePathSpec(unittest.TestCase):
+    def test_example(self):
+        """
+        dir
+            subdir1
+            subdir2
+                file.ext
+        """
+        fs = "dir\n\tsubdir1\n\tsubdir2\n\t\tfile.ext"
+        expected = len("dir/subdir2/file.ext")
+        self.assertEqual(expected, longest_abs_file_path(fs))
+
+    def test_example2(self):
+        """
+        dir
+            subdir1
+                file1.ext
+                subsubdir1
+            subdir2
+                subsubdir2
+                    file2.ext
+        """
+        fs = "dir\n\tsubdir1\n\t\tfile1.ext\n\t\tsubsubdir1\n\tsubdir2\n\t\tsubsubdir2\n\t\t\tfile2.ext"
+        expected = len("dir/subdir2/subsubdir2/file2.ext")
+        self.assertEqual(expected, longest_abs_file_path(fs))
+
+    def test_empty_fs(self):
+        self.assertEqual(0, longest_abs_file_path(""))
+
+    def test_empty_folder_with_no_files(self):
+        self.assertEqual(0, longest_abs_file_path("folder"))
+
+    def test_nested_folder_with_no_files(self):
+        """
+        a
+            b
+                c
+            d
+                e
+        """
+        fs = "a\n\tb\n\t\tc\n\td\n\t\te"
+        self.assertEqual(0, longest_abs_file_path(fs))
+
+    def test_shoft_file_path_vs_long_folder_with_no_file_path(self):
+        """
+        dir
+            subdir1
+                subdir2
+            a.txt
+        """
+        fs = "dir\n\tsubdir1\n\t\tsubdir2\n\ta.txt"
+        expected = len("dir/a.txt")
+        self.assertEqual(expected, longest_abs_file_path(fs))
+
+    def test_nested_fs(self):
+        """
+        dir
+            sub1
+                sub2
+                    sub3
+                        file1.txt
+                    sub4
+                        file2.in
+                sub5
+                    file3.in
+            sub6
+                file4.in
+                sub7
+                    file5.in
+                    sub8
+                        file6.output
+            file7.txt            
+        """
+        fs = 'dir\n\tsub1\n\t\tsub2\n\t\t\tsub3\n\t\t\t\tfile1.txt\n\t\t\tsub4\n\t\t\t\tfile2.in\n\t\tsub5\n\t\t\tfile3.in\n\tsub6\n\t\tfile4.in\n\t\tsub7\n\t\t\tfile5.in\n\t\t\tsub8\n\t\t\t\tfile6.output\n\tfile7.txt'
+        expected = len('dir/sub6/sub7/sub8/file6.output')
+        self.assertEqual(expected, longest_abs_file_path(fs))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False, verbosity=2)
+```
+
 ### Feb 5, 2021 LC 120 \[Easy\] Max Path Sum in Triangle
 ---
 > **Question:** You are given an array of arrays of integers, where each array corresponds to a row in a triangle of numbers. For example, `[[1], [2, 3], [1, 5, 1]]` represents the triangle:
