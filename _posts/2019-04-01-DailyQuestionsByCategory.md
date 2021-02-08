@@ -2266,6 +2266,30 @@ For example, given the string `tweet`, return `tteew`. `eettw` would also be acc
 <details>
 <summary class="lc_h">
 
+- [**\[Hard\] Regular Expression: Period and Asterisk**](http://trsong.github.io/python/java/2021/02/02/DailyQuestionsFeb/#feb-7-2021-hard-regular-expression-period-and-asterisk) -- *Implement regular expression matching with the following special characters: . (period) and \* (asterisk)* [*\(Try ME\)*](https://repl.it/@trsong/Regular-Expression-Period-and-Asterisk-1)
+
+</summary>
+<div>
+
+**Question:** Implement regular expression matching with the following special characters:
+
+- `.` (period) which matches any single character
+ 
+- `*` (asterisk) which matches zero or more of the preceding element
+ 
+That is, implement a function that takes in a string and a valid regular expression and returns whether or not the string matches the regular expression.
+
+For example, given the regular expression "ra." and the string "ray", your function should return true. The same regular expression on the string "raymond" should return false.
+
+Given the regular expression ".*at" and the string "chat", your function should return true. The same regular expression on the string "chats" should return false.
+
+</div>
+</details>
+
+
+<details>
+<summary class="lc_h">
+
 - [**\[Hard\] LC 65. Valid Number**](http://trsong.github.io/python/java/2020/11/02/DailyQuestionsAug/#jan-30-2021-lc-65-hard-valid-number) -- *Given a string that may represent a number, determine if it is a number.* [*\(Try ME\)*](https://repl.it/@trsong/Valid-Number-1)
 
 </summary>

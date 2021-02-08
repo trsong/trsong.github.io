@@ -42,6 +42,84 @@ Each operation should run in O(1) time.
 >
 > Given the regular expression ".*at" and the string "chat", your function should return true. The same regular expression on the string "chats" should return false.
 
+**My thoughts:** First consider the solution without `*` (asterisk), then we just need to match letters one by one while doing some special handling for `.` (period) so that it can match all letters. 
+
+Then we consider the solution with `*`, we will need to perform ONE look-ahead, so `*` can represent 0 or more matching. And we consider those two situations separately:
+- If we have 1 matching, we just need to check if the rest of text match the current pattern.
+- Or if we do not have matching, then we need to advance both text and pattern.
+
+**Solution:** [https://repl.it/@trsong/Regular-Expression-Period-and-Asterisk](https://repl.it/@trsong/Regular-Expression-Period-and-Asterisk)
+```py
+import unittest
+
+def pattern_match(text, pattern):
+    if not pattern:
+        return not text
+    
+    match_first = text and (pattern[0] == text[0] or pattern[0] == '.')
+
+    if len(pattern) > 1 and pattern[1] == '*':
+        return pattern_match(text, pattern[2:]) or (match_first and pattern_match(text[1:], pattern))
+    else:
+        return match_first and pattern_match(text[1:], pattern[1:])
+    
+
+class PatternMatchSpec(unittest.TestCase):
+    def test_empty_pattern(self):
+        text = "a"
+        pattern = ""
+        self.assertFalse(pattern_match(text, pattern))
+
+    def test_empty_text(self):
+        text = ""
+        pattern = "a"
+        self.assertFalse(pattern_match(text, pattern))
+
+    def test_empty_text_and_pattern(self):
+        text = ""
+        pattern = ""
+        self.assertTrue(pattern_match(text, pattern))
+
+    def test_asterisk(self):
+        text = "aa"
+        pattern = "a*"
+        self.assertTrue(pattern_match(text, pattern))
+
+    def test_asterisk2(self):
+        text = "aaa"
+        pattern = "ab*ac*a"
+        self.assertTrue(pattern_match(text, pattern))
+
+    def test_asterisk3(self):
+        text = "aab"
+        pattern = "c*a*b"
+        self.assertTrue(pattern_match(text, pattern))
+
+    def test_period(self):
+        text = "ray"
+        pattern = "ra."
+        self.assertTrue(pattern_match(text, pattern))
+
+    def test_period2(self):
+        text = "raymond"
+        pattern = "ra."
+        self.assertFalse(pattern_match(text, pattern))
+
+    def test_period_and_asterisk(self):
+        text = "chat"
+        pattern = ".*at"
+        self.assertTrue(pattern_match(text, pattern))
+
+    def test_period_and_asterisk2(self):
+        text = "chats"
+        pattern = ".*at"
+        self.assertFalse(pattern_match(text, pattern))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False, verbosity=2)
+```
+
 
 ### Feb 6, 2021 LC 388 \[Medium\] Longest Absolute File Path
 ---
