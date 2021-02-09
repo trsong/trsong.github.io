@@ -4150,9 +4150,12 @@ Explanation: The words are in increasing alphabetical order
 </summary>
 <div>
 
-**Question:** LRU cache is a cache data structure that has limited space, and once there are more items in the cache than available space, it will preempt the least recently used item. What counts as recently used is any item a key has `'get'` or `'put'` called on it.
+**Question:** Implement an LRU (Least Recently Used) cache. It should be able to be initialized with a cache size n, and contain the following methods:
 
-Implement an LRU cache class with the 2 functions `'put'` and `'get'`. `'put'` should place a value mapped to a certain key, and preempt items if needed. `'get'` should return the value for a given key if it exists in the cache, and return None if it doesn't exist.
+- `put(key, value)`: sets key to value. If there are already n items in the cache and we are adding a new item, then it should also remove the least recently used item.
+- `get(key)`: gets the value at key. If no such key exists, return null.
+  
+Each operation should run in O(1) time.
 
 **Example:**
 ```py
@@ -4180,7 +4183,7 @@ cache.get(3)  # returns 3
 
 **Question:** Implement an LFU (Least Frequently Used) cache. It should be able to be initialized with a cache size n, and contain the following methods:
 
-- `set(key, value)`: sets key to value. If there are already n items in the cache and we are adding a new item, then it should also remove the least frequently used item. If there is a tie, then the least recently used key should be removed.
+- `put(key, value)`: sets key to value. If there are already n items in the cache and we are adding a new item, then it should also remove the least frequently used item. If there is a tie, then the least recently used key should be removed.
 - `get(key)`: gets the value at key. If no such key exists, return null.
 Each operation should run in O(1) time.
 
