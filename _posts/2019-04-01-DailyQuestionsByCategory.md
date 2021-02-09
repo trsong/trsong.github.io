@@ -4173,7 +4173,7 @@ cache.get(3)  # returns 3
 <details>
 <summary class="lc_h">
 
-- [**\[Hard\] LFU Cache**](https://trsong.github.io/python/java/2020/08/02/DailyQuestionsAug/#oct-6-2020-hard-lfu-cache) -- *Designs and implements data structures that use the least frequently used (LFU) cache.* [*\(Try ME\)*](https://repl.it/@trsong/LFU-Cache-1)
+- [**\[Hard\] LFU Cache**](http://trsong.github.io/python/java/2021/02/02/DailyQuestionsFeb/#feb-8-2021-hard-lfu-cache) -- *Designs and implements data structures that use the least frequently used (LFU) cache.* [*\(Try ME\)*](https://repl.it/@trsong/Design-LFU-Cache-1)
 
 </summary>
 <div>

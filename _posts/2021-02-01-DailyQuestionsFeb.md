@@ -27,6 +27,127 @@ categories: Python/Java
 > - `get(key)`: gets the value at key. If no such key exists, return null.
 Each operation should run in O(1) time.
 
+**My thoughts:** Create two maps:
+
+- Key - (Value, Freq) Map
+- Freq - Deque<Key> Map: new elem goes from right and old elem stores on the left. 
+
+We also use a variable to point to minimum frequency, so when it meets capacity, elem with min freq and on the left of deque will first be evicted.
+
+**Solution:** [https://repl.it/@trsong/Design-LFU-Cache](https://repl.it/@trsong/Design-LFU-Cache)
+```py
+import unittest
+from collections import defaultdict
+from collections import deque
+
+class LFUCache(object):
+    def __init__(self, capacity):
+        self.kvf_map = {}
+        self.freq_order_map = defaultdict(deque)
+        self.min_freq = 1
+        self.capacity = capacity
+
+    def get(self, key):
+        if key not in self.kvf_map:
+            return None
+
+        val, freq = self.kvf_map[key]
+        self.kvf_map[key] = (val, freq + 1)
+
+        self.freq_order_map[freq].remove(key)
+        self.freq_order_map[freq + 1].append(key)
+        
+        if not self.freq_order_map[freq]:
+            del self.freq_order_map[freq]
+            if freq == self.min_freq:
+                self.min_freq += 1
+        return val
+
+    def put(self, key, val):
+        if self.capacity <= 0:
+            return 
+
+        if key in self.kvf_map:
+            _, freq = self.kvf_map[key]
+            self.kvf_map[key] = (val, freq)
+            self.get(key)
+        else:
+            if len(self.kvf_map) >= self.capacity:
+                evict_key = self.freq_order_map[self.min_freq].popleft()
+                if not self.freq_order_map[self.min_freq]:
+                    del self.freq_order_map[self.min_freq]
+                del self.kvf_map[evict_key]
+            
+            self.kvf_map[key] = (val, 1)
+            self.freq_order_map[1].append(key)
+            self.min_freq = 1
+
+
+class LFUCacheSpec(unittest.TestCase):
+    def test_empty_cache(self):
+        cache = LFUCache(0)
+        self.assertIsNone(cache.get(0))
+        cache.put(0, 0)
+
+    def test_end_to_end_workflow(self):
+        cache = LFUCache(2)
+        cache.put(1, 1)
+        cache.put(2, 2)
+        self.assertEqual(1, cache.get(1))
+        cache.put(3, 3)  # remove key 2
+        self.assertIsNone(cache.get(2))  # key 2 not found
+        self.assertEqual(3, cache.get(3))
+        cache.put(4, 4)  # remove key 1
+        self.assertIsNone(cache.get(1))  # key 1 not found
+        self.assertEqual(3, cache.get(3))
+        self.assertEqual(4, cache.get(4))
+
+    def test_end_to_end_workflow2(self):
+        cache = LFUCache(3)
+        cache.put(2, 2)
+        cache.put(1, 1)
+        self.assertEqual(2, cache.get(2))
+        self.assertEqual(1, cache.get(1))
+        self.assertEqual(2, cache.get(2))
+        cache.put(3, 3)
+        cache.put(4, 4)  # remove key 3
+        self.assertIsNone(cache.get(3))
+        self.assertEqual(2, cache.get(2))
+        self.assertEqual(1, cache.get(1))
+        self.assertEqual(4, cache.get(4))
+
+    def test_end_to_end_workflow3(self):
+        cache = LFUCache(2)
+        cache.put(3, 1)
+        cache.put(2, 1)
+        cache.put(2, 2)
+        cache.put(4, 4)
+        self.assertEqual(2, cache.get(2))
+
+    def test_remove_least_freq_elements_when_evict(self):
+        cache = LFUCache(3)
+        cache.put(1, 'a')
+        cache.put(1, 'aa')
+        cache.put(1, 'aaa')
+        cache.put(2, 'b')
+        cache.put(2, 'bb')
+        cache.put(3, 'c')
+        cache.put(4, 'd')
+        self.assertIsNone(cache.get(3))
+        self.assertEqual('d', cache.get(4))
+        cache.get(4)
+        cache.get(4)
+        cache.get(2)
+        cache.get(2)
+        cache.put(3, 'cc')
+        self.assertIsNone(cache.get(1))
+        self.assertEqual('cc', cache.get(3))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False, verbosity=2)
+```
+
 
 ### Feb 7, 2021 \[Hard\] Regular Expression: Period and Asterisk
 ---
