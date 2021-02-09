@@ -4145,7 +4145,7 @@ Explanation: The words are in increasing alphabetical order
 <details>
 <summary class="lc_m">
 
-- [**\[Medium\] LRU Cache**](https://trsong.github.io/python/java/2020/08/02/DailyQuestionsAug/#oct-5-2020-medium-lru-cache) -- *Design and implement an LRU cache class with the 2 functions 'put' and 'get'.* [*\(Try ME\)*](https://repl.it/@trsong/Design-LRU-Cache-1)
+- [**\[Medium\] LRU Cache**](http://trsong.github.io/python/java/2021/02/02/DailyQuestionsFeb/#feb-9-2021-medium-lru-cache) -- *Design and implement an LRU cache class with the 2 functions 'put' and 'get'.* [*\(Try ME\)*](https://repl.it/@trsong/Design-LRU-Cache-1)
 
 </summary>
 <div>

@@ -51,8 +51,8 @@ Each operation should run in O(1) time.
 
 **My thoughts:** Create two maps:
 
-- Key - (Value, Freq) Map
-- Freq - Deque<Key> Map: new elem goes from right and old elem stores on the left. 
+- `Key - (Value, Freq)` Map
+- `Freq - Deque<Key>` Map: new elem goes from right and old elem stores on the left. 
 
 We also use a variable to point to minimum frequency, so when it meets capacity, elem with min freq and on the left of deque will first be evicted.
 
