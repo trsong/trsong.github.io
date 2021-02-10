@@ -19,6 +19,12 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
 
+
+### Feb 10, 2021 \[Easy\] Making a Height Balanced Binary Search Tree
+---
+> **Question:** Given a sorted list, create a height balanced binary search tree, meaning the height differences of each node can only differ by at most 1.
+
+
 ### Feb 9, 2021 \[Medium\] LRU Cache
 ---
 > **Question:** Implement an LRU (Least Recently Used) cache. It should be able to be initialized with a cache size n, and contain the following methods:
