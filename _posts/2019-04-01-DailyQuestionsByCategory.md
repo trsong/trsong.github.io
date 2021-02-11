@@ -2909,6 +2909,20 @@ For example, given the array `[3, 4, 9, 6, 1]`, return `[1, 1, 2, 1, 0]`, since:
 ---
 
 <details>
+<summary class="lc_e">
+
+- [**\[Easy\] Making a Height Balanced Binary Search Tree**](http://trsong.github.io/python/java/2021/02/02/DailyQuestionsFeb/#feb-10-2021-easy-making-a-height-balanced-binary-search-tree) -- *Given a sorted list, create a height balanced binary search tree, meaning the height differences of each node can only differ by at most 1.* [*\(Try ME\)*](https://repl.it/@trsong/Making-a-Height-Balanced-Binary-Search-Tree-1)
+
+</summary>
+<div>
+
+**Question:** Given a sorted list, create a height balanced binary search tree, meaning the height differences of each node can only differ by at most 1.
+
+</div>
+</details>
+
+
+<details>
 <summary class="lc_m">
 
 - [**\[Medium\] Maximum Path Sum in Binary Tree**](https://trsong.github.io/python/java/2021/02/02/DailyQuestionsFeb/#feb-1-2021-medium-maximum-path-sum-in-binary-tree) -- *Given the root of a binary tree. Find the path between 2 nodes that maximizes the sum of all the nodes in the path, and return the sum.* [*\(Try ME\)*](https://repl.it/@trsong/Find-Maximum-Path-Sum-in-Binary-Tree-1)

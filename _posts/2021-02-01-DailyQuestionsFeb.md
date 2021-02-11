@@ -24,6 +24,117 @@ categories: Python/Java
 ---
 > **Question:** Given a sorted list, create a height balanced binary search tree, meaning the height differences of each node can only differ by at most 1.
 
+**Solution:** [https://repl.it/@trsong/Making-a-Height-Balanced-Binary-Search-Tree](https://repl.it/@trsong/Making-a-Height-Balanced-Binary-Search-Tree)
+```py
+import unittest
+
+def build_balanced_bst(sorted_list):
+    def build_balanced_bst_recur(left, right):
+        if left > right:
+            return None
+        mid = left + (right - left) // 2
+        left_res = build_balanced_bst_recur(left, mid - 1)
+        right_res = build_balanced_bst_recur(mid + 1, right)
+        return TreeNode(sorted_list[mid], left_res, right_res)
+
+    return build_balanced_bst_recur(0, len(sorted_list) - 1)
+
+
+#####################
+# Testing Utilities
+#####################
+class TreeNode(object):
+    def __init__(self, val, left=None, right=None):
+        self.val = val
+        self.left = left
+        self.right = right
+
+    def flatten(self):
+        res = []
+        stack = []
+        p = self
+        while p or stack:
+            if p:
+                stack.append(p)
+                p = p.left
+            elif stack:
+                p = stack.pop()
+                res.append(p.val)
+                p = p.right
+        return res
+
+    def is_balanced(self):
+        res, _ = self._is_balanced_helper()
+        return res
+
+    def _is_balanced_helper(self):
+        left_res, left_height = True, 0
+        right_res, right_height = True, 0
+        if self.left:
+            left_res, left_height = self.left._is_balanced_helper()
+        if self.right:
+            right_res, right_height = self.right._is_balanced_helper()
+        res = left_res and right_res and abs(left_height - right_height) <= 1
+        if left_res and right_res and not res:
+            print "Violate balance requirement"
+            print self
+        return res, max(left_height, right_height) + 1
+
+    def __repr__(self):
+        stack = [(self, 0)]
+        res = []
+        while stack:
+            node, depth = stack.pop()
+            res.append("\n" + "\t" * depth)
+            if not node:
+                res.append("* None")
+                continue
+
+            res.append("* " + str(node.val))
+            for child in [node.right, node.left]:
+                stack.append((child, depth + 1))
+        return "\n" + "".join(res) + "\n"
+
+
+class BuildBalancdBSTSpec(unittest.TestCase):
+    def test_empty_list(self):
+        self.assertIsNone(build_balanced_bst([]))
+
+    def test_one_elem_list(self):
+        lst = [42]
+        root = build_balanced_bst(lst)
+        self.assertTrue(root.is_balanced())
+        self.assertEqual(lst, root.flatten())
+
+    def test_list1(self):
+        lst = [1, 2, 3]
+        root = build_balanced_bst(lst)
+        self.assertTrue(root.is_balanced())
+        self.assertEqual(lst, root.flatten())
+
+    def test_list2(self):
+        lst = [1, 5, 6, 9, 10, 11, 13]
+        root = build_balanced_bst(lst)
+        self.assertTrue(root.is_balanced())
+        self.assertEqual(lst, root.flatten())
+
+    def test_list_with_duplicated_elem(self):
+        lst = [1, 1, 2, 2, 3, 3, 3, 3, 3]
+        root = build_balanced_bst(lst)
+        self.assertTrue(root.is_balanced())
+        self.assertEqual(lst, root.flatten())
+
+    def test_list_with_duplicated_elem2(self):
+        lst = [1, 1, 1, 1, 1, 1]
+        root = build_balanced_bst(lst)
+        self.assertTrue(root.is_balanced())
+        self.assertEqual(lst, root.flatten())
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False, verbosity=2)
+```
+
 
 ### Feb 9, 2021 \[Medium\] LRU Cache
 ---
