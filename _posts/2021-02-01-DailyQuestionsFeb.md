@@ -19,6 +19,25 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
 
+### Feb 11, 2021 \[Medium\] Generate Binary Search Trees
+--- 
+> **Question:** Given a number n, generate all binary search trees that can be constructed with nodes 1 to n.
+ 
+**Example:**
+```py
+Pre-order traversals of binary trees from 1 to n:
+- 123
+- 132
+- 213
+- 312
+- 321
+
+   1      1      2      3      3
+    \      \    / \    /      /
+     2      3  1   3  1      2
+      \    /           \    /
+       3  2             2  1
+``` 
 
 ### Feb 10, 2021 \[Easy\] Making a Height Balanced Binary Search Tree
 ---
