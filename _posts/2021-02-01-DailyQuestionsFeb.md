@@ -19,6 +19,32 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
 
+
+### Feb 12, 2021 LC 332 \[Medium\] Reconstruct Itinerary
+---
+> **Questions:** Given a list of airline tickets represented by pairs of departure and arrival airports [from, to], reconstruct the itinerary in order. All of the tickets belong to a man who departs from JFK. Thus, the itinerary must begin with JFK.
+
+Note:
+
+> 1. If there are multiple valid itineraries, you should return the itinerary that has the smallest lexical order when read as a single string. For example, the itinerary ["JFK", "LGA"] has a smaller lexical order than ["JFK", "LGB"].
+> 2. All airports are represented by three capital letters (IATA code).
+> 3. You may assume all tickets form at least one valid itinerary.
+   
+Example 1:
+
+```java
+Input: [["MUC", "LHR"], ["JFK", "MUC"], ["SFO", "SJC"], ["LHR", "SFO"]]
+Output: ["JFK", "MUC", "LHR", "SFO", "SJC"]
+```
+Example 2:
+
+```java
+Input: [["JFK","SFO"],["JFK","ATL"],["SFO","ATL"],["ATL","JFK"],["ATL","SFO"]]
+Output: ["JFK","ATL","JFK","SFO","ATL","SFO"]
+Explanation: Another possible reconstruction is ["JFK","SFO","ATL","JFK","ATL","SFO"].
+             But it is larger in lexical order.
+```
+
 ### Feb 11, 2021 \[Medium\] Generate Binary Search Trees
 --- 
 > **Question:** Given a number n, generate all binary search trees that can be constructed with nodes 1 to n.
@@ -38,6 +64,95 @@ Pre-order traversals of binary trees from 1 to n:
       \    /           \    /
        3  2             2  1
 ``` 
+
+**Solution:** [https://repl.it/@trsong/Generate-All-Binary-Search-Trees](https://repl.it/@trsong/Generate-All-Binary-Search-Trees)
+```py
+
+import unittest
+
+def generate_bst(n):
+    if n < 1:
+        return []
+    return generate_bst_recur(1, n)
+
+
+def generate_bst_recur(lo, hi):
+    if lo > hi:
+        return [None]
+
+    res = []
+    for val in xrange(lo, hi + 1):
+        for left_child in generate_bst_recur(lo, val - 1):
+            for right_child in generate_bst_recur(val + 1, hi):
+                res.append(TreeNode(val, left_child, right_child))
+    return res
+
+
+###################
+# Testing Utilities
+###################
+class TreeNode(object):
+    def __init__(self, val, left=None, right=None):
+        self.val = val
+        self.left = left
+        self.right = right
+
+    def preorder_traversal(self):
+        res = [self.val]
+        if self.left:
+            res += self.left.preorder_traversal()
+        if self.right:
+            res += self.right.preorder_traversal()
+        return res
+
+
+class GenerateBSTSpec(unittest.TestCase):
+    def assert_result(self, expected_preorder_traversal, bst_seq):
+        self.assertEqual(len(expected_preorder_traversal), len(bst_seq))
+        result_traversal = map(lambda t: t.preorder_traversal(), bst_seq)
+        self.assertEqual(sorted(expected_preorder_traversal), sorted(result_traversal))
+
+    def test_example(self):
+        expected_preorder_traversal = [
+            [1, 2, 3],
+            [1, 3, 2],
+            [2, 1, 3],
+            [3, 1, 2],
+            [3, 2, 1]
+        ]
+        self.assert_result(expected_preorder_traversal, generate_bst(3))
+    
+    def test_empty_tree(self):
+        self.assertEqual([], generate_bst(0))
+
+    def test_base_case(self):
+        expected_preorder_traversal = [[1]]
+        self.assert_result(expected_preorder_traversal, generate_bst(1))
+
+    def test_generate_4_nodes(self):
+        expected_preorder_traversal = [
+            [1, 2, 3, 4],
+            [1, 2, 4, 3],
+            [1, 3, 2, 4],
+            [1, 4, 2, 3],
+            [1, 4, 3, 2],
+            [2, 1, 3, 4],
+            [2, 1, 4, 3],
+            [3, 1, 2, 4],
+            [3, 2, 1, 4],
+            [4, 1, 2, 3],
+            [4, 1, 3, 2],
+            [4, 2, 1, 3],
+            [4, 3, 1, 2],
+            [4, 3, 2, 1]
+        ]
+        self.assert_result(expected_preorder_traversal, generate_bst(4))
+    
+
+if __name__ == '__main__':
+    unittest.main(exit=False, verbosity=2)
+```
+
 
 ### Feb 10, 2021 \[Easy\] Making a Height Balanced Binary Search Tree
 ---
