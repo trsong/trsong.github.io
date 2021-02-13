@@ -30,19 +30,77 @@ Note:
 > 2. All airports are represented by three capital letters (IATA code).
 > 3. You may assume all tickets form at least one valid itinerary.
    
-Example 1:
-
+**Example 1:**
 ```java
 Input: [["MUC", "LHR"], ["JFK", "MUC"], ["SFO", "SJC"], ["LHR", "SFO"]]
 Output: ["JFK", "MUC", "LHR", "SFO", "SJC"]
 ```
-Example 2:
 
+**Example 2:**
 ```java
 Input: [["JFK","SFO"],["JFK","ATL"],["SFO","ATL"],["ATL","JFK"],["ATL","SFO"]]
 Output: ["JFK","ATL","JFK","SFO","ATL","SFO"]
 Explanation: Another possible reconstruction is ["JFK","SFO","ATL","JFK","ATL","SFO"].
              But it is larger in lexical order.
+```
+
+**My thoughts:** Forget about lexical requirement for now, consider all airports as vertices and each itinerary as an edge. Then all we need to do is to find a path from "JFK" that consumes all edges. By using DFS to iterate all potential solution space, once we find a solution we will return immediately.
+
+Now let's consider the lexical requirement, when we search from one node to its neighbor, we can go from smaller lexical order first and by keep doing that will lead us to the result. 
+
+**Solution with DFS:** [https://repl.it/@trsong/Reconstruct-Flight-Itinerary](https://repl.it/@trsong/Reconstruct-Flight-Itinerary)
+```py
+import unittest
+
+def reconstruct_itinerary(tickets):
+    neighbors = {}
+    for src, dst in sorted(tickets):
+        if src not in neighbors:
+            neighbors[src] = []
+        neighbors[src].append(dst)
+    res = []
+    dfs_route(res, 'JFK', neighbors)
+    return res[::-1]
+
+
+def dfs_route(res, src, neighbors):
+    while src in neighbors and neighbors[src]:
+        dst = neighbors[src].pop(0)
+        dfs_route(res, dst, neighbors)
+    res.append(src)
+
+
+class ReconstructItinerarySpec(unittest.TestCase):
+    def test_example(self):
+        tickets = [['MUC', 'LHR'], ['JFK', 'MUC'], ['SFO', 'SJC'],
+                   ['LHR', 'SFO']]
+        expected = ['JFK', 'MUC', 'LHR', 'SFO', 'SJC']
+        self.assertEqual(expected, reconstruct_itinerary(tickets))
+
+    def test_example2(self):
+        tickets = [['JFK', 'SFO'], ['JFK', 'ATL'], ['SFO', 'ATL'],
+                   ['ATL', 'JFK'], ['ATL', 'SFO']]
+        expected = ['JFK', 'ATL', 'JFK', 'SFO', 'ATL', 'SFO']
+        expected2 = ['JFK', 'SFO', 'ATL', 'JFK', 'ATL', 'SFO']
+        self.assertIn(reconstruct_itinerary(tickets), [expected, expected2])
+
+    def test_not_run_into_loop(self):
+        tickets = [['JFK', 'YVR'], ['LAX', 'LAX'], ['YVR', 'YVR'],
+                   ['YVR', 'YVR'], ['YVR', 'LAX'], ['LAX', 'LAX'],
+                   ['LAX', 'YVR'], ['YVR', 'JFK']]
+        expected = [
+            'JFK', 'YVR', 'LAX', 'LAX', 'LAX', 'YVR', 'YVR', 'YVR', 'JFK'
+        ]
+        self.assertEqual(expected, reconstruct_itinerary(tickets))
+
+    def test_not_run_into_form_loop2(self):
+        tickets = [['JFK', 'YVR'], ['JFK', 'LAX'], ['LAX', 'JFK']]
+        expected = ['JFK', 'LAX', 'JFK', 'YVR']
+        self.assertEqual(expected, reconstruct_itinerary(tickets))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False, verbosity=2)
 ```
 
 ### Feb 11, 2021 \[Medium\] Generate Binary Search Trees

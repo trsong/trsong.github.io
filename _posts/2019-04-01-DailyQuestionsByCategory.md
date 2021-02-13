@@ -4745,6 +4745,39 @@ Output: 1
 ### DFS
 ---
 
+<details>
+<summary class="lc_m">
+
+- [**\[Medium\] LC 332. Reconstruct Itinerary**](http://trsong.github.io/python/java/2021/02/02/DailyQuestionsFeb/#feb-12-2021-lc-332-medium-reconstruct-itinerary) -- *Given a list of airline tickets represented by pairs of departure and arrival airports [from, to], reconstruct the itinerary in order.* [*\(Try ME\)*](https://repl.it/@trsong/Reconstruct-Flight-Itinerary-1)
+
+</summary>
+<div>
+
+**Questions:** Given a list of airline tickets represented by pairs of departure and arrival airports [from, to], reconstruct the itinerary in order. All of the tickets belong to a man who departs from JFK. Thus, the itinerary must begin with JFK.
+
+Note:
+
+1. If there are multiple valid itineraries, you should return the itinerary that has the smallest lexical order when read as a single string. For example, the itinerary ["JFK", "LGA"] has a smaller lexical order than ["JFK", "LGB"].
+2. All airports are represented by three capital letters (IATA code).
+3. You may assume all tickets form at least one valid itinerary.
+   
+**Example 1:**
+```java
+Input: [["MUC", "LHR"], ["JFK", "MUC"], ["SFO", "SJC"], ["LHR", "SFO"]]
+Output: ["JFK", "MUC", "LHR", "SFO", "SJC"]
+```
+
+**Example 2:**
+```java
+Input: [["JFK","SFO"],["JFK","ATL"],["SFO","ATL"],["ATL","JFK"],["ATL","SFO"]]
+Output: ["JFK","ATL","JFK","SFO","ATL","SFO"]
+Explanation: Another possible reconstruction is ["JFK","SFO","ATL","JFK","ATL","SFO"].
+             But it is larger in lexical order.
+```
+
+</div>
+</details>
+
 
 <details>
 <summary class="lc_m">
