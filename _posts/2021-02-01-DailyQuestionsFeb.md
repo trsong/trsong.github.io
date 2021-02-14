@@ -42,6 +42,108 @@ Explanation: we have an infinite loop.
 ```
 
 
+**My thoughts:** This question is a perfect example illustrates how to apply different teachniques, such as Toplogical Sort and DP, to solve a graph problem.
+
+The brute force solution is to iterate through all possible vertices and start from where we can search neighbors recursively and find the maximum path value. Which takes `O(V * (V + E))`.
+
+However, certain nodes will be calculated over and over again. e.g. "AAB", [(0, 1), (2, 1)] both share same neighbor second A.
+
+Thus, in order to speed up, we can use DP to cache the intermediate result. Let `dp[v][letter]` represents the path value starts from v with the letter. `dp[v][non_current_letter] = max(dp[nb][non_current_letter]) for all neighbour nb ` or `dp[v][current_letter] = max(dp[nb][current_letter]) + 1 for all neighbour nb`.  The final solution is `max{ dp[v][current_letter_v] } for all v`.
+
+With DP solution, the time complexity drop to `O(V + E)`, 'cause each vertix and edge only needs to be visited once.
+
+
+**Solution with Toplogical Sort and DP:** [https://repl.it/@trsong/Find-Max-Letter-Path-Value-in-Directed-Graph](https://repl.it/@trsong/Find-Max-Letter-Path-Value-in-Directed-Graph)
+```py
+import unittest
+from collections import defaultdict
+
+
+def find_max_path_value(letters, edges):
+    if not letters:
+        return 0
+
+    n = len(letters)
+    neighbors = [[] for _ in xrange(n)]
+    inbound = [0] * n
+
+    for src, dst in edges:
+        neighbors[src].append(dst)
+        inbound[dst] += 1
+    
+    top_order = find_top_order(neighbors, inbound)
+    if not top_order:
+        return None
+
+    # Let dp[node][letter] represents path value of letter ended ended at node
+    # dp[node][letter] = max(dp[prev][letter] for all prev)  if current node letter is not letter
+    #                  = 1 + max(dp[prev][letter] for all prev)  if current node letter is letter
+    dp = [defaultdict(int) for _ in xrange(n)]
+    for node in top_order:
+        dp[node][letters[node]] += 1
+
+        for letter, count in dp[node].items():
+            for nb in neighbors[node]:
+                dp[nb][letter] = max(dp[nb][letter], count)
+    return max(dp[top_order[-1]].values())
+
+
+def find_top_order(neighbors, inbound):
+    n = len(neighbors)
+    queue = filter(lambda node: inbound[node] == 0, xrange(n))
+    res = []
+
+    while queue:
+        node = queue.pop(0)
+        res.append(node)
+
+        for nb in neighbors[node]:
+            inbound[nb] -= 1
+            if inbound[nb] == 0:
+                queue.append(nb)
+
+    return res if len(res) == n else None
+
+
+class FindMaxPathValueSpec(unittest.TestCase):
+    def test_graph_with_self_edge(self):
+        letters ='A'
+        edges = [(0, 0)]
+        self.assertIsNone(find_max_path_value(letters, edges))
+
+    def test_example_graph(self):
+        letters ='ABACA'
+        edges = [(0, 1), (0, 2), (2, 3), (3, 4)]
+        self.assertEqual(3, find_max_path_value(letters, edges))
+    
+    def test_empty_graph(self):
+        self.assertEqual(0, find_max_path_value('', []))
+
+    def test_diconnected_graph(self):
+        self.assertEqual(1, find_max_path_value('AABBCCDD', []))
+    
+    def test_graph_with_cycle(self):
+        letters ='XZYABC'
+        edges = [(0, 1), (1, 2), (2, 0), (3, 2), (4, 3), (5, 3)]
+        self.assertIsNone(find_max_path_value(letters, edges))
+
+    def test_graph_with_disconnected_components(self):
+        letters ='AABBB'
+        edges = [(0, 1), (2, 3), (3, 4)]
+        self.assertEqual(3, find_max_path_value(letters, edges))
+
+    def test_complicated_graph(self):
+        letters ='XZYZYZYZQX'
+        edges = [(0, 1), (0, 9), (1, 9), (1, 3), (1, 5), (3, 5), 
+            (3, 4), (5, 4), (5, 7), (1, 7), (2, 4), (2, 6), (2, 8), (9, 8)]
+        self.assertEqual(4, find_max_path_value(letters, edges))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False, verbosity=2)
+```
+
+
 ### Feb 12, 2021 LC 332 \[Medium\] Reconstruct Itinerary
 ---
 > **Questions:** Given a list of airline tickets represented by pairs of departure and arrival airports [from, to], reconstruct the itinerary in order. All of the tickets belong to a man who departs from JFK. Thus, the itinerary must begin with JFK.
