@@ -19,6 +19,31 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
 
+### Feb 14, 2021 \[Easy\] Filter Binary Tree Leaves
+---
+> **Questions:** Given a binary tree and an integer k, filter the binary tree such that its leaves don't contain the value k. Here are the rules:
+>
+> - If a leaf node has a value of k, remove it.
+> - If a parent node has a value of k, and all of its children are removed, remove it.
+
+**Example:**
+```py
+Given the tree to be the following and k = 1:
+     1
+    / \
+   1   1
+  /   /
+ 2   1
+
+After filtering the result should be:
+     1
+    /
+   1
+  /
+ 2
+```
+
+
 ### Feb 13, 2021 \[Hard\] Max Path Value in Directed Graph
 ---
 > **Question:** In a directed graph, each node is assigned an uppercase letter. We define a path's value as the number of most frequently-occurring letter along that path. For example, if a path in the graph goes through "ABACA", the value of the path is 3, since there are 3 occurrences of 'A' on the path.
