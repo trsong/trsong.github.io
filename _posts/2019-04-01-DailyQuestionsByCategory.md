@@ -2908,6 +2908,41 @@ For example, given the array `[3, 4, 9, 6, 1]`, return `[1, 1, 2, 1, 0]`, since:
 ### Recursion
 ---
 
+
+<details>
+<summary class="lc_e">
+
+- [**\[Easy\] Filter Binary Tree Leaves**](http://trsong.github.io/python/java/2021/02/02/DailyQuestionsFeb/#feb-14-2021-easy-filter-binary-tree-leaves) -- *Given a binary tree and an integer k, filter the binary tree such that its leaves don’t contain the value k.* [*\(Try ME\)*](https://repl.it/@trsong/Filter-Binary-Tree-Leaves-of-Certain-Value-1)
+
+</summary>
+<div>
+
+**Questions:** Given a binary tree and an integer k, filter the binary tree such that its leaves don't contain the value k. Here are the rules:
+
+- If a leaf node has a value of k, remove it.
+- If a parent node has a value of k, and all of its children are removed, remove it.
+
+**Example:**
+```py
+Given the tree to be the following and k = 1:
+     1
+    / \
+   1   1
+  /   /
+ 2   1
+
+After filtering the result should be:
+     1
+    /
+   1
+  /
+ 2
+```
+
+</div>
+</details>
+
+
 <details>
 <summary class="lc_e">
 

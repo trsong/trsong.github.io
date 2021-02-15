@@ -50,6 +50,127 @@ After filtering the result should be:
  2
 ```
 
+**Solution:** [https://repl.it/@trsong/Filter-Binary-Tree-Leaves-of-Certain-Value](https://repl.it/@trsong/Filter-Binary-Tree-Leaves-of-Certain-Value)
+```py
+import unittest
+
+def filter_tree_leaves(tree, k):
+    if not tree:
+        return None
+
+    left_res = filter_tree_leaves(tree.left, k)
+    right_res = filter_tree_leaves(tree.right, k)
+    if not left_res and not right_res and tree.val == k:
+        return None
+    else:
+        tree.left = left_res
+        tree.right = right_res
+        return tree
+
+
+class TreeNode(object):
+    def __init__(self, val, left=None, right=None):
+        self.val = val
+        self.left = left
+        self.right = right
+    
+    def __eq__(self, other):
+        return other and other.val == self.val and self.left == other.left and self.right == other.right
+
+    def __repr__(self):
+        stack = [(self, 0)]
+        res = ['\n']
+        while stack:
+            cur, depth = stack.pop()
+            res.append('\t' * depth)
+            if cur:
+                res.append('* ' + str(cur.val))
+                stack.append((cur.right, depth + 1))
+                stack.append((cur.left, depth + 1))
+            else:
+                res.append('* None')
+            res.append('\n')            
+        return ''.join(res)
+
+
+class FilterTreeLeaveSpec(unittest.TestCase):
+    def test_example(self):
+        """
+        Input:
+             1
+            / \
+           1   1
+          /   /
+         2   1
+
+        Result:
+             1
+            /
+           1
+          /
+         2
+        """
+        left_tree = TreeNode(1, TreeNode(2))
+        right_tree = TreeNode(1, TreeNode(1))
+        root = TreeNode(1, left_tree, right_tree)
+        expected_tree = TreeNode(1, TreeNode(1, TreeNode(2)))
+        self.assertEqual(expected_tree, filter_tree_leaves(root, k=1))
+
+    def test_remove_empty_tree(self):
+        self.assertIsNone(filter_tree_leaves(None, 1))
+
+    def test_remove_the_last_node(self):
+        self.assertIsNone(filter_tree_leaves(TreeNode(2), 2))
+
+    def test_filter_cause_all_nodes_to_be_removed(self):
+        k = 42
+        left_tree = TreeNode(k, right=TreeNode(k))
+        right_tree = TreeNode(k, TreeNode(k), TreeNode(k))
+        tree = TreeNode(k, left_tree, right_tree)
+        self.assertIsNone(filter_tree_leaves(tree, k))
+
+    def test_filter_not_internal_nodes(self):
+        from copy import deepcopy
+        """
+             1
+           /   \
+          1     1
+         / \   /
+        2   2 2
+        """
+        left_tree = TreeNode(1, TreeNode(2), TreeNode(2))
+        right_tree = TreeNode(1, TreeNode(2))
+        root = TreeNode(1, left_tree, right_tree)
+        expected = deepcopy(root)
+        self.assertEqual(expected, filter_tree_leaves(root, k=1))
+    
+    def test_filter_only_leaves(self):
+        """
+        Input :    
+               4
+            /     \
+           5       5
+         /  \    /
+        3    1  5 
+      
+        Output :  
+            4
+           /     
+          5       
+         /  \    
+        3    1  
+        """
+        left_tree = TreeNode(5, TreeNode(3), TreeNode(1))
+        right_tree = TreeNode(5, TreeNode(5))
+        root = TreeNode(4, left_tree, right_tree)
+        expected = TreeNode(4, TreeNode(5, TreeNode(3), TreeNode(1)))
+        self.assertEqual(expected, filter_tree_leaves(root, 5))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False, verbosity=2)
+```
+
 
 ### Feb 13, 2021 \[Hard\] Max Path Value in Directed Graph
 ---
