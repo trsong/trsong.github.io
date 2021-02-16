@@ -1311,6 +1311,22 @@ Explanation: Because the new interval [4,8] overlaps with [3,5],[6,7],[8,10].
 ---
 
 <details>
+<summary class="lc_e">
+
+- [**\[Easy\] Fixed Point**](http://trsong.github.io/python/java/2021/02/02/DailyQuestionsFeb/#feb-15-2021-easy-fixed-point) -- *Given a sorted array of distinct elements, return a fixed point, if one exists. Otherwise, return False.* [*\(Try ME\)*](https://repl.it/@trsong/Find-the-Fixed-Point-1)
+
+</summary>
+<div>
+
+**Questions:** A fixed point in an array is an element whose value is equal to its index. Given a sorted array of distinct elements, return a fixed point, if one exists. Otherwise, return `False`.
+
+For example, given `[-6, 0, 2, 40]`, you should return `2`. Given `[1, 5, 7, 8]`, you should return `False`.
+
+</div>
+</details>
+
+
+<details>
 <summary class="lc_m">
 
 - [**\[Medium\] Find Minimum Element in a Sorted and Rotated Array**](http://trsong.github.io/python/java/2020/11/02/DailyQuestionsAug/#dec-31-2020-medium-find-minimum-element-in-a-sorted-and-rotated-array) -- *Suppose an array sorted in ascending order is rotated at some pivot unknown to you beforehand. Find the minimum element.* [*\(Try ME\)*](https://repl.it/@trsong/Find-Minimum-Element-in-a-Sorted-and-Rotated-Array-1)
