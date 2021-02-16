@@ -19,6 +19,20 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
 
+### Feb 16, 2021 \[Medium\] Shortest Unique Prefix
+---
+> **Question:** Given an array of words, find all shortest unique prefixes to represent each word in the given array. Assume that no word is prefix of another.
+
+**Example:**
+```py
+Input: ['zebra', 'dog', 'duck', 'dove']
+Output: ['z', 'dog', 'du', 'dov']
+Explanation: dog => dog
+             dove = dov 
+             duck = du
+             z   => zebra 
+```
+
 ### Feb 15, 2021 \[Easy\] Fixed Point
 ---
 > **Questions:** A fixed point in an array is an element whose value is equal to its index. Given a sorted array of distinct elements, return a fixed point, if one exists. Otherwise, return `False`.
