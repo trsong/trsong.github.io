@@ -3558,6 +3558,29 @@ sumRange(0, 2) -> 8
 ---
 
 <details>
+<summary class="lc_m">
+
+- [**\[Medium\] Shortest Unique Prefix**](http://trsong.github.io/python/java/2021/02/02/DailyQuestionsFeb/#feb-16-2021-medium-shortest-unique-prefix) -- *Given an array of words, find all shortest unique prefixes to represent each word in the given array. Assume no word is prefix of another.* [*\(Try ME\)*](https://repl.it/@trsong/Find-All-Shortest-Unique-Prefix-1)
+
+</summary>
+<div>
+
+**Question:** Given an array of words, find all shortest unique prefixes to represent each word in the given array. Assume that no word is prefix of another.
+
+**Example:**
+```py
+Input: ['zebra', 'dog', 'duck', 'dove']
+Output: ['z', 'dog', 'du', 'dov']
+Explanation: dog => dog
+             dove = dov 
+             duck = du
+             z   => zebra 
+```
+
+</div>
+</details>
+
+<details>
 <summary class="lc_e">
 
 - [**\[Easy\] Implement Prefix Map Sum**](http://trsong.github.io/python/java/2020/11/02/DailyQuestionsAug/#dec-6-2020-easy-implement-prefix-map-sum) -- *Implement a PrefixMapSum class with the following methods: insert(key: str, value: int), sum(prefix: str)* [*\(Try ME\)*](https://repl.it/@trsong/Implement-Prefix-Map-Sum-1)
