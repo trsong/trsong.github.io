@@ -19,6 +19,26 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
 
+
+### Feb 17, 2021 \[Medium\] Substrings with Exactly K Distinct Characters
+---
+> **Question:** Given a string `s` and an int `k`, return an int representing the number of substrings (not unique) of `s` with exactly `k` distinct characters. 
+>
+> If the given string doesn't have `k` distinct characters, return `0`.
+
+**Example 1:**
+```py
+Input: s = "pqpqs", k = 2
+Output: 7
+Explanation: ["pq", "pqp", "pqpq", "qp", "qpq", "pq", "qs"]
+```
+
+**Example 2:**
+```py
+Input: s = "aabab", k = 3
+Output: 0
+```
+
 ### Feb 16, 2021 \[Medium\] Shortest Unique Prefix
 ---
 > **Question:** Given an array of words, find all shortest unique prefixes to represent each word in the given array. Assume that no word is prefix of another.
