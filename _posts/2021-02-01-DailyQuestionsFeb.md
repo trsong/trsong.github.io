@@ -39,6 +39,73 @@ Input: s = "aabab", k = 3
 Output: 0
 ```
 
+**My thoughts:** Counting number of substr with exact k distinct char is hard. However, counting substr with at most k distinct char is easier: just mantain a sliding window of (start, end) and in each iteration count number of substring ended at end, that is, `end - start + 1`. 
+
+`Number of exact k-distinct substring = Number of k-most substr - Number of (k-1)most substr`.
+
+**Solution with Sliding Window:** [https://repl.it/@trsong/Substrings-with-Exactly-K-Distinct-Characters](https://repl.it/@trsong/Substrings-with-Exactly-K-Distinct-Characters)
+```py
+import unittest
+
+def count_k_distinct_substring(s, k):
+    if k <= 0 or k > len(s):
+        return 0
+
+    return count_k_most_substring(s, k) - count_k_most_substring(s, k - 1)
+
+
+def count_k_most_substring(s, k):
+    char_freq = {}
+    start = 0
+    res = 0
+
+    for end, incoming_char in enumerate(s):
+        char_freq[incoming_char] = char_freq.get(incoming_char, 0) + 1
+        while len(char_freq) > k:
+            outgoing_char = s[start]
+            char_freq[outgoing_char] -= 1
+            if char_freq[outgoing_char] == 0:
+                del char_freq[outgoing_char]
+            start += 1
+        res += end - start + 1
+         
+    return res
+
+
+class CountKDistinctSubstringSpec(unittest.TestCase):
+    def test_example(self):
+        k, s = 2, 'pqpqs'
+        # pq, pqp, pqpq, qp, qpq, pq, qs
+        expected = 7
+        self.assertEqual(expected, count_k_distinct_substring(s, k))
+
+    def test_example2(self):
+        k, s = 3, 'aabab'
+        expected = 0
+        self.assertEqual(expected, count_k_distinct_substring(s, k))
+    
+    def test_k_is_zero(self):
+        k, s = 0, 'abc'
+        expected = 0
+        self.assertEqual(expected, count_k_distinct_substring(s, k))
+
+    def test_substring_does_not_need_to_be_unique(self):
+        k, s = 2, 'aba'
+        # ab, ba, aba
+        expected = 3
+        self.assertEqual(expected, count_k_distinct_substring(s, k))
+
+    def test_substring_does_not_need_to_be_unique2(self):
+        k, s = 3, 'abcdbacba'
+        # abc, bcd, cdb, dba, bac, acb, cba, bcdb, acba, bacb, bacba
+        expected = 11
+        self.assertEqual(expected, count_k_distinct_substring(s, k))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False, verbosity=2)
+```
+
 ### Feb 16, 2021 \[Medium\] Shortest Unique Prefix
 ---
 > **Question:** Given an array of words, find all shortest unique prefixes to represent each word in the given array. Assume that no word is prefix of another.

@@ -1725,6 +1725,36 @@ Window position                Max
 </details>
 
 
+
+<details>
+<summary class="lc_m">
+
+- [**\[Medium\] Substrings with Exactly K Distinct Characters**](http://trsong.github.io/python/java/2021/02/02/DailyQuestionsFeb/#feb-17-2021-medium-substrings-with-exactly-k-distinct-characters) -- *Given a string s and an int k, return an int representing the number of substrings (not unique) of s with exactly k distinct characters.* [*\(Try ME\)*](https://repl.it/@trsong/Substrings-with-Exactly-K-Distinct-Characters-1)
+
+</summary>
+<div>
+
+**Question:** Given a string `s` and an int `k`, return an int representing the number of substrings (not unique) of `s` with exactly `k` distinct characters. 
+
+If the given string doesn't have `k` distinct characters, return `0`.
+
+**Example 1:**
+```py
+Input: s = "pqpqs", k = 2
+Output: 7
+Explanation: ["pq", "pqp", "pqpq", "qp", "qpq", "pq", "qs"]
+```
+
+**Example 2:**
+```py
+Input: s = "aabab", k = 3
+Output: 0
+```
+
+</div>
+</details>
+
+
 <details>
 <summary class="lc_m">
 
