@@ -5933,6 +5933,64 @@ For example, given `"2542540123"`, you should return `['254.25.40.123', '254.254
 ---
 
 <details>
+<summary class="lc_m">
+
+- [**\[Medium\] LC 1155. Number of Dice Rolls With Target Sum**](http://trsong.github.io/python/java/2021/02/02/DailyQuestionsFeb/#feb-18-2021-lc-1155-medium-number-of-dice-rolls-with-target-sum) -- *Write a function that determines how many ways it is possible to throw N dice with some number of faces each to get a specific total.* [*\(Try ME\)*](https://repl.it/@trsong/Number-of-Dice-Rolls-With-Target-Sum-1)
+
+</summary>
+<div>
+
+**Question:** You have `d` dice, and each die has `f` faces numbered `1, 2, ..., f`.
+
+Return the number of possible ways (out of `f^d` total ways) modulo `10^9 + 7` to roll the dice so the sum of the face up numbers equals target.
+
+
+**Example 1:**
+```py
+Input: d = 1, f = 6, target = 3
+Output: 1
+Explanation: 
+You throw one die with 6 faces.  There is only one way to get a sum of 3.
+```
+
+**Example 2:**
+```py
+Input: d = 2, f = 6, target = 7
+Output: 6
+Explanation: 
+You throw two dice, each with 6 faces.  There are 6 ways to get a sum of 7:
+1+6, 2+5, 3+4, 4+3, 5+2, 6+1.
+```
+
+**Example 3:**
+```py
+Input: d = 2, f = 5, target = 10
+Output: 1
+Explanation: 
+You throw two dice, each with 5 faces.  There is only one way to get a sum of 10: 5+5.
+```
+
+**Example 4:**
+```py
+Input: d = 1, f = 2, target = 3
+Output: 0
+Explanation: 
+You throw one die with 2 faces.  There is no way to get a sum of 3.
+```
+
+**Example 5:**
+```py
+Input: d = 30, f = 30, target = 500
+Output: 222616187
+Explanation: 
+The answer must be returned modulo 10^9 + 7.
+```
+
+</div>
+</details>
+
+
+<details>
 <summary class="lc_e">
 
 - [**\[Easy\] LC 120. Max Path Sum in Triangle**](http://trsong.github.io/python/java/2021/02/02/DailyQuestionsFeb/#feb-5-2021-lc-120-easy-max-path-sum-in-triangle) -- *Given an array of arrays of integers, where each array corresponds to a row in a triangle of number, returns the weight of the maximum path.* [*\(Try ME\)*](https://repl.it/@trsong/Max-Path-Sum-in-Triangle-1)
