@@ -19,6 +19,17 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
 
+### Feb 19, 2021 \[Medium\] Smallest Number of Perfect Squares
+---
+> **Question:** Write a program that determines the smallest number of perfect squares that sum up to N.
+>
+> Here are a few examples:
+```py
+Given N = 4, return 1 (4)
+Given N = 17, return 2 (16 + 1)
+Given N = 18, return 2 (9 + 9)
+```
+
 ### Feb 18, 2021 LC 1155 \[Medium\] Number of Dice Rolls With Target Sum
 ---
 > **Question:** You have `d` dice, and each die has `f` faces numbered `1, 2, ..., f`.
