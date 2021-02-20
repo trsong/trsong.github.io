@@ -30,6 +30,61 @@ Given N = 17, return 2 (16 + 1)
 Given N = 18, return 2 (9 + 9)
 ```
 
+**Solution with DP:** [https://repl.it/@trsong/Calculate-the-Smallest-Number-of-Perfect-Squares](https://repl.it/@trsong/Calculate-the-Smallest-Number-of-Perfect-Squares)
+```py
+import unittest
+import math
+
+def min_perfect_squares(target):
+    if target == 0:
+        return 1
+    elif target < 0:
+        return - 1
+
+    # Let dp[num] represents min num of squares sum to num
+    # dp[num] = dp[num - i * i] + 1 where i * i <= num
+    dp = [float("inf")] * (target + 1)
+    dp[0] = 0
+    for num in xrange(1, target + 1):
+        for i in xrange(1, int(math.sqrt(num) + 1)):
+            dp[num] = min(dp[num], 1 + dp[num - i * i])
+    
+    return dp[target]
+
+
+class MinPerfectSquareSpec(unittest.TestCase):
+    def test_example(self):
+        self.assertEqual(1, min_perfect_squares(4))  # 4 = 4
+
+    def test_example2(self):
+        self.assertEqual(2, min_perfect_squares(17))  # 17 = 16 + 1
+
+    def test_example3(self):
+        self.assertEqual(2, min_perfect_squares(18))  # 18 = 9 + 9
+
+    def test_greedy_not_work(self):
+        self.assertEqual(2, min_perfect_squares(32))  # 32 = 16 + 16
+    
+    def test_zero(self):
+        self.assertEqual(1, min_perfect_squares(0))  # 0 = 0
+
+    def test_negative_number(self):
+        self.assertEqual(-1, min_perfect_squares(-3))  # negatives cannot be a sum of perfect squares
+    
+    def test_perfect_numbers(self):
+        self.assertEqual(1, min_perfect_squares(169))  # 169 = 169
+
+    def test_odd_number(self):
+        self.assertEqual(3, min_perfect_squares(3))  # 3 = 1 + 1 + 1
+
+    def test_even_number(self):
+        self.assertEqual(3, min_perfect_squares(6))  # 6 = 4 + 1 + 1
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
+```
+
 ### Feb 18, 2021 LC 1155 \[Medium\] Number of Dice Rolls With Target Sum
 ---
 > **Question:** You have `d` dice, and each die has `f` faces numbered `1, 2, ..., f`.
