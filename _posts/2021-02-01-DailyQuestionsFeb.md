@@ -19,6 +19,17 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
 
+
+
+### Feb 20, 2021 \[Hard\] Minimum Palindrome Substring
+---
+> **Question:** Given a string, split it into as few strings as possible such that each string is a palindrome.
+>
+> For example, given the input string `"racecarannakayak"`, return `["racecar", "anna", "kayak"]`.
+>
+> Given the input string `"abc"`, return `["a", "b", "c"]`.
+
+
 ### Feb 19, 2021 \[Medium\] Smallest Number of Perfect Squares
 ---
 > **Question:** Write a program that determines the smallest number of perfect squares that sum up to N.
