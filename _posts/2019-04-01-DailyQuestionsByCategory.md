@@ -2646,6 +2646,24 @@ For example, `'carrace'` should return True, since it can be rearranged to form 
 <details>
 <summary class="lc_h">
 
+- [**\[Hard\] Minimum Palindrome Substring**](https://trsong.github.io/python/java/2021/02/02/DailyQuestionsFeb/#feb-20-2021-hard-minimum-palindrome-substring) -- *Given a string, split it into as few strings as possible such that each string is a palindrome.* [*\(Try ME\)*](https://repl.it/@trsong/Minimum-Palindrome-Substring-1)
+
+</summary>
+<div>
+
+**Question:** Given a string, split it into as few strings as possible such that each string is a palindrome.
+
+For example, given the input string `"racecarannakayak"`, return `["racecar", "anna", "kayak"]`.
+
+Given the input string `"abc"`, return `["a", "b", "c"]`.
+
+</div>
+</details>
+
+
+<details>
+<summary class="lc_h">
+
 - [**\[Hard\] Longest Palindromic Substring**](https://trsong.github.io/python/java/2020/08/02/DailyQuestionsAug/#oct-10-2020-hard-longest-palindromic-substring) -- *Given a string, find the longest palindromic contiguous substring. If there are more than one with the maximum length, return any one.* [*\(Try ME\)*](https://repl.it/@trsong/Find-the-Longest-Palindromic-Substring-1)
 
 </summary>
@@ -6335,6 +6353,24 @@ Given such an array, determine the denominations that must be in use. In the cas
 
 ### 2D DP
 ---
+
+<details>
+<summary class="lc_h">
+
+- [**\[Hard\] Minimum Palindrome Substring**](https://trsong.github.io/python/java/2021/02/02/DailyQuestionsFeb/#feb-20-2021-hard-minimum-palindrome-substring) -- *Given a string, split it into as few strings as possible such that each string is a palindrome.* [*\(Try ME\)*](https://repl.it/@trsong/Minimum-Palindrome-Substring-1)
+
+</summary>
+<div>
+
+**Question:** Given a string, split it into as few strings as possible such that each string is a palindrome.
+
+For example, given the input string `"racecarannakayak"`, return `["racecar", "anna", "kayak"]`.
+
+Given the input string `"abc"`, return `["a", "b", "c"]`.
+
+</div>
+</details>
+
 
 <details>
 <summary class="lc_h">

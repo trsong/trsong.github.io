@@ -48,6 +48,80 @@ Output: [["a"]]
 > Given the input string `"abc"`, return `["a", "b", "c"]`.
 
 
+**Solution with DP:** [https://repl.it/@trsong/Minimum-Palindrome-Substring](https://repl.it/@trsong/Minimum-Palindrome-Substring)
+```py
+import unittest
+
+def min_palindrome_substring(s):
+    n = len(s)
+    # Let cache[start][end] represents s[start: end + 1] is palindrome or not
+    cache = [[None for _ in xrange(n)] for _ in xrange(n)]
+
+    # Let dp[size] represents the min palindrome for string s[:size]
+    # dp[size] = dp[start] + [s[start: size]] if s[start: size] is palindrome and start = argmin(len(dp[x])) 
+    dp = [[] for _ in xrange(n + 1)]
+    for size in xrange(1, n + 1):
+        start = size - 1
+        min_sub_size = float('inf')
+        for x in xrange(size):
+            if not is_palindrome(s, x, size - 1, cache):
+                continue
+            if len(dp[x]) < min_sub_size:
+                min_sub_size = len(dp[x])
+                start = x
+        dp[size] = dp[start] + [s[start: size]]
+    return dp[-1]
+
+
+def is_palindrome(s, start, end, cache):
+    if end - start < 1:
+        return True
+    
+    if cache[start][end] is None:
+        cache[start][end] = s[start] == s[end] and is_palindrome(s, start + 1, end - 1, cache)
+    
+    return cache[start][end]
+    
+
+class MinPalindromeSubstringSpec(unittest.TestCase):
+    def test_example(self):
+        s = 'racecarannakayak'
+        expected = ['racecar', 'anna', 'kayak']
+        self.assertEqual(expected, min_palindrome_substring(s))
+
+    def test_example2(self):
+        s = 'abc'
+        expected = ['a', 'b', 'c']
+        self.assertEqual(expected, min_palindrome_substring(s))
+
+    def test_empty_string(self):
+        self.assertEqual([], min_palindrome_substring(''))
+
+    def test_one_char_string(self):
+        self.assertEqual(['a'], min_palindrome_substring('a'))
+
+    def test_already_palindrome(self):
+        s = 'abbacadabraarbadacabba'
+        expected = ['abbacadabraarbadacabba']
+        self.assertEqual(expected, min_palindrome_substring(s))
+
+    def test_long_and_short_palindrome_substrings(self):
+        s1 = 'aba'
+        s2 = 'abbacadabraarbadacabba'
+        s3 = 'c'
+        expected = [s1, s2, s3]
+        self.assertEqual(expected, min_palindrome_substring(s1 + s2 + s3))
+
+    def test_should_return_optimal_solution(self):
+        s = 'xabaay'
+        expected = ['x', 'aba', 'a', 'y']
+        self.assertEqual(expected, min_palindrome_substring(s))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False, verbosity=2)
+```
+
 ### Feb 19, 2021 \[Medium\] Smallest Number of Perfect Squares
 ---
 > **Question:** Write a program that determines the smallest number of perfect squares that sum up to N.
