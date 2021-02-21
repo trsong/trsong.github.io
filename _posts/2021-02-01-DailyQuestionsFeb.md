@@ -21,6 +21,24 @@ categories: Python/Java
 
 
 
+### Feb 21, 2021 LC 131 \[Medium\] Palindrome Partitioning
+---
+> **Question:** Given a string s, partition s such that every substring of the partition is a palindrome. Return all possible palindrome partitioning of s.
+>
+> A palindrome string is a string that reads the same backward as forward.
+
+**Example 1:**
+```py
+Input: s = "aab"
+Output: [["a","a","b"],["aa","b"]]
+```
+
+**Example 2:**
+```py
+Input: s = "a"
+Output: [["a"]]
+```
+
 ### Feb 20, 2021 \[Hard\] Minimum Palindrome Substring
 ---
 > **Question:** Given a string, split it into as few strings as possible such that each string is a palindrome.
@@ -50,7 +68,7 @@ def min_perfect_squares(target):
     if target == 0:
         return 1
     elif target < 0:
-        return - 1
+        return -1
 
     # Let dp[num] represents min num of squares sum to num
     # dp[num] = dp[num - i * i] + 1 where i * i <= num
