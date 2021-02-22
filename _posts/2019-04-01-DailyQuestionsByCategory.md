@@ -2644,6 +2644,33 @@ For example, `'carrace'` should return True, since it can be rearranged to form 
 ---
 
 <details>
+<summary class="lc_m">
+
+- [**\[Medium\] LC 131. Palindrome Partitioning**](http://trsong.github.io/python/java/2021/02/02/DailyQuestionsFeb/#feb-21-2021-lc-131-medium-palindrome-partitioning) -- *Given a string s, partition s such that every substring of the partition is a palindrome. Return all possible palindrome partitioning of s.* [*\(Try ME\)*](https://repl.it/@trsong/Palindrome-Partitioning-1)
+
+</summary>
+<div>
+
+**Question:** Given a string s, partition s such that every substring of the partition is a palindrome. Return all possible palindrome partitioning of s.
+
+A palindrome string is a string that reads the same backward as forward.
+
+**Example 1:**
+```py
+Input: s = "aab"
+Output: [["a","a","b"],["aa","b"]]
+```
+
+**Example 2:**
+```py
+Input: s = "a"
+Output: [["a"]]
+```
+
+</div>
+</details>
+
+<details>
 <summary class="lc_h">
 
 - [**\[Hard\] Minimum Palindrome Substring**](https://trsong.github.io/python/java/2021/02/02/DailyQuestionsFeb/#feb-20-2021-hard-minimum-palindrome-substring) -- *Given a string, split it into as few strings as possible such that each string is a palindrome.* [*\(Try ME\)*](https://repl.it/@trsong/Minimum-Palindrome-Substring-1)
@@ -5593,6 +5620,34 @@ For example, given `100`, you can reach `1` in five steps with the following rou
 
 ## Backtracking
 ---
+
+
+<details>
+<summary class="lc_m">
+
+- [**\[Medium\] LC 131. Palindrome Partitioning**](http://trsong.github.io/python/java/2021/02/02/DailyQuestionsFeb/#feb-21-2021-lc-131-medium-palindrome-partitioning) -- *Given a string s, partition s such that every substring of the partition is a palindrome. Return all possible palindrome partitioning of s.* [*\(Try ME\)*](https://repl.it/@trsong/Palindrome-Partitioning-1)
+
+</summary>
+<div>
+
+**Question:** Given a string s, partition s such that every substring of the partition is a palindrome. Return all possible palindrome partitioning of s.
+
+A palindrome string is a string that reads the same backward as forward.
+
+**Example 1:**
+```py
+Input: s = "aab"
+Output: [["a","a","b"],["aa","b"]]
+```
+
+**Example 2:**
+```py
+Input: s = "a"
+Output: [["a"]]
+```
+
+</div>
+</details>
 
 
 <details>

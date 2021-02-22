@@ -39,6 +39,84 @@ Input: s = "a"
 Output: [["a"]]
 ```
 
+**Solution with Backtracking:** [https://repl.it/@trsong/Palindrome-Partitioning](https://repl.it/@trsong/Palindrome-Partitioning)
+```py
+import unittest
+
+def palindrome_partition(s):
+    n = len(s)
+    cache = [[None for _ in xrange(n)] for _ in xrange(n)]
+    res = []
+    backtrack(s, res, [], 0, cache)
+    return res
+
+
+def backtrack(s, res, accu, start, cache):
+    n = len(s)
+    if start >= n:
+        res.append(accu[:])
+    
+    for end in xrange(start, n):
+        if is_palindrome(s, start, end, cache):
+            accu.append(s[start: end + 1])
+            backtrack(s, res, accu, end + 1, cache)
+            accu.pop()
+
+
+def is_palindrome(s, start, end, cache):
+    if end - start < 1:
+        return True
+    
+    if cache[start][end] is None:
+        cache[start][end] = s[start] == s[end] and is_palindrome(s, start + 1, end - 1, cache)
+    
+    return cache[start][end]
+
+
+class PalindromePartitionSpec(unittest.TestCase):
+    def assert_result(self, expected, res):
+        expected.sort()
+        res.sort()
+        self.assertEqual(expected, res)
+    
+    def test_example(self):
+        s = "aab"
+        expected = [["a","a","b"],["aa","b"]]
+        self.assert_result(expected, palindrome_partition(s))
+    
+    def test_example2(self):
+        s = "a"
+        expected = [["a"]]
+        self.assert_result(expected, palindrome_partition(s))
+    
+    def test_multiple_results(self):
+        s = "12321"
+        expected = [
+            ['1', '2', '3', '2', '1'], 
+            ['1', '232', '1'], 
+            ['12321']]
+        self.assert_result(expected, palindrome_partition(s))
+    
+    def test_multiple_results2(self):
+        s = "112321"
+        expected = [
+            ['1', '1', '2', '3', '2', '1'], 
+            ['1', '1', '232', '1'], 
+            ['1', '12321'], 
+            ['11', '2', '3', '2', '1'], 
+            ['11', '232', '1']]
+        self.assert_result(expected, palindrome_partition(s))
+    
+    def test_multiple_results3(self):
+        s = "aaa"
+        expected = [["a", "aa"], ["aa", "a"], ["aaa"], ['a', 'a', 'a']]
+        self.assert_result(expected, palindrome_partition(s))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False, verbosity=2)
+```
+
 ### Feb 20, 2021 \[Hard\] Minimum Palindrome Substring
 ---
 > **Question:** Given a string, split it into as few strings as possible such that each string is a palindrome.
