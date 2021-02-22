@@ -19,6 +19,11 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
 
+### Feb 22, 2021 \[Medium\] Lazy Binary Tree Generation
+---
+> **Question:** Generate a finite, but an arbitrarily large binary tree quickly in `O(1)`.
+>
+> That is, `generate()` should return a tree whose size is unbounded but finite.
 
 
 ### Feb 21, 2021 LC 131 \[Medium\] Palindrome Partitioning
