@@ -25,6 +25,57 @@ categories: Python/Java
 >
 > That is, `generate()` should return a tree whose size is unbounded but finite.
 
+**Solution:** [https://repl.it/@trsong/Lazy-Binary-Tree-Generation](https://repl.it/@trsong/Lazy-Binary-Tree-Generation)
+```py
+import random
+
+def generate():
+    return TreeNode(0)
+
+
+class TreeNode(object):
+    def __init__(self, val, left=None, right=None):
+        self.val = val
+        self._left = left
+        self._right = right
+        self._is_left_init = False
+        self._is_right_init = False
+
+    @property
+    def left(self):
+        if not self._is_left_init:
+            if random.randint(0, 1):
+                self._left = TreeNode(0)
+            self._is_left_init = True
+        return self._left
+
+    @property
+    def right(self):
+        if not self._is_right_init:
+            if random.randint(0, 1):
+                self._right = TreeNode(0)
+            self._is_right_init = True
+        return self._right
+
+    def __repr__(self):
+        stack = [(self, 0)]
+        res = ['\n']
+        while stack:
+            cur, depth = stack.pop()
+            res.append('\t' * depth)
+            if cur:
+                res.append('* ' + str(cur.val))
+                stack.append((cur.right, depth + 1))
+                stack.append((cur.left, depth + 1))
+            else:
+                res.append('* None')
+            res.append('\n')            
+        return ''.join(res)
+
+
+if __name__ == '__main__':
+    print generate()
+```
 
 ### Feb 21, 2021 LC 131 \[Medium\] Palindrome Partitioning
 ---

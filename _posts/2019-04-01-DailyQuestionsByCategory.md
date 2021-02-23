@@ -2743,6 +2743,22 @@ Output: False
 <details>
 <summary class="lc_m">
 
+- [**\[Medium\] Lazy Binary Tree Generation**](http://trsong.github.io/python/java/2021/02/02/DailyQuestionsFeb/#feb-22-2021-medium-lazy-binary-tree-generation) -- *Generate a finite, but an arbitrarily large binary tree quickly in `O(1)`.* [*\(Try ME\)*](https://repl.it/@trsong/Lazy-Binary-Tree-Generation-1)
+
+</summary>
+<div>
+
+**Question:** Generate a finite, but an arbitrarily large binary tree quickly in `O(1)`.
+
+That is, `generate()` should return a tree whose size is unbounded but finite.
+
+</div>
+</details>
+
+
+<details>
+<summary class="lc_m">
+
 - [**\[Medium\] LC 388. Longest Absolute File Path**](http://trsong.github.io/python/java/2021/02/02/DailyQuestionsFeb/#feb-6-2021-lc-388-medium-longest-absolute-file-path) -- *Given a string representing the file system in certain format, return the length of the longest absolute path to a file in that fs.* [*\(Try ME\)*](https://repl.it/@trsong/Longest-Absolute-File-Path-1)
 
 </summary>
