@@ -18,6 +18,12 @@ categories: Python/Java
 
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
+### Feb 23, 2021 \[Hard\] K-Palindrome
+---
+> **Question:** Given a string which we can delete at most k, return whether you can make a palindrome.
+>
+> For example, given `'waterrfetawx'` and a k of 2, you could delete f and x to get `'waterretaw'`.
+
 
 ### Feb 22, 2021 \[Medium\] Lazy Binary Tree Generation
 ---
