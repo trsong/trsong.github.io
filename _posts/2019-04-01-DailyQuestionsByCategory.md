@@ -2644,6 +2644,22 @@ For example, `'carrace'` should return True, since it can be rearranged to form 
 ---
 
 <details>
+<summary class="lc_h">
+
+- [**\[Hard\] K-Palindrome**](http://trsong.github.io/python/java/2021/02/02/DailyQuestionsFeb/#feb-23-2021-hard-k-palindrome) -- *Given a string which we can delete at most k, return whether you can make a palindrome.* [*\(Try ME\)*](https://repl.it/@trsong/Find-K-Palindrome-1)
+
+</summary>
+<div>
+
+**Question:** Given a string which we can delete at most k, return whether you can make a palindrome.
+
+For example, given `'waterrfetawx'` and a k of 2, you could delete f and x to get `'waterretaw'`.
+
+</div>
+</details>
+
+
+<details>
 <summary class="lc_m">
 
 - [**\[Medium\] LC 131. Palindrome Partitioning**](http://trsong.github.io/python/java/2021/02/02/DailyQuestionsFeb/#feb-21-2021-lc-131-medium-palindrome-partitioning) -- *Given a string s, partition s such that every substring of the partition is a palindrome. Return all possible palindrome partitioning of s.* [*\(Try ME\)*](https://repl.it/@trsong/Palindrome-Partitioning-1)
@@ -6425,6 +6441,7 @@ Given such an array, determine the denominations that must be in use. In the cas
 ### 2D DP
 ---
 
+
 <details>
 <summary class="lc_h">
 
@@ -6627,6 +6644,21 @@ Output:  2
 Explanation: 
 LCS is "AC"
 ```
+
+</div>
+</details>
+
+<details>
+<summary class="lc_h">
+
+- [**\[Hard\] K-Palindrome**](http://trsong.github.io/python/java/2021/02/02/DailyQuestionsFeb/#feb-23-2021-hard-k-palindrome) -- *Given a string which we can delete at most k, return whether you can make a palindrome.* [*\(Try ME\)*](https://repl.it/@trsong/Find-K-Palindrome-1)
+
+</summary>
+<div>
+
+**Question:** Given a string which we can delete at most k, return whether you can make a palindrome.
+
+For example, given `'waterrfetawx'` and a k of 2, you could delete f and x to get `'waterretaw'`.
 
 </div>
 </details>
