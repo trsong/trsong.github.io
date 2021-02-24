@@ -19,7 +19,7 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
 
-### Feb 24, 2021 \[Hard\] Minimum Distance between Two Words
+### Feb 24, 2021 \[Easy\] Minimum Distance between Two Words
 ---
 > **Question:** Find an efficient algorithm to find the smallest distance (measured in number of words) between any two given words in a string.
 >
@@ -37,8 +37,8 @@ categories: Python/Java
 We can first calculate the minimum deletion needed to make a palindrome and the way we do it is to compare the original string vs the reversed string in order to calculate the LCS - longest common subsequence. Thus the minimum deletion equals length of original string minus LCS.
 
 To calculate LCS, we use DP and will encounter the following situations:
-1. If the last digit of each string matches each other, i.e. lcs(seq1 + s, seq2 + s) then result = 1 + lcs(seq1, seq2).
-2. If the last digit not matches, i.e. lcs(seq1 + s, seq2 + p), then res is either ignore s or ignore q. Just like insert a whitespace or remove a letter from edit distance, which gives max(lcs(seq1, seq2 + p), lcs(seq1 + s, seq2))
+1. If the last digit of each string matches each other, i.e. `lcs(seq1 + s, seq2 + s)` then `result = 1 + lcs(seq1, seq2)`.
+2. If the last digit not matches, i.e. `lcs(seq1 + s, seq2 + p)`, then res is either ignore s or ignore q. Just like insert a whitespace or remove a letter from edit distance, which gives `max(lcs(seq1, seq2 + p), lcs(seq1 + s, seq2))`
 
 
 **Solution with DP:** [https://repl.it/@trsong/Find-K-Palindrome](https://repl.it/@trsong/Find-K-Palindrome)
