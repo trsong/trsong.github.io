@@ -18,6 +18,14 @@ categories: Python/Java
 
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
+
+### Feb 24, 2021 \[Hard\] Minimum Distance between Two Words
+---
+> **Question:** Find an efficient algorithm to find the smallest distance (measured in number of words) between any two given words in a string.
+>
+> For example, given words `"hello"`, and `"world"` and a text content of `"dog cat hello cat dog dog hello cat world"`, return `1` because there's only one word `"cat"` in between the two words.
+
+
 ### Feb 23, 2021 \[Hard\] K-Palindrome
 ---
 > **Question:** Given a string which we can delete at most k, return whether you can make a palindrome.
