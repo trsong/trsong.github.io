@@ -2089,7 +2089,7 @@ Given the linked list `1 -> 2 -> 3 -> 4 -> 5` and `k = 3`, it should become `3 -
 
 
 <details>
-<summary class="lc_m>
+<summary class="lc_m">
 
 - [**\[Medium\] Detect Linked List Cycle**](http://trsong.github.io/python/java/2020/11/02/DailyQuestionsAug/#jan-3-2021-medium-detect-linked-list-cycle) -- *Given a linked list, determine if the linked list has a cycle in it.* [*\(Try ME\)*](https://repl.it/@trsong/Detect-Linked-List-Cycle-1)
 
