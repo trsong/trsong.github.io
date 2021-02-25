@@ -19,6 +19,24 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
 
+### Feb 25, 2021 \[Medium\] Evaluate Expression in Reverse Polish Notation
+---
+> **Question:** Given an arithmetic expression in **Reverse Polish Notation**, write a program to evaluate it.
+>
+> The expression is given as a list of numbers and operands. 
+
+**Example 1:** 
+```py
+[5, 3, '+'] should return 5 + 3 = 8.
+```
+
+**Example 2:**
+```py
+ [15, 7, 1, 1, '+', '-', '/', 3, '*', 2, 1, 1, '+', '+', '-'] should return 5, 
+ since it is equivalent to ((15 / (7 - (1 + 1))) * 3) - (2 + (1 + 1)) = 5.
+ ```
+
+
 ### Feb 24, 2021 \[Easy\] Minimum Distance between Two Words
 ---
 > **Question:** Find an efficient algorithm to find the smallest distance (measured in number of words) between any two given words in a string.
