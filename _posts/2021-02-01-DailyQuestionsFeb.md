@@ -25,6 +25,66 @@ categories: Python/Java
 >
 > For example, given words `"hello"`, and `"world"` and a text content of `"dog cat hello cat dog dog hello cat world"`, return `1` because there's only one word `"cat"` in between the two words.
 
+**Solution with Two Pointers:** [https://repl.it/@trsong/Minimum-Distance-between-Two-Words](https://repl.it/@trsong/Minimum-Distance-between-Two-Words)
+```py
+import unittest
+import sys
+
+def word_distance(s, word1, word2):
+    i = sys.maxint
+    j = -sys.maxint
+    res = sys.maxint
+
+    for index, word in enumerate(s.split()):
+        if word == word1:
+            i = index
+        
+        if word == word2:
+            j = index
+
+        res = min(res, abs(j - i))
+
+    return res if res < sys.maxint else -1
+
+
+class WordDistanceSpec(unittest.TestCase):
+    def test_example(self):
+        s = 'dog cat hello cat dog dog hello cat world'
+        word1 = 'hello'
+        word2 = 'world'
+        self.assertEqual(2, word_distance(s, word1, word2))
+
+    def test_word_not_exists_in_sentence(self):
+        self.assertEqual(-1, word_distance("", "a", "b"))
+
+    def test_word_not_exists_in_sentence2(self):
+        self.assertEqual(-1, word_distance("b", "a", "a"))
+
+    def test_word_not_exists_in_sentence3(self):
+        self.assertEqual(-1, word_distance("ab", "a", "b"))
+    
+    def test_only_one_word_exists(self):
+        s = 'a b c d'
+        word1 = 'a'
+        word2 = 'e'
+        self.assertEqual(-1, word_distance(s, word1, word2))
+        self.assertEqual(-1, word_distance(s, word2, word1))
+        
+    def test_search_for_same_word_in_sentence(self):
+        s = 'cat dog cat cat dog dog dog cat'
+        word = 'cat'
+        self.assertEqual(0, word_distance(s, word, word))
+
+    def test_second_word_comes_first(self):
+        s = 'air water water earth water water water'
+        word1 = "earth"
+        word2 = "air"
+        self.assertEqual(3, word_distance(s, word1, word2))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False, verbosity=2)
+```
 
 ### Feb 23, 2021 \[Hard\] K-Palindrome
 ---

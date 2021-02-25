@@ -1522,6 +1522,22 @@ missing_ranges(nums=[1, 3, 5, 10], lower=1, upper=10)
 ---
 
 <details>
+<summary class="lc_e">
+
+- [**\[Easy\] Minimum Distance between Two Words**](http://trsong.github.io/python/java/2021/02/02/DailyQuestionsFeb/#feb-24-2021-easy-minimum-distance-between-two-words) -- *Find an efficient algorithm to find the smallest distance (measured in number of words) between any two given words in a string.* [*\(Try ME\)*](https://repl.it/@trsong/Minimum-Distance-between-Two-Words-1)
+
+</summary>
+<div>
+
+**Question:** Find an efficient algorithm to find the smallest distance (measured in number of words) between any two given words in a string.
+
+For example, given words `"hello"`, and `"world"` and a text content of `"dog cat hello cat dog dog hello cat world"`, return `1` because there's only one word `"cat"` in between the two words.
+
+</div>
+</details>
+
+
+<details>
 <summary class="lc_h">
 
 - [**\[Hard\] Count Elements in Sorted Matrix**](https://trsong.github.io/python/java/2020/11/02/DailyQuestionsAug/#jan-17-2021-hard-count-elements-in-sorted-matrix) -- *Let A be a sorted matrix. Given i1, j1, i2, and j2, compute the number of elements smaller than A[i1, j1] and larger than A[i2, j2].* [*\(Try ME\)*](https://repl.it/@trsong/Count-Elements-in-Sorted-Matrix-1)
