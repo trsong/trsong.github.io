@@ -19,6 +19,31 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
 
+### Feb 26, 2021 LC 227 \[Medium\] Basic Calculator II
+---
+> **Question:** Implement a basic calculator to evaluate a simple expression string.
+>
+> The expression string contains only non-negative integers, +, -, *, / operators and empty spaces. The integer division should truncate toward zero.
+
+**Example 1:**
+```py
+Input: "3+2*2"
+Output: 7
+```
+
+**Example 2:**
+```py
+Input: " 3/2 "
+Output: 1
+```
+
+**Example 3:**
+```py
+Input: " 3+5 / 2 "
+Output: 5
+```
+
+
 ### Feb 25, 2021 \[Medium\] Evaluate Expression in Reverse Polish Notation
 ---
 > **Question:** Given an arithmetic expression in **Reverse Polish Notation**, write a program to evaluate it.
@@ -35,6 +60,70 @@ categories: Python/Java
  [15, 7, 1, 1, '+', '-', '/', 3, '*', 2, 1, 1, '+', '+', '-'] should return 5, 
  since it is equivalent to ((15 / (7 - (1 + 1))) * 3) - (2 + (1 + 1)) = 5.
  ```
+
+
+**Solution with Stack:** [https://repl.it/@trsong/Evaluate-Expression-Represented-in-Reverse-Polish-Notation](https://repl.it/@trsong/Evaluate-Expression-Represented-in-Reverse-Polish-Notation)
+```py
+import unittest
+
+class RPNExprEvaluator(object):
+    @staticmethod
+    def run(tokens):
+        stack = []
+        for token in tokens:
+            if type(token) is int:
+                stack.append(token)
+            else:
+                num2 = stack.pop()
+                num1 = stack.pop()
+                res = RPNExprEvaluator.apply(token, num1, num2)
+                stack.append(res)
+        return stack[-1] if stack else 0
+
+    @staticmethod
+    def apply(operation, num1, num2):
+        if operation == '+':
+            return num1 + num2
+        elif operation == '-':
+            return num1 - num2
+        elif operation == '*':
+            return num1 * num2
+        elif operation == '/':
+            return num1 / num2
+        else:
+            raise NotImplementedError
+        
+
+class RPNExprEvaluatorSpec(unittest.TestCase):
+    def test_example1(self):
+        self.assertEqual(8, RPNExprEvaluator.run([5, 3, '+'])) # 5 + 3 = 8
+
+    def test_example2(self):
+        tokens = [15, 7, 1, 1, '+', '-', '/', 3, '*', 2, 1, 1, '+', '+', '-']
+        self.assertEqual(5, RPNExprEvaluator.run(tokens))
+
+    def test_empty_tokens(self):
+        self.assertEqual(0, RPNExprEvaluator.run([]))
+
+    def test_expression_contains_just_number(self):
+        self.assertEqual(42, RPNExprEvaluator.run([42]))
+    
+    def test_balanced_expression_tree(self):
+        tokens = [7, 2, '-', 4, 1, '+', '*'] 
+        self.assertEqual(25, RPNExprEvaluator.run(tokens))  # (7 - 2) * (4 + 1) = 25
+    
+    def test_left_heavy_expression_tree(self):
+        tokens = [6, 4, '-', 2, '/']  
+        self.assertEqual(1, RPNExprEvaluator.run(tokens)) # (6 - 4) / 2 = 1
+
+    def test_right_heavy_expression_tree(self):
+        tokens = [2, 8, 2, '/', '*']
+        self.assertEqual(8, RPNExprEvaluator.run(tokens)) # 2 * (8 / 2) = 8
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False, verbosity=2)
+```
 
 
 ### Feb 24, 2021 \[Easy\] Minimum Distance between Two Words

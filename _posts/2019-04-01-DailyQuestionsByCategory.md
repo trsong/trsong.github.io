@@ -3835,6 +3835,32 @@ s.autocomplete('do')  # Return ['dog', 'door', 'dodge']
 ## Stack
 ---
 
+<details>
+<summary class="lc_m">
+
+- [**\[Medium\] Evaluate Expression in Reverse Polish Notation**](http://trsong.github.io/python/java/2021/02/02/DailyQuestionsFeb/#feb-25-2021-medium-evaluate-expression-in-reverse-polish-notation) -- *Given an arithmetic expression in Reverse Polish Notation, write a program to evaluate it.* [*\(Try ME\)*](https://repl.it/@trsong/Evaluate-Expression-Represented-in-Reverse-Polish-Notation-1)
+
+</summary>
+<div>
+
+**Question:** Given an arithmetic expression in **Reverse Polish Notation**, write a program to evaluate it.
+
+The expression is given as a list of numbers and operands. 
+
+**Example 1:** 
+```py
+[5, 3, '+'] should return 5 + 3 = 8.
+```
+
+**Example 2:**
+```py
+ [15, 7, 1, 1, '+', '-', '/', 3, '*', 2, 1, 1, '+', '+', '-'] should return 5, 
+ since it is equivalent to ((15 / (7 - (1 + 1))) * 3) - (2 + (1 + 1)) = 5.
+```
+
+</div>
+</details>
+
 
 <details>
 <summary class="lc_m">
