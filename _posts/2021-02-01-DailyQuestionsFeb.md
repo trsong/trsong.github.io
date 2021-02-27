@@ -44,6 +44,121 @@ Output: 5
 ```
 
 
+**My thoughts:** A complicated _expression_ can be broken into multiple normal _terms_. `Expr = term1 + term2 - term3 ...`. Between each consecutive term we only allow `+` and `-`. Whereas within each term we only allow `*` and `/`. So we will have the following definition of an expression. e.g. `1 + 2 - 1*2*1 - 3/4*4 + 5*6 - 7*8 + 9/10 = (1) + (2) - (1*2*1) - (3/4*4) + (5*6) - (7*8) + (9/10)` 
+
+_Expression_ is one of the following:
+- Empty or 0
+- Term - Expression
+- Term + Expression
+
+_Term_ is one of the following:
+- 1
+- A number * Term
+- A number / Term
+
+
+Thus, we can comupte each term value and sum them together.
+
+
+**Solution:** [https://repl.it/@trsong/Implement-Basic-Calculator-II](https://repl.it/@trsong/Implement-Basic-Calculator-II)
+```py
+import unittest
+
+OP_SET = {'+', '-', '*', '/', 'EOF'}
+
+def calculate(s):
+    tokens = tokenize(s)
+    expr_value = 0
+    term_value = 0
+    num = 0
+    prev_op = '+'
+
+    for token in tokens:
+        if not token or token.isspace():
+            continue
+            
+        if token not in OP_SET:
+            num = int(token)
+            continue
+        
+        if prev_op == '+':
+            expr_value += term_value
+            term_value = num
+        elif prev_op == '-':
+            expr_value += term_value
+            term_value = -num
+        elif prev_op == '*':
+            term_value *= num
+        elif prev_op == '/':
+            sign = 1 if term_value > 0 else -1
+            term_value = abs(term_value) / num * sign
+            
+        num = 0
+        prev_op = token
+
+    expr_value += term_value
+    return expr_value
+    
+
+def tokenize(s):
+    res = []
+    prev_pos = -1
+    for pos, ch in enumerate(s):
+        if ch in OP_SET:
+            res.append(s[prev_pos + 1: pos])
+            res.append(ch)
+            prev_pos = pos
+    res.append(s[prev_pos + 1: ])
+    res.append('EOF')
+    return res
+
+
+class CalculateSpec(unittest.TestCase):
+    def test_empty_string(self):
+        self.assertEqual(0, calculate(""))
+
+    def test_example1(self):
+        self.assertEqual(7, calculate("3+2*2"))
+
+    def test_example2(self):
+        self.assertEqual(1, calculate(" 3/2 "))
+
+    def test_example3(self):
+        self.assertEqual(5, calculate(" 3+5 / 2 "))
+
+    def test_negative1(self):
+        self.assertEqual(-1, calculate("-1"))
+
+    def test_negative2(self):
+        self.assertEqual(0, calculate(" -1/2 "))
+
+    def test_negative3(self):
+        self.assertEqual(-1, calculate(" -7 / 4 "))
+
+    def test_minus(self):
+        self.assertEqual(-5, calculate("-2-3"))
+    
+    def test_positive1(self):
+        self.assertEqual(10, calculate("100/ 10"))
+    
+    def test_positive2(self):
+        self.assertEqual(4, calculate("9 /2"))
+
+    def test_complicated_operations(self):
+        self.assertEqual(-24, calculate("1*2-3/4+5*6-7*8+9/10"))
+
+    def test_complicated_operations2(self):
+        self.assertEqual(10000, calculate("10000-1000/10+100*1"))
+
+    def test_complicated_operations3(self):
+        self.assertEqual(13, calculate("14-3/2"))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False, verbosity=2)
+```
+
+
 ### Feb 25, 2021 \[Medium\] Evaluate Expression in Reverse Polish Notation
 ---
 > **Question:** Given an arithmetic expression in **Reverse Polish Notation**, write a program to evaluate it.

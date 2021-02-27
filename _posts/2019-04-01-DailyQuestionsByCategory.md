@@ -713,6 +713,40 @@ For example, if A is `'abcde'` and B is `'cdeab'`, return `True`. If A is `'abc'
 ---
 
 <details>
+<summary class="lc_m">
+
+- [**\[Medium\] LC 227. Basic Calculator II**](http://trsong.github.io/python/java/2021/02/02/DailyQuestionsFeb/#feb-26-2021-lc-227-medium-basic-calculator-ii) -- *Implement a basic calculator to evaluate a simple expression string.* [*\(Try ME\)*](https://repl.it/@trsong/Implement-Basic-Calculator-II-1)
+
+</summary>
+<div>
+
+**Question:** Implement a basic calculator to evaluate a simple expression string.
+
+The expression string contains only non-negative integers, +, -, *, / operators and empty spaces. The integer division should truncate toward zero.
+
+**Example 1:**
+```py
+Input: "3+2*2"
+Output: 7
+```
+
+**Example 2:**
+```py
+Input: " 3/2 "
+Output: 1
+```
+
+**Example 3:**
+```py
+Input: " 3+5 / 2 "
+Output: 5
+```
+
+</div>
+</details>
+
+
+<details>
 <summary class="lc_e">
 
 - [**\[Easy\] Compare Version Numbers**](https://trsong.github.io/python/java/2020/11/02/DailyQuestionsAug/#jan-9-2021-easy-compare-version-numbers) -- *Given two version numbers version1 and version2, conclude which is the latest version number.* [*\(Try ME\)*](https://repl.it/@trsong/Compare-Two-Version-Numbers-1)
