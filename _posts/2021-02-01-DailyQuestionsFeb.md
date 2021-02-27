@@ -19,6 +19,18 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
 
+### Feb 27, 2021 LC 341 \[Medium\] Flatten Nested List Iterator
+---
+> **Question:** Implement a 2D iterator class. It will be initialized with an array of arrays, and should implement the following methods:
+>
+> - `next()`: returns the next element in the array of arrays. If there are no more elements, raise an exception.
+> - `has_next()`: returns whether or not the iterator still has elements left.
+>
+> For example, given the input `[[1, 2], [3], [], [4, 5, 6]]`, calling `next()` repeatedly should output `1, 2, 3, 4, 5, 6`.
+>
+> Do not use flatten or otherwise clone the arrays. Some of the arrays can be empty.
+
+
 ### Feb 26, 2021 LC 227 \[Medium\] Basic Calculator II
 ---
 > **Question:** Implement a basic calculator to evaluate a simple expression string.
