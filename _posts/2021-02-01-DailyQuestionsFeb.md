@@ -27,7 +27,7 @@ categories: Python/Java
 > - `query(start: int, end: int)`: Retrieve the number of subscribers that have signed up between start and end (inclusive). You can assume that all values get cleared at the end of the day, and that you will not be asked for start and end values that wrap around midnight.
 
 
-### Feb 27, 2021 LC 341 \[Medium\] Flatten Nested List Iterator
+### Feb 27, 2021 \[Medium\] Flatten Nested List Iterator
 ---
 > **Question:** Implement a 2D iterator class. It will be initialized with an array of arrays, and should implement the following methods:
 >
@@ -37,6 +37,71 @@ categories: Python/Java
 > For example, given the input `[[1, 2], [3], [], [4, 5, 6]]`, calling `next()` repeatedly should output `1, 2, 3, 4, 5, 6`.
 >
 > Do not use flatten or otherwise clone the arrays. Some of the arrays can be empty.
+
+**Solution:** [https://repl.it/@trsong/Flatten-Nested-List-Iterator](https://repl.it/@trsong/Flatten-Nested-List-Iterator)
+```py
+import unittest
+
+class NestedIterator(object):
+    def __init__(self, nested_list):
+        self.row = 0
+        self.col = 0
+        self.nested_list = [[None]] + nested_list
+        self.next()
+        
+    def next(self):
+        res = self.nested_list[self.row][self.col]
+
+        self.col += 1
+        while self.row < len(self.nested_list) and self.col >= len(self.nested_list[self.row]):
+            self.col = 0
+            self.row += 1
+
+        return res       
+
+    def has_next(self):
+        return self.row < len(self.nested_list)
+        
+
+class NestedIteratorSpec(unittest.TestCase):
+    def assert_result(self, nested_list):
+        expected = []
+        for lst in nested_list:
+            if not lst:
+                continue
+            expected.extend(lst)
+
+        res = []
+        it = NestedIterator(nested_list)
+        while it.has_next():
+            res.append(it.next())
+        
+        self.assertEqual(expected, res)       
+        
+    def test_example(self):
+        self.assert_result([[1, 2], [3], [], [4, 5, 6]])
+
+    def test_empty_list(self):
+        it = NestedIterator([])
+        self.assertFalse(it.has_next())
+
+    def test_empty_list2(self):
+        it = NestedIterator([[], [], []])
+        self.assertFalse(it.has_next())
+
+    def test_non_empty_list(self):
+        self.assert_result([[1], [2], [3], [4]])
+
+    def test_non_empty_list2(self):
+        self.assert_result([[1, 1, 1], [4], [1, 2, 3], [5]])
+
+    def test_has_empty_list(self):
+        self.assert_result([[], [1, 2, 3], []])
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False, verbosity=2)
+```
 
 
 ### Feb 26, 2021 LC 227 \[Medium\] Basic Calculator II
