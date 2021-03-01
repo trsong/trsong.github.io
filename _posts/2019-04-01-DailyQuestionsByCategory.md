@@ -5276,6 +5276,31 @@ The following tree should return level 1:
 </div>
 </details>
 
+
+
+
+<details>
+<summary class="lc_e">
+
+- [**\[Easy\] Flatten Nested List Iterator**](http://trsong.github.io/python/java/2021/02/02/DailyQuestionsFeb/#feb-27-2021-easy-flatten-nested-list-iterator) -- *Implement a 2D iterator class. It will be initialized with an array of arrays, and should implement the following methods: next(), hasNext()* [*\(Try ME\)*](https://repl.it/@trsong/Flatten-Nested-List-Iterator-1)
+
+</summary>
+<div>
+
+**Question:** Implement a 2D iterator class. It will be initialized with an array of arrays, and should implement the following methods:
+
+- `next()`: returns the next element in the array of arrays. If there are no more elements, raise an exception.
+- `has_next()`: returns whether or not the iterator still has elements left.
+
+For example, given the input `[[1, 2], [3], [], [4, 5, 6]]`, calling `next()` repeatedly should output `1, 2, 3, 4, 5, 6`.
+
+Do not use flatten or otherwise clone the arrays. Some of the arrays can be empty.
+
+</div>
+</details>
+
+
+
 <details>
 <summary class="lc_e">
 
