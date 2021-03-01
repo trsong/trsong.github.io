@@ -3686,6 +3686,24 @@ d  e f  g
 
 ### Range Query
 
+
+<details>
+<summary class="lc_m">
+
+- [**\[Medium\] 24-Hour Hit Counter**](http://trsong.github.io/python/java/2021/02/02/DailyQuestionsFeb/#feb-28-2021-medium-24-hour-hit-counter) -- *You are given an array of length 24, where each element represents the number of new subscribers during the corresponding hour.* [*\(Try ME\)*](https://repl.it/@trsong/24-Hour-Hit-Counter-1)
+
+</summary>
+<div>
+
+**Question:** You are given an array of length 24, where each element represents the number of new subscribers during the corresponding hour. Implement a data structure that efficiently supports the following:
+
+- `update(hour: int, value: int)`: Increment the element at index hour by value.
+- `query(start: int, end: int)`: Retrieve the number of subscribers that have signed up between start and end (inclusive). You can assume that all values get cleared at the end of the day, and that you will not be asked for start and end values that wrap around midnight.
+
+</div>
+</details>
+
+
 <details>
 <summary class="lc_m">
 

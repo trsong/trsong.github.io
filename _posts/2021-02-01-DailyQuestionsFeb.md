@@ -34,6 +34,89 @@ categories: Python/Java
 > - `update(hour: int, value: int)`: Increment the element at index hour by value.
 > - `query(start: int, end: int)`: Retrieve the number of subscribers that have signed up between start and end (inclusive). You can assume that all values get cleared at the end of the day, and that you will not be asked for start and end values that wrap around midnight.
 
+**My thoughts:** Binary-indexed Tree a.k.a BIT or Fenwick Tree is used for dynamic range query. Basically, it allows efficiently query for sum of a continous interval of values.
+
+BIT Usage:
+```py
+bit = BIT(4)
+bit.query(3) # => 0
+bit.update(index=0, delta=1) # => [1, 0, 0, 0]
+bit.update(index=0, delta=1) # => [2, 0, 0, 0]
+bit.update(index=2, delta=3) # => [2, 0, 3, 0]
+bit.query(2) # => 2 + 0 + 3 = 5
+bit.update(index=1, delta=-1) # => [2, -1, 3, 0]
+bit.query(1) # => 2 + -1 = 1
+```
+
+
+**Solution with BIT:** [https://repl.it/@trsong/24-Hour-Hit-Counter](https://repl.it/@trsong/24-Hour-Hit-Counter)
+```py
+import unittest
+
+class HitCounter(object):
+    HOUR_OF_DAY = 24
+
+    def __init__(self, hours=HOUR_OF_DAY):
+        self.tree = [0] * (hours + 1)
+
+    def update(self, hour, value):
+        old_val = self.query(hour, hour)
+        delta = value - old_val
+
+        index = hour + 1
+        while index < len(self.tree):
+            self.tree[index] += delta
+            index += index & -index
+
+    def query(self, start_time, end_time):
+        return self.query_from_begin(end_time) - self.query_from_begin(start_time - 1)
+    
+    def query_from_begin(self, end_time):
+        index = end_time + 1
+        res = 0
+        while index > 0:
+            res += self.tree[index]
+            index -= index & -index
+        return res
+
+
+class HitCounterSpec(unittest.TestCase):
+    def test_query_without_update(self):
+        hc = HitCounter()
+        self.assertEqual(0, hc.query(0, 23))
+        self.assertEqual(0, hc.query(3, 5))
+    
+    def test_update_should_affect_query_value(self):
+        hc = HitCounter()
+        hc.update(5, 10)
+        hc.update(10, 15)
+        hc.update(12, 20)
+        self.assertEqual(0, hc.query(0, 4))
+        self.assertEqual(10, hc.query(0, 5))
+        self.assertEqual(10, hc.query(0, 9))
+        self.assertEqual(25, hc.query(0, 10))
+        self.assertEqual(45, hc.query(0, 13))
+        hc.update(3, 2)
+        self.assertEqual(2, hc.query(0, 4))
+        self.assertEqual(12, hc.query(0, 5))
+        self.assertEqual(12, hc.query(0, 9))
+        self.assertEqual(27, hc.query(0, 10))
+        self.assertEqual(47, hc.query(0, 13))
+
+    def test_number_of_subscribers_can_decrease(self):
+        hc = HitCounter()
+        hc.update(10, 5)
+        hc.update(20, 10)
+        self.assertEqual(10, hc.query(15, 23))
+        hc.update(12, -3)
+        self.assertEqual(10, hc.query(15, 23))
+        hc.update(17, -7)
+        self.assertEqual(3, hc.query(15, 23))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False, verbosity=2)
+```
 
 ### Feb 27, 2021 \[Easy\] Flatten Nested List Iterator
 ---
