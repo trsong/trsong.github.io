@@ -19,6 +19,14 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
 
+### Feb 28, 2021 \[Medium\] 24-Hour Hit Counter
+---
+> **Question:** You are given an array of length 24, where each element represents the number of new subscribers during the corresponding hour. Implement a data structure that efficiently supports the following:
+>
+> - `update(hour: int, value: int)`: Increment the element at index hour by value.
+> - `query(start: int, end: int)`: Retrieve the number of subscribers that have signed up between start and end (inclusive). You can assume that all values get cleared at the end of the day, and that you will not be asked for start and end values that wrap around midnight.
+
+
 ### Feb 27, 2021 LC 341 \[Medium\] Flatten Nested List Iterator
 ---
 > **Question:** Implement a 2D iterator class. It will be initialized with an array of arrays, and should implement the following methods:
