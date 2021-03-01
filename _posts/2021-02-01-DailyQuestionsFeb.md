@@ -19,6 +19,14 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
 
+
+### Mar 1, 2021 LC 336 \[Hard\] Palindrome Pairs
+---
+> **Question:** Given a list of words, find all pairs of unique indices such that the concatenation of the two words is a palindrome.
+>
+> For example, given the list `["code", "edoc", "da", "d"]`, return `[(0, 1), (1, 0), (2, 3)]`.
+
+
 ### Feb 28, 2021 \[Medium\] 24-Hour Hit Counter
 ---
 > **Question:** You are given an array of length 24, where each element represents the number of new subscribers during the corresponding hour. Implement a data structure that efficiently supports the following:
