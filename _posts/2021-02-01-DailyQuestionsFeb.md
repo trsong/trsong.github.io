@@ -31,6 +31,121 @@ categories: Python/Java
 > For example, given the list `["code", "edoc", "da", "d"]`, return `[(0, 1), (1, 0), (2, 3)]`.
 
 
+**My thoughts:** any word in the list can be partition into `prefix` and `suffix`. If there exists another word such that its reverse equals either prefix or suffix, then we can combine them and craft a new palindrome: 
+1. `reverse_suffix + prefix + suffix` where prefix is a palindrome or 
+2. `prefix + suffix + reverse_prefix` where suffix is a palindrome
+
+**Solution:** [https://repl.it/@trsong/Find-All-Palindrome-Pairs](https://repl.it/@trsong/Find-All-Palindrome-Pairs)
+```py
+
+import unittest
+from collections import defaultdict
+
+def find_all_palindrome_pairs(words):
+    reverse_words = defaultdict(list)
+    for i, word in enumerate(words):
+        reverse_words[word[::-1]].append(i)
+    
+    res = []
+
+    if "" in reverse_words:
+        palindrome_indices = filter(lambda j: is_palindrome(words[j]), xrange(len(words)))
+        res.extend((i, j) for i in reverse_words[""] for j in palindrome_indices if i != j)
+
+    for i, word in enumerate(words):
+        for pos in xrange(len(word)):
+            prefix = word[:pos]
+            suffix = word[pos:]
+            if prefix in reverse_words and is_palindrome(suffix):
+                res.extend((i, j) for j in reverse_words[prefix] if i != j)
+
+            if suffix in reverse_words and is_palindrome(prefix):
+                res.extend((j, i) for j in reverse_words[suffix] if i != j)
+
+    return res
+
+
+def is_palindrome(s):
+    i = 0
+    j = len(s) - 1
+    while i < j:
+        if s[i] != s[j]:
+            return False
+        i += 1
+        j -= 1
+    return True
+
+
+class FindAllPalindromePairSpec(unittest.TestCase):
+    def assert_result(self, expected, result):
+        self.assertSetEqual(set(expected), set(result))
+        self.assertEqual(len(expected), len(result))
+
+    def test_example(self):
+        words = ["code", "edoc", "da", "d"]
+        expected = [(0, 1), (1, 0), (2, 3)]
+        self.assert_result(expected, find_all_palindrome_pairs(words))
+
+    def test_example2(self):
+        words = ["bat", "tab", "cat"]
+        expected = [(0, 1), (1, 0)]
+        self.assert_result(expected, find_all_palindrome_pairs(words))
+
+    def test_example3(self):
+        words = ["abcd", "dcba", "lls", "s", "sssll"]
+        expected = [(0, 1), (1, 0), (3, 2), (2, 4)]
+        self.assert_result(expected, find_all_palindrome_pairs(words))
+    
+    def test_single_word_string(self):
+        words = ["a", "ab", "b", ""]
+        expected = [(1, 0), (2, 1), (0, 3), (3, 0), (2, 3), (3, 2)]
+        self.assert_result(expected, find_all_palindrome_pairs(words))
+
+    def test_empty_lists(self):
+        self.assert_result([], find_all_palindrome_pairs([]))
+    
+    def test_contains_empty_word(self):
+        words = [""]
+        expected = []
+        self.assert_result(expected, find_all_palindrome_pairs(words))
+
+    def test_contains_empty_word2(self):
+        words = ["", ""]
+        expected = [(0, 1), (1, 0)]
+        self.assert_result(expected, find_all_palindrome_pairs(words))
+    
+    def test_contains_empty_word3(self):
+        words = ["", "", "a"]
+        expected = [(0, 1), (0, 2), (1, 0), (1, 2), (2, 0), (2, 1)]
+        self.assert_result(expected, find_all_palindrome_pairs(words))
+    
+    def test_contains_empty_word4(self):
+        words = ["", "a"]
+        expected = [(0, 1), (1, 0)]
+        self.assert_result(expected, find_all_palindrome_pairs(words))
+
+
+    def test_contains_duplicate_word(self):
+        words = ["a", "a", "aa"]
+        expected = [(0, 1), (1, 0), (1, 2), (2, 1), (0, 2), (2, 0)]
+        self.assert_result(expected, find_all_palindrome_pairs(words))
+
+    def test_no_pairs(self):
+        words = ["abc", "gaba", "abcg"]
+        expected = []
+        self.assert_result(expected, find_all_palindrome_pairs(words))
+
+    def test_avoid_hash_collision(self):
+        words = ["a", "jfdjfhgidffedfecbfh"]
+        expected = []
+        self.assert_result(expected, find_all_palindrome_pairs(words))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
+```
+
+
 ### Feb 28, 2021 \[Medium\] 24-Hour Hit Counter
 ---
 > **Question:** You are given an array of length 24, where each element represents the number of new subscribers during the corresponding hour. Implement a data structure that efficiently supports the following:

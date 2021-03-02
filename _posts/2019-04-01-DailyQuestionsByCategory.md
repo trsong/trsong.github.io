@@ -2693,6 +2693,23 @@ For example, `'carrace'` should return True, since it can be rearranged to form 
 ### Palindrome
 ---
 
+
+<details>
+<summary class="lc_h">
+
+- [**\[Hard\] LC 336. Palindrome Pairs**](http://trsong.github.io/python/java/2021/02/02/DailyQuestionsFeb/#mar-1-2021-lc-336-hard-palindrome-pairs) -- *Given a list of words, find all pairs of unique indices such that the concatenation of the two words is a palindrome.* [*\(Try ME\)*](https://repl.it/@trsong/Find-All-Palindrome-Pairs-1)
+
+</summary>
+<div>
+
+**Question:** Given a list of words, find all pairs of unique indices such that the concatenation of the two words is a palindrome.
+
+For example, given the list `["code", "edoc", "da", "d"]`, return `[(0, 1), (1, 0), (2, 3)]`.
+
+</div>
+</details>
+
+
 <details>
 <summary class="lc_h">
 
