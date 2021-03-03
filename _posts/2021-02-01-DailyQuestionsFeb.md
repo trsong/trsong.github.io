@@ -19,7 +19,7 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
 
-### Mar 3, 2021 \[Hard\] Maximize Sum of the Minimum of K Subarrays
+### Mar 4, 2021 \[Hard\] Maximize Sum of the Minimum of K Subarrays
 --- 
 > **Question:** Given an array a of size N and an integer K, the task is to divide the array into K segments such that sum of the minimum of K segments is maximized.
 
@@ -36,6 +36,12 @@ Input: [6, 5, 3, 8, 9, 10, 4, 7, 10], K = 4
 Output: 27
 [6, 5, 3, 8, 9], [10], [4, 7], [10] => 3 + 10 + 4 + 10 = 27
 ```
+
+### Mar 3, 2021 \[Hard\] Maximize the Minimum of Subarray Sum
+---
+> **Question:** Given an array of numbers `N` and an integer `k`, your task is to split `N` into `k` partitions such that the maximum sum of any partition is minimized. Return this sum.
+>
+> For example, given `N = [5, 1, 2, 7, 3, 4]` and `k = 3`, you should return `8`, since the optimal partition is `[5, 1, 2], [7], [3, 4]`.
 
 
 ### Mar 2, 2021 \[Medium\] Bitwise AND of a Range
