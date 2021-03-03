@@ -19,6 +19,25 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
 
+### Mar 3, 2021 \[Hard\] Maximize Sum of the Minimum of K Subarrays
+--- 
+> **Question:** Given an array a of size N and an integer K, the task is to divide the array into K segments such that sum of the minimum of K segments is maximized.
+
+**Example1:**
+```py
+Input: [5, 7, 4, 2, 8, 1, 6], K = 3
+Output: 13
+Divide the array at indexes 0 and 1. Then the segments are [5], [7], [4, 2, 8, 1, 6] Sum of the minimus is 5 + 7 + 1 = 13
+```
+
+**Example2:**
+```py
+Input: [6, 5, 3, 8, 9, 10, 4, 7, 10], K = 4
+Output: 27
+[6, 5, 3, 8, 9], [10], [4, 7], [10] => 3 + 10 + 4 + 10 = 27
+```
+
+
 ### Mar 2, 2021 \[Medium\] Bitwise AND of a Range
 ---
 > **Question:** Write a function that returns the bitwise AND of all integers between M and N, inclusive.
