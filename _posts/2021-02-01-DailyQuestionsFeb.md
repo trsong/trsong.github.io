@@ -48,6 +48,8 @@ Output: 27
 
 - The lower bound of guessing number is `max(nums)`, as max element has to present in some subarray. 
 - The upper bound of guessing number is `sum(nums)` as sum of subarray cannot exceed sum of entire array. 
+
+We can use the guessing number to cut the array greedily so that each parts cannot exceed the guessing number:
 - If the guessing number is lower than expected, then we over-cut the array.  (cut more than k parts)
 - If the guessing number is higher than expected, then we under-cut the array.  (cut less than k parts)
 
