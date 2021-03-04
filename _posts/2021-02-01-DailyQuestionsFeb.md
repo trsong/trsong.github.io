@@ -44,12 +44,12 @@ Output: 27
 > For example, given `N = [5, 1, 2, 7, 3, 4]` and `k = 3`, you should return `8`, since the optimal partition is `[5, 1, 2], [7], [3, 4]`.
 
 
-**My thoughts:** The method to solve this problem is through guessing the result. We have two observations: 
+**My thoughts:** The method to solve this problem is through guessing the result. We have the following observations: 
 
-- Result lower bound is `max(nums)`, as max element has to present in some subarray. 
-- Result upper bound is `sum(nums)` as sum of subarray cannot exceed sum of entire array. 
-- If the result is lower than expected, then we over-cut the array.  (cut more than k parts)
-- If the result is high than expected, then we under-cut the array.  (cut less than k parts)
+- The lower bound of guessing number is `max(nums)`, as max element has to present in some subarray. 
+- The upper bound of guessing number is `sum(nums)` as sum of subarray cannot exceed sum of entire array. 
+- If the guessing number is lower than expected, then we over-cut the array.  (cut more than k parts)
+- If the guessing number is higher than expected, then we under-cut the array.  (cut less than k parts)
 
 We can use binary search to get result such that it just-cut the array: under-cut and just-cut goes left and over-cut goes right. 
 
