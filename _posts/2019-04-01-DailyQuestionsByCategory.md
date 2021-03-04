@@ -1359,6 +1359,23 @@ Explanation: Because the new interval [4,8] overlaps with [3,5],[6,7],[8,10].
 ---
 
 <details>
+<summary class="lc_h">
+
+- [**\[Hard\] Maximize the Minimum of Subarray Sum**](http://trsong.github.io/python/java/2021/02/02/DailyQuestionsFeb/#mar-3-2021-hard-maximize-the-minimum-of-subarray-sum) -- *Given an array of numbers N and integer k, split N into k partitions such that the maximize sum of any partition is minimized.* [*\(Try ME\)*](https://repl.it/@trsong/Maximize-the-Minimum-of-Subarray-Sum-1)
+
+</summary>
+<div>
+
+**Question:** Given an array of numbers `N` and an integer `k`, your task is to split `N` into `k` partitions such that the maximum sum of any partition is minimized. Return this sum.
+
+For example, given `N = [5, 1, 2, 7, 3, 4]` and `k = 3`, you should return `8`, since the optimal partition is `[5, 1, 2], [7], [3, 4]`.
+
+
+</div>
+</details>
+
+
+<details>
 <summary class="lc_e">
 
 - [**\[Easy\] Fixed Point**](http://trsong.github.io/python/java/2021/02/02/DailyQuestionsFeb/#feb-15-2021-easy-fixed-point) -- *Given a sorted array of distinct elements, return a fixed point, if one exists. Otherwise, return False.* [*\(Try ME\)*](https://repl.it/@trsong/Find-the-Fixed-Point-1)

@@ -44,6 +44,92 @@ Output: 27
 > For example, given `N = [5, 1, 2, 7, 3, 4]` and `k = 3`, you should return `8`, since the optimal partition is `[5, 1, 2], [7], [3, 4]`.
 
 
+**My thoughts:** The method to solve this problem is through guessing the result. We have two observations: 
+
+- Result lower bound is `max(nums)`, as max element has to present in some subarray. 
+- Result upper bound is `sum(nums)` as sum of subarray cannot exceed sum of entire array. 
+- If the result is lower than expected, then we over-cut the array.  (cut more than k parts)
+- If the result is high than expected, then we under-cut the array.  (cut less than k parts)
+
+We can use binary search to get result such that it just-cut the array: under-cut and just-cut goes left and over-cut goes right. 
+
+But how can we make sure that result we get from binary search is indeed sum of subarray?
+
+The reason is simply, if it is just-cut, it won't stop until it's almost over-cut that gives smallest just-cut. Maximum of the Minimum Sum among all subarray sum is actually the smallest just-cut. And it will stop at that number. 
+
+
+**Solution with Binary Search:** [https://repl.it/@trsong/Maximize-the-Minimum-of-Subarray-Sum](https://repl.it/@trsong/Maximize-the-Minimum-of-Subarray-Sum)
+```py
+import unittest
+
+
+def max_of_min_sum_subarray(nums, k):
+    lo = max(nums)
+    hi = sum(nums)
+
+    while lo < hi:
+        mid = lo + (hi - lo) // 2
+        if within_partition_constraint(nums, k, mid):
+            hi = mid
+        else:
+            lo = mid + 1
+    
+    return lo
+
+
+def within_partition_constraint(nums, k, subarray_limit):
+    accu = 0
+    for num in nums:
+        if accu + num > subarray_limit:
+            accu = num
+            k -= 1
+        else:
+            accu += num
+    return k >= 1
+
+
+
+class MaxOfMinSumSubarraySpec(unittest.TestCase):
+    def test_example(self):
+        k, nums = 3, [5, 1, 2, 7, 3, 4]
+        expected = 8  # [5, 1, 2], [2, 7], [3, 4]
+        self.assertEqual(expected, max_of_min_sum_subarray(nums, k))
+
+    def test_ascending_array(self):
+        k, nums = 3, [1, 2, 3, 4]
+        expected = 4  # [1, 2], [3], [4]
+        self.assertEqual(expected, max_of_min_sum_subarray(nums, k))
+
+    def test_k_is_one(self):
+        k, nums = 1, [1, 1, 1, 1, 4]
+        expected = 8  # [1, 1, 1, 1, 4]
+        self.assertEqual(expected, max_of_min_sum_subarray(nums, k))
+
+    def test_return_larger_half(self):
+        k, nums = 2,  [1, 2, 3, 4, 5, 10, 11, 3, 6, 16]
+        expected = 36  # [1, 2, 3, 4, 5, 10, 11], [3, 6, 16]
+        self.assertEqual(expected, max_of_min_sum_subarray(nums, k))
+
+    def test_evenly_distributed(self):
+        k, nums = 4, [1, 1, 1, 1]
+        expected = 1
+        self.assertEqual(expected, max_of_min_sum_subarray(nums, k))
+
+    def test_evenly_distributed2(self):
+        k, nums = 3, [1, 1, 1, 1, 1, 1, 1, 1, 1]
+        expected = 3
+        self.assertEqual(expected, max_of_min_sum_subarray(nums, k))
+
+    def test_outlier_element(self):
+        k, nums = 3, [1, 1, 1, 100, 1]
+        expected = 100  # [1, 1, 1], [100], [1]
+        self.assertEqual(expected, max_of_min_sum_subarray(nums, k))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False, verbosity=2)
+```
+
 ### Mar 2, 2021 \[Medium\] Bitwise AND of a Range
 ---
 > **Question:** Write a function that returns the bitwise AND of all integers between M and N, inclusive.
