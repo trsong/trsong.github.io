@@ -6608,6 +6608,33 @@ Given such an array, determine the denominations that must be in use. In the cas
 ### 2D DP
 ---
 
+<details>
+<summary class="lc_h">
+
+- [**\[Hard\] Maximize Sum of the Minimum of K Subarrays**](http://trsong.github.io/python/java/2021/02/02/DailyQuestionsFeb/#mar-4-2021-hard-maximize-sum-of-the-minimum-of-k-subarrays) -- *Given an array a of size N and an integer K, divide the array into K segments such that sum of the minimum of K segments is maximized.* [*\(Try ME\)*](https://repl.it/@trsong/Find-the-Maximize-Sum-of-the-Minimum-of-K-Subarrays-1)
+
+</summary>
+<div>
+
+**Question:** Given an array a of size N and an integer K, the task is to divide the array into K segments such that sum of the minimum of K segments is maximized.
+
+**Example1:**
+```py
+Input: [5, 7, 4, 2, 8, 1, 6], K = 3
+Output: 13
+Divide the array at indexes 0 and 1. Then the segments are [5], [7], [4, 2, 8, 1, 6] Sum of the minimus is 5 + 7 + 1 = 13
+```
+
+**Example2:**
+```py
+Input: [6, 5, 3, 8, 9, 10, 4, 7, 10], K = 4
+Output: 27
+[6, 5, 3, 8, 9], [10], [4, 7], [10] => 3 + 10 + 4 + 10 = 27
+```
+
+</div>
+</details>
+
 
 <details>
 <summary class="lc_h">
