@@ -19,6 +19,13 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
 
+### Mar 5, 2021 \[Hard\] Reverse Words Keep Delimiters
+---
+> **Question:** Given a string and a set of delimiters, reverse the words in the string while maintaining the relative order of the delimiters. For example, given "hello/world:here", return "here/world:hello"
+>
+> Follow-up: Does your solution work for the following cases: "hello/world:here/", "hello//world:here"
+
+
 ### Mar 4, 2021 \[Hard\] Maximize Sum of the Minimum of K Subarrays
 --- 
 > **Question:** Given an array a of size N and an integer K, the task is to divide the array into K segments such that sum of the minimum of K segments is maximized.
