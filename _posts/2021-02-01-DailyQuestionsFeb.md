@@ -25,6 +25,66 @@ categories: Python/Java
 >
 > Follow-up: Does your solution work for the following cases: "hello/world:here/", "hello//world:here"
 
+**Solution:** [https://repl.it/@trsong/Reverse-Words-and-Keep-Delimiters](https://repl.it/@trsong/Reverse-Words-and-Keep-Delimiters)
+```py
+import unittest
+
+def reverse_words_and_keep_delimiters(s, delimiters):
+    tokens = filter(len, tokenize(s, delimiters))
+    i, j = 0, len(tokens) - 1
+    while i < j:
+        if tokens[i] in delimiters:
+            i += 1
+        elif tokens[j] in delimiters:
+            j -= 1
+        else:
+            tokens[i], tokens[j] = tokens[j], tokens[i]
+            i += 1
+            j -= 1
+    return ''.join(tokens)  
+     
+
+def tokenize(s, delimiters):
+    res = []
+    prev_index = -1
+    for i, ch in enumerate(s):
+        if ch in delimiters:
+            res.append(s[prev_index + 1: i])
+            res.append(s[i])
+            prev_index = i
+    res.append(s[prev_index + 1: len(s)])
+    return res
+
+
+class ReverseWordsKeepDelimiterSpec(unittest.TestCase):
+    def test_example1(self):
+        self.assertEqual(reverse_words_and_keep_delimiters("hello/world:here", ['/', ':']), "here/world:hello")
+    
+    def test_example2(self):
+        self.assertEqual(reverse_words_and_keep_delimiters("hello/world:here/", ['/', ':']), "here/world:hello/")
+
+    def test_example3(self):
+        self.assertEqual(reverse_words_and_keep_delimiters("hello//world:here", ['/', ':']), "here//world:hello")
+
+    def test_only_has_delimiters(self):
+        self.assertEqual(reverse_words_and_keep_delimiters("--++--+++", ['-', '+']), "--++--+++")
+
+    def test_without_delimiters(self):
+        self.assertEqual(reverse_words_and_keep_delimiters("--++--+++", []), "--++--+++")
+
+    def test_without_delimiters2(self):
+        self.assertEqual(reverse_words_and_keep_delimiters("--++--+++", ['a', 'b']), "--++--+++")
+
+    def test_first_delimiter_then_word(self):
+        self.assertEqual(reverse_words_and_keep_delimiters("///a/b", ['/']), "///b/a")
+    
+    def test_first_word_then_delimiter(self):
+        self.assertEqual(reverse_words_and_keep_delimiters("a///b///", ['/']), "b///a///")
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False, verbosity=2)
+```
 
 ### Mar 4, 2021 \[Hard\] Maximize Sum of the Minimum of K Subarrays
 --- 
