@@ -2393,6 +2393,24 @@ For example, given the string `tweet`, return `tteew`. `eettw` would also be acc
 <details>
 <summary class="lc_h">
 
+- [**\[Hard\] Efficiently Manipulate a Very Long String**](http://trsong.github.io/python/java/2021/02/02/DailyQuestionsFeb/#mar-6-2021-hard-efficiently-manipulate-a-very-long-string) -- *Design a tree-based data structure to efficiently manipulate a very long string* [*\(Try ME\)*](https://repl.it/@trsong/Efficiently-Manipulate-a-Very-Long-String-1)
+
+</summary>
+<div>
+
+**Question:** Design a tree-based data structure to efficiently manipulate a very long string that supports the following operations:
+
+- `char char_at(int index)`, return char at index
+- `LongString substring_at(int start_index, int end_index)`, return substring based on start and end index
+- `void delete(int start_index, int end_index)`, deletes the substring 
+
+</div>
+</details>
+
+
+<details>
+<summary class="lc_h">
+
 - [**\[Hard\] Reverse Words Keep Delimiters**](http://trsong.github.io/python/java/2021/02/02/DailyQuestionsFeb/#mar-5-2021-hard-reverse-words-keep-delimiters) -- *Given a string and a set of delimiters, reverse the words in the string while maintaining the relative order of the delimiters.* [*\(Try ME\)*](https://repl.it/@trsong/Reverse-Words-and-Keep-Delimiters-1)
 
 </summary>

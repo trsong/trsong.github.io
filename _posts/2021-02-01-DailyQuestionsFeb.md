@@ -42,11 +42,222 @@ The distance between 1 and 8 is 6: [1 -> 2 -> 3 -> 5 -> 6 -> 7 -> 8]
 ### Mar 6, 2021 \[Hard\] Efficiently Manipulate a Very Long String
 ---
 > **Question:** Design a tree-based data structure to efficiently manipulate a very long string that supports the following operations:
+>
+> - `char char_at(int index)`, return char at index
+> - `LongString substring_at(int start_index, int end_index)`, return substring based on start and end index
+> - `void delete(int start_index, int end_index)`, deletes the substring 
 
-- `char char_at(int index)`, return char at index
-- `LongString substring_at(int start_index, int end_index)`, return substring based on start and end index
-- `void delete(int start_index, int end_index)`, deletes the substring 
 
+**My thoughts:** Rope data structure is just a balanced binary tree where leaf stores substring and inner node stores length of all substring of left children recursively. Rope is widely used in text editor program and supports log time insertion, deletion and appending. And is super memory efficent. 
+
+**Solution with Rope:** [https://repl.it/@trsong/Efficiently-Manipulate-a-Very-Long-String](https://repl.it/@trsong/Efficiently-Manipulate-a-Very-Long-String)
+```py
+import unittest
+
+class LongString(object):
+    def __init__(self, s):
+        self.rope = RopeNode(s)
+
+    def char_at(self, index):
+        return self.rope[index]
+
+    def substring_at(self, start_index, end_index):
+        return LongString(self.rope[start_index: end_index + 1])
+
+    def delete(self, start_index, end_index):
+        self.rope = self.rope.delete(start_index, end_index)
+
+    
+class LongStringSpec(unittest.TestCase):
+    def test_empty_string(self):
+        self.assertIsNotNone(LongString(''))
+
+    def test_char_at(self):
+        s = LongString('01234567')
+        self.assertEqual('0', s.char_at(0))
+        self.assertEqual('1', s.char_at(1))
+        self.assertEqual('3', s.char_at(3))
+
+    def test_chart_at_substring(self):
+        s = LongString('012345678')
+        self.assertEqual('0', s.substring_at(0, 3).char_at(0))
+        self.assertEqual('8', s.substring_at(0, 8).char_at(8))
+        self.assertEqual('5', s.substring_at(5, 8).char_at(0))
+
+    def test_delete_string(self):
+        s = LongString('012345678')
+        s.delete(1, 7)
+        self.assertEqual('0', s.char_at(0))
+        self.assertEqual('8', s.char_at(1))
+
+        s = LongString('012345678')
+        s.delete(0, 3)
+        self.assertEqual('4', s.char_at(0))
+        self.assertEqual('7', s.char_at(3))
+
+        s = LongString('012345678')
+        s.delete(7, 8)
+        self.assertEqual('4', s.char_at(4))
+        self.assertEqual('6', s.char_at(6))
+
+    def test_char_at_deleted_substring(self):
+        s = LongString('012345678')
+        s.delete(2, 7)  # gives 018 
+        self.assertEqual('1', s.substring_at(1, 2).char_at(0))
+        self.assertEqual('8', s.substring_at(1, 2).char_at(1))
+
+    def test_char_at_substring_of_deleted_string(self):
+        s = LongString('e012345678eee')
+        sub = s.substring_at(1, 8)  # 01234567  
+        sub.delete(0, 6)
+        self.assertEqual('7', sub.char_at(0))
+        
+
+class RopeNode(object):
+    def __init__(self, s=None):
+        self.weight = len(s) if s else 0
+        self.left = None
+        self.right = None
+        self.data = s
+
+    def delete(self, start_index, end_index):
+        if start_index <= 0:
+            return self[end_index + 1:]
+        elif end_index >= len(self) - 1:
+            return self[:start_index]
+        else:
+            return self[:start_index] + self[end_index + 1:] 
+
+    def __len__(self):
+        if self.data is not None:
+            return self.weight
+        right_len = len(self.right) if self.right else 0
+        return self.weight + right_len
+
+    def __add__(self, other):
+        # omit tree re-balance 
+        node = RopeNode()
+        node.weight = len(self)
+        node.left = self
+        node.right = other
+        return node
+
+    def __getitem__(self, key):
+        if self.data is not None:
+            return self.data[key]
+        elif key < self.weight:
+            return self.left[key]
+        else:
+            return self.right[key - self.weight]
+
+    def __getslice__(self, i, j):
+        if i >= j:
+            return RopeNode('')
+        elif self.data:
+            return RopeNode(self.data[i:j])
+        elif j <= self.weight:
+            return self.left[i:j]
+        elif i >= self.weight:
+            return self.right[i - self.weight:j - self.weight]
+        else:
+            left_res = self.left[i:self.weight]
+            right_res = self.right[0:j - self.weight]
+            return left_res + right_res            
+
+    ####################
+    # Testing Utilities
+    ####################
+
+    def __repr__(self):
+        if self.data:
+            return self.data
+        else:
+            return str(self.left or '') + str(self.right or '')
+
+    def print_tree(self):
+        stack = [(self, 0)]
+        res = ['\n']
+        while stack:
+            cur, depth = stack.pop()
+            res.append('\t' * depth)
+            if cur:
+                if cur.data:
+                    res.append('* data=' + cur.data)
+                else:
+                    res.append('* weight=' + str(cur.weight))
+                stack.append((cur.right, depth + 1))
+                stack.append((cur.left, depth + 1))
+            else:
+                res.append('* None')
+            res.append('\n')            
+        print ''.join(res)
+
+
+class RopeNodeSpec(unittest.TestCase):
+    def test_string_slice(self):
+        """ 
+            x 
+           / \
+          x   2
+         / \       
+        0   1
+        """
+        s = RopeNode('0') + RopeNode('1') + RopeNode('2')
+        self.assertEqual(1, s.left.weight)
+        self.assertEqual(2, s.weight)
+        self.assertEqual("0", str(s[0:1]))
+        self.assertEqual("01", str(s[0:2]))
+        self.assertEqual("012", str(s[0:3]))
+        self.assertEqual("12", str(s[1:3]))
+        self.assertEqual("2", str(s[2:3]))
+        self.assertEqual("1", str(s[1:2]))
+
+    def test_string_slice2(self):
+        """ 
+              x 
+           /     \
+          x       x
+         / \     / \     
+        01 23   4  567
+        """
+        s = (RopeNode('01') + RopeNode('23')) + (RopeNode('4') + RopeNode('567'))
+        self.assertEqual(2, s.left.weight)
+        self.assertEqual(4, s.weight)
+        self.assertEqual(1, s.right.weight)
+        self.assertEqual("012", str(s[0:3]))
+        self.assertEqual("3456", str(s[3:7]))
+        self.assertEqual("1234567", str(s[1:8]))
+        self.assertEqual("7", str(s[7:8]))
+
+    def test_delete(self):
+        """ 
+              x 
+           /     \
+          x       x
+         / \     / \     
+        01 23   4  567
+        """
+        s = (RopeNode('01') + RopeNode('23')) + (RopeNode('4') + RopeNode('567'))
+        self.assertEqual("012", str(s.delete(3, 7)))
+        self.assertEqual("4567", str(s.delete(0, 3)))
+        self.assertEqual("01237", str(s.delete(4, 6)))
+
+    def test_get_item(self):
+        """ 
+              x 
+           /     \
+          x       x
+         / \     / \     
+        01 23   4  567
+        """
+        s = (RopeNode('01') + RopeNode('23')) + (RopeNode('4') + RopeNode('567'))
+        self.assertEqual("0", s[0])
+        self.assertEqual("4", s[4])
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False, verbosity=2)
+```
 
 ### Mar 5, 2021 \[Hard\] Reverse Words Keep Delimiters
 ---
