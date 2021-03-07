@@ -19,6 +19,26 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
 
+### Mar 7, 2021 \[Medium\] Distance Between 2 Nodes in BST
+---
+> **Question:**  Write a function that given a BST, it will return the distance (number of edges) between 2 nodes.
+
+**Example:**
+```py
+Given the following tree:
+
+         5
+        / \
+       3   6
+      / \   \
+     2   4   7
+    /         \
+   1           8
+The distance between 1 and 4 is 3: [1 -> 2 -> 3 -> 4]
+The distance between 1 and 8 is 6: [1 -> 2 -> 3 -> 5 -> 6 -> 7 -> 8]
+```
+
+
 ### Mar 6, 2021 \[Hard\] Efficiently Manipulate a Very Long String
 ---
 > **Question:** Design a tree-based data structure to efficiently manipulate a very long string that supports the following operations:
