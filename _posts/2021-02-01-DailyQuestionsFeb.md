@@ -19,6 +19,15 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
 
+### Mar 6, 2021 \[Hard\] Efficiently Manipulate a Very Long String
+---
+> **Question:** Design a tree-based data structure to efficiently manipulate a very long string that supports the following operations:
+
+- `char char_at(int index)`, return char at index
+- `LongString substring_at(int start_index, int end_index)`, return substring based on start and end index
+- `void delete(int start_index, int end_index)`, deletes the substring 
+
+
 ### Mar 5, 2021 \[Hard\] Reverse Words Keep Delimiters
 ---
 > **Question:** Given a string and a set of delimiters, reverse the words in the string while maintaining the relative order of the delimiters. For example, given "hello/world:here", return "here/world:hello"
