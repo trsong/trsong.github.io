@@ -137,7 +137,6 @@ if __name__ == '__main__':
     unittest.main(exit=False)
 ```
 
-
 ### Mar 6, 2021 \[Hard\] Efficiently Manipulate a Very Long String
 ---
 > **Question:** Design a tree-based data structure to efficiently manipulate a very long string that supports the following operations:
