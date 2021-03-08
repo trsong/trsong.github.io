@@ -38,6 +38,105 @@ The distance between 1 and 4 is 3: [1 -> 2 -> 3 -> 4]
 The distance between 1 and 8 is 6: [1 -> 2 -> 3 -> 5 -> 6 -> 7 -> 8]
 ```
 
+**Solution:** [https://repl.it/@trsong/Distance-Between-2-Nodes-in-BST](https://repl.it/@trsong/Distance-Between-2-Nodes-in-BST)
+```py
+import unittest
+
+def find_distance(tree, v1, v2):    
+    path1 = find_path(tree, v1)
+    path2 = find_path(tree, v2)
+
+    common_nodes = 0
+    for n1, n2 in zip(path1, path2):
+        if n1 != n2:
+            break
+        common_nodes += 1
+
+    return len(path1) + len(path2) - 2 * common_nodes
+    
+
+def find_path(tree, v):
+    res = []
+    while True:
+        res.append(tree)
+        if tree.val == v:
+            break
+        elif tree.val < v:
+            tree = tree.right
+        else:
+            tree = tree.left
+    return res
+
+
+class TreeNode(object):
+    def __init__(self, val, left=None, right=None):
+        self.val = val
+        self.left = left
+        self.right = right
+
+
+class FindLCASpec(unittest.TestCase):
+    def setUp(self):
+        """
+             4
+           /   \
+          2     6
+         / \   / \
+        1   3 5   7
+        """
+        self.n1 = TreeNode(1)
+        self.n3 = TreeNode(3)
+        self.n5 = TreeNode(5)
+        self.n7 = TreeNode(7)
+        self.n2 = TreeNode(2, self.n1, self.n3)
+        self.n6 = TreeNode(6, self.n5, self.n7)
+        self.root = TreeNode(4, self.n2, self.n6)
+
+    def test_both_nodes_on_leaves(self):
+        self.assertEqual(2, find_distance(self.root, 1, 3))
+
+    def test_both_nodes_on_leaves2(self):
+        self.assertEqual(2, find_distance(self.root, 5, 7))
+    
+    def test_both_nodes_on_leaves3(self):
+        self.assertEqual(4, find_distance(self.root, 1, 5))
+
+    def test_nodes_on_different_levels(self):
+        self.assertEqual(1, find_distance(self.root, 1, 2))
+    
+    def test_nodes_on_different_levels2(self):
+        self.assertEqual(3, find_distance(self.root, 1, 6))
+    
+    def test_nodes_on_different_levels3(self):
+        self.assertEqual(2, find_distance(self.root, 1, 4))
+
+    def test_same_nodes(self):
+        self.assertEqual(0, find_distance(self.root, 2, 2))
+    
+    def test_same_nodes2(self):
+        self.assertEqual(0, find_distance(self.root, 5, 5))
+
+    def test_example(self):
+        """
+                 5
+                / \
+               3   6
+              / \   \
+             2   4   7
+            /         \
+           1           8
+        """
+        left_tree = TreeNode(3, TreeNode(2, TreeNode(1)), TreeNode(4))
+        right_tree = TreeNode(6, right=TreeNode(7, right=TreeNode(8)))
+        root = TreeNode(5, left_tree, right_tree)
+        self.assertEqual(3, find_distance(root, 1, 4))
+        self.assertEqual(6, find_distance(root, 1, 8))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
+```
+
 
 ### Mar 6, 2021 \[Hard\] Efficiently Manipulate a Very Long String
 ---

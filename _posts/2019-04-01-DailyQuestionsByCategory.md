@@ -3035,6 +3035,34 @@ An unbalanced tree with three consecutive left children: ((((00)0)0)0)
 ### BST
 ---
 
+<details>
+<summary class="lc_m">
+
+- [**\[Medium\] Distance Between 2 Nodes in BST**](http://trsong.github.io/python/java/2021/02/02/DailyQuestionsFeb/#mar-7-2021-medium-distance-between-2-nodes-in-bst) -- *Write a function that given a BST, it will return the distance (number of edges) between 2 nodes.* [*\(Try ME\)*](https://repl.it/@trsong/Distance-Between-2-Nodes-in-BST-1)
+
+</summary>
+<div>
+
+**Question:** Write a function that given a BST, it will return the distance (number of edges) between 2 nodes.
+
+**Example:**
+```py
+Given the following tree:
+
+         5
+        / \
+       3   6
+      / \   \
+     2   4   7
+    /         \
+   1           8
+The distance between 1 and 4 is 3: [1 -> 2 -> 3 -> 4]
+The distance between 1 and 8 is 6: [1 -> 2 -> 3 -> 5 -> 6 -> 7 -> 8]
+```
+
+</div>
+</details>
+
 
 <details>
 <summary class="lc_m">
