@@ -19,6 +19,19 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
 
+### Mar 10, 2021 LC 821 \[Medium\] Shortest Distance to Character
+---
+> **Question:**  Given a string s and a character c, find the distance for all characters in the string to the character c in the string s. 
+>
+> You can assume that the character c will appear at least once in the string.
+
+**Example:**
+```py
+shortest_dist('helloworld', 'l') 
+# returns [2, 1, 0, 0, 1, 2, 2, 1, 0, 1]
+```
+
+
 ### Mar 9, 2021 \[Medium\] Number of Android Lock Patterns
 ---
 > **Question:** One way to unlock an Android phone is through a pattern of swipes across a 1-9 keypad.
