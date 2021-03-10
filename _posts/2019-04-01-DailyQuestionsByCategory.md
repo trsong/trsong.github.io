@@ -5885,6 +5885,29 @@ For example, given `100`, you can reach `1` in five steps with the following rou
 <details>
 <summary class="lc_m">
 
+- [**\[Medium\] Number of Android Lock Patterns**](https://trsong.github.io/python/java/2021/02/02/DailyQuestionsFeb/#mar-9-2021-medium-number-of-android-lock-patterns) -- *One way to unlock an Android phone is through a pattern of swipes across a 1-9 keypad.* [*\(Try ME\)*](https://repl.it/@trsong/Count-Number-of-Android-Lock-Patterns-1)
+
+</summary>
+<div>
+
+**Question:** One way to unlock an Android phone is through a pattern of swipes across a 1-9 keypad.
+
+For a pattern to be valid, it must satisfy the following:
+
+- All of its keys must be distinct.
+- It must not connect two keys by jumping over a third key, unless that key has already been used.
+
+For example, 4 - 2 - 1 - 7 is a valid pattern, whereas 2 - 1 - 7 is not.
+
+Find the total number of valid unlock patterns of length N, where 1 <= N <= 9.
+
+</div>
+</details>
+
+
+<details>
+<summary class="lc_m">
+
 - [**\[Medium\] Lazy Bartender**](http://trsong.github.io/python/java/2021/02/02/DailyQuestionsFeb/#mar-8-2021-medium-lazy-bartender) -- *Given a dictionary input such as the one above, return the fewest number of drinks he must learn in order to satisfy all customers.* [*\(Try ME\)*](https://repl.it/@trsong/Lazy-Bartender-Problem-1)
 
 </summary>
