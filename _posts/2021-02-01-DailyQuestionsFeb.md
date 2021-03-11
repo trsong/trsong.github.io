@@ -19,6 +19,16 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
 
+### Mar 11, 2021 \[Easy\] Make the Largest Number
+---
+> **Question:** Given a number of integers, combine them so it would create the largest number.
+
+**Example:**
+```py
+Input: [17, 7, 2, 45, 72]
+Output: 77245217
+```
+
 ### Mar 10, 2021 LC 821 \[Medium\] Shortest Distance to Character
 ---
 > **Question:**  Given a string s and a character c, find the distance for all characters in the string to the character c in the string s. 
