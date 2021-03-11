@@ -31,6 +31,84 @@ shortest_dist('helloworld', 'l')
 # returns [2, 1, 0, 0, 1, 2, 2, 1, 0, 1]
 ```
 
+**My thoughts:** The idea is similar to Problem ["LC 42 Trap Rain Water"](https://trsong.github.io/python/java/2019/05/01/DailyQuestions/#may-11-2019-lc-42-hard-trapping-rain-water): we can simply scan from left to know the shortest distance from nearest character on the left and vice versa when we can from right to left. 
+
+**Solution:** [https://repl.it/@trsong/Find-Shortest-Distance-to-Characters](https://repl.it/@trsong/Find-Shortest-Distance-to-Characters)
+```py
+import unittest
+
+def shortest_dist_to_char(s, ch):
+    n = len(s)
+    res = [float('inf')] * n
+    left_pos = float('-inf')
+    for index, c in enumerate(s):
+        if ch == c:
+            left_pos = index
+        res[index] = index - left_pos
+
+    right_pos = float('inf')
+    for index in xrange(n - 1, -1, -1):
+        c = s[index]
+        if ch == c:
+            right_pos = index
+        res[index] = min(res[index], right_pos - index)
+        
+    return res
+
+
+class ShortestDistToCharSpec(unittest.TestCase):
+    def test_example(self):
+        ch, s = 'l', 'helloworld'
+        expected = [2, 1, 0, 0, 1, 2, 2, 1, 0, 1]
+        self.assertEqual(expected, shortest_dist_to_char(s, ch))
+
+    def test_example2(self):
+        ch, s = 'o', 'helloworld'
+        expected = [4, 3, 2, 1, 0, 1, 0, 1, 2, 3]
+        self.assertEqual(expected, shortest_dist_to_char(s, ch))
+
+    def test_one_letter_string(self):
+        self.assertEqual([0], shortest_dist_to_char('a', 'a'))
+
+    def test_target_char_as_head(self):
+        ch, s = 'a', 'abcde'
+        expected = [0, 1, 2, 3, 4]
+        self.assertEqual(expected, shortest_dist_to_char(s, ch))
+
+    def test_target_char_as_last(self):
+        ch, s = 'a', 'eeeeeeea'
+        expected = [7, 6, 5, 4, 3, 2, 1, 0]
+        self.assertEqual(expected, shortest_dist_to_char(s, ch))
+
+    def test_unique_letter_string(self):
+        ch, s = 'a', 'aaaaa'
+        expected = [0, 0, 0, 0, 0]
+        self.assertEqual(expected, shortest_dist_to_char(s, ch))
+
+    def test_multiple_occurance_of_target(self):
+        ch, s = 'a', 'babbabbbaabbbbb'
+        expected = [1, 0, 1, 1, 0, 1, 2, 1, 0, 0, 1, 2, 3, 4, 5]
+        self.assertEqual(expected, shortest_dist_to_char(s, ch))
+
+    def test_no_duplicate_letters(self):
+        ch, s = 'a', 'bcadefgh'
+        expected = [2, 1, 0, 1, 2, 3, 4, 5]
+        self.assertEqual(expected, shortest_dist_to_char(s, ch))
+    
+    def test_long_string(self):
+        ch, s = 'a', 'a' + 'b' * 9999
+        expected = range(10000)
+        self.assertEqual(expected, shortest_dist_to_char(s, ch))
+    
+    def test_long_string2(self):
+        ch, s = 'a', 'b' * 999999 + 'a'
+        expected = range(1000000)[::-1]
+        self.assertEqual(expected, shortest_dist_to_char(s, ch))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False, verbosity=2)
+```
 
 ### Mar 9, 2021 \[Medium\] Number of Android Lock Patterns
 ---

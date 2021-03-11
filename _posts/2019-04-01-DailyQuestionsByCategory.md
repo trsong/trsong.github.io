@@ -2391,6 +2391,28 @@ For example, given the string `tweet`, return `tteew`. `eettw` would also be acc
 
 
 <details>
+<summary class="lc_m">
+
+- [**\[Medium\] LC 821. Shortest Distance to Character**](http://trsong.github.io/python/java/2021/02/02/DailyQuestionsFeb/#mar-10-2021-lc-821-medium-shortest-distance-to-character) -- *Given a string s and a character c, find the distance for all characters in the string to the character c in the string s.* [*\(Try ME\)*](https://repl.it/@trsong/Find-Shortest-Distance-to-Characters-1)
+
+</summary>
+<div>
+
+**Question:**  Given a string s and a character c, find the distance for all characters in the string to the character c in the string s. 
+
+You can assume that the character c will appear at least once in the string.
+
+**Example:**
+```py
+shortest_dist('helloworld', 'l') 
+# returns [2, 1, 0, 0, 1, 2, 2, 1, 0, 1]
+```
+
+</div>
+</details>
+
+
+<details>
 <summary class="lc_h">
 
 - [**\[Hard\] Efficiently Manipulate a Very Long String**](http://trsong.github.io/python/java/2021/02/02/DailyQuestionsFeb/#mar-6-2021-hard-efficiently-manipulate-a-very-long-string) -- *Design a tree-based data structure to efficiently manipulate a very long string* [*\(Try ME\)*](https://repl.it/@trsong/Efficiently-Manipulate-a-Very-Long-String-1)
