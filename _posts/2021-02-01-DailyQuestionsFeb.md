@@ -19,6 +19,18 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
 
+### Mar 12, 2021 \[Medium\] Number of Connected Components
+---
+> **Question:** Given a list of undirected edges which represents a graph, find out the number of connected components.
+
+**Example:**
+```py
+Input: [(1, 2), (2, 3), (4, 1), (5, 6)]))
+Output: 2
+Explanation: In the above example, vertices 1, 2, 3, 4 are all connected, and 5, 6 are connected, and thus there are 2 connected components in the graph above.
+```
+
+
 ### Mar 11, 2021 \[Easy\] Make the Largest Number
 ---
 > **Question:** Given a number of integers, combine them so it would create the largest number.
@@ -27,6 +39,62 @@ categories: Python/Java
 ```py
 Input: [17, 7, 2, 45, 72]
 Output: 77245217
+```
+
+**Solution with Customized Sort:** [https://repl.it/@trsong/Construct-the-Largest-Number](https://repl.it/@trsong/Construct-the-Largest-Number)
+```py
+import unittest
+
+def construct_largest_number(nums):
+    if not nums:
+        return 0
+
+    negatives = filter(lambda x: x < 0, nums)
+    positives = filter(lambda x: x >= 0, nums)
+    positive_strings = map(str, positives)
+    custom_cmp = lambda x, y: cmp(x + y, y + x)
+    if negatives:
+        positive_strings.sort(cmp=custom_cmp)
+        return int(str(negatives[0]) + "".join(positive_strings))
+    else:
+        positive_strings.sort(cmp=custom_cmp, reverse=True)
+        return int("".join(positive_strings))
+
+
+class ConstructLargestNumberSpec(unittest.TestCase):
+    def test_example(self):
+        self.assertEqual(77245217, construct_largest_number([17, 7, 2, 45, 72]))
+
+    def test_empty_array(self):
+        self.assertEqual(0, construct_largest_number([]))
+
+    def test_array_with_one_element(self):
+        self.assertEqual(-42, construct_largest_number([-42]))
+
+    def test_array_with_duplicated_zeros(self):
+        self.assertEqual(4321000, construct_largest_number([4, 1, 3, 2, 0, 0, 0]))
+
+    def test_array_with_unaligned_digits(self):
+        self.assertEqual(123451234123121, construct_largest_number([1, 12, 123, 1234, 12345]))
+
+    def test_array_with_unaligned_digits2(self):
+        self.assertEqual(4434324321, construct_largest_number([4321, 432, 43, 4]))
+    
+    def test_array_with_unaligned_digits3(self):
+        self.assertEqual(6054854654, construct_largest_number([54, 546, 548, 60]))
+    
+    def test_array_with_unaligned_digits4(self):
+        self.assertEqual(998764543431, construct_largest_number([1, 34, 3, 98, 9, 76, 45, 4]))
+
+    def test_array_with_negative_numbers(self):
+        self.assertEqual(-101234, construct_largest_number([-1, 0, 1, 2, 3, 4]))
+    
+    def test_array_with_negative_numbers2(self):
+        self.assertEqual(-99990101202123442, construct_largest_number([0, 1, 10, 2, 21, 20, 34, 42, -9999]))
+        
+
+if __name__ == '__main__':
+    unittest.main(exit=False, verbosity=2)
 ```
 
 ### Mar 10, 2021 LC 821 \[Medium\] Shortest Distance to Character
