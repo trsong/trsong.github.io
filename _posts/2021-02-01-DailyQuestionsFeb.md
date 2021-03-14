@@ -25,9 +25,93 @@ categories: Python/Java
 
 **Example:**
 ```py
-Input: [(1, 2), (2, 3), (4, 1), (5, 6)]))
+Input: [(1, 2), (2, 3), (4, 1), (5, 6)]
 Output: 2
 Explanation: In the above example, vertices 1, 2, 3, 4 are all connected, and 5, 6 are connected, and thus there are 2 connected components in the graph above.
+```
+
+**Soluiton with DisjointSet(Union-Find):** [https://replit.com/@trsong/Number-of-Connected-Components](https://replit.com/@trsong/Number-of-Connected-Components)
+```py
+import unittest
+
+def count_connected_components(edges):
+    uf = DisjointSet()
+    for u, v in edges:
+        uf.union(u, v)
+    return uf.count_roots()
+
+
+class DisjointSet(object):
+    def __init__(self):
+        self.parent = {}
+    
+    def find(self, p):
+        self.parent[p] = self.parent.get(p, p)
+        while self.parent[p] != p:
+            self.parent[p] = self.parent[self.parent[p]]
+            p = self.parent[p]
+        return p
+
+    def union(self, p1, p2):
+        root1 = self.find(p1)
+        root2 = self.find(p2)
+        if root1 != root2:
+            self.parent[root1] = root2
+
+    def count_roots(self):
+        root_set = { self.find(root) for root in self.parent.keys() }
+        return len(root_set)
+
+
+class CountConnectedComponentSpec(unittest.TestCase):
+    def test_example(self):
+        edges = [(1, 2), (2, 3), (4, 1), (5, 6)]
+        expected = 2
+        self.assertEqual(expected, count_connected_components(edges))
+
+    def test_disconnected_graph(self):
+        edges = [(1, 5), (0, 2), (2, 4), (3, 7)]
+        expected = 3
+        self.assertEqual(expected, count_connected_components(edges))
+    
+    def test_k3(self):
+        edges = [(0, 1), (1, 2), (2, 0)]
+        expected = 1
+        self.assertEqual(expected, count_connected_components(edges))  
+    
+    def test_empty_graph(self):
+        edges = []
+        expected = 0
+        self.assertEqual(expected, count_connected_components(edges))  
+
+    def test_connected_graph1(self):
+        edges = [(0, 1), (0, 2), (0, 3), (1, 2), (2, 3)]
+        expected = 1
+        self.assertEqual(expected, count_connected_components(edges))  
+
+    def test_connected_graph2(self):
+        edges = [(0, 1), (1, 2), (2, 0), (3, 4), (4, 5), (5, 3), (5, 0)]
+        expected = 1
+        self.assertEqual(expected, count_connected_components(edges))  
+    
+    def test_connected_graph3(self):
+        edges = [(0, 1), (1, 2), (2, 0), (0, 3), (3, 4)]
+        expected = 1
+        self.assertEqual(expected, count_connected_components(edges))  
+
+    def test_connected_graph4(self):
+        edges = [(0, 1), (1, 2), (2, 3)]
+        expected = 1
+        self.assertEqual(expected, count_connected_components(edges))
+
+    def test_connected_graph5(self):
+        edges = [(0, 1), (0, 2), (1, 2), (0, 3), (3, 4)]
+        expected = 1
+        self.assertEqual(expected, count_connected_components(edges))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False, verbosity=2)
 ```
 
 

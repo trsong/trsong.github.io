@@ -5681,6 +5681,27 @@ In this case, the shortest valid path would be 0 -> 2 -> 4 -> 0, with a distance
 <details>
 <summary class="lc_m">
 
+- [**\[Medium\] Number of Connected Components**](https://trsong.github.io/python/java/2021/02/02/DailyQuestionsFeb/#mar-12-2021-medium-number-of-connected-components) -- *Given a list of undirected edges which represents a graph, find out the number of connected components.* [*\(Try ME\)*](https://replit.com/@trsong/Number-of-Connected-Components-1)
+
+</summary>
+<div>
+
+**Question:** Given a list of undirected edges which represents a graph, find out the number of connected components.
+
+**Example:**
+```py
+Input: [(1, 2), (2, 3), (4, 1), (5, 6)]
+Output: 2
+Explanation: In the above example, vertices 1, 2, 3, 4 are all connected, and 5, 6 are connected, and thus there are 2 connected components in the graph above.
+```
+
+</div>
+</details>
+
+
+<details>
+<summary class="lc_m">
+
 - [**\[Medium\] Friend Cycle Problem**](https://trsong.github.io/python/java/2020/11/02/DailyQuestionsAug/#jan-19-2021-medium-friend-cycle-problem) -- *Given a friendship list, determine the number of friend groups in the class.* [*\(Try ME\)*](https://repl.it/@trsong/Friend-Cycle-Problem-1)
 
 </summary>
