@@ -19,6 +19,26 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
 
+### Mar 13, 2021 \[Hard\] Critical Routers (Articulation Point)
+--- 
+> **Question:** You are given an undirected connected graph. An articulation point (or cut vertex) is defined as a vertex which, when removed along with associated edges, makes the graph disconnected (or more precisely, increases the number of connected components in the graph). The task is to find all articulation points in the given graph.
+
+**Example1:**
+```py
+Input: vertices = 4, edges = [[0, 1], [1, 2], [2, 3]]
+Output: [1, 2]
+Explanation: 
+Removing either vertex 0 or 3 along with edges [0, 1] or [2, 3] does not increase number of connected components. 
+But removing 1, 2 breaks graph into two components.
+```
+
+**Example2:**
+```py
+Input: vertices = 5, edges = [[0, 1], [0, 2], [1, 2], [0, 3], [3, 4]]
+Output: [0, 3]
+```
+
+
 ### Mar 12, 2021 \[Medium\] Number of Connected Components
 ---
 > **Question:** Given a list of undirected edges which represents a graph, find out the number of connected components.
