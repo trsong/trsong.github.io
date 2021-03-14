@@ -19,6 +19,28 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
 
+### Mar 14, 2021  \[Medium\] Split a Binary Search Tree
+---
+> **Question:** Given a binary search tree (BST) and a value s, split the BST into 2 trees, where one tree has all values less than or equal to s, and the other tree has all values greater than s while maintaining the tree structure of the original BST. You can assume that s will be one of the node's value in the BST. Return both tree's root node as a tuple.
+
+**Example:**
+```py
+Given the following tree, and s = 2
+     3
+   /   \
+  1     4
+   \     \
+    2     5
+
+Split into two trees:
+ 1    And   3
+  \          \
+   2          4
+               \
+                5
+```
+
+
 ### Mar 13, 2021 \[Hard\] Critical Routers (Articulation Point)
 --- 
 > **Question:** You are given an undirected connected graph. An articulation point (or cut vertex) is defined as a vertex which, when removed along with associated edges, makes the graph disconnected (or more precisely, increases the number of connected components in the graph). The task is to find all articulation points in the given graph.
