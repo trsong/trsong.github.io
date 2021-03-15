@@ -3215,6 +3215,37 @@ For example, given the array `[3, 4, 9, 6, 1]`, return `[1, 1, 2, 1, 0]`, since:
 
 
 <details>
+<summary class="lc_m">
+
+- [**\[Medium\] Split a Binary Search Tree**](http://trsong.github.io/python/java/2021/02/02/DailyQuestionsFeb/#mar-14-2021--medium-split-a-binary-search-tree) -- *Given a BST and a value s, split the BST into 2 trees, where one tree has all values less than or equal to s, and the others.* [*\(Try ME\)*](https://replit.com/@trsong/Split-BST-into-Two-BSTs-1)
+
+</summary>
+<div>
+
+**Question:** Given a binary search tree (BST) and a value s, split the BST into 2 trees, where one tree has all values less than or equal to s, and the other tree has all values greater than s while maintaining the tree structure of the original BST. You can assume that s will be one of the node's value in the BST. Return both tree's root node as a tuple.
+
+**Example:**
+```py
+Given the following tree, and s = 2
+     3
+   /   \
+  1     4
+   \     \
+    2     5
+
+Split into two trees:
+ 1    And   3
+  \          \
+   2          4
+               \
+                5
+```
+
+</div>
+</details>
+
+
+<details>
 <summary class="lc_e">
 
 - [**\[Easy\] Filter Binary Tree Leaves**](http://trsong.github.io/python/java/2021/02/02/DailyQuestionsFeb/#feb-14-2021-easy-filter-binary-tree-leaves) -- *Given a binary tree and an integer k, filter the binary tree such that its leaves don’t contain the value k.* [*\(Try ME\)*](https://repl.it/@trsong/Filter-Binary-Tree-Leaves-of-Certain-Value-1)
