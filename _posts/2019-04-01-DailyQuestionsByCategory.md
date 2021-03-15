@@ -5153,6 +5153,35 @@ Output: 1
 ---
 
 <details>
+<summary class="lc_h">
+
+- [**\[Hard\] Critical Routers (Articulation Point)**](http://trsong.github.io/python/java/2021/02/02/DailyQuestionsFeb/#mar-13-2021-hard-critical-routers-articulation-point) -- *Given an undirected connected graph, find all articulation points in the given graph.* [*\(Try ME\)*](https://replit.com/@trsong/Find-the-Critical-Routers-Articulation-Point-1)
+
+</summary>
+<div>
+
+**Question:** You are given an undirected connected graph. An articulation point (or cut vertex) is defined as a vertex which, when removed along with associated edges, makes the graph disconnected (or more precisely, increases the number of connected components in the graph). The task is to find all articulation points in the given graph.
+
+**Example1:**
+```py
+Input: vertices = 4, edges = [[0, 1], [1, 2], [2, 3]]
+Output: [1, 2]
+Explanation: 
+Removing either vertex 0 or 3 along with edges [0, 1] or [2, 3] does not increase number of connected components. 
+But removing 1, 2 breaks graph into two components.
+```
+
+**Example2:**
+```py
+Input: vertices = 5, edges = [[0, 1], [0, 2], [1, 2], [0, 3], [3, 4]]
+Output: [0, 3]
+```
+
+</div>
+</details>
+
+
+<details>
 <summary class="lc_m">
 
 - [**\[Medium\] LC 332. Reconstruct Itinerary**](http://trsong.github.io/python/java/2021/02/02/DailyQuestionsFeb/#feb-12-2021-lc-332-medium-reconstruct-itinerary) -- *Given a list of airline tickets represented by pairs of departure and arrival airports [from, to], reconstruct the itinerary in order.* [*\(Try ME\)*](https://repl.it/@trsong/Reconstruct-Flight-Itinerary-1)
