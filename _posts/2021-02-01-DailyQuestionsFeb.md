@@ -115,7 +115,7 @@ def critial_rounters(vertices, edges):
                         res.add(v)
                 ancesor_time[u] = min(ancesor_time[u], ancesor_time[v])
         else:
-            # When node_states[u] is NodeState.VISITED
+            # When node_states[u] is NodeState.UNVISITED
             node_states[u] = NodeState.VISITING
             ancesor_time[u] = discover_time[u] = time
             time += 1
