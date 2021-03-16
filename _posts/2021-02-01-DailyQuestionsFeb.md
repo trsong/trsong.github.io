@@ -19,6 +19,24 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
 
+### Mar 16, 2021 LC 30 \[Hard\] Substring with Concatenation of All Words
+---
+> **Question:**  Given a string `s` and a list of words words, where each word is the same length, find all starting indices of substrings in s that is a concatenation of every word in words exactly once. The order of the indices does not matter.
+
+**Example 1:**
+```py
+Input: s = "dogcatcatcodecatdog", words = ["cat", "dog"]
+Output: [0, 13]
+Explanation: "dogcat" starts at index 0 and "catdog" starts at index 13.
+```
+
+**Example 2:**
+```py
+Input: s = "barfoobazbitbyte", words = ["dog", "cat"]
+Output: []
+Explanation: there are no substrings composed of "dog" and "cat" in s.
+```
+
 ### Mar 15, 2021 \[Medium\] Maze Paths
 ---
 > **Question:**  A maze is a matrix where each cell can either be a 0 or 1. A 0 represents that the cell is empty, and a 1 represents a wall that cannot be walked through. You can also only travel either right or down.
