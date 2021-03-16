@@ -35,6 +35,103 @@ Output: 2
 The two paths that can only be taken in the above example are: down -> right -> down -> right, and down -> down -> right -> right.
 ```
 
+**Solution with DP:** [https://replit.com/@trsong/Count-Number-of-Maze-Paths](https://replit.com/@trsong/Count-Number-of-Maze-Paths)
+```py
+import unittest
+
+def count_maze_path(grid):
+    if not grid or not grid[0]:
+        return 0
+
+    n, m = len(grid), len(grid[0])
+    # Let grid[r][c] represents # of ways from top left to cell (r, c)
+    # grid[r][c] = grid[r-1][c] + grid[r][c-1] 
+    grid[0][0] = -1
+    for r in xrange(n):
+        for c in xrange(m):
+            if grid[r][c] != 0:
+                continue
+
+            left_val = grid[r - 1][c] if r > 0 and grid[r - 1][c] < 0 else 0
+            top_val = grid[r][c - 1] if c > 0 and grid[r][c - 1] < 0 else 0
+            grid[r][c] += left_val + top_val
+
+    return abs(grid[-1][-1]) 
+
+
+class CountMazePathSpec(unittest.TestCase):
+    def test_example(self):
+        grid = [
+            [0, 1, 0],
+            [0, 0, 1],
+            [0, 0, 0]
+        ]
+        self.assertEqual(2, count_maze_path(grid))
+    
+    def test_one_cell_grid(self):
+        self.assertEqual(1, count_maze_path([[0]]))
+
+    def test_4x4_grid(self):
+        grid = [
+            [0, 0, 0, 0],
+            [0, 1, 0, 0],
+            [1, 0, 0, 0],
+            [0, 0, 0, 0]
+        ]
+        self.assertEqual(4, count_maze_path(grid))
+
+    def test_4x4_grid2(self):
+        grid = [
+            [0, 0, 0, 0],
+            [0, 0, 0, 0],
+            [1, 0, 0, 0],
+            [1, 0, 0, 0]
+        ]
+        self.assertEqual(16, count_maze_path(grid))
+    
+    def test_non_square_grid(self):
+        grid = [
+            [0, 0],
+            [1, 0],
+            [0, 0],
+            [0, 0]
+        ]
+        self.assertEqual(1, count_maze_path(grid))
+
+    def test_alternative_path_exists(self):
+        grid = [
+            [0, 0, 0, 0, 0],
+            [0, 0, 0, 1, 0],
+            [1, 0, 0, 0, 0],
+            [0, 0, 1, 0, 0],
+            [0, 0, 0, 0, 0]
+        ]
+        self.assertEqual(18, count_maze_path(grid))
+    
+    def test_all_paths_are_blocked(self):
+        grid = [
+            [0, 0, 0, 0, 0],
+            [0, 0, 0, 1, 0],
+            [1, 0, 0, 1, 0],
+            [0, 1, 1, 0, 1],
+            [0, 0, 0, 0, 0]
+        ]
+        self.assertEqual(0, count_maze_path(grid))
+
+    def test_no_obstacles(self):
+        grid = [
+            [0, 0, 0],
+            [0, 0, 0],
+            [0, 0, 0]
+        ]
+        self.assertEqual(6, count_maze_path(grid))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False, verbosity=2)
+```
+
+
 ### Mar 14, 2021  \[Medium\] Split a Binary Search Tree
 ---
 > **Question:** Given a binary search tree (BST) and a value s, split the BST into 2 trees, where one tree has all values less than or equal to s, and the other tree has all values greater than s while maintaining the tree structure of the original BST. You can assume that s will be one of the node's value in the BST. Return both tree's root node as a tuple.
