@@ -19,6 +19,15 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
 
+### Mar 17, 2021 \[Medium\] K Closest Elements
+---
+> **Question:** Given a list of sorted numbers, and two integers `k` and `x`, find `k` closest numbers to the pivot `x`.
+
+**Example:**
+```py
+closest_nums([1, 3, 7, 8, 9], 3, 5)  # gives [7, 3, 8]
+```
+
 ### Mar 16, 2021 LC 30 \[Hard\] Substring with Concatenation of All Words
 ---
 > **Question:**  Given a string `s` and a list of words words, where each word is the same length, find all starting indices of substrings in s that is a concatenation of every word in words exactly once. The order of the indices does not matter.
