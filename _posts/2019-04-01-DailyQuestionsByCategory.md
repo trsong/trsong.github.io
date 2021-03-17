@@ -3896,6 +3896,34 @@ sumRange(0, 2) -> 8
 ---
 
 <details>
+<summary class="lc_h">
+
+- [**\[Hard\] LC 30. Substring with Concatenation of All Words**](http://trsong.github.io/python/java/2021/02/02/DailyQuestionsFeb/#mar-16-2021-lc-30-hard-substring-with-concatenation-of-all-words) -- *Given a string s and a list of same length words, find all index of substring of s that is permutation of words.* [*\(Try ME\)*](https://replit.com/@trsong/Substring-with-Concatenation-of-All-Words-1)
+
+</summary>
+<div>
+
+**Question:**  Given a string `s` and a list of words words, where each word is the same length, find all starting indices of substrings in s that is a concatenation of every word in words exactly once. The order of the indices does not matter.
+
+**Example 1:**
+```py
+Input: s = "dogcatcatcodecatdog", words = ["cat", "dog"]
+Output: [0, 13]
+Explanation: "dogcat" starts at index 0 and "catdog" starts at index 13.
+```
+
+**Example 2:**
+```py
+Input: s = "barfoobazbitbyte", words = ["dog", "cat"]
+Output: []
+Explanation: there are no substrings composed of "dog" and "cat" in s.
+```
+
+</div>
+</details>
+
+
+<details>
 <summary class="lc_m">
 
 - [**\[Medium\] Shortest Unique Prefix**](http://trsong.github.io/python/java/2021/02/02/DailyQuestionsFeb/#feb-16-2021-medium-shortest-unique-prefix) -- *Given an array of words, find all shortest unique prefixes to represent each word in the given array. Assume no word is prefix of another.* [*\(Try ME\)*](https://repl.it/@trsong/Find-All-Shortest-Unique-Prefix-1)

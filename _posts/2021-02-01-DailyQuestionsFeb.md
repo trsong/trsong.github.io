@@ -37,6 +37,119 @@ Output: []
 Explanation: there are no substrings composed of "dog" and "cat" in s.
 ```
 
+**Solution with Trie:** [https://replit.com/@trsong/Substring-with-Concatenation-of-All-Words](https://replit.com/@trsong/Substring-with-Concatenation-of-All-Words)
+```py
+import unittest
+
+def find_permutation_as_substring(s, words):
+    if not s or not words:
+        return []
+
+    word_count = len(words)
+    word_length = len(words[0])
+    trie = Trie()
+    for word in words:
+        trie.insert(word)
+
+    res = []
+    for i in xrange(len(s) - word_count * word_length + 1):
+        if is_substring(s, trie, i, word_count, word_length):
+            res.append(i)
+    return res
+
+
+def is_substring(s, trie, start, word_count, word_length):
+    nodes = []
+    for step in xrange(word_count):
+        offset = step * word_length
+        word = s[offset + start: offset + start + word_length]
+        node = trie.find(word)
+        if node is None or node.count <= 0:
+            break
+        node.count -= 1
+        nodes.append(node)
+
+    for node in nodes:
+        node.count += 1
+    
+    return len(nodes) == word_count
+
+
+class Trie(object):
+    def __init__(self):
+        self.children = None
+        self.count = 0
+    
+    def insert(self, word):
+        p = self
+        for ch in word:
+            p.children = p.children or {}
+            if ch not in p.children:
+                p.children[ch] = Trie()
+            p = p.children[ch]
+        p.count += 1
+
+    def find(self, word):
+        p = self
+        for ch in word:
+            if not p or not p.children or ch not in p.children:
+                return None
+            p = p.children[ch]
+        return p
+
+
+class FindPermutationAsSubstring(unittest.TestCase):
+    def assert_result(self, expected, result):
+        self.assertEqual(sorted(expected), sorted(result))
+
+    def test_example(self):
+        s = "dogcatcatcodecatdog"
+        words = ["cat", "dog"]
+        # catdog, dogcat
+        expected = [0, 13]
+        self.assert_result(expected, find_permutation_as_substring(s, words))
+
+    def test_example2(self):
+        s = "barfoobazbitbyte"
+        words = ["dog", "cat"]
+        expected = []
+        self.assert_result(expected, find_permutation_as_substring(s, words))
+
+    def test_words_with_two_elements(self):
+        s = "barfoothefoobarman"
+        words = ["foo", "bar"]
+        expected = [0, 9]
+        self.assert_result(expected, find_permutation_as_substring(s, words))
+    
+    def test_does_not_exist_solution(self):
+        s = "wordgoodgoodgoodbestword"
+        words = ["word","good","best","word"]
+        expected = []
+        self.assert_result(expected, find_permutation_as_substring(s, words))
+
+    def test_words_with_three_elements(self):
+        s = "barfoofoobarthefoobarman"
+        words = ["bar","foo","the"]
+        expected = [6,9,12]
+        self.assert_result(expected, find_permutation_as_substring(s, words))
+    
+    def test_empty_string(self):
+        self.assert_result([], find_permutation_as_substring("", ["a"]))
+
+    def test_empty_words(self):
+        self.assert_result([], find_permutation_as_substring("abc", []))
+
+    def test_words_with_one_element(self):
+        s = "01020304"
+        words = ["0"]
+        expected = [0, 2, 4, 6]
+        self.assert_result(expected, find_permutation_as_substring(s, words))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False, verbosity=2)
+```
+
 ### Mar 15, 2021 \[Medium\] Maze Paths
 ---
 > **Question:**  A maze is a matrix where each cell can either be a 0 or 1. A 0 represents that the cell is empty, and a 1 represents a wall that cannot be walked through. You can also only travel either right or down.
