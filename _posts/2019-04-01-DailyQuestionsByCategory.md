@@ -1359,6 +1359,25 @@ Explanation: Because the new interval [4,8] overlaps with [3,5],[6,7],[8,10].
 ---
 
 <details>
+<summary class="lc_m">
+
+- [**\[Medium\] K Closest Elements**](http://trsong.github.io/python/java/2021/02/02/DailyQuestionsFeb/#mar-17-2021-medium-k-closest-elements) -- *Given a list of sorted numbers, and two integers k and x, find k closest numbers to the pivot x.* [*\(Try ME\)*](https://replit.com/@trsong/Find-K-Closest-Elements-in-a-Sorted-Array-1)
+
+</summary>
+<div>
+
+**Question:** Given a list of sorted numbers, and two integers `k` and `x`, find `k` closest numbers to the pivot `x`.
+
+**Example:**
+```py
+closest_nums([1, 3, 7, 8, 9], 3, 5)  # gives [7, 3, 8]
+```
+
+</div>
+</details>
+
+
+<details>
 <summary class="lc_h">
 
 - [**\[Hard\] Maximize the Minimum of Subarray Sum**](http://trsong.github.io/python/java/2021/02/02/DailyQuestionsFeb/#mar-3-2021-hard-maximize-the-minimum-of-subarray-sum) -- *Given an array of numbers N and integer k, split N into k partitions such that the maximize sum of any partition is minimized.* [*\(Try ME\)*](https://repl.it/@trsong/Maximize-the-Minimum-of-Subarray-Sum-1)

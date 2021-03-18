@@ -28,6 +28,89 @@ categories: Python/Java
 closest_nums([1, 3, 7, 8, 9], 3, 5)  # gives [7, 3, 8]
 ```
 
+**Solution with Binary Search:** [https://replit.com/@trsong/Find-K-Closest-Elements-in-a-Sorted-Array](https://replit.com/@trsong/Find-K-Closest-Elements-in-a-Sorted-Array)
+```py
+import unittest
+
+def closest_nums(nums, k, target):
+    right = binary_search(nums, target)
+    left = right - 1
+    res = []
+    for _ in xrange(k):
+        if right >= len(nums) or left >= 0 and target - nums[left] <  nums[right] - target:
+            res.append(nums[left])
+            left -= 1
+        else:
+            res.append(nums[right])
+            right += 1
+    return res
+
+
+def binary_search(nums, target):
+    lo, hi = 0, len(nums) - 1
+    while lo < hi:
+        mid = lo + (hi - lo) // 2
+        if nums[mid] < target:
+            lo = mid + 1
+        else:
+            hi = mid
+    return lo
+
+
+class ClosestNumSpec(unittest.TestCase):
+    def test_example(self):
+        k, x, nums = 3, 5, [1, 3, 7, 8, 9]
+        expected = [7, 3, 8]
+        self.assertEqual(sorted(expected), sorted(closest_nums(nums, k, x)))
+
+    def test_example2(self):
+        k, x, nums = 5, 35, [12, 16, 22, 30, 35, 39, 42, 45, 48, 50, 53, 55, 56]
+        expected = [30, 39, 35, 42, 45]
+        self.assertEqual(sorted(expected), sorted(closest_nums(nums, k, x)))
+
+    def test_empty_list(self):
+        self.assertEqual([], closest_nums([], 0, 42))
+    
+    def test_entire_list_qualify(self):
+        k, x, nums = 6, -1000, [0, 1, 2, 3, 4, 5]
+        expected = [0, 1, 2, 3, 4, 5]
+        self.assertEqual(sorted(expected), sorted(closest_nums(nums, k, x)))
+    
+    def test_entire_list_qualify2(self):
+        k, x, nums = 2, 1000, [0, 1]
+        expected = [0, 1]
+        self.assertEqual(sorted(expected), sorted(closest_nums(nums, k, x)))
+
+    def test_closest_number_on_both_sides(self):
+        k, x, nums = 3, 5, [1, 5, 6, 10, 20]
+        expected = [1, 5, 6]
+        self.assertEqual(sorted(expected), sorted(closest_nums(nums, k, x)))
+
+    def test_closest_number_from_head_of_list(self):
+        k, x, nums = 2, -1, [0, 1, 2, 3]
+        expected = [0, 1]
+        self.assertEqual(sorted(expected), sorted(closest_nums(nums, k, x)))
+
+    def test_closest_number_from_tail_of_list(self):
+        k, x, nums = 4, 999, [0, 1, 2, 3]
+        expected = [0, 1, 2, 3]
+        self.assertEqual(sorted(expected), sorted(closest_nums(nums, k, x)))
+
+    def test_contains_duplicate_numbers(self):
+        k, x, nums = 5, 3, [1, 1, 1, 1, 3, 3, 3, 4, 4]
+        expected = [3, 3, 3, 4, 4]
+        self.assertEqual(sorted(expected), sorted(closest_nums(nums, k, x)))
+
+    def test_(self):
+        k, x, nums = 2, 99,[1, 2, 100]
+        expected = [2, 100]
+        self.assertEqual(sorted(expected), sorted(closest_nums(nums, k, x)))
+   
+
+if __name__ == '__main__':
+    unittest.main(exit=False, verbosity=2)
+```
+
 ### Mar 16, 2021 LC 30 \[Hard\] Substring with Concatenation of All Words
 ---
 > **Question:**  Given a string `s` and a list of words words, where each word is the same length, find all starting indices of substrings in s that is a concatenation of every word in words exactly once. The order of the indices does not matter.
