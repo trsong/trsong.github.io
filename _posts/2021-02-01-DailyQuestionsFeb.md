@@ -19,6 +19,16 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
 
+### Mar 18, 2021 \[Medium\] K-th Missing Number in Sorted Array
+---
+> **Question:** Given a sorted without any duplicate integer array, define the missing numbers to be the gap among numbers. Write a function to calculate K-th missing number. If such number does not exist, then return null.
+> 
+> For example, original array: `[2,4,7,8,9,15]`, within the range defined by original array, all missing numbers are: `[3,5,6,10,11,12,13,14]`
+> - the 1st missing number is 3,
+> - the 2nd missing number is 5,
+> - the 3rd missing number is 6
+
+
 ### Mar 17, 2021 \[Medium\] K Closest Elements
 ---
 > **Question:** Given a list of sorted numbers, and two integers `k` and `x`, find `k` closest numbers to the pivot `x`.
