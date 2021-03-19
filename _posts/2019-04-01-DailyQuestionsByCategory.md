@@ -1361,6 +1361,26 @@ Explanation: Because the new interval [4,8] overlaps with [3,5],[6,7],[8,10].
 <details>
 <summary class="lc_m">
 
+- [**\[Medium\] K-th Missing Number in Sorted Array**](http://trsong.github.io/python/java/2021/02/02/DailyQuestionsFeb/#mar-18-2021-medium-k-th-missing-number-in-sorted-array) -- *Given a sorted, define the missing numbers to be the gap among numbers. Calculate K-th missing number.* [*\(Try ME\)*](https://replit.com/@trsong/Find-K-th-Missing-Number-in-Sorted-Array-1)
+
+</summary>
+<div>
+
+**Question:** Given a sorted without any duplicate integer array, define the missing numbers to be the gap among numbers. Write a function to calculate K-th missing number. If such number does not exist, then return null.
+
+For example, original array: `[2,4,7,8,9,15]`, within the range defined by original array, all missing numbers are: `[3,5,6,10,11,12,13,14]`
+
+- the 1st missing number is 3,
+- the 2nd missing number is 5,
+- the 3rd missing number is 6
+
+</div>
+</details>
+
+
+<details>
+<summary class="lc_m">
+
 - [**\[Medium\] K Closest Elements**](http://trsong.github.io/python/java/2021/02/02/DailyQuestionsFeb/#mar-17-2021-medium-k-closest-elements) -- *Given a list of sorted numbers, and two integers k and x, find k closest numbers to the pivot x.* [*\(Try ME\)*](https://replit.com/@trsong/Find-K-Closest-Elements-in-a-Sorted-Array-1)
 
 </summary>
