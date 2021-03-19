@@ -19,6 +19,17 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
 
+### Mar 19, 2021 \[Easy\] Swap Even and Odd Nodes
+---
+> **Question:** Given the head of a singly linked list, swap every two nodes and return its head.
+>
+> **Note:** Make sure it’s acutally nodes that get swapped not value.
+
+**Example:**
+```py
+Given 1 -> 2 -> 3 -> 4, return 2 -> 1 -> 4 -> 3.
+```
+
 ### Mar 18, 2021 \[Medium\] K-th Missing Number in Sorted Array
 ---
 > **Question:** Given a sorted without any duplicate integer array, define the missing numbers to be the gap among numbers. Write a function to calculate K-th missing number. If such number does not exist, then return null.
