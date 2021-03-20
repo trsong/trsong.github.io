@@ -30,6 +30,82 @@ categories: Python/Java
 Given 1 -> 2 -> 3 -> 4, return 2 -> 1 -> 4 -> 3.
 ```
 
+**Solution:** [https://replit.com/@trsong/Swap-Every-Even-and-Odd-Nodes-in-Linked-List](https://replit.com/@trsong/Swap-Every-Even-and-Odd-Nodes-in-Linked-List)
+```py
+import unittest
+
+def swap_list(lst):
+    prev = dummy = ListNode(-1, lst)
+    while prev and prev.next and prev.next.next:
+        first = prev.next
+        second = prev.next.next
+
+        first.next = second.next
+        second.next = first
+        prev.next = second
+
+        prev = prev.next.next
+    return dummy.next
+
+
+class ListNode(object):
+    def __init__(self, val, next=None):
+        self.val = val
+        self.next = next
+
+
+class SwapListSpec(unittest.TestCase):
+    def assert_lists(self, lst, node_seq):
+        p = lst
+        for node in node_seq:
+            if p != node: print (p.data if p else "None"), (node.data if node else "None")
+            self.assertTrue(p == node)
+            p = p.next
+        self.assertTrue(p is None)
+
+    def test_empty(self):
+        self.assert_lists(swap_list(None), [])
+
+    def test_one_elem_list(self):
+        n1 = ListNode(1)
+        self.assert_lists(swap_list(n1), [n1])
+
+    def test_two_elems_list(self):
+        # 1 -> 2
+        n2 = ListNode(2)
+        n1 = ListNode(1, n2)
+        self.assert_lists(swap_list(n1), [n2, n1])
+
+    def test_three_elems_list(self):
+        # 1 -> 2 -> 3
+        n3 = ListNode(3)
+        n2 = ListNode(2, n3)
+        n1 = ListNode(1, n2)
+        self.assert_lists(swap_list(n1), [n2, n1, n3])
+
+    def test_four_elems_list(self):
+        # 1 -> 2 -> 3 -> 4
+        n4 = ListNode(4)
+        n3 = ListNode(3, n4)
+        n2 = ListNode(2, n3)
+        n1 = ListNode(1, n2)
+        self.assert_lists(swap_list(n1), [n2, n1, n4, n3])
+
+    def test_five_elems_list(self):
+        # 1 -> 2 -> 3 -> 4 -> 5
+        n5 = ListNode(5)
+        n4 = ListNode(4, n5)
+        n3 = ListNode(3, n4)
+        n2 = ListNode(2, n3)
+        n1 = ListNode(1, n2)
+        self.assert_lists(swap_list(n1), [n2, n1, n4, n3, n5])
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False, verbosity=2)
+```
+
+
 ### Mar 18, 2021 \[Medium\] K-th Missing Number in Sorted Array
 ---
 > **Question:** Given a sorted without any duplicate integer array, define the missing numbers to be the gap among numbers. Write a function to calculate K-th missing number. If such number does not exist, then return null.

@@ -1967,6 +1967,27 @@ Output: False
 ---
 
 <details>
+<summary class="lc_e">
+
+- [**\[Easy\] Swap Even and Odd Nodes**](https://trsong.github.io/python/java/2021/02/02/DailyQuestionsFeb/#mar-19-2021-easy-swap-even-and-odd-nodes) -- *Given the head of a singly linked list, swap every two nodes and return its head.* [*\(Try ME\)*](https://replit.com/@trsong/Swap-Every-Even-and-Odd-Nodes-in-Linked-List-1)
+
+</summary>
+<div>
+
+**Question:** Given the head of a singly linked list, swap every two nodes and return its head.
+
+**Note:** Make sure it’s acutally nodes that get swapped not value.
+
+**Example:**
+```py
+Given 1 -> 2 -> 3 -> 4, return 2 -> 1 -> 4 -> 3.
+```
+
+</div>
+</details>
+
+
+<details>
 <summary class="lc_m">
 
 - [**\[Medium\] LC 138. Deepcopy List with Random Pointer**](https://trsong.github.io/python/java/2020/11/02/DailyQuestionsAug/#jan-12-2021-lc-138-medium-deepcopy-list-with-random-pointer) -- *A linked list is given such that each node contains an additional random pointer points to any node in the list or null. Deepcopy that list.* [*\(Try ME\)*](https://repl.it/@trsong/Create-Deepcopy-List-with-Random-1)
