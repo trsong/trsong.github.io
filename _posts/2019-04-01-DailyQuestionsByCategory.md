@@ -6074,6 +6074,24 @@ For example, given `100`, you can reach `1` in five steps with the following rou
 ---
 
 <details>
+<summary class="lc_h">
+
+- [**\[Hard\] LC 679. 24 Game**](https://trsong.github.io/python/java/2021/02/02/DailyQuestionsFeb/#mar-20-2021-lc-679-hard-24-game) -- *Given a list of 4 int, each between 1 and 9.  Determine if placing the operators +, -, *, and /, and group by () gives 24.* [*\(Try ME\)*](https://replit.com/@trsong/24-Game-1)
+
+</summary>
+<div>
+
+**Question:** The 24 game is played as follows. You are given a list of four integers, each between 1 and 9, in a fixed order. By placing the operators +, -, *, and / between the numbers, and grouping them with parentheses, determine whether it is possible to reach the value 24.
+
+For example, given the input `[5, 2, 7, 8]`, you should return `True`, since `(5 * 2 - 7) * 8 = 24`.
+
+Write a function that plays the 24 game. 
+
+</div>
+</details>
+
+
+<details>
 <summary class="lc_m">
 
 - [**\[Medium\] Number of Android Lock Patterns**](https://trsong.github.io/python/java/2021/02/02/DailyQuestionsFeb/#mar-9-2021-medium-number-of-android-lock-patterns) -- *One way to unlock an Android phone is through a pattern of swipes across a 1-9 keypad.* [*\(Try ME\)*](https://repl.it/@trsong/Count-Number-of-Android-Lock-Patterns-1)

@@ -28,6 +28,81 @@ categories: Python/Java
 > Write a function that plays the 24 game.
 
 
+**Solution with Backtracking:** [https://replit.com/@trsong/24-Game](https://replit.com/@trsong/24-Game)
+```py
+import unittest
+
+def play_24_game(cards):
+    if len(cards) == 1:
+        return abs(cards[0] - 24) < 1e-3
+    elif len(cards) == 2:
+        combined1 = apply_ops(cards[0], cards[1]) 
+        combined2 = apply_ops(cards[1], cards[0])
+        return any(play_24_game([card]) for card in combined1 + combined2)
+    else:
+        for i in range(len(cards)):
+            for j in range(len(cards)):
+                if i == j:
+                    continue
+
+                for combine_cards in apply_ops(cards[i], cards[j]):
+                    remaining_cards = [combine_cards] + [cards[k] for k in range(len(cards)) if k != i and k != j]
+                    if play_24_game(remaining_cards):
+                        return True
+        return False
+
+
+def apply_ops(num1, num2):
+    return [num1 + num2, num1 - num2, num1 * num2, num1 / num2 if num2 != 0 else float('inf')]
+
+
+class Play24GameSpec(unittest.TestCase):
+    def test_example(self):
+        cards = [5, 2, 7, 8]  # (5 * 2 - 7) * 8 = 24
+        self.assertTrue(play_24_game(cards))
+
+    def test_example2(self):
+        cards = [4, 1, 8, 7]  # (8 - 4) * (7 - 1) = 24
+        self.assertTrue(play_24_game(cards))
+
+    def test_example3(self):
+        cards = [1, 2, 1, 2] 
+        self.assertFalse(play_24_game(cards))
+
+    def test_sum_to_24(self):
+        cards = [6, 6, 6, 6]  # 6 + 6 + 6 + 6 = 24
+        self.assertTrue(play_24_game(cards))
+
+    def test_require_division(self):
+        cards = [4, 7, 8, 8]  # 4 * (7 - 8 / 8) = 24
+        self.assertTrue(play_24_game(cards))
+    
+    def test_has_fraction(self):
+        cards = [1, 3, 4, 6]  # 6 / (1 - 3/ 4) = 24
+        self.assertTrue(play_24_game(cards))
+
+    def test_unable_to_solve(self):
+        cards = [1, 1, 1, 1] 
+        self.assertFalse(play_24_game(cards))
+
+    def test_unable_to_solve2(self):
+        cards = [1, 5, 5, 8] 
+        self.assertFalse(play_24_game(cards))
+
+    def test_unable_to_solve3(self):
+        cards = [2, 9, 9, 9] 
+        self.assertFalse(play_24_game(cards))
+
+    def test_unable_to_solve4(self):
+        cards = [2, 2, 7, 9] 
+        self.assertFalse(play_24_game(cards))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False, verbosity=2)
+```
+
+
 ### Mar 19, 2021 \[Easy\] Swap Even and Odd Nodes
 ---
 > **Question:** Given the head of a singly linked list, swap every two nodes and return its head.
