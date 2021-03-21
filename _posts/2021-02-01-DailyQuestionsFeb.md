@@ -19,6 +19,14 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
 
+
+### Mar 21, 2021 \[Easy\] Determine If Singly Linked List is Palindrome
+---
+> **Question:** Determine whether a singly linked list is a palindrome. 
+>
+> For example, `1 -> 4 -> 3 -> 4 -> 1` returns `True` while `1 -> 4` returns `False`. 
+
+
 ### Mar 20, 2021 LC 679 \[Hard\] 24 Game
 ---
 > **Question:** The 24 game is played as follows. You are given a list of four integers, each between 1 and 9, in a fixed order. By placing the operators +, -, *, and / between the numbers, and grouping them with parentheses, determine whether it is possible to reach the value 24.
