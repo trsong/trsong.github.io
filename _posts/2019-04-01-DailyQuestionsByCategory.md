@@ -2214,6 +2214,22 @@ abracadabra => c
 <details>
 <summary class="lc_e">
 
+- [**\[Easy\] Determine If Singly Linked List is Palindrome**](https://trsong.github.io/python/java/2021/02/02/DailyQuestionsFeb/#mar-21-2021-easy-determine-if-singly-linked-list-is-palindrome) -- *Determine whether a singly linked list is a palindrome.* [*\(Try ME\)*](https://replit.com/@trsong/Determine-If-Singly-Linked-List-is-Palindrome-1)
+
+</summary>
+<div>
+
+**Question:** Determine whether a singly linked list is a palindrome. 
+
+For example, `1 -> 4 -> 3 -> 4 -> 1` returns `True` while `1 -> 4` returns `False`.
+
+</div>
+</details>
+
+
+<details>
+<summary class="lc_e">
+
 - [**\[Easy\] Rotate Linked List**](https://trsong.github.io/python/java/2020/11/02/DailyQuestionsAug/#jan-26-2021-easy-rotate-linked-list) -- *Given a linked list and a number k, rotate the linked list by k places.* [*\(Try ME\)*](https://repl.it/@trsong/Rotate-Singly-Linked-List-1)
 
 </summary>

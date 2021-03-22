@@ -33,6 +33,112 @@ categories: Python/Java
 >
 > For example, `1 -> 4 -> 3 -> 4 -> 1` returns `True` while `1 -> 4` returns `False`. 
 
+**My thoughts:** An easy way to solve this problem is to use stack. But that is not memory efficient. An alternative way is to flip the second half of list and check each element against fist half. 
+
+**Solution with Fast-Slow Pointers:** [https://replit.com/@trsong/Determine-If-Singly-Linked-List-is-Palindrome](https://replit.com/@trsong/Determine-If-Singly-Linked-List-is-Palindrome)
+```py
+import unittest
+
+def is_palindrome(lst):
+    if not lst:
+        return True
+
+    slow = fast = lst
+    while fast.next and fast.next.next:
+        slow = slow.next
+        fast = fast.next.next
+
+    if fast.next:
+        fast = fast.next
+        reverse(slow.next)
+    else:
+        reverse(slow)
+
+    slow.next = None
+    return is_equal(lst, fast)
+
+
+def reverse(lst):
+    prev = None
+    cur = lst
+    while cur:
+        next = cur.next
+        cur.next = prev
+        prev = cur
+        cur = next
+    return prev
+
+
+def is_equal(l1, l2):
+    while l1 and l2:
+        if l1.val != l2.val:
+            return False
+        l1 = l1.next
+        l2 = l2.next
+    return l1 == l2 == None
+
+
+class ListNode(object):
+    def __init__(self, val, next=None):
+        self.val = val
+        self.next = next
+    
+    @staticmethod
+    def List(*vals):
+        dummy = cur = ListNode(-1)
+        for val in vals:
+            cur.next = ListNode(val)
+            cur = cur.next
+        return dummy.next
+
+    def __repr__(self):
+        return "%s -> %s" % (self.val, self.next)
+
+
+class IsPalindromeSpec(unittest.TestCase):
+    def test_empty_list(self):
+        self.assertTrue(is_palindrome(None))
+
+    def test_one_element_list(self):
+        self.assertTrue(is_palindrome(ListNode.List(42)))
+
+    def test_two_element_list(self):
+        self.assertFalse(is_palindrome(ListNode.List(1, 2)))
+
+    def test_two_element_palindrome(self):
+        self.assertTrue(is_palindrome(ListNode.List(6, 6)))
+
+    def test_three_element_list(self):
+        self.assertFalse(is_palindrome(ListNode.List(1, 2, 3)))
+
+    def test_three_element_list2(self):
+        self.assertFalse(is_palindrome(ListNode.List(1, 1, 2)))
+
+    def test_three_element_list3(self):
+        self.assertFalse(is_palindrome(ListNode.List(1, 2, 2)))
+
+    def test_three_element_palindrome(self):
+        self.assertTrue(is_palindrome(ListNode.List(1, 2, 1)))
+
+    def test_three_element_palindrome2(self):
+        self.assertTrue(is_palindrome(ListNode.List(1, 1, 1)))
+
+    def test_even_element_list(self):
+        self.assertFalse(is_palindrome(ListNode.List(1, 2, 3, 4, 2, 1)))
+
+    def test_even_element_list2(self):
+        self.assertTrue(is_palindrome(ListNode.List(1, 2, 3, 3, 2, 1)))
+
+    def test_odd_element_list(self):
+        self.assertTrue(is_palindrome(ListNode.List(1, 2, 3, 2, 1)))
+
+    def test_odd_element_list2(self):
+        self.assertFalse(is_palindrome(ListNode.List(1, 2, 3, 3, 1)))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False, verbosity=2)
+```
 
 ### Mar 20, 2021 LC 679 \[Hard\] 24 Game
 ---
