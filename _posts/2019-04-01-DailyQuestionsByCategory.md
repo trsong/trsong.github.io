@@ -6953,6 +6953,23 @@ Given such an array, determine the denominations that must be in use. In the cas
 <details>
 <summary class="lc_m">
 
+- [**\[Medium\] Paint House**](https://trsong.github.io/python/java/2021/02/02/DailyQuestionsFeb/#mar-22-2021-medium-paint-house) -- *Given an N by K matrix where the nth row and kth column represents the cost to build the nth house with kth color, return the minimum cost.* [*\(Try ME\)*](https://replit.com/@trsong/Min-Cost-to-Paint-House-1)
+
+</summary>
+<div>
+
+**Question:** A builder is looking to build a row of N houses that can be of K different colors. He has a goal of minimizing cost while ensuring that no two neighboring houses are of the same color.
+
+Given an N by K matrix where the n-th row and k-th column represents the cost to build the n-th house with k-th color, return the minimum cost which achieves this goal.
+
+</div>
+</details>
+
+
+
+<details>
+<summary class="lc_m">
+
 - [**\[Medium\] Maze Paths**](http://trsong.github.io/python/java/2021/02/02/DailyQuestionsFeb/#mar-15-2021-medium-maze-paths) -- *Given a nxm matrix, find the number of ways someone can go from the top left corner to the bottom right corner.* [*\(Try ME\)*](https://replit.com/@trsong/Count-Number-of-Maze-Paths-1)
 
 </summary>

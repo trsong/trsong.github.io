@@ -26,6 +26,96 @@ categories: Python/Java
 >
 > Given an N by K matrix where the n-th row and k-th column represents the cost to build the n-th house with k-th color, return the minimum cost which achieves this goal.
 
+**Solution with DP:** [https://replit.com/@trsong/Min-Cost-to-Paint-House](https://replit.com/@trsong/Min-Cost-to-Paint-House)
+```py
+import unittest
+
+def min_paint_houses_cost(paint_cost):
+    if not paint_cost or not paint_cost[0]:
+        return 0
+
+    num_house, num_color = len(paint_cost), len(paint_cost[0])
+    # Let dp[n][c] represents min paint house for n houses and k colors
+    # dp[n][c] = min(dp[n-1][k]) + paint_cost[n-1][c] where k != c
+    dp = [[float('inf') for _ in xrange(num_color)] for _ in xrange(num_house + 1)]
+    for c in xrange(num_color):
+        dp[0][c] = 0
+
+    for i in xrange(1, num_house + 1):
+        first_min = second_min = float('inf')
+        first_min_color = None
+
+        for color, prev_cost in enumerate(dp[i - 1]):
+            if prev_cost < first_min:
+                second_min = first_min
+                first_min = prev_cost
+                first_min_color = color
+            elif prev_cost < second_min:
+                second_min = prev_cost
+
+        for color in xrange(num_color):
+            if color == first_min_color:
+                dp[i][color] = second_min + paint_cost[i - 1][color]
+            else:
+                dp[i][color] = first_min + paint_cost[i - 1][color]
+    
+    return min(dp[num_house])
+
+
+class MinPaintHousesCostSpec(unittest.TestCase):
+    def test_three_houses(self):
+        paint_cost = [
+            [7, 3, 8, 6, 1, 2],
+            [5, 6, 7, 2, 4, 3],
+            [10, 1, 4, 9, 7, 6]
+        ]
+        # min_cost: 1, 2, 1
+        self.assertEqual(4, min_paint_houses_cost(paint_cost))
+
+    def test_four_houses(self):
+        paint_cost = [
+            [7, 3, 8, 6, 1, 2],
+            [5, 6, 7, 2, 4, 3],
+            [10, 1, 4, 9, 7, 6],
+            [10, 1, 4, 9, 7, 6]
+        ] 
+        # min_cost: 1, 2, 4, 1
+        self.assertEqual(8, min_paint_houses_cost(paint_cost))
+
+    def test_long_term_or_short_term_cost_tradeoff(self):
+        paint_cost = [
+            [0, 1],
+            [1, 0],
+            [0, 1],
+            [0, 5]
+        ]
+        # min_cost: 1, 1, 1, 0
+        self.assertEqual(3, min_paint_houses_cost(paint_cost))
+
+    def test_long_term_or_short_term_cost_tradeoff2(self):
+        paint_cost = [
+            [1, 2, 3],
+            [3, 2, 1],
+            [1, 3, 2],
+            [1, 1, 1],
+            [5, 2, 1]
+        ]
+        # min_cost: 1, 1, 1, 1, 1
+        self.assertEqual(5, min_paint_houses_cost(paint_cost))
+
+    def test_no_houses(self):
+        self.assertEqual(0, min_paint_houses_cost([]))
+
+    def test_one_house(self):
+        paint_cost = [
+            [3, 2, 1, 2, 3, 4, 5]
+        ]
+        self.assertEqual(1, min_paint_houses_cost(paint_cost))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False, verbosity=2)
+```
 
 ### Mar 21, 2021 \[Easy\] Determine If Singly Linked List is Palindrome
 ---
