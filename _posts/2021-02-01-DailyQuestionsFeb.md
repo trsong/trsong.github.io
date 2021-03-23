@@ -20,6 +20,22 @@ categories: Python/Java
 
 
 
+### Mar 23, 2021 \[Medium\] Multiply Large Numbers Represented as Strings
+---
+> **Question:** Given two strings which represent non-negative integers, multiply the two numbers and return the product as a string as well. You should assume that the numbers may be sufficiently large such that the built-in integer type will not be able to store the input.
+
+**Example 1:**
+```py
+Input: num1 = "2", num2 = "3"
+Output: "6"
+```
+
+**Example 2:**
+```py
+Input: num1 = "123", num2 = "456"
+Output: "56088"
+```
+
 ### Mar 22, 2021 \[Medium\] Paint House
 ---
 > **Question:** A builder is looking to build a row of N houses that can be of K different colors. He has a goal of minimizing cost while ensuring that no two neighboring houses are of the same color.
