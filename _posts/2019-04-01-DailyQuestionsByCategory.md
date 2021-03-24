@@ -30,6 +30,32 @@ categories: Python/Java
 <details>
 <summary class="lc_m">
 
+- [**\[Medium\] Multiply Large Numbers Represented as Strings**](https://trsong.github.io/python/java/2021/02/02/DailyQuestionsFeb/#mar-23-2021-medium-multiply-large-numbers-represented-as-strings) -- *Given two strings which represent non-negative integers, multiply the two numbers and return the product as a string as well.* [*\(Try ME\)*](https://replit.com/@trsong/Multiply-Large-Numbers-Represented-as-Strings-1)
+
+</summary>
+<div>
+
+**Question:** Given two strings which represent non-negative integers, multiply the two numbers and return the product as a string as well. You should assume that the numbers may be sufficiently large such that the built-in integer type will not be able to store the input.
+
+**Example 1:**
+```py
+Input: num1 = "2", num2 = "3"
+Output: "6"
+```
+
+**Example 2:**
+```py
+Input: num1 = "123", num2 = "456"
+Output: "56088"
+```
+
+</div>
+</details>
+
+
+<details>
+<summary class="lc_m">
+
 - [**\[Medium\] Count Occurrence in Multiplication Table**](https://trsong.github.io/python/java/2021/02/02/DailyQuestionsFeb/#feb-3-2021-medium-count-occurrence-in-multiplication-table) -- *Given integers N and X, write a function that returns the number of times X appears as a value in an N by N multiplication table.* [*\(Try ME\)*](https://repl.it/@trsong/Count-Occurrence-in-Multiplication-Table-1)
 
 </summary>

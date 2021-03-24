@@ -36,6 +36,105 @@ Input: num1 = "123", num2 = "456"
 Output: "56088"
 ```
 
+**Solution:** [https://replit.com/@trsong/Multiply-Large-Numbers-Represented-as-Strings](https://replit.com/@trsong/Multiply-Large-Numbers-Represented-as-Strings)
+```py
+import unittest
+
+def string_multiply(s1, s2):
+    rev1, rev2 = map(int, reversed(s1)), map(int, reversed(s2))
+    
+    set1, set2 = set(rev1), set(rev2)
+    if len(set1) < len(set2):
+        rev1, rev2 = rev2, rev1
+        set1, set2 = set2, set1
+
+    cache = { digit: multiply_digit(rev1, digit) for digit in set2 }
+    res = [0] * (len(rev1) + len(rev2))
+    for offset, digit in enumerate(rev2):
+        index = offset
+        carry = 0
+        partial_res = iter(cache[digit])
+        num = next(partial_res, None)
+
+        while carry > 0 or num is not None:
+            res[index] += carry + (num if num is not None else 0)
+            carry = res[index] // 10
+            res[index] %= 10
+            index += 1
+            num = next(partial_res, None)
+    
+    raw_result = ''.join(map(str, reversed(res))).lstrip('0')
+    return raw_result or '0'
+
+
+def multiply_digit(s, digit):
+    res = []
+    carry = 0
+    for num in s:
+        digit_res = digit * num + carry
+        res.append(digit_res % 10)
+        carry = digit_res // 10
+
+    if carry > 0:
+        res.append(carry)
+
+    return res
+
+
+class StringMultiplySpec(unittest.TestCase):
+    def test_example(self):
+        s1 = '2'
+        s2 = '3'
+        expected = '6'
+        self.assertEqual(expected, string_multiply(s1, s2))
+
+    def test_example2(self):
+        s1 = '123'
+        s2 = '456'
+        expected = '56088'
+        self.assertEqual(expected, string_multiply(s1, s2))
+
+    def test_multiply_single_digit(self):
+        s1 = '9'
+        s2 = '9'
+        expected = '81'
+        self.assertEqual(expected, string_multiply(s1, s2))
+
+    def test_multiply_by_zero(self):
+        s1 = '0'
+        s2 = '0'
+        expected = '0'
+        self.assertEqual(expected, string_multiply(s1, s2))
+
+    def test_multiply_by_zero2(self):
+        s1 = '0'
+        s2 = '9999'
+        expected = '0'
+        self.assertEqual(expected, string_multiply(s1, s2))
+    
+    def test_multiply_by_one(self):
+        s1 = '1'
+        s2 = '9999'
+        expected = '9999'
+        self.assertEqual(expected, string_multiply(s1, s2))
+
+    def test_input_with_different_lengths(self):
+        s1 = '1024'
+        s2 = '999'
+        expected = '1022976'
+        self.assertEqual(expected, string_multiply(s1, s2))
+
+    def test_large_numbers(self):
+        s1 = '1235421415454545454545454544'
+        s2 = '1714546546546545454544548544544545'
+        expected = '2118187521397235888154583183918321221520083884298838480662480'
+        self.assertEqual(expected, string_multiply(s1, s2))
+    
+
+if __name__ == '__main__':
+    unittest.main(exit=False, verbosity=2)
+```
+
 ### Mar 22, 2021 \[Medium\] Paint House
 ---
 > **Question:** A builder is looking to build a row of N houses that can be of K different colors. He has a goal of minimizing cost while ensuring that no two neighboring houses are of the same color.
