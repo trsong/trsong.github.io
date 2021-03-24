@@ -20,6 +20,16 @@ categories: Python/Java
 
 
 
+### Mar 24, 2021 \[Hard\] Optimal Strategy For Coin Game
+---
+> **Question:** In front of you is a row of `N` coins, with values `v_1, v_2, ..., v_n`.
+>
+> You are asked to play the following game. You and an opponent take turns choosing either the first or last coin from the row, removing it from the row, and receiving the value of the coin.
+>
+> Write a program that returns the maximum amount of money you can win with certainty, if you move first, assuming your opponent plays optimally.
+
+
+
 ### Mar 23, 2021 \[Medium\] Multiply Large Numbers Represented as Strings
 ---
 > **Question:** Given two strings which represent non-negative integers, multiply the two numbers and return the product as a string as well. You should assume that the numbers may be sufficiently large such that the built-in integer type will not be able to store the input.
