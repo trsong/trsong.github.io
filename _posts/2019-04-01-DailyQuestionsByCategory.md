@@ -7451,4 +7451,27 @@ Explanation: we choose the numbers 5 and 1.
 </details>
 
 
+
+### Minimax
+
+<details>
+<summary class="lc_h">
+
+- [**\[Hard\] Optimal Strategy For Coin Game**](http://trsong.github.io/python/java/2021/02/02/DailyQuestionsFeb/#mar-24-2021-hard-optimal-strategy-for-coin-game) -- *Write a program that returns the maximum amount of money you can win with certainty.* [*\(Try ME\)*](https://replit.com/@trsong/Optimal-Strategy-For-Coin-Game-1)
+
+</summary>
+<div>
+
+**Question:** In front of you is a row of `N` coins, with values `v_1, v_2, ..., v_n`.
+
+You are asked to play the following game. You and an opponent take turns choosing either the first or last coin from the row, removing it from the row, and receiving the value of the coin.
+
+Write a program that returns the maximum amount of money you can win with certainty, if you move first, assuming your opponent plays optimally.
+
+</div>
+</details>
+
+
+
+
 {::options parse_block_html="false" /}

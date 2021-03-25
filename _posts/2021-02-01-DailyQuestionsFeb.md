@@ -28,6 +28,80 @@ categories: Python/Java
 >
 > Write a program that returns the maximum amount of money you can win with certainty, if you move first, assuming your opponent plays optimally.
 
+**Solution with Minimax:** [https://replit.com/@trsong/Optimal-Strategy-For-Coin-Game](https://replit.com/@trsong/Optimal-Strategy-For-Coin-Game)
+```py
+import unittest
+
+def max_coin_game_profit(coins):
+    if not coins:
+        return 0
+    
+    n = len(coins)
+    # Let dp[i][j] represents result for coins[i:j+1]
+    # dp[i][j] = max {
+    #                  coins[i] + min(dp[i+2][j], dp[i+1][j-1]),
+    #                  coins[j] + min(dp[i+1][j-1], dp[i][j-2])
+    #                }
+    # Remember your opponent always make optimal move that leaves you min of profit for subproblem
+    dp = [[None for _ in range(n)] for _ in range(n)]
+    
+    for i in range(n):
+        dp[i][i] = coins[i]
+        
+    for i in range(1, n):
+        dp[i - 1][i] = max(coins[i - 1], coins[i])
+        
+    for offset in range(2, n):
+        for i in range(n - offset):
+            j = i + offset
+            dp[i][j] = max(
+                coins[i] + min(dp[i+2][j], dp[i+1][j-1]), 
+                coins[j] + min(dp[i+1][j-1], dp[i][j-2]))
+    
+    return dp[0][n-1]
+
+
+class MaxCoinGameProfitSpec(unittest.TestCase):
+    def test_greedy_not_work(self):
+        coins = [10, 24, 5, 9]
+        expected = 9 + 24  # 9 vs 10, 24 vs 5
+        self.assertEqual(expected, max_coin_game_profit(coins))
+        
+    def test_empty_coins(self):
+        self.assertEqual(0, max_coin_game_profit([]))
+        
+    def test_one_coin(self):
+        self.assertEqual(42, max_coin_game_profit([42]))
+        
+    def test_two_coins(self):
+        coins = [100, 1]
+        expected = 100
+        self.assertEqual(expected, max_coin_game_profit(coins))
+        
+    def test_local_max_profit_is_global_max(self):
+        coins = [100, 0, 100, 0]
+        expected = 200
+        self.assertEqual(expected, max_coin_game_profit(coins))
+        
+    def test_choose_larger_first_coin(self):
+        coins = [5, 3, 7, 10]
+        expected = 10 + 5  # 10 vs 7, 5 vs 3
+        self.assertEqual(expected, max_coin_game_profit(coins))
+        
+    def test_choose_smaller_first_coin(self):
+        coins = [8, 15, 3, 7]
+        expected = 7 + 15  # 7 vs 8, 15 vs 3
+        self.assertEqual(expected, max_coin_game_profit(coins))
+    
+    def test_opponent_always_make_optimal_move(self):
+        coins = [20, 30, 2, 1, 3, 10]
+        expected = 10 + 1 + 30  # 10 vs 3, 1 vs 20, 30 vs 2
+        self.assertEqual(expected, max_coin_game_profit(coins))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False, verbosity=2)
+```
 
 
 ### Mar 23, 2021 \[Medium\] Multiply Large Numbers Represented as Strings
