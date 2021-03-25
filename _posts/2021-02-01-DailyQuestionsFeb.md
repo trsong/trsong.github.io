@@ -19,6 +19,12 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
 
+### Mar 25, 2021 \[Hard\] Maximum Spanning Tree
+--- 
+> **Question:** Recall that the minimum spanning tree is the subset of edges of a tree that connect all its vertices with the smallest possible total edge weight.
+>	
+> Given an undirected graph with weighted edges, compute the maximum weight spanning tree.
+ 
 
 ### Mar 24, 2021 \[Hard\] Optimal Strategy For Coin Game
 ---
