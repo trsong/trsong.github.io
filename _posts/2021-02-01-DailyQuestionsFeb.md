@@ -55,7 +55,7 @@ def max_coin_game_profit(coins):
         dp[i][i] = coins[i]
         
     for i in range(1, n):
-        dp[i - 1][i] = max(coins[i - 1], coins[i])
+        dp[i-1][i] = max(coins[i-1], coins[i])
         
     for offset in range(2, n):
         for i in range(n - offset):
