@@ -19,6 +19,16 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
 
+### Mar 26, 2021 \[Easy\] Common Characters
+---
+> **Question:** Given n strings, find the common characters in all the strings. In simple words, find characters that appear in all the strings and display them in alphabetical order or lexicographical order.
+
+**Example:**
+```py
+common_characters(['google', 'facebook', 'youtube'])
+# ['e', 'o']
+```
+
 ### Mar 25, 2021 \[Hard\] Maximum Spanning Tree
 --- 
 > **Question:** Recall that the minimum spanning tree is the subset of edges of a tree that connect all its vertices with the smallest possible total edge weight.
