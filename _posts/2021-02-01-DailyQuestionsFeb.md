@@ -24,7 +24,199 @@ categories: Python/Java
 > **Question:** Recall that the minimum spanning tree is the subset of edges of a tree that connect all its vertices with the smallest possible total edge weight.
 >	
 > Given an undirected graph with weighted edges, compute the maximum weight spanning tree.
- 
+
+**My thoughts:** Both Kruskal's and Prim's Algorithm works for this question. The idea is to flip all edge weight into negative and then apply either of previous algorithms until find a spanning tree
+
+**Solution with Kruskal's Algorithm:** [https://replit.com/@trsong/Calculate-Maximum-Spanning-Tree](https://replit.com/@trsong/Calculate-Maximum-Spanning-Tree)
+```py
+import unittest
+import sys
+
+
+class DisjointSet(object):
+    def __init__(self):
+        self.parent = {}
+        
+    def find(self, p):
+        self.parent[p] = self.parent.get(p, p)
+        while self.parent[p] != p:
+            self.parent[p] = self.parent[self.parent[p]]
+            p = self.parent[p]
+        return p
+        
+    def union(self, p1, p2):
+        root1 = self.find(p1)
+        root2 = self.find(p2)
+        if root1 != root2:
+            self.parent[root1] = root2
+            
+    def is_connected(self, p1, p2):
+        return self.find(p1) == self.find(p2)
+    
+
+def max_spanning_tree(vertices, edges):
+    res = []
+    edges.sort(reverse=True, key=lambda uvw: uvw[-1])
+    
+    uf = DisjointSet()
+    for u, v, _ in edges:
+        if uf.is_connected(u, v):
+            continue
+        res.append((u, v))
+        uf.union(u, v)
+    
+    return res
+
+
+class MaxSpanningTreeSpec(unittest.TestCase):
+    def assert_spanning_tree(self, vertices, edges, spanning_tree_edges, expected_weight):
+        # check if it's a tree
+        self.assertEqual(vertices-1, len(spanning_tree_edges))
+
+        neighbor = [[sys.maxint for _ in xrange(vertices)] for _ in xrange(vertices)]
+        for u, v, w in edges:
+            neighbor[u][v] = w
+            neighbor[v][u] = w
+
+        visited = [0] * vertices
+        total_weight = 0
+        for u, v in spanning_tree_edges:
+            total_weight += neighbor[u][v]
+            visited[u] = 1
+            visited[v] = 1
+        
+        # check if all vertices are visited
+        self.assertEqual(vertices, sum(visited))
+        
+        # check if sum of all weight satisfied
+        self.assertEqual(expected_weight, total_weight)
+
+    
+    def test_empty_graph(self):
+        self.assertEqual([], max_spanning_tree(0, []))
+
+    def test_simple_graph1(self):
+        """
+        Input:
+            1
+          / | \
+         0  |  2
+          \ | /
+            3
+        
+        Output:
+            1
+            |  
+         0  |  2
+          \ | /
+            3
+        """
+        vertices = 4
+        edges = [(0, 1, 1), (1, 2, 2), (2, 3, 3), (3, 0, 4), (1, 3, 5)]
+        expected_weight = 3 + 4 + 5
+        res = max_spanning_tree(vertices, edges)
+        self.assert_spanning_tree(vertices, edges, res, expected_weight)
+
+    def test_simple_graph2(self):
+        """
+        Input:
+            1
+          / | \
+         0  |  2
+          \ | /
+            3
+        
+        Output:
+            1
+            | \
+         0  |  2
+          \ |  
+            3
+        """
+        vertices = 4
+        edges = [(0, 1, 0), (1, 2, 1), (2, 3, 0), (3, 0, 1), (1, 3, 1)]
+        expected_weight = 1 + 1 + 1
+        res = max_spanning_tree(vertices, edges)
+        self.assert_spanning_tree(vertices, edges, res, expected_weight)
+
+    def test_k3_graph(self):
+        """
+        Input:
+           1
+          / \
+         0---2
+
+        Output:
+           1
+            \
+         0---2         
+        """
+        vertices = 3
+        edges = [(0, 1, 1), (1, 2, 1), (0, 2, 2)]
+        expected_weight = 1 + 2
+        res = max_spanning_tree(vertices, edges)
+        self.assert_spanning_tree(vertices, edges, res, expected_weight)
+
+    def test_k4_graph(self):
+        """
+        Input:
+        0 - 1
+        | x |
+        3 - 2
+
+        Output:
+        0   1
+        | / 
+        3 - 2
+        """
+        vertices = 4
+        edges = [(0, 1, 10), (0, 2, 11), (0, 3, 12), (1, 2, 13), (1, 3, 14), (2, 3, 15)]
+        expected_weight = 12 + 14 + 15
+        res = max_spanning_tree(vertices, edges)
+        self.assert_spanning_tree(vertices, edges, res, expected_weight)
+
+    def test_complicated_graph(self):
+        """
+        Input:
+        0 - 1 - 2
+        | / | / |
+        3 - 4 - 5 
+
+        Output:
+        0   1 - 2
+        | /   / 
+        3   4 - 5 
+        """
+        vertices = 6
+        edges = [(0, 1, 1), (1, 2, 6), (0, 5, 3), (5, 1, 5), (4, 1, 1), (4, 2, 5), (3, 2, 2), (5, 4, 1), (4, 3, 4)]
+        expected_weight = 3 + 5 + 6 + 5 + 4
+        res = max_spanning_tree(vertices, edges)
+        self.assert_spanning_tree(vertices, edges, res, expected_weight)
+
+    def test_graph_with_all_negative_weight(self):
+        # Note only all negative weight can use greedy approach. Mixed postive and negative graph is NP-Hard
+        """
+        Input:
+        0 - 1 - 2
+        | / | / |
+        3 - 4 - 5 
+
+        Output:
+        0 - 1   2
+            |   |
+        3 - 4 - 5 
+        """
+        vertices = 6
+        edges = [(0, 1, -1), (1, 2, -6), (0, 5, -3), (5, 1, -5), (4, 1, -1), (4, 2, -5), (3, 2, -2), (5, 4, -1), (4, 3, -4)]
+        expected_weight = -1 -1 -1 -4 -2
+        res = max_spanning_tree(vertices, edges)
+        self.assert_spanning_tree(vertices, edges, res, expected_weight)
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False, verbosity=2)
+``` 
+
 
 ### Mar 24, 2021 \[Hard\] Optimal Strategy For Coin Game
 ---

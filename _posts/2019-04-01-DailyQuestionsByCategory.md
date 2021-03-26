@@ -5869,6 +5869,22 @@ In this case, the shortest valid path would be 0 -> 2 -> 4 -> 0, with a distance
 ---
 
 <details>
+<summary class="lc_h">
+
+- [**\[Hard\] Maximum Spanning Tree**](http://trsong.github.io/python/java/2021/02/02/DailyQuestionsFeb/#mar-25-2021-hard-maximum-spanning-tree) -- *Given an undirected graph with weighted edges, compute the maximum weight spanning tree.* [*\(Try ME\)*](https://replit.com/@trsong/Calculate-Maximum-Spanning-Tree-1)
+
+</summary>
+<div>
+
+**Question:** Recall that the minimum spanning tree is the subset of edges of a tree that connect all its vertices with the smallest possible total edge weight.
+	
+Given an undirected graph with weighted edges, compute the maximum weight spanning tree.
+
+</div>
+</details>
+
+
+<details>
 <summary class="lc_m">
 
 - [**\[Medium\] Number of Connected Components**](https://trsong.github.io/python/java/2021/02/02/DailyQuestionsFeb/#mar-12-2021-medium-number-of-connected-components) -- *Given a list of undirected edges which represents a graph, find out the number of connected components.* [*\(Try ME\)*](https://replit.com/@trsong/Number-of-Connected-Components-1)
