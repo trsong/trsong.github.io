@@ -29,6 +29,69 @@ common_characters(['google', 'facebook', 'youtube'])
 # ['e', 'o']
 ```
 
+**Solution:** [https://replit.com/@trsong/Find-All-Common-Characters](https://replit.com/@trsong/Find-All-Common-Characters)
+```py
+import unittest
+
+def find_common_characters(words):
+    char_freq = {}
+    for index, word in enumerate(words):
+        for ch in word:
+            if char_freq.get(ch, 0) == index:
+                char_freq[ch] = index + 1
+    
+    return sorted(filter(lambda ch: char_freq[ch] == len(words), char_freq.keys()))
+
+
+class FindCommonCharacterSpec(unittest.TestCase):
+    def test_example(self):
+        words = ['google', 'facebook', 'youtube']
+        expected = ['e', 'o']
+        self.assertEqual(expected, find_common_characters(words))
+
+    def test_empty_array(self):
+        self.assertEqual([], find_common_characters([]))
+
+    def test_contains_empty_word(self):
+        words = ['a', 'a', 'aa', '']
+        expected = []
+        self.assertEqual(expected, find_common_characters(words))
+
+    def test_different_intersections(self):
+        words = ['aab', 'bbc', 'acc']
+        expected = []
+        self.assertEqual(expected, find_common_characters(words))
+
+    def test_contains_duplicate_characters(self):
+        words = ['zbbccaa', 'fcca', 'gaaacaaac', 'tccaccc']
+        expected = ['a', 'c']
+        self.assertEqual(expected, find_common_characters(words))
+
+    def test_captical_letters(self):
+        words = ['aAbB', 'aAb', 'AaB']
+        expected = ['A', 'a']
+        self.assertEqual(expected, find_common_characters(words))
+    
+    def test_numbers(self):
+        words = ['123321312', '3321', '1123']
+        expected = ['1', '2', '3']
+        self.assertEqual(expected, find_common_characters(words))
+
+    def test_output_in_alphanumeric_orders(self):
+        words = ['123a!  bcABC', '3abc  !ACB12?', 'A B abC! c1c2 b 3']
+        expected = [' ', '!', '1', '2', '3', 'A', 'B', 'C', 'a', 'b', 'c']
+        self.assertEqual(expected, find_common_characters(words))
+
+    def test_no_overlapping_letters(self):
+        words = ['aabbcc', '112233', 'AABBCC']
+        expected = []
+        self.assertEqual(expected, find_common_characters(words))  
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False, verbosity=2)
+```
+
 ### Mar 25, 2021 \[Hard\] Maximum Spanning Tree
 --- 
 > **Question:** Recall that the minimum spanning tree is the subset of edges of a tree that connect all its vertices with the smallest possible total edge weight.
