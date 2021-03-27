@@ -19,6 +19,13 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
 
+### Mar 27, 2021 \[Medium\] Smallest Window Contains Every Distinct Character
+---
+> **Question:** Given a string, find the length of the smallest window that contains every distinct character. Characters may appear more than once in the window.
+>
+> For example, given `"jiujitsu"`, you should return `5`, corresponding to the final five letters.
+
+
 ### Mar 26, 2021 \[Easy\] Common Characters
 ---
 > **Question:** Given n strings, find the common characters in all the strings. In simple words, find characters that appear in all the strings and display them in alphabetical order or lexicographical order.
