@@ -4690,6 +4690,27 @@ Explanation: A -> B -> idle -> A -> B -> idle -> A -> B.
 ## Hashmap
 ---
 
+
+<details>
+<summary class="lc_e">
+
+- [**\[Easy\] Common Characters**](https://trsong.github.io/python/java/2021/02/02/DailyQuestionsFeb/#mar-26-2021-easy-common-characters) -- *Given n strings, find the common characters in all the strings. Display them in alphabetical order.* [*\(Try ME\)*](https://replit.com/@trsong/Find-All-Common-Characters-1)
+
+</summary>
+<div>
+
+**Question:** Given n strings, find the common characters in all the strings. In simple words, find characters that appear in all the strings and display them in alphabetical order or lexicographical order.
+
+**Example:**
+```py
+common_characters(['google', 'facebook', 'youtube'])
+# ['e', 'o']
+```
+
+</div>
+</details>
+
+
 <details>
 <summary class="lc_e">
 
