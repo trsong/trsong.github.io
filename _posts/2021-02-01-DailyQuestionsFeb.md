@@ -19,6 +19,15 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
 
+### Mar 28, 2021 \[Medium\] Minimum Number of Operations
+---
+> **Question:** You are only allowed to perform 2 operations:
+> - either multiply a number by 2;
+> - or subtract a number by 1. 
+>
+> Given a number `x` and a number `y`, find the minimum number of operations needed to go from `x` to `y`.
+
+
 ### Mar 27, 2021 \[Medium\] Smallest Window Contains Every Distinct Character
 ---
 > **Question:** Given a string, find the length of the smallest window that contains every distinct character. Characters may appear more than once in the window.
