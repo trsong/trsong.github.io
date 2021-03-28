@@ -1824,6 +1824,22 @@ Output: False
 <details>
 <summary class="lc_m">
 
+- [**\[Medium\] Smallest Window Contains Every Distinct Character**](https://trsong.github.io/python/java/2021/02/02/DailyQuestionsFeb/#mar-27-2021-medium-smallest-window-contains-every-distinct-character) -- *Given a string, find the length of the smallest window that contains every distinct character.* [*\(Try ME\)*](https://replit.com/@trsong/Smallest-Window-Contains-Every-Distinct-Character-1)
+
+</summary>
+<div>
+
+**Question:** Given a string, find the length of the smallest window that contains every distinct character. Characters may appear more than once in the window.
+
+For example, given `"jiujitsu"`, you should return `5`, corresponding to the final five letters.
+
+</div>
+</details>
+
+
+<details>
+<summary class="lc_m">
+
 - [**\[Medium\] LC 438. Anagram Indices Problem**](https://trsong.github.io/python/java/2020/05/02/DailyQuestionsMay/#june-13-2020-lc-438-medium-anagram-indices-problem) -- *Given a word W and a string S, find all starting indices in S which are anagrams of W.* [*\(Try ME\)*](https://repl.it/@trsong/Find-All-Anagram-Indices-1)
 
 </summary>

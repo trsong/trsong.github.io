@@ -26,6 +26,69 @@ categories: Python/Java
 > For example, given `"jiujitsu"`, you should return `5`, corresponding to the final five letters.
 
 
+**Solution with Sliding Window:** [https://replit.com/@trsong/Smallest-Window-Contains-Every-Distinct-Character](https://replit.com/@trsong/Smallest-Window-Contains-Every-Distinct-Character)
+```py
+import unittest
+
+def find_min_window_all_char(s):
+    char_set_size = len(set(s))
+    char_freq = {}
+    res = len(s)
+
+    start = 0
+    for end, incoming_char in enumerate(s):
+        char_freq[incoming_char] = char_freq.get(incoming_char, 0) + 1
+        while len(char_freq) == char_set_size:
+            res = min(res, end - start + 1)
+            outgoing_char = s[start]
+            char_freq[outgoing_char] -= 1
+            if char_freq[outgoing_char] == 0:
+                del char_freq[outgoing_char]
+            start += 1
+    return res
+
+
+class FindMinWindowAllCharSpec(unittest.TestCase):
+    def test_example(self):
+        s = 'jiujitsu'
+        expected = len('jitsu')
+        self.assertEqual(expected, find_min_window_all_char(s))
+
+    def test_suffix_has_result(self):
+        s = "ADOBECODEBANC"
+        expected = len('ODEBANC')
+        self.assertEqual(expected, find_min_window_all_char(s))
+
+    def test_prefix_has_result(self):
+        s = "CANADA"
+        expected = len("CANAD")
+        self.assertEqual(expected, find_min_window_all_char(s))
+
+    def test_string_has_no_duplicates(self):
+        s = 'USD'
+        expected = len(s)
+        self.assertEqual(expected, find_min_window_all_char(s))
+    
+    def test_has_to_include_entire_string(self):
+        s = "BANANAS"
+        expected = len(s)
+        self.assertEqual(expected, find_min_window_all_char(s))
+
+    def test_non_letter_char(self):
+        s = "AB_AABB_AB_BAB_ABB_BB_BACAB"
+        expected = len('_BAC')
+        self.assertEqual(expected, find_min_window_all_char(s))
+
+    def test_result_in_middle(self):
+        s = "AAAACCCCCBADDBBAADBBAAADDDCCBBA"
+        expected = len('CBAD')
+        self.assertEqual(expected, find_min_window_all_char(s))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False, verbosity=2)
+```
+
 ### Mar 26, 2021 \[Easy\] Common Characters
 ---
 > **Question:** Given n strings, find the common characters in all the strings. In simple words, find characters that appear in all the strings and display them in alphabetical order or lexicographical order.
