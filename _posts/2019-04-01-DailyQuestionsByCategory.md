@@ -5094,25 +5094,6 @@ Move 1 to 3
 
 
 <details>
-<summary class="lc_m">
-
-- [**\[Medium\] Minimum Number of Operations**](https://trsong.github.io/python/java/2021/02/02/DailyQuestionsFeb/#mar-28-2021-medium-minimum-number-of-operations) -- *Given a number x and a number y, find the minimum number of operations needed to go from x to y.* [*\(Try ME\)*](https://replit.com/@trsong/Find-Min-Number-of-Operations-1)
-
-</summary>
-<div>
-
-
-**Question:** You are only allowed to perform 2 operations:
-- either multiply a number by 2;
-- or subtract a number by 1. 
-
-Given a number `x` and a number `y`, find the minimum number of operations needed to go from `x` to `y`.
-
-</div>
-</details>
-
-
-<details>
 <summary class="lc_e">
 
 - [**\[Easy\] ZigZag Binary Tree**](https://trsong.github.io/python/java/2021/02/02/DailyQuestionsFeb/#feb-2-2021-easy-zigzag-binary-tree) -- *Given a binary tree, write an algorithm to print the nodes in zigzag order.* [*\(Try ME\)*](https://repl.it/@trsong/ZigZag-Order-of-Binary-Tree-1)
@@ -5313,6 +5294,26 @@ Output: [4, 2, 1, 3, 6] or [5, 2, 1, 3, 6]
 
 ### Level-based BFS
 ---
+
+
+<details>
+<summary class="lc_m">
+
+- [**\[Medium\] Minimum Number of Operations**](https://trsong.github.io/python/java/2021/02/02/DailyQuestionsFeb/#mar-28-2021-medium-minimum-number-of-operations) -- *Given a number x and a number y, find the minimum number of operations needed to go from x to y.* [*\(Try ME\)*](https://replit.com/@trsong/Find-Min-Number-of-Operations-1)
+
+</summary>
+<div>
+
+
+**Question:** You are only allowed to perform 2 operations:
+- either multiply a number by 2;
+- or subtract a number by 1. 
+
+Given a number `x` and a number `y`, find the minimum number of operations needed to go from `x` to `y`.
+
+</div>
+</details>
+
 
 <details>
 <summary class="lc_h">
