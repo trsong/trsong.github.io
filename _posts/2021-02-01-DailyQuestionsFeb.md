@@ -44,6 +44,72 @@ Output: "ffffffff"
 >
 > Given a number `x` and a number `y`, find the minimum number of operations needed to go from `x` to `y`.
 
+**Solution with BFS:** [https://replit.com/@trsong/Find-Min-Number-of-Operations](https://replit.com/@trsong/Find-Min-Number-of-Operations)
+```py
+import unittest
+
+def min_operations(start, end):
+    queue = [start]
+    visited = set()
+    step = 0
+
+    while queue:
+        for _ in xrange(len(queue)):
+            cur = queue.pop(0)
+            if end == cur:
+                return step
+            elif cur in visited:
+                continue
+            else:
+                visited.add(cur)
+
+            for child in [cur - 1, cur * 2]:
+                if child not in visited:
+                    queue.append(child)
+        step += 1
+    return None
+        
+
+class MinOperationSpec(unittest.TestCase):
+    def test_example(self):
+        # (((6 - 1) * 2) * 2) = 20 
+        self.assertEqual(3, min_operations(6, 20))
+
+    def test_first_double_then_decrement(self):
+        # 4 * 2 - 1 = 7
+        self.assertEqual(2, min_operations(4, 7))
+
+    def test_first_decrement_then_double(self):
+        # (4 - 1) * 2 = 6
+        self.assertEqual(2, min_operations(4, 6))
+
+    def test_first_decrement_then_double2(self):
+        # (2 * 2 - 1) * 2 - 1 = 5
+        self.assertEqual(4, min_operations(2, 5))
+
+    def test_first_decrement_then_double3(self):
+        # (((10 * 2) - 1 ) * 2 - 1) * 2
+        self.assertEqual(5, min_operations(10, 74))
+
+    def test_no_need_to_apply_operations(self):
+        self.assertEqual(0, min_operations(2, 2))
+
+    def test_avoid_inifite_loop(self):
+        # ((0 - 1 - 1) * 2  - 1) * 2  = -10
+        self.assertEqual(5, min_operations(0, -10))
+
+    def test_end_is_smaller(self):
+        # 10 - 1 -1 ... - 1 = 0
+        self.assertEqual(10, min_operations(10, 0))
+
+    def test_end_is_smaller2(self):
+        # (10 - 1 -1 ... - 1) * 2 * 2 = 0
+        self.assertEqual(13, min_operations(10, -4))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False, verbosity=2)
+```
 
 ### Mar 27, 2021 \[Medium\] Smallest Window Contains Every Distinct Character
 ---
