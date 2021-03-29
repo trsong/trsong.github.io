@@ -19,6 +19,23 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
 
+
+### Mar 29, 2021 LC 405 \[Easy\] Convert a Number to Hexadecimal
+---
+> **Question:** Given an integer, write an algorithm to convert it to hexadecimal. For negative integer, two’s complement method is used.
+
+**Example 1:**
+```py
+Input: 26
+Output: "1a"
+```
+
+**Example 2:**
+```py
+Input: -1
+Output: "ffffffff"
+```
+
 ### Mar 28, 2021 \[Medium\] Minimum Number of Operations
 ---
 > **Question:** You are only allowed to perform 2 operations:
