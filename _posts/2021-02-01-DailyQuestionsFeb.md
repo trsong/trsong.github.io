@@ -36,6 +36,66 @@ Input: -1
 Output: "ffffffff"
 ```
 
+**Solution:** [https://replit.com/@trsong/Convert-a-Number-to-Hexadecimal](https://replit.com/@trsong/Convert-a-Number-to-Hexadecimal)
+```py
+import unittest
+
+def to_hex(num):
+    if num == 0:
+        return '0'
+
+    DIGITS = "0123456789abcdef"
+    if num < 0:
+        num += 1 << 32
+    
+    res = []
+    while num > 0:
+        res.append(DIGITS[num % 16])
+        num //= 16
+    
+    return ''.join(res[::-1])
+
+
+class ToHexSpec(unittest.TestCase):
+    def test_example(self):
+        self.assertEqual('1a', to_hex(26))
+
+    def test_example2(self):
+        self.assertEqual('ffffffff', to_hex(-1))
+
+    def test_zero(self):
+        self.assertEqual('0', to_hex(0))
+
+    def test_double_digits(self):
+        self.assertEqual('cf', to_hex(0xcf))
+
+    def test_double_digits2(self):
+        self.assertEqual('43', to_hex(0x43))
+
+    def test_double_digits3(self):
+        self.assertEqual('a1', to_hex(0xa1))
+
+    def test_double_digits4(self):
+        self.assertEqual('4d', to_hex(0x4d))
+
+    def test_one_digit(self):
+        self.assertEqual('a', to_hex(0xa))
+
+    def test_positive_boundary(self):
+        self.assertEqual('7fffffff', to_hex(2147483647))
+
+    def test_nagative_boundary(self):
+        self.assertEqual('80000000', to_hex(-2147483648))
+
+    def test_negative_number(self):
+        self.assertEqual('fffffffe', to_hex(-2))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False, verbosity=2)
+```
+
+
 ### Mar 28, 2021 \[Medium\] Minimum Number of Operations
 ---
 > **Question:** You are only allowed to perform 2 operations:

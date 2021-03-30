@@ -28,6 +28,32 @@ categories: Python/Java
 ---
 
 <details>
+<summary class="lc_e">
+
+- [**\[Easy\] LC 405. Convert a Number to Hexadecimal**](https://trsong.github.io/python/java/2021/02/02/DailyQuestionsFeb/#mar-29-2021-lc-405-easy-convert-a-number-to-hexadecimal) -- *Given an integer, write an algorithm to convert it to hexadecimal.* [*\(Try ME\)*](https://replit.com/@trsong/Convert-a-Number-to-Hexadecimal-1)
+
+</summary>
+<div>
+
+**Question:** Given an integer, write an algorithm to convert it to hexadecimal. For negative integer, two’s complement method is used.
+
+**Example 1:**
+```py
+Input: 26
+Output: "1a"
+```
+
+**Example 2:**
+```py
+Input: -1
+Output: "ffffffff"
+```
+
+</div>
+</details>
+
+
+<details>
 <summary class="lc_m">
 
 - [**\[Medium\] Multiply Large Numbers Represented as Strings**](https://trsong.github.io/python/java/2021/02/02/DailyQuestionsFeb/#mar-23-2021-medium-multiply-large-numbers-represented-as-strings) -- *Given two strings which represent non-negative integers, multiply the two numbers and return the product as a string as well.* [*\(Try ME\)*](https://replit.com/@trsong/Multiply-Large-Numbers-Represented-as-Strings-1)
