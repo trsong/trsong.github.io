@@ -40,6 +40,72 @@ If N = 3, and our integers are [1, 2, 3], there are two ways, shown below.
 >
 > For example, suppose the mice are positioned at `[1, 4, 9, 15]`, and the holes are located at `[10, -5, 0, 16]`. In this case, the best pairing would require us to send the mouse at `1` to the hole at `-5`, so our function should return `6`.
  
+**Solution with Greedy Algorithm:** [https://replit.com/@trsong/Min-Max-Step-Mouse-to-Holes](https://replit.com/@trsong/Min-Max-Step-Mouse-to-Holes)
+```py
+import unittest
+
+def min_last_mouse_steps(mouse_positions, hole_positions):
+    mouse_positions.sort()
+    hole_positions.sort()
+    res = 0
+    for mouse, hole in zip(mouse_positions, hole_positions):
+        res = max(res, abs(mouse - hole))
+    return res
+
+
+class MisLastMouseStepSpec(unittest.TestCase):
+    def test_example(self):
+        mouse_positions = [1, 4, 9, 15]
+        hole_positions = [10, -5, 0, 16]
+        # sorted mouse: 1 4 9 15
+        # sorted hole: -5 0 10 16
+        # distance: 6 4 1 1
+        expected = 6
+        self.assertEqual(expected, min_last_mouse_steps(mouse_positions, hole_positions))
+
+    def test_no_mice_nor_holes(self):
+        self.assertEqual(0, min_last_mouse_steps([], []))
+
+    def test_simple_case(self):
+        mouse_positions = [0, 1, 2]
+        hole_positions = [0, 1, 2]
+        # sorted mouse: 0 1 2
+        # sorted hole: 0 1 2
+        # distance: 0 0 0
+        expected = 0
+        self.assertEqual(expected, min_last_mouse_steps(mouse_positions, hole_positions))
+
+    def test_position_in_reverse_order(self):
+        mouse_positions = [0, 1, 2]
+        hole_positions = [2, 1, 0]
+        # sorted mouse: 0 1 2
+        # sorted hole: 0 1 2
+        # distance: 0 0 0
+        expected = 0
+        self.assertEqual(expected, min_last_mouse_steps(mouse_positions, hole_positions))
+
+    def test_unorded_positions(self):
+        mouse_positions = [4, -4, 2]
+        hole_positions = [4, 0, 5]
+        # sorted mouse: -4 2 4
+        # sorted hole:   0 4 5
+        # distance: 4 2 1
+        expected = 4
+        self.assertEqual(expected, min_last_mouse_steps(mouse_positions, hole_positions))
+
+    def test_large_example(self):
+        mouse_positions = [-10, -79, -79, 67, 93, -85, -28, -94]
+        hole_positions = [-2, 9, 69, 25, -31, 23, 50, 78]
+        # sorted mouse: -94 -85 -79 -79 -28 -10 67 93
+        # sorted hole: -31 -2 9 23 25 50 69 78
+        # distance: 63 83 88 102 53 60 2 15
+        expected = 102
+        self.assertEqual(expected, min_last_mouse_steps(mouse_positions, hole_positions))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False, verbosity=2)
+```
 
 ### Mar 29, 2021 LC 405 \[Easy\] Convert a Number to Hexadecimal
 ---
