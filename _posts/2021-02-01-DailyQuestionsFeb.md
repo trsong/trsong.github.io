@@ -19,6 +19,19 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
 
+### Mar 31, 2020 \[Medium\] Ways to Form Heap with Distinct Integers
+---
+> **Question:** Write a program to determine how many distinct ways there are to create a max heap from a list of `N` given integers.
+
+**Example:**
+```py
+If N = 3, and our integers are [1, 2, 3], there are two ways, shown below.
+
+  3      3
+ / \    / \
+1   2  2   1
+```
+
 ### Mar 30, 2021 \[Easy\] Mouse Holes
 ---
 > **Question:** Consider the following scenario: there are N mice and N holes placed at integer points along a line. Given this, find a method that maps mice to holes such that the largest number of steps any mouse takes is minimized.
