@@ -19,7 +19,19 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
 
-### Mar 31, 2020 \[Medium\] Ways to Form Heap with Distinct Integers
+### Apr 1, 2021 LC 16 \[Medium\] Closest to 3 Sum
+---
+> **Question:** Given a list of numbers and a target number n, find 3 numbers in the list that sums closest to the target number n. There may be multiple ways of creating the sum closest to the target number, you can return any combination in any order.
+
+**Example:**
+```py
+Input: [2, 1, -5, 4], -1
+Output: [-5, 1, 2]
+Explanation: Closest sum is -5+1+2 = -2 OR -5+1+4 = 0
+```
+
+
+### Mar 31, 2021 \[Medium\] Ways to Form Heap with Distinct Integers
 ---
 > **Question:** Write a program to determine how many distinct ways there are to create a max heap from a list of `N` given integers.
 

@@ -30,7 +30,7 @@ categories: Python/Java
 <details>
 <summary class="lc_m">
 
-- [**\[Medium\] Ways to Form Heap with Distinct Integers**](https://trsong.github.io/python/java/2021/02/02/DailyQuestionsFeb/) -- *Write a program to determine how many distinct ways there are to create a max heap from a list of N given integers.* [*\(Try ME\)*](https://replit.com/@trsong/Total-Number-of-Ways-to-Form-Heap-with-Distinct-Integers-1)
+- [**\[Medium\] Ways to Form Heap with Distinct Integers**](https://trsong.github.io/python/java/2021/02/02/DailyQuestionsFeb/#mar-31-2021-medium-ways-to-form-heap-with-distinct-integers) -- *Write a program to determine how many distinct ways there are to create a max heap from a list of N given integers.* [*\(Try ME\)*](https://replit.com/@trsong/Total-Number-of-Ways-to-Form-Heap-with-Distinct-Integers-1)
 
 </summary>
 <div>
