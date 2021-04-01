@@ -28,6 +28,29 @@ categories: Python/Java
 ---
 
 <details>
+<summary class="lc_m">
+
+- [**\[Medium\] Ways to Form Heap with Distinct Integers**](https://trsong.github.io/python/java/2021/02/02/DailyQuestionsFeb/) -- *Write a program to determine how many distinct ways there are to create a max heap from a list of N given integers.* [*\(Try ME\)*](https://replit.com/@trsong/Total-Number-of-Ways-to-Form-Heap-with-Distinct-Integers-1)
+
+</summary>
+<div>
+
+**Question:** Write a program to determine how many distinct ways there are to create a max heap from a list of `N` given integers.
+
+**Example:**
+```py
+If N = 3, and our integers are [1, 2, 3], there are two ways, shown below.
+
+  3      3
+ / \    / \
+1   2  2   1
+```
+
+</div>
+</details>
+
+
+<details>
 <summary class="lc_e">
 
 - [**\[Easy\] LC 405. Convert a Number to Hexadecimal**](https://trsong.github.io/python/java/2021/02/02/DailyQuestionsFeb/#mar-29-2021-lc-405-easy-convert-a-number-to-hexadecimal) -- *Given an integer, write an algorithm to convert it to hexadecimal.* [*\(Try ME\)*](https://replit.com/@trsong/Convert-a-Number-to-Hexadecimal-1)

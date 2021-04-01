@@ -32,6 +32,82 @@ If N = 3, and our integers are [1, 2, 3], there are two ways, shown below.
 1   2  2   1
 ```
 
+**My thoughts:** First make observation that the root of heap is always maximum element. Then we can reduce the problem by choosing max then decide which elem goes to left so that other elem can go to right. 
+
+However, as heap has a height constraint, we cannot allow random number of elem go to left, that is, we have to keep the tree height balanced. Suppose we have l elem go to left and r elem to right, then we will have `l + r + 1 = n` (don't forget to include root). 
+
+Finally, let `dp[n]` represents solution for size n, then we will have `dp[n] = (n-1 choose l) * dp[l] * dp[r]` where `l + r + 1 = n`
+
+As for how to calculuate l, as last level of heap tree might not be full, we have two situations:
+1. last level is less than half full, then all last level goes to left tree
+2. last level is more than half full, then only half last level goes to left tree
+
+
+**Solution with DP:** [https://replit.com/@trsong/Total-Number-of-Ways-to-Form-Heap-with-Distinct-Integers](https://replit.com/@trsong/Total-Number-of-Ways-to-Form-Heap-with-Distinct-Integers)
+```py
+import unittest
+import math
+
+def form_heap_ways(n, cache=None):
+    if n <= 2:
+        return 1
+
+    cache = cache or {}
+
+    if n not in cache:
+        height = int(math.log(n)) + 1
+        bottom = n - (2 ** height - 1)
+
+        left = 2 ** (height - 1) - 1 + min(2 ** (height - 1), bottom)
+        right = n - left - 1
+        cache[n] = choose(n - 1, left) * form_heap_ways(left, cache) * form_heap_ways(right, cache)
+
+    return cache[n]
+        
+
+def choose(n, k):
+    return math.factorial(n) // math.factorial(k) // math.factorial(n - k)
+    
+
+class FormHeapWaySpec(unittest.TestCase):
+    def test_example(self):
+        """
+          3      3
+         / \    / \
+        1   2  2   1
+        """
+        self.assertEqual(2, form_heap_ways(3))
+
+    def test_empty_heap(self):
+        self.assertEqual(1, form_heap_ways(0))
+
+    def test_size_one_heap(self):
+        self.assertEqual(1, form_heap_ways(1))
+
+    def test_size_four_heap(self):
+        """
+            4      4      4
+           / \    / \    / \
+          3   1  3   2  2   3
+         /      /      /
+        2      1      1
+        """
+        self.assertEqual(3, form_heap_ways(4))
+
+    def test_size_five_heap(self):
+        self.assertEqual(8, form_heap_ways(5))
+
+    def test_size_ten_heap(self):
+        self.assertEqual(3360, form_heap_ways(10))
+
+    def test_size_twenty_heap(self):
+        self.assertEqual(319258368000, form_heap_ways(20))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False, verbosity=2)
+```
+
 ### Mar 30, 2021 \[Easy\] Mouse Holes
 ---
 > **Question:** Consider the following scenario: there are N mice and N holes placed at integer points along a line. Given this, find a method that maps mice to holes such that the largest number of steps any mouse takes is minimized.
