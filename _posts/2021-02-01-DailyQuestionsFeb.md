@@ -65,6 +65,80 @@ Output: [-5, 1, 2]
 Explanation: Closest sum is -5+1+2 = -2 OR -5+1+4 = 0
 ```
 
+**Solution with Two-Pointers:** [https://replit.com/@trsong/Closest-to-3-Sum](https://replit.com/@trsong/Closest-to-3-Sum)
+```py
+import unittest
+
+def closest_3_sum(nums, target):
+    res = None
+    n = len(nums)
+    min_diff = float('inf')
+    nums.sort()
+    for i in range(n - 2):
+        lo, hi = i + 1, n - 1
+        while lo < hi:
+            total = nums[i] + nums[lo] + nums[hi]
+            distance = abs(total - target) 
+            if distance < min_diff:
+                min_diff = distance
+                res = [nums[i], nums[lo], nums[hi]]
+
+            if total > target:
+                hi -= 1
+            else:
+                lo += 1
+    return res
+    
+
+class Closest3SumSpec(unittest.TestCase):
+    def test_example(self):
+        target, nums = -1, [2, 1, -5, 4]
+        expected1 = [-5, 1, 2]
+        expected2 = [-5, 1, 4]
+        self.assertIn(sorted(closest_3_sum(nums, target)), [expected1, expected2])
+
+    def test_example2(self):
+        target, nums = 1, [-1, 2, 1, -4]
+        expected = [-1, 2, 1]
+        self.assertEqual(sorted(expected), sorted(closest_3_sum(nums, target)))
+
+    def test_example3(self):
+        target, nums = 10, [1, 2, 3, 4, -5]
+        expected = [2, 3, 4]
+        self.assertEqual(sorted(expected), sorted(closest_3_sum(nums, target)))
+
+    def test_empty_array(self):
+        target, nums = 0, []
+        self.assertIsNone(closest_3_sum(nums, target))
+
+    def test_array_without_enough_elements(self):
+        target, nums = 3, [1, 2]
+        self.assertIsNone(closest_3_sum(nums, target))
+
+    def test_array_without_enough_elements2(self):
+        target, nums = 3, [3]
+        self.assertIsNone(closest_3_sum(nums, target))
+
+    def test_all_negatives(self):
+        target, nums = 10, [-2, -1, -5]
+        expected = [-2, -1, -5]
+        self.assertEqual(sorted(expected), sorted(closest_3_sum(nums, target)))
+
+    def test_all_negatives2(self):
+        target, nums = -10, [-2, -1, -5, -10]
+        expected = [-2, -1, -5]
+        self.assertEqual(sorted(expected), sorted(closest_3_sum(nums, target)))
+
+    def test_negative_target(self):
+        target, nums = -10, [0, 0, 0, 0, 0, 1, 1, 1, 1]
+        expected = [0, 0, 0]
+        self.assertEqual(sorted(expected), sorted(closest_3_sum(nums, target)))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False, verbosity=2)
+```
+
 
 ### Mar 31, 2021 \[Medium\] Ways to Form Heap with Distinct Integers
 ---
