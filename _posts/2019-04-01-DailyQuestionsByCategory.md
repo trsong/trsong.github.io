@@ -6018,6 +6018,49 @@ In this case, the shortest valid path would be 0 -> 2 -> 4 -> 0, with a distance
 <details>
 <summary class="lc_h">
 
+- [**\[Hard\] Teams without Enemies**](http://trsong.github.io/python/java/2021/02/02/DailyQuestionsFeb/#apr-2-2021-hard-teams-without-enemies) -- *A teacher must divide a class of students into two teams to play dodgeball. Write an algorithm that finds a satisfactory pair of teams.* [*\(Try ME\)*](https://replit.com/@trsong/Build-Teams-without-Enemies-1)
+
+</summary>
+<div>
+
+**Question:** A teacher must divide a class of students into two teams to play dodgeball. Unfortunately, not all the kids get along, and several refuse to be put on the same team as that of their enemies.
+
+Given an adjacency list of students and their enemies, write an algorithm that finds a satisfactory pair of teams, or returns False if none exists.
+
+**Example 1:**
+```py
+Given the following enemy graph you should return the teams {0, 1, 4, 5} and {2, 3}.
+
+students = {
+    0: [3],
+    1: [2],
+    2: [1, 4],
+    3: [0, 4, 5],
+    4: [2, 3],
+    5: [3]
+}
+```
+
+**Example 2:**
+```py
+On the other hand, given the input below, you should return False.
+
+students = {
+    0: [3],
+    1: [2],
+    2: [1, 3, 4],
+    3: [0, 2, 4, 5],
+    4: [2, 3],
+    5: [3]
+}
+```
+
+</div>
+</details>
+
+<details>
+<summary class="lc_h">
+
 - [**\[Hard\] Maximum Spanning Tree**](http://trsong.github.io/python/java/2021/02/02/DailyQuestionsFeb/#mar-25-2021-hard-maximum-spanning-tree) -- *Given an undirected graph with weighted edges, compute the maximum weight spanning tree.* [*\(Try ME\)*](https://replit.com/@trsong/Calculate-Maximum-Spanning-Tree-1)
 
 </summary>

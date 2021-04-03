@@ -85,6 +85,110 @@ students = {
 }
 ```
 
+**Solution with Disjoint-Set(Union Find):** [https://replit.com/@trsong/Build-Teams-without-Enemies](https://replit.com/@trsong/Build-Teams-without-Enemies)
+```py
+import unittest
+from collections import defaultdict
+
+def team_without_enemies(students):
+    enemy_map = defaultdict(defaultdict)
+    for student, enemies in students.items():
+        for enemy in enemies:
+            enemy_map[student][enemy] = True
+            enemy_map[enemy][student] = True
+
+    uf = DisjointSet()
+    for student, enemies in enemy_map.items():
+        enemy0 = next(iter(enemies), None)
+        for enemy in enemies:
+            if uf.is_connected(student, enemy):
+                return False
+            uf.union(enemy, enemy0)
+    
+    team1_leader = next(iter(enemy_map), None)
+    team1 = [student for student in students if uf.is_connected(student, team1_leader)]
+    team2 = [student for student in students if not uf.is_connected(student, team1_leader)]
+    return team1, team2
+            
+
+class DisjointSet(object):
+    def __init__(self):
+        self.parent = {}
+
+    def find(self, p):
+        self.parent[p] = self.parent.get(p, p)
+        while p != self.parent[p]:
+            self.parent[p] = self.parent[self.parent[p]]
+            p = self.parent[p]
+        return p
+
+    def union(self, p1, p2):
+        root1 = self.find(p1)
+        root2 = self.find(p2)
+        if root1 != root2:
+            self.parent[root1] = root2
+
+    def is_connected(self, p1, p2):
+        return self.find(p1) == self.find(p2)
+
+
+class TeamWithoutEnemiesSpec(unittest.TestCase):
+    def assert_result(self, expected, result):
+        expected_group1_set, expected_group2_set = set(expected[0]), set(expected[1])
+        result_group1_set, result_group2_set = set(result[0]), set(result[1])
+        outcome1 = (expected_group1_set == result_group1_set) and (expected_group2_set == result_group2_set)
+        outcome2 = (expected_group2_set == result_group1_set) and (expected_group1_set == result_group2_set)
+        self.assertTrue(outcome1 or outcome2)
+
+    def test_example(self):
+        students = {0: [3], 1: [2], 2: [1, 4], 3: [0, 4, 5], 4: [2, 3], 5: [3]}
+        expected = ([0, 1, 4, 5], [2, 3])
+        self.assert_result(expected, team_without_enemies(students))
+
+    def test_example2(self):
+        students = {
+            0: [3],
+            1: [2],
+            2: [1, 3, 4],
+            3: [0, 2, 4, 5],
+            4: [2, 3],
+            5: [3]
+        }
+        self.assertFalse(team_without_enemies(students))
+
+    def test_empty_graph(self):
+        students = {}
+        expected = ([], [])
+        self.assert_result(expected, team_without_enemies(students))
+
+    def test_one_node_graph(self):
+        students = {0: []}
+        expected = ([0], [])
+        self.assert_result(expected, team_without_enemies(students))
+
+    def test_disconnect_graph(self):
+        students = {0: [], 1: [0], 2: [3], 3: [4], 4: [2]}
+        self.assertFalse(team_without_enemies(students))
+
+    def test_square(self):
+        students = {0: [1], 1: [2], 2: [3], 3: [0]}
+        expected = ([0, 2], [1, 3])
+        self.assert_result(expected, team_without_enemies(students))
+
+    def test_k5(self):
+        students = {0: [1, 2, 3, 4], 1: [2, 3, 4], 2: [3, 4], 3: [3], 4: []}
+        self.assertFalse(team_without_enemies(students))
+
+    def test_square2(self):
+        students = {0: [3], 1: [2], 2: [1], 3: [0, 2]}
+        expected = ([0, 2], [1, 3])
+        self.assert_result(expected, team_without_enemies(students))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False, verbosity=2)
+```
+
 
 ### Apr 1, 2021 LC 16 \[Medium\] Closest to 3 Sum
 ---
