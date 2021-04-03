@@ -19,6 +19,38 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
 
+### Apr 3, 2021 \[Medium\] Add Bold Tag in String
+---
+> **Question:** Implement the function embolden(s, lst) which takes in a string s and list of substrings lst, and wraps all substrings in s with an HTML bold tag <b> and </b>.
+>
+> If two bold tags overlap or are contiguous, they should be merged.
+
+**Example 1:**
+```py
+Input: s = 'abcdefg', lst = ['bc', 'ef'] 
+Output: 'a<b>bc</b>d<b>ef</b>g'
+```
+
+**Example 2:**
+```py
+Input: s = 'abcdefg', lst = ['bcd', 'def']
+Output: 'a<b>bcdef</b>g'
+```
+
+**Example 3:**
+```py
+Input: s = 'abcxyz123', lst = ['abc', '123']
+Output:
+'<b>abc</b>xyz<b>123</b>'
+```
+
+**Example 4:**
+```py
+Input: s = 'aaabbcc', lst = ['aaa','aab','bc']
+Output: "<b>aaabbc</b>c"
+```
+
+
 ### Apr 2, 2021 \[Hard\] Teams without Enemies
 ---
 > **Question:** A teacher must divide a class of students into two teams to play dodgeball. Unfortunately, not all the kids get along, and several refuse to be put on the same team as that of their enemies.
