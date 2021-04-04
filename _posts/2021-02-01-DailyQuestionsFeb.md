@@ -50,6 +50,139 @@ Input: s = 'aaabbcc', lst = ['aaa','aab','bc']
 Output: "<b>aaabbc</b>c"
 ```
 
+**Solution with Trie:** [https://replit.com/@trsong/Add-Bold-Tag-in-String](https://replit.com/@trsong/Add-Bold-Tag-in-String)
+```py
+import unittest
+
+def embolden(s, lst):
+    trie = Trie()
+    for word in lst:
+        trie.insert(word)
+
+    bold_position = {}
+    for i, ch in enumerate(s):
+        num_match_chars = trie.match(s, i)
+        if num_match_chars > 0:
+            bold_position[i] = i + num_match_chars - 1
+
+    end_position = -1
+    res = []
+    for i in range(len(s)):
+        if end_position < i and i in bold_position:
+            res.append('<b>')
+        res.append(s[i])
+
+        end_position = max(end_position, bold_position.get(i, -1))
+        end_position = max(end_position, bold_position.get(end_position + 1, -1))
+        if i == end_position:
+            res.append('</b>')
+    return ''.join(res)
+
+
+class Trie(object):
+    def __init__(self):
+        self.children = None
+        self.terminated = False
+
+    def insert(self, word):
+        p = self
+        for ch in word:
+            p.children = p.children or {}
+            if ch not in p.children:
+                p.children[ch] = Trie()
+            p = p.children[ch]
+        p.terminated = True
+
+    def match(self, word, start):
+        p = self
+        end = start
+        for i in range(start, len(word)):
+            ch = word[i]
+            if not p or not p.children or ch not in p.children:
+                break
+            p = p.children[ch]
+            if p and p.terminated:
+                end = i + 1
+        return end - start
+            
+
+class EmboldenSpec(unittest.TestCase):
+    def test_example(self):
+        s = 'abcdefg'
+        lst = ['bc', 'ef'] 
+        expected = 'a<b>bc</b>d<b>ef</b>g'
+        self.assertEqual(expected, embolden(s, lst))
+
+    def test_example2(self):
+        s = 'abcdefg'
+        lst = ['bcd', 'def']
+        expected = 'a<b>bcdef</b>g'
+        self.assertEqual(expected, embolden(s, lst))
+
+    def test_example3(self):
+        s = 'abcxyz123'
+        lst = ['abc', '123']
+        expected = '<b>abc</b>xyz<b>123</b>'
+        self.assertEqual(expected, embolden(s, lst))
+
+    def test_example4(self):
+        s = 'aaabbcc'
+        lst = ['aaa','aab','bc']
+        expected = '<b>aaabbc</b>c'
+        self.assertEqual(expected, embolden(s, lst))
+
+    def test_non_pattern_match(self):
+        s = 'abc123'
+        lst = ['z']
+        self.assertEqual(s, embolden(s, lst))
+
+    def test_match_prefix(self):
+        s = 'abc123'
+        lst = ['a']
+        expected = '<b>a</b>bc123'
+        self.assertEqual(expected, embolden(s, lst))
+
+    def test_match_suffix(self):
+        s = 'abc123'
+        lst = ['3']
+        expected = 'abc12<b>3</b>' 
+        self.assertEqual(expected, embolden(s, lst))
+
+    def test_match_partial(self):
+        s = 'abc123'
+        lst = ['c133']
+        expected = 'abc123' 
+        self.assertEqual(expected, embolden(s, lst))
+
+    def test_match_max_pattern(self):
+        s = '000abc000'
+        lst = ['a', 'ab', 'abc', 'abcd', 'abcde']
+        expected = '000<b>abc</b>000' 
+        self.assertEqual(expected, embolden(s, lst))
+
+    def test_overlapping_patterns(self):
+        s = '321abc123'
+        lst = ['abc', '1abc1', '11abc11']
+        expected = '32<b>1abc1</b>23'
+        self.assertEqual(expected, embolden(s, lst))
+
+    def test_overlapping_patterns2(self):
+        s = '321abc123'
+        lst = ['321abc', 'abc', 'abc123']
+        expected = '<b>321abc123</b>'
+        self.assertEqual(expected, embolden(s, lst))
+
+    def test_non_overlapping_patterns(self):
+        s = '321abc123'
+        lst = ['3', '2', '1', 'ab', 'c']
+        expected = '<b>321abc123</b>'
+        self.assertEqual(expected, embolden(s, lst))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False, verbosity=2)
+```
+
 
 ### Apr 2, 2021 \[Hard\] Teams without Enemies
 ---

@@ -4084,6 +4084,49 @@ sumRange(0, 2) -> 8
 ---
 
 <details>
+<summary class="lc_m">
+
+- [**\[Medium\] Add Bold Tag in String**](http://trsong.github.io/python/java/2021/02/02/DailyQuestionsFeb/#apr-3-2021-medium-add-bold-tag-in-string) -- *Takes in a string s and list of substrings lst, and wraps all substrings in s with an HTML bold tag `<b>` and `</b>`.* [*\(Try ME\)*](https://replit.com/@trsong/Add-Bold-Tag-in-String-1)
+
+</summary>
+<div>
+
+
+**Question:** Implement the function `embolden(s, lst)` which takes in a string s and list of substrings lst, and wraps all substrings in `s` with an HTML bold tag `<b>` and `</b>`.
+
+If two bold tags overlap or are contiguous, they should be merged.
+
+**Example 1:**
+```py
+Input: s = 'abcdefg', lst = ['bc', 'ef'] 
+Output: 'a<b>bc</b>d<b>ef</b>g'
+```
+
+**Example 2:**
+```py
+Input: s = 'abcdefg', lst = ['bcd', 'def']
+Output: 'a<b>bcdef</b>g'
+```
+
+**Example 3:**
+```py
+Input: s = 'abcxyz123', lst = ['abc', '123']
+Output:
+'<b>abc</b>xyz<b>123</b>'
+```
+
+**Example 4:**
+```py
+Input: s = 'aaabbcc', lst = ['aaa','aab','bc']
+Output: "<b>aaabbc</b>c"
+```
+
+
+</div>
+</details>
+
+
+<details>
 <summary class="lc_h">
 
 - [**\[Hard\] LC 30. Substring with Concatenation of All Words**](http://trsong.github.io/python/java/2021/02/02/DailyQuestionsFeb/#mar-16-2021-lc-30-hard-substring-with-concatenation-of-all-words) -- *Given a string s and a list of same length words, find all index of substring of s that is permutation of words.* [*\(Try ME\)*](https://replit.com/@trsong/Substring-with-Concatenation-of-All-Words-1)
