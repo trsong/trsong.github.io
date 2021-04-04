@@ -21,7 +21,7 @@ categories: Python/Java
 
 ### Apr 3, 2021 \[Medium\] Add Bold Tag in String
 ---
-> **Question:** Implement the function embolden(s, lst) which takes in a string s and list of substrings lst, and wraps all substrings in s with an HTML bold tag <b> and </b>.
+> **Question:** Implement the function `embolden(s, lst)` which takes in a string s and list of substrings lst, and wraps all substrings in `s` with an HTML bold tag `<b>` and `</b>`.
 >
 > If two bold tags overlap or are contiguous, they should be merged.
 
