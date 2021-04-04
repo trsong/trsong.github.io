@@ -19,6 +19,15 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
 
+### Apr 4, 2021 \[Easy\] Count Line Segment Intersections
+---
+> **Question:** Suppose you are given two lists of n points, one list `p1, p2, ..., pn` on the line `y = 0` and the other list `q1, q2, ..., qn` on the line `y = 1`. 
+>
+> Imagine a set of n line segments connecting each point pi to qi. 
+>
+> Write an algorithm to determine how many pairs of the line segments intersect.
+
+
 ### Apr 3, 2021 \[Medium\] Add Bold Tag in String
 ---
 > **Question:** Implement the function `embolden(s, lst)` which takes in a string s and list of substrings lst, and wraps all substrings in `s` with an HTML bold tag `<b>` and `</b>`.
