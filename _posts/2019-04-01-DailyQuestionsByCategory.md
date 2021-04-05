@@ -28,6 +28,24 @@ categories: Python/Java
 ---
 
 <details>
+<summary class="lc_e">
+
+- [**\[Easy\] Count Line Segment Intersections**](http://trsong.github.io/python/java/2021/02/02/DailyQuestionsFeb/#apr-4-2021-easy-count-line-segment-intersections) -- *Suppose you are given two lists of n points, write an algorithm to determine how many pairs of the line segments intersect.* [*\(Try ME\)*](https://replit.com/@trsong/Count-Line-Segment-Intersections-1)
+
+</summary>
+<div>
+
+**Question:** Suppose you are given two lists of n points, one list `p1, p2, ..., pn` on the line `y = 0` and the other list `q1, q2, ..., qn` on the line `y = 1`. 
+
+Imagine a set of n line segments connecting each point pi to qi. 
+
+Write an algorithm to determine how many pairs of the line segments intersect.
+
+</div>
+</details>
+
+
+<details>
 <summary class="lc_m">
 
 - [**\[Medium\] Ways to Form Heap with Distinct Integers**](https://trsong.github.io/python/java/2021/02/02/DailyQuestionsFeb/#mar-31-2021-medium-ways-to-form-heap-with-distinct-integers) -- *Write a program to determine how many distinct ways there are to create a max heap from a list of N given integers.* [*\(Try ME\)*](https://replit.com/@trsong/Total-Number-of-Ways-to-Form-Heap-with-Distinct-Integers-1)

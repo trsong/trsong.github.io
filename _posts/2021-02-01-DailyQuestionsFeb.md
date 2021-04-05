@@ -27,6 +27,80 @@ categories: Python/Java
 >
 > Write an algorithm to determine how many pairs of the line segments intersect.
 
+**Solution:** [https://replit.com/@trsong/Count-Line-Segment-Intersections](https://replit.com/@trsong/Count-Line-Segment-Intersections)
+```py
+import unittest
+
+def num_intersection(p, q):
+    res = 0
+    n = len(p)
+    for i in range(n):
+        for j in range(i + 1, n):
+            if intercept(p[i], q[i], p[j], q[j]):
+                res += 1
+    return res
+
+
+def intercept(p1, q1, p2, q2):
+    return p1 < p2 and q1 > q2 or p1 > p2 and q1 < q2
+
+
+class NumIntersectionSpec(unittest.TestCase):
+    def test_zero_lines(self):
+        p = []
+        q = []
+        self.assertEqual(0, num_intersection(p, q))
+
+    def test_one_line(self):
+        p = [0]
+        q = [0]
+        self.assertEqual(0, num_intersection(p, q))
+
+    def test_two_lines(self):
+        p = [0, 1]
+        q = [0, 1]
+        self.assertEqual(0, num_intersection(p, q))
+
+    def test_two_lines2(self):
+        p = [0, 1]
+        q = [1, 0]
+        self.assertEqual(1, num_intersection(p, q))
+
+    def test_three_lines(self):
+        p = [0, 1, 2]
+        q = [1, 2, 0]
+        self.assertEqual(2, num_intersection(p, q))
+
+    def test_three_lines2(self):
+        p = [0, 1, 2]
+        q = [1, 0, 2]
+        self.assertEqual(1, num_intersection(p, q))
+
+    def test_three_lines3(self):
+        p = [0, 1, 2]
+        q = [0, 1, 2]
+        self.assertEqual(0, num_intersection(p, q))
+
+    def test_three_lines4(self):
+        p = [0, 1, 2]
+        q = [2, 1, 0]
+        self.assertEqual(3, num_intersection(p, q))
+
+    def test_four_lines(self):
+        p = [0, 1, 2, 3]
+        q = [3, 2, 1, 0]
+        self.assertEqual(6, num_intersection(p, q))
+
+    def test_four_lines2(self):
+        p = [0, 1, 2, 3]
+        q = [3, 1, 2, 0]
+        self.assertEqual(5, num_intersection(p, q))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False, verbosity=2)
+```
+
 
 ### Apr 3, 2021 \[Medium\] Add Bold Tag in String
 ---
