@@ -19,6 +19,11 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
 
+### Apr 5, 2021 \[Medium\] Merge K Sorted Lists
+---
+> **Question:** Given k sorted singly linked lists, write a function to merge all the lists into one sorted singly linked list.
+
+
 ### Apr 4, 2021 \[Easy\] Count Line Segment Intersections
 ---
 > **Question:** Suppose you are given two lists of n points, one list `p1, p2, ..., pn` on the line `y = 0` and the other list `q1, q2, ..., qn` on the line `y = 1`. 
