@@ -23,6 +23,106 @@ categories: Python/Java
 ---
 > **Question:** Given k sorted singly linked lists, write a function to merge all the lists into one sorted singly linked list.
 
+**Solution with Priority Queue:** [https://replit.com/@trsong/Merge-K-Sorted-Linked-Lists](https://replit.com/@trsong/Merge-K-Sorted-Linked-Lists)
+```py
+import unittest
+from queue import PriorityQueue
+
+def merge_k_sorted_lists(lists):
+    if not lists: 
+        return None
+
+    pq = PriorityQueue()
+    list_ptr = lists
+    while list_ptr:
+        sub_list_ptr = list_ptr.val
+        if sub_list_ptr:
+            pq.put((sub_list_ptr.val, sub_list_ptr))
+        list_ptr = list_ptr.next
+    
+    dummy = p = ListNode(-1)
+    while not pq.empty():
+        _, lst = pq.get()
+        p.next = ListNode(lst.val)
+        p = p.next
+        if lst.next:
+            lst = lst.next
+            pq.put((lst.val, lst))
+    return dummy.next
+        
+
+##################
+# Testing Utility
+##################
+class ListNode(object):
+    def __init__(self, val, next=None):
+        self.val = val
+        self.next = next
+
+    def __eq__(self, other):
+        return other and self.val == other.val and self.next == other.next
+    
+    def __lt__(self, other):
+        return other and self.val < other.val
+
+    def __repr__(self):
+        return "{} -> {}".format(str(self.val), str(self.next))
+
+    @staticmethod
+    def List(*vals):
+        p = dummy = ListNode(-1)
+        for v in vals:
+            p.next = ListNode(v)
+            p = p.next
+        return dummy.next
+
+
+class MergeKSortedListSpec(unittest.TestCase):
+    def test_empty_list(self):
+        self.assertEqual(ListNode.List(), merge_k_sorted_lists(ListNode.List()))
+
+    def test_list_contains_empty_sub_lists(self):
+        lists = ListNode.List(
+            ListNode.List(),
+            ListNode.List(),
+            ListNode.List(1), 
+            ListNode.List(), 
+            ListNode.List(2), 
+            ListNode.List(0, 4))
+        expected = ListNode.List(0, 1, 2, 4)
+        self.assertEqual(expected, merge_k_sorted_lists(lists))
+
+    def test_sub_lists_with_duplicated_values(self):
+        lists = ListNode.List(
+            ListNode.List(1, 1, 3), 
+            ListNode.List(1), 
+            ListNode.List(3), 
+            ListNode.List(1, 2), 
+            ListNode.List(2, 3), 
+            ListNode.List(2, 2), 
+            ListNode.List(3))
+        expected = ListNode.List(1, 1, 1, 1, 2, 2, 2, 2, 3, 3, 3, 3)
+        self.assertEqual(expected, merge_k_sorted_lists(lists))
+
+    def test_general_lists(self):
+        lists = ListNode.List(
+            ListNode.List(),
+            ListNode.List(1, 4, 7, 15),
+            ListNode.List(),
+            ListNode.List(2),
+            ListNode.List(0, 3, 9, 10),
+            ListNode.List(8, 13),
+            ListNode.List(),
+            ListNode.List(11, 12, 14),
+            ListNode.List(5, 6)
+        )
+        expected = ListNode.List(*range(16))
+        self.assertEqual(expected, merge_k_sorted_lists(lists))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False, verbosity=2)
+```
 
 ### Apr 4, 2021 \[Easy\] Count Line Segment Intersections
 ---

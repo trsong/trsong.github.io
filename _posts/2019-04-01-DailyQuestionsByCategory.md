@@ -4527,6 +4527,21 @@ Given a list of `N` people and the above operation, find a way to identify the c
 ## Heap / Priority Queue
 ---
 
+
+<details>
+<summary class="lc_m">
+
+- [**\[Medium\] Merge K Sorted Lists**](https://trsong.github.io/python/java/2021/02/02/DailyQuestionsFeb/#apr-5-2021-medium-merge-k-sorted-lists) -- *Given k sorted singly linked lists, write a function to merge all the lists into one sorted singly linked list.* [*\(Try ME\)*](https://replit.com/@trsong/Merge-K-Sorted-Linked-Lists-1)
+
+</summary>
+<div>
+
+**Question:** Given k sorted singly linked lists, write a function to merge all the lists into one sorted singly linked list.
+
+</div>
+</details>
+
+
 <details>
 <summary class="lc_m">
 
