@@ -5061,6 +5061,21 @@ For example, if the list is `[1, 2, 3, 4, 5]` and `K` is `9`, then it should ret
 ## Greedy
 ---
 
+<details>
+<summary class="lc_m">
+
+- [**\[Medium\] Minimum Number of Boats to Save Population**](https://trsong.github.io/python/java/2021/02/02/DailyQuestionsFeb/#apr-6-2021-medium-minimum-number-of-boats-to-save-population) -- *If at most two people can fit in a rescue boat, and the maximum weight limit for a given boat is k, determine how many boats will be needed.* [*\(Try ME\)*](https://replit.com/@trsong/Minimum-Number-of-Boats-to-Save-Population-1)
+
+</summary>
+<div>
+
+**Question:** An imminent hurricane threatens the coastal town of Codeville. If at most two people can fit in a rescue boat, and the maximum weight limit for a given boat is k, determine how many boats will be needed to save everyone.
+
+For example, given a population with weights `[100, 200, 150, 80]` and a boat limit of `200`, the smallest number of boats required will be three.
+
+</div>
+</details>
+
 
 <details>
 <summary class="lc_e">

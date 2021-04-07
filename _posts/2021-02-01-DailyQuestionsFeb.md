@@ -25,6 +25,74 @@ categories: Python/Java
 >
 > For example, given a population with weights `[100, 200, 150, 80]` and a boat limit of `200`, the smallest number of boats required will be three.
 
+**Solution with Greedy Algorithm:** [https://replit.com/@trsong/Minimum-Number-of-Boats-to-Save-Population](https://replit.com/@trsong/Minimum-Number-of-Boats-to-Save-Population)
+```py
+import unittest
+
+def min_required_boats(weights, limit):
+    if not weights:
+        return 0
+
+    weights.sort()
+    if weights[-1] > limit:
+        return -1
+
+    res = 0
+    lo, hi = 0, len(weights) - 1
+    while lo <= hi:
+        if weights[lo] + weights[hi] <= limit:
+            lo += 1
+        hi -= 1
+        res += 1
+    return res
+
+
+class MinRequiredBoatSpec(unittest.TestCase):
+    def test_example(self):
+        limit, weights = 200, [100, 200, 150, 80]
+        expected = 3  # [100, 80], [200], [150]
+        self.assertEqual(expected, min_required_boats(weights, limit))
+
+    def test_cannot_save_anyone(self):
+        limit, weights = 10, [100, 200]
+        expected = -1
+        self.assertEqual(expected, min_required_boats(weights, limit))
+
+    def test_no_passengers(self):
+        limit, weights = 10, []
+        expected = 0
+        self.assertEqual(expected, min_required_boats(weights, limit))
+
+    def test_each_person_fit_one_boat(self):
+        limit, weights = 100, [100, 100, 100, 100]
+        expected = 4
+        self.assertEqual(expected, min_required_boats(weights, limit))
+
+    def test_cannot_fit_second_person(self):
+        limit, weights = 100, [80, 90, 60, 50]
+        expected = 4
+        self.assertEqual(expected, min_required_boats(weights, limit))
+
+    def test_two_passengers_share_same_boat(self):
+        limit, weights = 100, [50, 50, 30, 30, 20, 20]
+        expected = 3
+        self.assertEqual(expected, min_required_boats(weights, limit))
+
+    def test_boat_can_at_most_fit_two_passengers(self):
+        limit, weights = 500, [50, 50, 50, 50]
+        expected = 2
+        self.assertEqual(expected, min_required_boats(weights, limit))
+
+    def test_figure_out_best_parnter(self):
+        limit, weights = 100, [10, 90, 20, 80, 30, 70, 40, 60, 100]
+        expected = 5  # [10, 90], [20, 80], [30, 70], [40, 60], [100]
+        self.assertEqual(expected, min_required_boats(weights, limit))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False, verbosity=2)
+``` 
+
 
 ### Apr 5, 2021 \[Medium\] Merge K Sorted Lists
 ---
