@@ -19,6 +19,16 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
 
+
+### Apr 7, 2021 \[Hard\] Anagram to Integer
+---
+> **Question:** You are given a string formed by concatenating several words corresponding to the integers `zero` through `nine` and then anagramming.
+>
+> For example, the input could be `'niesevehrtfeev'`, which is an anagram of `'threefiveseven'`. Note that there can be multiple instances of each integer.
+>
+> Given this string, return the original integers in sorted order. In the example above, this would be `357`.
+
+
 ### Apr 6, 2021 \[Medium\] Minimum Number of Boats to Save Population
 ---
 > **Question:** An imminent hurricane threatens the coastal town of Codeville. If at most two people can fit in a rescue boat, and the maximum weight limit for a given boat is k, determine how many boats will be needed to save everyone.
