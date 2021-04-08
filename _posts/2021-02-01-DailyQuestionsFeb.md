@@ -20,6 +20,21 @@ categories: Python/Java
 
 
 
+### Apr 8, 2021 \[Medium\]  Generate Brackets
+---
+> **Question:** Given a number n, generate all possible combinations of n well-formed brackets.
+
+**Example 1:**
+```py
+generate_brackets(1)  # returns ['()']
+```
+
+**Example 2:**
+```py
+generate_brackets(3)  # returns ['((()))', '(()())', '()(())', '()()()', '(())()']
+```
+
+
 ### Apr 7, 2021 \[Hard\] Anagram to Integer
 ---
 > **Question:** You are given a string formed by concatenating several words corresponding to the integers `zero` through `nine` and then anagramming.
