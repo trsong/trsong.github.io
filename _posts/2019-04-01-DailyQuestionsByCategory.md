@@ -445,6 +445,24 @@ Return true as the first and third rectangle overlap each other.
 ---
 
 <details>
+<summary class="lc_h">
+
+- [**\[Hard\] Anagram to Integer**](https://trsong.github.io/python/java/2021/02/02/DailyQuestionsFeb/#apr-7-2021-hard-anagram-to-integer) -- *Given a string formed by concatenating several words corresponding to the integers zero through nine and then anagramming,return the integer* [*\(Try ME\)*](https://repl.it/@trsong/Convert-Anagram-to-Integer-1)
+
+</summary>
+<div>
+
+**Question:** You are given a string formed by concatenating several words corresponding to the integers `zero` through `nine` and then anagramming.
+
+For example, the input could be `'niesevehrtfeev'`, which is an anagram of `'threefiveseven'`. Note that there can be multiple instances of each integer.
+
+Given this string, return the original integers in sorted order. In the example above, this would be `357`.
+
+</div>
+</details>
+
+
+<details>
 <summary class="lc_e">
 
 - [**\[Easy\] LC 766. Toeplitz Matrix**](http://trsong.github.io/python/java/2020/11/02/DailyQuestionsAug/#jan-31-2021-lc-766-easy-toeplitz-matrix) -- *Write a program to determine whether a given input is a Toeplitz matrix whose diagonal elements are the same.* [*\(Try ME\)*](https://repl.it/@trsong/Toeplitz-Matrix-1)
@@ -6513,23 +6531,6 @@ Output: [["a"]]
 </div>
 </details>
 
-
-<details>
-<summary class="lc_h">
-
-- [**\[Hard\] Anagram to Integer**](https://trsong.github.io/python/java/2020/11/02/DailyQuestionsAug/#jan-5-2021-hard-anagram-to-integer) -- *Given a string formed by concatenating several words corresponding to the integers zero through nine and then anagramming,return the integer* [*\(Try ME\)*](https://repl.it/@trsong/Convert-Anagram-to-Integer-1)
-
-</summary>
-<div>
-
-**Question:** You are given a string formed by concatenating several words corresponding to the integers `zero` through `nine` and then anagramming.
-
-For example, the input could be `'niesevehrtfeev'`, which is an anagram of `'threefiveseven'`. Note that there can be multiple instances of each integer.
-
-Given this string, return the original integers in sorted order. In the example above, this would be `357`.
-
-</div>
-</details>
 
 
 <details>

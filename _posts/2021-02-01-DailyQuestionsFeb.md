@@ -28,6 +28,99 @@ categories: Python/Java
 >
 > Given this string, return the original integers in sorted order. In the example above, this would be `357`.
 
+**Solution:** [https://replit.com/@trsong/Map-Anagram-to-Integer](https://replit.com/@trsong/Map-Anagram-to-Integer)
+```py
+import unittest
+
+def anagram_to_integer(s):
+    """
+    character distribution:
+    z [0]
+    w [2]
+    u [4]
+    x [6]
+    g [8]
+    f [4, 5]
+    s [6, 7]
+    h [3, 8]
+    v [5, 7]
+    r [0, 3, 4]
+    t [2, 3, 8]
+    i [5, 6, 8, 9]
+    o [0, 1, 2, 4]
+    n [1, 7, 9, 9]
+    e [0, 1, 3, 3, 5, 7, 7, 8, 9]
+    """
+    if not s:
+        return 0
+
+    char_freq = {}
+    for ch in s:
+        char_freq[ch] = char_freq.get(ch, 0) + 1
+
+    count = [0] * 10
+    count[0] = char_freq.get('z', 0)
+    count[2] = char_freq.get('w', 0) 
+    count[4] = char_freq.get('u', 0) 
+    count[6] = char_freq.get('x', 0) 
+    count[8] = char_freq.get('g', 0)
+
+    count[5] = char_freq.get('f', 0) - count[4]
+    count[7] = char_freq.get('s', 0) - count[6]
+    count[3] = char_freq.get('h', 0) - count[8]
+
+    count[9] = char_freq.get('i', 0) - count[5] - count[6] - count[8]
+    count[1] = char_freq.get('o', 0) - count[0] - count[2] - count[4]
+    return int(''.join(str(i) * count[i] for i in xrange(10)))
+
+        
+class AnagramToIntegerSpec(unittest.TestCase):
+    def test_example(self):
+        s = 'niesevehrtfeev'
+        expected = 357
+        self.assertEqual(expected, anagram_to_integer(s))
+
+    def test_empty_string(self):
+        self.assertEqual(0, anagram_to_integer(''))
+
+    def test_contains_duplicate_characters(self):
+        s = 'nininene'
+        expected = 99
+        self.assertEqual(expected, anagram_to_integer(s))
+
+    def test_contains_duplicate_characters2(self):
+        s = 'twoonefourfourtwoone'
+        expected = 112244
+        self.assertEqual(expected, anagram_to_integer(s))
+    
+    def test_char_in_sorted_order(self):
+        s = 'eeeffhioorrttuvw'
+        expected = 2345
+        self.assertEqual(expected, anagram_to_integer(s))
+
+    def test_zero(self):
+        s = 'zero'
+        expected = 0
+        self.assertEqual(expected, anagram_to_integer(s))
+    
+    def test_should_omit_zero(self):
+        s = 'onetwothreefourfivesixseveneightnine'
+        expected = 123456789
+        self.assertEqual(expected, anagram_to_integer(s))
+
+    def test_unique_character(self):
+        s = 'oneoneoneone'
+        expected = 1111
+        self.assertEqual(expected, anagram_to_integer(s))
+
+    def test_one_not_exists(self):
+        s = 'twonine'
+        expected = 29
+        self.assertEqual(expected, anagram_to_integer(s))
+
+if __name__ == '__main__':
+    unittest.main(exit=False, verbosity=2)
+```
 
 ### Apr 6, 2021 \[Medium\] Minimum Number of Boats to Save Population
 ---
