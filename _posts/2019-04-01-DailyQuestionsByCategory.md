@@ -6431,6 +6431,30 @@ For example, given `100`, you can reach `1` in five steps with the following rou
 ---
 
 <details>
+<summary class="lc_m">
+
+- [**\[Medium\] Generate Brackets**](https://trsong.github.io/python/java/2021/02/02/DailyQuestionsFeb/#apr-8-2021-medium--generate-brackets) -- *Given a number n, generate all possible combinations of n well-formed brackets.* [*\(Try ME\)*](https://replit.com/@trsong/Generate-Well-formed-Brackets-1)
+
+</summary>
+<div>
+
+**Question:** Given a number n, generate all possible combinations of n well-formed brackets.
+
+**Example 1:**
+```py
+generate_brackets(1)  # returns ['()']
+```
+
+**Example 2:**
+```py
+generate_brackets(3)  # returns ['((()))', '(()())', '()(())', '()()()', '(())()']
+```
+
+</div>
+</details>
+
+
+<details>
 <summary class="lc_h">
 
 - [**\[Hard\] LC 679. 24 Game**](https://trsong.github.io/python/java/2021/02/02/DailyQuestionsFeb/#mar-20-2021-lc-679-hard-24-game) -- *Given a list of 4 int, each between 1 and 9.  Determine if placing the operators +, -, *, and /, and group by () gives 24.* [*\(Try ME\)*](https://replit.com/@trsong/24-Game-1)

@@ -49,6 +49,56 @@ generate_brackets(1)  # returns ['()']
 generate_brackets(3)  # returns ['((()))', '(()())', '()(())', '()()()', '(())()']
 ```
 
+**Solution with Backtracking:** [https://replit.com/@trsong/Generate-Well-formed-Brackets](https://replit.com/@trsong/Generate-Well-formed-Brackets)
+```py
+import unittest
+
+def generate_brackets(n):
+    if n == 0:
+        return []
+    res = []
+    backtrack(res, [], n, 0, 0)
+    return res
+
+
+def backtrack(res, accu, n, num_open, num_close):
+    if n == num_open == num_close:
+        res.append(''.join(accu))
+    
+    if num_open > num_close:
+        accu.append(')')
+        backtrack(res, accu, n, num_open, num_close + 1)
+        accu.pop()
+        
+    if num_open < n:
+        accu.append('(')
+        backtrack(res, accu, n, num_open + 1, num_close)
+        accu.pop()
+
+
+class GenerateBracketSpec(unittest.TestCase):
+    def assert_result(self, expected, result):
+        self.assertEqual(sorted(expected), sorted(result))
+
+    def test_example1(self):
+        self.assert_result(['()'], generate_brackets(1))
+
+    def test_example2(self):
+        n, expected = 3, ['((()))', '(()())', '()(())', '()()()', '(())()']
+        self.assert_result(expected, generate_brackets(n))
+
+    def test_input_size_is_two(self):
+        n, expected = 2, ['()()', '(())']
+        self.assert_result(expected, generate_brackets(n))
+
+    def test_input_size_is_zero(self):
+        self.assert_result([], generate_brackets(0))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False, verbosity=2)
+```
+
 
 ### Apr 7, 2021 \[Hard\] Anagram to Integer
 ---
