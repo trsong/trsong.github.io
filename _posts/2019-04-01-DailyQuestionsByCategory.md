@@ -2204,6 +2204,32 @@ Explanation: 342 + 465 = 807.
 <details>
 <summary class="lc_e">
 
+- [**\[Easy\] Remove Duplicates From Sorted Linked List**](https://trsong.github.io/python/java/2021/02/02/DailyQuestionsFeb/#apr-9-2021-easy-remove-duplicates-from-sorted-linked-list) -- *Given a sorted linked list of integers, remove all the duplicate elements in the linked list so that all elements are unique.* [*\(Try ME\)*](https://replit.com/@trsong/Remove-Duplicates-From-Sorted-Linked-List-1)
+
+</summary>
+<div>
+
+**Question:** Given a sorted linked list, remove all duplicate values from the linked list.
+
+**Example 1:**
+```py
+Input: 1 -> 1 -> 2 -> 3 -> 4 -> 4 -> 4 -> 4 -> 4 -> 5 -> 5 -> 6 -> 7 -> 9
+Output: 1 -> 2 -> 3 -> 4 -> 5 -> 6 -> 7 -> 9
+```
+
+**Example 2:**
+```py
+Input: 1 -> 1 -> 1 -> 1
+Output: 1
+```
+
+</div>
+</details>
+
+
+<details>
+<summary class="lc_e">
+
 - [**\[Easy\] Remove Duplicates From Linked List**](https://trsong.github.io/python/java/2020/08/02/DailyQuestionsAug/#sep-10-2020-easy-remove-duplicates-from-linked-list) -- *Given a linked list, remove all duplicate values from the linked list.* [*\(Try ME\)*](https://repl.it/@trsong/Remove-Duplicates-From-Linked-List-1)
 
 </summary>
