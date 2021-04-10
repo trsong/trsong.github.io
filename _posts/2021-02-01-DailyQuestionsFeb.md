@@ -19,6 +19,13 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
 
+### Apr 10, 2021 \[Easy\] Count Complete Binary Tree
+---
+> **Question:** Given a complete binary tree, count the number of nodes in faster than `O(n)` time. 
+> 
+> Recall that a complete binary tree has every level filled except the last, and the nodes in the last level are filled starting from the left.
+
+
 ### Apr 9, 2021 \[Easy\] Remove Duplicates From Sorted Linked List
 ---
 > **Question:** Given a sorted linked list, remove all duplicate values from the linked list.
