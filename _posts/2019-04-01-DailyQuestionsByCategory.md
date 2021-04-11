@@ -3463,6 +3463,22 @@ For example, given the array `[3, 4, 9, 6, 1]`, return `[1, 1, 2, 1, 0]`, since:
 ### Recursion
 ---
 
+<details>
+<summary class="lc_e">
+
+- [**\[Easy\] Count Complete Binary Tree**](https://trsong.github.io/python/java/2021/02/02/DailyQuestionsFeb/#apr-10-2021-easy-count-complete-binary-tree) -- *Given a complete binary tree, count the number of nodes in faster than O(n) time.* [*\(Try ME\)*](https://replit.com/@trsong/Count-Complete-Binary-Tree-1)
+
+</summary>
+<div>
+
+**Question:** Given a complete binary tree, count the number of nodes in faster than `O(n)` time. 
+
+Recall that a complete binary tree has every level filled except the last, and the nodes in the last level are filled starting from the left.
+
+
+</div>
+</details>
+
 
 <details>
 <summary class="lc_m">
