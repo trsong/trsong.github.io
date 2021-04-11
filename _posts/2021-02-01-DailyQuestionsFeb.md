@@ -19,6 +19,21 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
 
+### Apr 11, 2021 \[Easy\] Minimum Depth of Binary Tree
+---
+> **Question:** Given a binary tree, find the minimum depth of the binary tree. The minimum depth is the shortest distance from the root to a leaf.
+
+**Example:**
+```py
+Input:
+     1
+    / \
+   2   3
+        \
+         4
+Output: 2
+```
+
 ### Apr 10, 2021 \[Easy\] Count Complete Binary Tree
 ---
 > **Question:** Given a complete binary tree, count the number of nodes in faster than `O(n)` time. 
