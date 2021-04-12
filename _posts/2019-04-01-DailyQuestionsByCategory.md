@@ -5535,6 +5535,30 @@ Output: [4, 2, 1, 3, 6] or [5, 2, 1, 3, 6]
 ### Level-based BFS
 ---
 
+<details>
+<summary class="lc_e">
+
+- [**\[Easy\] Minimum Depth of Binary Tree**](https://trsong.github.io/python/java/2021/02/02/DailyQuestionsFeb/#apr-11-2021-easy-minimum-depth-of-binary-tree) -- * Given a binary tree, find the minimum depth of the binary tree. The minimum depth is the shortest distance from the root to a leaf.* [*\(Try ME\)*](https://replit.com/@trsong/Minimum-Depth-of-Binary-Tree-3)
+
+</summary>
+<div>
+
+**Question:** Given a binary tree, find the minimum depth of the binary tree. The minimum depth is the shortest distance from the root to a leaf.
+
+**Example:**
+```py
+Input:
+     1
+    / \
+   2   3
+        \
+         4
+Output: 2
+```
+
+</div>
+</details>
+
 
 <details>
 <summary class="lc_m">

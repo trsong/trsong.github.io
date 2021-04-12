@@ -46,6 +46,89 @@ Input:
 Output: 2
 ```
 
+**Solution with BFS:** [https://replit.com/@trsong/Minimum-Depth-of-Binary-Tree](https://replit.com/@trsong/Minimum-Depth-of-Binary-Tree)
+```py
+import unittest
+
+def find_min_depth(root):
+    if not root:
+        return 0
+    depth = 0
+    queue = [root]
+    while queue:
+        depth += 1
+        for _ in range(len(queue)):
+            cur = queue.pop(0)
+            if not cur.left and not cur.right:
+                return depth
+            for child in [cur.left, cur.right]:
+                if not child:
+                    continue
+                queue.append(child)
+    return depth
+        
+
+class TreeNode(object):
+    def __init__(self, val, left=None, right=None):
+        self.val = val
+        self.left = left
+        self.right = right
+
+
+class FindMinDepthSpec(unittest.TestCase):
+    def test_example(self):
+        """
+            1
+           / \
+          2   3
+         /
+        4
+        """
+        root = TreeNode(1, TreeNode(2, TreeNode(4)), TreeNode(3))
+        self.assertEqual(2, find_min_depth(root))
+
+    def test_empty_tree(self):
+        self.assertEqual(0, find_min_depth(None))
+
+    def test_root_only(self):
+        root = TreeNode(1)
+        self.assertEqual(1, find_min_depth(root))
+
+    def test_complete_tree(self):
+        """
+               1
+             /   \
+            2     3
+           / \   / \
+          4   5 6   7
+         /
+        8
+        """
+        left_tree = TreeNode(2, TreeNode(4, TreeNode(8)), TreeNode(5))
+        right_tree = TreeNode(3, TreeNode(6), TreeNode(7))
+        root = TreeNode(1, left_tree, right_tree)
+        self.assertEqual(3, find_min_depth(root))
+
+    def test_should_return_min_depth(self):
+        """
+           1
+          / \
+         2   3
+        / \   \
+       4   5   6
+           /    \
+          7      8 
+        """
+        left_tree = TreeNode(2, TreeNode(4), TreeNode(5, TreeNode(7)))
+        right_tree = TreeNode(3, right=TreeNode(6, right=TreeNode(8)))
+        root = TreeNode(1, left_tree, right_tree)
+        self.assertEqual(3, find_min_depth(root))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False, verbosity=2)
+```
+
 ### Apr 10, 2021 \[Easy\] Count Complete Binary Tree
 ---
 > **Question:** Given a complete binary tree, count the number of nodes in faster than `O(n)` time. 
