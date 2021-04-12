@@ -19,6 +19,18 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
 
+
+### Apr 12, 2021 \[Hard\] Unique Sum Combinations
+---
+> **Question:** Given a list of numbers and a target number, find all possible unique subsets of the list of numbers that sum up to the target number. The numbers will all be positive numbers.
+
+**Example:**
+```py
+sum_combinations([10, 1, 2, 7, 6, 1, 5], 8)
+# returns [(2, 6), (1, 1, 6), (1, 2, 5), (1, 7)]
+# order doesn't matter
+```
+
 ### Apr 11, 2021 \[Easy\] Minimum Depth of Binary Tree
 ---
 > **Question:** Given a binary tree, find the minimum depth of the binary tree. The minimum depth is the shortest distance from the root to a leaf.
