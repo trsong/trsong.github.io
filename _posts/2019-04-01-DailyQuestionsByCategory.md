@@ -6648,7 +6648,7 @@ Output: [["a"]]
 <details>
 <summary class="lc_e">
 
-- [**\[Easy\] Map Digits to Letters*](http://trsong.github.io/python/java/2020/11/02/DailyQuestionsAug/#jan-1-2021-easy-map-digits-to-letters) -- *Given a mapping of digits to letters (as in a phone number), and a digit string, return all possible letters the number could represent.* [*\(Try ME\)*](https://repl.it/@trsong/Map-Digits-to-All-Possible-Letters-1)
+- [**\[Easy\] Map Digits to Letters**](http://trsong.github.io/python/java/2020/11/02/DailyQuestionsAug/#jan-1-2021-easy-map-digits-to-letters) -- *Given a mapping of digits to letters (as in a phone number), and a digit string, return all possible letters the number could represent.* [*\(Try ME\)*](https://repl.it/@trsong/Map-Digits-to-All-Possible-Letters-1)
 
 </summary>
 <div>
