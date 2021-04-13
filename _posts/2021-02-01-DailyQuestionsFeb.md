@@ -19,6 +19,21 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
 
+### Apr 13, 2021 \[Easy\] Target Sum from Root to Leaf
+---
+> **Question:** Given a binary tree, and a target number, find if there is a path from the root to any leaf that sums up to the target.
+
+**Example:**
+```py
+Input: target = 9
+      1
+    /   \
+   2     3
+    \     \
+     6     4
+Expected: True
+Explanation: path 1 -> 2 -> 6 sum up to 9
+```
 
 ### Apr 12, 2021 \[Hard\] Unique Sum Combinations
 ---
