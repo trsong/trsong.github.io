@@ -6497,6 +6497,28 @@ For example, given `100`, you can reach `1` in five steps with the following rou
 ---
 
 <details>
+<summary class="lc_h">
+
+- [**\[Hard\] Unique Sum Combinations**](https://trsong.github.io/python/java/2021/02/02/DailyQuestionsFeb/#apr-12-2021-hard-unique-sum-combinations) -- *Given a list of numbers and a target number, find all possible unique subsets of the list of numbers that sum up to the target number.* [*\(Try ME\)*](https://replit.com/@trsong/Find-Unique-Sum-Combinations-1)
+
+</summary>
+<div>
+
+
+**Question:** Given a list of numbers and a target number, find all possible unique subsets of the list of numbers that sum up to the target number. The numbers will all be positive numbers.
+
+**Example:**
+```py
+sum_combinations([10, 1, 2, 7, 6, 1, 5], 8)
+# returns [(2, 6), (1, 1, 6), (1, 2, 5), (1, 7)]
+# order doesn't matter
+```
+
+</div>
+</details>
+
+
+<details>
 <summary class="lc_m">
 
 - [**\[Medium\] Generate Brackets**](https://trsong.github.io/python/java/2021/02/02/DailyQuestionsFeb/#apr-8-2021-medium--generate-brackets) -- *Given a number n, generate all possible combinations of n well-formed brackets.* [*\(Try ME\)*](https://replit.com/@trsong/Generate-Well-formed-Brackets-1)

@@ -31,6 +31,80 @@ sum_combinations([10, 1, 2, 7, 6, 1, 5], 8)
 # order doesn't matter
 ```
 
+**Solution with Backtracking:** [https://replit.com/@trsong/Find-Unique-Sum-Combinations](https://replit.com/@trsong/Find-Unique-Sum-Combinations)
+```py
+import unittest
+
+def find_uniq_sum_combinations(nums, target):
+    nums.sort()
+    res = []
+    backtrack(res, nums, chosen=[], next_index=0, balance=target)
+    return res
+
+
+def backtrack(res, nums, chosen, next_index, balance):
+    if balance == 0:
+        res.append(chosen[:])
+    else:
+        for i in range(next_index, len(nums)):
+            if nums[i] > balance:
+                # exceed balance
+                break
+            
+            if i > next_index and nums[i] == nums[i - 1]:
+                # skip duplicates
+                continue
+
+            chosen.append(nums[i])
+            backtrack(res, nums, chosen, i + 1, balance - nums[i])
+            chosen.pop()
+
+
+class FindUniqSumCombinationSpec(unittest.TestCase):
+    def assert_result(self, expected, result):
+        self.assertEqual(len(expected), len(result))
+        for l1, l2 in zip(expected, result):
+            l1.sort()
+            l2.sort()
+        expected.sort()
+        result.sort()
+        self.assertEqual(expected, result)
+
+    def test_example(self):
+        target, nums = 8, [10, 1, 2, 7, 6, 1, 5]
+        expected = [[2, 6], [1, 1, 6], [1, 2, 5], [1, 7]]
+        self.assert_result(expected, find_uniq_sum_combinations(nums, target))
+
+    def test_ascending_list(self):
+        target, nums = 10, [2, 3, 5, 6, 8, 10]
+        expected = [[5, 2, 3], [2, 8], [10]]
+        self.assert_result(expected, find_uniq_sum_combinations(nums, target))
+
+    def test_ascending_list2(self):
+        target, nums = 10, [1, 2, 3, 4, 5]
+        expected = [[4, 3, 2, 1], [5, 3, 2], [5, 4, 1]]
+        self.assert_result(expected, find_uniq_sum_combinations(nums, target))
+
+    def test_empty_array(self):
+        target, nums = 0, []
+        expected = [[]]
+        self.assert_result(expected, find_uniq_sum_combinations(nums, target))
+
+    def test_empty_array2(self):
+        target, nums = 1, []
+        expected = []
+        self.assert_result(expected, find_uniq_sum_combinations(nums, target))
+
+    def test_unable_to_find_target_sum(self):
+        target, nums = -1, [1, 2, 3]
+        expected = []
+        self.assert_result(expected, find_uniq_sum_combinations(nums, target))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False, verbosity=2)
+```
+
 ### Apr 11, 2021 \[Easy\] Minimum Depth of Binary Tree
 ---
 > **Question:** Given a binary tree, find the minimum depth of the binary tree. The minimum depth is the shortest distance from the root to a leaf.
