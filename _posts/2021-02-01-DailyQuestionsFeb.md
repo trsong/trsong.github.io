@@ -35,6 +35,122 @@ Expected: True
 Explanation: path 1 -> 2 -> 6 sum up to 9
 ```
 
+**Solution with DFS:** [https://replit.com/@trsong/Target-Sum-from-Root-to-Leaf](https://replit.com/@trsong/Target-Sum-from-Root-to-Leaf)
+```py
+import unittest
+
+def contains_path_sum(root, target):
+    if not root:
+        return target == 0
+    
+    stack = [(root, 0)]
+    while stack:
+        cur, prev_sum = stack.pop()
+        cur_sum = prev_sum + cur.val
+        if not cur.left and not cur.right and cur_sum == target:
+            return True
+        
+        for child in [cur.left, cur.right]:
+            if not child:
+                continue
+            stack.append((child, cur_sum))
+    return False
+            
+
+class TreeNode(object):
+    def __init__(self, val, left=None, right=None):
+        self.val = val
+        self.left = left
+        self.right = right
+
+
+class ContainsPathSumSpec(unittest.TestCase):
+    def test_example(self):
+        """
+              1
+            /   \
+           2     3
+            \     \
+             6     4
+        """
+        left_tree = TreeNode(2, right=TreeNode(6))
+        right_tree = TreeNode(3, right=TreeNode(4))
+        root = TreeNode(1, left_tree, right_tree)
+        self.assertTrue(contains_path_sum(root, target=9))
+        self.assertTrue(contains_path_sum(root, target=8))
+        self.assertFalse(contains_path_sum(root, target=4))
+
+    def test_example2(self):
+        """
+            1
+          /   \
+         3     2
+          \   /
+           5 4
+        """
+        left_tree = TreeNode(3, right=TreeNode(5))
+        right_tree = TreeNode(2, TreeNode(4))
+        root = TreeNode(1, left_tree, right_tree)
+        self.assertTrue(contains_path_sum(root, target=9))
+        self.assertTrue(contains_path_sum(root, target=7))
+        self.assertFalse(contains_path_sum(root, target=1))
+
+    def test_negative_nodes(self):
+        """
+             10
+            /  \
+          -2    7
+         /  \     
+        8   -4    
+        """
+        left_tree = TreeNode(-2, TreeNode(8), TreeNode(-4))
+        root = TreeNode(10, left_tree, TreeNode(7))
+        self.assertTrue(contains_path_sum(root, target=4))
+        self.assertFalse(contains_path_sum(root, target=-4))
+
+    def test_empty_tree(self):
+        self.assertTrue(contains_path_sum(None, target=0))
+        self.assertFalse(contains_path_sum(None, target=1))
+
+    def test_heavy_right_tree(self):
+        """
+          1
+         / \
+        2   3
+       /   / \
+      8   4   5
+         / \   \
+        6   7   9
+        """
+        n5 = TreeNode(5, right=TreeNode(9))
+        n4 = TreeNode(4, TreeNode(6), TreeNode(7))
+        n3 = TreeNode(3, n4, n5)
+        n2 = TreeNode(2, TreeNode(8))
+        root = TreeNode(1, n2, n3)
+        self.assertTrue(contains_path_sum(root, target=14))
+        self.assertTrue(contains_path_sum(root, target=18))
+        self.assertFalse(contains_path_sum(root, target=20))
+
+    def test_all_paths_are_negative(self):
+        """
+              -1
+            /     \
+          -2      -3
+          / \    /  \
+        -4  -5 -6   -7
+        """
+        left_tree = TreeNode(-2, TreeNode(-4), TreeNode(-5))
+        right_tree = TreeNode(-3, TreeNode(-6), TreeNode(-7))
+        root = TreeNode(-1, left_tree, right_tree)
+        self.assertTrue(contains_path_sum(root, target=-8))
+        self.assertTrue(contains_path_sum(root, target=-11))
+        self.assertFalse(contains_path_sum(root, target=0))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False, verbosity=2)
+```
+
 ### Apr 12, 2021 \[Hard\] Unique Sum Combinations
 ---
 > **Question:** Given a list of numbers and a target number, find all possible unique subsets of the list of numbers that sum up to the target number. The numbers will all be positive numbers.

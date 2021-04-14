@@ -5635,6 +5635,33 @@ Output: 1
 ### DFS
 ---
 
+
+<details>
+<summary class="lc_e">
+
+- [**\[Easy\] Target Sum from Root to Leaf**](https://trsong.github.io/python/java/2021/02/02/DailyQuestionsFeb/#apr-13-2021-easy-target-sum-from-root-to-leaf) -- *Given a binary tree, and a target number, find if there is a path from the root to any leaf that sums up to the target.* [*\(Try ME\)*](https://replit.com/@trsong/Target-Sum-from-Root-to-Leaf-1)
+
+</summary>
+<div>
+
+**Question:** Given a binary tree, and a target number, find if there is a path from the root to any leaf that sums up to the target.
+
+**Example:**
+```py
+Input: target = 9
+      1
+    /   \
+   2     3
+    \     \
+     6     4
+Expected: True
+Explanation: path 1 -> 2 -> 6 sum up to 9
+```
+
+</div>
+</details>
+
+
 <details>
 <summary class="lc_h">
 
