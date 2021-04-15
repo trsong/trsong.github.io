@@ -3310,6 +3310,28 @@ An unbalanced tree with three consecutive left children: ((((00)0)0)0)
 <details>
 <summary class="lc_m">
 
+- [**\[Medium\] LC 981. Time Based Key-Value Store**](https://trsong.github.io/python/java/2021/02/02/DailyQuestionsFeb/#apr-14-2021-lc-981-medium-time-based-key-value-store) -- *Write a map implementation with a get function that lets you retrieve the value of a key at a particular time.* [*\(Try ME\)*](https://replit.com/@trsong/Time-Based-Key-Value-Store-1)
+
+</summary>
+<div>
+
+**Question:** Write a map implementation with a get function that lets you retrieve the value of a key at a particular time.
+
+It should contain the following methods:
+
+- `set(key, value, time)`: sets key to value for t = time.
+- `get(key, time)`: gets the key at t = time.
+
+The map should work like this. If we set a key at a particular time, it will maintain that value forever or until it gets set at a later time. In other words, when we get a key at a time, it should return the value that was set for that key set at the most recent time.
+
+
+</div>
+</details>
+
+
+<details>
+<summary class="lc_m">
+
 - [**\[Medium\] Distance Between 2 Nodes in BST**](http://trsong.github.io/python/java/2021/02/02/DailyQuestionsFeb/#mar-7-2021-medium-distance-between-2-nodes-in-bst) -- *Write a function that given a BST, it will return the distance (number of edges) between 2 nodes.* [*\(Try ME\)*](https://repl.it/@trsong/Distance-Between-2-Nodes-in-BST-1)
 
 </summary>
