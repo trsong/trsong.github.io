@@ -19,6 +19,15 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
 
+### Apr 15, 2021 \[Easy\] Number of 1 bits
+---
+> **Question:** Given an integer, find the number of 1 bits it has.
+
+**Example:**
+```py
+one_bits(23)  # Returns 4 as 23 equals 0b10111
+```
+
 
 ### Apr 14, 2021 LC 981 \[Medium\] Time Based Key-Value Store
 ---
