@@ -28,6 +28,66 @@ categories: Python/Java
 one_bits(23)  # Returns 4 as 23 equals 0b10111
 ```
 
+**My thoughts:** ***Brian Kernighan’s Algorithm*** is an efficient way to count number of set bits. In binary representation, a number num & with num - 1 always remove rightmost set bit. 
+
+```py
+1st iteration: 0b10111 -> 0b10110
+  0b10111
+& 0b10110  
+= 0b10110
+
+2nd iteration: 0b10110 -> 0b10100
+  0b10110
+& 0b10101
+= 0b10100
+
+3rd iteration: 0b10100 -> 0b10000
+  0b10100
+& 0b10011
+= 0b10000
+
+4th iteration: 0b10000 -> 0b00000
+  0b10000
+& 0b00000
+= 0b00000
+```
+
+**Solution:** [https://replit.com/@trsong/Count-Number-of-1-bits](https://replit.com/@trsong/Count-Number-of-1-bits)
+```py
+import unittest
+
+def count_bits(num):
+    res = 0
+    while num > 0:
+        num &= num - 1
+        res += 1
+    return res
+
+
+class CountBitSpec(unittest.TestCase):
+    def test_example(self):
+        self.assertEqual(4, count_bits(0b10111))
+
+    def test_zero(self):
+        self.assertEqual(0, count_bits(0b0))
+
+    def test_all_bits_set(self):
+        self.assertEqual(5, count_bits(0b11111))
+
+    def test_power_of_two(self):
+        self.assertEqual(1, count_bits(0b1000000000000))
+
+    def test_every_other_bit_set(self):
+        self.assertEqual(3, count_bits(0b0101010))
+
+    def test_random_one_and_zeros(self):
+        self.assertEqual(7, count_bits(0b1010010001000010000010000001))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False, verbosity=2)
+```
+
 
 ### Apr 14, 2021 LC 981 \[Medium\] Time Based Key-Value Store
 ---

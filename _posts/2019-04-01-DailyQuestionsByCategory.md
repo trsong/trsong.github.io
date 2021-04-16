@@ -599,6 +599,25 @@ Can you perform the operation without allocating extra memory (disregarding the 
 
 
 <details>
+<summary class="lc_e">
+
+- [**\[Easy\] Number of 1 bits**](https://replit.com/@trsong/Count-Number-of-1-bits-1) -- *Given an integer, find the number of 1 bits it has.* [*\(Try ME\)*](https://replit.com/@trsong/Count-Number-of-1-bits-1)
+
+</summary>
+<div>
+
+**Question:** Given an integer, find the number of 1 bits it has.
+
+**Example:**
+```py
+one_bits(23)  # Returns 4 as 23 equals 0b10111
+```
+
+</div>
+</details>
+
+
+<details>
 <summary class="lc_m">
 
 - [**\[Medium\] Bitwise AND of a Range**](http://trsong.github.io/python/java/2021/02/02/DailyQuestionsFeb/#mar-2-2021-medium-bitwise-and-of-a-range) -- *Write a function that returns the bitwise AND of all integers between M and N, inclusive.* [*\(Try ME\)*](https://repl.it/@trsong/Calculate-Bitwise-AND-of-a-Range-1)
