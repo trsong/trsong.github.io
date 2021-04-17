@@ -445,6 +445,34 @@ Return true as the first and third rectangle overlap each other.
 ---
 
 <details>
+<summary class="lc_e">
+
+- [**\[Easy\] Quxes Transformation**](http://trsong.github.io/python/java/2021/02/02/DailyQuestionsFeb/#apr-16-2021-easy-quxes-transformation) -- *Given N Quxes standing in a line, determine the smallest number of them remaining after any possible sequence of such transformations.* [*\(Try ME\)*](https://replit.com/@trsong/Quxes-Transformation-1)
+
+</summary>
+<div>
+
+**Question:** On a mysterious island there are creatures known as Quxes which come in three colors: red, green, and blue. One power of the Qux is that if two of them are standing next to each other, they can transform into a single creature of the third color.
+
+Given N Quxes standing in a line, determine the smallest number of them remaining after any possible sequence of such transformations.
+
+For example, given the input ['R', 'G', 'B', 'G', 'B'], it is possible to end up with a single Qux through the following steps:
+
+|       Arrangement         |   Change    |
+|---------------------------|-------------|
+| ['R', 'G', 'B', 'G', 'B'] | (R, G) -> B |
+| ['B', 'B', 'G', 'B']      | (B, G) -> R |
+| ['B', 'R', 'B']           | (R, B) -> G |
+| ['B', 'G']                | (B, G) -> R |
+| ['R']                     |             |
+
+
+
+</div>
+</details>
+
+
+<details>
 <summary class="lc_h">
 
 - [**\[Hard\] Anagram to Integer**](https://trsong.github.io/python/java/2021/02/02/DailyQuestionsFeb/#apr-7-2021-hard-anagram-to-integer) -- *Given a string formed by concatenating several words corresponding to the integers zero through nine and then anagramming,return the integer* [*\(Try ME\)*](https://repl.it/@trsong/Convert-Anagram-to-Integer-1)

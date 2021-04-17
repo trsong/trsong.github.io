@@ -37,6 +37,109 @@ categories: Python/Java
 
 
 
+**My thoughts:** After testing some input I found the following three rules:
+
+Suppose A, B, C are different colors
+- Rule1: Transform
+    - AB => C
+- Rule2: Left Elimination
+    - AAB => AC => B
+- Rule3: Right Elimination
+    - ABB => CB => A
+
+The algorithm works as the following:
+1. Step1: If we keep applying rule2 and rule3, we can guarantee no consecutive colors are the same.
+2. Step2: Then we apply rule1 to break the balance.
+3. Step3: Repeat step1 and step2,3 until not possible.
+4. Finally we will reduce to one single color that is the result
+
+Note after above steps, there are no consecutive same colors. e.g RGBRBR 
+
+Suppose R, G, B has count (r, g, b) where r >= g >= b. (Order not matter, we can always swap the color.)
+Use the following algorithms to break even. 
+1. Apply Rule 1 to G, B to makes consecutive R's, rule1(r, g, b) => (r + 1, g - 1, b - 1)
+2. Apply Rule 2 or 3 to R to eliminate previous consecutive R's, rule2(r, g, b) => (r - 2, g, b) 
+Combine both gives rule2(rule1(r, g, b)) = (r - 1, g - 1, b - 1)
+
+Then we will have the following scenarios:
+- Case 1: (Even, Even, Even) and (Odd, Odd, Odd) will eventually reduce to 2
+- Case 2: (Even, Odd, Odd) and (Odd, Even, Even) will eventually reduce to 1
+
+
+**Solution:** [https://replit.com/@trsong/Predict-Quxes-Transformation-Result](https://replit.com/@trsong/Predict-Quxes-Transformation-Result)
+```py
+import unittest
+R, G, B = 'R', 'G', 'B'
+
+def quxes_transformation(quxes):
+    histogram = {}
+    for color in quxes:
+        histogram[color] = histogram.get(color, 0) + 1
+
+    if len(histogram) <= 1:
+        return len(quxes)
+    
+    count_evens = len(list(filter(lambda count: count % 2, histogram.values())))
+    if 1 <= count_evens <= 2:
+        # [Even, Even, Odd] or [Even, Odd, Odd]
+        return 1
+    else:
+        # [Even, Even, Even] or [Odd, Odd, Odd]
+        return 2
+
+
+class QuxesTransformationSpec(unittest.TestCase):
+    def test_example(self):
+        # (R, G), B, G, B
+        # B, (B, G), B
+        # (B, R), B
+        # (G, B)
+        # R
+        self.assertEqual(1, quxes_transformation([R, G, B, G, B]))
+
+    def test_empty_list(self):
+        self.assertEqual(0, quxes_transformation([]))
+    
+    def test_unique_color(self):
+        self.assertEqual(6, quxes_transformation([G, G, G, G, G, G]))
+    
+    def test_unique_color2(self):
+        self.assertEqual(2, quxes_transformation([R, R]))
+    
+    def test_unique_color3(self):
+        self.assertEqual(3, quxes_transformation([B, B, B]))
+
+    def test_all_even_count(self):
+        # (R, G), (B, R), (G, B)
+        # (B, G), R
+        # R, R
+        self.assertEqual(2, quxes_transformation([R, G, B, R, G, B]))
+
+    def test_all_odd_count(self):
+        # R, R, R, (G, B), B, B, B, B
+        # R, R, R, (R, B), B, B, B
+        # R, R, R, (G, B), B, B
+        # R, R, (R, B), B, B
+        # R, (G, B), B, B
+        # R, (R, B), B
+        # R, (G, B)
+        # R, R
+        self.assertEqual(2, quxes_transformation([R, R, R, G, B, B, B, B, B]))
+    
+    def test_two_even_one_odd_count(self):
+        # R, R, G, (G, B)
+        # R, R, (G, R)
+        # R, (R, B)
+        # R, G
+        # B
+        self.assertEqual(1, quxes_transformation([R, R, G, G, B]))
+    
+
+if __name__ == '__main__':
+    unittest.main(exit=False, verbosity=2)
+```
+
+
 ### Apr 15, 2021 \[Easy\] Number of 1 bits
 ---
 > **Question:** Given an integer, find the number of 1 bits it has.
