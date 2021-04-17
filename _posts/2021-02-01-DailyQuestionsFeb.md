@@ -19,6 +19,16 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
 
+### Apr 17, 2021 LC 224 \[Medium\] Basic Calculator
+---
+> **Question:** Given a string consisting of parentheses, single digits, and positive and negative signs, convert the string into a mathematical expression to obtain the answer.
+>
+> Don't use eval or a similar built-in parser.
+>
+> For example, given `'-1 + (2 + 3)'`, you should return `4`.
+
+
+
 ### Apr 16, 2021 \[Easy\] Quxes Transformation
 ---
 > **Question:** On a mysterious island there are creatures known as Quxes which come in three colors: red, green, and blue. One power of the Qux is that if two of them are standing next to each other, they can transform into a single creature of the third color.
