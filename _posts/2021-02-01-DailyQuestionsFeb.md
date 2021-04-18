@@ -27,7 +27,99 @@ categories: Python/Java
 >
 > For example, given `'-1 + (2 + 3)'`, you should return `4`.
 
+**Solution with Stack:** [https://replit.com/@trsong/Basic-Calculator](https://replit.com/@trsong/Basic-Calculator)
+```py
+import unittest
 
+def evaluate(expr):
+    sign = 1
+    term = 0
+    res = 0
+    stack = []
+
+    for ch in expr:
+        if ch.isspace():
+            continue
+        elif ch.isdigit():
+            term = 10 * term + ord(ch) - ord('0')
+        elif ch in {'+', '-'}:
+            res += sign * term
+            term = 0
+            sign = 1 if ch == '+' else -1
+        elif ch == '(':
+            stack.append((res, sign))
+            res = 0
+            sign = 1
+        elif ch == ')':
+            res += sign * term
+            prev_res, prev_sign = stack.pop()
+            res = prev_res + prev_sign * res 
+            term = 0
+        else:
+            raise NotImplementedError("Invalid character: " + ch)
+    return res + sign * term 
+            
+
+class EvaluateSpec(unittest.TestCase):
+    def test_example(self):
+        expr = '-1 + (2 + 3)'
+        expected = 4
+        self.assertEqual(expected, evaluate(expr))
+    
+    def test_empty_expression(self):
+        expr = ''
+        expected = 0
+        self.assertEqual(expected, evaluate(expr))
+
+    def test_addition(self):
+        expr = '1 + 1'
+        expected = 2
+        self.assertEqual(expected, evaluate(expr))
+
+    def test_addition_and_subtraction(self):
+        expr = ' 2-1 + 2 '
+        expected = 3
+        self.assertEqual(expected, evaluate(expr))
+
+    def test_expression_with_parentheses(self):
+        expr = '(1+(4+5+2)-3)+(6+8)'
+        expected = 23
+        self.assertEqual(expected, evaluate(expr))
+
+    def test_negative_number(self):
+        expr = ' -42 '
+        expected = -42
+        self.assertEqual(expected, evaluate(expr))
+
+    def test_negative_number2(self):
+        expr = ' -42 + -42 -42'
+        expected = -126
+        self.assertEqual(expected, evaluate(expr))
+
+    def test_negative_number4(self):
+        expr = '-(-42) + -42'
+        expected = 0
+        self.assertEqual(expected, evaluate(expr))
+
+    def test_negative_with_parentheses(self):
+        expr = ' ((-42) + (42)) '
+        expected = 0
+        self.assertEqual(expected, evaluate(expr))
+
+    def test_nested_parentheses(self):
+        expr = '(((123 + 234 + 345) - (-199 - 288 + 377 - 4666)) - 20) + 0 - 0'
+        expected = 5458
+        self.assertEqual(expected, evaluate(expr))
+
+    def test_no_whitespaces(self):
+        expr = '1+2-(3+(4-5)+(6-999)+1000)-1234+556677'
+        expected = 555437
+        self.assertEqual(expected, evaluate(expr))
+
+    
+if __name__ == '__main__':
+    unittest.main(exit=False, verbosity=2)
+```
 
 ### Apr 16, 2021 \[Easy\] Quxes Transformation
 ---

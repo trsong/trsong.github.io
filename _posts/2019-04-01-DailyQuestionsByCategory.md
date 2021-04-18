@@ -4459,6 +4459,24 @@ s.autocomplete('do')  # Return ['dog', 'door', 'dodge']
 <details>
 <summary class="lc_m">
 
+- [**\[Medium\] LC 224.Basic Calculator**](http://trsong.github.io/python/java/2021/02/02/DailyQuestionsFeb/#apr-17-2021-lc-224-medium-basic-calculator) -- *Given a string consisting of parentheses, single digits, and positive and negative signs, convert and evaluate mathematical expression.* [*\(Try ME\)*](https://replit.com/@trsong/Basic-Calculator-2)
+
+</summary>
+<div>
+
+**Question:** Given a string consisting of parentheses, single digits, and positive and negative signs, convert the string into a mathematical expression to obtain the answer.
+
+Don't use eval or a similar built-in parser.
+
+For example, given `'-1 + (2 + 3)'`, you should return `4`.
+
+</div>
+</details>
+
+
+<details>
+<summary class="lc_m">
+
 - [**\[Medium\] Evaluate Expression in Reverse Polish Notation**](http://trsong.github.io/python/java/2021/02/02/DailyQuestionsFeb/#feb-25-2021-medium-evaluate-expression-in-reverse-polish-notation) -- *Given an arithmetic expression in Reverse Polish Notation, write a program to evaluate it.* [*\(Try ME\)*](https://repl.it/@trsong/Evaluate-Expression-Represented-in-Reverse-Polish-Notation-1)
 
 </summary>
