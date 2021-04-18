@@ -41,7 +41,7 @@ def evaluate(expr):
         if ch.isspace():
             continue
         elif ch.isdigit():
-            term = 10 * term + ord(ch) - ord('0')
+            term = 10 * term + int(ch)
         elif ch in {'+', '-'}:
             res += sign * term
             term = 0
@@ -51,9 +51,8 @@ def evaluate(expr):
             res = 0
             sign = 1
         elif ch == ')':
-            res += sign * term
             prev_res, prev_sign = stack.pop()
-            res = prev_res + prev_sign * res 
+            res = prev_res + prev_sign * (res + sign * term)
             term = 0
         else:
             raise NotImplementedError("Invalid character: " + ch)
