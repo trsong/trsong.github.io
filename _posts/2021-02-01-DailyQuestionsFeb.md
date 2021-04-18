@@ -19,6 +19,25 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
 
+### Apr 18, 2021 \[Medium\] Maximum Non Adjacent Sum
+---
+> **Question:** Given a list of positive numbers, find the largest possible set such that no elements are adjacent numbers of each other.
+
+**Example 1:**
+```py
+max_non_adjacent_sum([3, 4, 1, 1])
+# returns 5
+# max sum is 4 (index 1) + 1 (index 3)
+```
+
+**Example 2:**
+```py
+max_non_adjacent_sum([2, 1, 2, 7, 3])
+# returns 9
+# max sum is 2 (index 0) + 7 (index 3)
+```
+
+
 ### Apr 17, 2021 LC 224 \[Medium\] Basic Calculator
 ---
 > **Question:** Given a string consisting of parentheses, single digits, and positive and negative signs, convert the string into a mathematical expression to obtain the answer.
