@@ -49,6 +49,63 @@ max_non_adjacent_sum([2, 1, 2, 7, 3])
 # max sum is 2 (index 0) + 7 (index 3)
 ```
 
+**Solution with DP:** [https://replit.com/@trsong/Find-Maximum-Non-Adjacent-Sum](https://replit.com/@trsong/Find-Maximum-Non-Adjacent-Sum)
+```py
+import unittest
+
+def max_non_adjacent_sum(nums):
+    if not nums:
+        return 0
+        
+    n = len(nums)
+    # Let dp[i] represents max non adjacant when consider index from 0 to i
+    # dp[i] = max(dp[i - 2] + nums[i], dp[i - 1])
+    dp = [0] * n
+    for i in range(n):
+        prev = dp[i - 1] if i > 0 else 0
+        prev2 = dp[i - 2] if i > 1 else 0
+        dp[i] = max(prev2 + nums[i], prev)
+    return dp[-1]
+
+
+class MaxNonAdjacentSumSpec(unittest.TestCase):
+    def test_example(self):
+        self.assertEqual(5, max_non_adjacent_sum([3, 4, 1, 1]))  # 4 + 1 
+
+    def test_example2(self):
+        self.assertEqual(9, max_non_adjacent_sum([2, 1, 2, 7, 3]))  # 7 + 2
+
+    def test_example3(self):
+        self.assertEqual(110, max_non_adjacent_sum([5, 5, 10, 100, 10, 5])) 
+
+    def test_empty_array(self):
+        self.assertEqual(0, max_non_adjacent_sum([]))
+
+    def test_length_one_array(self):
+        self.assertEqual(42, max_non_adjacent_sum([42]))
+
+    def test_length_one_array2(self):
+        self.assertEqual(0, max_non_adjacent_sum([-10]))
+
+    def test_length_two_array(self):
+        self.assertEqual(0, max_non_adjacent_sum([-20, -10]))
+
+    def test_length_three_array(self):
+        self.assertEqual(1, max_non_adjacent_sum([1, -1, -1]))
+
+    def test_length_three_array2(self):
+        self.assertEqual(0, max_non_adjacent_sum([-1, -1, -1]))
+
+    def test_length_three_array3(self):
+        self.assertEqual(3, max_non_adjacent_sum([1, 3, 1]))
+
+    def test_length_three_array4(self):
+        self.assertEqual(4, max_non_adjacent_sum([2, 3, 2]))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False, verbosity=2)
+```
 
 ### Apr 17, 2021 LC 224 \[Medium\] Basic Calculator
 ---

@@ -7099,6 +7099,34 @@ For example, given `"2542540123"`, you should return `['254.25.40.123', '254.254
 <details>
 <summary class="lc_m">
 
+- [**\[Medium\] Maximum Non Adjacent Sum**](https://trsong.github.io/python/java/2021/02/02/DailyQuestionsFeb/#apr-18-2021-medium-maximum-non-adjacent-sum) -- *Given a list of positive numbers, find the largest possible set such that no elements are adjacent numbers of each other.* [*\(Try ME\)*](https://replit.com/@trsong/Find-Maximum-Non-Adjacent-Sum-1)
+
+</summary>
+<div>
+
+**Question:** Given a list of positive numbers, find the largest possible set such that no elements are adjacent numbers of each other.
+
+**Example 1:**
+```py
+max_non_adjacent_sum([3, 4, 1, 1])
+# returns 5
+# max sum is 4 (index 1) + 1 (index 3)
+```
+
+**Example 2:**
+```py
+max_non_adjacent_sum([2, 1, 2, 7, 3])
+# returns 9
+# max sum is 2 (index 0) + 7 (index 3)
+```
+
+</div>
+</details>
+
+
+<details>
+<summary class="lc_m">
+
 - [**\[Medium\] LC 1155. Number of Dice Rolls With Target Sum**](http://trsong.github.io/python/java/2021/02/02/DailyQuestionsFeb/#feb-18-2021-lc-1155-medium-number-of-dice-rolls-with-target-sum) -- *Write a function that determines how many ways it is possible to throw N dice with some number of faces each to get a specific total.* [*\(Try ME\)*](https://repl.it/@trsong/Number-of-Dice-Rolls-With-Target-Sum-1)
 
 </summary>
