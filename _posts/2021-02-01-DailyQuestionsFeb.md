@@ -19,6 +19,37 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
 
+### Apr 20, 2021 LC 114 \[Medium\] Flatten Binary Tree to Linked List
+---
+> **Question:** Given a binary tree, flatten it to a linked list in-place.
+>
+> For example, given the following tree:
+
+```py
+    1
+   / \
+  2   5
+ / \   \
+3   4   6
+```
+>
+> The flattened tree should look like:
+
+```py
+1
+ \
+  2
+   \
+    3
+     \
+      4
+       \
+        5
+         \
+          6
+```
+
+
 ### Apr 19, 2021 \[Medium\] Implement a Quack Using Three Stacks
 ---
 > **Question:** A quack is a data structure combining properties of both stacks and queues. It can be viewed as a list of elements written left to right such that three operations are possible:
@@ -28,6 +59,8 @@ categories: Python/Java
 > - `pull()`: remove the item on the right end of the list.
 >
 > Implement a quack using three stacks and `O(1)` additional memory, so that the amortized time for any push, pop, or pull operation is `O(1)`.
+
+**My thoughts:** Push is `O(1)`. Pop and pull have same running time and in most situation `O(1)` except when one stack is empty, need to transfter to the other stack that takes `O(n)`. So on average `(O(1) + .... + O(1) + O(n)) / n = 2 * O(n) / n = O(1)`. 
 
 **Solution:** [https://replit.com/@trsong/Implement-a-Quack-Using-Three-Stacks](https://replit.com/@trsong/Implement-a-Quack-Using-Three-Stacks)
 ```py
