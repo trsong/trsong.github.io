@@ -29,7 +29,98 @@ categories: Python/Java
 >
 > Implement a quack using three stacks and `O(1)` additional memory, so that the amortized time for any push, pop, or pull operation is `O(1)`.
 
+**Solution:** [https://replit.com/@trsong/Implement-a-Quack-Using-Three-Stacks](https://replit.com/@trsong/Implement-a-Quack-Using-Three-Stacks)
+```py
+import unittest
 
+class Quack(object):
+    def __init__(self):
+        self.left_stack = []
+        self.right_stack = []
+        self.buffer = []
+
+    def push(self, x):
+        self.left_stack.append(x)
+
+    def pop(self):
+        if not self.left_stack:
+            Quack.stack_migrate(self.right_stack, self.buffer, size=len(self.right_stack) // 2)
+            Quack.stack_migrate(self.right_stack, self.left_stack)
+            Quack.stack_migrate(self.buffer, self.right_stack)
+        return self.left_stack.pop()
+
+    def pull(self):
+        if not self.right_stack:
+            Quack.stack_migrate(self.left_stack, self.buffer, size=len(self.left_stack) // 2)
+            Quack.stack_migrate(self.left_stack, self.right_stack)
+            Quack.stack_migrate(self.buffer, self.left_stack)
+        return self.right_stack.pop()
+
+    @staticmethod
+    def stack_migrate(from_stack, to_stack, size=None):
+        if size is None:
+            size = len(from_stack) 
+            
+        for _ in range(size):
+            to_stack.append(from_stack.pop())
+
+
+class QuackSpec(unittest.TestCase):
+    def test_push_and_pop(self):
+        quack = Quack()
+        quack.push(1)
+        quack.push(2)
+        quack.push(3)
+        self.assertEqual(3, quack.pop())
+        self.assertEqual(2, quack.pop())
+        self.assertEqual(1, quack.pop())
+
+    def test_push_and_pull(self):
+        quack = Quack()
+        quack.push(1)
+        quack.push(2)
+        quack.push(3)
+        self.assertEqual(1, quack.pull())
+        self.assertEqual(2, quack.pull())
+        self.assertEqual(3, quack.pull())
+
+    def test_push_pop_and_pull(self):
+        quack = Quack()
+        quack.push(1)
+        quack.push(2)
+        quack.push(3)
+        self.assertEqual(1, quack.pull())
+        self.assertEqual(3, quack.pop())
+        self.assertEqual(2, quack.pop())
+
+    def test_push_pop_and_push_again(self):
+        quack = Quack()
+        quack.push(1)
+        quack.push(2)
+        quack.push(3)
+        self.assertEqual(3, quack.pop())
+        quack.push(4)
+        quack.push(5)
+        self.assertEqual(5, quack.pop())
+        self.assertEqual(4, quack.pop())
+        self.assertEqual(2, quack.pop())
+
+    def test_push_pull_and_push_again(self):
+        quack = Quack()
+        quack.push(1)
+        quack.push(2)
+        quack.push(3)
+        self.assertEqual(1, quack.pull())
+        quack.push(4)
+        quack.push(5)
+        self.assertEqual(2, quack.pull())
+        self.assertEqual(3, quack.pull())
+        self.assertEqual(4, quack.pull())
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False, verbosity=2)
+```
 
 ### Apr 18, 2021 \[Medium\] Maximum Non Adjacent Sum
 ---
