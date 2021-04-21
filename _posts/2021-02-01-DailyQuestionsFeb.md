@@ -19,6 +19,17 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
 
+### Apr 21, 2021 \[Easy\] Special Stack
+---
+> **Question:** Implement a special stack that has the following methods:
+>
+> - `push(val)`, which pushes an element onto the stack
+> - `pop()`, which pops off and returns the topmost element of the stack. If there are no elements in the stack, then it should throw an error or return null.
+> - `max()`, which returns the maximum value in the stack currently. If there are no elements in the stack, then it should throw an error or return null.
+> 
+> Each method should run in constant time.
+
+
 ### Apr 20, 2021 LC 114 \[Medium\] Flatten Binary Tree to Linked List
 ---
 > **Question:** Given a binary tree, flatten it to a linked list in-place.
@@ -49,6 +60,117 @@ categories: Python/Java
           6
 ```
 
+**Solution with DFS:** [https://replit.com/@trsong/In-place-Flatten-the-Binary-Tree-to-Linked-List](https://replit.com/@trsong/In-place-Flatten-the-Binary-Tree-to-Linked-List)
+```py
+import unittest
+
+def flatten(root):
+    if not root:
+        return None
+        
+    tail = TreeNode(-1)
+    stack = [root]
+    while stack:
+        cur = stack.pop()
+        tail.right = cur
+        for child in [cur.right, cur.left]:
+            if not child:
+                continue
+            stack.append(child)
+        cur.left = None
+        tail = cur
+    return root
+
+
+class TreeNode(object):
+    def __init__(self, val, left=None, right=None):
+        self.val = val
+        self.left = left
+        self.right = right
+
+    def __eq__(self, other):
+        return other and other.val == self.val and other.left == self.left and other.right == self.right
+
+    def __repr__(self):
+        return "TreeNode({}, {}, {})".format(self.val, str(self.left), str(self.right))
+
+
+class FlattenSpec(unittest.TestCase):
+    @staticmethod
+    def list_to_tree(lst):
+        p = dummy = TreeNode(-1)
+        for num in lst:
+            p.right = TreeNode(num)
+            p = p.right
+        return dummy.right
+
+    def assert_result(self, lst, tree):
+        self.assertEqual(FlattenSpec.list_to_tree(lst), tree)
+
+    def test_example(self):
+        """
+            1
+           / \
+          2   5
+         / \   \
+        3   4   6
+        """
+        n2 = TreeNode(2, TreeNode(3), TreeNode(4))
+        n5 = TreeNode(5, right = TreeNode(6))
+        tree = TreeNode(1, n2, n5)
+        flatten_list = [1, 2, 3, 4, 5, 6]
+        self.assert_result(flatten_list, flatten(tree))
+
+    def test_empty_tree(self):
+        tree = None
+        flatten(tree)
+        self.assertIsNone(tree)
+
+    def test_only_right_child(self):
+        """
+        1
+         \
+          2
+           \
+            3
+        """
+        n2 = TreeNode(2, right=TreeNode(3))
+        tree = TreeNode(1, right = n2)
+        flatten_list = [1, 2, 3]
+        self.assert_result(flatten_list, flatten(tree))
+
+    def test_only_left_child(self):
+        """
+            1
+           /
+          2
+         /
+        3
+        """
+        n2 = TreeNode(2, TreeNode(3))
+        tree = TreeNode(1, n2)
+        flatten_list = [1, 2, 3]
+        self.assert_result(flatten_list, flatten(tree))  
+
+    def test_right_heavy_tree(self):
+        """
+        1
+       / \
+      3   4
+         /
+        2
+         \
+          5
+        """
+        n4 = TreeNode(4, TreeNode(2, right=TreeNode(5)))
+        tree = TreeNode(1, TreeNode(3), n4)
+        flatten_list = [1, 3, 4, 2, 5]
+        self.assert_result(flatten_list, flatten(tree)) 
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False, verbosity=2)
+```
 
 ### Apr 19, 2021 \[Medium\] Implement a Quack Using Three Stacks
 ---

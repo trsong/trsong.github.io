@@ -5742,6 +5742,45 @@ Output: 1
 ### DFS
 ---
 
+<details>
+<summary class="lc_m">
+
+- [**\[Medium\] LC 114. Flatten Binary Tree to Linked List**](https://trsong.github.io/python/java/2021/02/02/DailyQuestionsFeb/#apr-20-2021-lc-114-medium-flatten-binary-tree-to-linked-list) -- *Given a binary tree, flatten it to a linked list in-place.* [*\(Try ME\)*](https://replit.com/@trsong/In-place-Flatten-the-Binary-Tree-to-Linked-List-1)
+
+</summary>
+<div>
+
+**Question:** Given a binary tree, flatten it to a linked list in-place.
+
+For example, given the following tree:
+
+```py
+    1
+   / \
+  2   5
+ / \   \
+3   4   6
+```
+>
+> The flattened tree should look like:
+
+```py
+1
+ \
+  2
+   \
+    3
+     \
+      4
+       \
+        5
+         \
+          6
+```
+
+</div>
+</details>
+
 
 <details>
 <summary class="lc_e">
