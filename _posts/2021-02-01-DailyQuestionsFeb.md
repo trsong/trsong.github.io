@@ -19,6 +19,13 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
 
+### Apr 22, 2021  LC 796 \[Easy\] Shift-Equivalent Strings
+---
+> **Question:** Given two strings A and B, return whether or not A can be shifted some number of times to get B.
+>
+> For example, if A is `'abcde'` and B is `'cdeab'`, return `True`. If A is `'abc'` and B is `'acb'`, return `False`.
+
+
 ### Apr 21, 2021 \[Easy\] Special Stack
 ---
 > **Question:** Implement a special stack that has the following methods:
@@ -29,6 +36,80 @@ categories: Python/Java
 > 
 > Each method should run in constant time.
 
+**Solution:** [https://replit.com/@trsong/Implement-Special-Stack](https://replit.com/@trsong/Implement-Special-Stack)
+```py
+import unittest
+
+class MaxStack(object):
+    def __init__(self):
+        self.stack = []
+
+    def push(self, v):
+        local_max = max(v, self.max() if self.stack else v)
+        self.stack.append((v, local_max))
+
+    def pop(self):
+        val, _ = self.stack.pop()
+        return val
+
+    def max(self):
+        _, local_max = self.stack[-1]
+        return local_max
+
+
+class MaxStackSpec(unittest.TestCase):
+    def test_example(self):
+        s = MaxStack()
+        s.push(1)
+        s.push(2)
+        s.push(3)
+        s.push(2)
+        self.assertEqual(3, s.max())
+        self.assertEqual(2, s.pop())
+        self.assertEqual(3, s.pop())
+        self.assertEqual(2, s.max())
+
+    def test_ascending_stack(self):
+        s = MaxStack()
+        s.push(1)
+        s.push(2)
+        self.assertEqual(2, s.max())
+        s.push(3)
+        self.assertEqual(3, s.max())
+        self.assertEqual(3, s.pop())
+        self.assertEqual(2, s.max())
+        s.push(4)
+        self.assertEqual(4, s.pop())
+
+    def test_descending_stack(self):
+        s = MaxStack()
+        s.push(4)
+        self.assertEqual(4, s.pop())
+        s.push(3)
+        s.push(2)
+        s.push(1)
+        self.assertEqual(3, s.max())
+
+    def test_up_down_up_stack(self):
+        s = MaxStack()
+        s.push(1)
+        s.push(3)
+        s.push(5)
+        s.push(2)
+        s.push(6)
+        self.assertEqual(6, s.max())
+        self.assertEqual(6, s.pop())
+        self.assertEqual(5, s.max())
+        self.assertEqual(2, s.pop())
+        self.assertEqual(5, s.max())
+        self.assertEqual(5, s.pop())
+        self.assertEqual(3, s.max())
+        self.assertEqual(3, s.pop())
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False, verbosity=2)
+```
 
 ### Apr 20, 2021 LC 114 \[Medium\] Flatten Binary Tree to Linked List
 ---
