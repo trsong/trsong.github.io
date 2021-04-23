@@ -869,7 +869,7 @@ The duplicate subtrees are
 <details>
 <summary class="lc_e">
 
-- [**\[Easy\] LC 796. Shift-Equivalent Strings**](https://trsong.github.io/python/java/2020/08/02/DailyQuestionsAug/#aug-25-2020-lc-796-easy-shift-equivalent-strings) -- *Given two strings A and B, return whether or not A can be shifted some number of times to get B.* [*\(Try ME\)*](https://repl.it/@trsong/Check-if-Strings-are-Shift-Equivalent-1)
+- [**\[Easy\] LC 796. Shift-Equivalent Strings**](https://trsong.github.io/python/java/2021/02/02/DailyQuestionsFeb/#apr-22-2021--lc-796-easy-shift-equivalent-strings) -- *Given two strings A and B, return whether or not A can be shifted some number of times to get B.* [*\(Try ME\)*](https://replit.com/@trsong/Check-Shift-Equivalent-Strings-1)
 
 </summary>
 <div>
