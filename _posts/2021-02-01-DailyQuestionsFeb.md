@@ -19,6 +19,19 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
 
+### Apr 23, 2021 \[Medium\] Bloom Filter
+---
+> **Question:**  Implement a data structure which carries out the following operations without resizing the underlying array:
+>
+> - `add(value)`: Add a value to the set of values.
+> - `check(value)`: Check whether a value is in the set.
+>
+> **Note:** The check method may return occasional false positives (in other words, incorrectly identifying an element as part of the set), but should always correctly identify a true element. In other words, a query returns either "possibly in set" or "definitely not in set."
+>
+> **Background:** Suppose you are creating an account on a website, you want to enter a cool username, you entered it and got a message, “Username is already taken”. You added your birth date along username, still no luck. Now you have added your university roll number also, still got “Username is already taken”. It’s really frustrating, isn’t it?
+But have you ever thought how quickly the website check availability of username by searching millions of username registered with it. That is exactly when above data structure comes into play.
+
+
 ### Apr 22, 2021  LC 796 \[Easy\] Shift-Equivalent Strings
 ---
 > **Question:** Given two strings A and B, return whether or not A can be shifted some number of times to get B.
