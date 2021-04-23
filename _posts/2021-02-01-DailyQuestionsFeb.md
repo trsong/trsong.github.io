@@ -53,10 +53,11 @@ def is_shift_eq(source, target):
     significant_base = base_at(len(source))
     source_hash = hash(source)
     target_hash = hash(target)
-    if source_hash == target_hash:
-        return True
 
     for ch in source:
+        if source_hash == target_hash:
+            return True
+
         ord_ch = ord(ch)
         # step1: abcde => _bcde
         source_hash -= (significant_base * ord_ch) % P1
@@ -70,9 +71,7 @@ def is_shift_eq(source, target):
         source_hash += ord_ch
         source_hash %= P1
 
-        if source_hash == target_hash:
-            return True
-    return False
+    return source_hash == target_hash
 
 
 def hash(s):
