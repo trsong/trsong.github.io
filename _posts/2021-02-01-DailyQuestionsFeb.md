@@ -19,6 +19,33 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
 
+
+### Apr 24, 2021 \[Easy\] Ternary Search Tree
+---
+> **Question:** A ternary search tree is a trie-like data structure where each node may have up to three children:
+>
+> - left child nodes link to words lexicographically earlier than the parent prefix
+> - right child nodes link to words lexicographically later than the parent prefix
+> - middle child nodes continue the current word
+>
+> Implement insertion and search functions for a ternary search tree. 
+
+**Example:**
+```py
+Input: code, cob, be, ax, war, and we.
+Output:
+       c
+    /  |  \
+   b   o   w
+ / |   |   |
+a  e   d   a
+|    / |   | \ 
+x   b  e   r  e  
+
+since code is the first word inserted in the tree, and cob lexicographically precedes cod, cob is represented as a left child extending from cod.
+```
+
+
 ### Apr 23, 2021 \[Medium\] Bloom Filter
 ---
 > **Question:**  Implement a data structure which carries out the following operations without resizing the underlying array:
