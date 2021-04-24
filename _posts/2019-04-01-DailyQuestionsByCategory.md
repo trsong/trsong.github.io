@@ -801,6 +801,28 @@ Output: [4, 8] order does not matter
 ---
 
 <details>
+<summary class="lc_h">
+
+- [**\[Medium\] Bloom Filter**](https://trsong.github.io/python/java/2021/02/02/DailyQuestionsFeb/#apr-23-2021-medium-bloom-filter) -- *Bloom Filter is a data structure features fast and space-efficient element checking.* [*\(Try ME\)*](https://replit.com/@trsong/Implement-Bloom-Filter-1)
+
+</summary>
+<div>
+
+**Question:** Implement a data structure which carries out the following operations without resizing the underlying array:
+
+- `add(value)`: Add a value to the set of values.
+- `check(value)`: Check whether a value is in the set.
+
+**Note:** The check method may return occasional false positives (in other words, incorrectly identifying an element as part of the set), but should always correctly identify a true element. In other words, a query returns either "possibly in set" or "definitely not in set."
+
+**Background:** Suppose you are creating an account on a website, you want to enter a cool username, you entered it and got a message, “Username is already taken”. You added your birth date along username, still no luck. Now you have added your university roll number also, still got “Username is already taken”. It’s really frustrating, isn’t it?
+But have you ever thought how quickly the website check availability of username by searching millions of username registered with it. That is exactly when above data structure comes into play.
+
+</div>
+</details>
+
+
+<details>
 <summary class="lc_e">
 
 - [**\[Easy\] URL Shortener**](https://trsong.github.io/python/java/2020/11/02/DailyQuestionsAug/#jan-28-2021-easy-url-shortener) -- *Implement a URL shortener with the following methods: shorten(url), restore(short).* [*\(Try ME\)*](https://repl.it/@trsong/URL-Shortener-1)

@@ -32,6 +32,64 @@ categories: Python/Java
 But have you ever thought how quickly the website check availability of username by searching millions of username registered with it. That is exactly when above data structure comes into play.
 
 
+**Solution:** [https://replit.com/@trsong/Implement-Bloom-Filter](https://replit.com/@trsong/Implement-Bloom-Filter)
+```py
+import unittest
+import hashlib
+
+class BloomFilter(object):
+    def __init__(self, capacity, hash_functions):
+        self.bit_map = 0
+        self.capacity = capacity
+        self.hash_functions = hash_functions
+        
+    def __repr__(self):
+        return bin(self.vector)
+    
+    def add(self, value):
+        for hash_index in self.get_hash_indices(value):
+            self.bit_map |= 1 << hash_index
+    
+    def check(self, value):
+        return any(self.bit_map & 1 << hash_index for hash_index in self.get_hash_indices(value))
+
+    def get_hash_indices(self, value):
+        return map(lambda hash: hash(value) % self.capacity, self.hash_functions)
+
+
+class BloomFilterSpec(unittest.TestCase):
+    @staticmethod
+    def hash_functions():
+        hash_algorithms = [
+            hashlib.md5,
+            hashlib.sha1,
+            hashlib.sha256,
+            hashlib.sha384,
+            hashlib.sha512
+        ]
+        apply_hash = lambda hash_func: lambda msg: int(hash_func(str(msg).encode('utf-8')).hexdigest(),base=16) 
+        return list(map(apply_hash, hash_algorithms))
+
+    def test_construct_object(self):
+        self.assertIsNotNone(BloomFilter(0, [lambda x: x]))
+
+    def test_add_and_check_value(self):
+        bf = BloomFilter(256, BloomFilterSpec.hash_functions())
+        s1 = "spam1@gmail.com"
+        s2 = "spam2@gmail.com"
+        s3 = "valid@validemail.com"
+        self.assertFalse(bf.check(s1))
+        bf.add(s1)
+        bf.add(s2)
+        self.assertTrue(bf.check(s1))
+        self.assertTrue(bf.check(s2))
+        self.assertFalse(bf.check(s3))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False, verbosity=2)
+```
+
 ### Apr 22, 2021  LC 796 \[Easy\] Shift-Equivalent Strings
 ---
 > **Question:** Given two strings A and B, return whether or not A can be shifted some number of times to get B.
