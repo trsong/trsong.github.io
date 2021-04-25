@@ -4253,6 +4253,41 @@ sumRange(0, 2) -> 8
 ---
 
 <details>
+<summary class="lc_e">
+
+- [**\[Easy\] Ternary Search Tree**](https://trsong.github.io/python/java/2021/02/02/DailyQuestionsFeb/#apr-24-2021-easy-ternary-search-tree) -- *Implement insertion and search functions for a ternary search tree.* [*\(Try ME\)*](https://replit.com/@trsong/Implement-Ternary-Search-Tree-1)
+
+</summary>
+<div>
+
+**Question:** A ternary search tree is a trie-like data structure where each node may have up to three children:
+
+- left child nodes link to words lexicographically earlier than the parent prefix
+- right child nodes link to words lexicographically later than the parent prefix
+- middle child nodes continue the current word
+
+Implement insertion and search functions for a ternary search tree. 
+
+**Example:**
+```py
+Input: code, cob, be, ax, war, and we.
+Output:
+       c
+    /  |  \
+   b   o   w
+ / |   |   |
+a  e   d   a
+|    / |   | \ 
+x   b  e   r  e  
+
+since code is the first word inserted in the tree, and cob lexicographically precedes cod, cob is represented as a left child extending from cod.
+```
+
+</div>
+</details>
+
+
+<details>
 <summary class="lc_m">
 
 - [**\[Medium\] Add Bold Tag in String**](http://trsong.github.io/python/java/2021/02/02/DailyQuestionsFeb/#apr-3-2021-medium-add-bold-tag-in-string) -- *Takes in a string s and list of substrings lst, and wraps all substrings in s with an HTML bold tag `<b>` and `</b>`.* [*\(Try ME\)*](https://replit.com/@trsong/Add-Bold-Tag-in-String-1)

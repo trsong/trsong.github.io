@@ -45,6 +45,173 @@ x   b  e   r  e
 since code is the first word inserted in the tree, and cob lexicographically precedes cod, cob is represented as a left child extending from cod.
 ```
 
+**Solution:** [https://replit.com/@trsong/Implement-Ternary-Search-Tree](https://replit.com/@trsong/Implement-Ternary-Search-Tree)
+```py
+import unittest
+
+class TernarySearchTree(object):
+    def __init__(self):
+        self.root = TSTNode()
+
+    def search(self, word):
+        return self.root.search(word)
+
+    def insert(self, word):
+        self.root.insert(word)
+
+    def __repr__(self):
+        return str(self.root)
+        
+
+class TSTNode(object):
+    def __init__(self, val=None, left=None, middle=None, right=None):
+        self.val = val
+        self.left = left
+        self.middle = middle
+        self.right = right
+        self.is_end = False
+    
+    def insert(self, word):
+        if not word:
+            self.is_end = True
+
+        p = self
+        for index, ch in enumerate(word):
+            p.val = p.val or ch
+            while p.val != ch:
+                if p.val < ch:
+                    p.right = p.right or TSTNode(ch)
+                    p = p.right
+                else:
+                    p.left = p.left or TSTNode(ch)
+                    p = p.left
+            p.middle = p.middle or TSTNode()
+            p = p.middle
+
+            if index == len(word) - 1:
+                p.is_end = True
+
+    def search(self, word):
+        p = self
+        for ch in word:
+            while p and p.val != ch:
+                if p.val is None:
+                    break
+                elif p.val < ch:
+                    p = p.right
+                else:
+                    p = p.left
+            if not p or not p.middle:
+                return False
+            p = p.middle
+        return p and p.is_end
+
+
+    ###################
+    # Testing Utilities
+    ###################
+    def __eq__(self, other):
+        return (other and
+            other.val == self.val and
+            other.left == self.left and 
+            other.right == self.right)
+
+    def __repr__(self):
+        stack = [(self, 0)]
+        res = []
+        while stack:
+            node, depth = stack.pop()
+            res.append("\n" + "\t" * depth)
+            if not node:
+                res.append("* None")
+                continue
+
+            res.append("* " + str(node.val))
+            if node.is_end:
+                res.append(" [END]")
+            for child in [node.left, node.middle, node.right]:
+                stack.append((child, depth+1))
+        return "\n" + "".join(res) + "\n"
+
+
+class TSTNodeSpec(unittest.TestCase):
+    def test_example(self):
+        t = TernarySearchTree()
+        words = ["code", "cob", "be", "ax", "war", "we"]
+        for w in words:
+            t.insert(w)
+        for w in words:
+            self.assertTrue(t.search(w), msg=str(t))
+
+    def test_insert_empty_word(self):
+        t = TernarySearchTree()
+        t.insert("")
+        self.assertTrue(t.search(""), msg=str(t))
+
+    def test_search_unvisited_word(self):
+        t = TernarySearchTree()
+        self.assertFalse(t.search("a"), msg=str(t))
+        t.insert("a")
+        self.assertTrue(t.search("a"), msg=str(t))
+
+    def test_insert_word_with_same_prefix(self):
+        t = TernarySearchTree()
+        t.insert("a")
+        t.insert("aa")
+        self.assertTrue(t.search("a"), msg=str(t))
+        t.insert("aaa")
+        self.assertFalse(t.search("aaaa"), msg=str(t))
+
+    def test_insert_word_with_same_prefix2(self):
+        t = TernarySearchTree()
+        t.insert("bbb")
+        t.insert("aaa")
+        self.assertFalse(t.search("a"), msg=str(t))
+        t.insert("aa")
+        self.assertFalse(t.search("a"), msg=str(t))
+        self.assertFalse(t.search("b"), msg=str(t))
+        self.assertTrue("aa", msg=str(t))
+        self.assertTrue("aaa", msg=str(t))
+
+    def test_insert_empty_word_and_nonempty_word(self):
+        t = TernarySearchTree()
+        self.assertFalse(t.search(""))
+        t.insert("")
+        self.assertTrue(t.search(""))
+        t.insert("aaa")
+        self.assertFalse(t.search("a"))
+        self.assertFalse(t.search("aaaa"))
+        self.assertTrue(t.search("aaa"))
+
+
+    def test_tst_should_follow_specification(self):
+        """
+                  c
+                / | \
+               a  u  h
+               |  |  | \
+               t  t  e  u
+             /  / |   / |
+            s  p  e  i  s
+        """
+        t = TernarySearchTree()
+        words = ["cute", "cup","at","as","he", "us", "i"]
+        for w in words:
+            t.insert(w)
+
+        left_tree = TSTNode('a', middle=TSTNode('t', TSTNode('s')))
+        middle_tree = TSTNode('u', middle=TSTNode('t', TSTNode('p'), TSTNode('e')))
+
+        right_right_tree = TSTNode('u', TSTNode('i'), TSTNode('s'))
+        right_tree = TSTNode('h', middle=TSTNode('e'), right=right_right_tree)
+        root = TSTNode('c', left_tree, middle_tree, right_tree)
+        self.assertEqual(root, t.root)
+        
+
+if __name__ == '__main__':
+    unittest.main(exit=False, verbosity=2)
+```
+
 
 ### Apr 23, 2021 \[Medium\] Bloom Filter
 ---
