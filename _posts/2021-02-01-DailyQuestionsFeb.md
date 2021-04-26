@@ -70,6 +70,104 @@ Node 5 -> (3,4,5) is the maximum value in the path
 Node 3 -> (3,1,3) is the maximum value in the path.
 ```
 
+**Solution with DFS:** [https://replit.com/@trsong/Count-Good-Nodes-in-Binary-Tree](https://replit.com/@trsong/Count-Good-Nodes-in-Binary-Tree)
+```py
+import unittest
+
+def count_good_nodes(root):
+    if not root:
+        return 0
+
+    stack = [(root, float('-inf'))]
+    res = 0
+    while stack:
+        cur, local_max = stack.pop()
+        if cur.val >= local_max:
+            res += 1
+        
+        for child in [cur.left, cur.right]:
+            if not child:
+                continue
+            stack.append((child, max(cur.val, local_max)))
+    return res
+        
+
+class TreeNode(object):
+    def __init__(self, val, left=None, right=None):
+        self.val = val
+        self.left = left
+        self.right = right
+
+
+class CountGoodNodeSpec(unittest.TestCase):
+    def test_example(self):
+        """
+            3
+           / \
+          1   4
+         /   / \
+        3   1   5
+        """
+        left_tree = TreeNode(1, TreeNode(3))
+        right_tree = TreeNode(4, TreeNode(1), TreeNode(5))
+        root = TreeNode(3, left_tree, right_tree)
+        # 3
+        # 3 -> 1 -> 3
+        # 3 -> 4
+        # 3 -> 4 -> 5
+        self.assertEqual(4, count_good_nodes(root))
+
+    def test_example2(self):
+        """
+            3
+           /
+          3
+         / \
+        4   2
+        """
+        left_tree = TreeNode(3, TreeNode(4), TreeNode(2))
+        root = TreeNode(3, left_tree)
+        # 3
+        # 3 -> 3
+        # 3 -> 3 -> 4
+        self.assertEqual(3, count_good_nodes(root))
+
+    def test_one_node_tree(self):
+        self.assertEqual(1, count_good_nodes(TreeNode(1)))
+
+    def test_empty_tree(self):
+        self.assertEqual(0, count_good_nodes(None))
+
+    def test_full_tree(self):
+        """
+             1
+           /   \
+          2     3
+         / \   / \
+        4   5 6   7
+        """
+        left_tree = TreeNode(2, TreeNode(4), TreeNode(5))
+        right_tree = TreeNode(3, TreeNode(6), TreeNode(7))
+        root = TreeNode(1, left_tree, right_tree)
+        self.assertEqual(7, count_good_nodes(root))
+
+    def test_full_tree2(self):
+        """
+             7
+           /   \
+          6     5
+         / \   / \
+        4   3 2   1
+        """
+        left_tree = TreeNode(6, TreeNode(4), TreeNode(3))
+        right_tree = TreeNode(5, TreeNode(2), TreeNode(1))
+        root = TreeNode(7, left_tree, right_tree)
+        self.assertEqual(1, count_good_nodes(root))
+
+        
+if __name__ == '__main__':
+    unittest.main(exit=False, verbosity=2)
+```
 
 ### Apr 24, 2021 \[Easy\] Ternary Search Tree
 ---

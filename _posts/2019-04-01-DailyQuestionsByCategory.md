@@ -5802,6 +5802,38 @@ Output: 1
 <details>
 <summary class="lc_m">
 
+- [**\[Medium\] LC 1448. Count Good Nodes in Binary Tree**](https://trsong.github.io/python/java/2021/02/02/DailyQuestionsFeb/#apr-25-2021-lc-1448-medium-count-good-nodes-in-binary-tree) -- *Given a binary tree root, a node X in the tree is named good if in the path from root to X there are no nodes with a value greater than X.* [*\(Try ME\)*](https://replit.com/@trsong/Count-Good-Nodes-in-Binary-Tree-1)
+
+</summary>
+<div>
+
+**Question:** Given a binary tree root, a node X in the tree is named good if in the path from root to X there are no nodes with a value greater than X.
+
+Return the number of good nodes in the binary tree.
+
+**Example:**
+```py
+Input: 
+    3
+   / \
+  1   4
+ /   / \
+3   1   5
+
+Output: 4
+Root Node (3) is always a good node.
+Node 4 -> (3,4) is the maximum value in the path starting from the root.
+Node 5 -> (3,4,5) is the maximum value in the path
+Node 3 -> (3,1,3) is the maximum value in the path.
+```
+
+</div>
+</details>
+
+
+<details>
+<summary class="lc_m">
+
 - [**\[Medium\] LC 114. Flatten Binary Tree to Linked List**](https://trsong.github.io/python/java/2021/02/02/DailyQuestionsFeb/#apr-20-2021-lc-114-medium-flatten-binary-tree-to-linked-list) -- *Given a binary tree, flatten it to a linked list in-place.* [*\(Try ME\)*](https://replit.com/@trsong/In-place-Flatten-the-Binary-Tree-to-Linked-List-1)
 
 </summary>
