@@ -19,6 +19,34 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
 
+### Apr 26, 2021 \[Medium\] Mininum Adjacent Swaps to Make Palindrome
+---
+> **Question:** Given a string, what is the minimum number of adjacent swaps required to convert a string into a palindrome. If not possible, return -1.
+
+**Example 1:**
+```py
+Input: "mamad"
+Output: 3
+```
+
+**Example 2:**
+```py
+Input: "asflkj"
+Output: -1
+```
+
+**Example 3:**
+```py
+Input: "aabb"
+Output: 2
+```
+
+**Example 4:**
+```py
+Input: "ntiin"
+Output: 1
+Explanation: swap 't' with 'i' => "nitin"
+```
     
 ### Apr 25, 2021 LC 1448 \[Medium\] Count Good Nodes in Binary Tree
 ---
