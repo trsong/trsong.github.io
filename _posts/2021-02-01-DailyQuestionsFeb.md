@@ -19,6 +19,24 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
 
+### Apr 27, 2021 \[Easy\] Ransom Note
+---
+> **Question:** A criminal is constructing a ransom note. In order to disguise his handwriting, he is cutting out letters from a magazine.
+>
+> Given a magazine of letters and the note he wants to write, determine whether he can construct the word.
+
+**Example 1:**
+```py
+Input: ['a', 'b', 'c', 'd', 'e', 'f'], 'bed'
+Output: True
+```
+
+**Example 2:**
+```py
+Input: ['a', 'b', 'c', 'd', 'e', 'f'], 'cat'
+Output: False
+```
+
 ### Apr 26, 2021 \[Medium\] Mininum Adjacent Swaps to Make Palindrome
 ---
 > **Question:** Given a string, what is the minimum number of adjacent swaps required to convert a string into a palindrome. If not possible, return -1.
