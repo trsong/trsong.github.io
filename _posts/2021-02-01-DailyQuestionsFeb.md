@@ -19,6 +19,12 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
 
+
+### Apr 28, 2021 \[Hard\] Morris Traversal
+---
+> **Question:** Typically, an implementation of in-order traversal of a binary tree has `O(h)` space complexity, where `h` is the height of the tree. Write a program to compute the in-order traversal of a binary tree using `O(1)` space.
+
+
 ### Apr 27, 2021 \[Easy\] Ransom Note
 ---
 > **Question:** A criminal is constructing a ransom note. In order to disguise his handwriting, he is cutting out letters from a magazine.
@@ -35,6 +41,64 @@ Output: True
 ```py
 Input: ['a', 'b', 'c', 'd', 'e', 'f'], 'cat'
 Output: False
+```
+
+**Solution:** [https://replit.com/@trsong/Ransom-Note-2](https://replit.com/@trsong/Ransom-Note-2)
+```py
+import unittest
+
+def can_construct_ransom_note(letters, word):
+    histogram = {}
+    for ch in word:
+        histogram[ch] = histogram.get(ch, 0) + 1
+    
+    for ch in letters:
+        if ch in histogram:
+            histogram[ch] -= 1
+            if histogram[ch] == 0:
+                del histogram[ch]
+
+        if not histogram:
+            break
+    return not histogram
+        
+
+class CanConstructRansomNoteSpec(unittest.TestCase):
+    def test_example(self):
+        word, letters = 'bed', ['a', 'b', 'c', 'd', 'e', 'f']
+        self.assertTrue(can_construct_ransom_note(letters, word))
+
+    def test_example2(self):
+        word, letters = 'cat', ['a', 'b', 'c', 'd', 'e', 'f']
+        self.assertFalse(can_construct_ransom_note(letters, word))
+    
+    def test_empty_word(self):
+        word, letters = '', ['a']
+        self.assertTrue(can_construct_ransom_note(letters, word))
+    
+    def test_empty_letters(self):
+        word, letters = 'ab', []
+        self.assertFalse(can_construct_ransom_note(letters, word))
+    
+    def test_word_with_duplicated_letters(self):
+        word, letters = 'aa', ['a', 'a', 'b']
+        self.assertTrue(can_construct_ransom_note(letters, word))
+    
+    def test_word_with_duplicated_letters2(self):
+        word, letters = 'abab', ['a', 'a', 'b']
+        self.assertFalse(can_construct_ransom_note(letters, word))
+    
+    def test_word_not_in_letters(self):
+        word, letters = 'cap', ['a', 'p', 'd', 'e']
+        self.assertFalse(can_construct_ransom_note(letters, word))
+
+    def test_insufficient_number_of_letters(self):
+        word, letters = 'aabbcc', ['a', 'b', 'c']
+        self.assertFalse(can_construct_ransom_note(letters, word))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False, verbosity=2)
 ```
 
 ### Apr 26, 2021 \[Medium\] Mininum Adjacent Swaps to Make Palindrome
