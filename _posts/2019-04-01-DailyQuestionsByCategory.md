@@ -1805,6 +1805,46 @@ missing_ranges(nums=[1, 3, 5, 10], lower=1, upper=10)
 ### Two Pointers
 ---
 
+
+<details>
+<summary class="lc_m">
+
+- [**\[Medium\] Mininum Adjacent Swaps to Make Palindrome**](https://trsong.github.io/python/java/2021/02/02/DailyQuestionsFeb/#apr-26-2021-medium-mininum-adjacent-swaps-to-make-palindrome) -- *Given a string, what is the minimum number of adjacent swaps required to convert a string into a palindrome.* [*\(Try ME\)*](https://replit.com/@trsong/Mininum-Adjacent-Swaps-to-Make-Palindrome-1)
+
+</summary>
+<div>
+
+**Question:** Given a string, what is the minimum number of adjacent swaps required to convert a string into a palindrome. If not possible, return -1.
+
+**Example 1:**
+```py
+Input: "mamad"
+Output: 3
+```
+
+**Example 2:**
+```py
+Input: "asflkj"
+Output: -1
+```
+
+**Example 3:**
+```py
+Input: "aabb"
+Output: 2
+```
+
+**Example 4:**
+```py
+Input: "ntiin"
+Output: 1
+Explanation: swap 't' with 'i' => "nitin"
+```
+
+</div>
+</details>
+
+
 <details>
 <summary class="lc_m">
 

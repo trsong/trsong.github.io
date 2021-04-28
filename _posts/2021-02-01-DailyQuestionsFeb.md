@@ -65,6 +65,120 @@ Input: "ntiin"
 Output: 1
 Explanation: swap 't' with 'i' => "nitin"
 ```
+
+**Solution with Two-pointers:** [https://replit.com/@trsong/Mininum-Adjacent-Swaps-to-Make-Palindrome](https://replit.com/@trsong/Mininum-Adjacent-Swaps-to-Make-Palindrome)
+```py
+import unittest
+
+def min_adj_swap_to_palindrome(s):
+    if not is_palindrome_anagram(s):
+        return -1
+    
+    buffer = list(s)
+    start, end = 0, len(buffer) - 1
+    res = 0
+    while start < end:
+        if buffer[start] == buffer[end]:
+            start += 1
+            end -= 1
+            continue
+        k = end
+        while start < k and buffer[start] != buffer[k]:
+            k -= 1
+        if k == start:
+            buffer[start], buffer[start+1] = buffer[start+1], buffer[start]
+            res += 1
+        else:
+            while k < end:
+                buffer[k], buffer[k+1] = buffer[k+1], buffer[k]
+                res += 1
+                k += 1
+            start += 1
+            end -= 1
+    return res
+
+
+def is_palindrome_anagram(s):
+    bit_vector = 0
+    for ch in s:
+        # toggle bit
+        bit_vector ^= 1 << ord(ch)
+    # check if 2's power (only has 1 or 0 bit set)
+    return bit_vector & (bit_vector - 1) == 0
+
+
+class MinAdjSwapToPalindromeSpec(unittest.TestCase):
+    def test_example(self):
+        s = 'mamad'
+        #    mamad 
+        # => maamd
+        # => maadm
+        # => madam
+        expected = 3
+        self.assertEqual(expected, min_adj_swap_to_palindrome(s))
+
+    def test_example2(self):
+        s = 'asflkj'
+        expected = -1
+        self.assertEqual(expected, min_adj_swap_to_palindrome(s))
+
+    def test_example3(self):
+        s = 'aabb'
+        #    aabb
+        # => abab
+        # => abba
+        expected = 2
+        self.assertEqual(expected, min_adj_swap_to_palindrome(s))
+
+    def test_example4(self):
+        s = 'ntiin'
+        #    ntiin
+        # => nitin
+        expected = 1
+        self.assertEqual(expected, min_adj_swap_to_palindrome(s))
+
+    def test_empty_string(self):
+        self.assertEqual(0, min_adj_swap_to_palindrome(''))
+
+    def test_already_palindrome(self):
+        s = '11233211'
+        self.assertEqual(0, min_adj_swap_to_palindrome(s))
+
+    def test_impossible_to_make_palindrome(self):
+        s = '12312312'
+        self.assertEqual(-1, min_adj_swap_to_palindrome(s))
+
+    def test_reverse_second_half(self):
+        s = '12341234'
+        #    12341234
+        # => 12342134
+        # => 12342314
+        # => 12342341
+        # => 12343241
+        # => 12343421
+        # => 12344321
+        expected = 6
+        self.assertEqual(expected, min_adj_swap_to_palindrome(s))
+
+    def test_palindrome_out_of_order(self):
+        s = "12233"
+        #    12233
+        # => 12323
+        # => 13223
+        # => 31223
+        # => 32123
+        expected = 4
+        self.assertEqual(expected, min_adj_swap_to_palindrome(s))
+
+    def test_non_palindrome_out_of_order(self):
+        s = "122333"
+        self.assertEqual(-1, min_adj_swap_to_palindrome(s))
+
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False, verbosity=2)
+```
     
 ### Apr 25, 2021 LC 1448 \[Medium\] Count Good Nodes in Binary Tree
 ---
