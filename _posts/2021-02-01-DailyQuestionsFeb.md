@@ -24,6 +24,110 @@ categories: Python/Java
 ---
 > **Question:** Typically, an implementation of in-order traversal of a binary tree has `O(h)` space complexity, where `h` is the height of the tree. Write a program to compute the in-order traversal of a binary tree using `O(1)` space.
 
+**My thoughts:** The Morris Traversal takes advantage of the right None pointer of predecessor: when reach a node for the first time, set predecessor of that node to itself and go left. When second time reach that node, yield result and reset predecessor's right pointer back to None. 
+
+**Solution:** [https://replit.com/@trsong/Morris-Traversal](https://replit.com/@trsong/Morris-Traversal)
+```py
+import unittest
+
+def generate_morris_traversal(root):
+    p = root
+    res = []
+    while p:
+        if not p.left:
+            res.append(p.val)
+            p = p.right
+        else:
+            predecessor = p.left
+            while predecessor.right and predecessor.right != p:
+                predecessor = predecessor.right
+
+            if not predecessor.right:
+                predecessor.right = p
+                p = p.left
+            else:
+                predecessor.right = None
+                res.append(p.val)
+                p = p.right
+    return res
+
+
+class TreeNode(object):
+    def __init__(self, val, left=None, right=None):
+        self.val = val
+        self.left = left
+        self.right = right
+
+
+class GenerateMorrisTraversalSpec(unittest.TestCase):
+    def test_one_node_tree(self):
+        root = TreeNode(1)
+        expected = [1]
+        self.assertEqual(expected, generate_morris_traversal(root))
+
+    def test_empty_tree(self):
+        self.assertEqual([], generate_morris_traversal(None))
+
+    def test_right_heavy_tree(self):
+        """
+            3
+           / \
+          1   4
+         /   / \
+        3   1   5
+        """
+        left_tree = TreeNode(1, TreeNode(3))
+        right_tree = TreeNode(4, TreeNode(1), TreeNode(5))
+        root = TreeNode(3, left_tree, right_tree)
+        expected = [3, 1, 3, 1, 4, 5]
+        self.assertEqual(expected, generate_morris_traversal(root))
+
+    def test_left_heavy_tree(self):
+        """
+            3
+           /
+          3
+         / \
+        4   2
+        """
+        left_tree = TreeNode(3, TreeNode(4), TreeNode(2))
+        root = TreeNode(3, left_tree)
+        expected = [4, 3, 2, 3]
+        self.assertEqual(expected, generate_morris_traversal(root))
+
+    def test_full_tree(self):
+        """
+             1
+           /   \
+          2     3
+         / \   / \
+        4   5 6   7
+        """
+        left_tree = TreeNode(2, TreeNode(4), TreeNode(5))
+        right_tree = TreeNode(3, TreeNode(6), TreeNode(7))
+        root = TreeNode(1, left_tree, right_tree)
+        expected = [4, 2, 5, 1, 6, 3, 7]
+        self.assertEqual(expected, generate_morris_traversal(root))
+
+    def test_full_tree2(self):
+        """
+             7
+           /   \
+          6     5
+         / \   / \
+        4   3 2   1
+        """
+        left_tree = TreeNode(6, TreeNode(4), TreeNode(3))
+        right_tree = TreeNode(5, TreeNode(2), TreeNode(1))
+        root = TreeNode(7, left_tree, right_tree)
+        expected = [4, 6, 3, 7, 2, 5, 1]
+        self.assertEqual(expected, generate_morris_traversal(root))
+
+        
+if __name__ == '__main__':
+    unittest.main(exit=False, verbosity=2)
+```
+
 
 ### Apr 27, 2021 \[Easy\] Ransom Note
 ---

@@ -3883,6 +3883,20 @@ return 23 (5 + 4 + 6 + 8).
 <details>
 <summary class="lc_h">
 
+- [**\[Hard\] Morris Traversal**](http://trsong.github.io/python/java/2021/02/02/DailyQuestionsFeb/#apr-28-2021-hard-morris-traversal) -- *Write a program to compute the in-order traversal of a binary tree using `O(1)` space.* [*\(Try ME\)*](https://replit.com/@trsong/Morris-Traversal-1)
+
+</summary>
+<div>
+
+**Question:** Typically, an implementation of in-order traversal of a binary tree has `O(h)` space complexity, where `h` is the height of the tree. Write a program to compute the in-order traversal of a binary tree using `O(1)` space.
+
+</div>
+</details>
+
+
+<details>
+<summary class="lc_h">
+
 - [**\[Hard\] Construct Cartesian Tree from Inorder Traversal**](https://trsong.github.io/python/java/2020/11/02/DailyQuestionsAug/#dec-12-2020-hard-construct-cartesian-tree-from-inorder-traversal) -- *Given in-order traversal, construct a Cartesian tree. A Cartesian tree is heap-ordered, so that each parent value is smaller than children.* [*\(Try ME\)*](https://repl.it/@trsong/Construct-Cartesian-Tree-from-Inorder-Traversal-1)
 
 </summary>
