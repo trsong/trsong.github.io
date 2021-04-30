@@ -4307,6 +4307,22 @@ sumRange(0, 2) -> 8
 ---
 
 <details>
+<summary class="lc_m">
+
+- [**\[Medium\] Maximum Distance among Binary Strings**](http://trsong.github.io/python/java/2021/02/02/DailyQuestionsFeb/#apr-29-2021-medium-maximum-distance-among-binary-strings) -- *The distance between 2 binary strings is the sum of their lengths after removing the common prefix.* [*\(Try ME\)*](https://replit.com/@trsong/Maximum-Distance-among-Binary-Strings-1)
+
+</summary>
+<div>
+
+**Question:** The distance between 2 binary strings is the sum of their lengths after removing the common prefix. For example: the common prefix of `1011000` and `1011110` is `1011` so the distance is `len("000") + len("110") = 3 + 3 = 6`.
+
+Given a list of binary strings, pick a pair that gives you maximum distance among all possible pair and return that distance.
+
+</div>
+</details>
+
+
+<details>
 <summary class="lc_e">
 
 - [**\[Easy\] Ternary Search Tree**](https://trsong.github.io/python/java/2021/02/02/DailyQuestionsFeb/#apr-24-2021-easy-ternary-search-tree) -- *Implement insertion and search functions for a ternary search tree.* [*\(Try ME\)*](https://replit.com/@trsong/Implement-Ternary-Search-Tree-1)
