@@ -1541,6 +1541,42 @@ Explanation: Because the new interval [4,8] overlaps with [3,5],[6,7],[8,10].
 <details>
 <summary class="lc_m">
 
+- [**\[Medium\] Stores and Houses**](http://trsong.github.io/python/java/2021/02/02/DailyQuestionsFeb/#apr-30-2021-medium-stores-and-houses) -- *Given 2 arrays representing integer locations of stores and houses. For each house, find the store closest to it.* [*\(Try ME\)*](https://replit.com/@trsong/Stores-and-Houses-1)
+
+</summary>
+<div>
+
+**Question:** You are given 2 arrays representing integer locations of stores and houses (each location in this problem is one-dementional). For each house, find the store closest to it.
+Return an integer array result where result[i] should denote the location of the store closest to the i-th house. If many stores are equidistant from a particular house, choose the store with the smallest numerical location. Note that there may be multiple stores and houses at the same location.
+
+**Example 1:**
+```py
+Input: houses = [5, 10, 17], stores = [1, 5, 20, 11, 16]
+Output: [5, 11, 16]
+Explanation: 
+The closest store to the house at location 5 is the store at the same location.
+The closest store to the house at location 10 is the store at the location 11.
+The closest store to the house at location 17 is the store at the location 16.
+```
+
+**Example 2:**
+```py
+Input: houses = [2, 4, 2], stores = [5, 1, 2, 3]
+Output: [2, 3, 2]
+```
+
+**Example 3:**
+```py
+Input: houses = [4, 8, 1, 1], stores = [5, 3, 1, 2, 6]
+Output: [3, 6, 1, 1]
+```
+
+</div>
+</details>
+
+<details>
+<summary class="lc_m">
+
 - [**\[Medium\] K-th Missing Number in Sorted Array**](http://trsong.github.io/python/java/2021/02/02/DailyQuestionsFeb/#mar-18-2021-medium-k-th-missing-number-in-sorted-array) -- *Given a sorted, define the missing numbers to be the gap among numbers. Calculate K-th missing number.* [*\(Try ME\)*](https://replit.com/@trsong/Find-K-th-Missing-Number-in-Sorted-Array-1)
 
 </summary>

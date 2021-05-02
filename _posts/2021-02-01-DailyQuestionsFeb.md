@@ -47,6 +47,83 @@ Input: houses = [4, 8, 1, 1], stores = [5, 3, 1, 2, 6]
 Output: [3, 6, 1, 1]
 ```
 
+**Solution with Binary Search:** [https://replit.com/@trsong/Stores-and-Houses](https://replit.com/@trsong/Stores-and-Houses)
+```py
+import unittest
+
+def find_cloest_store(houses, stores):
+    if not stores:
+        return [None] * len(houses)
+    elif not houses:
+        return []
+    
+    stores.sort()
+    res = []
+    for pos in houses:
+        next_store_index = search_for_next_store_index(stores, pos)
+        next_store_pos = stores[next_store_index]
+        prev_store_pos = stores[next_store_index - 1] if next_store_index > 0 else stores[0]
+        if abs(pos - prev_store_pos) <= abs(pos - next_store_pos):
+            res.append(prev_store_pos)
+        else:
+            res.append(next_store_pos)
+    return res
+
+
+def search_for_next_store_index(stores, pos):
+    lo = 0
+    hi = len(stores) - 1
+    while lo < hi:
+        mid = lo + (hi - lo) // 2
+        if stores[mid] < pos:
+            lo = mid + 1
+        else:
+            hi = mid
+    return lo
+
+
+class FindCloestStoreSpec(unittest.TestCase):
+    def test_example(self):
+        houses = [5, 10, 17]
+        stores = [1, 5, 20, 11, 16]
+        expected = [5, 11, 16]
+        self.assertEqual(expected, find_cloest_store(houses, stores))
+
+    def test_example2(self):
+        houses = [2, 4, 2]
+        stores = [5, 1, 2, 3]
+        expected = [2, 3, 2]
+        self.assertEqual(expected, find_cloest_store(houses, stores))
+
+    def test_example3(self):
+        houses = [4, 8, 1, 1]
+        stores = [5, 3, 1, 2, 6]
+        expected = [3, 6, 1, 1]          
+        self.assertEqual(expected, find_cloest_store(houses, stores))
+
+    def test_empty_houses(self):
+        houses = []
+        stores = [5, 3, 1, 2, 6]
+        expected = []          
+        self.assertEqual(expected, find_cloest_store(houses, stores))
+
+    def test_empty_stores(self):
+        houses = [1, 2, 3]
+        stores = []
+        expected = [None, None, None]          
+        self.assertEqual(expected, find_cloest_store(houses, stores))
+
+    def test_same_distance(self):
+        houses = [0]
+        stores = [-3, 3, -3, 3, 3, 3, 3, 3, 3, 3]
+        expected = [-3]
+        self.assertEqual(expected, find_cloest_store(houses, stores))
+
+    
+if __name__ == '__main__':
+    unittest.main(exit=False, verbosity=2)
+```
+
 ### Apr 29, 2021 \[Medium\] Maximum Distance among Binary Strings
 ---
 > **Question:** The distance between 2 binary strings is the sum of their lengths after removing the common prefix. For example: the common prefix of `1011000` and `1011110` is `1011` so the distance is `len("000") + len("110") = 3 + 3 = 6`.
