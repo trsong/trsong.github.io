@@ -45,6 +45,92 @@ Input: nums = [10, 1, 4, 8, 2, 9], k = 4
 Output: [1, 4, 8, 9]
 ```
 
+**Solution with DP and Binary Search:** [https://replit.com/@trsong/Increasing-Subsequence-of-Length-K-2](https://replit.com/@trsong/Increasing-Subsequence-of-Length-K-2)
+```py
+import unittest
+
+def increasing_sequence(nums, k):
+    if not nums:
+        return []
+
+    # Let dp[i] represents i-th element in a length i + 1 length subsequence
+    dp = []
+    prev_elem = {}
+
+    for num in nums:
+        insert_pos = binary_search(dp, num)
+        if insert_pos == len(dp):
+            dp.append(num)
+        else:
+            dp[insert_pos] = num
+        prev_elem[num] = dp[insert_pos - 1] if insert_pos > 0 else None
+
+        if len(dp) == k:
+            break
+
+    res = []
+    num = dp[-1]
+    while num is not None:
+        res.append(num)
+        num = prev_elem[num]
+    return res[::-1]
+
+
+def binary_search(dp, target):
+    lo = 0
+    hi = len(dp)
+    while lo < hi:
+        mid = lo + (hi - lo) // 2
+        if dp[mid] < target:
+            lo = mid + 1
+        else:
+            hi = mid
+    return lo
+
+
+class IncreasingSequenceSpec(unittest.TestCase):
+    def validate_result(self, nums, k):
+        subseq = increasing_sequence(nums, k)
+        self.assertEqual(k, len(subseq), str(subseq) + " Is not of length " + str(k))
+
+        i = 0
+        for num in nums:
+            if i < len(subseq) and num == subseq[i]:
+                i += 1
+        self.assertEqual(len(subseq), i, str(subseq) + " Is not valid subsequence.")
+        
+        for i in xrange(1, len(subseq)):
+            self.assertLessEqual(subseq[i-1], subseq[i], str(subseq) + " Is not increasing subsequene.")
+
+    def test_example(self):
+        k, nums = 3, [10, 1, 4, 8, 2, 9]
+        self.validate_result(nums, k)  # possible result: [1, 4, 8]
+
+    def test_example2(self):
+        k, nums = 4, [10, 1, 4, 8, 2, 9]
+        self.validate_result(nums, k)  # possible result: [1, 4, 8, 9]
+
+    def test_empty_sequence(self):
+        k, nums = 0, []
+        self.validate_result(nums, k)
+
+    def test_longest_increasing_subsequence(self):
+        k, nums = 4, [10, 9, 2, 5, 3, 7, 101, 18]
+        self.validate_result(nums, k)  # possible result: [2, 3, 7, 101]
+
+    def test_longest_increasing_subsequence_in_second_half_sequence(self):
+        k, nums = 4, [1, 2, 3, -2, -1, 0, 1]
+        self.validate_result(nums, k)  # possible result: [-2, -1, 0, 1]
+
+    def test_should_return_valid_subsequene(self):
+        k, nums = 3, [8, 9, 7, 6, 10]
+        self.validate_result(nums, k)  # possible result: [8, 9, 10]
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False, verbosity=2)
+```
+
 
 ### May 1, 2021 \[Hard\] Decreasing Subsequences
 ---
