@@ -19,6 +19,16 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
 
+### May 3, 2021 \[Easy\] Find Duplicates
+---
+> **Question:** Given an array of size n, and all values in the array are in the range 1 to n, find all the duplicates.
+
+**Example:**
+```py
+Input: [4, 3, 2, 7, 8, 2, 3, 1]
+Output: [2, 3]
+```
+
 ### May 2, 2021 \[Hard\] Increasing Subsequence of Length K
 ---
 > **Question:** Given an int array nums of length n and an int k. Return an increasing subsequence of length k (KIS). Expected time complexity `O(nlogk)`.
