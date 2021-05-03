@@ -19,6 +19,22 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
 
+### May 2, 2021 \[Hard\] Increasing Subsequence of Length K
+---
+> **Question:** Given an int array nums of length n and an int k. Return an increasing subsequence of length k (KIS). Expected time complexity `O(nlogk)`.
+
+**Example 1:**
+```py
+Input: nums = [10, 1, 4, 8, 2, 9], k = 3
+Output: [1, 4, 8] or [1, 4, 9] or [1, 8, 9]
+```
+
+**Example 2:**
+```py
+Input: nums = [10, 1, 4, 8, 2, 9], k = 4
+Output: [1, 4, 8, 9]
+```
+
 
 ### May 1, 2021 \[Hard\] Decreasing Subsequences
 ---
