@@ -6056,7 +6056,7 @@ if __name__ == '__main__':
 ---
 > **Question:** Write a function that rotates an array by `k` elements.
 >
-> For example, `[1, 2, 3, 4, 5, 6]` rotated by two becomes [`3, 4, 5, 6, 1, 2]`.
+> For example, `[1, 2, 3, 4, 5, 6]` rotated by two becomes `[3, 4, 5, 6, 1, 2]`.
 >
 > Try solving this without creating a copy of the array. How many swap or move operations do you need?
 

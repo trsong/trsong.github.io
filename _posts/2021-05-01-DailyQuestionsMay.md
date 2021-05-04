@@ -19,6 +19,15 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
 
+### May 4, 2021 \[Medium\] In-place Array Rotation
+---
+> **Question:** Write a function that rotates an array by `k` elements.
+>
+> For example, `[1, 2, 3, 4, 5, 6]` rotated by two becomes `[3, 4, 5, 6, 1, 2]`.
+>
+> Try solving this without creating a copy of the array. How many swap or move operations do you need?
+
+
 ### May 3, 2021 \[Easy\] Find Duplicates
 ---
 > **Question:** Given an array of size n, and all values in the array are in the range 1 to n, find all the duplicates.
