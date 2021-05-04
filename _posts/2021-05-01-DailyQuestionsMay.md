@@ -38,6 +38,70 @@ Input: [4, 3, 2, 7, 8, 2, 3, 1]
 Output: [2, 3]
 ```
 
+**Solution:** [https://replit.com/@trsong/Find-Duplicates](https://replit.com/@trsong/Find-Duplicates)
+```py
+import unittest
+
+def find_duplicates(nums):
+    res = []
+    for num in nums:
+        index = abs(num) - 1
+        if nums[index] < 0:
+            res.append(abs(num))
+        else:
+            nums[index] *= - 1
+
+    for i in range(len(nums)):
+        nums[i] = abs(nums[i])
+    return res
+
+
+class FindDuplicateSpec(unittest.TestCase):
+    def assert_result(self, expected, result):
+        self.assertEqual(sorted(expected), sorted(result))
+
+    def test_example1(self):
+        input = [4, 3, 2, 7, 8, 2, 3, 1]
+        expected = [2, 3]
+        self.assert_result(expected, find_duplicates(input))
+
+    def test_example2(self):
+        input = [4, 5, 2, 6, 8, 2, 1, 5]
+        expected = [2, 5]
+        self.assert_result(expected, find_duplicates(input))
+
+    def test_empty_array(self):
+        self.assertEqual([], find_duplicates([]))
+
+    def test_no_duplicated_numbers(self):
+        input = [6, 1, 4, 3, 2, 5]
+        expected = []
+        self.assert_result(expected, find_duplicates(input))
+
+    def test_duplicated_number(self):
+        input = [1, 1, 2]
+        expected = [1]
+        self.assert_result(expected, find_duplicates(input))
+
+    def test_duplicated_number2(self):
+        input = [1, 1, 3, 5, 6, 8, 8, 1, 1]
+        expected = [1, 8, 1, 1]
+        self.assert_result(expected, find_duplicates(input))
+  
+    def test_duplicated_number3(self):
+        input = [1, 3, 3]
+        expected = [3]
+        self.assert_result(expected, find_duplicates(input))
+    
+    def test_duplicated_number4(self):
+        input = [3, 2, 3, 2, 3, 2, 7]
+        expected = [3, 2, 3, 2]
+        self.assert_result(expected, find_duplicates(input))
+
+if __name__ == '__main__':
+    unittest.main(exit=False, verbosity=2)
+```
+
 ### May 2, 2021 \[Hard\] Increasing Subsequence of Length K
 ---
 > **Question:** Given an int array nums of length n and an int k. Return an increasing subsequence of length k (KIS). Expected time complexity `O(nlogk)`.

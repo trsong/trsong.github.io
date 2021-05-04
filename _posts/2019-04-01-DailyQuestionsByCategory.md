@@ -907,6 +907,26 @@ For example, if A is `'abcde'` and B is `'cdeab'`, return `True`. If A is `'abc'
 ---
 
 <details>
+<summary class="lc_e">
+
+- [**\[Easy\] Find Duplicates**](http://trsong.github.io/python/java/2021/05/02/DailyQuestionsMay/#may-3-2021-easy-find-duplicates) -- *Given an array of size n, and all values in the array are in the range 1 to n, find all the duplicates.* [*\(Try ME\)*](https://replit.com/@trsong/Find-Duplicates-1)
+
+</summary>
+<div>
+
+**Question:** Given an array of size n, and all values in the array are in the range 1 to n, find all the duplicates.
+
+**Example:**
+```py
+Input: [4, 3, 2, 7, 8, 2, 3, 1]
+Output: [2, 3]
+```
+
+</div>
+</details>
+
+
+<details>
 <summary class="lc_m">
 
 - [**\[Medium\] LC 227. Basic Calculator II**](http://trsong.github.io/python/java/2021/02/02/DailyQuestionsFeb/#feb-26-2021-lc-227-medium-basic-calculator-ii) -- *Implement a basic calculator to evaluate a simple expression string.* [*\(Try ME\)*](https://repl.it/@trsong/Implement-Basic-Calculator-II-1)
