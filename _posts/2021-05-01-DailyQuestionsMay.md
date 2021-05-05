@@ -36,6 +36,62 @@ categories: Python/Java
 >
 > Try solving this without creating a copy of the array. How many swap or move operations do you need?
 
+**Solution:** [https://replit.com/@trsong/Rotate-Array-In-place-2](https://replit.com/@trsong/Rotate-Array-In-place-2)
+```py
+import unittest
+
+def rotate(nums, k):
+    if not nums:
+        return []
+        
+    n = len(nums)
+    k %= n
+    reverse(nums, 0, k - 1)
+    reverse(nums, k , n - 1)
+    reverse(nums, 0, n - 1)
+    return nums
+
+
+def reverse(nums, start, end):
+    while start < end:
+        nums[start], nums[end] = nums[end], nums[start]
+        start += 1
+        end -= 1
+
+
+class RotateSpec(unittest.TestCase):
+    def test_example(self):
+        k, nums = 2, [1, 2, 3, 4, 5, 6]
+        expected = [3, 4, 5, 6, 1, 2]
+        self.assertEqual(expected, rotate(nums, k))
+
+    def test_rotate_0_position(self):
+        k, nums = 0, [0, 1, 2, 3]
+        expected = [0, 1, 2, 3]
+        self.assertEqual(expected, rotate(nums, k))
+
+    def test_empty_array(self):
+        self.assertEqual([], rotate([], k=10))
+
+    def test_shift_negative_position(self):
+        k, nums = -1, [0, 1, 2, 3]
+        expected = [3, 0, 1, 2]
+        self.assertEqual(expected, rotate(nums, k))
+
+    def test_shift_more_than_array_size(self):
+        k, nums = 8,  [1, 2, 3, 4, 5, 6]
+        expected = [3, 4, 5, 6, 1, 2]
+        self.assertEqual(expected, rotate(nums, k))
+
+    def test_multiple_round_of_forward_and_backward_shift(self):
+        k, nums = 5, [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
+        expected = [5, 6, 7, 8, 9, 10, 11, 12, 0, 1, 2, 3, 4]
+        self.assertEqual(expected, rotate(nums, k))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False, verbosity=2)
+```
 
 ### May 3, 2021 \[Easy\] Find Duplicates
 ---
