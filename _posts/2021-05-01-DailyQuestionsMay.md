@@ -19,6 +19,13 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
 
+### May 6, 2021 \[Easy\] Find Corresponding Node in Cloned Tree
+--- 
+> **Question:** Given two binary trees that are duplicates of one another, and given a node in one tree, find that corresponding node in the second tree. 
+> 
+> There can be duplicate values in the tree (so comparing node1.value == node2.value isn't going to work).
+
+
 ### May 5, 2021 LC 93 \[Medium\] All Possible Valid IP Address Combinations
 ---
 > **Question:** Given a string of digits, generate all possible valid IP address combinations.
@@ -27,6 +34,100 @@ categories: Python/Java
 >
 > For example, given `"2542540123"`, you should return `['254.25.40.123', '254.254.0.123']`
 
+**Solution with Backtracking:** [https://replit.com/@trsong/Find-All-Possible-Valid-IP-Address-Combinations-3](https://replit.com/@trsong/Find-All-Possible-Valid-IP-Address-Combinations-3)
+```py
+import unittest
+
+def all_ip_combinations(raw_str):
+    res = []
+    accu = []
+    n = len(raw_str)
+
+    def backtrack(i):
+        if len(accu) > 4:
+            return
+    
+        if i == n and len(accu) == 4:
+            res.append('.'.join(accu))
+        else:
+            for num_digit in [1, 2, 3]:
+                if i + num_digit > n: 
+                    break
+                num = int(raw_str[i: i + num_digit])
+                
+                # From 0 to 9
+                case1 = num_digit == 1
+
+                # From 10 to 99
+                case2 = case1 or num_digit == 2 and num >= 10
+
+                # From 100 to 255
+                case3 = case2 or num_digit == 3 and 100 <= num <= 255
+                if case3:
+                    accu.append(str(num))
+                    backtrack(i + num_digit)
+                    accu.pop()
+    
+    backtrack(0)
+    return res
+                    
+
+class AllIpCombinationSpec(unittest.TestCase):
+    def test_example(self):
+        raw_str = '2542540123'
+        expected = ['254.25.40.123', '254.254.0.123']
+        self.assertItemsEqual(expected, all_ip_combinations(raw_str))
+
+    def test_empty_string(self):
+        self.assertItemsEqual([], all_ip_combinations(''))
+
+    def test_no_valid_ips(self):
+        raw_str = '25505011535'
+        expected = []
+        self.assertItemsEqual(expected, all_ip_combinations(raw_str))
+
+    def test_multiple_outcomes(self):
+        raw_str = '25525511135'
+        expected = ['255.255.11.135', '255.255.111.35']
+        self.assertItemsEqual(expected, all_ip_combinations(raw_str))
+
+    def test_multiple_outcomes2(self):
+        raw_str = '25011255255'
+        expected = ['250.112.55.255', '250.11.255.255']
+        self.assertItemsEqual(expected, all_ip_combinations(raw_str))
+
+    def test_multiple_outcomes3(self):
+        raw_str = '10101010'
+        expected = [
+            '10.10.10.10', '10.10.101.0', '10.101.0.10', '101.0.10.10',
+            '101.0.101.0'
+        ]
+        self.assertItemsEqual(expected, all_ip_combinations(raw_str))
+
+    def test_multiple_outcomes4(self):
+        raw_str = '01010101'
+        expected = ['0.10.10.101', '0.101.0.101']
+        self.assertItemsEqual(expected, all_ip_combinations(raw_str))
+
+    def test_unique_outcome(self):
+        raw_str = '111111111111'
+        expected = ['111.111.111.111']
+        self.assertItemsEqual(expected, all_ip_combinations(raw_str))
+
+    def test_unique_outcome2(self):
+        raw_str = '0000'
+        expected = ['0.0.0.0']
+        self.assertItemsEqual(expected, all_ip_combinations(raw_str))
+
+    def test_missing_parts(self):
+        raw_str = '000'
+        expected = []
+        self.assertItemsEqual(expected, all_ip_combinations(raw_str))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False, verbosity=2)
+```
 
 ### May 4, 2021 \[Medium\] In-place Array Rotation
 ---
