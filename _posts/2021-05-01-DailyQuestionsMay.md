@@ -21,7 +21,7 @@ categories: Python/Java
 
 ### May 7, 2021 \[Medium\] Minimum Days to Bloom Roses
 --- 
-> **Question:** Given an array of roses. `roses[i]` means rose `i` will bloom on day roses[i]. Also given an int `k`, which is the minimum number of adjacent bloom roses required for a bouquet, and an int `n`, which is the number of bouquets we need. Return the earliest day that we can get `n` bouquets of roses.
+> **Question:** Given an array of roses. `roses[i]` means rose `i` will bloom on day `roses[i]`. Also given an int `k`, which is the minimum number of adjacent bloom roses required for a bouquet, and an int `n`, which is the number of bouquets we need. Return the earliest day that we can get `n` bouquets of roses.
 
 **Example:**
 ```py
@@ -47,6 +47,111 @@ Here the last three bloom roses make a bouquet, meeting the required n = 2 bouqu
 > 
 > There can be duplicate values in the tree (so comparing node1.value == node2.value isn't going to work).
 
+**Solution with DFS Traversal:** [https://replit.com/@trsong/Find-Corresponding-Node-in-Cloned-Tree-2](https://replit.com/@trsong/Find-Corresponding-Node-in-Cloned-Tree-2)
+```py
+from copy import deepcopy
+import unittest
+
+def find_node(root1, root2, node1):
+    if root1 is None or root2 is None or node1 is None:
+        return None
+    
+    traversal1 = dfs_traversal(root1)
+    traversal2 = dfs_traversal(root2)
+
+    for n1, n2 in zip(traversal1, traversal2):
+        if n1 == node1:
+            return n2
+    return None
+
+
+def dfs_traversal(root):
+    stack = [root]
+    while stack:
+        cur = stack.pop()
+        yield cur
+        for child in [cur.left, cur.right]:
+            if child is None:
+                continue
+            stack.append(child)
+
+
+class TreeNode(object):
+    def __init__(self, val, left=None, right=None):
+        self.val = val
+        self.left = left
+        self.right = right
+
+    def __repr__(self):
+        return "TreeNode(%d, %s, %s)" % (self.val, self.left, self.right)
+
+
+class FindNodeSpec(unittest.TestCase):
+    def test_empty_tree(self):
+        self.assertIsNone(find_node(None, None, None))
+
+    def test_one_node_tree(self):
+        root1 = TreeNode(1)
+        root2 = deepcopy(root1)
+        self.assertEqual(root2, find_node(root1, root2, root1))
+
+    def test_leaf_node(self):
+        """
+          1
+         / \
+        2   3
+             \
+              4
+        """
+        root1 = TreeNode(1, TreeNode(2), TreeNode(3, right=TreeNode(4)))
+        root2 = deepcopy(root1)
+        f = lambda root: root.right.right
+        self.assertEqual(f(root2), find_node(root1, root2, f(root1)))
+
+    def test_internal_node(self):
+        """
+            1
+           / \
+          2   3
+         /   /
+        0   1
+        """
+        left_tree = TreeNode(2, TreeNode(0))
+        right_tree = TreeNode(3, TreeNode(1))
+        root1 = TreeNode(1, left_tree, right_tree)
+        root2 = deepcopy(root1)
+        f = lambda root: root.left
+        self.assertEqual(f(root2), find_node(root1, root2, f(root1))) 
+
+    def test_duplicated_value_in_tree(self):
+        """
+          1
+           \
+            1
+           /
+          1
+         /
+        1
+        """
+        root1 = TreeNode(1, right=TreeNode(1, TreeNode(1, TreeNode(1))))
+        root2 = deepcopy(root1)
+        f = lambda root: root.right.left
+        self.assertEqual(f(root2), find_node(root1, root2, f(root1))) 
+    
+    def test_find_root_node(self):
+        """
+          1
+         / \
+        2   3
+        """
+        root1 = TreeNode(1, TreeNode(2), TreeNode(3))
+        root2 = deepcopy(root1)
+        self.assertEqual(root2, find_node(root1, root2, root1))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False, verbosity=2)
+```
 
 ### May 5, 2021 LC 93 \[Medium\] All Possible Valid IP Address Combinations
 ---
