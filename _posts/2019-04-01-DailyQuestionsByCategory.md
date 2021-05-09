@@ -2126,6 +2126,40 @@ Output: False
 <details>
 <summary class="lc_m">
 
+- [**\[Medium\] LC 1525. Number of Good Ways to Split a String**](http://trsong.github.io/python/java/2021/05/02/DailyQuestionsMay/#may-8-2021-lc-1525-medium-number-of-good-ways-to-split-a-string) -- *Return the number of ways S can be split such that the number of unique characters between S1 and S2 are the same.* [*\(Try ME\)*](https://replit.com/@trsong/Number-of-Good-Ways-to-Split-a-String-1)
+
+</summary>
+<div>
+
+**Question:** Given a string S, we can split S into 2 strings: S1 and S2. Return the number of ways S can be split such that the number of unique characters between S1 and S2 are the same.
+
+**Example 1:**
+```py
+Input: "aaaa"
+Output: 3
+Explanation: we can get a - aaa, aa - aa, aaa- a
+```
+
+**Example 2:**
+```py
+Input: "bac"
+Output: 0
+```
+
+**Example 3:**
+```py
+Input: "ababa"
+Output: 2
+Explanation: ab - aba, aba - ba
+```
+
+</div>
+</details>
+
+
+<details>
+<summary class="lc_m">
+
 - [**\[Medium\] Smallest Window Contains Every Distinct Character**](https://trsong.github.io/python/java/2021/02/02/DailyQuestionsFeb/#mar-27-2021-medium-smallest-window-contains-every-distinct-character) -- *Given a string, find the length of the smallest window that contains every distinct character.* [*\(Try ME\)*](https://replit.com/@trsong/Smallest-Window-Contains-Every-Distinct-Character-1)
 
 </summary>

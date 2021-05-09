@@ -43,6 +43,85 @@ Output: 2
 Explanation: ab - aba, aba - ba
 ```
 
+**Solution with Sliding Window:** [https://replit.com/@trsong/Number-of-Good-Ways-to-Split-a-String](https://replit.com/@trsong/Number-of-Good-Ways-to-Split-a-String)
+```py
+import unittest
+
+def count_equal_splits(s):
+    n = len(s)
+    last_occurance = {}
+    forward_bit_map = 0
+    backward_bit_map = 0
+
+    for i in range(n - 1, -1, -1):
+        ch = s[i]
+        mask = 1 << ord(ch)
+        if ~backward_bit_map & mask:
+            last_occurance[ch] = i
+            backward_bit_map |= mask
+
+    res = 0
+    for i, ch in enumerate(s):
+        mask = 1 << ord(ch)
+        forward_bit_map |= mask
+        if last_occurance[ch] == i:
+            backward_bit_map ^= mask
+        
+        if forward_bit_map == backward_bit_map:
+            res += 1
+
+    return res
+            
+
+class CountEqualSplitSpec(unittest.TestCase):
+    def test_example(self):
+        s = "aaaa"
+        # a - aaa, aa - aa, aaa- a
+        expected = 3
+        self.assertEqual(expected, count_equal_splits(s))
+
+    def test_example2(self):
+        s = "bac"
+        expected = 0
+        self.assertEqual(expected, count_equal_splits(s))
+
+    def test_example3(self):
+        s = "ababa"
+        # ab - aba, aba - ba
+        expected = 2
+        self.assertEqual(expected, count_equal_splits(s))
+    
+    def test_empty_string(self):
+        s = ""
+        expected = 0
+        self.assertEqual(expected, count_equal_splits(s))
+    
+    def test_string_with_unique_characters(self):
+        s = "abcdef"
+        expected = 0
+        self.assertEqual(expected, count_equal_splits(s))
+
+    def test_palindrome(self):
+        s = "123454321"
+        expected = 0
+        self.assertEqual(expected, count_equal_splits(s))
+
+    def test_palindrome2(self):
+        s = "1234554321"
+        expected = 1
+        self.assertEqual(expected, count_equal_splits(s))
+
+    def test_string_with_duplicates(self):
+        s = "123123112233"
+        # 123-123112233, 1231-23112233, 12312-3112233, 123123-112233, 1231231-12233
+        expected = 5
+        self.assertEqual(expected, count_equal_splits(s))
+    
+
+if __name__ == '__main__':
+    unittest.main(exit=False, verbosity=2)
+```
+
 ### May 7, 2021 \[Medium\] Minimum Days to Bloom Roses
 --- 
 > **Question:** Given an array of roses. `roses[i]` means rose `i` will bloom on day `roses[i]`. Also given an int `k`, which is the minimum number of adjacent bloom roses required for a bouquet, and an int `n`, which is the number of bouquets we need. Return the earliest day that we can get `n` bouquets of roses.
