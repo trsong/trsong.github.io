@@ -1561,6 +1561,37 @@ Explanation: Because the new interval [4,8] overlaps with [3,5],[6,7],[8,10].
 <details>
 <summary class="lc_m">
 
+- [**\[Medium\] Minimum Days to Bloom Roses**](http://trsong.github.io/python/java/2021/05/02/DailyQuestionsMay/#may-7-2021-medium-minimum-days-to-bloom-roses) -- *Given an array of roses. Return the earliest day that we can get n bouquets of roses.* [*\(Try ME\)*](https://replit.com/@trsong/Minimum-Days-to-Bloom-Roses-1)
+
+</summary>
+<div>
+
+**Question:** Given an array of roses. `roses[i]` means rose `i` will bloom on day `roses[i]`. Also given an int `k`, which is the minimum number of adjacent bloom roses required for a bouquet, and an int `n`, which is the number of bouquets we need. Return the earliest day that we can get `n` bouquets of roses.
+
+**Example:**
+```py
+Input: roses = [1, 2, 4, 9, 3, 4, 1], k = 2, n = 2
+Output: 4
+Explanation:
+day 1: [b, n, n, n, n, n, b]
+The first and the last rose bloom.
+
+day 2: [b, b, n, n, n, n, b]
+The second rose blooms. Here the first two bloom roses make a bouquet.
+
+day 3: [b, b, n, n, b, n, b]
+
+day 4: [b, b, b, n, b, b, b]
+Here the last three bloom roses make a bouquet, meeting the required n = 2 bouquets of bloom roses. So return day 4.
+```
+
+</div>
+</details>
+
+
+<details>
+<summary class="lc_m">
+
 - [**\[Medium\] Stores and Houses**](http://trsong.github.io/python/java/2021/02/02/DailyQuestionsFeb/#apr-30-2021-medium-stores-and-houses) -- *Given 2 arrays representing integer locations of stores and houses. For each house, find the store closest to it.* [*\(Try ME\)*](https://replit.com/@trsong/Stores-and-Houses-1)
 
 </summary>

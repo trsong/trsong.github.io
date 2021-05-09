@@ -40,6 +40,98 @@ day 4: [b, b, b, n, b, b, b]
 Here the last three bloom roses make a bouquet, meeting the required n = 2 bouquets of bloom roses. So return day 4.
 ```
 
+**My thoughts:** Unless rose field cannot produce `n * k` roses, the final answer lies between `1` and `max(roses)`. And if on `x` day we can get expected number of bloom roses then any `day > x` can also be. So we can use the binary search to guess the min day to get target number of rose bunquets. 
+
+**Solution with Binary Search:** [https://replit.com/@trsong/Minimum-Days-to-Bloom-Roses](https://replit.com/@trsong/Minimum-Days-to-Bloom-Roses)
+```py
+import unittest
+
+def min_day_rose_bloom(roses, n, k):
+    if n * k > len(roses):
+        return -1
+    
+    lo = 1
+    hi = max(roses)
+    while lo < hi:
+        mid = lo + (hi - lo) // 2
+        if can_bloom_rose(roses, mid, n, k):
+            hi = mid
+        else:
+            lo = mid + 1
+    return lo
+
+
+def can_bloom_rose(roses, target, n, k):
+    bonquet = 0
+    count = 0
+
+    for day in roses:
+        if day > target:
+            count = 0
+            continue
+        
+        count += 1
+        if count >= k:
+            count = 0
+            bonquet += 1
+        
+        if bonquet >= n:
+            break
+
+    return bonquet >= n
+
+
+class MinDayRoseBloomSpec(unittest.TestCase):
+    def test_example(self):
+        n, k, roses = 2, 2, [1, 2, 4, 9, 3, 4, 1]
+        # [b, n, n, n, n, n, b]
+        # [b, b, n, n, n, n, b]
+        # [b, b, n, n, b, n, b]
+        # [b, b, b, n, b, b, b]
+        expected = 4
+        self.assertEqual(expected, min_day_rose_bloom(roses, n, k))
+
+    def test_window_size_one(self):
+        n, k, roses = 3, 1, [1, 10, 3, 10, 2]
+        # [b, n, n, n, n]
+        # [b, n, n, n, b]
+        # [b, n, b, n, b]
+        expected = 3
+        self.assertEqual(expected, min_day_rose_bloom(roses, n, k))
+
+    def test_required_size_greater_than_array(self):
+        n, k, roses = 3, 2, [1, 1, 1, 1, 1]
+        expected = -1
+        self.assertEqual(expected, min_day_rose_bloom(roses, n, k))
+
+    def test_just_meet_required_size(self):
+        n, k, roses = 2, 3, [1, 2, 3, 1, 2, 3]
+        # [b, n, n, b, n, n]
+        # [b, b, n, b, b, n]
+        # [b, b, b, b, b, b]
+        expected = 3
+        self.assertEqual(expected, min_day_rose_bloom(roses, n, k))
+
+    def test_array_with_outlier_number(self):
+        n, k, roses = 2, 3, [7, 7, 7, 7, 12, 7, 7]
+        expected = 12
+        self.assertEqual(expected, min_day_rose_bloom(roses, n, k))
+
+    def test_array_with_extreme_large_number(self):
+        n, k, roses = 1, 1, [10000, 9999999]
+        expected = 10000
+        self.assertEqual(expected, min_day_rose_bloom(roses, n, k))
+
+    def test_continuous_bonquet(self):
+        n, k, roses = 4, 2, [1, 10, 2, 9, 3, 8, 4, 7, 5, 6]
+        expected = 9
+        self.assertEqual(expected, min_day_rose_bloom(roses, n, k))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False, verbosity=2)
+```
+
 
 ### May 6, 2021 \[Easy\] Find Corresponding Node in Cloned Tree
 --- 
