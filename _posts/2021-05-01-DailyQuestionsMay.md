@@ -19,7 +19,7 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
 
-### May 9, 2021 LT 1859 \[Medium\] Minimum Amplitude
+### May 9, 2021 LT 1859 \[Easy\] Minimum Amplitude
 --- 
 > **Question:** Given an array A consisting of N integers. In one move, we can choose any element in this array and replace it with any value. The amplitude of an array is the difference between the largest and the smallest values it contains.
 > 
