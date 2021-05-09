@@ -19,6 +19,30 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
 
+### May 8, 2021 LC 1525 \[Medium\] Number of Good Ways to Split a String
+--- 
+> **Question:** Given a string S, we can split S into 2 strings: S1 and S2. Return the number of ways S can be split such that the number of unique characters between S1 and S2 are the same.
+
+**Example 1:**
+```py
+Input: "aaaa"
+Output: 3
+Explanation: we can get a - aaa, aa - aa, aaa- a
+```
+
+**Example 2:**
+```py
+Input: "bac"
+Output: 0
+```
+
+**Example 3:**
+```py
+Input: "ababa"
+Output: 2
+Explanation: ab - aba, aba - ba
+```
+
 ### May 7, 2021 \[Medium\] Minimum Days to Bloom Roses
 --- 
 > **Question:** Given an array of roses. `roses[i]` means rose `i` will bloom on day `roses[i]`. Also given an int `k`, which is the minimum number of adjacent bloom roses required for a bouquet, and an int `n`, which is the number of bouquets we need. Return the earliest day that we can get `n` bouquets of roses.
