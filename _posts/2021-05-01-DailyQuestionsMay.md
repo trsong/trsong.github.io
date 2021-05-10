@@ -19,6 +19,34 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
 
+### May 10, 2021 LC 1007 \[Medium\] Minimum Domino Rotations For Equal Row
+--- 
+> **Question:** In a row of dominoes, `A[i]` and `B[i]` represent the top and bottom halves of the ith domino.  (A domino is a tile with two numbers from 1 to 6 - one on each half of the tile.)
+>
+> We may rotate the ith domino, so that `A[i]` and `B[i]` swap values.
+>
+> Return the minimum number of rotations so that all the values in A are the same, or all the values in B are the same.
+>
+> If it cannot be done, return `-1`.
+
+**Example 1:**
+```py
+Input: A = [2,1,2,4,2,2], B = [5,2,6,2,3,2]
+Output: 2
+Explanation: 
+The first figure represents the dominoes as given by A and B: before we do any rotations.
+If we rotate the second and fourth dominoes, we can make every value in the top row equal to 2, as indicated by the second figure.
+```
+
+**Example 2:**
+```py
+Input: A = [3,5,1,2,3], B = [3,6,3,3,4]
+Output: -1
+Explanation: In this case, it is not possible to rotate the dominoes to make one row of values equal.
+```
+
+
+
 ### May 9, 2021 LT 1859 \[Easy\] Minimum Amplitude
 --- 
 > **Question:** Given an array A consisting of N integers. In one move, we can choose any element in this array and replace it with any value. The amplitude of an array is the difference between the largest and the smallest values it contains.
