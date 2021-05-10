@@ -46,6 +46,89 @@ Output: 3
 Explanation: This can be achieved by replacing 11, -6 and 5 with three values of -2.
 ```
 
+**Solution with Heap:** [https://replit.com/@trsong/Minimum-Amplitude](https://replit.com/@trsong/Minimum-Amplitude)
+```py
+import unittest
+from queue import PriorityQueue
+
+def min_amplitute(nums):
+    heap_size = 4
+    if len(nums) <= heap_size:
+        return 0
+
+    max_heap = PriorityQueue()
+    min_heap = PriorityQueue()
+
+    for i in range(heap_size):
+        min_heap.put(nums[i])
+        max_heap.put(-nums[i])
+    
+    for i in range(heap_size, len(nums)):
+        num = nums[i]
+        if num > min_heap.queue[0]:
+            min_heap.get()
+            min_heap.put(num)
+        if num < abs(max_heap.queue[0]):
+            max_heap.get()
+            max_heap.put(-num)
+
+    max4, max3, max2, max1 = [min_heap.get() for _ in range(heap_size)]
+    min4, min3, min2, min1 = [-max_heap.get() for _ in range(heap_size)]
+    return min(max4 - min1, max3 - min2, max2 - min3, max1 - min4)
+
+
+class MinAmplitute(unittest.TestCase):
+    def test_example(self):
+        nums = [-9, 8, -1]
+        expected = 0
+        self.assertEqual(expected, min_amplitute(nums))
+
+    def test_example2(self):
+        nums = [14, 10, 5, 1, 0]
+        # 5 -> 1, 10 -> 1, 14 -> 1
+        expected = 1
+        self.assertEqual(expected, min_amplitute(nums))
+
+    def test_example3(self):
+        nums = [11, 0, -6, -1, -3, 5]
+        # 11 -> 0, -6 -> 0, 5 -> 0
+        expected = 3
+        self.assertEqual(expected, min_amplitute(nums))
+
+    def test_empty_array(self):
+        self.assertEqual(0, min_amplitute([]))
+
+    def test_one_elem_array(self):
+        self.assertEqual(0, min_amplitute([42]))
+
+    def test_two_elem_array(self):
+        self.assertEqual(0, min_amplitute([42, -43]))
+
+    def test_change_max3_outliers(self):
+        nums = [0, 0, 0, 99, 100, 101]
+        expected = 0
+        self.assertEqual(expected, min_amplitute(nums))
+
+    def test_change_min3_outliers(self):
+        nums = [0, 0, 0, -99, -100, -101]
+        expected = 0
+        self.assertEqual(expected, min_amplitute(nums))
+
+    def test_change_min1_and_max2_outliers(self):
+        nums = [0, 0, 0, -99, 100, 101]
+        expected = 0
+        self.assertEqual(expected, min_amplitute(nums))
+
+    def test_change_min2_and_max1_outliers(self):
+        nums = [0, 0, 0, -99, -100, 101]
+        expected = 0
+        self.assertEqual(expected, min_amplitute(nums))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False, verbosity=2)
+```
+
 
 ### May 8, 2021 LC 1525 \[Medium\] Number of Good Ways to Split a String
 --- 

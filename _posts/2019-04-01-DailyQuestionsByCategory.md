@@ -4944,6 +4944,43 @@ Given a list of `N` people and the above operation, find a way to identify the c
 
 
 <details>
+<summary class="lc_e">
+
+- [**\[Easy\] LT 1859. Minimum Amplitude**](http://trsong.github.io/python/java/2021/05/02/DailyQuestionsMay/#may-9-2021-lt-1859-easy-minimum-amplitude) -- *Return the smallest amplitude of array A that we can achieve by performing at most three moves.* [*\(Try ME\)*](https://replit.com/@trsong/Minimum-Amplitude-1)
+
+</summary>
+<div>
+
+**Question:** Given an array A consisting of N integers. In one move, we can choose any element in this array and replace it with any value. The amplitude of an array is the difference between the largest and the smallest values it contains.
+ 
+Return the smallest amplitude of array A that we can achieve by performing at most three moves.
+
+**Example 1:**
+```py
+Input: A = [-9, 8, -1]
+Output: 0
+Explanation: We can replace -9 and 8 with -1 so that all element are equal to -1, and then the amplitude is 0
+```
+
+**Example 2:**
+```py
+Input: A = [14, 10, 5, 1, 0]
+Output: 1
+Explanation: To achieve an amplitude of 1, we can replace 14, 10 and 5 with 1 or 0.
+```
+
+**Example 3:**
+```py
+Input: A = [11, 0, -6, -1, -3, 5]
+Output: 3
+Explanation: This can be achieved by replacing 11, -6 and 5 with three values of -2.
+```
+
+</div>
+</details>
+
+
+<details>
 <summary class="lc_m">
 
 - [**\[Medium\] Merge K Sorted Lists**](https://trsong.github.io/python/java/2021/02/02/DailyQuestionsFeb/#apr-5-2021-medium-merge-k-sorted-lists) -- *Given k sorted singly linked lists, write a function to merge all the lists into one sorted singly linked list.* [*\(Try ME\)*](https://replit.com/@trsong/Merge-K-Sorted-Linked-Lists-1)
