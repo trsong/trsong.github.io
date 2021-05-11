@@ -45,6 +45,86 @@ Output: -1
 Explanation: In this case, it is not possible to rotate the dominoes to make one row of values equal.
 ```
 
+**My thoughts:** If there exists a solution then it can only be the following case:
+
+1. `A[0]` is the target value, need to rotate rest of `B` dominos to match `A[0]`;
+2. `A[0]` is the target value, yet position is not correct, rotate `A[0]` as well as remaining dominos;
+3. `B[0]` is the target value, need to rotate rest of `A` dominos to match `B[0]`
+4. `B[0]` is the target value, yet position is not correct, rotate `B[0]` as well as remaining dominos.
+
+
+**Solution:** [https://replit.com/@trsong/Minimum-Domino-Rotations-For-Equal-Row](https://replit.com/@trsong/Minimum-Domino-Rotations-For-Equal-Row)
+```py
+import unittest
+
+def min_domino_rotations(A, B):
+    if not A or not B:
+        return 0
+
+    res = min(
+        count_rotations(A, B, A[0]),
+        count_rotations(A, B, B[0]),
+        count_rotations(B, A, A[0]),
+        count_rotations(B, A, B[0]))
+    return res if res < float('inf') else -1
+
+
+def count_rotations(A, B, target):
+    res = 0
+    for num1, num2 in zip(A, B):
+        if num1 == target:
+            continue
+        elif num2 == target:
+            res += 1
+        else:
+            return float('inf')
+    return res
+
+
+class MinDominoRotationSpec(unittest.TestCase):
+    def test_example(self):
+        A = [2, 1, 2, 4, 2, 2]
+        B = [5, 2, 6, 2, 3, 2]
+        expected = 2
+        self.assertEqual(expected, min_domino_rotations(A, B))
+
+    def test_example2(self):
+        A = [3, 5, 1, 2, 3]
+        B = [3, 6, 3, 3, 4]
+        expected = -1
+        self.assertEqual(expected, min_domino_rotations(A, B))
+
+    def test_empty_domino_lists(self):
+        self.assertEqual(0, min_domino_rotations([], []))
+
+    def test_rotate_towards_A0(self):
+        A = [1, 2, 3, 4]
+        B = [3, 1, 1, 1]
+        expected = 1
+        self.assertEqual(expected, min_domino_rotations(A, B))
+
+    def test_rotate_towards_B0(self):
+        A = [0, 3, 3, 3, 4]
+        B = [3, 0, 1, 0, 3]
+        expected = 2
+        self.assertEqual(expected, min_domino_rotations(A, B))
+
+    def test_rotate_A0(self):
+        A = [0, 2, 3, 4, 0]
+        B = [-1, 0, 0, 0, 1]
+        expected = 2
+        self.assertEqual(expected, min_domino_rotations(A, B))
+
+    def test_rotate_B0(self):
+        A = [1, 1, 2, 2, 2]
+        B = [2, 2, 1, 1, 1]
+        expected = 2
+        self.assertEqual(expected, min_domino_rotations(A, B))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False, verbosity=2)
+```
 
 
 ### May 9, 2021 LT 1859 \[Easy\] Minimum Amplitude
