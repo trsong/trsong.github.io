@@ -70,12 +70,12 @@ Output: -1
 Explanation: In this case, it is not possible to rotate the dominoes to make one row of values equal.
 ```
 
-**My thoughts:** If there exists a solution then it can only be the following case:
+**My thoughts:** If there exists a solution then it can only be one of the following cases:
 
-1. `A[0]` is the target value, need to rotate rest of `B` dominos to match `A[0]`;
-2. `A[0]` is the target value, yet position is not correct, rotate `A[0]` as well as remaining dominos;
-3. `B[0]` is the target value, need to rotate rest of `A` dominos to match `B[0]`
-4. `B[0]` is the target value, yet position is not correct, rotate `B[0]` as well as remaining dominos.
+1. `A[0]` is the target value: need to rotate rest of `B` dominos to match `A[0]`;
+2. `A[0]` is the target value, yet position is not correct: rotate `A[0]` as well as remaining dominos;
+3. `B[0]` is the target value: need to rotate rest of `A` dominos to match `B[0]`
+4. `B[0]` is the target value, yet position is not correct: rotate `B[0]` as well as remaining dominos.
 
 
 **Solution:** [https://replit.com/@trsong/Minimum-Domino-Rotations-For-Equal-Row](https://replit.com/@trsong/Minimum-Domino-Rotations-For-Equal-Row)
