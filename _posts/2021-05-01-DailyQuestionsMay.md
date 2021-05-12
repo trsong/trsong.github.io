@@ -19,6 +19,17 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
 
+### May 12, 2021 \[Medium\] Three Equal Sums
+---
+> **Question:** Given an array of numbers, determine whether it can be partitioned into 3 arrays of equal sums.
+
+**Example:**
+```py
+[0, 2, 1, -6, 6, -7, 9, 1, 2, 0, 1] can be partitioned into:
+[0, 2, 1], [-6, 6, -7, 9, 1], [2, 0, 1] all of which sum to 3.
+```
+
+
 ### May 11, 2021  LC 239 \[Medium\] Sliding Window Maximum
 ---
 > **Question:** Given an array nums, there is a sliding window of size k which is moving from the very left of the array to the very right. You can only see the k numbers in the window. Each time the sliding window moves right by one position. Return the max sliding window.
