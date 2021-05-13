@@ -19,6 +19,12 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
 
+
+### May 13, 2021 \[Easy\] Rand7
+---
+> **Question:** Given a function `rand5()`, use that function to implement a function `rand7()` where `rand5()` returns an integer from `1` to `5` (inclusive) with uniform probability and `rand7()` is from `1` to `7` (inclusive). Also, use of any other library function and floating point arithmetic are not allowed.
+
+
 ### May 12, 2021 \[Easy\] Three Equal Sums
 ---
 > **Question:** Given an array of numbers, determine whether it can be partitioned into 3 arrays of equal sums.
