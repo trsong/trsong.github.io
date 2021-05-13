@@ -35,6 +35,72 @@ categories: Python/Java
 [0, 2, 1], [-6, 6, -7, 9, 1], [2, 0, 1] all of which sum to 3.
 ```
 
+**Solution:** [https://replit.com/@trsong/Three-Equal-Sums](https://replit.com/@trsong/Three-Equal-Sums)
+```py
+import unittest
+
+def has_three_equal_sums(nums):
+    if len(nums) < 3:
+        return False
+    
+    total = sum(nums)
+    if total % 3 != 0:
+        return False
+    
+    subtotal = total // 3
+    count = 0
+    accu = 0
+    for num in nums:
+        accu += num
+        if accu == subtotal:
+            accu = 0
+            count += 1
+        if count >= 3:
+            return True
+    
+    return False
+
+
+class HasThreeEqualSumSpec(unittest.TestCase):
+    def test_example(self):
+        nums = [0, 2, 1, -6, 6, -7, 9, 1, 2, 0, 1]
+        # [0, 2, 1], [-6, 6, -7, 9, 1], [2, 0, 1]
+        self.assertTrue(has_three_equal_sums(nums))
+
+    def test_not_enough_elements(self):
+        self.assertFalse(has_three_equal_sums([]))
+        self.assertFalse(has_three_equal_sums([0]))
+        self.assertFalse(has_three_equal_sums([0, 0]))
+    
+    def test_contains_zero(self):
+        self.assertTrue(has_three_equal_sums([0, 0, 0, 0]))
+
+    def test_total_sum_not_divisible_by_three(self):
+        nums = [1, 1, 2, 1]
+        self.assertFalse(has_three_equal_sums(nums))
+
+    def test_total_sum_ok_yet_cannot_break(self):
+        nums = [1, 1, 1, 3]
+        self.assertFalse(has_three_equal_sums(nums))
+
+    def test_qualified_array(self):
+        nums = [1, 1, 1, 3, 3]
+        self.assertTrue(has_three_equal_sums(nums))
+
+    def test_qualified_array2(self):
+        nums = [1, -1, 3, -3, 0, 0, 1, 0, -1, 2, -1, -1]
+        # [1, -1], [3, -3], [0, 0, 1, 0, -1, 2, -1, -1]
+        self.assertTrue(has_three_equal_sums(nums))
+
+    def test_qualified_array3(self):
+        nums = [10, 2, 2, 2, 2, 2, 9, 1]
+        # [10], [2, 2, 2, 2, 2], [9, 1]
+        self.assertTrue(has_three_equal_sums(nums))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False, verbosity=2)
+```
 
 ### May 11, 2021  LC 239 \[Medium\] Sliding Window Maximum
 ---

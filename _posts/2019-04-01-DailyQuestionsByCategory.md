@@ -945,6 +945,26 @@ For example, if A is `'abcde'` and B is `'cdeab'`, return `True`. If A is `'abc'
 <details>
 <summary class="lc_e">
 
+- [**\[Easy\] Three Equal Sums**](https://trsong.github.io/python/java/2021/05/02/DailyQuestionsMay/#may-12-2021-easy-three-equal-sums) -- *Given an array of numbers, determine whether it can be partitioned into 3 arrays of equal sums.* [*\(Try ME\)*](https://replit.com/@trsong/Three-Equal-Sums-1)
+
+</summary>
+<div>
+
+**Question:** Given an array of numbers, determine whether it can be partitioned into 3 arrays of equal sums.
+
+**Example:**
+```py
+[0, 2, 1, -6, 6, -7, 9, 1, 2, 0, 1] can be partitioned into:
+[0, 2, 1], [-6, 6, -7, 9, 1], [2, 0, 1] all of which sum to 3.
+```
+
+</div>
+</details>
+
+
+<details>
+<summary class="lc_e">
+
 - [**\[Easy\] Find Duplicates**](http://trsong.github.io/python/java/2021/05/02/DailyQuestionsMay/#may-3-2021-easy-find-duplicates) -- *Given an array of size n, and all values in the array are in the range 1 to n, find all the duplicates.* [*\(Try ME\)*](https://replit.com/@trsong/Find-Duplicates-1)
 
 </summary>
