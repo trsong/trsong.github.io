@@ -19,7 +19,7 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
 
-### May 12, 2021 \[Medium\] Three Equal Sums
+### May 12, 2021 \[Easy\] Three Equal Sums
 ---
 > **Question:** Given an array of numbers, determine whether it can be partitioned into 3 arrays of equal sums.
 
