@@ -73,6 +73,61 @@ defaults to "0"
 > **Question:** Given a function `rand5()`, use that function to implement a function `rand7()` where `rand5()` returns an integer from `1` to `5` (inclusive) with uniform probability and `rand7()` is from `1` to `7` (inclusive). Also, use of any other library function and floating point arithmetic are not allowed.
 
 
+**My thoughts:** You might ask how is it possible that a random number ranges from 1 to 5 can generate another random number ranges from 1 to 7? Well, think about how binary number works. For example, any number ranges from 0 to 3 can be represents in binary: 00, 01, 10 and 11. Each digit ranges from 0 to 1. Yet it can represents any number. Moreover, all digits are independent which means all number have the same probability to generate.
+
+Just like the idea of a binary system, we can design a quinary (base-5) numeral system. And 2 digits is sufficient: `00, 01, 02, 03, 04, 10, 11, ..., 33, 34, 40, 41, 42, 43, 44.` (25 numbers in total) In decimal, "d1d0" base-5 equals `5 * d1 + d0` where d0, d1 ranges from 0 to 4. And entire "d1d0" ranges from 0 to 24. That should be sufficient to cover 1 to 7.
+
+So whenever we get a random number in 1 to 7, we can simply return otherwise replay the same process over and over again until get a random number in 1 to 7.
+
+> But, what if rand5 is expensive to call? Can we limit the call to rand5?
+
+Yes, we can. We can just break the interval into the multiple of the modules. eg. `[0, 6]`, `[7, 13]` and `[14, 20]`. Once mod 7, all of them will be `[0, 6]`. And whenever we encounter 21 to 24, we simply discard it and replay the same algorithem mentioned above.
+
+
+**Solution:** [https://replit.com/@trsong/Implement-Rand7-with-Rand5](https://replit.com/@trsong/Implement-Rand7-with-Rand5)
+```py
+from random import randint
+
+def rand7():
+    # d0, d2 range from 0 to 4 inclusive
+    d0 = rand5() - 1
+    d1 = rand5() - 1
+
+    # base5 num ranges from 0 to 24 inclusive
+    base5_num = 5 * d1 + d0
+
+    if base5_num >= 21:
+        # retry
+        return rand7()
+    
+    # now base5 num can only have range 0 to 20 inclusive
+    return base5_num % 7 + 1
+
+
+####################
+# Testing Utilities
+####################
+def rand5():
+    return randint(1, 5)
+
+def print_distribution(func, repeat):
+    histogram = {}
+    for _ in range(repeat):
+        res = func()
+        histogram[res] = histogram.get(res, 0) + 1
+    print(histogram)
+
+
+def main():
+    # Distribution looks like {1: 10058, 2: 9977, 3: 10039, 4: 10011, 5: 9977, 6: 9998, 7: 9940}
+    print_distribution(rand7, repeat=70000)
+
+
+if __name__ == '__main__':
+    main()
+```
+
+
 ### May 12, 2021 \[Easy\] Three Equal Sums
 ---
 > **Question:** Given an array of numbers, determine whether it can be partitioned into 3 arrays of equal sums.

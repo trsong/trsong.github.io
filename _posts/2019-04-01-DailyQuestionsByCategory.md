@@ -30,6 +30,21 @@ categories: Python/Java
 <details>
 <summary class="lc_e">
 
+- [**\[Easy\] Rand7**](https://trsong.github.io/python/java/2021/05/02/DailyQuestionsMay/#may-13-2021-easy-rand7) -- *Given a function rand5(), use that function to implement a function rand7()* [*\(Try ME\)*](https://replit.com/@trsong/Implement-Rand7-with-Rand5-1)
+
+</summary>
+<div>
+
+**Question:** Given a function `rand5()`, use that function to implement a function `rand7()` where `rand5()` returns an integer from `1` to `5` (inclusive) with uniform probability and `rand7()` is from `1` to `7` (inclusive). Also, use of any other library function and floating point arithmetic are not allowed.
+
+
+</div>
+</details>
+
+
+<details>
+<summary class="lc_e">
+
 - [**\[Easy\] Count Line Segment Intersections**](http://trsong.github.io/python/java/2021/02/02/DailyQuestionsFeb/#apr-4-2021-easy-count-line-segment-intersections) -- *Suppose you are given two lists of n points, write an algorithm to determine how many pairs of the line segments intersect.* [*\(Try ME\)*](https://replit.com/@trsong/Count-Line-Segment-Intersections-1)
 
 </summary>
