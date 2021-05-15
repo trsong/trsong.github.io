@@ -67,6 +67,103 @@ Output: 0
 defaults to "0"
 ```
 
+**Solution:** [https://replit.com/@trsong/Compare-Two-Version-Numbers-2](https://replit.com/@trsong/Compare-Two-Version-Numbers-2)
+```py
+import unittest
+
+def compare(v1, v2):
+    stream1 = generate_stream(v1)
+    stream2 = generate_stream(v2)
+
+    for num1, num2 in zip(stream1, stream2):
+        if num1 < num2:
+            return -1
+        elif num1 > num2:
+            return 1
+    
+    for num1 in stream1:
+        if num1 != 0:
+            return 1
+
+    for num2 in stream2:
+        if num2 != 0:
+            return -1
+
+    return 0
+
+
+def generate_stream(version):
+    num = 0
+    for ch in version:
+        if ch == '.':
+            yield num
+            num = 0
+        else:
+            num = 10 * num + int(ch)
+    yield num
+
+
+class VersionNumberCompareSpec(unittest.TestCase):
+    def test_example1(self):
+        version1 = "1.0.33"
+        version2 = "1.0.27"
+        self.assertEqual(1, compare(version1, version2))
+
+    def test_example2(self):
+        version1 = "0.1"
+        version2 = "1.1"
+        self.assertEqual(-1, compare(version1, version2))
+
+    def test_example3(self):
+        version1 = "1.01"
+        version2 = "1.001"
+        self.assertEqual(0, compare(version1, version2))
+
+    def test_example4(self):
+        version1 = "1.0"
+        version2 = "1.0.0"
+        self.assertEqual(0, compare(version1, version2))
+
+    def test_unspecified_version_numbers(self):
+        self.assertEqual(0, compare("", ""))
+        self.assertEqual(-1, compare("", "1"))
+        self.assertEqual(1, compare("2", ""))
+
+    def test_unaligned_zeros(self):
+        version1 = "00000.00000.00000.0"
+        version2 = "0.00000.000.00.00000.000.000.0"
+        self.assertEqual(0, compare(version1, version2))
+
+    def test_same_version_yet_unaligned(self):
+        version1 = "00001.001"
+        version2 = "1.000001.0000000.0000"
+        self.assertEqual(0, compare(version1, version2))
+
+    def test_different_version_numbers(self):
+        version1 = "1.2.3.4"
+        version2 = "1.2.3.4.5"
+        self.assertEqual(-1, compare(version1, version2))
+
+    def test_different_version_numbers2(self):
+        version1 = "3.2.1"
+        version2 = "3.1.2.3"
+        self.assertEqual(1, compare(version1, version2))
+
+    def test_different_version_numbers3(self):
+        version1 = "00001.001.0.1"
+        version2 = "1.000001.0000000.0000"
+        self.assertEqual(1, compare(version1, version2))
+
+    def test_without_dots(self):
+        version1 = "32123"
+        version2 = "3144444"
+        self.assertEqual(-1, compare(version1, version2))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False, verbosity=2)
+```
+
 
 ### May 13, 2021 \[Easy\] Rand7
 ---
