@@ -73,6 +73,138 @@ Explanation: We can reach the end from starting indices 1, 2, and 4.
 ```
 
 
+
+**My thoughts:** For each index i, two scenarios will happen:
+- If it's odd turn, then whether start from i can reach the end depends on next greater index of i can reach the end in even turn
+- If it's even turn, then whether start from i can reach the end depends on next smaller index of i can reach the end in odd turn
+
+Based on above recursive definition, we can backtrack from the end and use dp to avoid calculate sub-problem over and over again. 
+
+Yet, to make the algorithem efficient we need to pre-compute next greater and smaller index. This can be done with sorting and using stack.  
+
+Finally, we just count how many indice can reach the end in odd turn. 
+
+
+**Solution with DP, Stack and Sorting:** [https://replit.com/@trsong/Odd-Even-Jump](https://replit.com/@trsong/Odd-Even-Jump)
+```py
+import unittest
+
+def count_odd_even_jumps(nums):
+    if not nums:
+        return 0
+
+    n = len(nums)
+    next_greater = [None] * n
+    next_smaller = [None] * n
+    smaller_stack = []
+    for i in sorted(range(n), key=lambda i: (nums[i], i)):
+        while smaller_stack and smaller_stack[-1] < i:
+            next_greater[smaller_stack.pop()] = i
+        smaller_stack.append(i)
+
+    bigger_stack = []
+    for j in sorted(range(n), key=lambda j: (-nums[j], j)):
+        while bigger_stack and bigger_stack[-1] < j:
+            next_smaller[bigger_stack.pop()] = j
+        bigger_stack.append(j)
+
+    # Let dp[i][odd_res], dp[i][even_res] represents whether start from i and take odd steps or even steps can reach the end
+    odd_res, even_res = 1, 0
+    dp = [[False, False] for _ in range(n)]
+    dp[n - 1][odd_res] = True
+    dp[n - 1][even_res] = True
+    res = 1  # index n - 1 is always true
+    for i in range(n - 2, -1, -1):
+        if next_greater[i] is not None and dp[next_greater[i]][even_res]:
+            dp[i][odd_res] = True
+            res += 1
+
+        if next_smaller[i] is not None and dp[next_smaller[i]][odd_res]:
+            dp[i][even_res] = True
+    return res
+
+
+class CountOddEvenJumpSpec(unittest.TestCase):
+    def test_example(self):
+        nums = [10, 13, 12, 14, 15]
+        # 14 -> 15
+        # 15
+        expected = 2
+        self.assertEqual(expected, count_odd_even_jumps(nums))
+
+    def test_example2(self):
+        nums = [2, 3, 1, 1, 4]
+        # 3 -> 4
+        # 1 -> 4
+        # 4
+        expected = 3
+        self.assertEqual(expected, count_odd_even_jumps(nums))
+
+    def test_example3(self):
+        nums = [5, 1, 3, 4, 2]
+        # 1 -> 3 -> 2
+        # 3 -> 4 -> 2
+        # 2
+        expected = 3
+        self.assertEqual(expected, count_odd_even_jumps(nums))
+
+    def test_example4(self):
+        nums = [1, 2, 3, 2, 1, 4, 4, 5]
+        # 2 -> 2 -> 1 -> 4 -> 4 -> 5
+        # 3 -> 4 -> 4 -> 5
+        # 2 -> 4 -> 4 -> 5
+        # 1 -> 4 -> 4 -> 5
+        # 4 -> 5
+        # 5
+        expected = 6
+        self.assertEqual(expected, count_odd_even_jumps(nums))
+
+    def test_increasing_array(self):
+        nums = [1, 2, 3, 4, 5, 6, 7]
+        # 6 -> 7
+        # 7
+        expected = 2
+        self.assertEqual(expected, count_odd_even_jumps(nums))
+
+    def test_decreasing_array(self):
+        nums = [7, 6, 5, 4, 3, 2, 1]
+        # 1
+        expected = 1
+        self.assertEqual(expected, count_odd_even_jumps(nums))
+
+    def test_array_with_duplicated_values(self):
+        nums = [1, 1, 1]
+        # 1 -> 1 -> 1
+        # 1 -> 1
+        # 1
+        expected = 3
+        self.assertEqual(expected, count_odd_even_jumps(nums))
+
+    def test_array_with_duplicated_values2(self):
+        nums = [1, 1, 1, 2, 2, 2]
+        # 1 -> 1 -> 2 -> 2 -> 2
+        # 1 -> 2 -> 2 -> 2
+        # 2 -> 2 -> 2
+        # 2 -> 2
+        # 2
+        expected = 5
+        self.assertEqual(expected, count_odd_even_jumps(nums))
+
+    def test_array_with_duplicated_values3(self):
+        nums = [1, 1, 1, 2, 2, 2, 3, 3, 3]
+        # 2 -> 2 -> 3 -> 3 -> 3
+        # 2 -> 3 -> 3 -> 3
+        # 3 -> 3 -> 3
+        # 3 -> 3
+        # 3
+        expected = 5
+        self.assertEqual(expected, count_odd_even_jumps(nums))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False, verbosity=2)
+```
+
 ### May 14, 2021 \[Easy\] Compare Version Numbers
 --- 
 > **Question:** Version numbers are strings that are used to identify unique states of software products. A version number is in the format a.b.c.d. and so on where a, b, etc. are numeric strings separated by dots. These generally represent a hierarchy from major to minor changes. 
