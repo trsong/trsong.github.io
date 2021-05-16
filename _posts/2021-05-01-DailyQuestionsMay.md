@@ -49,7 +49,7 @@ Output: "09:59"
 ```
 
 **Example 5:**
-``py
+```py
 Input: "??:??"
 Output: "23:59"
 ```
