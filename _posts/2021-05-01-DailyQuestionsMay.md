@@ -20,6 +20,41 @@ categories: Python/Java
 
 
 
+### May 16, 2021 \[Easy\] Maximum Time
+--- 
+> **Question:** You are given a string that represents time in the format `hh:mm`. Some of the digits are blank (represented by ?). Fill in ? such that the time represented by this string is the maximum possible. Maximum time: `23:59`, minimum time: `00:00`. You can assume that input string is always valid.
+
+**Example 1:**
+```py
+Input: "?4:5?"
+Output: "14:59"
+```
+
+**Example 2:**
+```py
+Input: "23:5?"
+Output: "23:59"
+```
+
+**Example 3:**
+```py
+Input: "2?:22"
+Output: "23:22"
+```
+
+**Example 4:**
+```py
+Input: "0?:??"
+Output: "09:59"
+```
+
+**Example 5:**
+``py
+Input: "??:??"
+Output: "23:59"
+```
+
+
 ### May 15, 2021 LC 975 \[Hard\] Odd Even Jump
 --- 
 > **Question:** You are given an integer array `A`.  From some starting index, you can make a series of jumps.  The (1st, 3rd, 5th, ...) jumps in the series are called odd numbered jumps, and the (2nd, 4th, 6th, ...) jumps in the series are called even numbered jumps. 
