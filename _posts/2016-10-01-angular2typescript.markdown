@@ -32,7 +32,6 @@ Angular Template Syntax:
 * Template variables
 * Template expression operators 
 
-Nonsupported in {{ }}
 
 * Assignments
 * Newing up variables

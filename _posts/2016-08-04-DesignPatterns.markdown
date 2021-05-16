@@ -1719,9 +1719,6 @@ Data Binding
 
 In order to achieve two-way binding, directives register watchers. For a page to be fast and efficient we need to try and reduce all these watchers that we create. So you should be careful when using two-way binding - i.e. only use it when you really needed. Otherwise use one-way:
 
-```
-<h1> {{ ::vm.title }} </h1>
-```
 
 Here it is quite obvious that the title of the page probably won't be changed while the user is on the page - or needs to see the new one if it is changed. So we can use :: to register a one-way binding during the template linking phase.
 
