@@ -53,6 +53,74 @@ Input: "??:??"
 Output: "23:59"
 ```
 
+**Solution:** [https://replit.com/@trsong/Maximum-Time](https://replit.com/@trsong/Maximum-Time)
+```py
+import unittest
+
+def max_time(s):
+    parts = s.split(":")
+    return max_hour(parts[0]) + ":" + max_minute(parts[1])
+
+
+def max_hour(s):
+    d0, d1 = s[0], s[1]
+    if d0 == "?":
+        d0 = '2' if '0' <= d1 <= '3' or d1 == '?' else '1'
+    if d1 == "?":
+        d1 = '3' if d0 == '2' else '9'
+    return d0 + d1
+
+
+def max_minute(s):
+    d0 = '5' if s[0] == '?' else s[0]
+    d1 = '9' if s[1] == '?' else s[1]
+    return d0 + d1
+
+
+class MaxTimeSpec(unittest.TestCase):
+    def test_example(self):
+        self.assertEqual("14:59", max_time("?4:5?"))
+
+    def test_example2(self):
+        self.assertEqual("23:59", max_time("23:5?"))
+
+    def test_example3(self):
+        self.assertEqual("23:22", max_time("2?:22"))
+
+    def test_example4(self):
+        self.assertEqual("09:59", max_time("0?:??"))
+
+    def test_example5(self):
+        self.assertEqual("23:59", max_time("??:??"))
+
+    def test_no_question_mark(self):
+        self.assertEqual("00:00", max_time("00:00"))
+
+    def test_hour(self):
+        self.assertEqual("23:49", max_time("??:49"))
+
+    def test_hour2(self):
+        self.assertEqual("23:03", max_time("?3:03"))
+
+    def test_hour3(self):
+        self.assertEqual("17:19", max_time("?7:19"))
+
+    def test_hour4(self):
+        self.assertEqual("09:50", max_time("0?:50"))
+
+    def test_minute(self):
+        self.assertEqual("18:59", max_time("18:??"))
+
+    def test_minute2(self):
+        self.assertEqual("18:54", max_time("18:?4"))
+
+    def test_minute3(self):
+        self.assertEqual("18:39", max_time("18:3?"))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False, verbosity=2)
+```
 
 ### May 15, 2021 LC 975 \[Hard\] Odd Even Jump
 --- 

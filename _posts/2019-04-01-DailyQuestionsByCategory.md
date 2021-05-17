@@ -30,7 +30,7 @@ categories: Python/Java
 <details>
 <summary class="lc_e">
 
-- [**\[Easy\] Rand7**](https://trsong.github.io/python/java/2021/05/02/DailyQuestionsMay/#may-13-2021-easy-rand7) -- *Given a function rand5(), use that function to implement a function rand7()* [*\(Try ME\)*](https://replit.com/@trsong/Implement-Rand7-with-Rand5-1)
+- [**\[Easy\] Rand7**](https://trsong.github.io/python/java/2021/05/02/DailyQuestionsMay.html#may-13-2021-easy-rand7) -- *Given a function rand5(), use that function to implement a function rand7()* [*\(Try ME\)*](https://replit.com/@trsong/Implement-Rand7-with-Rand5-1)
 
 </summary>
 <div>
@@ -45,7 +45,7 @@ categories: Python/Java
 <details>
 <summary class="lc_e">
 
-- [**\[Easy\] Count Line Segment Intersections**](http://trsong.github.io/python/java/2021/02/02/DailyQuestionsFeb/#apr-4-2021-easy-count-line-segment-intersections) -- *Suppose you are given two lists of n points, write an algorithm to determine how many pairs of the line segments intersect.* [*\(Try ME\)*](https://replit.com/@trsong/Count-Line-Segment-Intersections-1)
+- [**\[Easy\] Count Line Segment Intersections**](http://trsong.github.io/python/java/2021/02/02/DailyQuestionsFeb.html#apr-4-2021-easy-count-line-segment-intersections) -- *Suppose you are given two lists of n points, write an algorithm to determine how many pairs of the line segments intersect.* [*\(Try ME\)*](https://replit.com/@trsong/Count-Line-Segment-Intersections-1)
 
 </summary>
 <div>
@@ -63,7 +63,7 @@ Write an algorithm to determine how many pairs of the line segments intersect.
 <details>
 <summary class="lc_m">
 
-- [**\[Medium\] Ways to Form Heap with Distinct Integers**](https://trsong.github.io/python/java/2021/02/02/DailyQuestionsFeb/#mar-31-2021-medium-ways-to-form-heap-with-distinct-integers) -- *Write a program to determine how many distinct ways there are to create a max heap from a list of N given integers.* [*\(Try ME\)*](https://replit.com/@trsong/Total-Number-of-Ways-to-Form-Heap-with-Distinct-Integers-1)
+- [**\[Medium\] Ways to Form Heap with Distinct Integers**](https://trsong.github.io/python/java/2021/02/02/DailyQuestionsFeb.html#mar-31-2021-medium-ways-to-form-heap-with-distinct-integers) -- *Write a program to determine how many distinct ways there are to create a max heap from a list of N given integers.* [*\(Try ME\)*](https://replit.com/@trsong/Total-Number-of-Ways-to-Form-Heap-with-Distinct-Integers-1)
 
 </summary>
 <div>
@@ -86,7 +86,7 @@ If N = 3, and our integers are [1, 2, 3], there are two ways, shown below.
 <details>
 <summary class="lc_e">
 
-- [**\[Easy\] LC 405. Convert a Number to Hexadecimal**](https://trsong.github.io/python/java/2021/02/02/DailyQuestionsFeb/#mar-29-2021-lc-405-easy-convert-a-number-to-hexadecimal) -- *Given an integer, write an algorithm to convert it to hexadecimal.* [*\(Try ME\)*](https://replit.com/@trsong/Convert-a-Number-to-Hexadecimal-1)
+- [**\[Easy\] LC 405. Convert a Number to Hexadecimal**](https://trsong.github.io/python/java/2021/02/02/DailyQuestionsFeb.html#mar-29-2021-lc-405-easy-convert-a-number-to-hexadecimal) -- *Given an integer, write an algorithm to convert it to hexadecimal.* [*\(Try ME\)*](https://replit.com/@trsong/Convert-a-Number-to-Hexadecimal-1)
 
 </summary>
 <div>
@@ -112,7 +112,7 @@ Output: "ffffffff"
 <details>
 <summary class="lc_m">
 
-- [**\[Medium\] Multiply Large Numbers Represented as Strings**](https://trsong.github.io/python/java/2021/02/02/DailyQuestionsFeb/#mar-23-2021-medium-multiply-large-numbers-represented-as-strings) -- *Given two strings which represent non-negative integers, multiply the two numbers and return the product as a string as well.* [*\(Try ME\)*](https://replit.com/@trsong/Multiply-Large-Numbers-Represented-as-Strings-1)
+- [**\[Medium\] Multiply Large Numbers Represented as Strings**](https://trsong.github.io/python/java/2021/02/02/DailyQuestionsFeb.html#mar-23-2021-medium-multiply-large-numbers-represented-as-strings) -- *Given two strings which represent non-negative integers, multiply the two numbers and return the product as a string as well.* [*\(Try ME\)*](https://replit.com/@trsong/Multiply-Large-Numbers-Represented-as-Strings-1)
 
 </summary>
 <div>
@@ -138,7 +138,7 @@ Output: "56088"
 <details>
 <summary class="lc_m">
 
-- [**\[Medium\] Count Occurrence in Multiplication Table**](https://trsong.github.io/python/java/2021/02/02/DailyQuestionsFeb/#feb-3-2021-medium-count-occurrence-in-multiplication-table) -- *Given integers N and X, write a function that returns the number of times X appears as a value in an N by N multiplication table.* [*\(Try ME\)*](https://repl.it/@trsong/Count-Occurrence-in-Multiplication-Table-1)
+- [**\[Medium\] Count Occurrence in Multiplication Table**](https://trsong.github.io/python/java/2021/02/02/DailyQuestionsFeb.html#feb-3-2021-medium-count-occurrence-in-multiplication-table) -- *Given integers N and X, write a function that returns the number of times X appears as a value in an N by N multiplication table.* [*\(Try ME\)*](https://repl.it/@trsong/Count-Occurrence-in-Multiplication-Table-1)
 
 </summary>
 <div>
@@ -171,7 +171,7 @@ And there are `4` 12's in the table.
 <details>
 <summary class="lc_e">
 
-- [**\[Easy\] Palindrome Integers**](https://trsong.github.io/python/java/2020/11/02/DailyQuestionsAug/#jan-22-2021-easy-palindrome-integers) -- *Write a program that checks whether an integer is a palindrome.* [*\(Try ME\)*](https://repl.it/@trsong/Determine-Palindrome-Integer-1)
+- [**\[Easy\] Palindrome Integers**](https://trsong.github.io/python/java/2020/11/02/DailyQuestionsAug.html#jan-22-2021-easy-palindrome-integers) -- *Write a program that checks whether an integer is a palindrome.* [*\(Try ME\)*](https://repl.it/@trsong/Determine-Palindrome-Integer-1)
 
 </summary>
 <div>
@@ -184,7 +184,7 @@ And there are `4` 12's in the table.
 <details>
 <summary class="lc_m">
 
-- [**\[Medium\] Regular Numbers**](https://trsong.github.io/python/java/2020/11/02/DailyQuestionsAug/#jan-18-2021-medium-regular-numbers) -- *A regular number in mathematics is defined as one which evenly divides some power of 60.  Returns, in order, the first N regular numbers.* [*\(Try ME\)*](https://repl.it/@trsong/Regular-Numbers-1)
+- [**\[Medium\] Regular Numbers**](https://trsong.github.io/python/java/2020/11/02/DailyQuestionsAug.html#jan-18-2021-medium-regular-numbers) -- *A regular number in mathematics is defined as one which evenly divides some power of 60.  Returns, in order, the first N regular numbers.* [*\(Try ME\)*](https://repl.it/@trsong/Regular-Numbers-1)
 
 </summary>
 <div>
@@ -204,7 +204,7 @@ Given an integer N, write a program that returns, in order, the first N regular 
 
 <summary class="lc_e">
 
-- [**\[Easy\] LC 1344. Angle between Clock Hands**](https://trsong.github.io/python/java/2020/11/02/DailyQuestionsAug/#jan-14-2021-lc-1344-easy-angle-between-clock-hands) -- *Given a clock time in `hh:mm` format, determine, to the nearest degree, the angle between the hour and the minute hands.* [*\(Try ME\)*](https://repl.it/@trsong/Calculate-Angle-between-Clock-Hands-1)
+- [**\[Easy\] LC 1344. Angle between Clock Hands**](https://trsong.github.io/python/java/2020/11/02/DailyQuestionsAug.html#jan-14-2021-lc-1344-easy-angle-between-clock-hands) -- *Given a clock time in `hh:mm` format, determine, to the nearest degree, the angle between the hour and the minute hands.* [*\(Try ME\)*](https://repl.it/@trsong/Calculate-Angle-between-Clock-Hands-1)
 
 </summary>
 <div>
@@ -224,7 +224,7 @@ Output: 90
 <details>
 <summary class="lc_e">
 
-- [**\[Easy\] Spreadsheet Columns**](https://trsong.github.io/python/java/2020/11/02/DailyQuestionsAug/#jan-11-2021-easy-spreadsheet-columns) -- *Given a number n, find the n-th column name. From the 1st to the 26th column the letters are A to Z.* [*\(Try ME\)*](https://repl.it/@trsong/Find-Spreadsheet-Columns-1)
+- [**\[Easy\] Spreadsheet Columns**](https://trsong.github.io/python/java/2020/11/02/DailyQuestionsAug.html#jan-11-2021-easy-spreadsheet-columns) -- *Given a number n, find the n-th column name. From the 1st to the 26th column the letters are A to Z.* [*\(Try ME\)*](https://repl.it/@trsong/Find-Spreadsheet-Columns-1)
 
 </summary>
 <div>
@@ -252,7 +252,7 @@ Input          Output
 <details>
 <summary class="lc_e">
 
-- [**\[Easy\] Add Digits**](https://trsong.github.io/python/java/2020/08/02/DailyQuestionsAug/#oct-26-2020-easy-add-digits) -- *Given a number, add the digits repeatedly until you get a single number.* [*\(Try ME\)*](https://repl.it/@trsong/Add-Digits-1)
+- [**\[Easy\] Add Digits**](https://trsong.github.io/python/java/2020/08/02/DailyQuestionsAug.html#oct-26-2020-easy-add-digits) -- *Given a number, add the digits repeatedly until you get a single number.* [*\(Try ME\)*](https://repl.it/@trsong/Add-Digits-1)
 
 </summary>
 <div>
@@ -276,7 +276,7 @@ So the answer is 6.
 <details>
 <summary class="lc_h">
 
-- [**\[Hard\] LC 273. Integer to English Words**](https://trsong.github.io/python/java/2020/08/02/DailyQuestionsAug/#sep-25-2020-lc-273-hard-integer-to-english-words) -- *Convert a non-negative integer to its English word representation.* [*\(Try ME\)*](https://repl.it/@trsong/Convert-Int-to-English-Words-1)
+- [**\[Hard\] LC 273. Integer to English Words**](https://trsong.github.io/python/java/2020/08/02/DailyQuestionsAug.html#sep-25-2020-lc-273-hard-integer-to-english-words) -- *Convert a non-negative integer to its English word representation.* [*\(Try ME\)*](https://repl.it/@trsong/Convert-Int-to-English-Words-1)
 
 </summary>
 <div>
@@ -313,7 +313,7 @@ Output: "One Billion Two Hundred Thirty Four Million Five Hundred Sixty Seven Th
 <details>
 <summary class="lc_e">
 
-- [**\[Easy\] LC 13. Convert Roman Numerals to Decimal**](https://trsong.github.io/python/java/2020/08/02/DailyQuestionsAug/#sep-8-2020-lc-13-easy-convert-roman-numerals-to-decimal) -- *Given a Roman numeral, find the corresponding decimal value. Inputs will be between 1 and 3999.* [*\(Try ME\)*](https://repl.it/@trsong/Convert-Roman-Format-Number-1)
+- [**\[Easy\] LC 13. Convert Roman Numerals to Decimal**](https://trsong.github.io/python/java/2020/08/02/DailyQuestionsAug.html#sep-8-2020-lc-13-easy-convert-roman-numerals-to-decimal) -- *Given a Roman numeral, find the corresponding decimal value. Inputs will be between 1 and 3999.* [*\(Try ME\)*](https://repl.it/@trsong/Convert-Roman-Format-Number-1)
 
 </summary>
 <div>
@@ -358,7 +358,7 @@ M     1000
 <details>
 <summary class="lc_m">
 
-- [**\[Medium\] LC 8. String to Integer (atoi)**](http://trsong.github.io/python/java/2020/08/02/DailyQuestionsAug/#sep-6-2020-lc-8-medium-string-to-integer-atoi) -- *Given a string, convert it to an integer without using the builtin str function.* [*\(Try ME\)*](https://repl.it/@trsong/String-to-Integer-atoi-1)
+- [**\[Medium\] LC 8. String to Integer (atoi)**](http://trsong.github.io/python/java/2020/08/02/DailyQuestionsAug.html#sep-6-2020-lc-8-medium-string-to-integer-atoi) -- *Given a string, convert it to an integer without using the builtin str function.* [*\(Try ME\)*](https://repl.it/@trsong/String-to-Integer-atoi-1)
 
 </summary>
 <div>
@@ -380,7 +380,7 @@ atoi('-105')  # -105
 <summary class="lc_m">
 
 
-- [**\[Medium\] LC 166. Fraction to Recurring Decimal**](https://trsong.github.io/python/java/2020/08/02/DailyQuestionsAug/#aug-30-2020-lc-166-medium-fraction-to-recurring-decimal) -- *Given two integers representing the numerator and denominator of a fraction, return the fraction in string format.* [*\(Try ME\)*](https://repl.it/@trsong/Convert-Fraction-to-Recurring-Decimal-1)
+- [**\[Medium\] LC 166. Fraction to Recurring Decimal**](https://trsong.github.io/python/java/2020/08/02/DailyQuestionsAug.html#aug-30-2020-lc-166-medium-fraction-to-recurring-decimal) -- *Given two integers representing the numerator and denominator of a fraction, return the fraction in string format.* [*\(Try ME\)*](https://repl.it/@trsong/Convert-Fraction-to-Recurring-Decimal-1)
 
 </summary>
 <div>
@@ -415,7 +415,7 @@ Output: "0.(6)"
 <details>
 <summary class="lc_e">
 
-- [**\[Easy\] Overlapping Rectangles**](https://trsong.github.io/python/java/2020/08/02/DailyQuestionsAug/#aug-17-2020-medium-overlapping-rectangles) -- *Find the area of overlapping rectangles.* [*\(Try ME\)*](https://repl.it/@trsong/Overlapping-Rectangle-Areas-1)
+- [**\[Easy\] Overlapping Rectangles**](https://trsong.github.io/python/java/2020/08/02/DailyQuestionsAug.html#aug-17-2020-medium-overlapping-rectangles) -- *Find the area of overlapping rectangles.* [*\(Try ME\)*](https://repl.it/@trsong/Overlapping-Rectangle-Areas-1)
 
 </summary>
 <div>
@@ -428,7 +428,7 @@ Output: "0.(6)"
 <details>
 <summary class="lc_e">
 
-- [**\[Easy\] Exists Overlap Rectangle**](https://trsong.github.io/python/java/2020/11/02/DailyQuestionsAug/#jan-16-2021-easy-exists-overlap-rectangle) -- *Given a list of rectangles represented by min and max x- and y-coordinates. Compute whether or not a pair of rectangles overlap each other.* [*\(Try ME\)*](https://repl.it/@trsong/Exists-Overlap-Rectangles-1)
+- [**\[Easy\] Exists Overlap Rectangle**](https://trsong.github.io/python/java/2020/11/02/DailyQuestionsAug.html#jan-16-2021-easy-exists-overlap-rectangle) -- *Given a list of rectangles represented by min and max x- and y-coordinates. Compute whether or not a pair of rectangles overlap each other.* [*\(Try ME\)*](https://repl.it/@trsong/Exists-Overlap-Rectangles-1)
 
 </summary>
 <div>
@@ -462,7 +462,7 @@ Return true as the first and third rectangle overlap each other.
 <details>
 <summary class="lc_m">
 
-- [**\[Medium\] LC 1007. Minimum Domino Rotations For Equal Row**](http://trsong.github.io/python/java/2021/05/02/DailyQuestionsMay/#may-10-2021-lc-1007-medium-minimum-domino-rotations-for-equal-row) -- *`A[i]` and `B[i]` represents dominos. Return the minimum number of rotations so that all the values in `A` or `B` are the same.* [*\(Try ME\)*](https://replit.com/@trsong/Minimum-Domino-Rotations-For-Equal-Row-1)
+- [**\[Medium\] LC 1007. Minimum Domino Rotations For Equal Row**](http://trsong.github.io/python/java/2021/05/02/DailyQuestionsMay.html#may-10-2021-lc-1007-medium-minimum-domino-rotations-for-equal-row) -- *`A[i]` and `B[i]` represents dominos. Return the minimum number of rotations so that all the values in `A` or `B` are the same.* [*\(Try ME\)*](https://replit.com/@trsong/Minimum-Domino-Rotations-For-Equal-Row-1)
 
 </summary>
 <div>
@@ -498,7 +498,7 @@ Explanation: In this case, it is not possible to rotate the dominoes to make one
 <details>
 <summary class="lc_e">
 
-- [**\[Easy\] Quxes Transformation**](http://trsong.github.io/python/java/2021/02/02/DailyQuestionsFeb/#apr-16-2021-easy-quxes-transformation) -- *Given N Quxes standing in a line, determine the smallest number of them remaining after any possible sequence of such transformations.* [*\(Try ME\)*](https://replit.com/@trsong/Quxes-Transformation-1)
+- [**\[Easy\] Quxes Transformation**](http://trsong.github.io/python/java/2021/02/02/DailyQuestionsFeb.html#apr-16-2021-easy-quxes-transformation) -- *Given N Quxes standing in a line, determine the smallest number of them remaining after any possible sequence of such transformations.* [*\(Try ME\)*](https://replit.com/@trsong/Quxes-Transformation-1)
 
 </summary>
 <div>
@@ -526,7 +526,7 @@ For example, given the input ['R', 'G', 'B', 'G', 'B'], it is possible to end up
 <details>
 <summary class="lc_h">
 
-- [**\[Hard\] Anagram to Integer**](https://trsong.github.io/python/java/2021/02/02/DailyQuestionsFeb/#apr-7-2021-hard-anagram-to-integer) -- *Given a string formed by concatenating several words corresponding to the integers zero through nine and then anagramming,return the integer* [*\(Try ME\)*](https://repl.it/@trsong/Convert-Anagram-to-Integer-1)
+- [**\[Hard\] Anagram to Integer**](https://trsong.github.io/python/java/2021/02/02/DailyQuestionsFeb.html#apr-7-2021-hard-anagram-to-integer) -- *Given a string formed by concatenating several words corresponding to the integers zero through nine and then anagramming,return the integer* [*\(Try ME\)*](https://repl.it/@trsong/Convert-Anagram-to-Integer-1)
 
 </summary>
 <div>
@@ -544,7 +544,7 @@ Given this string, return the original integers in sorted order. In the example 
 <details>
 <summary class="lc_e">
 
-- [**\[Easy\] LC 766. Toeplitz Matrix**](http://trsong.github.io/python/java/2020/11/02/DailyQuestionsAug/#jan-31-2021-lc-766-easy-toeplitz-matrix) -- *Write a program to determine whether a given input is a Toeplitz matrix whose diagonal elements are the same.* [*\(Try ME\)*](https://repl.it/@trsong/Toeplitz-Matrix-1)
+- [**\[Easy\] LC 766. Toeplitz Matrix**](http://trsong.github.io/python/java/2020/11/02/DailyQuestionsAug.html#jan-31-2021-lc-766-easy-toeplitz-matrix) -- *Write a program to determine whether a given input is a Toeplitz matrix whose diagonal elements are the same.* [*\(Try ME\)*](https://repl.it/@trsong/Toeplitz-Matrix-1)
 
 </summary>
 <div>
@@ -568,7 +568,7 @@ Write a program to determine whether a given input is a Toeplitz matrix.
 <details>
 <summary class="lc_m">
 
-- [**\[Medium\] LC 89. Generate Gray Code**](https://trsong.github.io/python/java/2020/11/02/DailyQuestionsAug/#jan-27-2021-lc-89-medium-generate-gray-code) -- *Gray code is a binary code where each successive value differ in only one bit* [*\(Try ME\)*](https://repl.it/@trsong/Generate-the-Gray-Code-1)
+- [**\[Medium\] LC 89. Generate Gray Code**](https://trsong.github.io/python/java/2020/11/02/DailyQuestionsAug.html#jan-27-2021-lc-89-medium-generate-gray-code) -- *Gray code is a binary code where each successive value differ in only one bit* [*\(Try ME\)*](https://repl.it/@trsong/Generate-the-Gray-Code-1)
 
 </summary>
 <div>
@@ -589,7 +589,7 @@ For n = 2, one gray code would be [00, 01, 11, 10].
 <details>
 <summary class="lc_h">
 
-- [**\[Hard\] Minimum Cost to Construct Pyramid with Stones**](http://trsong.github.io/python/java/2020/11/02/DailyQuestionsAug/#nov-25-2020-hard-minimum-cost-to-construct-pyramid-with-stones) -- *Given N stones in a row, you can change the height of any stone by paying a cost of 1 unit. Determine the lowest cost  or produce a pyramid.* [*\(Try ME\)*](https://repl.it/@trsong/Minimum-Cost-to-Construct-Pyramid-with-Stones-1)
+- [**\[Hard\] Minimum Cost to Construct Pyramid with Stones**](http://trsong.github.io/python/java/2020/11/02/DailyQuestionsAug.html#nov-25-2020-hard-minimum-cost-to-construct-pyramid-with-stones) -- *Given N stones in a row, you can change the height of any stone by paying a cost of 1 unit. Determine the lowest cost  or produce a pyramid.* [*\(Try ME\)*](https://repl.it/@trsong/Minimum-Cost-to-Construct-Pyramid-with-Stones-1)
 
 </summary>
 <div>
@@ -607,7 +607,7 @@ For example, given the stones `[1, 1, 3, 3, 2, 1]`, the optimal solution is to p
 <details>
 <summary class="lc_e">
 
-- [**\[Easy\] Reconstruct a Jumbled Array**](https://trsong.github.io/python/java/2020/11/02/DailyQuestionsAug/#nov-24-2020-easy-reconstruct-a-jumbled-array) -- *The sequence 0 to N is jumbled, and given its order is an array with each number is larger or smaller than the previous one. Return an array.* [*\(Try ME\)*](https://repl.it/@trsong/Reconstruct-a-Jumbled-Array-1)
+- [**\[Easy\] Reconstruct a Jumbled Array**](https://trsong.github.io/python/java/2020/11/02/DailyQuestionsAug.html#nov-24-2020-easy-reconstruct-a-jumbled-array) -- *The sequence 0 to N is jumbled, and given its order is an array with each number is larger or smaller than the previous one. Return an array.* [*\(Try ME\)*](https://repl.it/@trsong/Reconstruct-a-Jumbled-Array-1)
 
 </summary>
 <div>
@@ -623,7 +623,7 @@ Given this information, reconstruct an array that is consistent with it. For exa
 <details>
 <summary class="lc_m">
 
-- [**\[Medium\] Count Attacking Bishop Pairs**](http://trsong.github.io/python/java/2020/08/02/DailyQuestionsAug/#sep-12-2020-medium-count-attacking-bishop-pairs) -- *Given N bishops, represented as (row, column) tuples on a M by M chessboard, count the number of pairs of bishops attacking each other.* [*\(Try ME\)*](https://repl.it/@trsong/Count-Number-of-Attacking-Bishop-Pairs-1)
+- [**\[Medium\] Count Attacking Bishop Pairs**](http://trsong.github.io/python/java/2020/08/02/DailyQuestionsAug.html#sep-12-2020-medium-count-attacking-bishop-pairs) -- *Given N bishops, represented as (row, column) tuples on a M by M chessboard, count the number of pairs of bishops attacking each other.* [*\(Try ME\)*](https://repl.it/@trsong/Count-Number-of-Attacking-Bishop-Pairs-1)
 
 </summary>
 <div>
@@ -658,7 +658,7 @@ You should return 2, since bishops 1 and 3 attack each other, as well as bishops
 <details>
 <summary class="lc_h">
 
-- [**\[Hard\] Find Next Greater Permutation**](https://trsong.github.io/python/java/2020/05/02/DailyQuestionsMay/#june-2-2020-hard-find-next-greater-permutation) -- *Given a number represented by a list of digits, find the next greater permutation of a number, in terms of lexicographic ordering.* [*\(Try ME\)*](https://repl.it/@trsong/Find-the-Next-Greater-Permutation-1)
+- [**\[Hard\] Find Next Greater Permutation**](https://trsong.github.io/python/java/2020/05/02/DailyQuestionsMay.html#june-2-2020-hard-find-next-greater-permutation) -- *Given a number represented by a list of digits, find the next greater permutation of a number, in terms of lexicographic ordering.* [*\(Try ME\)*](https://repl.it/@trsong/Find-the-Next-Greater-Permutation-1)
 
 </summary>
 <div>
@@ -699,7 +699,7 @@ one_bits(23)  # Returns 4 as 23 equals 0b10111
 <details>
 <summary class="lc_m">
 
-- [**\[Medium\] Bitwise AND of a Range**](http://trsong.github.io/python/java/2021/02/02/DailyQuestionsFeb/#mar-2-2021-medium-bitwise-and-of-a-range) -- *Write a function that returns the bitwise AND of all integers between M and N, inclusive.* [*\(Try ME\)*](https://repl.it/@trsong/Calculate-Bitwise-AND-of-a-Range-1)
+- [**\[Medium\] Bitwise AND of a Range**](http://trsong.github.io/python/java/2021/02/02/DailyQuestionsFeb.html#mar-2-2021-medium-bitwise-and-of-a-range) -- *Write a function that returns the bitwise AND of all integers between M and N, inclusive.* [*\(Try ME\)*](https://repl.it/@trsong/Calculate-Bitwise-AND-of-a-Range-1)
 
 </summary>
 <div>
@@ -713,7 +713,7 @@ one_bits(23)  # Returns 4 as 23 equals 0b10111
 <details>
 <summary class="lc_e">
 
-- [**\[Easy\] Valid UTF-8 Encoding**](https://trsong.github.io/python/java/2020/11/02/DailyQuestionsAug/#jan-23-2021-easy-valid-utf-8-encoding) -- *Takes in an array of integers representing byte values, and returns whether it is a valid UTF-8 encoding.* [*\(Try ME\)*](https://repl.it/@trsong/Valid-UTF-8-Encoding-1)
+- [**\[Easy\] Valid UTF-8 Encoding**](https://trsong.github.io/python/java/2020/11/02/DailyQuestionsAug.html#jan-23-2021-easy-valid-utf-8-encoding) -- *Takes in an array of integers representing byte values, and returns whether it is a valid UTF-8 encoding.* [*\(Try ME\)*](https://repl.it/@trsong/Valid-UTF-8-Encoding-1)
 
 </summary>
 <div>
@@ -745,7 +745,7 @@ Visually, this can be represented as follows.
 <details>
 <summary class="lc_e">
 
-- [**\[Easy\] Longest Consecutive 1s in Binary Representation**](https://trsong.github.io/python/java/2020/11/02/DailyQuestionsAug/#dec-20-2020-easy-longest-consecutive-1s-in-binary-representation) -- *Given an integer n, return the length of the longest consecutive run of 1s in its binary representation.* [*\(Try ME\)*](https://repl.it/@trsong/Longest-Consecutive-1s-in-Binary-Representation-1)
+- [**\[Easy\] Longest Consecutive 1s in Binary Representation**](https://trsong.github.io/python/java/2020/11/02/DailyQuestionsAug.html#dec-20-2020-easy-longest-consecutive-1s-in-binary-representation) -- *Given an integer n, return the length of the longest consecutive run of 1s in its binary representation.* [*\(Try ME\)*](https://repl.it/@trsong/Longest-Consecutive-1s-in-Binary-Representation-1)
 
 </summary>
 <div>
@@ -767,7 +767,7 @@ Exaplanation: 156 in binary is 10011100
 <details>
 <summary class="lc_m">
 
-- [**\[Medium\] LC 29. Divide Two Integers**](https://trsong.github.io/python/java/2020/08/02/DailyQuestionsAug/#aug-23-2020-lc-29-medium-divide-two-integers) -- *Implement integer division without using the division operator: take two numbers,  return a tuple of (dividend, remainder)* [*\(Try ME\)*](https://repl.it/@trsong/Divide-Two-Integers-1)
+- [**\[Medium\] LC 29. Divide Two Integers**](https://trsong.github.io/python/java/2020/08/02/DailyQuestionsAug.html#aug-23-2020-lc-29-medium-divide-two-integers) -- *Implement integer division without using the division operator: take two numbers,  return a tuple of (dividend, remainder)* [*\(Try ME\)*](https://repl.it/@trsong/Divide-Two-Integers-1)
 
 </summary>
 <div>
@@ -782,7 +782,7 @@ For example, calling `divide(10, 3)` should return `(3, 1)` since the divisor is
 <details>
 <summary class="lc_h">
 
-- [**\[Hard\] Find the Element That Appears Once While Others Occur 3 Times**](http://trsong.github.io/python/java/2020/11/02/DailyQuestionsAug/#nov-21-2020-hard-find-the-element-that-appears-once-while-others-occur-3-times) -- *Given an array of integers where every integer occurs three times except for one integer, which only occurs once, find that element.* [*\(Try ME\)*](https://repl.it/@trsong/Find-the-Element-That-Appears-Once-While-Others-Occur-3-Ti-1)
+- [**\[Hard\] Find the Element That Appears Once While Others Occur 3 Times**](http://trsong.github.io/python/java/2020/11/02/DailyQuestionsAug.html#nov-21-2020-hard-find-the-element-that-appears-once-while-others-occur-3-times) -- *Given an array of integers where every integer occurs three times except for one integer, which only occurs once, find that element.* [*\(Try ME\)*](https://repl.it/@trsong/Find-the-Element-That-Appears-Once-While-Others-Occur-3-Ti-1)
 
 </summary>
 <div>
@@ -800,7 +800,7 @@ Do this in `O(N)` time and `O(1)` space.
 <details>
 <summary class="lc_h">
 
-- [**\[Hard\] Find Next Sparse Number**](https://trsong.github.io/python/java/2020/11/02/DailyQuestionsAug/#dec-11-2020-hard-find-next-sparse-number) -- *For a given input N, find the smallest sparse number greater than or equal to N.* [*\(Try ME\)*](https://repl.it/@trsong/Find-the-Next-Spare-Number-1)
+- [**\[Hard\] Find Next Sparse Number**](https://trsong.github.io/python/java/2020/11/02/DailyQuestionsAug.html#dec-11-2020-hard-find-next-sparse-number) -- *For a given input N, find the smallest sparse number greater than or equal to N.* [*\(Try ME\)*](https://repl.it/@trsong/Find-the-Next-Spare-Number-1)
 
 </summary>
 <div>
@@ -818,7 +818,7 @@ Do this in faster than `O(N log N)` time.
 <details>
 <summary class="lc_m">
 
-- [**\[Medium\] Find Next Biggest Integer**](https://trsong.github.io/python/java/2020/05/02/DailyQuestionsMay/#june-1-2020-medium-find-next-biggest-integer) -- *Given an integer n, find the next biggest integer with the same number of 1-bits on.* [*\(Try ME\)*](https://repl.it/@trsong/Find-the-Next-Biggest-Integer-1)
+- [**\[Medium\] Find Next Biggest Integer**](https://trsong.github.io/python/java/2020/05/02/DailyQuestionsMay.html#june-1-2020-medium-find-next-biggest-integer) -- *Given an integer n, find the next biggest integer with the same number of 1-bits on.* [*\(Try ME\)*](https://repl.it/@trsong/Find-the-Next-Biggest-Integer-1)
 
 </summary>
 <div>
@@ -832,7 +832,7 @@ Do this in faster than `O(N log N)` time.
 <details>
 <summary class="lc_m">
 
-- [**\[Medium\] Find Two Elements Appear Once**](https://trsong.github.io/python/java/2020/05/02/DailyQuestionsMay/#june-27-2020-medium-find-two-elements-appear-once) -- *Given an array with two elements appear exactly once and all other elements appear exactly twice,find the two elements that appear only once* [*\(Try ME\)*](https://repl.it/@trsong/Find-Two-Elements-Appear-Once-1)
+- [**\[Medium\] Find Two Elements Appear Once**](https://trsong.github.io/python/java/2020/05/02/DailyQuestionsMay.html#june-27-2020-medium-find-two-elements-appear-once) -- *Given an array with two elements appear exactly once and all other elements appear exactly twice,find the two elements that appear only once* [*\(Try ME\)*](https://repl.it/@trsong/Find-Two-Elements-Appear-Once-1)
 
 </summary>
 <div>
@@ -854,7 +854,7 @@ Output: [4, 8] order does not matter
 <details>
 <summary class="lc_h">
 
-- [**\[Medium\] Bloom Filter**](https://trsong.github.io/python/java/2021/02/02/DailyQuestionsFeb/#apr-23-2021-medium-bloom-filter) -- *Bloom Filter is a data structure features fast and space-efficient element checking.* [*\(Try ME\)*](https://replit.com/@trsong/Implement-Bloom-Filter-1)
+- [**\[Medium\] Bloom Filter**](https://trsong.github.io/python/java/2021/02/02/DailyQuestionsFeb.html#apr-23-2021-medium-bloom-filter) -- *Bloom Filter is a data structure features fast and space-efficient element checking.* [*\(Try ME\)*](https://replit.com/@trsong/Implement-Bloom-Filter-1)
 
 </summary>
 <div>
@@ -876,7 +876,7 @@ But have you ever thought how quickly the website check availability of username
 <details>
 <summary class="lc_e">
 
-- [**\[Easy\] URL Shortener**](https://trsong.github.io/python/java/2020/11/02/DailyQuestionsAug/#jan-28-2021-easy-url-shortener) -- *Implement a URL shortener with the following methods: shorten(url), restore(short).* [*\(Try ME\)*](https://repl.it/@trsong/URL-Shortener-1)
+- [**\[Easy\] URL Shortener**](https://trsong.github.io/python/java/2020/11/02/DailyQuestionsAug.html#jan-28-2021-easy-url-shortener) -- *Implement a URL shortener with the following methods: shorten(url), restore(short).* [*\(Try ME\)*](https://repl.it/@trsong/URL-Shortener-1)
 
 </summary>
 <div>
@@ -896,7 +896,7 @@ But have you ever thought how quickly the website check availability of username
 <details>
 <summary class="lc_m">
 
-- [**\[Medium\] LC 652. Find Duplicate Subtrees**](https://trsong.github.io/python/java/2020/08/02/DailyQuestionsAug/#oct-30-2020-lc-652-medium-find-duplicate-subtrees) -- *Given a binary tree, find all duplicate subtrees (subtrees with the same value and same structure)* [*\(Try ME\)*](https://repl.it/@trsong/Find-Duplicate-Subtree-Nodes-1)
+- [**\[Medium\] LC 652. Find Duplicate Subtrees**](https://trsong.github.io/python/java/2020/08/02/DailyQuestionsAug.html#oct-30-2020-lc-652-medium-find-duplicate-subtrees) -- *Given a binary tree, find all duplicate subtrees (subtrees with the same value and same structure)* [*\(Try ME\)*](https://repl.it/@trsong/Find-Duplicate-Subtree-Nodes-1)
 
 </summary>
 <div>
@@ -942,7 +942,7 @@ The duplicate subtrees are
 <details>
 <summary class="lc_e">
 
-- [**\[Easy\] LC 796. Shift-Equivalent Strings**](https://trsong.github.io/python/java/2021/02/02/DailyQuestionsFeb/#apr-22-2021--lc-796-easy-shift-equivalent-strings) -- *Given two strings A and B, return whether or not A can be shifted some number of times to get B.* [*\(Try ME\)*](https://replit.com/@trsong/Check-Shift-Equivalent-Strings-1)
+- [**\[Easy\] LC 796. Shift-Equivalent Strings**](https://trsong.github.io/python/java/2021/02/02/DailyQuestionsFeb.html#apr-22-2021--lc-796-easy-shift-equivalent-strings) -- *Given two strings A and B, return whether or not A can be shifted some number of times to get B.* [*\(Try ME\)*](https://replit.com/@trsong/Check-Shift-Equivalent-Strings-1)
 
 </summary>
 <div>
@@ -960,7 +960,7 @@ For example, if A is `'abcde'` and B is `'cdeab'`, return `True`. If A is `'abc'
 <details>
 <summary class="lc_e">
 
-- [**\[Easy\] Three Equal Sums**](https://trsong.github.io/python/java/2021/05/02/DailyQuestionsMay/#may-12-2021-easy-three-equal-sums) -- *Given an array of numbers, determine whether it can be partitioned into 3 arrays of equal sums.* [*\(Try ME\)*](https://replit.com/@trsong/Three-Equal-Sums-1)
+- [**\[Easy\] Three Equal Sums**](https://trsong.github.io/python/java/2021/05/02/DailyQuestionsMay.html#may-12-2021-easy-three-equal-sums) -- *Given an array of numbers, determine whether it can be partitioned into 3 arrays of equal sums.* [*\(Try ME\)*](https://replit.com/@trsong/Three-Equal-Sums-1)
 
 </summary>
 <div>
@@ -980,7 +980,7 @@ For example, if A is `'abcde'` and B is `'cdeab'`, return `True`. If A is `'abc'
 <details>
 <summary class="lc_e">
 
-- [**\[Easy\] Find Duplicates**](http://trsong.github.io/python/java/2021/05/02/DailyQuestionsMay/#may-3-2021-easy-find-duplicates) -- *Given an array of size n, and all values in the array are in the range 1 to n, find all the duplicates.* [*\(Try ME\)*](https://replit.com/@trsong/Find-Duplicates-1)
+- [**\[Easy\] Find Duplicates**](http://trsong.github.io/python/java/2021/05/02/DailyQuestionsMay.html#may-3-2021-easy-find-duplicates) -- *Given an array of size n, and all values in the array are in the range 1 to n, find all the duplicates.* [*\(Try ME\)*](https://replit.com/@trsong/Find-Duplicates-1)
 
 </summary>
 <div>
@@ -1000,7 +1000,7 @@ Output: [2, 3]
 <details>
 <summary class="lc_m">
 
-- [**\[Medium\] LC 227. Basic Calculator II**](http://trsong.github.io/python/java/2021/02/02/DailyQuestionsFeb/#feb-26-2021-lc-227-medium-basic-calculator-ii) -- *Implement a basic calculator to evaluate a simple expression string.* [*\(Try ME\)*](https://repl.it/@trsong/Implement-Basic-Calculator-II-1)
+- [**\[Medium\] LC 227. Basic Calculator II**](http://trsong.github.io/python/java/2021/02/02/DailyQuestionsFeb.html#feb-26-2021-lc-227-medium-basic-calculator-ii) -- *Implement a basic calculator to evaluate a simple expression string.* [*\(Try ME\)*](https://repl.it/@trsong/Implement-Basic-Calculator-II-1)
 
 </summary>
 <div>
@@ -1034,7 +1034,7 @@ Output: 5
 <details>
 <summary class="lc_e">
 
-- [**\[Easy\] Compare Version Numbers**](https://trsong.github.io/python/java/2020/11/02/DailyQuestionsAug/#jan-9-2021-easy-compare-version-numbers) -- *Given two version numbers version1 and version2, conclude which is the latest version number.* [*\(Try ME\)*](https://repl.it/@trsong/Compare-Two-Version-Numbers-1)
+- [**\[Easy\] Compare Version Numbers**](https://trsong.github.io/python/java/2020/11/02/DailyQuestionsAug.html#jan-9-2021-easy-compare-version-numbers) -- *Given two version numbers version1 and version2, conclude which is the latest version number.* [*\(Try ME\)*](https://repl.it/@trsong/Compare-Two-Version-Numbers-1)
 
 </summary>
 <div>
@@ -1092,7 +1092,7 @@ defaults to "0"
 <details>
 <summary class="lc_m">
 
-- [**\[Medium\] LC 554. Brick Wall**](https://trsong.github.io/python/java/2020/11/02/DailyQuestionsAug/#dec-14-2020-lc-554-medium-brick-wall) -- *Find a vertical line going from the top to the bottom of the wall that cuts through the fewest* [*\(Try ME\)*](https://repl.it/@trsong/Min-Cut-of-Wall-Bricks-1)
+- [**\[Medium\] LC 554. Brick Wall**](https://trsong.github.io/python/java/2020/11/02/DailyQuestionsAug.html#dec-14-2020-lc-554-medium-brick-wall) -- *Find a vertical line going from the top to the bottom of the wall that cuts through the fewest* [*\(Try ME\)*](https://repl.it/@trsong/Min-Cut-of-Wall-Bricks-1)
 
 </summary>
 <div>
@@ -1123,7 +1123,7 @@ Given an input consisting of brick lengths for each row such as the one above, r
 <details>
 <summary class="lc_e">
 
-- [**\[Easy\] Distribute Bonuses**](https://trsong.github.io/python/java/2020/11/02/DailyQuestionsAug/#dec-10-2020-easy-distribute-bonuses) -- *Give the smallest positive amount to each worker and if a developer has written more lines of code than their neighbors that dev earns more.* [*\(Try ME\)*](https://repl.it/@trsong/Distribute-Bonuses-1)
+- [**\[Easy\] Distribute Bonuses**](https://trsong.github.io/python/java/2020/11/02/DailyQuestionsAug.html#dec-10-2020-easy-distribute-bonuses) -- *Give the smallest positive amount to each worker and if a developer has written more lines of code than their neighbors that dev earns more.* [*\(Try ME\)*](https://repl.it/@trsong/Distribute-Bonuses-1)
 
 </summary>
 <div>
@@ -1144,7 +1144,7 @@ Output: [1, 2, 3, 4, 2, 1].
 <details>
 <summary class="lc_m">
 
-- [**\[Medium\] Find Missing Positive**](http://trsong.github.io/python/java/2020/11/02/DailyQuestionsAug/#nov-13-2020-medium-find-missing-positive) -- *Given an unsorted integer array, find the first missing positive integer.* [*\(Try ME\)*](https://repl.it/@trsong/Find-First-Missing-Positive-1)
+- [**\[Medium\] Find Missing Positive**](http://trsong.github.io/python/java/2020/11/02/DailyQuestionsAug.html#nov-13-2020-medium-find-missing-positive) -- *Given an unsorted integer array, find the first missing positive integer.* [*\(Try ME\)*](https://repl.it/@trsong/Find-First-Missing-Positive-1)
 
 </summary>
 <div>
@@ -1170,7 +1170,7 @@ Output: 2
 <details>
 <summary class="lc_e">
 
-- [**\[Easy\] LC 121. Best Time to Buy and Sell Stock**](https://trsong.github.io/python/java/2020/11/02/DailyQuestionsAug/#nov-3-2020-lc-121-easy-best-time-to-buy-and-sell-stock) -- *Given an array of numbers representing the stock prices of a company, write a function that calculates the maximum profit.* [*\(Try ME\)*](https://repl.it/@trsong/Best-Time-to-Buy-and-Sell-Stock-1)
+- [**\[Easy\] LC 121. Best Time to Buy and Sell Stock**](https://trsong.github.io/python/java/2020/11/02/DailyQuestionsAug.html#nov-3-2020-lc-121-easy-best-time-to-buy-and-sell-stock) -- *Given an array of numbers representing the stock prices of a company, write a function that calculates the maximum profit.* [*\(Try ME\)*](https://repl.it/@trsong/Best-Time-to-Buy-and-Sell-Stock-1)
 
 </summary>
 <div>
@@ -1191,7 +1191,7 @@ Explanation: Here, the optimal trade is to buy when the price is 5, and sell whe
 <details>
 <summary class="lc_h">
 
-- [**\[Hard\] Exclusive Product**](https://trsong.github.io/python/java/2020/08/02/DailyQuestionsAug/#oct-28-2020-hard-exclusive-product) -- *Given an array of integers, return a new array such that each element at index i of the new array is the product of all the numbers except i.* [*\(Try ME\)*](https://repl.it/@trsong/Calculate-Exclusive-Product-1)
+- [**\[Hard\] Exclusive Product**](https://trsong.github.io/python/java/2020/08/02/DailyQuestionsAug.html#oct-28-2020-hard-exclusive-product) -- *Given an array of integers, return a new array such that each element at index i of the new array is the product of all the numbers except i.* [*\(Try ME\)*](https://repl.it/@trsong/Calculate-Exclusive-Product-1)
 
 </summary>
 <div>
@@ -1208,7 +1208,7 @@ Follow-up: what if you can't use division?
 <details>
 <summary class="lc_e">
 
-- [**\[Easy\] Delete Columns to Make Sorted I**](https://trsong.github.io/python/java/2020/08/02/DailyQuestionsAug/#oct-14-2020-easy-delete-columns-to-make-sorted-i) -- *Given a 2D matrix of lowercase letters. Determine the minimum number of columns that can be removed to ensure that each column is sorted.* [*\(Try ME\)*](https://repl.it/@trsong/Delete-Columns-From-Table-to-Make-Sorted-I-1)
+- [**\[Easy\] Delete Columns to Make Sorted I**](https://trsong.github.io/python/java/2020/08/02/DailyQuestionsAug.html#oct-14-2020-easy-delete-columns-to-make-sorted-i) -- *Given a 2D matrix of lowercase letters. Determine the minimum number of columns that can be removed to ensure that each column is sorted.* [*\(Try ME\)*](https://repl.it/@trsong/Delete-Columns-From-Table-to-Make-Sorted-I-1)
 
 </summary>
 <div>
@@ -1256,7 +1256,7 @@ Your function should return 3, since we would need to remove all the columns to 
 <details>
 <summary class="lc_m">
 
-- [**\[Medium\] LC 665. Off-by-One Non-Decreasing Array**](http://trsong.github.io/python/java/2020/08/02/DailyQuestionsAug/#oct-9-2020-lc-665-medium-off-by-one-non-decreasing-array) -- *Given an array of integers, write a function to determine whether the array could become non-decreasing by modifying at most 1 element.* [*\(Try ME\)*](https://repl.it/@trsong/Determine-if-Off-by-One-Non-Decreasing-Array-1)
+- [**\[Medium\] LC 665. Off-by-One Non-Decreasing Array**](http://trsong.github.io/python/java/2020/08/02/DailyQuestionsAug.html#oct-9-2020-lc-665-medium-off-by-one-non-decreasing-array) -- *Given an array of integers, write a function to determine whether the array could become non-decreasing by modifying at most 1 element.* [*\(Try ME\)*](https://repl.it/@trsong/Determine-if-Off-by-One-Non-Decreasing-Array-1)
 
 </summary>
 <div>
@@ -1273,7 +1273,7 @@ Given the array `[10, 5, 1]`, you should return false, since we can't modify any
 <details>
 <summary class="lc_e">
 
-- [**\[Easy\] Witness of The Tall People**](https://trsong.github.io/python/java/2020/08/02/DailyQuestionsAug/#sep-30-2020-easy-witness-of-the-tall-people) -- *There are n people lined up,  a murder has happened right in front of them. How many witnesses are there?* [*\(Try ME\)*](https://repl.it/@trsong/Witness-of-The-Tall-People-1)
+- [**\[Easy\] Witness of The Tall People**](https://trsong.github.io/python/java/2020/08/02/DailyQuestionsAug.html#sep-30-2020-easy-witness-of-the-tall-people) -- *There are n people lined up,  a murder has happened right in front of them. How many witnesses are there?* [*\(Try ME\)*](https://repl.it/@trsong/Witness-of-The-Tall-People-1)
 
 </summary>
 <div>
@@ -1301,7 +1301,7 @@ Explanation: Only [6, 4, 1] were able to see in front of them.
 <details>
 <summary class="lc_m">
 
-- [**\[Medium\] LC 54. Spiral Matrix**](http://trsong.github.io/python/java/2020/08/02/DailyQuestionsAug/#sep-5-2020-lc-54-medium-spiral-matrix) -- *Given a matrix of n x m elements (n rows, m columns), return all elements of the matrix in spiral order.* [*\(Try ME\)*](https://repl.it/@trsong/Spiral-Matrix-Traversal-1)
+- [**\[Medium\] LC 54. Spiral Matrix**](http://trsong.github.io/python/java/2020/08/02/DailyQuestionsAug.html#sep-5-2020-lc-54-medium-spiral-matrix) -- *Given a matrix of n x m elements (n rows, m columns), return all elements of the matrix in spiral order.* [*\(Try ME\)*](https://repl.it/@trsong/Spiral-Matrix-Traversal-1)
 
 </summary>
 <div>
@@ -1338,7 +1338,7 @@ Output: [1, 2, 3, 4, 8, 12, 11, 10, 9, 5, 6, 7]
 <details>
 <summary class="lc_e">
 
-- [**\[Easy\] Record the Last N Orders**](https://trsong.github.io/python/java/2020/08/02/DailyQuestionsAug/#aug-15-2020-easy-record-the-last-n-orders) -- *You run an e-commerce website and want to record the last N order ids in a log.* [*\(Try ME\)*](https://repl.it/@trsong/Record-the-Last-N-Orders-1)
+- [**\[Easy\] Record the Last N Orders**](https://trsong.github.io/python/java/2020/08/02/DailyQuestionsAug.html#aug-15-2020-easy-record-the-last-n-orders) -- *You run an e-commerce website and want to record the last N order ids in a log.* [*\(Try ME\)*](https://repl.it/@trsong/Record-the-Last-N-Orders-1)
 
 </summary>
 <div>
@@ -1358,7 +1358,7 @@ You should be as efficient with time and space as possible.
 <details>
 <summary class="lc_e">
 
-- [**\[Easy\] In-place Array Rotation**](https://trsong.github.io/python/java/2020/05/02/DailyQuestionsMay/#june-3-2020-medium-in-place-array-rotation) -- *Write a function that rotates an array by k elements.* [*\(Try ME\)*](https://repl.it/@trsong/Rotate-Array-In-place-1)
+- [**\[Easy\] In-place Array Rotation**](https://trsong.github.io/python/java/2020/05/02/DailyQuestionsMay.html#june-3-2020-medium-in-place-array-rotation) -- *Write a function that rotates an array by k elements.* [*\(Try ME\)*](https://repl.it/@trsong/Rotate-Array-In-place-1)
 
 </summary>
 <div>
@@ -1376,7 +1376,7 @@ Try solving this without creating a copy of the array. How many swap or move ope
 <details>
 <summary class="lc_m">
 
-- [**\[Medium\] Longest Subarray with Sum Divisible by K**](https://trsong.github.io/python/java/2020/05/02/DailyQuestionsMay/#june-11-2020-medium-longest-subarray-with-sum-divisible-by-k) -- *Find the length of the longest subarray with sum of the elements divisible by the given value k.* [*\(Try ME\)*](https://repl.it/@trsong/Find-Longest-Subarray-with-Sum-Divisible-by-K-1)
+- [**\[Medium\] Longest Subarray with Sum Divisible by K**](https://trsong.github.io/python/java/2020/05/02/DailyQuestionsMay.html#june-11-2020-medium-longest-subarray-with-sum-divisible-by-k) -- *Find the length of the longest subarray with sum of the elements divisible by the given value k.* [*\(Try ME\)*](https://repl.it/@trsong/Find-Longest-Subarray-with-Sum-Divisible-by-K-1)
 
 </summary>
 <div>
@@ -1396,7 +1396,7 @@ The subarray is {7, 6, 1, 4} with sum 18, which is divisible by 3.
 <details>
 <summary class="lc_m">
 
-- [**\[Medium\] LC 152. Maximum Product Subarray**](https://trsong.github.io/python/java/2020/05/02/DailyQuestionsMay/#jul-14-2020-lc-152-medium-maximum-product-subarray) -- *Given an array that contains both positive and negative integers, find the product of the maximum product subarray.* [*\(Try ME\)*](https://repl.it/@trsong/Maximum-Product-Subarray-1)
+- [**\[Medium\] LC 152. Maximum Product Subarray**](https://trsong.github.io/python/java/2020/05/02/DailyQuestionsMay.html#jul-14-2020-lc-152-medium-maximum-product-subarray) -- *Given an array that contains both positive and negative integers, find the product of the maximum product subarray.* [*\(Try ME\)*](https://repl.it/@trsong/Maximum-Product-Subarray-1)
 
 </summary>
 <div>
@@ -1430,7 +1430,7 @@ Explanation: The subarray is [-2, -40]
 <details>
 <summary class="lc_m">
 
-- [**\[Medium\] Majority Element**](https://trsong.github.io/python/java/2020/05/02/DailyQuestionsMay/#june-28-2020-medium-majority-element) -- *A majority element is an element that appears more than half the time. Given a list with a majority element, find the majority element.* [*\(Try ME\)*](https://repl.it/@trsong/Find-Majority-Element-1)
+- [**\[Medium\] Majority Element**](https://trsong.github.io/python/java/2020/05/02/DailyQuestionsMay.html#june-28-2020-medium-majority-element) -- *A majority element is an element that appears more than half the time. Given a list with a majority element, find the majority element.* [*\(Try ME\)*](https://repl.it/@trsong/Find-Majority-Element-1)
 
 </summary>
 <div>
@@ -1449,7 +1449,7 @@ majority_element([3, 5, 3, 3, 2, 4, 3])  # gives 3
 <details>
 <summary class="lc_e">
 
-- [**\[Easy\] Valid Mountain Array**](https://trsong.github.io/python/java/2020/05/02/DailyQuestionsMay/#jul-6-2020-easy-valid-mountain-array) -- *Given an array of heights, determine whether the array forms a “mountain” pattern. A mountain pattern goes up and then down.* [*\(Try ME\)*](https://repl.it/@trsong/Valid-Mountain-Array-1)
+- [**\[Easy\] Valid Mountain Array**](https://trsong.github.io/python/java/2020/05/02/DailyQuestionsMay.html#jul-6-2020-easy-valid-mountain-array) -- *Given an array of heights, determine whether the array forms a “mountain” pattern. A mountain pattern goes up and then down.* [*\(Try ME\)*](https://repl.it/@trsong/Valid-Mountain-Array-1)
 
 </summary>
 <div>
@@ -1468,7 +1468,7 @@ validMountainArray([1, 2, 3])  # False
 <details>
 <summary class="lc_e">
 
-- [**\[Easy\] Matrix Rotation**](https://trsong.github.io/python/java/2020/05/02/DailyQuestionsMay/#jul-7-2020-medium-matrix-rotation) -- *Given an N by N matrix, rotate it by 90 degrees clockwise.* [*\(Try ME\)*](https://repl.it/@trsong/Matrix-Rotation-In-place-with-flip-1)
+- [**\[Easy\] Matrix Rotation**](https://trsong.github.io/python/java/2020/05/02/DailyQuestionsMay.html#jul-7-2020-medium-matrix-rotation) -- *Given an N by N matrix, rotate it by 90 degrees clockwise.* [*\(Try ME\)*](https://repl.it/@trsong/Matrix-Rotation-In-place-with-flip-1)
 
 </summary>
 <div>
@@ -1502,7 +1502,7 @@ Follow-up: What if you couldn't use any extra space?
 <details>
 <summary class="lc_h">
 
-- [**\[Hard\] LC 352. Data Stream as Disjoint Intervals**](https://trsong.github.io/python/java/2020/11/02/DailyQuestionsAug/#dec-17-2020-lc-352-hard-data-stream-as-disjoint-intervals) -- *Given a data stream input of non-negative integers a1, a2, ..., an, ..., summarize the numbers seen so far as a list of disjoint intervals.* [*\(Try ME\)*](https://repl.it/@trsong/Print-Data-Stream-as-Disjoint-Intervals-1)
+- [**\[Hard\] LC 352. Data Stream as Disjoint Intervals**](https://trsong.github.io/python/java/2020/11/02/DailyQuestionsAug.html#dec-17-2020-lc-352-hard-data-stream-as-disjoint-intervals) -- *Given a data stream input of non-negative integers a1, a2, ..., an, ..., summarize the numbers seen so far as a list of disjoint intervals.* [*\(Try ME\)*](https://repl.it/@trsong/Print-Data-Stream-as-Disjoint-Intervals-1)
 
 </summary>
 <div>
@@ -1527,7 +1527,7 @@ For example, suppose the integers from the data stream are `1, 3, 7, 2, 6, ...`,
 <details>
 <summary class="lc_e">
 
-- [**\[Easy\] LC 228. Extract Range**](https://trsong.github.io/python/java/2020/11/02/DailyQuestionsAug/#nov-30-2020-lc-228-easy-extract-range) -- *Given a sorted list of numbers, return a list of strings that represent all of the consecutive numbers.* [*\(Try ME\)*](https://repl.it/@trsong/Extract-Range-1)
+- [**\[Easy\] LC 228. Extract Range**](https://trsong.github.io/python/java/2020/11/02/DailyQuestionsAug.html#nov-30-2020-lc-228-easy-extract-range) -- *Given a sorted list of numbers, return a list of strings that represent all of the consecutive numbers.* [*\(Try ME\)*](https://repl.it/@trsong/Extract-Range-1)
 
 </summary>
 <div>
@@ -1547,7 +1547,7 @@ Output: ['0->2', '5', '7->11', '15']
 <details>
 <summary class="lc_e">
 
-- [**\[Easy\] Merge Overlapping Intervals**](https://trsong.github.io/python/java/2020/08/02/DailyQuestionsAug/#aug-18-2020-easy-merge-overlapping-intervals) -- *Given a list of possibly overlapping intervals, return a new list of intervals where all overlapping intervals have been merged.* [*\(Try ME\)*](https://repl.it/@trsong/Merge-All-Overlapping-Intervals-1)
+- [**\[Easy\] Merge Overlapping Intervals**](https://trsong.github.io/python/java/2020/08/02/DailyQuestionsAug.html#aug-18-2020-easy-merge-overlapping-intervals) -- *Given a list of possibly overlapping intervals, return a new list of intervals where all overlapping intervals have been merged.* [*\(Try ME\)*](https://repl.it/@trsong/Merge-All-Overlapping-Intervals-1)
 
 </summary>
 <div>
@@ -1564,7 +1564,7 @@ For example, given `[(1, 3), (5, 8), (4, 10), (20, 25)]`, you should return `[(1
 <details>
 <summary class="lc_e">
 
-- [**\[Easy\] LC 253. Minimum Lecture Rooms**](https://trsong.github.io/python/java/2020/08/02/DailyQuestionsAug/#aug-27-2020-lc-253-easy-minimum-lecture-rooms) -- *Given an array of time intervals (start, end) for classroom lectures (possibly overlapping), find the minimum number of rooms required.* [*\(Try ME\)*](https://repl.it/@trsong/Minimum-Required-Lecture-Rooms-1)
+- [**\[Easy\] LC 253. Minimum Lecture Rooms**](https://trsong.github.io/python/java/2020/08/02/DailyQuestionsAug.html#aug-27-2020-lc-253-easy-minimum-lecture-rooms) -- *Given an array of time intervals (start, end) for classroom lectures (possibly overlapping), find the minimum number of rooms required.* [*\(Try ME\)*](https://repl.it/@trsong/Minimum-Required-Lecture-Rooms-1)
 
 </summary>
 <div>
@@ -1580,7 +1580,7 @@ For example, given `[(30, 75), (0, 50), (60, 150)]`, you should return `2`.
 <details>
 <summary class="lc_m">
 
-- [**\[Medium\] LC 986. Interval List Intersections**](https://trsong.github.io/python/java/2020/08/02/DailyQuestionsAug/#sep-15-2020-lc-986-medium-interval-list-intersections) -- *Given two lists of closed intervals, each list of intervals is pairwise disjoint and in sorted order.* [*\(Try ME\)*](https://repl.it/@trsong/Interval-List-Intersections-1)
+- [**\[Medium\] LC 986. Interval List Intersections**](https://trsong.github.io/python/java/2020/08/02/DailyQuestionsAug.html#sep-15-2020-lc-986-medium-interval-list-intersections) -- *Given two lists of closed intervals, each list of intervals is pairwise disjoint and in sorted order.* [*\(Try ME\)*](https://repl.it/@trsong/Interval-List-Intersections-1)
 
 </summary>
 <div>
@@ -1601,7 +1601,7 @@ Output: [[1,2],[5,5],[8,10],[15,23],[24,24],[25,25]]
 <details>
 <summary class="lc_h">
 
-- [**\[Hard\] LC 57. Insert Interval**](https://trsong.github.io/python/java/2020/08/02/DailyQuestionsAug/#sep-14-2020-lc-57-hard-insert-interval) -- *Given a set of non-overlapping intervals, insert a new interval into the intervals (merge if necessary).* [*\(Try ME\)*](https://repl.it/@trsong/Insert-Interval-1)
+- [**\[Hard\] LC 57. Insert Interval**](https://trsong.github.io/python/java/2020/08/02/DailyQuestionsAug.html#sep-14-2020-lc-57-hard-insert-interval) -- *Given a set of non-overlapping intervals, insert a new interval into the intervals (merge if necessary).* [*\(Try ME\)*](https://repl.it/@trsong/Insert-Interval-1)
 
 </summary>
 <div>
@@ -1632,7 +1632,7 @@ Explanation: Because the new interval [4,8] overlaps with [3,5],[6,7],[8,10].
 <details>
 <summary class="lc_m">
 
-- [**\[Medium\] Minimum Days to Bloom Roses**](http://trsong.github.io/python/java/2021/05/02/DailyQuestionsMay/#may-7-2021-medium-minimum-days-to-bloom-roses) -- *Given an array of roses. Return the earliest day that we can get n bouquets of roses.* [*\(Try ME\)*](https://replit.com/@trsong/Minimum-Days-to-Bloom-Roses-1)
+- [**\[Medium\] Minimum Days to Bloom Roses**](http://trsong.github.io/python/java/2021/05/02/DailyQuestionsMay.html#may-7-2021-medium-minimum-days-to-bloom-roses) -- *Given an array of roses. Return the earliest day that we can get n bouquets of roses.* [*\(Try ME\)*](https://replit.com/@trsong/Minimum-Days-to-Bloom-Roses-1)
 
 </summary>
 <div>
@@ -1663,7 +1663,7 @@ Here the last three bloom roses make a bouquet, meeting the required n = 2 bouqu
 <details>
 <summary class="lc_m">
 
-- [**\[Medium\] Stores and Houses**](http://trsong.github.io/python/java/2021/02/02/DailyQuestionsFeb/#apr-30-2021-medium-stores-and-houses) -- *Given 2 arrays representing integer locations of stores and houses. For each house, find the store closest to it.* [*\(Try ME\)*](https://replit.com/@trsong/Stores-and-Houses-1)
+- [**\[Medium\] Stores and Houses**](http://trsong.github.io/python/java/2021/02/02/DailyQuestionsFeb.html#apr-30-2021-medium-stores-and-houses) -- *Given 2 arrays representing integer locations of stores and houses. For each house, find the store closest to it.* [*\(Try ME\)*](https://replit.com/@trsong/Stores-and-Houses-1)
 
 </summary>
 <div>
@@ -1699,7 +1699,7 @@ Output: [3, 6, 1, 1]
 <details>
 <summary class="lc_m">
 
-- [**\[Medium\] K-th Missing Number in Sorted Array**](http://trsong.github.io/python/java/2021/02/02/DailyQuestionsFeb/#mar-18-2021-medium-k-th-missing-number-in-sorted-array) -- *Given a sorted, define the missing numbers to be the gap among numbers. Calculate K-th missing number.* [*\(Try ME\)*](https://replit.com/@trsong/Find-K-th-Missing-Number-in-Sorted-Array-1)
+- [**\[Medium\] K-th Missing Number in Sorted Array**](http://trsong.github.io/python/java/2021/02/02/DailyQuestionsFeb.html#mar-18-2021-medium-k-th-missing-number-in-sorted-array) -- *Given a sorted, define the missing numbers to be the gap among numbers. Calculate K-th missing number.* [*\(Try ME\)*](https://replit.com/@trsong/Find-K-th-Missing-Number-in-Sorted-Array-1)
 
 </summary>
 <div>
@@ -1719,7 +1719,7 @@ For example, original array: `[2,4,7,8,9,15]`, within the range defined by origi
 <details>
 <summary class="lc_m">
 
-- [**\[Medium\] K Closest Elements**](http://trsong.github.io/python/java/2021/02/02/DailyQuestionsFeb/#mar-17-2021-medium-k-closest-elements) -- *Given a list of sorted numbers, and two integers k and x, find k closest numbers to the pivot x.* [*\(Try ME\)*](https://replit.com/@trsong/Find-K-Closest-Elements-in-a-Sorted-Array-1)
+- [**\[Medium\] K Closest Elements**](http://trsong.github.io/python/java/2021/02/02/DailyQuestionsFeb.html#mar-17-2021-medium-k-closest-elements) -- *Given a list of sorted numbers, and two integers k and x, find k closest numbers to the pivot x.* [*\(Try ME\)*](https://replit.com/@trsong/Find-K-Closest-Elements-in-a-Sorted-Array-1)
 
 </summary>
 <div>
@@ -1738,7 +1738,7 @@ closest_nums([1, 3, 7, 8, 9], 3, 5)  # gives [7, 3, 8]
 <details>
 <summary class="lc_h">
 
-- [**\[Hard\] Maximize the Minimum of Subarray Sum**](http://trsong.github.io/python/java/2021/02/02/DailyQuestionsFeb/#mar-3-2021-hard-maximize-the-minimum-of-subarray-sum) -- *Given an array of numbers N and integer k, split N into k partitions such that the maximize sum of any partition is minimized.* [*\(Try ME\)*](https://repl.it/@trsong/Maximize-the-Minimum-of-Subarray-Sum-1)
+- [**\[Hard\] Maximize the Minimum of Subarray Sum**](http://trsong.github.io/python/java/2021/02/02/DailyQuestionsFeb.html#mar-3-2021-hard-maximize-the-minimum-of-subarray-sum) -- *Given an array of numbers N and integer k, split N into k partitions such that the maximize sum of any partition is minimized.* [*\(Try ME\)*](https://repl.it/@trsong/Maximize-the-Minimum-of-Subarray-Sum-1)
 
 </summary>
 <div>
@@ -1755,7 +1755,7 @@ For example, given `N = [5, 1, 2, 7, 3, 4]` and `k = 3`, you should return `8`, 
 <details>
 <summary class="lc_e">
 
-- [**\[Easy\] Fixed Point**](http://trsong.github.io/python/java/2021/02/02/DailyQuestionsFeb/#feb-15-2021-easy-fixed-point) -- *Given a sorted array of distinct elements, return a fixed point, if one exists. Otherwise, return False.* [*\(Try ME\)*](https://repl.it/@trsong/Find-the-Fixed-Point-1)
+- [**\[Easy\] Fixed Point**](http://trsong.github.io/python/java/2021/02/02/DailyQuestionsFeb.html#feb-15-2021-easy-fixed-point) -- *Given a sorted array of distinct elements, return a fixed point, if one exists. Otherwise, return False.* [*\(Try ME\)*](https://repl.it/@trsong/Find-the-Fixed-Point-1)
 
 </summary>
 <div>
@@ -1771,7 +1771,7 @@ For example, given `[-6, 0, 2, 40]`, you should return `2`. Given `[1, 5, 7, 8]`
 <details>
 <summary class="lc_m">
 
-- [**\[Medium\] Find Minimum Element in a Sorted and Rotated Array**](http://trsong.github.io/python/java/2020/11/02/DailyQuestionsAug/#dec-31-2020-medium-find-minimum-element-in-a-sorted-and-rotated-array) -- *Suppose an array sorted in ascending order is rotated at some pivot unknown to you beforehand. Find the minimum element.* [*\(Try ME\)*](https://repl.it/@trsong/Find-Minimum-Element-in-a-Sorted-and-Rotated-Array-1)
+- [**\[Medium\] Find Minimum Element in a Sorted and Rotated Array**](http://trsong.github.io/python/java/2020/11/02/DailyQuestionsAug.html#dec-31-2020-medium-find-minimum-element-in-a-sorted-and-rotated-array) -- *Suppose an array sorted in ascending order is rotated at some pivot unknown to you beforehand. Find the minimum element.* [*\(Try ME\)*](https://repl.it/@trsong/Find-Minimum-Element-in-a-Sorted-and-Rotated-Array-1)
 
 </summary>
 <div>
@@ -1788,7 +1788,7 @@ For example, given `[5, 7, 10, 3, 4]`, return `3`.
 <details>
 <summary class="lc_m">
 
-- [**\[Medium\] Searching in Rotated Array**](https://trsong.github.io/python/java/2020/08/02/DailyQuestionsAug/#oct-12-2020-medium-searching-in-rotated-array) -- *A sorted array of integers was rotated an unknown number of times. Find the index of the element in the array.* [*\(Try ME\)*](https://repl.it/@trsong/Searching-Elem-in-Rotated-Array-1)
+- [**\[Medium\] Searching in Rotated Array**](https://trsong.github.io/python/java/2020/08/02/DailyQuestionsAug.html#oct-12-2020-medium-searching-in-rotated-array) -- *A sorted array of integers was rotated an unknown number of times. Find the index of the element in the array.* [*\(Try ME\)*](https://repl.it/@trsong/Searching-Elem-in-Rotated-Array-1)
 
 </summary>
 <div>
@@ -1806,7 +1806,7 @@ For example, given `[5, 7, 10, 3, 4]`, return `3`.
 <details>
 <summary class="lc_h">
 
-- [**\[Hard\] LC 668. Kth Smallest Number in Multiplication Table**](https://trsong.github.io/python/java/2020/08/02/DailyQuestionsAug/#oct-11-2020-lc-668-hard-kth-smallest-number-in-multiplication-table) -- *Find out the k-th smallest number quickly from the multiplication table.* [*\(Try ME\)*](https://repl.it/@trsong/Kth-Smallest-Number-in-Multiplication-Table-1)
+- [**\[Hard\] LC 668. Kth Smallest Number in Multiplication Table**](https://trsong.github.io/python/java/2020/08/02/DailyQuestionsAug.html#oct-11-2020-lc-668-hard-kth-smallest-number-in-multiplication-table) -- *Find out the k-th smallest number quickly from the multiplication table.* [*\(Try ME\)*](https://repl.it/@trsong/Kth-Smallest-Number-in-Multiplication-Table-1)
 
 </summary>
 <div>
@@ -1845,7 +1845,7 @@ The 6-th smallest number is 6 (1, 2, 2, 3, 4, 6).
 <details>
 <summary class="lc_e">
 
-- [**\[Easy\] First and Last Indices of an Element in a Sorted Array**](https://trsong.github.io/python/java/2020/05/02/DailyQuestionsMay/#june-6-2020-easy-first-and-last-indices-of-an-element-in-a-sorted-array) -- *Given a sorted array, A, with possibly duplicated elements, find the indices of the first and last occurrences of a target element.* [*\(Try ME\)*](https://repl.it/@trsong/Find-First-and-Last-Indices-of-an-Element-in-a-Sorted-Arr-1)
+- [**\[Easy\] First and Last Indices of an Element in a Sorted Array**](https://trsong.github.io/python/java/2020/05/02/DailyQuestionsMay.html#june-6-2020-easy-first-and-last-indices-of-an-element-in-a-sorted-array) -- *Given a sorted array, A, with possibly duplicated elements, find the indices of the first and last occurrences of a target element.* [*\(Try ME\)*](https://repl.it/@trsong/Find-First-and-Last-Indices-of-an-Element-in-a-Sorted-Arr-1)
 
 </summary>
 <div>
@@ -1871,7 +1871,7 @@ Output: [-1, -1]
 <details>
 <summary class="lc_h">
 
-- [**\[Hard\] LC 300. The Longest Increasing Subsequence**](https://trsong.github.io/python/java/2020/05/02/DailyQuestionsMay/#june-19-2020-lc-300-hard-the-longest-increasing-subsequence) -- *Given an array of numbers, find the length of the longest increasing subsequence in the array.* [*\(Try ME\)*](https://repl.it/@trsong/Find-the-Longest-Increasing-Subsequence-1)
+- [**\[Hard\] LC 300. The Longest Increasing Subsequence**](https://trsong.github.io/python/java/2020/05/02/DailyQuestionsMay.html#june-19-2020-lc-300-hard-the-longest-increasing-subsequence) -- *Given an array of numbers, find the length of the longest increasing subsequence in the array.* [*\(Try ME\)*](https://repl.it/@trsong/Find-the-Longest-Increasing-Subsequence-1)
 
 </summary>
 <div>
@@ -1886,7 +1886,7 @@ For example, given the array `[0, 8, 4, 12, 2, 10, 6, 14, 1, 9, 5, 13, 3, 11, 7,
 <details>
 <summary class="lc_h">
 
-- [**\[Hard\] Increasing Subsequence of Length K**](https://trsong.github.io/python/java/2020/05/02/DailyQuestionsMay/#june-20-2020-hard-increasing-subsequence-of-length-k) -- *Given an int array nums of length n and an int k. Return an increasing subsequence of length k (KIS).* [*\(Try ME\)*](https://repl.it/@trsong/Increasing-Subsequence-of-Length-K-1)
+- [**\[Hard\] Increasing Subsequence of Length K**](https://trsong.github.io/python/java/2020/05/02/DailyQuestionsMay.html#june-20-2020-hard-increasing-subsequence-of-length-k) -- *Given an int array nums of length n and an int k. Return an increasing subsequence of length k (KIS).* [*\(Try ME\)*](https://repl.it/@trsong/Increasing-Subsequence-of-Length-K-1)
 
 </summary>
 <div>
@@ -1912,7 +1912,7 @@ Output: [1, 4, 8, 9]
 <details>
 <summary class="lc_e">
 
-- [**\[Easy\] LC 162. Find a Peak Element**](https://trsong.github.io/python/java/2020/05/02/DailyQuestionsMay/#june-26-2020-lc-162-easy-find-a-peak-element) -- *Given an unsorted array, in which all elements are distinct, find a “peak” element in O(log N) time.* [*\(Try ME\)*](https://repl.it/@trsong/Find-a-Peak-Element-2)
+- [**\[Easy\] LC 162. Find a Peak Element**](https://trsong.github.io/python/java/2020/05/02/DailyQuestionsMay.html#june-26-2020-lc-162-easy-find-a-peak-element) -- *Given an unsorted array, in which all elements are distinct, find a “peak” element in O(log N) time.* [*\(Try ME\)*](https://repl.it/@trsong/Find-a-Peak-Element-2)
 
 </summary>
 <div>
@@ -1943,7 +1943,7 @@ both of them are less than 20, similarly 90 has neighbous 23 and 67.
 <details>
 <summary class="lc_m">
 
-- [**\[Medium\] LC 163. Missing Ranges**](https://trsong.github.io/python/java/2020/05/02/DailyQuestionsMay/#june-29-2020-lc-163-medium-missing-ranges) -- *Given a sorted list of numbers, and two integers low and high, return a list of (inclusive) ranges where the numbers are missing.* [*\(Try ME\)*](https://repl.it/@trsong/Find-Missing-Ranges-1)
+- [**\[Medium\] LC 163. Missing Ranges**](https://trsong.github.io/python/java/2020/05/02/DailyQuestionsMay.html#june-29-2020-lc-163-medium-missing-ranges) -- *Given a sorted list of numbers, and two integers low and high, return a list of (inclusive) ranges where the numbers are missing.* [*\(Try ME\)*](https://repl.it/@trsong/Find-Missing-Ranges-1)
 
 </summary>
 <div>
@@ -1967,7 +1967,7 @@ missing_ranges(nums=[1, 3, 5, 10], lower=1, upper=10)
 <details>
 <summary class="lc_m">
 
-- [**\[Medium\] Mininum Adjacent Swaps to Make Palindrome**](https://trsong.github.io/python/java/2021/02/02/DailyQuestionsFeb/#apr-26-2021-medium-mininum-adjacent-swaps-to-make-palindrome) -- *Given a string, what is the minimum number of adjacent swaps required to convert a string into a palindrome.* [*\(Try ME\)*](https://replit.com/@trsong/Mininum-Adjacent-Swaps-to-Make-Palindrome-1)
+- [**\[Medium\] Mininum Adjacent Swaps to Make Palindrome**](https://trsong.github.io/python/java/2021/02/02/DailyQuestionsFeb.html#apr-26-2021-medium-mininum-adjacent-swaps-to-make-palindrome) -- *Given a string, what is the minimum number of adjacent swaps required to convert a string into a palindrome.* [*\(Try ME\)*](https://replit.com/@trsong/Mininum-Adjacent-Swaps-to-Make-Palindrome-1)
 
 </summary>
 <div>
@@ -2006,7 +2006,7 @@ Explanation: swap 't' with 'i' => "nitin"
 <details>
 <summary class="lc_m">
 
-- [**\[Medium\] LC 16. Closest to 3 Sum**](https://trsong.github.io/python/java/2021/02/02/DailyQuestionsFeb/#apr-1-2021-lc-16-medium-closest-to-3-sum) -- *Given a list of numbers and a target number n, find 3 numbers in the list that sums closest to the target number n.* [*\(Try ME\)*](https://replit.com/@trsong/Closest-to-3-Sum-1)
+- [**\[Medium\] LC 16. Closest to 3 Sum**](https://trsong.github.io/python/java/2021/02/02/DailyQuestionsFeb.html#apr-1-2021-lc-16-medium-closest-to-3-sum) -- *Given a list of numbers and a target number n, find 3 numbers in the list that sums closest to the target number n.* [*\(Try ME\)*](https://replit.com/@trsong/Closest-to-3-Sum-1)
 
 </summary>
 <div>
@@ -2027,7 +2027,7 @@ Explanation: Closest sum is -5+1+2 = -2 OR -5+1+4 = 0
 <details>
 <summary class="lc_e">
 
-- [**\[Easy\] Minimum Distance between Two Words**](http://trsong.github.io/python/java/2021/02/02/DailyQuestionsFeb/#feb-24-2021-easy-minimum-distance-between-two-words) -- *Find an efficient algorithm to find the smallest distance (measured in number of words) between any two given words in a string.* [*\(Try ME\)*](https://repl.it/@trsong/Minimum-Distance-between-Two-Words-1)
+- [**\[Easy\] Minimum Distance between Two Words**](http://trsong.github.io/python/java/2021/02/02/DailyQuestionsFeb.html#feb-24-2021-easy-minimum-distance-between-two-words) -- *Find an efficient algorithm to find the smallest distance (measured in number of words) between any two given words in a string.* [*\(Try ME\)*](https://repl.it/@trsong/Minimum-Distance-between-Two-Words-1)
 
 </summary>
 <div>
@@ -2043,7 +2043,7 @@ For example, given words `"hello"`, and `"world"` and a text content of `"dog ca
 <details>
 <summary class="lc_h">
 
-- [**\[Hard\] Count Elements in Sorted Matrix**](https://trsong.github.io/python/java/2020/11/02/DailyQuestionsAug/#jan-17-2021-hard-count-elements-in-sorted-matrix) -- *Let A be a sorted matrix. Given i1, j1, i2, and j2, compute the number of elements smaller than A[i1, j1] and larger than A[i2, j2].* [*\(Try ME\)*](https://repl.it/@trsong/Count-Elements-in-Sorted-Matrix-1)
+- [**\[Hard\] Count Elements in Sorted Matrix**](https://trsong.github.io/python/java/2020/11/02/DailyQuestionsAug.html#jan-17-2021-hard-count-elements-in-sorted-matrix) -- *Let A be a sorted matrix. Given i1, j1, i2, and j2, compute the number of elements smaller than A[i1, j1] and larger than A[i2, j2].* [*\(Try ME\)*](https://repl.it/@trsong/Count-Elements-in-Sorted-Matrix-1)
 
 </summary>
 <div>
@@ -2072,7 +2072,7 @@ return 15 as there are 15 numbers in the matrix smaller than 7 or greater than 2
 <details>
 <summary class="lc_e">
 
-- [**\[Easy\] LC 859. Buddy Strings**](https://trsong.github.io/python/java/2020/11/02/DailyQuestionsAug/#nov-11-2020-lc-859-easy-buddy-strings) -- *Given two string A, B. Return true if and only if we can swap two letters in A so that the result equals B.* [*\(Try ME\)*](https://repl.it/@trsong/Buddy-Strings-1)
+- [**\[Easy\] LC 859. Buddy Strings**](https://trsong.github.io/python/java/2020/11/02/DailyQuestionsAug.html#nov-11-2020-lc-859-easy-buddy-strings) -- *Given two string A, B. Return true if and only if we can swap two letters in A so that the result equals B.* [*\(Try ME\)*](https://repl.it/@trsong/Buddy-Strings-1)
 
 </summary>
 <div>
@@ -2117,7 +2117,7 @@ Output: false
 <details>
 <summary class="lc_m">
 
-- [**\[Medium\] Find Pythagorean Triplets**](https://trsong.github.io/python/java/2020/08/02/DailyQuestionsAug/#oct-22-2020-medium-find-pythagorean-triplets) -- *Given a list of numbers, find if there exists a Pythagorean triplet in that list. * [*\(Try ME\)*](https://repl.it/@trsong/Find-Pythagorean-Triplets-1)
+- [**\[Medium\] Find Pythagorean Triplets**](https://trsong.github.io/python/java/2020/08/02/DailyQuestionsAug.html#oct-22-2020-medium-find-pythagorean-triplets) -- *Given a list of numbers, find if there exists a Pythagorean triplet in that list. * [*\(Try ME\)*](https://repl.it/@trsong/Find-Pythagorean-Triplets-1)
 
 </summary>
 <div>
@@ -2138,7 +2138,7 @@ Here, 5 * 5 + 12 * 12 = 13 * 13.
 <details>
 <summary class="lc_m">
 
-- [**\[Medium\] LT 640. One Edit Distance**](https://trsong.github.io/python/java/2020/08/02/DailyQuestionsAug/#oct-21-2020-lt-640-medium-one-edit-distance) -- *Given two strings S and T, determine if they are both one edit distance apart.* [*\(Try ME\)*](https://repl.it/@trsong/Is-One-Edit-Distance-1)
+- [**\[Medium\] LT 640. One Edit Distance**](https://trsong.github.io/python/java/2020/08/02/DailyQuestionsAug.html#oct-21-2020-lt-640-medium-one-edit-distance) -- *Given two strings S and T, determine if they are both one edit distance apart.* [*\(Try ME\)*](https://repl.it/@trsong/Is-One-Edit-Distance-1)
 
 </summary>
 <div>
@@ -2166,7 +2166,7 @@ s=t, so they aren't one edit distance apart
 <details>
 <summary class="lc_e">
 
-- [**\[Easy\] Array of Equal Parts**](https://trsong.github.io/python/java/2020/08/02/DailyQuestionsAug/#aug-5-2020-easy-array-of-equal-parts) -- *Given an array with only positive integers, determine if exist two numbers such that removing them can break array into 3 equal-sum sub-arrays.* [*\(Try ME\)*](https://repl.it/@trsong/Array-of-Equal-Parts-1)
+- [**\[Easy\] Array of Equal Parts**](https://trsong.github.io/python/java/2020/08/02/DailyQuestionsAug.html#aug-5-2020-easy-array-of-equal-parts) -- *Given an array with only positive integers, determine if exist two numbers such that removing them can break array into 3 equal-sum sub-arrays.* [*\(Try ME\)*](https://repl.it/@trsong/Array-of-Equal-Parts-1)
 
 </summary>
 <div>
@@ -2197,7 +2197,7 @@ Output: False
 <details>
 <summary class="lc_m">
 
-- [**\[Medium\] LC 1525. Number of Good Ways to Split a String**](http://trsong.github.io/python/java/2021/05/02/DailyQuestionsMay/#may-8-2021-lc-1525-medium-number-of-good-ways-to-split-a-string) -- *Return the number of ways S can be split such that the number of unique characters between S1 and S2 are the same.* [*\(Try ME\)*](https://replit.com/@trsong/Number-of-Good-Ways-to-Split-a-String-1)
+- [**\[Medium\] LC 1525. Number of Good Ways to Split a String**](http://trsong.github.io/python/java/2021/05/02/DailyQuestionsMay.html#may-8-2021-lc-1525-medium-number-of-good-ways-to-split-a-string) -- *Return the number of ways S can be split such that the number of unique characters between S1 and S2 are the same.* [*\(Try ME\)*](https://replit.com/@trsong/Number-of-Good-Ways-to-Split-a-String-1)
 
 </summary>
 <div>
@@ -2231,7 +2231,7 @@ Explanation: ab - aba, aba - ba
 <details>
 <summary class="lc_m">
 
-- [**\[Medium\] Smallest Window Contains Every Distinct Character**](https://trsong.github.io/python/java/2021/02/02/DailyQuestionsFeb/#mar-27-2021-medium-smallest-window-contains-every-distinct-character) -- *Given a string, find the length of the smallest window that contains every distinct character.* [*\(Try ME\)*](https://replit.com/@trsong/Smallest-Window-Contains-Every-Distinct-Character-1)
+- [**\[Medium\] Smallest Window Contains Every Distinct Character**](https://trsong.github.io/python/java/2021/02/02/DailyQuestionsFeb.html#mar-27-2021-medium-smallest-window-contains-every-distinct-character) -- *Given a string, find the length of the smallest window that contains every distinct character.* [*\(Try ME\)*](https://replit.com/@trsong/Smallest-Window-Contains-Every-Distinct-Character-1)
 
 </summary>
 <div>
@@ -2247,7 +2247,7 @@ For example, given `"jiujitsu"`, you should return `5`, corresponding to the fin
 <details>
 <summary class="lc_m">
 
-- [**\[Medium\] LC 438. Anagram Indices Problem**](https://trsong.github.io/python/java/2020/05/02/DailyQuestionsMay/#june-13-2020-lc-438-medium-anagram-indices-problem) -- *Given a word W and a string S, find all starting indices in S which are anagrams of W.* [*\(Try ME\)*](https://repl.it/@trsong/Find-All-Anagram-Indices-1)
+- [**\[Medium\] LC 438. Anagram Indices Problem**](https://trsong.github.io/python/java/2020/05/02/DailyQuestionsMay.html#june-13-2020-lc-438-medium-anagram-indices-problem) -- *Given a word W and a string S, find all starting indices in S which are anagrams of W.* [*\(Try ME\)*](https://repl.it/@trsong/Find-All-Anagram-Indices-1)
 
 </summary>
 <div>
@@ -2263,7 +2263,7 @@ For example, given that W is `"ab"`, and S is `"abxaba"`, return `0`, `3`, and `
 <details>
 <summary class="lc_m">
 
-- [**\[Medium\] LC 239. Sliding Window Maximum**](https://trsong.github.io/python/java/2020/05/02/DailyQuestionsMay/#june-14-2020-lc-239-medium-sliding-window-maximum) -- *Given an array nums, return the max sliding window.* [*\(Try ME\)*](https://repl.it/@trsong/Find-Sliding-Window-Maximum-1)
+- [**\[Medium\] LC 239. Sliding Window Maximum**](https://trsong.github.io/python/java/2020/05/02/DailyQuestionsMay.html#june-14-2020-lc-239-medium-sliding-window-maximum) -- *Given an array nums, return the max sliding window.* [*\(Try ME\)*](https://repl.it/@trsong/Find-Sliding-Window-Maximum-1)
 
 </summary>
 <div>
@@ -2298,7 +2298,7 @@ Window position                Max
 <details>
 <summary class="lc_m">
 
-- [**\[Medium\] Substrings with Exactly K Distinct Characters**](http://trsong.github.io/python/java/2021/02/02/DailyQuestionsFeb/#feb-17-2021-medium-substrings-with-exactly-k-distinct-characters) -- *Given a string s and an int k, return an int representing the number of substrings (not unique) of s with exactly k distinct characters.* [*\(Try ME\)*](https://repl.it/@trsong/Substrings-with-Exactly-K-Distinct-Characters-1)
+- [**\[Medium\] Substrings with Exactly K Distinct Characters**](http://trsong.github.io/python/java/2021/02/02/DailyQuestionsFeb.html#feb-17-2021-medium-substrings-with-exactly-k-distinct-characters) -- *Given a string s and an int k, return an int representing the number of substrings (not unique) of s with exactly k distinct characters.* [*\(Try ME\)*](https://repl.it/@trsong/Substrings-with-Exactly-K-Distinct-Characters-1)
 
 </summary>
 <div>
@@ -2327,7 +2327,7 @@ Output: 0
 <details>
 <summary class="lc_m">
 
-- [**\[Medium\] LT 386. Longest Substring with At Most K Distinct Characters**](https://trsong.github.io/python/java/2020/05/02/DailyQuestionsMay/#june-16-2020-lt-386-medium-longest-substring-with-at-most-k-distinct-characters) -- *Given a string, find the longest substring that contains at most k unique characters.* [*\(Try ME\)*](https://repl.it/@trsong/Find-Longest-Substring-with-At-Most-K-Distinct-Characters-1)
+- [**\[Medium\] LT 386. Longest Substring with At Most K Distinct Characters**](https://trsong.github.io/python/java/2020/05/02/DailyQuestionsMay.html#june-16-2020-lt-386-medium-longest-substring-with-at-most-k-distinct-characters) -- *Given a string, find the longest substring that contains at most k unique characters.* [*\(Try ME\)*](https://repl.it/@trsong/Find-Longest-Substring-with-At-Most-K-Distinct-Characters-1)
 
 </summary>
 <div>
@@ -2343,7 +2343,7 @@ For example, given `"abcbbbbcccbdddadacb"`, the longest substring that contains 
 <details>
 <summary class="lc_m">
 
-- [**\[Medium\] Longest Substring without Repeating Characters**](https://trsong.github.io/python/java/2020/05/02/DailyQuestionsMay/#june-17-2020-medium-longest-substring-without-repeating-characters) -- *Given a string, find the length of the longest substring without repeating characters.* [*\(Try ME\)*](https://repl.it/@trsong/Find-Longest-Substring-without-Repeating-Characters-1)
+- [**\[Medium\] Longest Substring without Repeating Characters**](https://trsong.github.io/python/java/2020/05/02/DailyQuestionsMay.html#june-17-2020-medium-longest-substring-without-repeating-characters) -- *Given a string, find the length of the longest substring without repeating characters.* [*\(Try ME\)*](https://repl.it/@trsong/Find-Longest-Substring-without-Repeating-Characters-1)
 
 </summary>
 <div>
@@ -2364,7 +2364,7 @@ lengthOfLongestSubstring("abrkaabcdefghijjxxx") # => 10 as len("abcdefghij") == 
 <details>
 <summary class="lc_m">
 
-- [**\[Medium\] LC 209. Minimum Size Subarray Sum**](https://trsong.github.io/python/java/2020/05/02/DailyQuestionsMay/#june-23-2020-lc-209-medium-minimum-size-subarray-sum) -- *Given an array of n positive integers and a positive integer s, find the minimal length of a contiguous subarray of which the sum >= s.* [*\(Try ME\)*](https://repl.it/@trsong/Find-the-Minimum-Size-Subarray-Sum-1)
+- [**\[Medium\] LC 209. Minimum Size Subarray Sum**](https://trsong.github.io/python/java/2020/05/02/DailyQuestionsMay.html#june-23-2020-lc-209-medium-minimum-size-subarray-sum) -- *Given an array of n positive integers and a positive integer s, find the minimal length of a contiguous subarray of which the sum >= s.* [*\(Try ME\)*](https://repl.it/@trsong/Find-the-Minimum-Size-Subarray-Sum-1)
 
 </summary>
 <div>
@@ -2384,7 +2384,7 @@ Explanation: the subarray [4,3] has the minimal length under the problem constra
 <details>
 <summary class="lc_e">
 
-- [**\[Easy\] LC 383. Ransom Note**](https://trsong.github.io/python/java/2020/05/02/DailyQuestionsMay/#jul-10-2020-lc-383-easy-ransom-note) -- *Given a magazine of letters and the note he wants to write, determine whether he can construct the word.* [*\(Try ME\)*](https://repl.it/@trsong/Ransom-Note-1)
+- [**\[Easy\] LC 383. Ransom Note**](https://trsong.github.io/python/java/2020/05/02/DailyQuestionsMay.html#jul-10-2020-lc-383-easy-ransom-note) -- *Given a magazine of letters and the note he wants to write, determine whether he can construct the word.* [*\(Try ME\)*](https://repl.it/@trsong/Ransom-Note-1)
 
 </summary>
 <div>
@@ -2418,7 +2418,7 @@ Output: False
 <details>
 <summary class="lc_e">
 
-- [**\[Easy\] Swap Even and Odd Nodes**](https://trsong.github.io/python/java/2021/02/02/DailyQuestionsFeb/#mar-19-2021-easy-swap-even-and-odd-nodes) -- *Given the head of a singly linked list, swap every two nodes and return its head.* [*\(Try ME\)*](https://replit.com/@trsong/Swap-Every-Even-and-Odd-Nodes-in-Linked-List-1)
+- [**\[Easy\] Swap Even and Odd Nodes**](https://trsong.github.io/python/java/2021/02/02/DailyQuestionsFeb.html#mar-19-2021-easy-swap-even-and-odd-nodes) -- *Given the head of a singly linked list, swap every two nodes and return its head.* [*\(Try ME\)*](https://replit.com/@trsong/Swap-Every-Even-and-Odd-Nodes-in-Linked-List-1)
 
 </summary>
 <div>
@@ -2439,7 +2439,7 @@ Given 1 -> 2 -> 3 -> 4, return 2 -> 1 -> 4 -> 3.
 <details>
 <summary class="lc_m">
 
-- [**\[Medium\] LC 138. Deepcopy List with Random Pointer**](https://trsong.github.io/python/java/2020/11/02/DailyQuestionsAug/#jan-12-2021-lc-138-medium-deepcopy-list-with-random-pointer) -- *A linked list is given such that each node contains an additional random pointer points to any node in the list or null. Deepcopy that list.* [*\(Try ME\)*](https://repl.it/@trsong/Create-Deepcopy-List-with-Random-1)
+- [**\[Medium\] LC 138. Deepcopy List with Random Pointer**](https://trsong.github.io/python/java/2020/11/02/DailyQuestionsAug.html#jan-12-2021-lc-138-medium-deepcopy-list-with-random-pointer) -- *A linked list is given such that each node contains an additional random pointer points to any node in the list or null. Deepcopy that list.* [*\(Try ME\)*](https://repl.it/@trsong/Create-Deepcopy-List-with-Random-1)
 
 </summary>
 <div>
@@ -2464,7 +2464,7 @@ Node 2's value is 2, its next pointer points to null and its random pointer poin
 <details>
 <summary class="lc_e">
 
-- [**\[Easy\] Reverse a Linked List**](https://trsong.github.io/python/java/2020/08/02/DailyQuestionsAug/#oct-8-2020-easy-reverse-a-linked-list) -- *Given a singly-linked list, reverse the list. This can be done iteratively or recursively. Can you get both solutions?* [*\(Try ME\)*](https://repl.it/@trsong/Reverse-a-Linked-List-1)
+- [**\[Easy\] Reverse a Linked List**](https://trsong.github.io/python/java/2020/08/02/DailyQuestionsAug.html#oct-8-2020-easy-reverse-a-linked-list) -- *Given a singly-linked list, reverse the list. This can be done iteratively or recursively. Can you get both solutions?* [*\(Try ME\)*](https://repl.it/@trsong/Reverse-a-Linked-List-1)
 
 </summary>
 <div>
@@ -2484,7 +2484,7 @@ Output: 0 -> 1 -> 2 -> 3 -> 4 -> NULL
 <details>
 <summary class="lc_e">
 
-- [**\[Easy\] Add Two Numbers as a Linked List**](http://trsong.github.io/python/java/2020/08/02/DailyQuestionsAug/#oct-4-2020--easy-add-two-numbers-as-a-linked-list) -- *Given two linked-lists representing two non-negative integers. Add the two numbers and return it as a linked list.* [*\(Try ME\)*](https://repl.it/@trsong/Add-Two-Numbers-and-Return-as-a-Linked-List-1)
+- [**\[Easy\] Add Two Numbers as a Linked List**](http://trsong.github.io/python/java/2020/08/02/DailyQuestionsAug.html#oct-4-2020--easy-add-two-numbers-as-a-linked-list) -- *Given two linked-lists representing two non-negative integers. Add the two numbers and return it as a linked list.* [*\(Try ME\)*](https://repl.it/@trsong/Add-Two-Numbers-and-Return-as-a-Linked-List-1)
 
 </summary>
 <div>
@@ -2505,7 +2505,7 @@ Explanation: 342 + 465 = 807.
 <details>
 <summary class="lc_e">
 
-- [**\[Easy\] Remove Duplicates From Sorted Linked List**](https://trsong.github.io/python/java/2021/02/02/DailyQuestionsFeb/#apr-9-2021-easy-remove-duplicates-from-sorted-linked-list) -- *Given a sorted linked list of integers, remove all the duplicate elements in the linked list so that all elements are unique.* [*\(Try ME\)*](https://replit.com/@trsong/Remove-Duplicates-From-Sorted-Linked-List-1)
+- [**\[Easy\] Remove Duplicates From Sorted Linked List**](https://trsong.github.io/python/java/2021/02/02/DailyQuestionsFeb.html#apr-9-2021-easy-remove-duplicates-from-sorted-linked-list) -- *Given a sorted linked list of integers, remove all the duplicate elements in the linked list so that all elements are unique.* [*\(Try ME\)*](https://replit.com/@trsong/Remove-Duplicates-From-Sorted-Linked-List-1)
 
 </summary>
 <div>
@@ -2531,7 +2531,7 @@ Output: 1
 <details>
 <summary class="lc_e">
 
-- [**\[Easy\] Remove Duplicates From Linked List**](https://trsong.github.io/python/java/2020/08/02/DailyQuestionsAug/#sep-10-2020-easy-remove-duplicates-from-linked-list) -- *Given a linked list, remove all duplicate values from the linked list.* [*\(Try ME\)*](https://repl.it/@trsong/Remove-Duplicates-From-Linked-List-1)
+- [**\[Easy\] Remove Duplicates From Linked List**](https://trsong.github.io/python/java/2020/08/02/DailyQuestionsAug.html#sep-10-2020-easy-remove-duplicates-from-linked-list) -- *Given a linked list, remove all duplicate values from the linked list.* [*\(Try ME\)*](https://repl.it/@trsong/Remove-Duplicates-From-Linked-List-1)
 
 </summary>
 <div>
@@ -2547,7 +2547,7 @@ For instance, given `1 -> 2 -> 3 -> 3 -> 4`, then we wish to return the linked l
 <details>
 <summary class="lc_m">
 
-- [**\[Medium\] LC 86. Partitioning Linked List**](https://trsong.github.io/python/java/2020/08/02/DailyQuestionsAug/#aug-28-2020--lc-86-medium-partitioning-linked-list) -- *Given a linked list and a value x, partition it such that all nodes less than x come before nodes greater than or equal to x.* [*\(Try ME\)*](https://repl.it/@trsong/Partitioning-Singly-Linked-List-1)
+- [**\[Medium\] LC 86. Partitioning Linked List**](https://trsong.github.io/python/java/2020/08/02/DailyQuestionsAug.html#aug-28-2020--lc-86-medium-partitioning-linked-list) -- *Given a linked list and a value x, partition it such that all nodes less than x come before nodes greater than or equal to x.* [*\(Try ME\)*](https://repl.it/@trsong/Partitioning-Singly-Linked-List-1)
 
 </summary>
 <div>
@@ -2570,7 +2570,7 @@ Output: 1->2->2->4->3->5
 <details>
 <summary class="lc_e">
 
-- [**\[Easy\] Zig-Zag Distinct LinkedList**](https://trsong.github.io/python/java/2020/08/02/DailyQuestionsAug/#aug-16-2020-easy-zig-zag-distinct-linkedlist) -- *Rearrange distinct linked-list such that they appear in alternating order.* [*\(Try ME\)*](https://repl.it/@trsong/Zig-Zag-Order-of-Distinct-LinkedList-1)
+- [**\[Easy\] Zig-Zag Distinct LinkedList**](https://trsong.github.io/python/java/2020/08/02/DailyQuestionsAug.html#aug-16-2020-easy-zig-zag-distinct-linkedlist) -- *Rearrange distinct linked-list such that they appear in alternating order.* [*\(Try ME\)*](https://repl.it/@trsong/Zig-Zag-Order-of-Distinct-LinkedList-1)
 
 </summary>
 <div>
@@ -2583,7 +2583,7 @@ Output: 1->2->2->4->3->5
 <details>
 <summary class="lc_e">
 
-- [**\[Easy\] Remove K-th Last Element from Singly Linked-list**](https://trsong.github.io/python/java/2020/05/02/DailyQuestionsMay/#may-31-2020-medium-remove-k-th-last-element-from-singly-linked-list) -- *Given a singly linked list and an integer k, remove the kth last element from the list.* [*\(Try ME\)*](https://repl.it/@trsong/Remove-the-K-th-Last-Element-from-Singly-Linked-list-1)
+- [**\[Easy\] Remove K-th Last Element from Singly Linked-list**](https://trsong.github.io/python/java/2020/05/02/DailyQuestionsMay.html#may-31-2020-medium-remove-k-th-last-element-from-singly-linked-list) -- *Given a singly linked list and an integer k, remove the kth last element from the list.* [*\(Try ME\)*](https://repl.it/@trsong/Remove-the-K-th-Last-Element-from-Singly-Linked-list-1)
 
 </summary>
 <div>
@@ -2601,7 +2601,7 @@ Output: 1->2->2->4->3->5
 <details>
 <summary class="lc_e">
 
-- [**\[Easy\] Intersection of N Arrays**](https://trsong.github.io/python/java/2020/11/02/DailyQuestionsAug/#dec-1-2020-easy-intersection-of-n-arrays) -- *Given n arrays, find the intersection of them.* [*\(Try ME\)*](https://repl.it/@trsong/Intersection-of-N-Arrays-1)
+- [**\[Easy\] Intersection of N Arrays**](https://trsong.github.io/python/java/2020/11/02/DailyQuestionsAug.html#dec-1-2020-easy-intersection-of-n-arrays) -- *Given n arrays, find the intersection of them.* [*\(Try ME\)*](https://repl.it/@trsong/Intersection-of-N-Arrays-1)
 
 </summary>
 <div>
@@ -2620,7 +2620,7 @@ intersection([1, 2, 3, 4], [2, 4, 6, 8], [3, 4, 5])  # returns [4]
 <details>
 <summary class="lc_e">
 
-- [**\[Easy\] Intersection of Linked Lists**](https://trsong.github.io/python/java/2020/05/02/DailyQuestionsMay/#jul-19-2020-easy-intersection-of-linked-lists) -- *Given two singly linked lists. The lists intersect at some node. Find, and return the node. Note: the lists are non-cyclical.* [*\(Try ME\)*](https://repl.it/@trsong/Intersection-of-Linked-Lists-1)
+- [**\[Easy\] Intersection of Linked Lists**](https://trsong.github.io/python/java/2020/05/02/DailyQuestionsMay.html#jul-19-2020-easy-intersection-of-linked-lists) -- *Given two singly linked lists. The lists intersect at some node. Find, and return the node. Note: the lists are non-cyclical.* [*\(Try ME\)*](https://repl.it/@trsong/Intersection-of-Linked-Lists-1)
 
 </summary>
 <div>
@@ -2643,7 +2643,7 @@ B = 6 -> 3 -> 4
 <details>
 <summary class="lc_e">
 
-- [**\[Easy\] Determine If Linked List is Palindrome**](http://trsong.github.io/python/java/2020/11/02/DailyQuestionsAug/#jan-2-2021-easy-determine-if-linked-list-is-palindrome) -- *You are given a doubly linked list. Determine if it is a palindrome.* [*\(Try ME\)*](https://repl.it/@trsong/Determine-If-Linked-List-is-Palindrome-1)
+- [**\[Easy\] Determine If Linked List is Palindrome**](http://trsong.github.io/python/java/2020/11/02/DailyQuestionsAug.html#jan-2-2021-easy-determine-if-linked-list-is-palindrome) -- *You are given a doubly linked list. Determine if it is a palindrome.* [*\(Try ME\)*](https://repl.it/@trsong/Determine-If-Linked-List-is-Palindrome-1)
 
 </summary>
 <div>
@@ -2657,7 +2657,7 @@ B = 6 -> 3 -> 4
 <details>
 <summary class="lc_h">
 
-- [**\[Hard\] First Unique Character from a Stream**](https://trsong.github.io/python/java/2020/08/02/DailyQuestionsAug/#oct-24-2020-hard-first-unique-character-from-a-stream) -- *Given a stream of characters, find the first unique (non-repeating) character from stream.* [*\(Try ME\)*](https://repl.it/@trsong/First-Unique-Character-from-a-Stream-1)
+- [**\[Hard\] First Unique Character from a Stream**](https://trsong.github.io/python/java/2020/08/02/DailyQuestionsAug.html#oct-24-2020-hard-first-unique-character-from-a-stream) -- *Given a stream of characters, find the first unique (non-repeating) character from stream.* [*\(Try ME\)*](https://repl.it/@trsong/First-Unique-Character-from-a-Stream-1)
 
 </summary>
 <div>
@@ -2689,7 +2689,7 @@ abracadabra => c
 <details>
 <summary class="lc_e">
 
-- [**\[Easy\] Determine If Singly Linked List is Palindrome**](https://trsong.github.io/python/java/2021/02/02/DailyQuestionsFeb/#mar-21-2021-easy-determine-if-singly-linked-list-is-palindrome) -- *Determine whether a singly linked list is a palindrome.* [*\(Try ME\)*](https://replit.com/@trsong/Determine-If-Singly-Linked-List-is-Palindrome-1)
+- [**\[Easy\] Determine If Singly Linked List is Palindrome**](https://trsong.github.io/python/java/2021/02/02/DailyQuestionsFeb.html#mar-21-2021-easy-determine-if-singly-linked-list-is-palindrome) -- *Determine whether a singly linked list is a palindrome.* [*\(Try ME\)*](https://replit.com/@trsong/Determine-If-Singly-Linked-List-is-Palindrome-1)
 
 </summary>
 <div>
@@ -2705,7 +2705,7 @@ For example, `1 -> 4 -> 3 -> 4 -> 1` returns `True` while `1 -> 4` returns `Fals
 <details>
 <summary class="lc_e">
 
-- [**\[Easy\] Rotate Linked List**](https://trsong.github.io/python/java/2020/11/02/DailyQuestionsAug/#jan-26-2021-easy-rotate-linked-list) -- *Given a linked list and a number k, rotate the linked list by k places.* [*\(Try ME\)*](https://repl.it/@trsong/Rotate-Singly-Linked-List-1)
+- [**\[Easy\] Rotate Linked List**](https://trsong.github.io/python/java/2020/11/02/DailyQuestionsAug.html#jan-26-2021-easy-rotate-linked-list) -- *Given a linked list and a number k, rotate the linked list by k places.* [*\(Try ME\)*](https://repl.it/@trsong/Rotate-Singly-Linked-List-1)
 
 </summary>
 <div>
@@ -2723,7 +2723,7 @@ Given the linked list `1 -> 2 -> 3 -> 4 -> 5` and `k = 3`, it should become `3 -
 <details>
 <summary class="lc_m">
 
-- [**\[Medium\] Detect Linked List Cycle**](http://trsong.github.io/python/java/2020/11/02/DailyQuestionsAug/#jan-3-2021-medium-detect-linked-list-cycle) -- *Given a linked list, determine if the linked list has a cycle in it.* [*\(Try ME\)*](https://repl.it/@trsong/Detect-Linked-List-Cycle-1)
+- [**\[Medium\] Detect Linked List Cycle**](http://trsong.github.io/python/java/2020/11/02/DailyQuestionsAug.html#jan-3-2021-medium-detect-linked-list-cycle) -- *Given a linked list, determine if the linked list has a cycle in it.* [*\(Try ME\)*](https://repl.it/@trsong/Detect-Linked-List-Cycle-1)
 
 </summary>
 <div>
@@ -2742,7 +2742,7 @@ Output: True
 <details>
 <summary class="lc_m">
 
-- [**\[Medium\] LC 287. Find the Duplicate Number**](http://trsong.github.io/python/java/2020/08/02/DailyQuestionsAug/#oct-31-2020-lc-287-medium-find-the-duplicate-number) -- *Given an array of length `n + 1` whose elements belong to the set `{1, 2, ..., n}`. Find any duplicate element.* [*\(Try ME\)*](https://repl.it/@trsong/Find-the-Duplicate-Number-from-Array-1)
+- [**\[Medium\] LC 287. Find the Duplicate Number**](http://trsong.github.io/python/java/2020/08/02/DailyQuestionsAug.html#oct-31-2020-lc-287-medium-find-the-duplicate-number) -- *Given an array of length `n + 1` whose elements belong to the set `{1, 2, ..., n}`. Find any duplicate element.* [*\(Try ME\)*](https://repl.it/@trsong/Find-the-Duplicate-Number-from-Array-1)
 
 </summary>
 <div>
@@ -2760,7 +2760,7 @@ You are given an array of length `n + 1` whose elements belong to the set `{1, 2
 <details>
 <summary class="lc_m">
 
-- [**\[Medium\] LC 274. H-Index**](http://trsong.github.io/python/java/2020/11/02/DailyQuestionsAug/#dec-5-2020-lc-274-medium-h-index) -- *The definition of the h-index is if a scholar has at least h of their papers cited h times.* [*\(Try ME\)*](https://repl.it/@trsong/Calculate-H-Index-1)
+- [**\[Medium\] LC 274. H-Index**](http://trsong.github.io/python/java/2020/11/02/DailyQuestionsAug.html#dec-5-2020-lc-274-medium-h-index) -- *The definition of the h-index is if a scholar has at least h of their papers cited h times.* [*\(Try ME\)*](https://repl.it/@trsong/Calculate-H-Index-1)
 
 </summary>
 <div>
@@ -2784,7 +2784,7 @@ There are 3 publications with 3 or more citations, hence the h-index is 3.
 <details>
 <summary class="lc_e">
 
-- [**\[Easy\] Sorted Square of Integers**](https://trsong.github.io/python/java/2020/08/02/DailyQuestionsAug/#oct-20-2020-easy-sorted-square-of-integers) -- *Given a sorted list of integers, square the elements and give the output in sorted order.* [*\(Try ME\)*](https://repl.it/@trsong/Calculate-Sorted-Square-of-Integers-1)
+- [**\[Easy\] Sorted Square of Integers**](https://trsong.github.io/python/java/2020/08/02/DailyQuestionsAug.html#oct-20-2020-easy-sorted-square-of-integers) -- *Given a sorted list of integers, square the elements and give the output in sorted order.* [*\(Try ME\)*](https://repl.it/@trsong/Calculate-Sorted-Square-of-Integers-1)
 
 </summary>
 <div>
@@ -2802,7 +2802,7 @@ Additonal Requirement: Do it in-place. i.e. Space Complexity O(1).
 <details>
 <summary class="lc_e">
 
-- [**\[Easy\] Make the Largest Number**](https://trsong.github.io/python/java/2020/08/02/DailyQuestionsAug/#aug-21-2020-easy-make-the-largest-number) -- *Given a number of integers, combine them so it would create the largest number.* [*\(Try ME\)*](https://repl.it/@trsong/Construct-Largest-Number-1)
+- [**\[Easy\] Make the Largest Number**](https://trsong.github.io/python/java/2020/08/02/DailyQuestionsAug.html#aug-21-2020-easy-make-the-largest-number) -- *Given a number of integers, combine them so it would create the largest number.* [*\(Try ME\)*](https://repl.it/@trsong/Construct-Largest-Number-1)
 
 </summary>
 <div>
@@ -2823,7 +2823,7 @@ Output: 77245217
 <details>
 <summary class="lc_e">
 
-- [**\[Easy\] Sorting Window Range**](https://trsong.github.io/python/java/2020/05/02/DailyQuestionsMay/#june-21-2020-medium-sorting-window-range) -- *Given a list of numbers, find the smallest window to sort such that the whole list will be sorted.* [*\(Try ME\)*](https://repl.it/@trsong/Min-Window-Range-to-Sort-1)
+- [**\[Easy\] Sorting Window Range**](https://trsong.github.io/python/java/2020/05/02/DailyQuestionsMay.html#june-21-2020-medium-sorting-window-range) -- *Given a list of numbers, find the smallest window to sort such that the whole list will be sorted.* [*\(Try ME\)*](https://repl.it/@trsong/Min-Window-Range-to-Sort-1)
 
 </summary>
 <div>
@@ -2846,7 +2846,7 @@ Explanation: Sorting the window (2, 4) which is [7, 5, 6] will also means that t
 <details>
 <summary class="lc_h">
 
-- [**\[Hard\] Inversion Pairs**](http://trsong.github.io/python/java/2020/11/02/DailyQuestionsAug/#nov-26-2020-hard-inversion-pairs) -- *Count total number of pairs such that a smaller element appears after a larger element.* [*\(Try ME\)*](https://repl.it/@trsong/Count-Inversion-Pairs-1)
+- [**\[Hard\] Inversion Pairs**](http://trsong.github.io/python/java/2020/11/02/DailyQuestionsAug.html#nov-26-2020-hard-inversion-pairs) -- *Count total number of pairs such that a smaller element appears after a larger element.* [*\(Try ME\)*](https://repl.it/@trsong/Count-Inversion-Pairs-1)
 
 </summary>
 <div>
@@ -2861,7 +2861,7 @@ For example, a sorted list has zero inversions. The array `[2, 4, 1, 3, 5]` has 
 <details>
 <summary class="lc_m">
 
-- [**\[Medium\] Sort Linked List**](https://trsong.github.io/python/java/2020/08/02/DailyQuestionsAug/#aug-14-2020-medium-sort-linked-list) -- *Given a linked list, sort it in O(n log n) time and constant space.* [*\(Try ME\)*](https://repl.it/@trsong/Sort-Linked-List-1)
+- [**\[Medium\] Sort Linked List**](https://trsong.github.io/python/java/2020/08/02/DailyQuestionsAug.html#aug-14-2020-medium-sort-linked-list) -- *Given a linked list, sort it in O(n log n) time and constant space.* [*\(Try ME\)*](https://repl.it/@trsong/Sort-Linked-List-1)
 
 </summary>
 <div>
@@ -2881,7 +2881,7 @@ For example, the linked list `4 -> 1 -> -3 -> 99` should become `-3 -> 1 -> 4 ->
 <details>
 <summary class="lc_e">
 
-- [**\[Easy\] Find the K-th Largest Number**](https://trsong.github.io/python/java/2020/05/02/DailyQuestionsMay/#june-24-2020-easy-find-the-k-th-largest-number) -- *Find the k-th largest number in a sequence of unsorted numbers.* [*\(Try ME\)*](https://repl.it/@trsong/Find-the-K-th-Largest-Number-1)
+- [**\[Easy\] Find the K-th Largest Number**](https://trsong.github.io/python/java/2020/05/02/DailyQuestionsMay.html#june-24-2020-easy-find-the-k-th-largest-number) -- *Find the k-th largest number in a sequence of unsorted numbers.* [*\(Try ME\)*](https://repl.it/@trsong/Find-the-K-th-Largest-Number-1)
 
 </summary>
 <div>
@@ -2901,7 +2901,7 @@ Output: 7
 <details>
 <summary class="lc_m">
 
-- [**\[Medium\] Sorting a List With 3 Unique Numbers**](https://trsong.github.io/python/java/2020/05/02/DailyQuestionsMay/#jul-18-2020-medium-sorting-a-list-with-3-unique-numbers) -- *Given a list of numbers with only 3 unique numbers (1, 2, 3), sort the list in O(n) time.* [*\(Try ME\)*](https://repl.it/@trsong/Sorting-a-List-With-3-Unique-Numbers-1)
+- [**\[Medium\] Sorting a List With 3 Unique Numbers**](https://trsong.github.io/python/java/2020/05/02/DailyQuestionsMay.html#jul-18-2020-medium-sorting-a-list-with-3-unique-numbers) -- *Given a list of numbers with only 3 unique numbers (1, 2, 3), sort the list in O(n) time.* [*\(Try ME\)*](https://repl.it/@trsong/Sorting-a-List-With-3-Unique-Numbers-1)
 
 </summary>
 <div>
@@ -2923,7 +2923,7 @@ Output: [1, 1, 2, 2, 3, 3, 3]
 <details>
 <summary class="lc_e">
 
-- [**\[Easy\] LC 451. Sort Characters By Frequency**](https://trsong.github.io/python/java/2020/08/02/DailyQuestionsAug/#aug-22-2020-lc-451-easy-sort-characters-by-frequency) -- *Given a string, sort it in decreasing order based on the frequency of characters.* [*\(Try ME\)*](https://repl.it/@trsong/Sort-Characters-By-Frequency-1)
+- [**\[Easy\] LC 451. Sort Characters By Frequency**](https://trsong.github.io/python/java/2020/08/02/DailyQuestionsAug.html#aug-22-2020-lc-451-easy-sort-characters-by-frequency) -- *Given a string, sort it in decreasing order based on the frequency of characters.* [*\(Try ME\)*](https://repl.it/@trsong/Sort-Characters-By-Frequency-1)
 
 </summary>
 <div>
@@ -2944,7 +2944,7 @@ For example, given the string `tweet`, return `tteew`. `eettw` would also be acc
 <details>
 <summary class="lc_m">
 
-- [**\[Medium\] LC 821. Shortest Distance to Character**](http://trsong.github.io/python/java/2021/02/02/DailyQuestionsFeb/#mar-10-2021-lc-821-medium-shortest-distance-to-character) -- *Given a string s and a character c, find the distance for all characters in the string to the character c in the string s.* [*\(Try ME\)*](https://repl.it/@trsong/Find-Shortest-Distance-to-Characters-1)
+- [**\[Medium\] LC 821. Shortest Distance to Character**](http://trsong.github.io/python/java/2021/02/02/DailyQuestionsFeb.html#mar-10-2021-lc-821-medium-shortest-distance-to-character) -- *Given a string s and a character c, find the distance for all characters in the string to the character c in the string s.* [*\(Try ME\)*](https://repl.it/@trsong/Find-Shortest-Distance-to-Characters-1)
 
 </summary>
 <div>
@@ -2966,7 +2966,7 @@ shortest_dist('helloworld', 'l')
 <details>
 <summary class="lc_h">
 
-- [**\[Hard\] Efficiently Manipulate a Very Long String**](http://trsong.github.io/python/java/2021/02/02/DailyQuestionsFeb/#mar-6-2021-hard-efficiently-manipulate-a-very-long-string) -- *Design a tree-based data structure to efficiently manipulate a very long string* [*\(Try ME\)*](https://repl.it/@trsong/Efficiently-Manipulate-a-Very-Long-String-1)
+- [**\[Hard\] Efficiently Manipulate a Very Long String**](http://trsong.github.io/python/java/2021/02/02/DailyQuestionsFeb.html#mar-6-2021-hard-efficiently-manipulate-a-very-long-string) -- *Design a tree-based data structure to efficiently manipulate a very long string* [*\(Try ME\)*](https://repl.it/@trsong/Efficiently-Manipulate-a-Very-Long-String-1)
 
 </summary>
 <div>
@@ -2984,7 +2984,7 @@ shortest_dist('helloworld', 'l')
 <details>
 <summary class="lc_h">
 
-- [**\[Hard\] Reverse Words Keep Delimiters**](http://trsong.github.io/python/java/2021/02/02/DailyQuestionsFeb/#mar-5-2021-hard-reverse-words-keep-delimiters) -- *Given a string and a set of delimiters, reverse the words in the string while maintaining the relative order of the delimiters.* [*\(Try ME\)*](https://repl.it/@trsong/Reverse-Words-and-Keep-Delimiters-1)
+- [**\[Hard\] Reverse Words Keep Delimiters**](http://trsong.github.io/python/java/2021/02/02/DailyQuestionsFeb.html#mar-5-2021-hard-reverse-words-keep-delimiters) -- *Given a string and a set of delimiters, reverse the words in the string while maintaining the relative order of the delimiters.* [*\(Try ME\)*](https://repl.it/@trsong/Reverse-Words-and-Keep-Delimiters-1)
 
 </summary>
 <div>
@@ -3000,7 +3000,7 @@ Follow-up: Does your solution work for the following cases: "hello/world:here/",
 <details>
 <summary class="lc_h">
 
-- [**\[Hard\] Regular Expression: Period and Asterisk**](http://trsong.github.io/python/java/2021/02/02/DailyQuestionsFeb/#feb-7-2021-hard-regular-expression-period-and-asterisk) -- *Implement regular expression matching with the following special characters: . (period) and \* (asterisk)* [*\(Try ME\)*](https://repl.it/@trsong/Regular-Expression-Period-and-Asterisk-1)
+- [**\[Hard\] Regular Expression: Period and Asterisk**](http://trsong.github.io/python/java/2021/02/02/DailyQuestionsFeb.html#feb-7-2021-hard-regular-expression-period-and-asterisk) -- *Implement regular expression matching with the following special characters: . (period) and \* (asterisk)* [*\(Try ME\)*](https://repl.it/@trsong/Regular-Expression-Period-and-Asterisk-1)
 
 </summary>
 <div>
@@ -3024,7 +3024,7 @@ Given the regular expression ".*at" and the string "chat", your function should 
 <details>
 <summary class="lc_h">
 
-- [**\[Hard\] LC 65. Valid Number**](http://trsong.github.io/python/java/2020/11/02/DailyQuestionsAug/#jan-30-2021-lc-65-hard-valid-number) -- *Given a string that may represent a number, determine if it is a number.* [*\(Try ME\)*](https://repl.it/@trsong/Valid-Number-1)
+- [**\[Hard\] LC 65. Valid Number**](http://trsong.github.io/python/java/2020/11/02/DailyQuestionsAug.html#jan-30-2021-lc-65-hard-valid-number) -- *Given a string that may represent a number, determine if it is a number.* [*\(Try ME\)*](https://repl.it/@trsong/Valid-Number-1)
 
 </summary>
 <div>
@@ -3051,7 +3051,7 @@ And here are examples of non-numbers:
 <details>
 <summary class="lc_m">
 
-- [**\[Medium\] LC 151. Reverse Words in a String**](http://trsong.github.io/python/java/2020/11/02/DailyQuestionsAug/#nov-28-2020-lc-151-medium-reverse-words-in-a-string) -- *Given an input string, reverse the string word by word.* [*\(Try ME\)*](https://repl.it/@trsong/Reverse-words-in-a-string-1)
+- [**\[Medium\] LC 151. Reverse Words in a String**](http://trsong.github.io/python/java/2020/11/02/DailyQuestionsAug.html#nov-28-2020-lc-151-medium-reverse-words-in-a-string) -- *Given an input string, reverse the string word by word.* [*\(Try ME\)*](https://repl.it/@trsong/Reverse-words-in-a-string-1)
 
 </summary>
 <div>
@@ -3093,7 +3093,7 @@ Explanation: You need to reduce multiple spaces between two words to a single sp
 <details>
 <summary class="lc_m">
 
-- [**\[Medium\] Implement Soundex**](http://trsong.github.io/python/java/2020/11/02/DailyQuestionsAug/#nov-29-2020-medium-implement-soundex) -- *Soundex is an algorithm used to categorize phonetically, such that two names that sound alike but are spelled differently have the same repr...* [*\(Try ME\)*](https://repl.it/@trsong/Implement-Soundex-1)
+- [**\[Medium\] Implement Soundex**](http://trsong.github.io/python/java/2020/11/02/DailyQuestionsAug.html#nov-29-2020-medium-implement-soundex) -- *Soundex is an algorithm used to categorize phonetically, such that two names that sound alike but are spelled differently have the same repr...* [*\(Try ME\)*](https://repl.it/@trsong/Implement-Soundex-1)
 
 </summary>
 <div>
@@ -3125,7 +3125,7 @@ Using this scheme, Jackson and Jaxen both map to J250.
 <details>
 <summary class="lc_e">
 
-- [**\[Easy\] Run-length String Encode and Decode**](https://trsong.github.io/python/java/2020/08/02/DailyQuestionsAug/#sep-21-2020-easy-run-length-string-encode-and-decode) -- *Implement run-length encoding and decoding.* [*\(Try ME\)*](https://repl.it/@trsong/Run-length-String-Encode-and-Decode-1)
+- [**\[Easy\] Run-length String Encode and Decode**](https://trsong.github.io/python/java/2020/08/02/DailyQuestionsAug.html#sep-21-2020-easy-run-length-string-encode-and-decode) -- *Implement run-length encoding and decoding.* [*\(Try ME\)*](https://repl.it/@trsong/Run-length-String-Encode-and-Decode-1)
 
 </summary>
 <div>
@@ -3141,7 +3141,7 @@ Implement run-length encoding and decoding. You can assume the string to be enco
 <details>
 <summary class="lc_m">
 
-- [**\[Medium\] Zig-Zag String**](http://trsong.github.io/python/java/2020/08/02/DailyQuestionsAug/#sep-4-2020-medium-zig-zag-string) -- *Given a string and a number of lines k, print the string in zigzag form.* [*\(Try ME\)*](https://repl.it/@trsong/Print-Zig-Zag-String-1)
+- [**\[Medium\] Zig-Zag String**](http://trsong.github.io/python/java/2020/08/02/DailyQuestionsAug.html#sep-4-2020-medium-zig-zag-string) -- *Given a string and a number of lines k, print the string in zigzag form.* [*\(Try ME\)*](https://repl.it/@trsong/Print-Zig-Zag-String-1)
 
 </summary>
 <div>
@@ -3164,7 +3164,7 @@ t     a     g
 <details>
 <summary class="lc_m">
 
-- [**\[Medium\] Tokenization**](https://trsong.github.io/python/java/2020/05/02/DailyQuestionsMay/#jul-20-2020-medium-tokenization) -- *Given a dictionary of words and a string made up of those words (no spaces), return the original sentence in a list.* [*\(Try ME\)*](https://repl.it/@trsong/String-Tokenization-1)
+- [**\[Medium\] Tokenization**](https://trsong.github.io/python/java/2020/05/02/DailyQuestionsMay.html#jul-20-2020-medium-tokenization) -- *Given a dictionary of words and a string made up of those words (no spaces), return the original sentence in a list.* [*\(Try ME\)*](https://repl.it/@trsong/String-Tokenization-1)
 
 </summary>
 <div>
@@ -3193,7 +3193,7 @@ Output:  Either ['bed', 'bath', 'and', 'beyond'] or ['bedbath', 'and', 'beyond']
 <details>
 <summary class="lc_e">
 
-- [**\[Easy\] Invalid Parentheses to Remove**](https://trsong.github.io/python/java/2020/11/02/DailyQuestionsAug/#dec-21-2020-easy-invalid-parentheses-to-remove) -- *Write a function to compute the minimum number of parentheses to be removed to make the string valid.* [*\(Try ME\)*](https://repl.it/@trsong/Count-Invalid-Parentheses-to-Remove-1)
+- [**\[Easy\] Invalid Parentheses to Remove**](https://trsong.github.io/python/java/2020/11/02/DailyQuestionsAug.html#dec-21-2020-easy-invalid-parentheses-to-remove) -- *Write a function to compute the minimum number of parentheses to be removed to make the string valid.* [*\(Try ME\)*](https://repl.it/@trsong/Count-Invalid-Parentheses-to-Remove-1)
 
 </summary>
 <div>
@@ -3209,7 +3209,7 @@ For example, given the string `"()())()"`, you should return `1`. Given the stri
 <details>
 <summary class="lc_h">
 
-- [**\[Hard\] LC 301. Remove Invalid Parentheses**](https://trsong.github.io/python/java/2020/11/02/DailyQuestionsAug/#dec-22-2020-lc-301-hard-remove-invalid-parentheses) -- *Remove the minimum number of invalid parentheses in order to make the input string valid. Return all possible results.* [*\(Try ME\)*](https://repl.it/@trsong/Ways-to-Remove-Invalid-Parentheses-1)
+- [**\[Hard\] LC 301. Remove Invalid Parentheses**](https://trsong.github.io/python/java/2020/11/02/DailyQuestionsAug.html#dec-22-2020-lc-301-hard-remove-invalid-parentheses) -- *Remove the minimum number of invalid parentheses in order to make the input string valid. Return all possible results.* [*\(Try ME\)*](https://repl.it/@trsong/Ways-to-Remove-Invalid-Parentheses-1)
 
 </summary>
 <div>
@@ -3243,7 +3243,7 @@ Output: [""]
 <details>
 <summary class="lc_m">
 
-- [**\[Medium\] LC 678. Balanced Parentheses with Wildcard**](http://trsong.github.io/python/java/2020/08/02/DailyQuestionsAug/#oct-2-2020-lc-678-medium-balanced-parentheses-with-wildcard) -- *Given string contains * that can represent either a (, ), or an empty string. Determine whether the parentheses are balanced.* [*\(Try ME\)*](https://repl.it/@trsong/Determine-Balanced-Parentheses-with-Wildcard-1)
+- [**\[Medium\] LC 678. Balanced Parentheses with Wildcard**](http://trsong.github.io/python/java/2020/08/02/DailyQuestionsAug.html#oct-2-2020-lc-678-medium-balanced-parentheses-with-wildcard) -- *Given string contains * that can represent either a (, ), or an empty string. Determine whether the parentheses are balanced.* [*\(Try ME\)*](https://repl.it/@trsong/Determine-Balanced-Parentheses-with-Wildcard-1)
 
 </summary>
 <div>
@@ -3259,7 +3259,7 @@ For example, `(()*` and `(*)` are balanced. `)*(` is not balanced.
 <details>
 <summary class="lc_e">
 
-- [**\[Easy\] LC 1021. Remove One Layer of Parenthesis**](https://trsong.github.io/python/java/2020/08/02/DailyQuestionsAug/#aug-12-2020-lc-1021-easy-remove-one-layer-of-parenthesis) -- *Given a valid parenthesis string, remove the outermost layers of the parenthesis string and return the new parenthesis string.* [*\(Try ME\)*](https://repl.it/@trsong/Remove-One-Layer-of-Parenthesis-1)
+- [**\[Easy\] LC 1021. Remove One Layer of Parenthesis**](https://trsong.github.io/python/java/2020/08/02/DailyQuestionsAug.html#aug-12-2020-lc-1021-easy-remove-one-layer-of-parenthesis) -- *Given a valid parenthesis string, remove the outermost layers of the parenthesis string and return the new parenthesis string.* [*\(Try ME\)*](https://repl.it/@trsong/Remove-One-Layer-of-Parenthesis-1)
 
 </summary>
 <div>
@@ -3299,7 +3299,7 @@ Output: ''
 <details>
 <summary class="lc_e">
 
-- [**\[Easy\] Step Word Anagram**](https://trsong.github.io/python/java/2020/11/02/DailyQuestionsAug/#jan-8-2021-easy-step-word-anagram) -- *Given a dictionary of words and an input word, create a function that returns all valid step words (word adding a letter, and anagramming).* [*\(Try ME\)*](https://repl.it/@trsong/Step-Word-Anagram-1)
+- [**\[Easy\] Step Word Anagram**](https://trsong.github.io/python/java/2020/11/02/DailyQuestionsAug.html#jan-8-2021-easy-step-word-anagram) -- *Given a dictionary of words and an input word, create a function that returns all valid step words (word adding a letter, and anagramming).* [*\(Try ME\)*](https://repl.it/@trsong/Step-Word-Anagram-1)
 
 </summary>
 <div>
@@ -3315,7 +3315,7 @@ Given a dictionary of words and an input word, create a function that returns al
 <details>
 <summary class="lc_e">
 
-- [**\[Easy\] Is Anagram of Palindrome**](https://trsong.github.io/python/java/2020/08/02/DailyQuestionsAug/#oct-1-2020-easy-is-anagram-of-palindrome) -- *Given a string, determine whether any permutation of it is a palindrome.* [*\(Try ME\)*](https://repl.it/@trsong/Is-Anagram-of-Palindrome-1)
+- [**\[Easy\] Is Anagram of Palindrome**](https://trsong.github.io/python/java/2020/08/02/DailyQuestionsAug.html#oct-1-2020-easy-is-anagram-of-palindrome) -- *Given a string, determine whether any permutation of it is a palindrome.* [*\(Try ME\)*](https://repl.it/@trsong/Is-Anagram-of-Palindrome-1)
 
 </summary>
 <div>
@@ -3335,7 +3335,7 @@ For example, `'carrace'` should return True, since it can be rearranged to form 
 <details>
 <summary class="lc_h">
 
-- [**\[Hard\] LC 336. Palindrome Pairs**](http://trsong.github.io/python/java/2021/02/02/DailyQuestionsFeb/#mar-1-2021-lc-336-hard-palindrome-pairs) -- *Given a list of words, find all pairs of unique indices such that the concatenation of the two words is a palindrome.* [*\(Try ME\)*](https://repl.it/@trsong/Find-All-Palindrome-Pairs-1)
+- [**\[Hard\] LC 336. Palindrome Pairs**](http://trsong.github.io/python/java/2021/02/02/DailyQuestionsFeb.html#mar-1-2021-lc-336-hard-palindrome-pairs) -- *Given a list of words, find all pairs of unique indices such that the concatenation of the two words is a palindrome.* [*\(Try ME\)*](https://repl.it/@trsong/Find-All-Palindrome-Pairs-1)
 
 </summary>
 <div>
@@ -3351,7 +3351,7 @@ For example, given the list `["code", "edoc", "da", "d"]`, return `[(0, 1), (1, 
 <details>
 <summary class="lc_h">
 
-- [**\[Hard\] K-Palindrome**](http://trsong.github.io/python/java/2021/02/02/DailyQuestionsFeb/#feb-23-2021-hard-k-palindrome) -- *Given a string which we can delete at most k, return whether you can make a palindrome.* [*\(Try ME\)*](https://repl.it/@trsong/Find-K-Palindrome-1)
+- [**\[Hard\] K-Palindrome**](http://trsong.github.io/python/java/2021/02/02/DailyQuestionsFeb.html#feb-23-2021-hard-k-palindrome) -- *Given a string which we can delete at most k, return whether you can make a palindrome.* [*\(Try ME\)*](https://repl.it/@trsong/Find-K-Palindrome-1)
 
 </summary>
 <div>
@@ -3367,7 +3367,7 @@ For example, given `'waterrfetawx'` and a k of 2, you could delete f and x to ge
 <details>
 <summary class="lc_m">
 
-- [**\[Medium\] LC 131. Palindrome Partitioning**](http://trsong.github.io/python/java/2021/02/02/DailyQuestionsFeb/#feb-21-2021-lc-131-medium-palindrome-partitioning) -- *Given a string s, partition s such that every substring of the partition is a palindrome. Return all possible palindrome partitioning of s.* [*\(Try ME\)*](https://repl.it/@trsong/Palindrome-Partitioning-1)
+- [**\[Medium\] LC 131. Palindrome Partitioning**](http://trsong.github.io/python/java/2021/02/02/DailyQuestionsFeb.html#feb-21-2021-lc-131-medium-palindrome-partitioning) -- *Given a string s, partition s such that every substring of the partition is a palindrome. Return all possible palindrome partitioning of s.* [*\(Try ME\)*](https://repl.it/@trsong/Palindrome-Partitioning-1)
 
 </summary>
 <div>
@@ -3394,7 +3394,7 @@ Output: [["a"]]
 <details>
 <summary class="lc_h">
 
-- [**\[Hard\] Minimum Palindrome Substring**](https://trsong.github.io/python/java/2021/02/02/DailyQuestionsFeb/#feb-20-2021-hard-minimum-palindrome-substring) -- *Given a string, split it into as few strings as possible such that each string is a palindrome.* [*\(Try ME\)*](https://repl.it/@trsong/Minimum-Palindrome-Substring-1)
+- [**\[Hard\] Minimum Palindrome Substring**](https://trsong.github.io/python/java/2021/02/02/DailyQuestionsFeb.html#feb-20-2021-hard-minimum-palindrome-substring) -- *Given a string, split it into as few strings as possible such that each string is a palindrome.* [*\(Try ME\)*](https://repl.it/@trsong/Minimum-Palindrome-Substring-1)
 
 </summary>
 <div>
@@ -3412,7 +3412,7 @@ Given the input string `"abc"`, return `["a", "b", "c"]`.
 <details>
 <summary class="lc_h">
 
-- [**\[Hard\] Longest Palindromic Substring**](https://trsong.github.io/python/java/2020/08/02/DailyQuestionsAug/#oct-10-2020-hard-longest-palindromic-substring) -- *Given a string, find the longest palindromic contiguous substring. If there are more than one with the maximum length, return any one.* [*\(Try ME\)*](https://repl.it/@trsong/Find-the-Longest-Palindromic-Substring-1)
+- [**\[Hard\] Longest Palindromic Substring**](https://trsong.github.io/python/java/2020/08/02/DailyQuestionsAug.html#oct-10-2020-hard-longest-palindromic-substring) -- *Given a string, find the longest palindromic contiguous substring. If there are more than one with the maximum length, return any one.* [*\(Try ME\)*](https://repl.it/@trsong/Find-the-Longest-Palindromic-Substring-1)
 
 </summary>
 <div>
@@ -3428,7 +3428,7 @@ For example, the longest palindromic substring of `"aabcdcb"` is `"bcdcb"`. The 
 <details>
 <summary class="lc_e">
 
-- [**\[Easy\] LC 680. Remove Character to Create Palindrome**](https://trsong.github.io/python/java/2020/05/02/DailyQuestionsMay/#jul-1-2020-lc-680-easy-remove-character-to-create-palindrome) -- *Given a string, determine if you can remove any character to create a palindrome.* [*\(Try ME\)*](https://repl.it/@trsong/Remove-Character-to-Create-Palindrome-1)
+- [**\[Easy\] LC 680. Remove Character to Create Palindrome**](https://trsong.github.io/python/java/2020/05/02/DailyQuestionsMay.html#jul-1-2020-lc-680-easy-remove-character-to-create-palindrome) -- *Given a string, determine if you can remove any character to create a palindrome.* [*\(Try ME\)*](https://repl.it/@trsong/Remove-Character-to-Create-Palindrome-1)
 
 </summary>
 <div>
@@ -3464,7 +3464,7 @@ Output: False
 <details>
 <summary class="lc_m">
 
-- [**\[Medium\] Lazy Binary Tree Generation**](http://trsong.github.io/python/java/2021/02/02/DailyQuestionsFeb/#feb-22-2021-medium-lazy-binary-tree-generation) -- *Generate a finite, but an arbitrarily large binary tree quickly in `O(1)`.* [*\(Try ME\)*](https://repl.it/@trsong/Lazy-Binary-Tree-Generation-1)
+- [**\[Medium\] Lazy Binary Tree Generation**](http://trsong.github.io/python/java/2021/02/02/DailyQuestionsFeb.html#feb-22-2021-medium-lazy-binary-tree-generation) -- *Generate a finite, but an arbitrarily large binary tree quickly in `O(1)`.* [*\(Try ME\)*](https://repl.it/@trsong/Lazy-Binary-Tree-Generation-1)
 
 </summary>
 <div>
@@ -3480,7 +3480,7 @@ That is, `generate()` should return a tree whose size is unbounded but finite.
 <details>
 <summary class="lc_m">
 
-- [**\[Medium\] LC 388. Longest Absolute File Path**](http://trsong.github.io/python/java/2021/02/02/DailyQuestionsFeb/#feb-6-2021-lc-388-medium-longest-absolute-file-path) -- *Given a string representing the file system in certain format, return the length of the longest absolute path to a file in that fs.* [*\(Try ME\)*](https://repl.it/@trsong/Longest-Absolute-File-Path-1)
+- [**\[Medium\] LC 388. Longest Absolute File Path**](http://trsong.github.io/python/java/2021/02/02/DailyQuestionsFeb.html#feb-6-2021-lc-388-medium-longest-absolute-file-path) -- *Given a string representing the file system in certain format, return the length of the longest absolute path to a file in that fs.* [*\(Try ME\)*](https://repl.it/@trsong/Longest-Absolute-File-Path-1)
 
 </summary>
 <div>
@@ -3528,7 +3528,7 @@ Given a string representing the file system in the above format, return the leng
 <details>
 <summary class="lc_m">
 
-- [**\[Medium\] Invert a Binary Tree**](http://trsong.github.io/python/java/2020/11/02/DailyQuestionsAug/#nov-9-2020-medium-invert-a-binary-tree) -- *Given the root of a binary tree. Invert the binary tree in place.* [*\(Try ME\)*](https://repl.it/@trsong/Invert-All-Nodes-in-Binary-Tree-1)
+- [**\[Medium\] Invert a Binary Tree**](http://trsong.github.io/python/java/2020/11/02/DailyQuestionsAug.html#nov-9-2020-medium-invert-a-binary-tree) -- *Given the root of a binary tree. Invert the binary tree in place.* [*\(Try ME\)*](https://repl.it/@trsong/Invert-All-Nodes-in-Binary-Tree-1)
 
 </summary>
 <div>
@@ -3560,7 +3560,7 @@ c     b
 <details>
 <summary class="lc_m">
 
-- [**\[Medium\] Locking in Binary Tree**](https://trsong.github.io/python/java/2020/08/02/DailyQuestionsAug/#oct-13-2020-medium-locking-in-binary-tree) -- *Implement locking in a binary tree. A binary tree node can be locked or unlocked only if all of its descendants or ancestors are not locked.* [*\(Try ME\)*](https://repl.it/@trsong/Locking-and-Unlocking-in-Binary-Tree-1)
+- [**\[Medium\] Locking in Binary Tree**](https://trsong.github.io/python/java/2020/08/02/DailyQuestionsAug.html#oct-13-2020-medium-locking-in-binary-tree) -- *Implement locking in a binary tree. A binary tree node can be locked or unlocked only if all of its descendants or ancestors are not locked.* [*\(Try ME\)*](https://repl.it/@trsong/Locking-and-Unlocking-in-Binary-Tree-1)
 
 </summary>
 <div>
@@ -3583,7 +3583,7 @@ You may augment the node to add parent pointers or any other property you would 
 <details>
 <summary class="lc_e">
 
-- [**\[Easy\] Depth of Binary Tree in Peculiar String Representation**](https://trsong.github.io/python/java/2020/08/02/DailyQuestionsAug/#aug-31-2020-easy-depth-of-binary-tree-in-peculiar-string-representation) -- *Given a binary tree in a peculiar string representation, determine the depth of the tree.* [*\(Try ME\)*](https://repl.it/@trsong/Depth-of-Binary-Tree-in-Peculiar-String-Representation-1)
+- [**\[Easy\] Depth of Binary Tree in Peculiar String Representation**](https://trsong.github.io/python/java/2020/08/02/DailyQuestionsAug.html#aug-31-2020-easy-depth-of-binary-tree-in-peculiar-string-representation) -- *Given a binary tree in a peculiar string representation, determine the depth of the tree.* [*\(Try ME\)*](https://repl.it/@trsong/Depth-of-Binary-Tree-in-Peculiar-String-Representation-1)
 
 </summary>
 <div>
@@ -3611,7 +3611,7 @@ An unbalanced tree with three consecutive left children: ((((00)0)0)0)
 <details>
 <summary class="lc_m">
 
-- [**\[Medium\] LC 981. Time Based Key-Value Store**](https://trsong.github.io/python/java/2021/02/02/DailyQuestionsFeb/#apr-14-2021-lc-981-medium-time-based-key-value-store) -- *Write a map implementation with a get function that lets you retrieve the value of a key at a particular time.* [*\(Try ME\)*](https://replit.com/@trsong/Time-Based-Key-Value-Store-1)
+- [**\[Medium\] LC 981. Time Based Key-Value Store**](https://trsong.github.io/python/java/2021/02/02/DailyQuestionsFeb.html#apr-14-2021-lc-981-medium-time-based-key-value-store) -- *Write a map implementation with a get function that lets you retrieve the value of a key at a particular time.* [*\(Try ME\)*](https://replit.com/@trsong/Time-Based-Key-Value-Store-1)
 
 </summary>
 <div>
@@ -3633,7 +3633,7 @@ The map should work like this. If we set a key at a particular time, it will mai
 <details>
 <summary class="lc_m">
 
-- [**\[Medium\] Distance Between 2 Nodes in BST**](http://trsong.github.io/python/java/2021/02/02/DailyQuestionsFeb/#mar-7-2021-medium-distance-between-2-nodes-in-bst) -- *Write a function that given a BST, it will return the distance (number of edges) between 2 nodes.* [*\(Try ME\)*](https://repl.it/@trsong/Distance-Between-2-Nodes-in-BST-1)
+- [**\[Medium\] Distance Between 2 Nodes in BST**](http://trsong.github.io/python/java/2021/02/02/DailyQuestionsFeb.html#mar-7-2021-medium-distance-between-2-nodes-in-bst) -- *Write a function that given a BST, it will return the distance (number of edges) between 2 nodes.* [*\(Try ME\)*](https://repl.it/@trsong/Distance-Between-2-Nodes-in-BST-1)
 
 </summary>
 <div>
@@ -3662,7 +3662,7 @@ The distance between 1 and 8 is 6: [1 -> 2 -> 3 -> 5 -> 6 -> 7 -> 8]
 <details>
 <summary class="lc_m">
 
-- [**\[Medium\] Largest BST in a Binary Tree**](https://trsong.github.io/python/java/2020/05/02/DailyQuestionsMay/#jul-3-2020-medium-largest-bst-in-a-binary-tree) -- *You are given the root of a binary tree. Find and return the largest subtree of that tree, which is a valid binary search tree.* [*\(Try ME\)*](https://repl.it/@trsong/Find-Largest-BST-in-a-Binary-Tree-1)
+- [**\[Medium\] Largest BST in a Binary Tree**](https://trsong.github.io/python/java/2020/05/02/DailyQuestionsMay.html#jul-3-2020-medium-largest-bst-in-a-binary-tree) -- *You are given the root of a binary tree. Find and return the largest subtree of that tree, which is a valid binary search tree.* [*\(Try ME\)*](https://repl.it/@trsong/Find-Largest-BST-in-a-Binary-Tree-1)
 
 </summary>
 <div>
@@ -3709,7 +3709,7 @@ Output:
 <details>
 <summary class="lc_e">
 
-- [**\[Easy\] Floor and Ceiling of BST**](https://trsong.github.io/python/java/2020/08/02/DailyQuestionsAug/#oct-23-2020-easy-floor-and-ceiling-of-bst) -- *Given an integer k and a binary search tree, find the floor (less than or equal to) of k, and the ceiling (larger than or equal to) of k.* [*\(Try ME\)*](https://repl.it/@trsong/Floor-and-Ceiling-of-BST-1)
+- [**\[Easy\] Floor and Ceiling of BST**](https://trsong.github.io/python/java/2020/08/02/DailyQuestionsAug.html#oct-23-2020-easy-floor-and-ceiling-of-bst) -- *Given an integer k and a binary search tree, find the floor (less than or equal to) of k, and the ceiling (larger than or equal to) of k.* [*\(Try ME\)*](https://repl.it/@trsong/Floor-and-Ceiling-of-BST-1)
 
 </summary>
 <div>
@@ -3759,7 +3759,7 @@ For example, given the array `[3, 4, 9, 6, 1]`, return `[1, 1, 2, 1, 0]`, since:
 <details>
 <summary class="lc_e">
 
-- [**\[Easy\] Generate Binary Search Trees**](https://trsong.github.io/python/java/2020/05/02/DailyQuestionsMay/#jul-11-2020-easy-generate-binary-search-trees) -- *Given an integer N, construct all possible binary search trees with N nodes.* [*\(Try ME\)*](https://repl.it/@trsong/Generate-Binary-Search-Trees-with-N-Nodes-1)
+- [**\[Easy\] Generate Binary Search Trees**](https://trsong.github.io/python/java/2020/05/02/DailyQuestionsMay.html#jul-11-2020-easy-generate-binary-search-trees) -- *Given an integer N, construct all possible binary search trees with N nodes.* [*\(Try ME\)*](https://repl.it/@trsong/Generate-Binary-Search-Trees-with-N-Nodes-1)
 
 </summary>
 <div>
@@ -3773,7 +3773,7 @@ For example, given the array `[3, 4, 9, 6, 1]`, return `[1, 1, 2, 1, 0]`, since:
 <details>
 <summary class="lc_e">
 
-- [**\[Easy\] Second Largest in BST**](https://trsong.github.io/python/java/2020/05/02/DailyQuestionsMay/#jul-24-2020-medium-second-largest-in-bst) -- *Given the root to a binary search tree, find the second largest node in the tree.* [*\(Try ME\)*](https://repl.it/@trsong/Find-Second-Largest-in-BST-1)
+- [**\[Easy\] Second Largest in BST**](https://trsong.github.io/python/java/2020/05/02/DailyQuestionsMay.html#jul-24-2020-medium-second-largest-in-bst) -- *Given the root to a binary search tree, find the second largest node in the tree.* [*\(Try ME\)*](https://repl.it/@trsong/Find-Second-Largest-in-BST-1)
 
 </summary>
 <div>
@@ -3789,7 +3789,7 @@ For example, given the array `[3, 4, 9, 6, 1]`, return `[1, 1, 2, 1, 0]`, since:
 <details>
 <summary class="lc_e">
 
-- [**\[Easy\] Count Complete Binary Tree**](https://trsong.github.io/python/java/2021/02/02/DailyQuestionsFeb/#apr-10-2021-easy-count-complete-binary-tree) -- *Given a complete binary tree, count the number of nodes in faster than O(n) time.* [*\(Try ME\)*](https://replit.com/@trsong/Count-Complete-Binary-Tree-1)
+- [**\[Easy\] Count Complete Binary Tree**](https://trsong.github.io/python/java/2021/02/02/DailyQuestionsFeb.html#apr-10-2021-easy-count-complete-binary-tree) -- *Given a complete binary tree, count the number of nodes in faster than O(n) time.* [*\(Try ME\)*](https://replit.com/@trsong/Count-Complete-Binary-Tree-1)
 
 </summary>
 <div>
@@ -3806,7 +3806,7 @@ Recall that a complete binary tree has every level filled except the last, and t
 <details>
 <summary class="lc_m">
 
-- [**\[Medium\] Split a Binary Search Tree**](http://trsong.github.io/python/java/2021/02/02/DailyQuestionsFeb/#mar-14-2021--medium-split-a-binary-search-tree) -- *Given a BST and a value s, split the BST into 2 trees, where one tree has all values less than or equal to s, and the others.* [*\(Try ME\)*](https://replit.com/@trsong/Split-BST-into-Two-BSTs-1)
+- [**\[Medium\] Split a Binary Search Tree**](http://trsong.github.io/python/java/2021/02/02/DailyQuestionsFeb.html#mar-14-2021--medium-split-a-binary-search-tree) -- *Given a BST and a value s, split the BST into 2 trees, where one tree has all values less than or equal to s, and the others.* [*\(Try ME\)*](https://replit.com/@trsong/Split-BST-into-Two-BSTs-1)
 
 </summary>
 <div>
@@ -3837,7 +3837,7 @@ Split into two trees:
 <details>
 <summary class="lc_e">
 
-- [**\[Easy\] Filter Binary Tree Leaves**](http://trsong.github.io/python/java/2021/02/02/DailyQuestionsFeb/#feb-14-2021-easy-filter-binary-tree-leaves) -- *Given a binary tree and an integer k, filter the binary tree such that its leaves don’t contain the value k.* [*\(Try ME\)*](https://repl.it/@trsong/Filter-Binary-Tree-Leaves-of-Certain-Value-1)
+- [**\[Easy\] Filter Binary Tree Leaves**](http://trsong.github.io/python/java/2021/02/02/DailyQuestionsFeb.html#feb-14-2021-easy-filter-binary-tree-leaves) -- *Given a binary tree and an integer k, filter the binary tree such that its leaves don’t contain the value k.* [*\(Try ME\)*](https://repl.it/@trsong/Filter-Binary-Tree-Leaves-of-Certain-Value-1)
 
 </summary>
 <div>
@@ -3871,7 +3871,7 @@ After filtering the result should be:
 <details>
 <summary class="lc_e">
 
-- [**\[Easy\] Making a Height Balanced Binary Search Tree**](http://trsong.github.io/python/java/2021/02/02/DailyQuestionsFeb/#feb-10-2021-easy-making-a-height-balanced-binary-search-tree) -- *Given a sorted list, create a height balanced binary search tree, meaning the height differences of each node can only differ by at most 1.* [*\(Try ME\)*](https://repl.it/@trsong/Making-a-Height-Balanced-Binary-Search-Tree-1)
+- [**\[Easy\] Making a Height Balanced Binary Search Tree**](http://trsong.github.io/python/java/2021/02/02/DailyQuestionsFeb.html#feb-10-2021-easy-making-a-height-balanced-binary-search-tree) -- *Given a sorted list, create a height balanced binary search tree, meaning the height differences of each node can only differ by at most 1.* [*\(Try ME\)*](https://repl.it/@trsong/Making-a-Height-Balanced-Binary-Search-Tree-1)
 
 </summary>
 <div>
@@ -3885,7 +3885,7 @@ After filtering the result should be:
 <details>
 <summary class="lc_m">
 
-- [**\[Medium\] Maximum Path Sum in Binary Tree**](https://trsong.github.io/python/java/2021/02/02/DailyQuestionsFeb/#feb-1-2021-medium-maximum-path-sum-in-binary-tree) -- *Given the root of a binary tree. Find the path between 2 nodes that maximizes the sum of all the nodes in the path, and return the sum.* [*\(Try ME\)*](https://repl.it/@trsong/Find-Maximum-Path-Sum-in-Binary-Tree-1)
+- [**\[Medium\] Maximum Path Sum in Binary Tree**](https://trsong.github.io/python/java/2021/02/02/DailyQuestionsFeb.html#feb-1-2021-medium-maximum-path-sum-in-binary-tree) -- *Given the root of a binary tree. Find the path between 2 nodes that maximizes the sum of all the nodes in the path, and return the sum.* [*\(Try ME\)*](https://repl.it/@trsong/Find-Maximum-Path-Sum-in-Binary-Tree-1)
 
 </summary>
 <div>
@@ -3913,7 +3913,7 @@ Given the following binary tree, the result should be 42 = 20 + 2 + 10 + 10.
 <details>
 <summary class="lc_m">
 
-- [**\[Medium\] Most Frequent Subtree Sum**](https://trsong.github.io/python/java/2020/11/02/DailyQuestionsAug/#jan-20-2021-medium-most-frequent-subtree-sum) -- *Given the root of a binary tree, find the most frequent subtree sum.* [*\(Try ME\)*](https://repl.it/@trsong/Find-Most-Frequent-Subtree-Sum-1)
+- [**\[Medium\] Most Frequent Subtree Sum**](https://trsong.github.io/python/java/2020/11/02/DailyQuestionsAug.html#jan-20-2021-medium-most-frequent-subtree-sum) -- *Given the root of a binary tree, find the most frequent subtree sum.* [*\(Try ME\)*](https://repl.it/@trsong/Find-Most-Frequent-Subtree-Sum-1)
 
 </summary>
 <div>
@@ -3942,7 +3942,7 @@ Therefore the most frequent subtree sum is 1.
 <details>
 <summary class="lc_m">
 
-- [**\[Medium\] LC 236. Lowest Common Ancestor of a Binary Tree**](https://trsong.github.io/python/java/2020/08/02/DailyQuestionsAug/#sep-23-2020-lc-236-medium-lowest-common-ancestor-of-a-binary-tree) -- *Given a binary tree, find the lowest common ancestor (LCA) of two given nodes in the tree.* [*\(Try ME\)*](https://repl.it/@trsong/Find-the-Lowest-Common-Ancestor-of-a-Given-Binary-Tree-1)
+- [**\[Medium\] LC 236. Lowest Common Ancestor of a Binary Tree**](https://trsong.github.io/python/java/2020/08/02/DailyQuestionsAug.html#sep-23-2020-lc-236-medium-lowest-common-ancestor-of-a-binary-tree) -- *Given a binary tree, find the lowest common ancestor (LCA) of two given nodes in the tree.* [*\(Try ME\)*](https://repl.it/@trsong/Find-the-Lowest-Common-Ancestor-of-a-Given-Binary-Tree-1)
 
 </summary>
 <div>
@@ -3971,7 +3971,7 @@ LCA(2, 4) = 2
 <details>
 <summary class="lc_e">
 
-- [**\[Easy\] Tree Isomorphism Problem**](https://trsong.github.io/python/java/2020/08/02/DailyQuestionsAug/#aug-29-2020-easy-tree-isomorphism-problem) -- *Write a function to detect if two trees are isomorphic.* [*\(Try ME\)*](https://repl.it/@trsong/Is-Binary-Tree-Isomorphic-1)
+- [**\[Easy\] Tree Isomorphism Problem**](https://trsong.github.io/python/java/2020/08/02/DailyQuestionsAug.html#aug-29-2020-easy-tree-isomorphism-problem) -- *Write a function to detect if two trees are isomorphic.* [*\(Try ME\)*](https://repl.it/@trsong/Is-Binary-Tree-Isomorphic-1)
 
 </summary>
 <div>
@@ -4010,7 +4010,7 @@ Tree2:
 <details>
 <summary class="lc_e">
 
-- [**\[Easy\] Full Binary Tree**](https://trsong.github.io/python/java/2020/08/02/DailyQuestionsAug/#aug-11-2020-easy-full-binary-tree) -- *Given a binary tree, remove the nodes in which there is only 1 child, so that the binary tree is a full binary tree.* [*\(Try ME\)*](https://repl.it/@trsong/Prune-to-Full-Binary-Tree-1)
+- [**\[Easy\] Full Binary Tree**](https://trsong.github.io/python/java/2020/08/02/DailyQuestionsAug.html#aug-11-2020-easy-full-binary-tree) -- *Given a binary tree, remove the nodes in which there is only 1 child, so that the binary tree is a full binary tree.* [*\(Try ME\)*](https://repl.it/@trsong/Prune-to-Full-Binary-Tree-1)
 
 </summary>
 <div>
@@ -4043,7 +4043,7 @@ We want a tree like:
 <details>
 <summary class="lc_e">
 
-- [**\[Easy\] LC 938. Range Sum of BST**](https://trsong.github.io/python/java/2020/05/02/DailyQuestionsMay/#jul-22-2020-lc-938-easy-range-sum-of-bst) -- *Given a binary search tree and a range [a, b] (inclusive), return the sum of the elements of the binary search tree within the range.* [*\(Try ME\)*](https://repl.it/@trsong/Find-Range-Sum-of-BST-1)
+- [**\[Easy\] LC 938. Range Sum of BST**](https://trsong.github.io/python/java/2020/05/02/DailyQuestionsMay.html#jul-22-2020-lc-938-easy-range-sum-of-bst) -- *Given a binary search tree and a range [a, b] (inclusive), return the sum of the elements of the binary search tree within the range.* [*\(Try ME\)*](https://repl.it/@trsong/Find-Range-Sum-of-BST-1)
 
 </summary>
 <div>
@@ -4075,7 +4075,7 @@ return 23 (5 + 4 + 6 + 8).
 <details>
 <summary class="lc_h">
 
-- [**\[Hard\] Morris Traversal**](http://trsong.github.io/python/java/2021/02/02/DailyQuestionsFeb/#apr-28-2021-hard-morris-traversal) -- *Write a program to compute the in-order traversal of a binary tree using `O(1)` space.* [*\(Try ME\)*](https://replit.com/@trsong/Morris-Traversal-1)
+- [**\[Hard\] Morris Traversal**](http://trsong.github.io/python/java/2021/02/02/DailyQuestionsFeb.html#apr-28-2021-hard-morris-traversal) -- *Write a program to compute the in-order traversal of a binary tree using `O(1)` space.* [*\(Try ME\)*](https://replit.com/@trsong/Morris-Traversal-1)
 
 </summary>
 <div>
@@ -4089,7 +4089,7 @@ return 23 (5 + 4 + 6 + 8).
 <details>
 <summary class="lc_h">
 
-- [**\[Hard\] Construct Cartesian Tree from Inorder Traversal**](https://trsong.github.io/python/java/2020/11/02/DailyQuestionsAug/#dec-12-2020-hard-construct-cartesian-tree-from-inorder-traversal) -- *Given in-order traversal, construct a Cartesian tree. A Cartesian tree is heap-ordered, so that each parent value is smaller than children.* [*\(Try ME\)*](https://repl.it/@trsong/Construct-Cartesian-Tree-from-Inorder-Traversal-1)
+- [**\[Hard\] Construct Cartesian Tree from Inorder Traversal**](https://trsong.github.io/python/java/2020/11/02/DailyQuestionsAug.html#dec-12-2020-hard-construct-cartesian-tree-from-inorder-traversal) -- *Given in-order traversal, construct a Cartesian tree. A Cartesian tree is heap-ordered, so that each parent value is smaller than children.* [*\(Try ME\)*](https://repl.it/@trsong/Construct-Cartesian-Tree-from-Inorder-Traversal-1)
 
 </summary>
 <div>
@@ -4119,7 +4119,7 @@ Given the sequence [3, 2, 6, 1, 9], the resulting Cartesian tree would be:
 <details>
 <summary class="lc_e">
 
-- [**\[Easy\] Count Number of Unival Subtrees**](https://trsong.github.io/python/java/2020/11/02/DailyQuestionsAug/#nov-17-2020-easy-count-number-of-unival-subtrees) -- *A unival tree is a tree where all the nodes have the same value. Given a binary tree, return the number of unival subtrees in the tree.* [*\(Try ME\)*](https://repl.it/@trsong/Count-Total-Number-of-Uni-val-Subtrees-1)
+- [**\[Easy\] Count Number of Unival Subtrees**](https://trsong.github.io/python/java/2020/11/02/DailyQuestionsAug.html#nov-17-2020-easy-count-number-of-unival-subtrees) -- *A unival tree is a tree where all the nodes have the same value. Given a binary tree, return the number of unival subtrees in the tree.* [*\(Try ME\)*](https://repl.it/@trsong/Count-Total-Number-of-Uni-val-Subtrees-1)
 
 </summary>
 <div>
@@ -4175,7 +4175,7 @@ There are five subtrees with single values.
 <details>
 <summary class="lc_e">
 
-- [**\[Easy\] Find Corresponding Node in Cloned Tree**](https://trsong.github.io/python/java/2020/08/02/DailyQuestionsAug/#sep-27-2020-easy-find-corresponding-node-in-cloned-tree) -- *Given two binary trees that are duplicates of one another, and given a node in one tree, find that corresponding node in the second tree.* [*\(Try ME\)*](https://repl.it/@trsong/Find-Corresponding-Node-in-Cloned-Tree-1)
+- [**\[Easy\] Find Corresponding Node in Cloned Tree**](https://trsong.github.io/python/java/2020/08/02/DailyQuestionsAug.html#sep-27-2020-easy-find-corresponding-node-in-cloned-tree) -- *Given two binary trees that are duplicates of one another, and given a node in one tree, find that corresponding node in the second tree.* [*\(Try ME\)*](https://repl.it/@trsong/Find-Corresponding-Node-in-Cloned-Tree-1)
 
 </summary>
 <div>
@@ -4191,7 +4191,7 @@ There can be duplicate values in the tree (so comparing node1.value == node2.val
 <details>
 <summary class="lc_e">
 
-- [**\[Easy\] LC 653. Two Sum in BST**](http://trsong.github.io/python/java/2020/08/02/DailyQuestionsAug/#sep-19-2020-easy-two-sum-in-bst) -- *Given the root of a binary search tree, and a target K, return two nodes in the tree whose sum equals K.* [*\(Try ME\)*](https://repl.it/@trsong/Two-Sum-in-BST-1)
+- [**\[Easy\] LC 653. Two Sum in BST**](http://trsong.github.io/python/java/2020/08/02/DailyQuestionsAug.html#sep-19-2020-easy-two-sum-in-bst) -- *Given the root of a binary search tree, and a target K, return two nodes in the tree whose sum equals K.* [*\(Try ME\)*](https://repl.it/@trsong/Two-Sum-in-BST-1)
 
 </summary>
 <div>
@@ -4218,7 +4218,7 @@ Return the nodes 5 and 15.
 <details>
 <summary class="lc_m">
 
-- [**\[Medium\] LC 230. Kth Smallest Element in a BST**](https://trsong.github.io/python/java/2020/08/02/DailyQuestionsAug/#sep-1-2020-lc-230-medium-kth-smallest-element-in-a-bst) -- *Given a binary search tree, write a function kthSmallest to find the kth smallest element in it.* [*\(Try ME\)*](https://repl.it/@trsong/Find-Kth-Smallest-Element-in-a-BST-1)
+- [**\[Medium\] LC 230. Kth Smallest Element in a BST**](https://trsong.github.io/python/java/2020/08/02/DailyQuestionsAug.html#sep-1-2020-lc-230-medium-kth-smallest-element-in-a-bst) -- *Given a binary search tree, write a function kthSmallest to find the kth smallest element in it.* [*\(Try ME\)*](https://repl.it/@trsong/Find-Kth-Smallest-Element-in-a-BST-1)
 
 </summary>
 <div>
@@ -4261,7 +4261,7 @@ Output: 3
 <details>
 <summary class="lc_m">
 
-- [**\[Medium\] Tree Serialization**](https://trsong.github.io/python/java/2020/08/02/DailyQuestionsAug/#aug-20-2020-medium-tree-serialization) -- *Given the root of a binary tree. You need to implement 2 functions: Serialize and Deserialize.* [*\(Try ME\)*](https://repl.it/@trsong/Serialize-and-Deserialize-the-Binary-Tree-1)
+- [**\[Medium\] Tree Serialization**](https://trsong.github.io/python/java/2020/08/02/DailyQuestionsAug.html#aug-20-2020-medium-tree-serialization) -- *Given the root of a binary tree. You need to implement 2 functions: Serialize and Deserialize.* [*\(Try ME\)*](https://repl.it/@trsong/Serialize-and-Deserialize-the-Binary-Tree-1)
 
 </summary>
 <div>
@@ -4293,7 +4293,7 @@ serialize(tree)
 <details>
 <summary class="lc_e">
 
-- [**\[Easy\] Symmetric K-ary Tree**](https://trsong.github.io/python/java/2020/05/02/DailyQuestionsMay/#jul-5-2020-easy-symmetric-k-ary-tree) -- *Given a k-ary tree, figure out if the tree is symmetrical.* [*\(Try ME\)*](https://repl.it/@trsong/Is-Symmetric-K-ary-Tree-1)
+- [**\[Easy\] Symmetric K-ary Tree**](https://trsong.github.io/python/java/2020/05/02/DailyQuestionsMay.html#jul-5-2020-easy-symmetric-k-ary-tree) -- *Given a k-ary tree, figure out if the tree is symmetrical.* [*\(Try ME\)*](https://repl.it/@trsong/Is-Symmetric-K-ary-Tree-1)
 
 </summary>
 <div>
@@ -4319,7 +4319,7 @@ Here's an example of a symmetrical k-ary tree.
 <details>
 <summary class="lc_e">
 
-- [**\[Easy\] LC 872. Leaf-Similar Trees**](https://trsong.github.io/python/java/2020/05/02/DailyQuestionsMay/#jul-8-2020-lc-872-easy-leaf-similar-trees) -- *Given two trees, whether they are "leaf similar". Two trees are considered "leaf-similar" if their leaf orderings are the same.* [*\(Try ME\)*](https://repl.it/@trsong/Leaf-Similar-Trees-1)
+- [**\[Easy\] LC 872. Leaf-Similar Trees**](https://trsong.github.io/python/java/2020/05/02/DailyQuestionsMay.html#jul-8-2020-lc-872-easy-leaf-similar-trees) -- *Given two trees, whether they are "leaf similar". Two trees are considered "leaf-similar" if their leaf orderings are the same.* [*\(Try ME\)*](https://repl.it/@trsong/Leaf-Similar-Trees-1)
 
 </summary>
 <div>
@@ -4351,7 +4351,7 @@ For instance, the following two trees are considered leaf-similar because their 
 <details>
 <summary class="lc_m">
 
-- [**\[Medium\] Construct BST from Post-order Traversal**](https://trsong.github.io/python/java/2020/08/02/DailyQuestionsAug/#sep-17-2020-medium-construct-bst-from-post-order-traversal) -- *Given the sequence of keys visited by a postorder traversal of a binary search tree, reconstruct the tree.* [*\(Try ME\)*](https://repl.it/@trsong/Construct-Binary-Search-Tree-from-Post-order-Traversal-1)
+- [**\[Medium\] Construct BST from Post-order Traversal**](https://trsong.github.io/python/java/2020/08/02/DailyQuestionsAug.html#sep-17-2020-medium-construct-bst-from-post-order-traversal) -- *Given the sequence of keys visited by a postorder traversal of a binary search tree, reconstruct the tree.* [*\(Try ME\)*](https://repl.it/@trsong/Construct-Binary-Search-Tree-from-Post-order-Traversal-1)
 
 </summary>
 <div>
@@ -4376,7 +4376,7 @@ Given the sequence 2, 4, 3, 8, 7, 5, you should construct the following tree:
 <details>
 <summary class="lc_m">
 
-- [**\[Medium\] In-order & Post-order Binary Tree Traversal**](https://trsong.github.io/python/java/2020/05/02/DailyQuestionsMay/#jul-29-2020-medium-in-order--post-order-binary-tree-traversal) -- *Given Postorder and Inorder traversals, construct the tree.* [*\(Try ME\)*](https://repl.it/@trsong/Test-Build-Binary-Tree-with-In-order-and-Post-order-Traversal)
+- [**\[Medium\] In-order & Post-order Binary Tree Traversal**](https://trsong.github.io/python/java/2020/05/02/DailyQuestionsMay.html#jul-29-2020-medium-in-order--post-order-binary-tree-traversal) -- *Given Postorder and Inorder traversals, construct the tree.* [*\(Try ME\)*](https://repl.it/@trsong/Test-Build-Binary-Tree-with-In-order-and-Post-order-Traversal)
 
 </summary>
 <div>
@@ -4418,7 +4418,7 @@ Output:
 <details>
 <summary class="lc_m">
 
-- [**\[Medium\] Pre-order & In-order Binary Tree Traversal**](https://trsong.github.io/python/java/2020/05/02/DailyQuestionsMay/#jul-28-2020-medium-pre-order--in-order-binary-tree-traversal) -- *Given pre-order and in-order traversals of a binary tree, write a function to reconstruct the tree.* [*\(Try ME\)*](https://repl.it/@trsong/Test-Pre-order-and-In-order-Binary-Tree-Traversal)
+- [**\[Medium\] Pre-order & In-order Binary Tree Traversal**](https://trsong.github.io/python/java/2020/05/02/DailyQuestionsMay.html#jul-28-2020-medium-pre-order--in-order-binary-tree-traversal) -- *Given pre-order and in-order traversals of a binary tree, write a function to reconstruct the tree.* [*\(Try ME\)*](https://repl.it/@trsong/Test-Pre-order-and-In-order-Binary-Tree-Traversal)
 
 </summary>
 <div>
@@ -4456,7 +4456,7 @@ d  e f  g
 <details>
 <summary class="lc_m">
 
-- [**\[Medium\] 24-Hour Hit Counter**](http://trsong.github.io/python/java/2021/02/02/DailyQuestionsFeb/#feb-28-2021-medium-24-hour-hit-counter) -- *You are given an array of length 24, where each element represents the number of new subscribers during the corresponding hour.* [*\(Try ME\)*](https://repl.it/@trsong/24-Hour-Hit-Counter-1)
+- [**\[Medium\] 24-Hour Hit Counter**](http://trsong.github.io/python/java/2021/02/02/DailyQuestionsFeb.html#feb-28-2021-medium-24-hour-hit-counter) -- *You are given an array of length 24, where each element represents the number of new subscribers during the corresponding hour.* [*\(Try ME\)*](https://repl.it/@trsong/24-Hour-Hit-Counter-1)
 
 </summary>
 <div>
@@ -4473,7 +4473,7 @@ d  e f  g
 <details>
 <summary class="lc_m">
 
-- [**\[Medium\] LC 307. Range Sum Query - Mutable**](https://trsong.github.io/python/java/2020/11/02/DailyQuestionsAug/#dec-15-2020-lc-307-medium-range-sum-query---mutable) -- *Given an integer array nums, find the sum of the elements between indices i and j (i ≤ j), inclusive.* [*\(Try ME\)*](https://repl.it/@trsong/Mutable-Range-Sum-Query-1)
+- [**\[Medium\] LC 307. Range Sum Query - Mutable**](https://trsong.github.io/python/java/2020/11/02/DailyQuestionsAug.html#dec-15-2020-lc-307-medium-range-sum-query---mutable) -- *Given an integer array nums, find the sum of the elements between indices i and j (i ≤ j), inclusive.* [*\(Try ME\)*](https://repl.it/@trsong/Mutable-Range-Sum-Query-1)
 
 </summary>
 <div>
@@ -4501,7 +4501,7 @@ sumRange(0, 2) -> 8
 <details>
 <summary class="lc_m">
 
-- [**\[Medium\] Maximum Distance among Binary Strings**](http://trsong.github.io/python/java/2021/02/02/DailyQuestionsFeb/#apr-29-2021-medium-maximum-distance-among-binary-strings) -- *The distance between 2 binary strings is the sum of their lengths after removing the common prefix.* [*\(Try ME\)*](https://replit.com/@trsong/Maximum-Distance-among-Binary-Strings-1)
+- [**\[Medium\] Maximum Distance among Binary Strings**](http://trsong.github.io/python/java/2021/02/02/DailyQuestionsFeb.html#apr-29-2021-medium-maximum-distance-among-binary-strings) -- *The distance between 2 binary strings is the sum of their lengths after removing the common prefix.* [*\(Try ME\)*](https://replit.com/@trsong/Maximum-Distance-among-Binary-Strings-1)
 
 </summary>
 <div>
@@ -4517,7 +4517,7 @@ Given a list of binary strings, pick a pair that gives you maximum distance amon
 <details>
 <summary class="lc_e">
 
-- [**\[Easy\] Ternary Search Tree**](https://trsong.github.io/python/java/2021/02/02/DailyQuestionsFeb/#apr-24-2021-easy-ternary-search-tree) -- *Implement insertion and search functions for a ternary search tree.* [*\(Try ME\)*](https://replit.com/@trsong/Implement-Ternary-Search-Tree-1)
+- [**\[Easy\] Ternary Search Tree**](https://trsong.github.io/python/java/2021/02/02/DailyQuestionsFeb.html#apr-24-2021-easy-ternary-search-tree) -- *Implement insertion and search functions for a ternary search tree.* [*\(Try ME\)*](https://replit.com/@trsong/Implement-Ternary-Search-Tree-1)
 
 </summary>
 <div>
@@ -4552,7 +4552,7 @@ since code is the first word inserted in the tree, and cob lexicographically pre
 <details>
 <summary class="lc_m">
 
-- [**\[Medium\] Add Bold Tag in String**](http://trsong.github.io/python/java/2021/02/02/DailyQuestionsFeb/#apr-3-2021-medium-add-bold-tag-in-string) -- *Takes in a string s and list of substrings lst, and wraps all substrings in s with an HTML bold tag `<b>` and `</b>`.* [*\(Try ME\)*](https://replit.com/@trsong/Add-Bold-Tag-in-String-1)
+- [**\[Medium\] Add Bold Tag in String**](http://trsong.github.io/python/java/2021/02/02/DailyQuestionsFeb.html#apr-3-2021-medium-add-bold-tag-in-string) -- *Takes in a string s and list of substrings lst, and wraps all substrings in s with an HTML bold tag `<b>` and `</b>`.* [*\(Try ME\)*](https://replit.com/@trsong/Add-Bold-Tag-in-String-1)
 
 </summary>
 <div>
@@ -4595,7 +4595,7 @@ Output: "<b>aaabbc</b>c"
 <details>
 <summary class="lc_h">
 
-- [**\[Hard\] LC 30. Substring with Concatenation of All Words**](http://trsong.github.io/python/java/2021/02/02/DailyQuestionsFeb/#mar-16-2021-lc-30-hard-substring-with-concatenation-of-all-words) -- *Given a string s and a list of same length words, find all index of substring of s that is permutation of words.* [*\(Try ME\)*](https://replit.com/@trsong/Substring-with-Concatenation-of-All-Words-1)
+- [**\[Hard\] LC 30. Substring with Concatenation of All Words**](http://trsong.github.io/python/java/2021/02/02/DailyQuestionsFeb.html#mar-16-2021-lc-30-hard-substring-with-concatenation-of-all-words) -- *Given a string s and a list of same length words, find all index of substring of s that is permutation of words.* [*\(Try ME\)*](https://replit.com/@trsong/Substring-with-Concatenation-of-All-Words-1)
 
 </summary>
 <div>
@@ -4623,7 +4623,7 @@ Explanation: there are no substrings composed of "dog" and "cat" in s.
 <details>
 <summary class="lc_m">
 
-- [**\[Medium\] Shortest Unique Prefix**](http://trsong.github.io/python/java/2021/02/02/DailyQuestionsFeb/#feb-16-2021-medium-shortest-unique-prefix) -- *Given an array of words, find all shortest unique prefixes to represent each word in the given array. Assume no word is prefix of another.* [*\(Try ME\)*](https://repl.it/@trsong/Find-All-Shortest-Unique-Prefix-1)
+- [**\[Medium\] Shortest Unique Prefix**](http://trsong.github.io/python/java/2021/02/02/DailyQuestionsFeb.html#feb-16-2021-medium-shortest-unique-prefix) -- *Given an array of words, find all shortest unique prefixes to represent each word in the given array. Assume no word is prefix of another.* [*\(Try ME\)*](https://repl.it/@trsong/Find-All-Shortest-Unique-Prefix-1)
 
 </summary>
 <div>
@@ -4646,7 +4646,7 @@ Explanation: dog => dog
 <details>
 <summary class="lc_e">
 
-- [**\[Easy\] Implement Prefix Map Sum**](http://trsong.github.io/python/java/2020/11/02/DailyQuestionsAug/#dec-6-2020-easy-implement-prefix-map-sum) -- *Implement a PrefixMapSum class with the following methods: insert(key: str, value: int), sum(prefix: str)* [*\(Try ME\)*](https://repl.it/@trsong/Implement-Prefix-Map-Sum-1)
+- [**\[Easy\] Implement Prefix Map Sum**](http://trsong.github.io/python/java/2020/11/02/DailyQuestionsAug.html#dec-6-2020-easy-implement-prefix-map-sum) -- *Implement a PrefixMapSum class with the following methods: insert(key: str, value: int), sum(prefix: str)* [*\(Try ME\)*](https://repl.it/@trsong/Implement-Prefix-Map-Sum-1)
 
 </summary>
 <div>
@@ -4672,7 +4672,7 @@ assert mapsum.sum("col") == 5
 <details>
 <summary class="lc_h">
 
-- [**\[Hard\] LC 212. Word Search II**](https://trsong.github.io/python/java/2020/11/02/DailyQuestionsAug/#nov-22-2020-lc-212-hard-word-search-ii) -- *Given an m x n board of characters and a list of strings words, return all words on the board.* [*\(Try ME\)*](https://repl.it/@trsong/Word-Search-II-1)
+- [**\[Hard\] LC 212. Word Search II**](https://trsong.github.io/python/java/2020/11/02/DailyQuestionsAug.html#nov-22-2020-lc-212-hard-word-search-ii) -- *Given an m x n board of characters and a list of strings words, return all words on the board.* [*\(Try ME\)*](https://repl.it/@trsong/Word-Search-II-1)
 
 </summary>
 <div>
@@ -4707,7 +4707,7 @@ Output: []
 <details>
 <summary class="lc_m">
 
-- [**\[Medium\] LC 421. Maximum XOR of Two Numbers in an Array**](https://trsong.github.io/python/java/2020/08/02/DailyQuestionsAug/#sep-20-2020-lc-421-medium-maximum-xor-of-two-numbers-in-an-array) -- *Given an array of integers, find the maximum XOR of any two elements.* [*\(Try ME\)*](https://repl.it/@trsong/Maximum-XOR-of-Two-Numbers-in-an-Array-1)
+- [**\[Medium\] LC 421. Maximum XOR of Two Numbers in an Array**](https://trsong.github.io/python/java/2020/08/02/DailyQuestionsAug.html#sep-20-2020-lc-421-medium-maximum-xor-of-two-numbers-in-an-array) -- *Given an array of integers, find the maximum XOR of any two elements.* [*\(Try ME\)*](https://repl.it/@trsong/Maximum-XOR-of-Two-Numbers-in-an-Array-1)
 
 </summary>
 <div>
@@ -4728,7 +4728,7 @@ Explanation: The maximum result is 5 XOR 25 = 28.
 <details>
 <summary class="lc_m">
 
-- [**\[Medium\] Group Words that are Anagrams**](https://trsong.github.io/python/java/2020/05/02/DailyQuestionsMay/#june-8-2020-medium-group-words-that-are-anagrams) -- *Given a list of words, group the words that are anagrams of each other. (An anagram are words made up of the same letters).* [*\(Try ME\)*](https://repl.it/@trsong/Group-Anagrams-1)
+- [**\[Medium\] Group Words that are Anagrams**](https://trsong.github.io/python/java/2020/05/02/DailyQuestionsMay.html#june-8-2020-medium-group-words-that-are-anagrams) -- *Given a list of words, group the words that are anagrams of each other. (An anagram are words made up of the same letters).* [*\(Try ME\)*](https://repl.it/@trsong/Group-Anagrams-1)
 
 </summary>
 <div>
@@ -4748,7 +4748,7 @@ Output: [['abc', 'cba'], ['bcd', 'cbd'], ['efg']]
 <details>
 <summary class="lc_m">
 
-- [**\[Medium\] Autocompletion**](https://trsong.github.io/python/java/2020/05/02/DailyQuestionsMay/#jul-16-2020-medium-autocompletion) -- *Given a large set of words and then a single word prefix, find all words that it can complete to.* [*\(Try ME\)*](https://repl.it/@trsong/Autocompletion-1)
+- [**\[Medium\] Autocompletion**](https://trsong.github.io/python/java/2020/05/02/DailyQuestionsMay.html#jul-16-2020-medium-autocompletion) -- *Given a large set of words and then a single word prefix, find all words that it can complete to.* [*\(Try ME\)*](https://repl.it/@trsong/Autocompletion-1)
 
 </summary>
 <div>
@@ -4778,7 +4778,7 @@ s.autocomplete('do')  # Return ['dog', 'door', 'dodge']
 <details>
 <summary class="lc_m">
 
-- [**\[Medium\] Implement a Quack Using Three Stacks**](https://trsong.github.io/python/java/2021/02/02/DailyQuestionsFeb/#apr-19-2021-medium-implement-a-quack-using-three-stacks) -- *A quack is a data structure combining properties of both stacks and queues. Implement a quack using three stacks and O(1) additional memory.* [*\(Try ME\)*](https://replit.com/@trsong/Implement-a-Quack-Using-Three-Stacks-1)
+- [**\[Medium\] Implement a Quack Using Three Stacks**](https://trsong.github.io/python/java/2021/02/02/DailyQuestionsFeb.html#apr-19-2021-medium-implement-a-quack-using-three-stacks) -- *A quack is a data structure combining properties of both stacks and queues. Implement a quack using three stacks and O(1) additional memory.* [*\(Try ME\)*](https://replit.com/@trsong/Implement-a-Quack-Using-Three-Stacks-1)
 
 </summary>
 <div>
@@ -4798,7 +4798,7 @@ Implement a quack using three stacks and `O(1)` additional memory, so that the a
 <details>
 <summary class="lc_m">
 
-- [**\[Medium\] LC 224.Basic Calculator**](http://trsong.github.io/python/java/2021/02/02/DailyQuestionsFeb/#apr-17-2021-lc-224-medium-basic-calculator) -- *Given a string consisting of parentheses, single digits, and positive and negative signs, convert and evaluate mathematical expression.* [*\(Try ME\)*](https://replit.com/@trsong/Basic-Calculator-2)
+- [**\[Medium\] LC 224.Basic Calculator**](http://trsong.github.io/python/java/2021/02/02/DailyQuestionsFeb.html#apr-17-2021-lc-224-medium-basic-calculator) -- *Given a string consisting of parentheses, single digits, and positive and negative signs, convert and evaluate mathematical expression.* [*\(Try ME\)*](https://replit.com/@trsong/Basic-Calculator-2)
 
 </summary>
 <div>
@@ -4816,7 +4816,7 @@ For example, given `'-1 + (2 + 3)'`, you should return `4`.
 <details>
 <summary class="lc_m">
 
-- [**\[Medium\] Evaluate Expression in Reverse Polish Notation**](http://trsong.github.io/python/java/2021/02/02/DailyQuestionsFeb/#feb-25-2021-medium-evaluate-expression-in-reverse-polish-notation) -- *Given an arithmetic expression in Reverse Polish Notation, write a program to evaluate it.* [*\(Try ME\)*](https://repl.it/@trsong/Evaluate-Expression-Represented-in-Reverse-Polish-Notation-1)
+- [**\[Medium\] Evaluate Expression in Reverse Polish Notation**](http://trsong.github.io/python/java/2021/02/02/DailyQuestionsFeb.html#feb-25-2021-medium-evaluate-expression-in-reverse-polish-notation) -- *Given an arithmetic expression in Reverse Polish Notation, write a program to evaluate it.* [*\(Try ME\)*](https://repl.it/@trsong/Evaluate-Expression-Represented-in-Reverse-Polish-Notation-1)
 
 </summary>
 <div>
@@ -4843,7 +4843,7 @@ The expression is given as a list of numbers and operands.
 <details>
 <summary class="lc_m">
 
-- [**\[Medium\] Normalize Pathname**](https://trsong.github.io/python/java/2020/11/02/DailyQuestionsAug/#jan-7-2021-medium-normalize-pathname) -- *Given an absolute pathname that may have . or .. as part of it, return the shortest standardized path.* [*\(Try ME\)*](https://repl.it/@trsong/Normalize-to-Absolute-Pathname-1)
+- [**\[Medium\] Normalize Pathname**](https://trsong.github.io/python/java/2020/11/02/DailyQuestionsAug.html#jan-7-2021-medium-normalize-pathname) -- *Given an absolute pathname that may have . or .. as part of it, return the shortest standardized path.* [*\(Try ME\)*](https://repl.it/@trsong/Normalize-to-Absolute-Pathname-1)
 
 </summary>
 <div>
@@ -4859,7 +4859,7 @@ For example, given `"/usr/bin/../bin/./scripts/../"`, return `"/usr/bin"`.
 <details>
 <summary class="lc_m">
 
-- [**\[Medium\] Largest Rectangular Area in a Histogram**](http://trsong.github.io/python/java/2020/11/02/DailyQuestionsAug/#dec-26-2020-medium-largest-rectangular-area-in-a-histogram) -- *Given a histogram consisting of rectangles of different heights. Determine the area of the largest rectangle that can be formed.* [*\(Try ME\)*](https://repl.it/@trsong/Find-Largest-Rectangular-Area-in-a-Histogram-1)
+- [**\[Medium\] Largest Rectangular Area in a Histogram**](http://trsong.github.io/python/java/2020/11/02/DailyQuestionsAug.html#dec-26-2020-medium-largest-rectangular-area-in-a-histogram) -- *Given a histogram consisting of rectangles of different heights. Determine the area of the largest rectangle that can be formed.* [*\(Try ME\)*](https://repl.it/@trsong/Find-Largest-Rectangular-Area-in-a-Histogram-1)
 
 </summary>
 <div>
@@ -4887,7 +4887,7 @@ For the diagram above, for example, this would be six, representing the 2 x 3 ar
 <details>
 <summary class="lc_m">
 
-- [**\[Medium\] Interleave Stacks**](https://trsong.github.io/python/java/2020/08/02/DailyQuestionsAug/#oct-27-2020-medium-interleave-stacks) -- *Given a stack of N elements, interleave the first half of the stack with the second half reversed using only one other queue.* [*\(Try ME\)*](https://repl.it/@trsong/Interleave-First-and-Second-Half-of-Stacks-1)
+- [**\[Medium\] Interleave Stacks**](https://trsong.github.io/python/java/2020/08/02/DailyQuestionsAug.html#oct-27-2020-medium-interleave-stacks) -- *Given a stack of N elements, interleave the first half of the stack with the second half reversed using only one other queue.* [*\(Try ME\)*](https://repl.it/@trsong/Interleave-First-and-Second-Half-of-Stacks-1)
 
 </summary>
 <div>
@@ -4907,7 +4907,7 @@ Hint: Try working backwards from the end state.
 <details>
 <summary class="lc_m">
 
-- [**\[Medium\] Maximum In A Stack**](https://trsong.github.io/python/java/2020/08/02/DailyQuestionsAug/#oct-16-2020-medium-maximum-in-a-stack) -- *Implement a class for a stack that supports all the regular functions (push, pop) and an additional function of max().* [*\(Try ME\)*](https://repl.it/@trsong/Maximum-In-A-Stack-1)
+- [**\[Medium\] Maximum In A Stack**](https://trsong.github.io/python/java/2020/08/02/DailyQuestionsAug.html#oct-16-2020-medium-maximum-in-a-stack) -- *Implement a class for a stack that supports all the regular functions (push, pop) and an additional function of max().* [*\(Try ME\)*](https://repl.it/@trsong/Maximum-In-A-Stack-1)
 
 </summary>
 <div>
@@ -4934,7 +4934,7 @@ print s.max()  # 2
 <details>
 <summary class="lc_m">
 
-- [**\[Medium\] Nearest Larger Number**](https://trsong.github.io/python/java/2020/08/02/DailyQuestionsAug/#aug-13-2020-medium-nearest-larger-number) -- *Given an array of numbers and an index i, return the index of the nearest larger number of the number at index i.* [*\(Try ME\)*](https://repl.it/@trsong/Nearest-Larger-Number-1)
+- [**\[Medium\] Nearest Larger Number**](https://trsong.github.io/python/java/2020/08/02/DailyQuestionsAug.html#aug-13-2020-medium-nearest-larger-number) -- *Given an array of numbers and an index i, return the index of the nearest larger number of the number at index i.* [*\(Try ME\)*](https://repl.it/@trsong/Nearest-Larger-Number-1)
 
 </summary>
 <div>
@@ -4954,7 +4954,7 @@ If two distances to larger numbers are the equal, then return any one of them. I
 <details>
 <summary class="lc_e">
 
-- [**\[Easy\] LC 1047. Remove Adjacent Duplicate Characters**](https://trsong.github.io/python/java/2020/05/02/DailyQuestionsMay/#jul-15-2020-lc-1047-easy-remove-adjacent-duplicate-characters) -- *Given a string, we want to remove 2 adjacent characters that are the same, and repeat the process with the new string until we can no longer* [*\(Try ME\)*](https://repl.it/@trsong/Remove-2-Adjacent-Duplicate-Characters-1)
+- [**\[Easy\] LC 1047. Remove Adjacent Duplicate Characters**](https://trsong.github.io/python/java/2020/05/02/DailyQuestionsMay.html#jul-15-2020-lc-1047-easy-remove-adjacent-duplicate-characters) -- *Given a string, we want to remove 2 adjacent characters that are the same, and repeat the process with the new string until we can no longer* [*\(Try ME\)*](https://repl.it/@trsong/Remove-2-Adjacent-Duplicate-Characters-1)
 
 </summary>
 <div>
@@ -4977,7 +4977,7 @@ remove_adjacent_dup("cabba")
 <details>
 <summary class="lc_m">
 
-- [**\[Medium\] Index of Larger Next Number**](https://trsong.github.io/python/java/2020/05/02/DailyQuestionsMay/#jul-17-2020-medium-index-of-larger-next-number) -- *Given a list of numbers, for each element find the next element that is larger than the current element.* [*\(Try ME\)*](https://repl.it/@trsong/Find-Index-of-Larger-Next-Number-1)
+- [**\[Medium\] Index of Larger Next Number**](https://trsong.github.io/python/java/2020/05/02/DailyQuestionsMay.html#jul-17-2020-medium-index-of-larger-next-number) -- *Given a list of numbers, for each element find the next element that is larger than the current element.* [*\(Try ME\)*](https://repl.it/@trsong/Find-Index-of-Larger-Next-Number-1)
 
 </summary>
 <div>
@@ -4997,7 +4997,7 @@ larger_number([3, 2, 5, 6, 9, 8])
 <details>
 <summary class="lc_m">
 
-- [**\[Medium\] The Celebrity Problem**](https://trsong.github.io/python/java/2020/05/02/DailyQuestionsMay/#jul-27-2020-medium-the-celebrity-problem) -- *Given a list of N people and the above operation, find a way to identify the celebrity in O(N) time.* [*\(Try ME\)*](https://repl.it/@trsong/Test-The-Celebrity-Problem)
+- [**\[Medium\] The Celebrity Problem**](https://trsong.github.io/python/java/2020/05/02/DailyQuestionsMay.html#jul-27-2020-medium-the-celebrity-problem) -- *Given a list of N people and the above operation, find a way to identify the celebrity in O(N) time.* [*\(Try ME\)*](https://repl.it/@trsong/Test-The-Celebrity-Problem)
 
 </summary>
 <div>
@@ -5017,7 +5017,7 @@ Given a list of `N` people and the above operation, find a way to identify the c
 <details>
 <summary class="lc_e">
 
-- [**\[Easy\] LT 1859. Minimum Amplitude**](http://trsong.github.io/python/java/2021/05/02/DailyQuestionsMay/#may-9-2021-lt-1859-easy-minimum-amplitude) -- *Return the smallest amplitude of array A that we can achieve by performing at most three moves.* [*\(Try ME\)*](https://replit.com/@trsong/Minimum-Amplitude-1)
+- [**\[Easy\] LT 1859. Minimum Amplitude**](http://trsong.github.io/python/java/2021/05/02/DailyQuestionsMay.html#may-9-2021-lt-1859-easy-minimum-amplitude) -- *Return the smallest amplitude of array A that we can achieve by performing at most three moves.* [*\(Try ME\)*](https://replit.com/@trsong/Minimum-Amplitude-1)
 
 </summary>
 <div>
@@ -5054,7 +5054,7 @@ Explanation: This can be achieved by replacing 11, -6 and 5 with three values of
 <details>
 <summary class="lc_m">
 
-- [**\[Medium\] Merge K Sorted Lists**](https://trsong.github.io/python/java/2021/02/02/DailyQuestionsFeb/#apr-5-2021-medium-merge-k-sorted-lists) -- *Given k sorted singly linked lists, write a function to merge all the lists into one sorted singly linked list.* [*\(Try ME\)*](https://replit.com/@trsong/Merge-K-Sorted-Linked-Lists-1)
+- [**\[Medium\] Merge K Sorted Lists**](https://trsong.github.io/python/java/2021/02/02/DailyQuestionsFeb.html#apr-5-2021-medium-merge-k-sorted-lists) -- *Given k sorted singly linked lists, write a function to merge all the lists into one sorted singly linked list.* [*\(Try ME\)*](https://replit.com/@trsong/Merge-K-Sorted-Linked-Lists-1)
 
 </summary>
 <div>
@@ -5068,7 +5068,7 @@ Explanation: This can be achieved by replacing 11, -6 and 5 with three values of
 <details>
 <summary class="lc_m">
 
-- [**\[Medium\] Running Median of a Number Stream**](https://trsong.github.io/python/java/2020/11/02/DailyQuestionsAug/#jan-29-2021-medium-running-median-of-a-number-stream) -- *Print the running median of a number stream* [*\(Try ME\)*](https://repl.it/@trsong/Running-Median-of-a-Number-Stream-1)
+- [**\[Medium\] Running Median of a Number Stream**](https://trsong.github.io/python/java/2020/11/02/DailyQuestionsAug.html#jan-29-2021-medium-running-median-of-a-number-stream) -- *Print the running median of a number stream* [*\(Try ME\)*](https://repl.it/@trsong/Running-Median-of-a-Number-Stream-1)
 
 </summary>
 <div>
@@ -5096,7 +5096,7 @@ For example, given the sequence `[2, 1, 5, 7, 2, 0, 5]`, your algorithm should p
 <details>
 <summary class="lc_m">
 
-- [**\[Medium\] LC 692. Top K Frequent words**](https://trsong.github.io/python/java/2020/11/02/DailyQuestionsAug/#jan-6-2021-lc-692-medium-top-k-frequent-words) -- *Given a non-empty list of words, return the k most frequent words.* [*\(Try ME\)*](https://repl.it/@trsong/Find-Top-K-Frequent-Elements-1)
+- [**\[Medium\] LC 692. Top K Frequent words**](https://trsong.github.io/python/java/2020/11/02/DailyQuestionsAug.html#jan-6-2021-lc-692-medium-top-k-frequent-words) -- *Given a non-empty list of words, return the k most frequent words.* [*\(Try ME\)*](https://repl.it/@trsong/Find-Top-K-Frequent-Elements-1)
 
 </summary>
 <div>
@@ -5126,7 +5126,7 @@ Explanation: "the", "is", "sunny" and "day" are the four most frequent words,
 <details>
 <summary class="lc_m">
 
-- [**\[Medium\] Sort a K-Sorted Array**](https://trsong.github.io/python/java/2020/11/02/DailyQuestionsAug/#jan-4-2021-medium-sort-a-k-sorted-array) -- *Given a list of N numbers, in which each number is located at most k places away from its sorted position. Sort this array in O(N log k).* [*\(Try ME\)*](https://repl.it/@trsong/Sort-a-K-Sorted-Array-1)
+- [**\[Medium\] Sort a K-Sorted Array**](https://trsong.github.io/python/java/2020/11/02/DailyQuestionsAug.html#jan-4-2021-medium-sort-a-k-sorted-array) -- *Given a list of N numbers, in which each number is located at most k places away from its sorted position. Sort this array in O(N log k).* [*\(Try ME\)*](https://repl.it/@trsong/Sort-a-K-Sorted-Array-1)
 
 </summary>
 <div>
@@ -5149,7 +5149,7 @@ As seen above, every number is at most 2 indexes away from its proper sorted ind
 <details>
 <summary class="lc_h">
 
-- [**\[Hard\] LC 218. City Skyline**](http://trsong.github.io/python/java/2020/11/02/DailyQuestionsAug/#dec-27-2020--lc-218-hard-city-skyline) -- *Given a list of building in the form of (left, right, height), return what the skyline should look like.* [*\(Try ME\)*](https://repl.it/@trsong/Find-City-Skyline-1)
+- [**\[Hard\] LC 218. City Skyline**](http://trsong.github.io/python/java/2020/11/02/DailyQuestionsAug.html#dec-27-2020--lc-218-hard-city-skyline) -- *Given a list of building in the form of (left, right, height), return what the skyline should look like.* [*\(Try ME\)*](https://repl.it/@trsong/Find-City-Skyline-1)
 
 </summary>
 <div>
@@ -5179,7 +5179,7 @@ The result represents the scanned height of city skyline from left to right.
 <details>
 <summary class="lc_m">
 
-- [**\[Medium\] Similar Websites**](http://trsong.github.io/python/java/2020/11/02/DailyQuestionsAug/#nov-8-2020-medium-similar-websites) -- *You are given a list of (website, user) pairs that represent users visiting websites. Come up with a program that identifies the top k pairs* [*\(Try ME\)*](https://repl.it/@trsong/Find-Similar-Websites-1)
+- [**\[Medium\] Similar Websites**](http://trsong.github.io/python/java/2020/11/02/DailyQuestionsAug.html#nov-8-2020-medium-similar-websites) -- *You are given a list of (website, user) pairs that represent users visiting websites. Come up with a program that identifies the top k pairs* [*\(Try ME\)*](https://repl.it/@trsong/Find-Similar-Websites-1)
 
 </summary>
 <div>
@@ -5208,7 +5208,7 @@ Then a reasonable similarity metric would most likely conclude that a and e are 
 <details>
 <summary class="lc_m">
 
-- [**\[Medium\] M Smallest in K Sorted Lists**](https://trsong.github.io/python/java/2020/08/02/DailyQuestionsAug/#aug-4-2020-medium-m-smallest-in-k-sorted-lists) -- *Given k sorted arrays of possibly different sizes, find m-th smallest value in the merged array.* [*\(Try ME\)*](https://repl.it/@trsong/Find-M-Smallest-in-K-Sorted-Lists-1)
+- [**\[Medium\] M Smallest in K Sorted Lists**](https://trsong.github.io/python/java/2020/08/02/DailyQuestionsAug.html#aug-4-2020-medium-m-smallest-in-k-sorted-lists) -- *Given k sorted arrays of possibly different sizes, find m-th smallest value in the merged array.* [*\(Try ME\)*](https://repl.it/@trsong/Find-M-Smallest-in-K-Sorted-Lists-1)
 
 </summary>
 <div>
@@ -5242,7 +5242,7 @@ Output: 20
 <details>
 <summary class="lc_e">
 
-- [**\[Easy\] Largest Product of 3 Elements**](https://trsong.github.io/python/java/2020/05/02/DailyQuestionsMay/#june-25-2020-easy-largest-product-of-3-elements) -- *You are given an array of integers. Return the largest product that can be made by multiplying any 3 integers in the array.* [*\(Try ME\)*](https://repl.it/@trsong/Find-Largest-Product-of-3-Elements-in-Array-1)
+- [**\[Easy\] Largest Product of 3 Elements**](https://trsong.github.io/python/java/2020/05/02/DailyQuestionsMay.html#june-25-2020-easy-largest-product-of-3-elements) -- *You are given an array of integers. Return the largest product that can be made by multiplying any 3 integers in the array.* [*\(Try ME\)*](https://repl.it/@trsong/Find-Largest-Product-of-3-Elements-in-Array-1)
 
 </summary>
 <div>
@@ -5265,7 +5265,7 @@ Explanation: the largest product can be made by multiplying -4 * -4 * 8 = 128.
 <details>
 <summary class="lc_m">
 
-- [**\[Medium\] Craft Sentence**](https://trsong.github.io/python/java/2020/11/02/DailyQuestionsAug/#dec-19-2020-medium-craft-sentence) -- *Given a sequence of words and an integer line length k, write an algorithm to justify text.* [*\(Try ME\)*](https://repl.it/@trsong/Craft-Sentence-and-Adjust-Text-Width-1)
+- [**\[Medium\] Craft Sentence**](https://trsong.github.io/python/java/2020/11/02/DailyQuestionsAug.html#dec-19-2020-medium-craft-sentence) -- *Given a sequence of words and an integer line length k, write an algorithm to justify text.* [*\(Try ME\)*](https://repl.it/@trsong/Craft-Sentence-and-Adjust-Text-Width-1)
 
 </summary>
 <div>
@@ -5294,7 +5294,7 @@ For example, given the list of words `["the", "quick", "brown", "fox", "jumps", 
 <details>
 <summary class="lc_m">
 
-- [**\[Medium\] Rearrange String with Repeated Characters**](https://trsong.github.io/python/java/2020/11/02/DailyQuestionsAug/#dec-7-2020-medium-rearrange-string-with-repeated-characters) -- *Given a string with repeated characters, rearrange the string so that no two adjacent characters are the same.* [*\(Try ME\)*](https://repl.it/@trsong/Rearrange-String-with-Repeated-Characters-1)
+- [**\[Medium\] Rearrange String with Repeated Characters**](https://trsong.github.io/python/java/2020/11/02/DailyQuestionsAug.html#dec-7-2020-medium-rearrange-string-with-repeated-characters) -- *Given a string with repeated characters, rearrange the string so that no two adjacent characters are the same.* [*\(Try ME\)*](https://repl.it/@trsong/Rearrange-String-with-Repeated-Characters-1)
 
 </summary>
 <div>
@@ -5310,7 +5310,7 @@ For example, given `"aaabbc"`, you could return `"ababac"`. Given `"aaab"`, retu
 <details>
 <summary class="lc_h">
 
-- [**\[Hard\] LC 358. Rearrange String K Distance Apart**](http://trsong.github.io/python/java/2020/08/02/DailyQuestionsAug/#sep-11-2020-lc-358-hard-rearrange-string-k-distance-apart) -- *Given a non-empty string str and an integer k, rearrange the string such that the same characters are at least distance k from each other.* [*\(Try ME\)*](https://repl.it/@trsong/Rearrange-Strings-K-Distance-Apart-1)
+- [**\[Hard\] LC 358. Rearrange String K Distance Apart**](http://trsong.github.io/python/java/2020/08/02/DailyQuestionsAug.html#sep-11-2020-lc-358-hard-rearrange-string-k-distance-apart) -- *Given a non-empty string str and an integer k, rearrange the string such that the same characters are at least distance k from each other.* [*\(Try ME\)*](https://repl.it/@trsong/Rearrange-Strings-K-Distance-Apart-1)
 
 </summary>
 <div>
@@ -5348,7 +5348,7 @@ The same letters are at least distance 2 from each other.
 <details>
 <summary class="lc_m">
 
-- [**\[Medium\] LC 621. Task Scheduler**](https://trsong.github.io/python/java/2020/05/02/DailyQuestionsMay/#june-10-2020--lc-621-medium-task-scheduler) -- *Given a char array representing tasks CPU need to do.You need to return the least number of intervals the CPU will take to finish all tasks.* [*\(Try ME\)*](https://repl.it/@trsong/LC-621-Task-Scheduler-1)
+- [**\[Medium\] LC 621. Task Scheduler**](https://trsong.github.io/python/java/2020/05/02/DailyQuestionsMay.html#june-10-2020--lc-621-medium-task-scheduler) -- *Given a char array representing tasks CPU need to do.You need to return the least number of intervals the CPU will take to finish all tasks.* [*\(Try ME\)*](https://repl.it/@trsong/LC-621-Task-Scheduler-1)
 
 </summary>
 <div>
@@ -5379,7 +5379,7 @@ Explanation: A -> B -> idle -> A -> B -> idle -> A -> B.
 <details>
 <summary class="lc_e">
 
-- [**\[Easy\] Common Characters**](https://trsong.github.io/python/java/2021/02/02/DailyQuestionsFeb/#mar-26-2021-easy-common-characters) -- *Given n strings, find the common characters in all the strings. Display them in alphabetical order.* [*\(Try ME\)*](https://replit.com/@trsong/Find-All-Common-Characters-1)
+- [**\[Easy\] Common Characters**](https://trsong.github.io/python/java/2021/02/02/DailyQuestionsFeb.html#mar-26-2021-easy-common-characters) -- *Given n strings, find the common characters in all the strings. Display them in alphabetical order.* [*\(Try ME\)*](https://replit.com/@trsong/Find-All-Common-Characters-1)
 
 </summary>
 <div>
@@ -5399,7 +5399,7 @@ common_characters(['google', 'facebook', 'youtube'])
 <details>
 <summary class="lc_e">
 
-- [**\[Easy\] Word Ordering in a Different Alphabetical Order**](http://trsong.github.io/python/java/2020/11/02/DailyQuestionsAug/#nov-20-2020-easy-word-ordering-in-a-different-alphabetical-order) -- *Given a list of words, and an arbitrary alphabetical order, verify that the words are in order of the alphabetical order.* [*\(Try ME\)*](https://repl.it/@trsong/Determine-Word-Ordering-in-a-Different-Alphabetical-Order-1)
+- [**\[Easy\] Word Ordering in a Different Alphabetical Order**](http://trsong.github.io/python/java/2020/11/02/DailyQuestionsAug.html#nov-20-2020-easy-word-ordering-in-a-different-alphabetical-order) -- *Given a list of words, and an arbitrary alphabetical order, verify that the words are in order of the alphabetical order.* [*\(Try ME\)*](https://repl.it/@trsong/Determine-Word-Ordering-in-a-Different-Alphabetical-Order-1)
 
 </summary>
 <div>
@@ -5433,7 +5433,7 @@ Explanation: The words are in increasing alphabetical order
 <details>
 <summary class="lc_m">
 
-- [**\[Medium\] LRU Cache**](http://trsong.github.io/python/java/2021/02/02/DailyQuestionsFeb/#feb-9-2021-medium-lru-cache) -- *Design and implement an LRU cache class with the 2 functions 'put' and 'get'.* [*\(Try ME\)*](https://repl.it/@trsong/Design-LRU-Cache-1)
+- [**\[Medium\] LRU Cache**](http://trsong.github.io/python/java/2021/02/02/DailyQuestionsFeb.html#feb-9-2021-medium-lru-cache) -- *Design and implement an LRU cache class with the 2 functions 'put' and 'get'.* [*\(Try ME\)*](https://repl.it/@trsong/Design-LRU-Cache-1)
 
 </summary>
 <div>
@@ -5464,7 +5464,7 @@ cache.get(3)  # returns 3
 <details>
 <summary class="lc_h">
 
-- [**\[Hard\] LFU Cache**](http://trsong.github.io/python/java/2021/02/02/DailyQuestionsFeb/#feb-8-2021-hard-lfu-cache) -- *Designs and implements data structures that use the least frequently used (LFU) cache.* [*\(Try ME\)*](https://repl.it/@trsong/Design-LFU-Cache-1)
+- [**\[Hard\] LFU Cache**](http://trsong.github.io/python/java/2021/02/02/DailyQuestionsFeb.html#feb-8-2021-hard-lfu-cache) -- *Designs and implements data structures that use the least frequently used (LFU) cache.* [*\(Try ME\)*](https://repl.it/@trsong/Design-LFU-Cache-1)
 
 </summary>
 <div>
@@ -5483,7 +5483,7 @@ Each operation should run in O(1) time.
 <details>
 <summary class="lc_m">
 
-- [**\[Medium\] Fixed Order Task Scheduler with Cooldown**](https://trsong.github.io/python/java/2020/08/02/DailyQuestionsAug/#sep-26-2020-medium-fixed-order-task-scheduler-with-cooldown) -- *Given a list of tasks to perform, with a cooldown period. Return execution order.* [*\(Try ME\)*](Fixed Order Task Scheduler with Cooldown-1)
+- [**\[Medium\] Fixed Order Task Scheduler with Cooldown**](https://trsong.github.io/python/java/2020/08/02/DailyQuestionsAug.html#sep-26-2020-medium-fixed-order-task-scheduler-with-cooldown) -- *Given a list of tasks to perform, with a cooldown period. Return execution order.* [*\(Try ME\)*](Fixed Order Task Scheduler with Cooldown-1)
 
 </summary>
 <div>
@@ -5506,7 +5506,7 @@ output: 7 (order is 1 _ _ 1 2 _ 1)
 <details>
 <summary class="lc_m">
 
-- [**\[Medium\] LC 763. Partition Labels**](https://trsong.github.io/python/java/2020/08/02/DailyQuestionsAug/#sep-7-2020-lc-763-medium-partition-labels) -- *Partition the given string into as many parts as possible so that each letter appears in at most one part. Return length for each part.* [*\(Try ME\)*](https://repl.it/@trsong/Partition-Labels-1)
+- [**\[Medium\] LC 763. Partition Labels**](https://trsong.github.io/python/java/2020/08/02/DailyQuestionsAug.html#sep-7-2020-lc-763-medium-partition-labels) -- *Partition the given string into as many parts as possible so that each letter appears in at most one part. Return length for each part.* [*\(Try ME\)*](https://repl.it/@trsong/Partition-Labels-1)
 
 </summary>
 <div>
@@ -5528,7 +5528,7 @@ A partition like "ababcbacadefegde", "hijhklij" is incorrect, because it splits 
 <details>
 <summary class="lc_m">
 
-- [**\[Medium\] LC 1171. Remove Consecutive Nodes that Sum to 0**](https://trsong.github.io/python/java/2020/08/02/DailyQuestionsAug/#aug-26-2020-lc-1171-medium-remove-consecutive-nodes-that-sum-to-0) -- *Given a linked list of integers, remove all consecutive nodes that sum up to 0.* [*\(Try ME\)*](https://repl.it/@trsong/Remove-Consecutive-Nodes-that-Sum-to-Zero-1)
+- [**\[Medium\] LC 1171. Remove Consecutive Nodes that Sum to 0**](https://trsong.github.io/python/java/2020/08/02/DailyQuestionsAug.html#aug-26-2020-lc-1171-medium-remove-consecutive-nodes-that-sum-to-0) -- *Given a linked list of integers, remove all consecutive nodes that sum up to 0.* [*\(Try ME\)*](https://repl.it/@trsong/Remove-Consecutive-Nodes-that-Sum-to-Zero-1)
 
 </summary>
 <div>
@@ -5568,7 +5568,7 @@ Output: 1
 <details>
 <summary class="lc_m">
 
-- [**\[Medium\] LC 560. Subarray Sum Equals K**](https://trsong.github.io/python/java/2020/08/02/DailyQuestionsAug/#aug-24-2020-lc-560-medium-subarray-sum-equals-k) -- *Given a list of integers and a number K, return which contiguous elements of the list sum to K.* [*\(Try ME\)*](https://repl.it/@trsong/Find-Number-of-Sub-array-Sum-Equals-K-1)
+- [**\[Medium\] LC 560. Subarray Sum Equals K**](https://trsong.github.io/python/java/2020/08/02/DailyQuestionsAug.html#aug-24-2020-lc-560-medium-subarray-sum-equals-k) -- *Given a list of integers and a number K, return which contiguous elements of the list sum to K.* [*\(Try ME\)*](https://repl.it/@trsong/Find-Number-of-Sub-array-Sum-Equals-K-1)
 
 </summary>
 <div>
@@ -5587,7 +5587,7 @@ For example, if the list is `[1, 2, 3, 4, 5]` and `K` is `9`, then it should ret
 <details>
 <summary class="lc_h">
 
-- [**\[Hard\] Decreasing Subsequences**](http://trsong.github.io/python/java/2021/05/02/DailyQuestionsMay/#may-1-2021-hard-decreasing-subsequences) -- *Given an int array nums of length n. Split it into strictly decreasing subsequences. Output the min number of subsequences you can get.* [*\(Try ME\)*](https://replit.com/@trsong/Decreasing-Subsequences-1)
+- [**\[Hard\] Decreasing Subsequences**](http://trsong.github.io/python/java/2021/05/02/DailyQuestionsMay.html#may-1-2021-hard-decreasing-subsequences) -- *Given an int array nums of length n. Split it into strictly decreasing subsequences. Output the min number of subsequences you can get.* [*\(Try ME\)*](https://replit.com/@trsong/Decreasing-Subsequences-1)
 
 </summary>
 <div>
@@ -5625,7 +5625,7 @@ Explanation: Because of the strictly descending order you have to split it into 
 <details>
 <summary class="lc_m">
 
-- [**\[Medium\] Minimum Number of Boats to Save Population**](https://trsong.github.io/python/java/2021/02/02/DailyQuestionsFeb/#apr-6-2021-medium-minimum-number-of-boats-to-save-population) -- *If at most two people can fit in a rescue boat, and the maximum weight limit for a given boat is k, determine how many boats will be needed.* [*\(Try ME\)*](https://replit.com/@trsong/Minimum-Number-of-Boats-to-Save-Population-1)
+- [**\[Medium\] Minimum Number of Boats to Save Population**](https://trsong.github.io/python/java/2021/02/02/DailyQuestionsFeb.html#apr-6-2021-medium-minimum-number-of-boats-to-save-population) -- *If at most two people can fit in a rescue boat, and the maximum weight limit for a given boat is k, determine how many boats will be needed.* [*\(Try ME\)*](https://replit.com/@trsong/Minimum-Number-of-Boats-to-Save-Population-1)
 
 </summary>
 <div>
@@ -5641,7 +5641,7 @@ For example, given a population with weights `[100, 200, 150, 80]` and a boat li
 <details>
 <summary class="lc_e">
 
-- [**\[Easy\] Mouse Holes**](https://trsong.github.io/python/java/2021/02/02/DailyQuestionsFeb/#mar-30-2021-easy-mouse-holes) -- *N mice and N holes placed at integer points along a line. Find he largest number of mice-to-holes steps any mouse takes is minimized.* [*\(Try ME\)*](https://replit.com/@trsong/Min-Max-Step-Mouse-to-Holes-1)
+- [**\[Easy\] Mouse Holes**](https://trsong.github.io/python/java/2021/02/02/DailyQuestionsFeb.html#mar-30-2021-easy-mouse-holes) -- *N mice and N holes placed at integer points along a line. Find he largest number of mice-to-holes steps any mouse takes is minimized.* [*\(Try ME\)*](https://replit.com/@trsong/Min-Max-Step-Mouse-to-Holes-1)
 
 </summary>
 <div>
@@ -5659,7 +5659,7 @@ For example, suppose the mice are positioned at `[1, 4, 9, 15]`, and the holes a
 <details>
 <summary class="lc_h">
 
-- [**\[Hard\] Smallest Stab Set**](https://trsong.github.io/python/java/2020/11/02/DailyQuestionsAug/#jan-24-2021-hard-smallest-stab-set) -- *P “stabs” X if every interval in X contains at least one point in P. Compute the smallest set of points that stabs X.* [*\(Try ME\)*](https://repl.it/@trsong/Smallest-Stab-Set-1)
+- [**\[Hard\] Smallest Stab Set**](https://trsong.github.io/python/java/2020/11/02/DailyQuestionsAug.html#jan-24-2021-hard-smallest-stab-set) -- *P “stabs” X if every interval in X contains at least one point in P. Compute the smallest set of points that stabs X.* [*\(Try ME\)*](https://repl.it/@trsong/Smallest-Stab-Set-1)
 
 </summary>
 <div>
@@ -5674,7 +5674,7 @@ For example, given the intervals `[(1, 4), (4, 5), (7, 9), (9, 12)]`, you should
 <details>
 <summary class="lc_m">
 
-- [**\[Medium\] LC 1647. Minimum Deletions to Make Character Frequencies Unique**](https://trsong.github.io/python/java/2020/11/02/DailyQuestionsAug/#nov-16-2020-lc-1647-medium-minimum-deletions-to-make-character-frequencies-unique) -- *Given a string s, return the minimum number of characters you need to delete to make s good. s is good if no two letters have same count.* [*\(Try ME\)*](https://repl.it/@trsong/Minimum-Deletions-to-Make-Character-Frequencies-Unique-1)
+- [**\[Medium\] LC 1647. Minimum Deletions to Make Character Frequencies Unique**](https://trsong.github.io/python/java/2020/11/02/DailyQuestionsAug.html#nov-16-2020-lc-1647-medium-minimum-deletions-to-make-character-frequencies-unique) -- *Given a string s, return the minimum number of characters you need to delete to make s good. s is good if no two letters have same count.* [*\(Try ME\)*](https://repl.it/@trsong/Minimum-Deletions-to-Make-Character-Frequencies-Unique-1)
 
 </summary>
 <div>
@@ -5722,7 +5722,7 @@ Note that we only care about characters that are still in the string at the end 
 <details>
 <summary class="lc_e">
 
-- [**\[Easy\] Max and Min with Limited Comparisons**](https://trsong.github.io/python/java/2020/11/02/DailyQuestionsAug/#dec-16-2020-easy-max-and-min-with-limited-comparisons) -- *Find the maximum and minimum of the list using less than `2 * (n - 1)` comparisons.* [*\(Try ME\)*](https://repl.it/@trsong/Find-the-Max-and-Min-with-Limited-Comparisons-1)
+- [**\[Easy\] Max and Min with Limited Comparisons**](https://trsong.github.io/python/java/2020/11/02/DailyQuestionsAug.html#dec-16-2020-easy-max-and-min-with-limited-comparisons) -- *Find the maximum and minimum of the list using less than `2 * (n - 1)` comparisons.* [*\(Try ME\)*](https://repl.it/@trsong/Find-the-Max-and-Min-with-Limited-Comparisons-1)
 
 </summary>
 <div>
@@ -5742,7 +5742,7 @@ Output: (1, 8)
 <details>
 <summary class="lc_m">
 
-- [**\[Medium\] LC 240. Search a 2D Matrix II**](https://trsong.github.io/python/java/2020/11/02/DailyQuestionsAug/#dec-13-2020-lc-240-medium-search-a-2d-matrix-ii) -- *Write an efficient algorithm that searches for a value in an m x n matrix.* [*\(Try ME\)*](https://repl.it/@trsong/Search-in-a-Sorted-2D-Matrix-1)
+- [**\[Medium\] LC 240. Search a 2D Matrix II**](https://trsong.github.io/python/java/2020/11/02/DailyQuestionsAug.html#dec-13-2020-lc-240-medium-search-a-2d-matrix-ii) -- *Write an efficient algorithm that searches for a value in an m x n matrix.* [*\(Try ME\)*](https://repl.it/@trsong/Search-in-a-Sorted-2D-Matrix-1)
 
 </summary>
 <div>
@@ -5774,7 +5774,7 @@ Given target = 20, return False.
 <details>
 <summary class="lc_m">
 
-- [**\[Medium\] Maximum Subarray Sum**](https://trsong.github.io/python/java/2020/11/02/DailyQuestionsAug/#nov-5-2020-easy-maximum-subarray-sum) -- *Given array that may contain both positive and negative integers, find the sum of contiguous subarray of numbers which has the largest sum.* [*\(Try ME\)*](https://repl.it/@trsong/Maximum-Subarray-Sum-Divide-and-Conquer-1)
+- [**\[Medium\] Maximum Subarray Sum**](https://trsong.github.io/python/java/2020/11/02/DailyQuestionsAug.html#nov-5-2020-easy-maximum-subarray-sum) -- *Given array that may contain both positive and negative integers, find the sum of contiguous subarray of numbers which has the largest sum.* [*\(Try ME\)*](https://repl.it/@trsong/Maximum-Subarray-Sum-Divide-and-Conquer-1)
 
 </summary>
 <div>
@@ -5792,7 +5792,7 @@ Solve this problem with Divide and Conquer as well as DP separately.
 <details>
 <summary class="lc_m">
 
-- [**\[Medium\] The Tower of Hanoi**](http://trsong.github.io/python/java/2020/11/02/DailyQuestionsAug/#nov-1-2020-medium-the-tower-of-hanoi) -- *The Tower of Hanoi is a puzzle game with three rods.Write a function that prints out all the steps necessary to complete the Tower of Hanoi.* [*\(Try ME\)*](https://repl.it/@trsong/Solve-the-Tower-of-Hanoi-Problem-1)
+- [**\[Medium\] The Tower of Hanoi**](http://trsong.github.io/python/java/2020/11/02/DailyQuestionsAug.html#nov-1-2020-medium-the-tower-of-hanoi) -- *The Tower of Hanoi is a puzzle game with three rods.Write a function that prints out all the steps necessary to complete the Tower of Hanoi.* [*\(Try ME\)*](https://repl.it/@trsong/Solve-the-Tower-of-Hanoi-Problem-1)
 
 </summary>
 <div>
@@ -5837,7 +5837,7 @@ Move 1 to 3
 <details>
 <summary class="lc_e">
 
-- [**\[Easy\] ZigZag Binary Tree**](https://trsong.github.io/python/java/2021/02/02/DailyQuestionsFeb/#feb-2-2021-easy-zigzag-binary-tree) -- *Given a binary tree, write an algorithm to print the nodes in zigzag order.* [*\(Try ME\)*](https://repl.it/@trsong/ZigZag-Order-of-Binary-Tree-1)
+- [**\[Easy\] ZigZag Binary Tree**](https://trsong.github.io/python/java/2021/02/02/DailyQuestionsFeb.html#feb-2-2021-easy-zigzag-binary-tree) -- *Given a binary tree, write an algorithm to print the nodes in zigzag order.* [*\(Try ME\)*](https://repl.it/@trsong/ZigZag-Order-of-Binary-Tree-1)
 
 </summary>
 <div>
@@ -5866,7 +5866,7 @@ You should return [1, 3, 2, 4, 5, 6, 7].
 <details>
 <summary class="lc_m">
 
-- [**\[Medium\] LC 127. Word Ladder**](https://trsong.github.io/python/java/2020/11/02/DailyQuestionsAug/#dec-2-2020-lc-127-medium-word-ladder) -- *Find the shortest transformation sequence from start to end such that only one letter is changed at each step of the sequence.* [*\(Try ME\)*](https://repl.it/@trsong/Word-Ladder-1)
+- [**\[Medium\] LC 127. Word Ladder**](https://trsong.github.io/python/java/2020/11/02/DailyQuestionsAug.html#dec-2-2020-lc-127-medium-word-ladder) -- *Find the shortest transformation sequence from start to end such that only one letter is changed at each step of the sequence.* [*\(Try ME\)*](https://repl.it/@trsong/Word-Ladder-1)
 
 </summary>
 <div>
@@ -5885,7 +5885,7 @@ Given `start = "dog"`, `end = "cat"`, and `dictionary = {"dot", "tod", "dat", "d
 <details>
 <summary class="lc_m">
 
-- [**\[Medium\] LC 286. Walls and Gates**](https://trsong.github.io/python/java/2020/11/02/DailyQuestionsAug/#nov-23-2020-lc-286-medium-walls-and-gates) -- *Given a m x n 2D grid, fill each empty room with the distance to its nearest gate.* [*\(Try ME\)*](https://repl.it/@trsong/Identify-Walls-and-Gates-1)
+- [**\[Medium\] LC 286. Walls and Gates**](https://trsong.github.io/python/java/2020/11/02/DailyQuestionsAug.html#nov-23-2020-lc-286-medium-walls-and-gates) -- *Given a m x n 2D grid, fill each empty room with the distance to its nearest gate.* [*\(Try ME\)*](https://repl.it/@trsong/Identify-Walls-and-Gates-1)
 
 </summary>
 <div>
@@ -5922,7 +5922,7 @@ After running your function, the 2D grid should be:
 <details>
 <summary class="lc_e">
 
-- [**\[Easy\] Deepest Node in a Binary Tree**](https://trsong.github.io/python/java/2020/08/02/DailyQuestionsAug/#sep-2-2020-easy-deepest-node-in-a-binary-tree) -- *You are given the root of a binary tree. Return the deepest node (the furthest node from the root).* [*\(Try ME\)*](https://repl.it/@trsong/Find-Deepest-Node-in-a-Binary-Tree-1)
+- [**\[Easy\] Deepest Node in a Binary Tree**](https://trsong.github.io/python/java/2020/08/02/DailyQuestionsAug.html#sep-2-2020-easy-deepest-node-in-a-binary-tree) -- *You are given the root of a binary tree. Return the deepest node (the furthest node from the root).* [*\(Try ME\)*](https://repl.it/@trsong/Find-Deepest-Node-in-a-Binary-Tree-1)
 
 </summary>
 <div>
@@ -5946,7 +5946,7 @@ The deepest node in this tree is d at depth 3.
 <details>
 <summary class="lc_m">
 
-- [**\[Medium\] Maximum Number of Connected Colors**](https://trsong.github.io/python/java/2020/05/02/DailyQuestionsMay/#june-30-2020-medium-maximum-number-of-connected-colors) -- *Given a grid with cells in different colors, find the maximum number of same color cells that are connected.* [*\(Try ME\)*](https://repl.it/@trsong/Find-Maximum-Number-of-Connected-Colors-1)
+- [**\[Medium\] Maximum Number of Connected Colors**](https://trsong.github.io/python/java/2020/05/02/DailyQuestionsMay.html#june-30-2020-medium-maximum-number-of-connected-colors) -- *Given a grid with cells in different colors, find the maximum number of same color cells that are connected.* [*\(Try ME\)*](https://repl.it/@trsong/Find-Maximum-Number-of-Connected-Colors-1)
 
 </summary>
 <div>
@@ -5973,7 +5973,7 @@ The following grid have max 4 connected colors. `[color 3: (1, 2), (1, 3), (2, 1
 <details>
 <summary class="lc_m">
 
-- [**\[Medium\] Find All Cousins in Binary Tree**](https://trsong.github.io/python/java/2020/05/02/DailyQuestionsMay/#jul-21-2020-medium-find-all-cousins-in-binary-tree) -- *Given a binary tree and a particular node, find all cousins of that node.* [*\(Try ME\)*](https://repl.it/@trsong/All-Cousins-in-Binary-Tree-1)
+- [**\[Medium\] Find All Cousins in Binary Tree**](https://trsong.github.io/python/java/2020/05/02/DailyQuestionsMay.html#jul-21-2020-medium-find-all-cousins-in-binary-tree) -- *Given a binary tree and a particular node, find all cousins of that node.* [*\(Try ME\)*](https://repl.it/@trsong/All-Cousins-in-Binary-Tree-1)
 
 </summary>
 <div>
@@ -6001,7 +6001,7 @@ In the following diagram 4 and 6 are cousins:
 <details>
 <summary class="lc_h">
 
-- [**\[Hard\] Longest Path in Binary Tree**](https://trsong.github.io/python/java/2020/05/02/DailyQuestionsMay/#jul-31-2020-hard-longest-path-in-binary-tree) -- *Given a binary tree, return any of the longest path.* [*\(Try ME\)*](https://repl.it/@trsong/Test-Longest-Path-in-Binary-Tree)
+- [**\[Hard\] Longest Path in Binary Tree**](https://trsong.github.io/python/java/2020/05/02/DailyQuestionsMay.html#jul-31-2020-hard-longest-path-in-binary-tree) -- *Given a binary tree, return any of the longest path.* [*\(Try ME\)*](https://repl.it/@trsong/Test-Longest-Path-in-Binary-Tree)
 
 </summary>
 <div>
@@ -6039,7 +6039,7 @@ Output: [4, 2, 1, 3, 6] or [5, 2, 1, 3, 6]
 <details>
 <summary class="lc_e">
 
-- [**\[Easy\] Minimum Depth of Binary Tree**](https://trsong.github.io/python/java/2021/02/02/DailyQuestionsFeb/#apr-11-2021-easy-minimum-depth-of-binary-tree) -- * Given a binary tree, find the minimum depth of the binary tree. The minimum depth is the shortest distance from the root to a leaf.* [*\(Try ME\)*](https://replit.com/@trsong/Minimum-Depth-of-Binary-Tree-3)
+- [**\[Easy\] Minimum Depth of Binary Tree**](https://trsong.github.io/python/java/2021/02/02/DailyQuestionsFeb.html#apr-11-2021-easy-minimum-depth-of-binary-tree) -- * Given a binary tree, find the minimum depth of the binary tree. The minimum depth is the shortest distance from the root to a leaf.* [*\(Try ME\)*](https://replit.com/@trsong/Minimum-Depth-of-Binary-Tree-3)
 
 </summary>
 <div>
@@ -6064,7 +6064,7 @@ Output: 2
 <details>
 <summary class="lc_m">
 
-- [**\[Medium\] Minimum Number of Operations**](https://trsong.github.io/python/java/2021/02/02/DailyQuestionsFeb/#mar-28-2021-medium-minimum-number-of-operations) -- *Given a number x and a number y, find the minimum number of operations needed to go from x to y.* [*\(Try ME\)*](https://replit.com/@trsong/Find-Min-Number-of-Operations-1)
+- [**\[Medium\] Minimum Number of Operations**](https://trsong.github.io/python/java/2021/02/02/DailyQuestionsFeb.html#mar-28-2021-medium-minimum-number-of-operations) -- *Given a number x and a number y, find the minimum number of operations needed to go from x to y.* [*\(Try ME\)*](https://replit.com/@trsong/Find-Min-Number-of-Operations-1)
 
 </summary>
 <div>
@@ -6083,7 +6083,7 @@ Given a number `x` and a number `y`, find the minimum number of operations neede
 <details>
 <summary class="lc_h">
 
-- [**\[Hard\] LC 934. Shortest Bridge**](https://trsong.github.io/python/java/2020/08/02/DailyQuestionsAug/#aug-1-2020-lc-934-medium-shortest-bridge) -- *In a given 2D binary array A, there are two islands.Return the smallest number of 0s that must be flipped.* [*\(Try ME\)*](https://repl.it/@trsong/Shortest-Bridge-1)
+- [**\[Hard\] LC 934. Shortest Bridge**](https://trsong.github.io/python/java/2020/08/02/DailyQuestionsAug.html#aug-1-2020-lc-934-medium-shortest-bridge) -- *In a given 2D binary array A, there are two islands.Return the smallest number of 0s that must be flipped.* [*\(Try ME\)*](https://repl.it/@trsong/Shortest-Bridge-1)
 
 </summary>
 <div>
@@ -6139,7 +6139,7 @@ Output: 1
 <details>
 <summary class="lc_m">
 
-- [**\[Medium\] LC 1448. Count Good Nodes in Binary Tree**](https://trsong.github.io/python/java/2021/02/02/DailyQuestionsFeb/#apr-25-2021-lc-1448-medium-count-good-nodes-in-binary-tree) -- *Given a binary tree root, a node X in the tree is named good if in the path from root to X there are no nodes with a value greater than X.* [*\(Try ME\)*](https://replit.com/@trsong/Count-Good-Nodes-in-Binary-Tree-1)
+- [**\[Medium\] LC 1448. Count Good Nodes in Binary Tree**](https://trsong.github.io/python/java/2021/02/02/DailyQuestionsFeb.html#apr-25-2021-lc-1448-medium-count-good-nodes-in-binary-tree) -- *Given a binary tree root, a node X in the tree is named good if in the path from root to X there are no nodes with a value greater than X.* [*\(Try ME\)*](https://replit.com/@trsong/Count-Good-Nodes-in-Binary-Tree-1)
 
 </summary>
 <div>
@@ -6171,7 +6171,7 @@ Node 3 -> (3,1,3) is the maximum value in the path.
 <details>
 <summary class="lc_m">
 
-- [**\[Medium\] LC 114. Flatten Binary Tree to Linked List**](https://trsong.github.io/python/java/2021/02/02/DailyQuestionsFeb/#apr-20-2021-lc-114-medium-flatten-binary-tree-to-linked-list) -- *Given a binary tree, flatten it to a linked list in-place.* [*\(Try ME\)*](https://replit.com/@trsong/In-place-Flatten-the-Binary-Tree-to-Linked-List-1)
+- [**\[Medium\] LC 114. Flatten Binary Tree to Linked List**](https://trsong.github.io/python/java/2021/02/02/DailyQuestionsFeb.html#apr-20-2021-lc-114-medium-flatten-binary-tree-to-linked-list) -- *Given a binary tree, flatten it to a linked list in-place.* [*\(Try ME\)*](https://replit.com/@trsong/In-place-Flatten-the-Binary-Tree-to-Linked-List-1)
 
 </summary>
 <div>
@@ -6211,7 +6211,7 @@ For example, given the following tree:
 <details>
 <summary class="lc_e">
 
-- [**\[Easy\] Target Sum from Root to Leaf**](https://trsong.github.io/python/java/2021/02/02/DailyQuestionsFeb/#apr-13-2021-easy-target-sum-from-root-to-leaf) -- *Given a binary tree, and a target number, find if there is a path from the root to any leaf that sums up to the target.* [*\(Try ME\)*](https://replit.com/@trsong/Target-Sum-from-Root-to-Leaf-1)
+- [**\[Easy\] Target Sum from Root to Leaf**](https://trsong.github.io/python/java/2021/02/02/DailyQuestionsFeb.html#apr-13-2021-easy-target-sum-from-root-to-leaf) -- *Given a binary tree, and a target number, find if there is a path from the root to any leaf that sums up to the target.* [*\(Try ME\)*](https://replit.com/@trsong/Target-Sum-from-Root-to-Leaf-1)
 
 </summary>
 <div>
@@ -6237,7 +6237,7 @@ Explanation: path 1 -> 2 -> 6 sum up to 9
 <details>
 <summary class="lc_h">
 
-- [**\[Hard\] Critical Routers (Articulation Point)**](http://trsong.github.io/python/java/2021/02/02/DailyQuestionsFeb/#mar-13-2021-hard-critical-routers-articulation-point) -- *Given an undirected connected graph, find all articulation points in the given graph.* [*\(Try ME\)*](https://replit.com/@trsong/Find-the-Critical-Routers-Articulation-Point-1)
+- [**\[Hard\] Critical Routers (Articulation Point)**](http://trsong.github.io/python/java/2021/02/02/DailyQuestionsFeb.html#mar-13-2021-hard-critical-routers-articulation-point) -- *Given an undirected connected graph, find all articulation points in the given graph.* [*\(Try ME\)*](https://replit.com/@trsong/Find-the-Critical-Routers-Articulation-Point-1)
 
 </summary>
 <div>
@@ -6266,7 +6266,7 @@ Output: [0, 3]
 <details>
 <summary class="lc_m">
 
-- [**\[Medium\] LC 332. Reconstruct Itinerary**](http://trsong.github.io/python/java/2021/02/02/DailyQuestionsFeb/#feb-12-2021-lc-332-medium-reconstruct-itinerary) -- *Given a list of airline tickets represented by pairs of departure and arrival airports [from, to], reconstruct the itinerary in order.* [*\(Try ME\)*](https://repl.it/@trsong/Reconstruct-Flight-Itinerary-1)
+- [**\[Medium\] LC 332. Reconstruct Itinerary**](http://trsong.github.io/python/java/2021/02/02/DailyQuestionsFeb.html#feb-12-2021-lc-332-medium-reconstruct-itinerary) -- *Given a list of airline tickets represented by pairs of departure and arrival airports [from, to], reconstruct the itinerary in order.* [*\(Try ME\)*](https://repl.it/@trsong/Reconstruct-Flight-Itinerary-1)
 
 </summary>
 <div>
@@ -6300,7 +6300,7 @@ Explanation: Another possible reconstruction is ["JFK","SFO","ATL","JFK","ATL","
 <details>
 <summary class="lc_m">
 
-- [**\[Medium\] Longest Consecutive Sequence in an Unsorted Array**](https://trsong.github.io/python/java/2020/11/02/DailyQuestionsAug/#dec-25-2020-medium-longest-consecutive-sequence-in-an-unsorted-array) -- *Given an array of integers, return the largest range, inclusive, of integers that are all included in the array.* [*\(Try ME\)*](https://repl.it/@trsong/Longest-Consecutive-Sequence-1)
+- [**\[Medium\] Longest Consecutive Sequence in an Unsorted Array**](https://trsong.github.io/python/java/2020/11/02/DailyQuestionsAug.html#dec-25-2020-medium-longest-consecutive-sequence-in-an-unsorted-array) -- *Given an array of integers, return the largest range, inclusive, of integers that are all included in the array.* [*\(Try ME\)*](https://repl.it/@trsong/Longest-Consecutive-Sequence-1)
 
 </summary>
 <div>
@@ -6316,7 +6316,7 @@ For example, given the array `[9, 6, 1, 3, 8, 10, 12, 11]`, return `(8, 12)` sin
 <details>
 <summary class="lc_m">
 
-- [**\[Medium\] Direction and Position Rule Verification**](http://trsong.github.io/python/java/2020/11/02/DailyQuestionsAug/#nov-27-2020-medium-direction-and-position-rule-verification) -- *Given a list of rules, check if the sum of the rules validate.* [*\(Try ME\)*](https://repl.it/@trsong/Verify-List-of-Direction-and-Position-Rules-1)
+- [**\[Medium\] Direction and Position Rule Verification**](http://trsong.github.io/python/java/2020/11/02/DailyQuestionsAug.html#nov-27-2020-medium-direction-and-position-rule-verification) -- *Given a list of rules, check if the sum of the rules validate.* [*\(Try ME\)*](https://repl.it/@trsong/Verify-List-of-Direction-and-Position-Rules-1)
 
 </summary>
 <div>
@@ -6356,7 +6356,7 @@ is considered valid.
 <details>
 <summary class="lc_e">
 
-- [**\[Easy\] Count Visible Nodes in Binary Tree**](https://trsong.github.io/python/java/2020/11/02/DailyQuestionsAug/#nov-19-2020-easy-count-visible-nodes-in-binary-tree) -- *In a binary tree, if no node with greater value than A’s along the path, this node is visible. Count total number of such nodes.* [*\(Try ME\)*](https://repl.it/@trsong/Count-Visible-Nodes-in-Binary-Tree-1)
+- [**\[Easy\] Count Visible Nodes in Binary Tree**](https://trsong.github.io/python/java/2020/11/02/DailyQuestionsAug.html#nov-19-2020-easy-count-visible-nodes-in-binary-tree) -- *In a binary tree, if no node with greater value than A’s along the path, this node is visible. Count total number of such nodes.* [*\(Try ME\)*](https://repl.it/@trsong/Count-Visible-Nodes-in-Binary-Tree-1)
 
 </summary>
 <div>
@@ -6396,7 +6396,7 @@ Explanation: Visible nodes are -10 and -1.
 <details>
 <summary class="lc_m">
 
-- [**\[Medium\] Isolated Islands**](http://trsong.github.io/python/java/2020/11/02/DailyQuestionsAug/#nov-14-2020-medium-isolated-islands) -- *Given a matrix of 1s and 0s, return the number of "islands" in the matrix.* [*\(Try ME\)*](https://repl.it/@trsong/Count-Number-of-Isolated-Islands-1)
+- [**\[Medium\] Isolated Islands**](http://trsong.github.io/python/java/2020/11/02/DailyQuestionsAug.html#nov-14-2020-medium-isolated-islands) -- *Given a matrix of 1s and 0s, return the number of "islands" in the matrix.* [*\(Try ME\)*](https://repl.it/@trsong/Count-Number-of-Isolated-Islands-1)
 
 </summary>
 <div>
@@ -6420,7 +6420,7 @@ For example, this matrix has 4 islands.
 <details>
 <summary class="lc_e">
 
-- [**\[Easy\] Largest Path Sum from Root To Leaf**](https://trsong.github.io/python/java/2020/11/02/DailyQuestionsAug/#nov-4-2020-easy-largest-path-sum-from-root-to-leaf) -- *Given a binary tree, find and return the largest path from root to leaf.* [*\(Try ME\)*](https://repl.it/@trsong/Find-Largest-Path-Sum-from-Root-To-Leaf-1)
+- [**\[Easy\] Largest Path Sum from Root To Leaf**](https://trsong.github.io/python/java/2020/11/02/DailyQuestionsAug.html#nov-4-2020-easy-largest-path-sum-from-root-to-leaf) -- *Given a binary tree, find and return the largest path from root to leaf.* [*\(Try ME\)*](https://repl.it/@trsong/Find-Largest-Path-Sum-from-Root-To-Leaf-1)
 
 </summary>
 <div>
@@ -6444,7 +6444,7 @@ Output: [1, 3, 5]
 <details>
 <summary class="lc_h">
 
-- [**\[Hard\] LC 403. Frog Jump**](https://trsong.github.io/python/java/2020/11/02/DailyQuestionsAug/#nov-2-2020-lc-403-hard-frog-jump) -- *A frog is crossing a river. The river is divided into x units and at each unit there may or may not exist a stone.* [*\(Try ME\)*](https://repl.it/@trsong/Solve-Frog-Jump-Problem-1)
+- [**\[Hard\] LC 403. Frog Jump**](https://trsong.github.io/python/java/2020/11/02/DailyQuestionsAug.html#nov-2-2020-lc-403-hard-frog-jump) -- *A frog is crossing a river. The river is divided into x units and at each unit there may or may not exist a stone.* [*\(Try ME\)*](https://repl.it/@trsong/Solve-Frog-Jump-Problem-1)
 
 </summary>
 <div>
@@ -6488,7 +6488,7 @@ the gap between the 5th and 6th stone is too large.
 <details>
 <summary class="lc_h">
 
-- [**\[Hard\] De Bruijn Sequence**](https://trsong.github.io/python/java/2020/08/02/DailyQuestionsAug/#sep-24-2020-hard-de-bruijn-sequence) -- *Given a set of characters C and an integer k,  find a De Bruijn Sequence.* [*\(Try ME\)*](https://repl.it/@trsong/Find-De-Bruijn-Sequence-1)
+- [**\[Hard\] De Bruijn Sequence**](https://trsong.github.io/python/java/2020/08/02/DailyQuestionsAug.html#sep-24-2020-hard-de-bruijn-sequence) -- *Given a set of characters C and an integer k,  find a De Bruijn Sequence.* [*\(Try ME\)*](https://repl.it/@trsong/Find-De-Bruijn-Sequence-1)
 
 </summary>
 <div>
@@ -6517,7 +6517,7 @@ Output: 01100
 <details>
 <summary class="lc_e">
 
-- [**\[Easy\] Level of tree with Maximum Sum**](https://trsong.github.io/python/java/2020/08/02/DailyQuestionsAug/#sep-3-2020-easy-level-of-tree-with-maximum-sum) -- *Given a binary tree, find the level in the tree where the sum of all nodes on that level is the greatest.* [*\(Try ME\)*](https://repl.it/@trsong/Find-Level-of-tree-with-Maximum-Sum-1)
+- [**\[Easy\] Level of tree with Maximum Sum**](https://trsong.github.io/python/java/2020/08/02/DailyQuestionsAug.html#sep-3-2020-easy-level-of-tree-with-maximum-sum) -- *Given a binary tree, find the level in the tree where the sum of all nodes on that level is the greatest.* [*\(Try ME\)*](https://repl.it/@trsong/Find-Level-of-tree-with-Maximum-Sum-1)
 
 </summary>
 <div>
@@ -6543,7 +6543,7 @@ The following tree should return level 1:
 <details>
 <summary class="lc_e">
 
-- [**\[Easy\] Flatten Nested List Iterator**](http://trsong.github.io/python/java/2021/02/02/DailyQuestionsFeb/#feb-27-2021-easy-flatten-nested-list-iterator) -- *Implement a 2D iterator class. It will be initialized with an array of arrays, and should implement the following methods: next(), hasNext()* [*\(Try ME\)*](https://repl.it/@trsong/Flatten-Nested-List-Iterator-1)
+- [**\[Easy\] Flatten Nested List Iterator**](http://trsong.github.io/python/java/2021/02/02/DailyQuestionsFeb.html#feb-27-2021-easy-flatten-nested-list-iterator) -- *Implement a 2D iterator class. It will be initialized with an array of arrays, and should implement the following methods: next(), hasNext()* [*\(Try ME\)*](https://repl.it/@trsong/Flatten-Nested-List-Iterator-1)
 
 </summary>
 <div>
@@ -6565,7 +6565,7 @@ Do not use flatten or otherwise clone the arrays. Some of the arrays can be empt
 <details>
 <summary class="lc_e">
 
-- [**\[Easy\] Flatten a Nested Dictionary**](https://trsong.github.io/python/java/2020/08/02/DailyQuestionsAug/#aug-8-2020-easy-flatten-a-nested-dictionary) -- *Write a function to flatten a nested dictionary. Namespace the keys with a period.* [*\(Try ME\)*](https://repl.it/@trsong/Flatten-Nested-Dictionary-1)
+- [**\[Easy\] Flatten a Nested Dictionary**](https://trsong.github.io/python/java/2020/08/02/DailyQuestionsAug.html#aug-8-2020-easy-flatten-a-nested-dictionary) -- *Write a function to flatten a nested dictionary. Namespace the keys with a period.* [*\(Try ME\)*](https://repl.it/@trsong/Flatten-Nested-Dictionary-1)
 
 </summary>
 <div>
@@ -6602,7 +6602,7 @@ You can assume keys do not contain dots in them, i.e. no clobbering will occur.
 <details>
 <summary class="lc_m">
 
-- [**\[Medium\] Circle of Chained Words**](https://trsong.github.io/python/java/2020/05/02/DailyQuestionsMay/#june-9-2020-medium-circle-of-chained-words) -- *Given a list of words, determine if there is a way to ‘chain’ all the words in a circle.* [*\(Try ME\)*](https://repl.it/@trsong/Contains-Circle-of-Chained-Words-1)
+- [**\[Medium\] Circle of Chained Words**](https://trsong.github.io/python/java/2020/05/02/DailyQuestionsMay.html#june-9-2020-medium-circle-of-chained-words) -- *Given a list of words, determine if there is a way to ‘chain’ all the words in a circle.* [*\(Try ME\)*](https://repl.it/@trsong/Contains-Circle-of-Chained-Words-1)
 
 </summary>
 <div>
@@ -6629,7 +6629,7 @@ The words in the order of ['apple', 'eggs', 'snack', 'karat', 'tuna'] creates a 
 <details>
 <summary class="lc_h">
 
-- [**\[Hard\] Max Path Value in Directed Graph**](http://trsong.github.io/python/java/2021/02/02/DailyQuestionsFeb/#feb-13-2021-hard-max-path-value-in-directed-graph) -- *Given a directed graph, return the largest value path of the graph. Define a path’s value as the number of most frequent letters along path.* [*\(Try ME\)*](https://repl.it/@trsong/Find-Max-Letter-Path-Value-in-Directed-Graph-1)
+- [**\[Hard\] Max Path Value in Directed Graph**](http://trsong.github.io/python/java/2021/02/02/DailyQuestionsFeb.html#feb-13-2021-hard-max-path-value-in-directed-graph) -- *Given a directed graph, return the largest value path of the graph. Define a path’s value as the number of most frequent letters along path.* [*\(Try ME\)*](https://repl.it/@trsong/Find-Max-Letter-Path-Value-in-Directed-Graph-1)
 
 </summary>
 <div>
@@ -6661,7 +6661,7 @@ Explanation: we have an infinite loop.
 <details>
 <summary class="lc_m">
 
-- [**\[Medium\] Satisfactory Playlist**](https://trsong.github.io/python/java/2020/11/02/DailyQuestionsAug/#jan-15-2021-medium-satisfactory-playlist) -- *Given a set of these ranked lists, interleave them to create a playlist that satisfies everyone’s priorities.* [*\(Try ME\)*](https://repl.it/@trsong/Satisfactory-Playlist-for-Everyone-1)
+- [**\[Medium\] Satisfactory Playlist**](https://trsong.github.io/python/java/2020/11/02/DailyQuestionsAug.html#jan-15-2021-medium-satisfactory-playlist) -- *Given a set of these ranked lists, interleave them to create a playlist that satisfies everyone’s priorities.* [*\(Try ME\)*](https://repl.it/@trsong/Satisfactory-Playlist-for-Everyone-1)
 
 </summary>
 <div>
@@ -6679,7 +6679,7 @@ For example, suppose your input is `[[1, 7, 3], [2, 1, 6, 7, 9], [3, 9, 5]]`. In
 <details>
 <summary class="lc_h">
 
-- [**\[Hard\] Order of Alien Dictionary**](https://trsong.github.io/python/java/2020/08/02/DailyQuestionsAug/#oct-25-2020-hard-order-of-alien-dictionary) -- *Give a dictionary of sorted words in an alien language, returns the correct order of letters in this language.* [*\(Try ME\)*](https://repl.it/@trsong/Alien-Dictionary-Order-1)
+- [**\[Hard\] Order of Alien Dictionary**](https://trsong.github.io/python/java/2020/08/02/DailyQuestionsAug.html#oct-25-2020-hard-order-of-alien-dictionary) -- *Give a dictionary of sorted words in an alien language, returns the correct order of letters in this language.* [*\(Try ME\)*](https://repl.it/@trsong/Alien-Dictionary-Order-1)
 
 </summary>
 <div>
@@ -6696,7 +6696,7 @@ For example, given `['xww', 'wxyz', 'wxyw', 'ywx', 'ywz']`, you should return `[
 <details>
 <summary class="lc_h">
 
-- [**\[Hard\] Order of Course Prerequisites**](http://trsong.github.io/python/java/2020/08/02/DailyQuestionsAug/#sep-18-2020-hard-order-of-course-prerequisites) -- *Given a hashmap of courseId key to a list of courseIds values. Return a sorted ordering of courses such that we can finish all courses.* [*\(Try ME\)*](https://repl.it/@trsong/Find-Order-of-Course-Prerequisites-1)
+- [**\[Hard\] Order of Course Prerequisites**](http://trsong.github.io/python/java/2020/08/02/DailyQuestionsAug.html#sep-18-2020-hard-order-of-course-prerequisites) -- *Given a hashmap of courseId key to a list of courseIds values. Return a sorted ordering of courses such that we can finish all courses.* [*\(Try ME\)*](https://repl.it/@trsong/Find-Order-of-Course-Prerequisites-1)
 
 </summary>
 <div>
@@ -6713,7 +6713,7 @@ For example, given `{'CSC300': ['CSC100', 'CSC200'], 'CSC200': ['CSC100'], 'CSC1
 <details>
 <summary class="lc_h">
 
-- [**\[Hard\] LC 329. Longest Increasing Path in a Matrix**](https://trsong.github.io/python/java/2020/08/02/DailyQuestionsAug/#sep-16-2020-lc-329-hard-longest-increasing-path-in-a-matrix) -- *Given an integer matrix, find the length of the longest increasing path.* [*\(Try ME\)*](https://repl.it/@trsong/Longest-Increasing-Path-in-a-Matrix-1)
+- [**\[Hard\] LC 329. Longest Increasing Path in a Matrix**](https://trsong.github.io/python/java/2020/08/02/DailyQuestionsAug.html#sep-16-2020-lc-329-hard-longest-increasing-path-in-a-matrix) -- *Given an integer matrix, find the length of the longest increasing path.* [*\(Try ME\)*](https://repl.it/@trsong/Longest-Increasing-Path-in-a-Matrix-1)
 
 </summary>
 <div>
@@ -6753,7 +6753,7 @@ Explanation: The longest increasing path is [3, 4, 5, 6]. Moving diagonally is n
 <details>
 <summary class="lc_h">
 
-- [**\[Hard\] Shortest Uphill and Downhill Route**](https://trsong.github.io/python/java/2020/08/02/DailyQuestionsAug/#aug-7-2020-hard-shortest-uphill-and-downhill-route) -- *A runner decide the route goes entirely uphill at first, and then entirely downhill.  Find the length of the shortest of such route.* [*\(Try ME\)*](https://repl.it/@trsong/Shortest-Uphill-and-Downhill-Route-1)
+- [**\[Hard\] Shortest Uphill and Downhill Route**](https://trsong.github.io/python/java/2020/08/02/DailyQuestionsAug.html#aug-7-2020-hard-shortest-uphill-and-downhill-route) -- *A runner decide the route goes entirely uphill at first, and then entirely downhill.  Find the length of the shortest of such route.* [*\(Try ME\)*](https://repl.it/@trsong/Shortest-Uphill-and-Downhill-Route-1)
 
 </summary>
 <div>
@@ -6792,7 +6792,7 @@ In this case, the shortest valid path would be 0 -> 2 -> 4 -> 0, with a distance
 <details>
 <summary class="lc_h">
 
-- [**\[Hard\] Teams without Enemies**](http://trsong.github.io/python/java/2021/02/02/DailyQuestionsFeb/#apr-2-2021-hard-teams-without-enemies) -- *A teacher must divide a class of students into two teams to play dodgeball. Write an algorithm that finds a satisfactory pair of teams.* [*\(Try ME\)*](https://replit.com/@trsong/Build-Teams-without-Enemies-1)
+- [**\[Hard\] Teams without Enemies**](http://trsong.github.io/python/java/2021/02/02/DailyQuestionsFeb.html#apr-2-2021-hard-teams-without-enemies) -- *A teacher must divide a class of students into two teams to play dodgeball. Write an algorithm that finds a satisfactory pair of teams.* [*\(Try ME\)*](https://replit.com/@trsong/Build-Teams-without-Enemies-1)
 
 </summary>
 <div>
@@ -6835,7 +6835,7 @@ students = {
 <details>
 <summary class="lc_h">
 
-- [**\[Hard\] Maximum Spanning Tree**](http://trsong.github.io/python/java/2021/02/02/DailyQuestionsFeb/#mar-25-2021-hard-maximum-spanning-tree) -- *Given an undirected graph with weighted edges, compute the maximum weight spanning tree.* [*\(Try ME\)*](https://replit.com/@trsong/Calculate-Maximum-Spanning-Tree-1)
+- [**\[Hard\] Maximum Spanning Tree**](http://trsong.github.io/python/java/2021/02/02/DailyQuestionsFeb.html#mar-25-2021-hard-maximum-spanning-tree) -- *Given an undirected graph with weighted edges, compute the maximum weight spanning tree.* [*\(Try ME\)*](https://replit.com/@trsong/Calculate-Maximum-Spanning-Tree-1)
 
 </summary>
 <div>
@@ -6851,7 +6851,7 @@ Given an undirected graph with weighted edges, compute the maximum weight spanni
 <details>
 <summary class="lc_m">
 
-- [**\[Medium\] Number of Connected Components**](https://trsong.github.io/python/java/2021/02/02/DailyQuestionsFeb/#mar-12-2021-medium-number-of-connected-components) -- *Given a list of undirected edges which represents a graph, find out the number of connected components.* [*\(Try ME\)*](https://replit.com/@trsong/Number-of-Connected-Components-1)
+- [**\[Medium\] Number of Connected Components**](https://trsong.github.io/python/java/2021/02/02/DailyQuestionsFeb.html#mar-12-2021-medium-number-of-connected-components) -- *Given a list of undirected edges which represents a graph, find out the number of connected components.* [*\(Try ME\)*](https://replit.com/@trsong/Number-of-Connected-Components-1)
 
 </summary>
 <div>
@@ -6872,7 +6872,7 @@ Explanation: In the above example, vertices 1, 2, 3, 4 are all connected, and 5,
 <details>
 <summary class="lc_m">
 
-- [**\[Medium\] Friend Cycle Problem**](https://trsong.github.io/python/java/2020/11/02/DailyQuestionsAug/#jan-19-2021-medium-friend-cycle-problem) -- *Given a friendship list, determine the number of friend groups in the class.* [*\(Try ME\)*](https://repl.it/@trsong/Friend-Cycle-Problem-1)
+- [**\[Medium\] Friend Cycle Problem**](https://trsong.github.io/python/java/2020/11/02/DailyQuestionsAug.html#jan-19-2021-medium-friend-cycle-problem) -- *Given a friendship list, determine the number of friend groups in the class.* [*\(Try ME\)*](https://repl.it/@trsong/Friend-Cycle-Problem-1)
 
 </summary>
 <div>
@@ -6900,7 +6900,7 @@ Given a friendship list such as the one above, determine the number of friend gr
 <details>
 <summary class="lc_h">
 
-- [**\[Hard\] Power Supply to All Cities**](https://trsong.github.io/python/java/2020/11/02/DailyQuestionsAug/#dec-9-2020-hard-power-supply-to-all-cities) -- *Given a graph of possible electricity connections(each with their own cost)between cities in an area, find the cheapest way to supply power.* [*\(Try ME\)*](https://repl.it/@trsong/Design-Power-Supply-to-All-Cities-1)
+- [**\[Hard\] Power Supply to All Cities**](https://trsong.github.io/python/java/2020/11/02/DailyQuestionsAug.html#dec-9-2020-hard-power-supply-to-all-cities) -- *Given a graph of possible electricity connections(each with their own cost)between cities in an area, find the cheapest way to supply power.* [*\(Try ME\)*](https://repl.it/@trsong/Design-Power-Supply-to-All-Cities-1)
 
 </summary>
 <div>
@@ -6942,7 +6942,7 @@ Explanation: Min cost to connect to all cities is 4:
 <details>
 <summary class="lc_m">
 
-- [**\[Medium\] LC 130. Surrounded Regions**](http://trsong.github.io/python/java/2020/08/02/DailyQuestionsAug/#oct-18-2020-lc-130-medium-surrounded-regions) -- *A region is captured by flipping all ‘O’s into ‘X’s in that surrounded region.* [*\(Try ME\)*](https://repl.it/@trsong/Flip-Surrounded-Regions-1)
+- [**\[Medium\] LC 130. Surrounded Regions**](http://trsong.github.io/python/java/2020/08/02/DailyQuestionsAug.html#oct-18-2020-lc-130-medium-surrounded-regions) -- *A region is captured by flipping all ‘O’s into ‘X’s in that surrounded region.* [*\(Try ME\)*](https://repl.it/@trsong/Flip-Surrounded-Regions-1)
 
 </summary>
 <div>
@@ -6975,7 +6975,7 @@ Surrounded regions shouldn’t be on the border, which means that any 'O' on the
 <details>
 <summary class="lc_m">
 
-- [**\[Medium\] Is Bipartite**](https://trsong.github.io/python/java/2020/08/02/DailyQuestionsAug/#sep-22-2020-medium-is-bipartite) -- *Given an undirected graph G, check whether it is bipartite.* [*\(Try ME\)*](https://repl.it/@trsong/Is-a-Graph-Bipartite-1)
+- [**\[Medium\] Is Bipartite**](https://trsong.github.io/python/java/2020/08/02/DailyQuestionsAug.html#sep-22-2020-medium-is-bipartite) -- *Given an undirected graph G, check whether it is bipartite.* [*\(Try ME\)*](https://repl.it/@trsong/Is-a-Graph-Bipartite-1)
 
 </summary>
 <div>
@@ -6995,7 +6995,7 @@ is_bipartite(vertices=2, edges=[(0, 1), (1, 0)])  # returns True. U = {0}. V = {
 <details>
 <summary class="lc_m">
 
-- [**\[Medium\] LC 261. Graph Valid Tree**](https://trsong.github.io/python/java/2020/08/02/DailyQuestionsAug/#aug-10-2020-lc-261-medium-graph-valid-tree) -- *Given n nodes and a list of undirected edges, write a function to check whether these edges make up a valid tree.* [*\(Try ME\)*](https://repl.it/@trsong/Graph-Valid-Tree-1)
+- [**\[Medium\] LC 261. Graph Valid Tree**](https://trsong.github.io/python/java/2020/08/02/DailyQuestionsAug.html#aug-10-2020-lc-261-medium-graph-valid-tree) -- *Given n nodes and a list of undirected edges, write a function to check whether these edges make up a valid tree.* [*\(Try ME\)*](https://repl.it/@trsong/Graph-Valid-Tree-1)
 
 </summary>
 <div>
@@ -7024,7 +7024,7 @@ Output: False
 <details>
 <summary class="lc_m">
 
-- [**\[Medium\] LC 743. Network Delay Time**](https://trsong.github.io/python/java/2020/11/02/DailyQuestionsAug/#dec-8-2020-lc-743-medium-network-delay-time) -- *A network consists of nodes labeled 0 to N. Determine how long it will take for every node to receive a message that begins at node 0.* [*\(Try ME\)*](https://repl.it/@trsong/Find-Network-Delay-Time-1)
+- [**\[Medium\] LC 743. Network Delay Time**](https://trsong.github.io/python/java/2020/11/02/DailyQuestionsAug.html#dec-8-2020-lc-743-medium-network-delay-time) -- *A network consists of nodes labeled 0 to N. Determine how long it will take for every node to receive a message that begins at node 0.* [*\(Try ME\)*](https://repl.it/@trsong/Find-Network-Delay-Time-1)
 
 </summary>
 <div>
@@ -7059,7 +7059,7 @@ You should return 9, because propagating the message from 0 -> 2 -> 3 -> 4 will 
 <details>
 <summary class="lc_h">
 
-- [**\[Hard\] Sliding Puzzle**](https://trsong.github.io/python/java/2020/11/02/DailyQuestionsAug/#dec-4-2020-hard-sliding-puzzle) -- *An 8-puzzle is a game played on a 3 x 3 board of tiles, with the ninth tile missing. Design the board and solve the puzzle.* [*\(Try ME\)*](https://repl.it/@trsong/Solve-Sliding-Puzzle-1)
+- [**\[Hard\] Sliding Puzzle**](https://trsong.github.io/python/java/2020/11/02/DailyQuestionsAug.html#dec-4-2020-hard-sliding-puzzle) -- *An 8-puzzle is a game played on a 3 x 3 board of tiles, with the ninth tile missing. Design the board and solve the puzzle.* [*\(Try ME\)*](https://repl.it/@trsong/Solve-Sliding-Puzzle-1)
 
 </summary>
 <div>
@@ -7075,7 +7075,7 @@ Design a class to represent the board, and find a series of steps to bring the b
 <details>
 <summary class="lc_h">
 
-- [**\[Hard\] Minimum Step to Reach One**](https://trsong.github.io/python/java/2020/05/02/DailyQuestionsMay/#jul-26-2020-easy-minimum-step-to-reach-one) -- *Given a positive integer N, find the smallest number of steps it will take to reach 1.* [*\(Try ME\)*](https://repl.it/@trsong/Test-Find-Minimum-Step-to-Reach-One)
+- [**\[Hard\] Minimum Step to Reach One**](https://trsong.github.io/python/java/2020/05/02/DailyQuestionsMay.html#jul-26-2020-easy-minimum-step-to-reach-one) -- *Given a positive integer N, find the smallest number of steps it will take to reach 1.* [*\(Try ME\)*](https://repl.it/@trsong/Test-Find-Minimum-Step-to-Reach-One)
 
 </summary>
 <div>
@@ -7098,7 +7098,7 @@ For example, given `100`, you can reach `1` in five steps with the following rou
 <details>
 <summary class="lc_h">
 
-- [**\[Hard\] Unique Sum Combinations**](https://trsong.github.io/python/java/2021/02/02/DailyQuestionsFeb/#apr-12-2021-hard-unique-sum-combinations) -- *Given a list of numbers and a target number, find all possible unique subsets of the list of numbers that sum up to the target number.* [*\(Try ME\)*](https://replit.com/@trsong/Find-Unique-Sum-Combinations-1)
+- [**\[Hard\] Unique Sum Combinations**](https://trsong.github.io/python/java/2021/02/02/DailyQuestionsFeb.html#apr-12-2021-hard-unique-sum-combinations) -- *Given a list of numbers and a target number, find all possible unique subsets of the list of numbers that sum up to the target number.* [*\(Try ME\)*](https://replit.com/@trsong/Find-Unique-Sum-Combinations-1)
 
 </summary>
 <div>
@@ -7120,7 +7120,7 @@ sum_combinations([10, 1, 2, 7, 6, 1, 5], 8)
 <details>
 <summary class="lc_m">
 
-- [**\[Medium\] Generate Brackets**](https://trsong.github.io/python/java/2021/02/02/DailyQuestionsFeb/#apr-8-2021-medium--generate-brackets) -- *Given a number n, generate all possible combinations of n well-formed brackets.* [*\(Try ME\)*](https://replit.com/@trsong/Generate-Well-formed-Brackets-1)
+- [**\[Medium\] Generate Brackets**](https://trsong.github.io/python/java/2021/02/02/DailyQuestionsFeb.html#apr-8-2021-medium--generate-brackets) -- *Given a number n, generate all possible combinations of n well-formed brackets.* [*\(Try ME\)*](https://replit.com/@trsong/Generate-Well-formed-Brackets-1)
 
 </summary>
 <div>
@@ -7144,7 +7144,7 @@ generate_brackets(3)  # returns ['((()))', '(()())', '()(())', '()()()', '(())()
 <details>
 <summary class="lc_h">
 
-- [**\[Hard\] LC 679. 24 Game**](https://trsong.github.io/python/java/2021/02/02/DailyQuestionsFeb/#mar-20-2021-lc-679-hard-24-game) -- *Given a list of 4 int, each between 1 and 9.  Determine if placing the operators +, -, *, and /, and group by () gives 24.* [*\(Try ME\)*](https://replit.com/@trsong/24-Game-1)
+- [**\[Hard\] LC 679. 24 Game**](https://trsong.github.io/python/java/2021/02/02/DailyQuestionsFeb.html#mar-20-2021-lc-679-hard-24-game) -- *Given a list of 4 int, each between 1 and 9.  Determine if placing the operators +, -, *, and /, and group by () gives 24.* [*\(Try ME\)*](https://replit.com/@trsong/24-Game-1)
 
 </summary>
 <div>
@@ -7162,7 +7162,7 @@ Write a function that plays the 24 game.
 <details>
 <summary class="lc_m">
 
-- [**\[Medium\] Number of Android Lock Patterns**](https://trsong.github.io/python/java/2021/02/02/DailyQuestionsFeb/#mar-9-2021-medium-number-of-android-lock-patterns) -- *One way to unlock an Android phone is through a pattern of swipes across a 1-9 keypad.* [*\(Try ME\)*](https://repl.it/@trsong/Count-Number-of-Android-Lock-Patterns-1)
+- [**\[Medium\] Number of Android Lock Patterns**](https://trsong.github.io/python/java/2021/02/02/DailyQuestionsFeb.html#mar-9-2021-medium-number-of-android-lock-patterns) -- *One way to unlock an Android phone is through a pattern of swipes across a 1-9 keypad.* [*\(Try ME\)*](https://repl.it/@trsong/Count-Number-of-Android-Lock-Patterns-1)
 
 </summary>
 <div>
@@ -7185,7 +7185,7 @@ Find the total number of valid unlock patterns of length N, where 1 <= N <= 9.
 <details>
 <summary class="lc_m">
 
-- [**\[Medium\] Lazy Bartender**](http://trsong.github.io/python/java/2021/02/02/DailyQuestionsFeb/#mar-8-2021-medium-lazy-bartender) -- *Given a dictionary input such as the one above, return the fewest number of drinks he must learn in order to satisfy all customers.* [*\(Try ME\)*](https://repl.it/@trsong/Lazy-Bartender-Problem-1)
+- [**\[Medium\] Lazy Bartender**](http://trsong.github.io/python/java/2021/02/02/DailyQuestionsFeb.html#mar-8-2021-medium-lazy-bartender) -- *Given a dictionary input such as the one above, return the fewest number of drinks he must learn in order to satisfy all customers.* [*\(Try ME\)*](https://repl.it/@trsong/Lazy-Bartender-Problem-1)
 
 </summary>
 <div>
@@ -7218,7 +7218,7 @@ For the input above, the answer would be 2, as drinks 1 and 5 will satisfy every
 <details>
 <summary class="lc_m">
 
-- [**\[Medium\] LC 131. Palindrome Partitioning**](http://trsong.github.io/python/java/2021/02/02/DailyQuestionsFeb/#feb-21-2021-lc-131-medium-palindrome-partitioning) -- *Given a string s, partition s such that every substring of the partition is a palindrome. Return all possible palindrome partitioning of s.* [*\(Try ME\)*](https://repl.it/@trsong/Palindrome-Partitioning-1)
+- [**\[Medium\] LC 131. Palindrome Partitioning**](http://trsong.github.io/python/java/2021/02/02/DailyQuestionsFeb.html#feb-21-2021-lc-131-medium-palindrome-partitioning) -- *Given a string s, partition s such that every substring of the partition is a palindrome. Return all possible palindrome partitioning of s.* [*\(Try ME\)*](https://repl.it/@trsong/Palindrome-Partitioning-1)
 
 </summary>
 <div>
@@ -7247,7 +7247,7 @@ Output: [["a"]]
 <details>
 <summary class="lc_e">
 
-- [**\[Easy\] Map Digits to Letters**](http://trsong.github.io/python/java/2020/11/02/DailyQuestionsAug/#jan-1-2021-easy-map-digits-to-letters) -- *Given a mapping of digits to letters (as in a phone number), and a digit string, return all possible letters the number could represent.* [*\(Try ME\)*](https://repl.it/@trsong/Map-Digits-to-All-Possible-Letters-1)
+- [**\[Easy\] Map Digits to Letters**](http://trsong.github.io/python/java/2020/11/02/DailyQuestionsAug.html#jan-1-2021-easy-map-digits-to-letters) -- *Given a mapping of digits to letters (as in a phone number), and a digit string, return all possible letters the number could represent.* [*\(Try ME\)*](https://repl.it/@trsong/Map-Digits-to-All-Possible-Letters-1)
 
 </summary>
 <div>
@@ -7266,7 +7266,7 @@ Output: ['ad', 'ae', 'af', 'bd', 'be', 'bf', 'cd', 'ce', 'cf']
 <details>
 <summary class="lc_e">
 
-- [**\[Easy\] Power Set**](https://trsong.github.io/python/java/2020/11/02/DailyQuestionsAug/#jan-21-2021-easy-power-set) -- *Given a set, generate its power set.* [*\(Try ME\)*](https://repl.it/@trsong/Power-Set-1)
+- [**\[Easy\] Power Set**](https://trsong.github.io/python/java/2020/11/02/DailyQuestionsAug.html#jan-21-2021-easy-power-set) -- *Given a set, generate its power set.* [*\(Try ME\)*](https://repl.it/@trsong/Power-Set-1)
 
 </summary>
 <div>
@@ -7282,7 +7282,7 @@ For example, given a set represented by a list `[1, 2, 3]`, it should return `[[
 <details>
 <summary class="lc_m">
 
-- [**\[Medium\] LC 77. Combinations**](https://trsong.github.io/python/java/2020/11/02/DailyQuestionsAug/#dec-30-2020-lc-77-medium-combinations) -- *Given two integers n and k, return all possible combinations of k numbers out of 1 ... n.* [*\(Try ME\)*](https://repl.it/@trsong/Combinations-1)
+- [**\[Medium\] LC 77. Combinations**](https://trsong.github.io/python/java/2020/11/02/DailyQuestionsAug.html#dec-30-2020-lc-77-medium-combinations) -- *Given two integers n and k, return all possible combinations of k numbers out of 1 ... n.* [*\(Try ME\)*](https://repl.it/@trsong/Combinations-1)
 
 </summary>
 <div>
@@ -7310,7 +7310,7 @@ Output:
 <details>
 <summary class="lc_e">
 
-- [**\[Easy\] Permutations**](https://trsong.github.io/python/java/2020/11/02/DailyQuestionsAug/#dec-29-2020-easy-permutations) -- *Given a number in the form of a list of digits, return all possible permutations.* [*\(Try ME\)*](https://repl.it/@trsong/Generate-Permutations-1)
+- [**\[Easy\] Permutations**](https://trsong.github.io/python/java/2020/11/02/DailyQuestionsAug.html#dec-29-2020-easy-permutations) -- *Given a number in the form of a list of digits, return all possible permutations.* [*\(Try ME\)*](https://repl.it/@trsong/Generate-Permutations-1)
 
 </summary>
 <div>
@@ -7326,7 +7326,7 @@ For example, given `[1,2,3]`, return `[[1,2,3],[1,3,2],[2,1,3],[2,3,1],[3,1,2],[
 <details>
 <summary class="lc_h">
 
-- [**\[Hard\] LC 301. Remove Invalid Parentheses**](https://trsong.github.io/python/java/2020/11/02/DailyQuestionsAug/#dec-22-2020-lc-301-hard-remove-invalid-parentheses) -- *Remove the minimum number of invalid parentheses in order to make the input string valid. Return all possible results.* [*\(Try ME\)*](https://repl.it/@trsong/Ways-to-Remove-Invalid-Parentheses-1)
+- [**\[Hard\] LC 301. Remove Invalid Parentheses**](https://trsong.github.io/python/java/2020/11/02/DailyQuestionsAug.html#dec-22-2020-lc-301-hard-remove-invalid-parentheses) -- *Remove the minimum number of invalid parentheses in order to make the input string valid. Return all possible results.* [*\(Try ME\)*](https://repl.it/@trsong/Ways-to-Remove-Invalid-Parentheses-1)
 
 </summary>
 <div>
@@ -7360,7 +7360,7 @@ Output: [""]
 <details>
 <summary class="lc_h">
 
-- [**\[Hard\] Knight's Tour Problem**](https://trsong.github.io/python/java/2020/11/02/DailyQuestionsAug/#dec-3-2020-hard-knights-tour-problem) -- *A knight’s tour is a sequence of moves by a knight on a chessboard such that all squares are visited once.* [*\(Try ME\)*](https://repl.it/@trsong/Knights-Tour-Problem-1)
+- [**\[Hard\] Knight's Tour Problem**](https://trsong.github.io/python/java/2020/11/02/DailyQuestionsAug.html#dec-3-2020-hard-knights-tour-problem) -- *A knight’s tour is a sequence of moves by a knight on a chessboard such that all squares are visited once.* [*\(Try ME\)*](https://repl.it/@trsong/Knights-Tour-Problem-1)
 
 </summary>
 <div>
@@ -7376,7 +7376,7 @@ Given N, write a function to return the number of knight's tours on an N by N ch
 <details>
 <summary class="lc_h">
 
-- [**\[Hard\] LC 212. Word Search II**](https://trsong.github.io/python/java/2020/11/02/DailyQuestionsAug/#nov-22-2020-lc-212-hard-word-search-ii) -- *Given an m x n board of characters and a list of strings words, return all words on the board.* [*\(Try ME\)*](https://repl.it/@trsong/Word-Search-II-1)
+- [**\[Hard\] LC 212. Word Search II**](https://trsong.github.io/python/java/2020/11/02/DailyQuestionsAug.html#nov-22-2020-lc-212-hard-word-search-ii) -- *Given an m x n board of characters and a list of strings words, return all words on the board.* [*\(Try ME\)*](https://repl.it/@trsong/Word-Search-II-1)
 
 </summary>
 <div>
@@ -7411,7 +7411,7 @@ Output: []
 <details>
 <summary class="lc_m">
 
-- [**\[Medium\] All Root to Leaf Paths in Binary Tree**](http://trsong.github.io/python/java/2020/11/02/DailyQuestionsAug/#nov-10-2020-medium-all-root-to-leaf-paths-in-binary-tree) -- *Given a binary tree, return all paths from the root to leaves.* [*\(Try ME\)*](https://repl.it/@trsong/Print-All-Root-to-Leaf-Paths-in-Binary-Tree-1)
+- [**\[Medium\] All Root to Leaf Paths in Binary Tree**](http://trsong.github.io/python/java/2020/11/02/DailyQuestionsAug.html#nov-10-2020-medium-all-root-to-leaf-paths-in-binary-tree) -- *Given a binary tree, return all paths from the root to leaves.* [*\(Try ME\)*](https://repl.it/@trsong/Print-All-Root-to-Leaf-Paths-in-Binary-Tree-1)
 
 </summary>
 <div>
@@ -7437,7 +7437,7 @@ Return [[1, 2], [1, 3, 4], [1, 3, 5]]
 <details>
 <summary class="lc_h">
 
-- [**\[Hard\] LC 37. Sudoku Solver**](http://trsong.github.io/python/java/2020/08/02/DailyQuestionsAug/#sep-13-2020-lc-37-hard-sudoku-solver) -- *Write a program to solve a Sudoku puzzle by filling the empty cells.* [*\(Try ME\)*](https://repl.it/@trsong/Sudoku-Solver-1)
+- [**\[Hard\] LC 37. Sudoku Solver**](http://trsong.github.io/python/java/2020/08/02/DailyQuestionsAug.html#sep-13-2020-lc-37-hard-sudoku-solver) -- *Write a program to solve a Sudoku puzzle by filling the empty cells.* [*\(Try ME\)*](https://repl.it/@trsong/Sudoku-Solver-1)
 
 </summary>
 <div>
@@ -7484,7 +7484,7 @@ Possible output:
 <details>
 <summary class="lc_m">
 
-- [**\[Medium\] LC 78. Generate All Subsets**](https://trsong.github.io/python/java/2020/08/02/DailyQuestionsAug/#aug-6-2020-lc-78-medium-generate-all-subsets) -- *Given a list of unique numbers, generate all possible subsets without duplicates. This includes the empty set as well.* [*\(Try ME\)*](https://repl.it/@trsong/Generate-All-the-Subsets-1)
+- [**\[Medium\] LC 78. Generate All Subsets**](https://trsong.github.io/python/java/2020/08/02/DailyQuestionsAug.html#aug-6-2020-lc-78-medium-generate-all-subsets) -- *Given a list of unique numbers, generate all possible subsets without duplicates. This includes the empty set as well.* [*\(Try ME\)*](https://repl.it/@trsong/Generate-All-the-Subsets-1)
 
 </summary>
 <div>
@@ -7504,7 +7504,7 @@ generate_all_subsets([1, 2, 3])
 <details>
 <summary class="lc_h">
 
-- [**\[Hard\] Graph Coloring**](https://trsong.github.io/python/java/2020/08/02/DailyQuestionsAug/#aug-3-2020-hard-graph-coloring) -- *Given an undirected graph and an integer k, determine whether color with k colors such that no two adjacent nodes share the same color.* [*\(Try ME\)*](https://repl.it/@trsong/k-Graph-Coloring-1)
+- [**\[Hard\] Graph Coloring**](https://trsong.github.io/python/java/2020/08/02/DailyQuestionsAug.html#aug-3-2020-hard-graph-coloring) -- *Given an undirected graph and an integer k, determine whether color with k colors such that no two adjacent nodes share the same color.* [*\(Try ME\)*](https://repl.it/@trsong/k-Graph-Coloring-1)
 
 </summary>
 <div>
@@ -7517,7 +7517,7 @@ generate_all_subsets([1, 2, 3])
 <details>
 <summary class="lc_e">
 
-- [**\[Easy\] Generate All Possible Subsequences**](https://trsong.github.io/python/java/2020/05/02/DailyQuestionsMay/#june-7-2020-easy-generate-all-possible-subsequences) -- *Given a string, generate all possible subsequences of the string.* [*\(Try ME\)*](https://repl.it/@trsong/Generate-All-Possible-Subsequences-1)
+- [**\[Easy\] Generate All Possible Subsequences**](https://trsong.github.io/python/java/2020/05/02/DailyQuestionsMay.html#june-7-2020-easy-generate-all-possible-subsequences) -- *Given a string, generate all possible subsequences of the string.* [*\(Try ME\)*](https://repl.it/@trsong/Generate-All-Possible-Subsequences-1)
 
 </summary>
 <div>
@@ -7546,7 +7546,7 @@ Note that `zx` is not a valid subsequence since it is not in the order of the gi
 <details>
 <summary class="lc_m">
 
-- [**\[Medium\] LC 93. All Possible Valid IP Address Combinations**](https://trsong.github.io/python/java/2020/05/02/DailyQuestionsMay/#jul-23-2020-lc-93-medium-all-possible-valid-ip-address-combinations) -- *Given a string of digits, generate all possible valid IP address combinations.* [*\(Try ME\)*](https://repl.it/@trsong/Find-All-Possible-Valid-IP-Address-Combinations-1)
+- [**\[Medium\] LC 93. All Possible Valid IP Address Combinations**](https://trsong.github.io/python/java/2020/05/02/DailyQuestionsMay.html#jul-23-2020-lc-93-medium-all-possible-valid-ip-address-combinations) -- *Given a string of digits, generate all possible valid IP address combinations.* [*\(Try ME\)*](https://repl.it/@trsong/Find-All-Possible-Valid-IP-Address-Combinations-1)
 
 </summary>
 <div>
@@ -7564,7 +7564,7 @@ For example, given `"2542540123"`, you should return `['254.25.40.123', '254.254
 <details>
 <summary class="lc_h">
 
-- [**\[Hard\] The N Queens Puzzle**](https://trsong.github.io/python/java/2020/05/02/DailyQuestionsMay/#jul-2-2020-hard-the-n-queens-puzzle) -- *Given N, returns the number of possible arrangements of the board where N queens can be placed on the board without attacking each other.* [*\(Try ME\)*](https://repl.it/@trsong/Solve-the-N-Queen-Problem-1)
+- [**\[Hard\] The N Queens Puzzle**](https://trsong.github.io/python/java/2020/05/02/DailyQuestionsMay.html#jul-2-2020-hard-the-n-queens-puzzle) -- *Given N, returns the number of possible arrangements of the board where N queens can be placed on the board without attacking each other.* [*\(Try ME\)*](https://repl.it/@trsong/Solve-the-N-Queen-Problem-1)
 
 </summary>
 <div>
@@ -7584,7 +7584,7 @@ For example, given `"2542540123"`, you should return `['254.25.40.123', '254.254
 <details>
 <summary class="lc_m">
 
-- [**\[Medium\] Maximum Non Adjacent Sum**](https://trsong.github.io/python/java/2021/02/02/DailyQuestionsFeb/#apr-18-2021-medium-maximum-non-adjacent-sum) -- *Given a list of positive numbers, find the largest possible set such that no elements are adjacent numbers of each other.* [*\(Try ME\)*](https://replit.com/@trsong/Find-Maximum-Non-Adjacent-Sum-1)
+- [**\[Medium\] Maximum Non Adjacent Sum**](https://trsong.github.io/python/java/2021/02/02/DailyQuestionsFeb.html#apr-18-2021-medium-maximum-non-adjacent-sum) -- *Given a list of positive numbers, find the largest possible set such that no elements are adjacent numbers of each other.* [*\(Try ME\)*](https://replit.com/@trsong/Find-Maximum-Non-Adjacent-Sum-1)
 
 </summary>
 <div>
@@ -7612,7 +7612,7 @@ max_non_adjacent_sum([2, 1, 2, 7, 3])
 <details>
 <summary class="lc_m">
 
-- [**\[Medium\] LC 1155. Number of Dice Rolls With Target Sum**](http://trsong.github.io/python/java/2021/02/02/DailyQuestionsFeb/#feb-18-2021-lc-1155-medium-number-of-dice-rolls-with-target-sum) -- *Write a function that determines how many ways it is possible to throw N dice with some number of faces each to get a specific total.* [*\(Try ME\)*](https://repl.it/@trsong/Number-of-Dice-Rolls-With-Target-Sum-1)
+- [**\[Medium\] LC 1155. Number of Dice Rolls With Target Sum**](http://trsong.github.io/python/java/2021/02/02/DailyQuestionsFeb.html#feb-18-2021-lc-1155-medium-number-of-dice-rolls-with-target-sum) -- *Write a function that determines how many ways it is possible to throw N dice with some number of faces each to get a specific total.* [*\(Try ME\)*](https://repl.it/@trsong/Number-of-Dice-Rolls-With-Target-Sum-1)
 
 </summary>
 <div>
@@ -7670,7 +7670,7 @@ The answer must be returned modulo 10^9 + 7.
 <details>
 <summary class="lc_e">
 
-- [**\[Easy\] LC 120. Max Path Sum in Triangle**](http://trsong.github.io/python/java/2021/02/02/DailyQuestionsFeb/#feb-5-2021-lc-120-easy-max-path-sum-in-triangle) -- *Given an array of arrays of integers, where each array corresponds to a row in a triangle of number, returns the weight of the maximum path.* [*\(Try ME\)*](https://repl.it/@trsong/Max-Path-Sum-in-Triangle-1)
+- [**\[Easy\] LC 120. Max Path Sum in Triangle**](http://trsong.github.io/python/java/2021/02/02/DailyQuestionsFeb.html#feb-5-2021-lc-120-easy-max-path-sum-in-triangle) -- *Given an array of arrays of integers, where each array corresponds to a row in a triangle of number, returns the weight of the maximum path.* [*\(Try ME\)*](https://repl.it/@trsong/Max-Path-Sum-in-Triangle-1)
 
 </summary>
 <div>
@@ -7695,7 +7695,7 @@ Write a program that returns the weight of the maximum weight path.
 <details>
 <summary class="lc_m">
 
-- [**\[Medium\] LC 279. Minimum Number of Squares Sum to N**](http://trsong.github.io/python/java/2021/02/02/DailyQuestionsFeb/#feb-4-2021-lc-279-medium-minimum-number-of-squares-sum-to-n) -- *Given a positive integer n, find the smallest number of squared integers which sum to n.* [*\(Try ME\)*](https://repl.it/@trsong/Minimum-Squares-Sum-to-N-1)
+- [**\[Medium\] LC 279. Minimum Number of Squares Sum to N**](http://trsong.github.io/python/java/2021/02/02/DailyQuestionsFeb.html#feb-4-2021-lc-279-medium-minimum-number-of-squares-sum-to-n) -- *Given a positive integer n, find the smallest number of squared integers which sum to n.* [*\(Try ME\)*](https://repl.it/@trsong/Minimum-Squares-Sum-to-N-1)
 
 </summary>
 <div>
@@ -7731,7 +7731,7 @@ Given the multiset `{15, 5, 20, 10, 35}`, it would return `false`, since we can'
 <details>
 <summary class="lc_e">
 
-- [**\[Easy\] Smallest Sum Not Subset Sum**](https://trsong.github.io/python/java/2020/11/02/DailyQuestionsAug/#dec-24-2020-easy-smallest-sum-not-subset-sum) -- *Given a sorted list of positive numbers, find the smallest positive number that cannot be a sum of any subset in the list.* [*\(Try ME\)*](https://repl.it/@trsong/Smallest-Sum-Not-Subset-Sum-1)
+- [**\[Easy\] Smallest Sum Not Subset Sum**](https://trsong.github.io/python/java/2020/11/02/DailyQuestionsAug.html#dec-24-2020-easy-smallest-sum-not-subset-sum) -- *Given a sorted list of positive numbers, find the smallest positive number that cannot be a sum of any subset in the list.* [*\(Try ME\)*](https://repl.it/@trsong/Smallest-Sum-Not-Subset-Sum-1)
 
 </summary>
 <div>
@@ -7753,7 +7753,7 @@ Numbers 1 to 6 can all be summed by a subset of the list of numbers, but 7 canno
 <details>
 <summary class="lc_m">
 
-- [**\[Medium\] LT 879. NBA Playoff Matches**](https://trsong.github.io/python/java/2020/11/02/DailyQuestionsAug/#dec-23-2020-lt-879-medium-nba-playoff-matches) -- *Now, you're given n teams, and you need to output their final contest matches in the form of a string.* [*\(Try ME\)*](https://repl.it/@trsong/Print-NBA-Playoff-Matches-1)
+- [**\[Medium\] LT 879. NBA Playoff Matches**](https://trsong.github.io/python/java/2020/11/02/DailyQuestionsAug.html#dec-23-2020-lt-879-medium-nba-playoff-matches) -- *Now, you're given n teams, and you need to output their final contest matches in the form of a string.* [*\(Try ME\)*](https://repl.it/@trsong/Print-NBA-Playoff-Matches-1)
 
 </summary>
 <div>
@@ -7799,7 +7799,7 @@ Explanation:
 <details>
 <summary class="lc_m">
 
-- [**\[Medium\] Number of Flips to Make Binary String**](http://trsong.github.io/python/java/2020/11/02/DailyQuestionsAug/#nov-15-2020-medium-number-of-flips-to-make-binary-string) -- *You are given a string consisting of the letters x and y, such as xyxxxyxyy. Find min flip so that all x goes before y.* [*\(Try ME\)*](https://repl.it/@trsong/Find-Number-of-Flips-to-Make-Binary-String-1)
+- [**\[Medium\] Number of Flips to Make Binary String**](http://trsong.github.io/python/java/2020/11/02/DailyQuestionsAug.html#nov-15-2020-medium-number-of-flips-to-make-binary-string) -- *You are given a string consisting of the letters x and y, such as xyxxxyxyy. Find min flip so that all x goes before y.* [*\(Try ME\)*](https://repl.it/@trsong/Find-Number-of-Flips-to-Make-Binary-String-1)
 
 </summary>
 <div>
@@ -7815,7 +7815,7 @@ Determine how many times you would need to apply this operation to ensure that a
 <details>
 <summary class="lc_e">
 
-- [**\[Easy\] Maximum Subarray Sum**](https://trsong.github.io/python/java/2020/11/02/DailyQuestionsAug/#nov-5-2020-easy-maximum-subarray-sum) -- *Given array that may contain both positive and negative integers, find the sum of contiguous subarray of numbers which has the largest sum.* [*\(Try ME\)*](https://repl.it/@trsong/Maximum-Subarray-Sum-Divide-and-Conquer-1)
+- [**\[Easy\] Maximum Subarray Sum**](https://trsong.github.io/python/java/2020/11/02/DailyQuestionsAug.html#nov-5-2020-easy-maximum-subarray-sum) -- *Given array that may contain both positive and negative integers, find the sum of contiguous subarray of numbers which has the largest sum.* [*\(Try ME\)*](https://repl.it/@trsong/Maximum-Subarray-Sum-Divide-and-Conquer-1)
 
 </summary>
 <div>
@@ -7834,7 +7834,7 @@ Solve this problem with Divide and Conquer as well as DP separately.
 <details>
 <summary class="lc_h">
 
-- [**\[Hard\] Largest Sum of Non-adjacent Numbers**](http://trsong.github.io/python/java/2020/08/02/DailyQuestionsAug/#oct-17-2020-hard-largest-sum-of-non-adjacent-numbers) -- *Given a list of integers, write a function that returns the largest sum of non-adjacent numbers. Numbers can be 0 or negative.* [*\(Try ME\)*](https://repl.it/@trsong/Find-Largest-Sum-of-Non-adjacent-Numbers-1)
+- [**\[Hard\] Largest Sum of Non-adjacent Numbers**](http://trsong.github.io/python/java/2020/08/02/DailyQuestionsAug.html#oct-17-2020-hard-largest-sum-of-non-adjacent-numbers) -- *Given a list of integers, write a function that returns the largest sum of non-adjacent numbers. Numbers can be 0 or negative.* [*\(Try ME\)*](https://repl.it/@trsong/Find-Largest-Sum-of-Non-adjacent-Numbers-1)
 
 </summary>
 <div>
@@ -7852,7 +7852,7 @@ Follow-up: Can you do this in O(N) time and constant space?
 <details>
 <summary class="lc_m">
 
-- [**\[Medium\] Delete Columns to Make Sorted II**](https://trsong.github.io/python/java/2020/08/02/DailyQuestionsAug/#oct-15-2020-medium-delete-columns-to-make-sorted-ii) -- *Given 2D matrix, the task is to count the number of columns to be deleted so that all the rows are lexicographically sorted.* [*\(Try ME\)*](https://repl.it/@trsong/Delete-Columns-to-Make-Row-Sorted-II-1)
+- [**\[Medium\] Delete Columns to Make Sorted II**](https://trsong.github.io/python/java/2020/08/02/DailyQuestionsAug.html#oct-15-2020-medium-delete-columns-to-make-sorted-ii) -- *Given 2D matrix, the task is to count the number of columns to be deleted so that all the rows are lexicographically sorted.* [*\(Try ME\)*](https://repl.it/@trsong/Delete-Columns-to-Make-Row-Sorted-II-1)
 
 </summary>
 <div>
@@ -7888,7 +7888,7 @@ Your function should return 0. All rows are already sorted lexicographically.
 <details>
 <summary class="lc_h">
 
-- [**\[Hard\] Largest Divisible Pairs Subset**](https://trsong.github.io/python/java/2020/08/02/DailyQuestionsAug/#sep-28-2020-hard-largest-divisible-pairs-subset) -- *Given a set of distinct positive integers, find the largest subset such that every pair of elements has divisible counterpart in the subset.* [*\(Try ME\)*](https://repl.it/@trsong/Find-Largest-Divisible-Pairs-Subset-1)
+- [**\[Hard\] Largest Divisible Pairs Subset**](https://trsong.github.io/python/java/2020/08/02/DailyQuestionsAug.html#sep-28-2020-hard-largest-divisible-pairs-subset) -- *Given a set of distinct positive integers, find the largest subset such that every pair of elements has divisible counterpart in the subset.* [*\(Try ME\)*](https://repl.it/@trsong/Find-Largest-Divisible-Pairs-Subset-1)
 
 </summary>
 <div>
@@ -7904,7 +7904,7 @@ For example, given the set `[3, 5, 10, 20, 21]`, you should return `[5, 10, 20]`
 <details>
 <summary class="lc_m">
 
-- [**\[Medium\] LC 139. Word Break**](https://trsong.github.io/python/java/2020/08/02/DailyQuestionsAug/#sep-9-2020-lc-139-medium-word-break) -- *Given a non-empty string s and a dictionary with a list of non-empty words, determine if s can be segmented into a space-separated sequence.* [*\(Try ME\)*](https://repl.it/@trsong/Word-Break-Problem-1)
+- [**\[Medium\] LC 139. Word Break**](https://trsong.github.io/python/java/2020/08/02/DailyQuestionsAug.html#sep-9-2020-lc-139-medium-word-break) -- *Given a non-empty string s and a dictionary with a list of non-empty words, determine if s can be segmented into a space-separated sequence.* [*\(Try ME\)*](https://repl.it/@trsong/Word-Break-Problem-1)
 
 </summary>
 <div>
@@ -7943,7 +7943,7 @@ Output: False
 <details>
 <summary class="lc_m">
 
-- [**\[Medium\] LC 91. Decode Ways**](https://trsong.github.io/python/java/2020/08/02/DailyQuestionsAug/#aug-19-2020-lc-91-medium-decode-ways) -- *A message containing letters from A-Z is being encoded to numbers using the following mapping: 'A' -> 1 'B' -> 2 ... 'Z' -> 26.* [*\(Try ME\)*](https://repl.it/@trsong/Number-of-Decode-Ways-1)
+- [**\[Medium\] LC 91. Decode Ways**](https://trsong.github.io/python/java/2020/08/02/DailyQuestionsAug.html#aug-19-2020-lc-91-medium-decode-ways) -- *A message containing letters from A-Z is being encoded to numbers using the following mapping: 'A' -> 1 'B' -> 2 ... 'Z' -> 26.* [*\(Try ME\)*](https://repl.it/@trsong/Number-of-Decode-Ways-1)
 
 </summary>
 <div>
@@ -7977,7 +7977,7 @@ Output: 1
 <details>
 <summary class="lc_m">
 
-- [**\[Medium\] Making Changes**](https://trsong.github.io/python/java/2020/08/02/DailyQuestionsAug/#aug-9-2020-medium-making-changes) -- *Given a list of possible coins in cents, and an amount (in cents) n, return the minimum number of coins needed to create the amount n.* [*\(Try ME\)*](https://repl.it/@trsong/Making-Changes-Problem-1)
+- [**\[Medium\] Making Changes**](https://trsong.github.io/python/java/2020/08/02/DailyQuestionsAug.html#aug-9-2020-medium-making-changes) -- *Given a list of possible coins in cents, and an amount (in cents) n, return the minimum number of coins needed to create the amount n.* [*\(Try ME\)*](https://repl.it/@trsong/Making-Changes-Problem-1)
 
 </summary>
 <div>
@@ -7996,7 +7996,7 @@ make_change([1, 5, 10, 25], 36)  # gives 3 coins (25 + 10 + 1)
 <details>
 <summary class="lc_m">
 
-- [**\[Medium\] Reverse Coin Change**](https://trsong.github.io/python/java/2020/11/02/DailyQuestionsAug/#dec-18-2020-medium-reverse-coin-change) -- *Given an array represents the number of ways we can produce `i` units of change, determine the denominations that must be in use.* [*\(Try ME\)*](https://repl.it/@trsong/Reverse-Coin-Change-1)
+- [**\[Medium\] Reverse Coin Change**](https://trsong.github.io/python/java/2020/11/02/DailyQuestionsAug.html#dec-18-2020-medium-reverse-coin-change) -- *Given an array represents the number of ways we can produce `i` units of change, determine the denominations that must be in use.* [*\(Try ME\)*](https://repl.it/@trsong/Reverse-Coin-Change-1)
 
 </summary>
 <div>
@@ -8016,7 +8016,7 @@ Given such an array, determine the denominations that must be in use. In the cas
 <details>
 <summary class="lc_m">
 
-- [**\[Medium\] Paint House**](https://trsong.github.io/python/java/2021/02/02/DailyQuestionsFeb/#mar-22-2021-medium-paint-house) -- *Given an N by K matrix where the nth row and kth column represents the cost to build the nth house with kth color, return the minimum cost.* [*\(Try ME\)*](https://replit.com/@trsong/Min-Cost-to-Paint-House-1)
+- [**\[Medium\] Paint House**](https://trsong.github.io/python/java/2021/02/02/DailyQuestionsFeb.html#mar-22-2021-medium-paint-house) -- *Given an N by K matrix where the nth row and kth column represents the cost to build the nth house with kth color, return the minimum cost.* [*\(Try ME\)*](https://replit.com/@trsong/Min-Cost-to-Paint-House-1)
 
 </summary>
 <div>
@@ -8033,7 +8033,7 @@ Given an N by K matrix where the n-th row and k-th column represents the cost to
 <details>
 <summary class="lc_m">
 
-- [**\[Medium\] Maze Paths**](http://trsong.github.io/python/java/2021/02/02/DailyQuestionsFeb/#mar-15-2021-medium-maze-paths) -- *Given a nxm matrix, find the number of ways someone can go from the top left corner to the bottom right corner.* [*\(Try ME\)*](https://replit.com/@trsong/Count-Number-of-Maze-Paths-1)
+- [**\[Medium\] Maze Paths**](http://trsong.github.io/python/java/2021/02/02/DailyQuestionsFeb.html#mar-15-2021-medium-maze-paths) -- *Given a nxm matrix, find the number of ways someone can go from the top left corner to the bottom right corner.* [*\(Try ME\)*](https://replit.com/@trsong/Count-Number-of-Maze-Paths-1)
 
 </summary>
 <div>
@@ -8060,7 +8060,7 @@ The two paths that can only be taken in the above example are: down -> right -> 
 <details>
 <summary class="lc_h">
 
-- [**\[Hard\] Maximize Sum of the Minimum of K Subarrays**](http://trsong.github.io/python/java/2021/02/02/DailyQuestionsFeb/#mar-4-2021-hard-maximize-sum-of-the-minimum-of-k-subarrays) -- *Given an array a of size N and an integer K, divide the array into K segments such that sum of the minimum of K segments is maximized.* [*\(Try ME\)*](https://repl.it/@trsong/Find-the-Maximize-Sum-of-the-Minimum-of-K-Subarrays-1)
+- [**\[Hard\] Maximize Sum of the Minimum of K Subarrays**](http://trsong.github.io/python/java/2021/02/02/DailyQuestionsFeb.html#mar-4-2021-hard-maximize-sum-of-the-minimum-of-k-subarrays) -- *Given an array a of size N and an integer K, divide the array into K segments such that sum of the minimum of K segments is maximized.* [*\(Try ME\)*](https://repl.it/@trsong/Find-the-Maximize-Sum-of-the-Minimum-of-K-Subarrays-1)
 
 </summary>
 <div>
@@ -8088,7 +8088,7 @@ Output: 27
 <details>
 <summary class="lc_h">
 
-- [**\[Hard\] Minimum Palindrome Substring**](https://trsong.github.io/python/java/2021/02/02/DailyQuestionsFeb/#feb-20-2021-hard-minimum-palindrome-substring) -- *Given a string, split it into as few strings as possible such that each string is a palindrome.* [*\(Try ME\)*](https://repl.it/@trsong/Minimum-Palindrome-Substring-1)
+- [**\[Hard\] Minimum Palindrome Substring**](https://trsong.github.io/python/java/2021/02/02/DailyQuestionsFeb.html#feb-20-2021-hard-minimum-palindrome-substring) -- *Given a string, split it into as few strings as possible such that each string is a palindrome.* [*\(Try ME\)*](https://repl.it/@trsong/Minimum-Palindrome-Substring-1)
 
 </summary>
 <div>
@@ -8106,7 +8106,7 @@ Given the input string `"abc"`, return `["a", "b", "c"]`.
 <details>
 <summary class="lc_h">
 
-- [**\[Hard\] Partition Array to Reach Mininum Difference**](https://trsong.github.io/python/java/2020/11/02/DailyQuestionsAug/#jan-25-2021-hard-partition-array-to-reach-mininum-difference) -- *Given an array of positive integers, divide the array into two subsets such that the difference between the sum of the subsets reaches min.* [*\(Try ME\)*](https://repl.it/@trsong/Partition-Array-to-Reach-Min-Difference-1)
+- [**\[Hard\] Partition Array to Reach Mininum Difference**](https://trsong.github.io/python/java/2020/11/02/DailyQuestionsAug.html#jan-25-2021-hard-partition-array-to-reach-mininum-difference) -- *Given an array of positive integers, divide the array into two subsets such that the difference between the sum of the subsets reaches min.* [*\(Try ME\)*](https://repl.it/@trsong/Partition-Array-to-Reach-Min-Difference-1)
 
 </summary>
 <div>
@@ -8122,7 +8122,7 @@ For example, given `[5, 10, 15, 20, 25]`, return the sets `[10, 25]` and `[5, 15
 <details>
 <summary class="lc_h">
 
-- [**\[Hard\] Longest Common Subsequence of 3 Strings**](https://trsong.github.io/python/java/2020/11/02/DailyQuestionsAug/#jan-13-2021-hard-longest-common-subsequence-of-3-strings) -- *Write a program that computes the length of the longest common subsequence of three given strings.* [*\(Try ME\)*](https://repl.it/@trsong/Longest-Common-Subsequence-of-3-Strings-1)
+- [**\[Hard\] Longest Common Subsequence of 3 Strings**](https://trsong.github.io/python/java/2020/11/02/DailyQuestionsAug.html#jan-13-2021-hard-longest-common-subsequence-of-3-strings) -- *Write a program that computes the length of the longest common subsequence of three given strings.* [*\(Try ME\)*](https://repl.it/@trsong/Longest-Common-Subsequence-of-3-Strings-1)
 
 </summary>
 <div>
@@ -8138,7 +8138,7 @@ For example, given `"epidemiologist"`, `"refrigeration"`, and `"supercalifragili
 <details>
 <summary class="lc_h">
 
-- [**\[Hard\] Non-adjacent Subset Sum**](https://trsong.github.io/python/java/2020/11/02/DailyQuestionsAug/#nov-18-2020-hard-non-adjacent-subset-sum) -- *Given an array of unique positive numbers. Find non-adjacent subset of elements sum up to k.* [*\(Try ME\)*](https://repl.it/@trsong/Non-adjacent-Subset-Sum-1)
+- [**\[Hard\] Non-adjacent Subset Sum**](https://trsong.github.io/python/java/2020/11/02/DailyQuestionsAug.html#nov-18-2020-hard-non-adjacent-subset-sum) -- *Given an array of unique positive numbers. Find non-adjacent subset of elements sum up to k.* [*\(Try ME\)*](https://repl.it/@trsong/Non-adjacent-Subset-Sum-1)
 
 </summary>
 <div>
@@ -8161,7 +8161,7 @@ Output: [3, 7, 4]
 <details>
 <summary class="lc_m">
 
-- [**\[Medium\] Max Value of Coins to Collect in a Matrix**](https://trsong.github.io/python/java/2020/11/02/DailyQuestionsAug/#nov-12-2020-medium-max-value-of-coins-to-collect-in-a-matrix) -- *You are given a 2-d matrix. Find the maximum number of coins you can collect by the bottom right corner.* [*\(Try ME\)*](https://repl.it/@trsong/Find-Max-Value-of-Coins-to-Collect-in-a-Matrix-1)
+- [**\[Medium\] Max Value of Coins to Collect in a Matrix**](https://trsong.github.io/python/java/2020/11/02/DailyQuestionsAug.html#nov-12-2020-medium-max-value-of-coins-to-collect-in-a-matrix) -- *You are given a 2-d matrix. Find the maximum number of coins you can collect by the bottom right corner.* [*\(Try ME\)*](https://repl.it/@trsong/Find-Max-Value-of-Coins-to-Collect-in-a-Matrix-1)
 
 </summary>
 <div>
@@ -8187,7 +8187,7 @@ The most we can collect is 0 + 2 + 1 + 5 + 3 + 1 = 12 coins.
 <details>
 <summary class="lc_m">
 
-- [**\[Medium\] Largest Square**](http://trsong.github.io/python/java/2020/11/02/DailyQuestionsAug/#nov-7-2020-medium-largest-square) -- *Given matrix with 1 and 0. Find the largest square matrix containing only 1’s and return its dimension size.* [*\(Try ME\)*](https://repl.it/@trsong/Largest-Square-1)
+- [**\[Medium\] Largest Square**](http://trsong.github.io/python/java/2020/11/02/DailyQuestionsAug.html#nov-7-2020-medium-largest-square) -- *Given matrix with 1 and 0. Find the largest square matrix containing only 1’s and return its dimension size.* [*\(Try ME\)*](https://repl.it/@trsong/Largest-Square-1)
 
 </summary>
 <div>
@@ -8215,7 +8215,7 @@ Return 2. As the following 1s form the largest square matrix containing only 1s:
 <details>
 <summary class="lc_h">
 
-- [**\[Hard\] LC 76. Minimum Window Substring**](https://trsong.github.io/python/java/2020/05/02/DailyQuestionsMay/#june-12-2020-lc-76-hard-minimum-window-substring) -- *Given a string and a set of characters, return the shortest substring containing all the characters in the set.* [*\(Try ME\)*](https://repl.it/@trsong/Find-Minimum-Window-Substring-1)
+- [**\[Hard\] LC 76. Minimum Window Substring**](https://trsong.github.io/python/java/2020/05/02/DailyQuestionsMay.html#june-12-2020-lc-76-hard-minimum-window-substring) -- *Given a string and a set of characters, return the shortest substring containing all the characters in the set.* [*\(Try ME\)*](https://repl.it/@trsong/Find-Minimum-Window-Substring-1)
 
 </summary>
 <div>
@@ -8232,7 +8232,7 @@ If there is no substring containing all the characters in the set, return null.
 <details>
 <summary class="lc_h">
 
-- [**\[Hard\] LC 727. Minimum Window Subsequence**](https://trsong.github.io/python/java/2020/05/02/DailyQuestionsMay/#june-15-2020-lc-727-hard-minimum-window-subsequence) -- *Given strings S and T, find the minimum (contiguous) substring W of S, so that T is a subsequence of W.* [*\(Try ME\)*](https://repl.it/@trsong/Find-Minimum-Window-Subsequence-1)
+- [**\[Hard\] LC 727. Minimum Window Subsequence**](https://trsong.github.io/python/java/2020/05/02/DailyQuestionsMay.html#june-15-2020-lc-727-hard-minimum-window-subsequence) -- *Given strings S and T, find the minimum (contiguous) substring W of S, so that T is a subsequence of W.* [*\(Try ME\)*](https://repl.it/@trsong/Find-Minimum-Window-Subsequence-1)
 
 </summary>
 <div>
@@ -8259,7 +8259,7 @@ Explanation:
 <details>
 <summary class="lc_m">
 
-- [**\[Medium\] Longest Common Subsequence**](https://trsong.github.io/python/java/2020/05/02/DailyQuestionsMay/#june-18-2020-medium-longest-common-subsequence) -- *Given two sequences, find the length of longest subsequence present in both of them.* [*\(Try ME\)*](https://repl.it/@trsong/Find-the-Longest-Common-Subsequence-1)
+- [**\[Medium\] Longest Common Subsequence**](https://trsong.github.io/python/java/2020/05/02/DailyQuestionsMay.html#june-18-2020-medium-longest-common-subsequence) -- *Given two sequences, find the length of longest subsequence present in both of them.* [*\(Try ME\)*](https://repl.it/@trsong/Find-the-Longest-Common-Subsequence-1)
 
 </summary>
 <div>
@@ -8294,7 +8294,7 @@ LCS is "AC"
 <details>
 <summary class="lc_h">
 
-- [**\[Hard\] K-Palindrome**](http://trsong.github.io/python/java/2021/02/02/DailyQuestionsFeb/#feb-23-2021-hard-k-palindrome) -- *Given a string which we can delete at most k, return whether you can make a palindrome.* [*\(Try ME\)*](https://repl.it/@trsong/Find-K-Palindrome-1)
+- [**\[Hard\] K-Palindrome**](http://trsong.github.io/python/java/2021/02/02/DailyQuestionsFeb.html#feb-23-2021-hard-k-palindrome) -- *Given a string which we can delete at most k, return whether you can make a palindrome.* [*\(Try ME\)*](https://repl.it/@trsong/Find-K-Palindrome-1)
 
 </summary>
 <div>
@@ -8309,7 +8309,7 @@ For example, given `'waterrfetawx'` and a k of 2, you could delete f and x to ge
 <details>
 <summary class="lc_m">
 
-- [**\[Medium\] LC 446. Count Arithmetic Subsequences**](https://trsong.github.io/python/java/2020/05/02/DailyQuestionsMay/#june-22-2020-lc-446-medium-count-arithmetic-subsequences) -- *Given an array of n positive integers. The task is to count the number of Arithmetic Subsequence in the array.* [*\(Try ME\)*](https://repl.it/@trsong/Count-Number-of-Arithmetic-Subsequences-1)
+- [**\[Medium\] LC 446. Count Arithmetic Subsequences**](https://trsong.github.io/python/java/2020/05/02/DailyQuestionsMay.html#june-22-2020-lc-446-medium-count-arithmetic-subsequences) -- *Given an array of n positive integers. The task is to count the number of Arithmetic Subsequence in the array.* [*\(Try ME\)*](https://repl.it/@trsong/Count-Number-of-Arithmetic-Subsequences-1)
 
 </summary>
 <div>
@@ -8343,7 +8343,7 @@ Output : 23
 <details>
 <summary class="lc_m">
 
-- [**\[Medium\] LC 718. Longest Common Sequence of Browsing Histories**](https://trsong.github.io/python/java/2020/05/02/DailyQuestionsMay/#jul-9-2020-lc-718-medium-longest-common-sequence-of-browsing-histories) -- *Write a function that takes two users’ browsing histories as input and returns the longest contiguous sequence of URLs that appear in both.* [*\(Try ME\)*](https://repl.it/@trsong/Longest-Common-Sequence-of-Browsing-Histories-1)
+- [**\[Medium\] LC 718. Longest Common Sequence of Browsing Histories**](https://trsong.github.io/python/java/2020/05/02/DailyQuestionsMay.html#jul-9-2020-lc-718-medium-longest-common-sequence-of-browsing-histories) -- *Write a function that takes two users’ browsing histories as input and returns the longest contiguous sequence of URLs that appear in both.* [*\(Try ME\)*](https://repl.it/@trsong/Longest-Common-Sequence-of-Browsing-Histories-1)
 
 </summary>
 <div>
@@ -8375,7 +8375,7 @@ You should return the following:
 <details>
 <summary class="lc_h">
 
-- [**\[Hard\] LC 975. Odd Even Jump**](http://trsong.github.io/python/java/2021/05/02/DailyQuestionsMay/#may-15-2021-lc-975-hard-odd-even-jump) -- *Count number of start indices so that making a series of jumps based on even and odd turns can reach the end.* [*\(Try ME\)*](https://replit.com/@trsong/Odd-Even-Jump-1)
+- [**\[Hard\] LC 975. Odd Even Jump**](http://trsong.github.io/python/java/2021/05/02/DailyQuestionsMay.html#may-15-2021-lc-975-hard-odd-even-jump) -- *Count number of start indices so that making a series of jumps based on even and odd turns can reach the end.* [*\(Try ME\)*](https://replit.com/@trsong/Odd-Even-Jump-1)
 
 </summary>
 <div>
@@ -8436,7 +8436,7 @@ Explanation: We can reach the end from starting indices 1, 2, and 4.
 <details>
 <summary class="lc_h">
 
-- [**\[Hard\] Max Path Value in Directed Graph**](http://trsong.github.io/python/java/2021/02/02/DailyQuestionsFeb/#feb-13-2021-hard-max-path-value-in-directed-graph) -- *Given a directed graph, return the largest value path of the graph. Define a path’s value as the number of most frequent letters along path.* [*\(Try ME\)*](https://repl.it/@trsong/Find-Max-Letter-Path-Value-in-Directed-Graph-1)
+- [**\[Hard\] Max Path Value in Directed Graph**](http://trsong.github.io/python/java/2021/02/02/DailyQuestionsFeb.html#feb-13-2021-hard-max-path-value-in-directed-graph) -- *Given a directed graph, return the largest value path of the graph. Define a path’s value as the number of most frequent letters along path.* [*\(Try ME\)*](https://repl.it/@trsong/Find-Max-Letter-Path-Value-in-Directed-Graph-1)
 
 </summary>
 <div>
@@ -8467,7 +8467,7 @@ Explanation: we have an infinite loop.
 <details>
 <summary class="lc_h">
 
-- [**\[Hard\] Largest Rectangle**](https://trsong.github.io/python/java/2020/08/02/DailyQuestionsAug/#oct-29-2020-hard-largest-rectangle) -- *Given an N by M matrix consisting only of 1’s and 0’s, find the largest rectangle containing only 1’s and return its area.* [*\(Try ME\)*](https://repl.it/@trsong/Largest-Rectangle-in-a-Grid-1)
+- [**\[Hard\] Largest Rectangle**](https://trsong.github.io/python/java/2020/08/02/DailyQuestionsAug.html#oct-29-2020-hard-largest-rectangle) -- *Given an N by M matrix consisting only of 1’s and 0’s, find the largest rectangle containing only 1’s and return its area.* [*\(Try ME\)*](https://repl.it/@trsong/Largest-Rectangle-in-a-Grid-1)
 
 </summary>
 <div>
@@ -8496,7 +8496,7 @@ Return 4. As the following 1s form the largest rectangle containing only 1s:
 <details>
 <summary class="lc_h">
 
-- [**\[Hard\] Find Arbitrage Opportunities**](http://trsong.github.io/python/java/2020/08/02/DailyQuestionsAug/#oct-3-2020--hard-find-arbitrage-opportunities) -- *Given a table of currency exchange rates, represented as a 2D array. Determine whether there is a possible arbitrage.* [*\(Try ME\)*](https://repl.it/@trsong/Find-Arbitrage-Opportunities-for-Currency-Exchange-1)
+- [**\[Hard\] Find Arbitrage Opportunities**](http://trsong.github.io/python/java/2020/08/02/DailyQuestionsAug.html#oct-3-2020--hard-find-arbitrage-opportunities) -- *Given a table of currency exchange rates, represented as a 2D array. Determine whether there is a possible arbitrage.* [*\(Try ME\)*](https://repl.it/@trsong/Find-Arbitrage-Opportunities-for-Currency-Exchange-1)
 
 </summary>
 <div>
@@ -8523,7 +8523,7 @@ Given the following matrix:
 <details>
 <summary class="lc_m">
 
-- [**\[Medium\] Maximum Circular Subarray Sum**](https://trsong.github.io/python/java/2020/08/02/DailyQuestionsAug/#aug-2-2020-medium-maximum-circular-subarray-sum) -- *Given a circular array, compute its maximum subarray sum in O(n) time. A subarray can be empty, and in this case the sum is 0.* [*\(Try ME\)*](https://repl.it/@trsong/Find-Maximum-Circular-Subarray-Sum-1)
+- [**\[Medium\] Maximum Circular Subarray Sum**](https://trsong.github.io/python/java/2020/08/02/DailyQuestionsAug.html#aug-2-2020-medium-maximum-circular-subarray-sum) -- *Given a circular array, compute its maximum subarray sum in O(n) time. A subarray can be empty, and in this case the sum is 0.* [*\(Try ME\)*](https://repl.it/@trsong/Find-Maximum-Circular-Subarray-Sum-1)
 
 </summary>
 <div>
@@ -8555,7 +8555,7 @@ Explanation: we choose the numbers 5 and 1.
 <details>
 <summary class="lc_h">
 
-- [**\[Hard\] Optimal Strategy For Coin Game**](http://trsong.github.io/python/java/2021/02/02/DailyQuestionsFeb/#mar-24-2021-hard-optimal-strategy-for-coin-game) -- *Write a program that returns the maximum amount of money you can win with certainty.* [*\(Try ME\)*](https://replit.com/@trsong/Optimal-Strategy-For-Coin-Game-1)
+- [**\[Hard\] Optimal Strategy For Coin Game**](http://trsong.github.io/python/java/2021/02/02/DailyQuestionsFeb.html#mar-24-2021-hard-optimal-strategy-for-coin-game) -- *Write a program that returns the maximum amount of money you can win with certainty.* [*\(Try ME\)*](https://replit.com/@trsong/Optimal-Strategy-For-Coin-Game-1)
 
 </summary>
 <div>
