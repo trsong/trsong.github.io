@@ -460,6 +460,50 @@ Return true as the first and third rectangle overlap each other.
 ---
 
 <details>
+<summary class="lc_e">
+
+- [**\[Easy\] Maximum Time**](https://trsong.github.io/python/java/2021/05/02/DailyQuestionsMay.html#may-16-2021-easy-maximum-time) -- *Fill in ? such that the time represented by this string is the maximum possible.* [*\(Try ME\)*](https://replit.com/@trsong/Maximum-Time-1)
+
+</summary>
+<div>
+
+**Question:** You are given a string that represents time in the format `hh:mm`. Some of the digits are blank (represented by ?). Fill in ? such that the time represented by this string is the maximum possible. Maximum time: `23:59`, minimum time: `00:00`. You can assume that input string is always valid.
+
+**Example 1:**
+```py
+Input: "?4:5?"
+Output: "14:59"
+```
+
+**Example 2:**
+```py
+Input: "23:5?"
+Output: "23:59"
+```
+
+**Example 3:**
+```py
+Input: "2?:22"
+Output: "23:22"
+```
+
+**Example 4:**
+```py
+Input: "0?:??"
+Output: "09:59"
+```
+
+**Example 5:**
+```py
+Input: "??:??"
+Output: "23:59"
+```
+
+</div>
+</details>
+
+
+<details>
 <summary class="lc_m">
 
 - [**\[Medium\] LC 1007. Minimum Domino Rotations For Equal Row**](http://trsong.github.io/python/java/2021/05/02/DailyQuestionsMay.html#may-10-2021-lc-1007-medium-minimum-domino-rotations-for-equal-row) -- *`A[i]` and `B[i]` represents dominos. Return the minimum number of rotations so that all the values in `A` or `B` are the same.* [*\(Try ME\)*](https://replit.com/@trsong/Minimum-Domino-Rotations-For-Equal-Row-1)
