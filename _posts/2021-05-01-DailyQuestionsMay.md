@@ -19,6 +19,15 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
 
+
+
+### May 17, 2021 \[Easy\] Phone Number to Words Based on The Dictionary
+--- 
+> **Question:** Given a phone number, return all valid words that can be created using that phone number.
+>
+> For instance, given the phone number `364` and dictionary `['dog', 'fish', 'cat', 'fog']`, we can construct the words `['dog', 'fog']`.
+
+
 ### May 16, 2021 \[Easy\] Maximum Time
 --- 
 > **Question:** You are given a string that represents time in the format `hh:mm`. Some of the digits are blank (represented by ?). Fill in ? such that the time represented by this string is the maximum possible. Maximum time: `23:59`, minimum time: `00:00`. You can assume that input string is always valid.
@@ -58,15 +67,15 @@ Output: "23:59"
 import unittest
 
 def max_time(s):
-    parts = s.split(":")
-    return max_hour(parts[0]) + ":" + max_minute(parts[1])
+    parts = s.split(':')
+    return max_hour(parts[0]) + ':' + max_minute(parts[1])
 
 
 def max_hour(s):
     d0, d1 = s[0], s[1]
-    if d0 == "?":
+    if d0 == '?':
         d0 = '2' if '0' <= d1 <= '3' or d1 == '?' else '1'
-    if d1 == "?":
+    if d1 == '?':
         d1 = '3' if d0 == '2' else '9'
     return d0 + d1
 
@@ -79,43 +88,43 @@ def max_minute(s):
 
 class MaxTimeSpec(unittest.TestCase):
     def test_example(self):
-        self.assertEqual("14:59", max_time("?4:5?"))
+        self.assertEqual('14:59', max_time('?4:5?'))
 
     def test_example2(self):
-        self.assertEqual("23:59", max_time("23:5?"))
+        self.assertEqual('23:59', max_time('23:5?'))
 
     def test_example3(self):
-        self.assertEqual("23:22", max_time("2?:22"))
+        self.assertEqual('23:22', max_time('2?:22'))
 
     def test_example4(self):
-        self.assertEqual("09:59", max_time("0?:??"))
+        self.assertEqual('09:59', max_time('0?:??'))
 
     def test_example5(self):
-        self.assertEqual("23:59", max_time("??:??"))
+        self.assertEqual('23:59', max_time('??:??'))
 
     def test_no_question_mark(self):
-        self.assertEqual("00:00", max_time("00:00"))
+        self.assertEqual('00:00', max_time('00:00'))
 
     def test_hour(self):
-        self.assertEqual("23:49", max_time("??:49"))
+        self.assertEqual('23:49', max_time('??:49'))
 
     def test_hour2(self):
-        self.assertEqual("23:03", max_time("?3:03"))
+        self.assertEqual('23:03', max_time('?3:03'))
 
     def test_hour3(self):
-        self.assertEqual("17:19", max_time("?7:19"))
+        self.assertEqual('17:19', max_time('?7:19'))
 
     def test_hour4(self):
-        self.assertEqual("09:50", max_time("0?:50"))
+        self.assertEqual('09:50', max_time('0?:50'))
 
     def test_minute(self):
-        self.assertEqual("18:59", max_time("18:??"))
+        self.assertEqual('18:59', max_time('18:??'))
 
     def test_minute2(self):
-        self.assertEqual("18:54", max_time("18:?4"))
+        self.assertEqual('18:54', max_time('18:?4'))
 
     def test_minute3(self):
-        self.assertEqual("18:39", max_time("18:3?"))
+        self.assertEqual('18:39', max_time('18:3?'))
 
 
 if __name__ == '__main__':
