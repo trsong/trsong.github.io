@@ -19,6 +19,30 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
 
+### May 18, 2021 \[Medium\] Boggle Game
+--- 
+> **Question:** Given a dictionary, a method to do a lookup in the dictionary and a M x N board where every cell has one character. Find all possible words that can be formed by a sequence of adjacent characters. Note that we can move to any of 8 adjacent characters, but a word should not have multiple instances of the same cell.
+
+**Example 1:**
+```py
+Input: dictionary[] = {"GEEKS", "FOR", "QUIZ", "GO"};
+       boggle[][]   = {{'G', 'I', 'Z'},
+                       {'U', 'E', 'K'},
+                       {'Q', 'S', 'E'}};
+Output: Following words of the dictionary are present
+         GEEKS
+         QUIZ
+```
+
+**Example 2:**
+```py
+Input: dictionary[] = {"GEEKS", "ABCFIHGDE"};
+       boggle[][]   = {{'A', 'B', 'C'},
+                       {'D', 'E', 'F'},
+                       {'G', 'H', 'I'}};
+Output: Following words of the dictionary are present
+         ABCFIHGDE
+```
 
 
 ### May 17, 2021 \[Easy\] Phone Number to Words Based on The Dictionary
