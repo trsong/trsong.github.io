@@ -25,10 +25,10 @@ categories: Python/Java
 
 **Example 1:**
 ```py
-Input: dictionary[] = {"GEEKS", "FOR", "QUIZ", "GO"};
-       boggle[][]   = {{'G', 'I', 'Z'},
-                       {'U', 'E', 'K'},
-                       {'Q', 'S', 'E'}};
+Input: dictionary = ["GEEKS", "FOR", "QUIZ", "GO"]
+       boggle = [['G', 'I', 'Z'],
+                 ['U', 'E', 'K'],
+                 ['Q', 'S', 'E']]
 Output: Following words of the dictionary are present
          GEEKS
          QUIZ
@@ -36,14 +36,13 @@ Output: Following words of the dictionary are present
 
 **Example 2:**
 ```py
-Input: dictionary[] = {"GEEKS", "ABCFIHGDE"};
-       boggle[][]   = {{'A', 'B', 'C'},
-                       {'D', 'E', 'F'},
-                       {'G', 'H', 'I'}};
+Input: dictionary = ["GEEKS", "ABCFIHGDE"]
+       boggle = [['A', 'B', 'C'],
+                 ['D', 'E', 'F'],
+                 ['G', 'H', 'I']]
 Output: Following words of the dictionary are present
          ABCFIHGDE
 ```
-
 
 ### May 17, 2021 \[Easy\] Phone Number to Words Based on The Dictionary
 --- 
