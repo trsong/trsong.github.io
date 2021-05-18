@@ -44,6 +44,70 @@ Output: Following words of the dictionary are present
          ABCFIHGDE
 ```
 
+**Solution:** [https://replit.com/@trsong/Phone-Number-to-Words-Based-on-The-Dictionary](https://replit.com/@trsong/Phone-Number-to-Words-Based-on-The-Dictionary)
+```py
+import unittest
+from functools import reduce
+
+def phone_number_to_words(phone, dictionary):
+    letter_map = {
+        1: [],
+        2: ['a', 'b', 'c'],
+        3: ['d', 'e', 'f'],
+        4: ['g', 'h', 'i'],
+        5: ['j', 'k', 'l'],
+        6: ['m', 'n', 'o'],
+        7: ['p', 'q', 'r', 's'],
+        8: ['t', 'u', 'v'],
+        9: ['w', 'x', 'y', 'z'],
+        0: []
+    }
+    letter_to_digit = {
+        letter: digit
+        for digit in letter_map for letter in letter_map[digit]
+    }
+    word_to_phone = lambda word: reduce(
+        lambda accu, ch: 10 * accu + letter_to_digit[ch], word, 0)
+    validate_word = lambda word: phone == word_to_phone(word)
+    return list(filter(validate_word, dictionary))
+
+
+class PhoneNumberToWordSpec(unittest.TestCase):
+    def test_example(self):
+        phone = 364
+        dictionary = ['dog', 'fish', 'cat', 'fog']
+        expected = ['dog', 'fog']
+        self.assertCountEqual(expected,
+                              phone_number_to_words(phone, dictionary))
+
+    def test_empty_dictionary(self):
+        phone = 42
+        dictionary = []
+        expected = []
+        self.assertCountEqual(expected,
+                              phone_number_to_words(phone, dictionary))
+
+    def test_single_digit(self):
+        phone = 5
+        dictionary = ['a', 'b', 'cd', 'ef', 'g', 'k', 'j', 'kl']
+        expected = ['j', 'k']
+        self.assertCountEqual(expected,
+                              phone_number_to_words(phone, dictionary))
+
+    def test_contains_empty_word(self):
+        phone = 222
+        dictionary = [
+            "", "", "abc", "def", "ghi", "jkl", "mno", "pqrs", "tuv", "wxyz"
+        ]
+        expected = ['abc']
+        self.assertCountEqual(expected,
+                              phone_number_to_words(phone, dictionary))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False, verbosity=2)
+```
+
 ### May 17, 2021 \[Easy\] Phone Number to Words Based on The Dictionary
 --- 
 > **Question:** Given a phone number, return all valid words that can be created using that phone number.
