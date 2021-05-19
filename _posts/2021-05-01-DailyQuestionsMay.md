@@ -186,6 +186,14 @@ if __name__ == '__main__':
     unittest.main(exit=False, verbosity=2)
 ```
 
+
+### May 17, 2021 \[Easy\] Phone Number to Words Based on The Dictionary
+--- 
+> **Question:** Given a phone number, return all valid words that can be created using that phone number.
+>
+> For instance, given the phone number `364` and dictionary `['dog', 'fish', 'cat', 'fog']`, we can construct the words `['dog', 'fog']`.
+
+
 **Solution:** [https://replit.com/@trsong/Phone-Number-to-Words-Based-on-The-Dictionary](https://replit.com/@trsong/Phone-Number-to-Words-Based-on-The-Dictionary)
 ```py
 import unittest
@@ -249,12 +257,6 @@ class PhoneNumberToWordSpec(unittest.TestCase):
 if __name__ == '__main__':
     unittest.main(exit=False, verbosity=2)
 ```
-
-### May 17, 2021 \[Easy\] Phone Number to Words Based on The Dictionary
---- 
-> **Question:** Given a phone number, return all valid words that can be created using that phone number.
->
-> For instance, given the phone number `364` and dictionary `['dog', 'fish', 'cat', 'fog']`, we can construct the words `['dog', 'fog']`.
 
 
 ### May 16, 2021 \[Easy\] Maximum Time
