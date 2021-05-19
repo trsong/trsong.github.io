@@ -56,6 +56,136 @@ Output: Following words of the dictionary are present
          ABCFIHGDE
 ```
 
+**Solution with Trie and Backtracking:** [https://replit.com/@trsong/Boggle-Game](https://replit.com/@trsong/Boggle-Game)
+```py
+import unittest
+
+def boggle_game(boggle, dictionary):
+    if not boggle or not boggle[0]:
+        return []
+
+    trie = Trie()
+    for word in dictionary:
+        trie.insert(word)
+
+    res = []
+    for r in range(len(boggle)):
+        for c in range(len(boggle[0])):
+            backtrack(res, boggle, trie, r, c)
+    return res
+
+
+class Trie(object):
+    def __init__(self):
+        self.word = None
+        self.children = None
+    
+    def insert(self, word):
+        p = self
+        for ch in word:
+            p.children = p.children or {}
+            p.children[ch] = p.children.get(ch, Trie())
+            p = p.children[ch]
+        p.word = word
+
+
+DIRECTIONS = [-1, 0, 1]
+def backtrack(res, boggle, parent_node, r, c):
+    ch = boggle[r][c]
+    if not ch or not parent_node.children or not parent_node.children.get(ch, None):
+        return
+    
+    node = parent_node.children[ch]
+    if node.word:
+        res.append(node.word)
+        node.word = None
+    
+    boggle[r][c] = None
+    n, m = len(boggle), len(boggle[0])
+    for dr in DIRECTIONS:
+        for dc in DIRECTIONS:
+            new_r, new_c = r + dr, c + dc
+            if 0 <= new_r < n and 0 <= new_c < m and boggle[new_r][new_c]:
+                backtrack(res, boggle, node, new_r, new_c)
+    boggle[r][c] = ch
+
+
+class BoggleGamedSpec(unittest.TestCase):
+    def assert_result(self, expected, res):
+        self.assertEqual(sorted(expected), sorted(res))
+
+    def test_example(self):
+        dictionary = ["GEEKS", "FOR", "QUIZ", "GO"]
+        boggle = [['G', 'I', 'Z'],
+                 ['U', 'E', 'K'],
+                 ['Q', 'S', 'E']]
+        expected = ["GEEKS", "QUIZ"]
+        self.assert_result(expected, boggle_game(boggle, dictionary))
+
+    def test_example2(self):
+        dictionary = ["GEEKS", "ABCFIHGDE"]
+        boggle = [['A', 'B', 'C'],
+                 ['D', 'E', 'F'],
+                 ['G', 'H', 'I']]
+        expected = ['ABCFIHGDE']
+        self.assert_result(expected, boggle_game(boggle, dictionary))
+
+    def test_example3(self):
+        dictionary = ['oath','pea','eat','rain']
+        boggle = [
+            ['o','a','a','n'],
+            ['e','t','a','e'],
+            ['i','h','k','r'],
+            ['i','f','l','v']]
+        expected = ['eat', 'oath']
+        self.assert_result(expected, boggle_game(boggle, dictionary))
+
+    def test_example4(self):
+        dictionary = ['abcb']
+        boggle = [
+            ['a','b'],
+            ['c','d']]
+        expected = []
+        self.assert_result(expected, boggle_game(boggle, dictionary))
+    
+    def test_example5(self):
+        dictionary = ['DATA', 'HALO', 'HALT', 'SAG', 'BEAT', 'TOTAL', 'GLOT', 'DAG', 'DAGCD', 'DOG']
+        boggle = [
+            ['D', 'A', 'T', 'H'],
+            ['C', 'G', 'O', 'A'],
+            ['S', 'A', 'T', 'L'],
+            ['B', 'E', 'E', 'G']]
+        expected = ['DATA', 'HALO', 'HALT', 'SAG', 'BEAT', 'TOTAL', 'GLOT', 'DAG']
+        self.assert_result(expected, boggle_game(boggle, dictionary))
+
+    def test_unique_char(self):
+        dictionary = ['a', 'aa', 'aaa']
+        boggle = [
+            ['a','a'],
+            ['a','a']]
+        expected = ['a', 'aa', 'aaa']
+        self.assert_result(expected, boggle_game(boggle, dictionary))
+
+    def test_empty_grid(self):
+        self.assertEqual([], boggle_game([], ['a']))
+
+    def test_empty_empty_word(self):
+        self.assertEqual([], boggle_game(['a'], []))
+
+    def test_word_use_all_letters(self):
+        dictionary = ['abcdef']
+        boggle = [
+            ['a','b'],
+            ['f','c'],
+            ['e','d']]
+        expected = ['abcdef']
+        self.assert_result(expected, boggle_game(boggle, dictionary))
+
+    
+if __name__ == '__main__':
+    unittest.main(exit=False, verbosity=2)
+```
+
 **Solution:** [https://replit.com/@trsong/Phone-Number-to-Words-Based-on-The-Dictionary](https://replit.com/@trsong/Phone-Number-to-Words-Based-on-The-Dictionary)
 ```py
 import unittest

@@ -7140,6 +7140,41 @@ For example, given `100`, you can reach `1` in five steps with the following rou
 ---
 
 <details>
+<summary class="lc_m">
+
+- [**\[Medium\] Boggle Game**](https://trsong.github.io/python/java/2021/05/02/DailyQuestionsMay.html#may-18-2021-medium-boggle-game) -- *Given a boggle grid and dictionary. Find all possible words that can be formed by a sequence of adjacent characters.* [*\(Try ME\)*](https://replit.com/@trsong/Boggle-Game-1)
+
+</summary>
+<div>
+
+**Question:** Given a dictionary, a method to do a lookup in the dictionary and a M x N board where every cell has one character. Find all possible words that can be formed by a sequence of adjacent characters. Note that we can move to any of 8 adjacent characters, but a word should not have multiple instances of the same cell.
+
+**Example 1:**
+```py
+Input: dictionary = ["GEEKS", "FOR", "QUIZ", "GO"]
+       boggle = [['G', 'I', 'Z'],
+                 ['U', 'E', 'K'],
+                 ['Q', 'S', 'E']]
+Output: Following words of the dictionary are present
+         GEEKS
+         QUIZ
+```
+
+**Example 2:**
+```py
+Input: dictionary = ["GEEKS", "ABCFIHGDE"]
+       boggle = [['A', 'B', 'C'],
+                 ['D', 'E', 'F'],
+                 ['G', 'H', 'I']]
+Output: Following words of the dictionary are present
+         ABCFIHGDE
+```
+
+</div>
+</details>
+
+
+<details>
 <summary class="lc_h">
 
 - [**\[Hard\] Unique Sum Combinations**](https://trsong.github.io/python/java/2021/02/02/DailyQuestionsFeb.html#apr-12-2021-hard-unique-sum-combinations) -- *Given a list of numbers and a target number, find all possible unique subsets of the list of numbers that sum up to the target number.* [*\(Try ME\)*](https://replit.com/@trsong/Find-Unique-Sum-Combinations-1)
