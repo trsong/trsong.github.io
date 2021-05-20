@@ -37,6 +37,100 @@ Output: 7 -> 0 -> 8
 Explanation: 342 + 465 = 807.
 ```
 
+**Solution:** [https://replit.com/@trsong/Add-Two-Numbers-and-Return-as-a-Linked-List-2](https://replit.com/@trsong/Add-Two-Numbers-and-Return-as-a-Linked-List-2)
+```py
+import unittest
+
+def lists_addition(l1, l2):
+    dummy = p = ListNode(-1)
+    carry = 0
+    while l1 or l2 or carry:
+        if l1:
+            carry += l1.val
+            l1 = l1.next
+        if l2:
+            carry += l2.val
+            l2 = l2.next
+        p.next = ListNode(carry % 10)
+        p = p.next
+        carry //= 10
+    return dummy.next
+
+
+###################
+# Testing Utilities
+###################
+class ListNode(object):
+    def __init__(self, val, next=None):
+        self.val = val
+        self.next = next
+
+    def __repr__(self):
+        return "{} -> {}".format(str(self.val), str(self.next))
+
+    def __eq__(self, other):
+        return other and self.val == other.val and self.next == other.next
+
+    @staticmethod
+    def build_list(*nums):
+        node = dummy = ListNode(-1)
+        for num in nums:
+            node.next = ListNode(num)
+            node = node.next
+        return dummy.next
+
+
+class ListsAdditionSpec(unittest.TestCase):
+    def test_example(self):
+        l1 = ListNode.build_list(2, 4, 3)
+        l2 = ListNode.build_list(5, 6, 4)
+        expected = ListNode.build_list(7, 0, 8)
+        self.assertEqual(expected, lists_addition(l1, l2))
+
+    def test_add_empty_list(self):
+        self.assertEqual(None, lists_addition(None, None))
+
+    def test_add_nonempty_to_empty_list(self):
+        l1 = None
+        l2 = ListNode.build_list(1, 2, 3)
+        expected = ListNode.build_list(1, 2, 3)
+        self.assertEqual(expected, lists_addition(l1, l2))
+
+    def test_add_empty_to_nonempty_list(self):
+        l1 = ListNode.build_list(1)
+        l2 = None
+        expected = ListNode.build_list(1)
+        self.assertEqual(expected, lists_addition(l1, l2))
+
+    def test_addition_with_carryover(self):
+        l1 = ListNode.build_list(1, 1)
+        l2 = ListNode.build_list(9, 9, 9, 9)
+        expected = ListNode.build_list(0, 1, 0, 0, 1)
+        self.assertEqual(expected, lists_addition(l1, l2))
+
+    def test_addition_with_carryover2(self):
+        l1 = ListNode.build_list(7, 5, 9, 4, 6)
+        l2 = ListNode.build_list(8, 4)
+        expected = ListNode.build_list(5, 0, 0, 5, 6)
+        self.assertEqual(expected, lists_addition(l1, l2))
+
+    def test_add_zero_to_number(self):
+        l1 = ListNode.build_list(4, 2)
+        l2 = ListNode.build_list(0)
+        expected = ListNode.build_list(4, 2)
+        self.assertEqual(expected, lists_addition(l1, l2))
+    
+    def test_same_length_lists(self):
+        l1 = ListNode.build_list(1, 2, 3)
+        l2 = ListNode.build_list(9, 8, 7)
+        expected = ListNode.build_list(0, 1, 1, 1)
+        self.assertEqual(expected, lists_addition(l1, l2))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False, verbosity=2)
+```
+
 
 ### May 18, 2021 \[Medium\] Boggle Game
 --- 
