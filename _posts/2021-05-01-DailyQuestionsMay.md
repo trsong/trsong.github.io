@@ -19,6 +19,17 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
 
+### May 21, 2021 LC 421 \[Medium\] Maximum XOR of Two Numbers in an Array
+---
+> **Question:** Given an array of integers, find the maximum XOR of any two elements.
+
+**Example:**
+```py
+Input: nums = [3, 10, 5, 25, 2, 8]
+Output: 28
+Explanation: The maximum result is 5 XOR 25 = 28.
+```
+
 ### May 20, 2021 \[Hard\] Inversion Pairs
 ---
 > **Question:**  We can determine how "out of order" an array A is by counting the number of inversions it has. Two elements `A[i]` and `A[j]` form an inversion if `A[i] > A[j]` but `i < j`. That is, a smaller element appears after a larger element. Given an array, count the number of inversions it has. Do this faster than `O(N^2)` time. You may assume each element in the array is distinct.
