@@ -37,6 +37,128 @@ Explanation: The maximum result is 5 XOR 25 = 28.
 > For example, a sorted list has zero inversions. The array `[2, 4, 1, 3, 5]` has three inversions: `(2, 1)`, `(4, 1)`, and `(4, 3)`. The array `[5, 4, 3, 2, 1]` has ten inversions: every distinct pair forms an inversion.
 
 
+**Trivial Solution:** 
+```py
+def count_inversion_pairs_naive(nums):
+    inversions = 0
+    n = len(nums)
+    for i in xrange(n):
+        for j in xrange(i+1, n):
+            inversions += 1 if nums[i] > nums[j] else 0
+    return inversions
+```
+
+**My thoughts:** We can start from trivial solution and perform optimization after. In trivial solution basically, we try to count the total number of larger number on the left of smaller number. However, while solving this question, you need to ask yourself, is it necessary to iterate through all combination of different pairs and calculate result?
+
+e.g. For input `[5, 4, 3, 2, 1]` each pair is an inversion pair, once I know `(5, 4)` will be a pair, then do I need to go over the remain `(5, 3)`, `(5, 2)`, `(5, 1)` as 3,2,1 are all less than 4? 
+
+So there probably exits some tricks to allow us save some effort to not go over all possible combinations. 
+
+Did you notice the following properties? 
+
+1. `count_inversion_pairs([5, 4, 3, 2, 1]) = count_inversion_pairs([5, 4]) + count_inversion_pairs([3, 2, 1]) + inversion_pairs_between([5, 4], [3, 2, 1])`
+2. `inversion_pairs_between([5, 4], [3, 2, 1]) = inversion_pairs_between(sorted([5, 4]), sorted([3, 2, 1])) = inversion_pairs_between([4, 5], [1, 2, 3])`
+
+This is bascially modified version of merge sort. Consider we break `[5, 4, 3, 2, 1]` into two almost equal parts: `[5, 4]` and `[3, 2, 1]`. Notice such break won't affect inversion pairs, as whatever on the left remains on the left. However, inversion pairs between `[5, 4]` and `[3, 2, 1]` can be hard to count without doing it one-by-one. 
+
+If only we could sort them separately as sort won't affect the inversion order between two lists. i.e. `[4, 5]` and `[1, 2, 3]`. Now let's see if we can find the pattern, if `4 < 1`, then `5 should < 1`. And we also have `4 < 2` and `4 < 3`. We can simply skip all `elem > than 4` on each iteration, i.e. we just need to calculate how many elem > 4 on each iteration. This gives us **property 2**.
+
+And we can futher break `[5, 4]` into `[5]` and `[4]` recursively. This gives us **property 1**.
+
+Combine property 1 and 2 gives us the modified version of ***Merge-Sort***.
+
+**Solution with Merge Sort:** [https://replit.com/@trsong/Count-Inversion-Pairs-2](https://replit.com/@trsong/Count-Inversion-Pairs-2)
+```py
+import unittest
+
+def count_inversion_pairs(nums):
+    count, _ = merge_sort_and_count(nums)
+    return count
+
+
+def merge_sort_and_count(nums):
+    n = len(nums)
+    if n <= 1:
+        return 0, nums
+
+    count1, lst1 = merge_sort_and_count(nums[:n//2])
+    count2, lst2 = merge_sort_and_count(nums[n//2:])
+    combined_count, lst = merge(lst1, lst2)
+    return combined_count + count1 + count2, lst
+
+
+def merge(lst1, lst2):
+    n, m = len(lst1), len(lst2)
+    i = j = 0
+    res = []
+    count = 0
+
+    while i < n and j < m:
+        if lst1[i] <= lst2[j]:
+            res.append(lst1[i])
+            i += 1
+        else:
+            res.append(lst2[j])
+            j += 1
+            count += n - i
+
+    if i < n:
+        res.append(lst1[i])
+        i += 1
+    
+    if j < m:
+        res.append(lst2[j])
+        j += 1
+    
+    return count, res
+
+
+class CountInversionPairSpec(unittest.TestCase):
+    def test_example(self):
+        nums = [2, 4, 1, 3, 5]
+        expected = 3  # (2, 1), (4, 1), (4, 3)
+        self.assertEqual(expected, count_inversion_pairs(nums))
+
+    def test_example2(self):
+        nums = [5, 4, 3, 2, 1]
+        expected = 10  # (5, 4), (5, 3), ... (2, 1) = 4 + 3 + 2 + 1 = 10 
+        self.assertEqual(expected, count_inversion_pairs(nums))
+
+    def test_empty_array(self):
+        self.assertEqual(0, count_inversion_pairs([]))
+
+    def test_one_elem_array(self):
+        self.assertEqual(0, count_inversion_pairs([42]))
+
+    def test_ascending_array(self):
+        nums = [1, 4, 6, 8, 9]
+        expected = 0
+        self.assertEqual(expected, count_inversion_pairs(nums))
+
+    def test_ascending_array2(self):
+        nums = [1, 1, 1, 2, 2, 2, 3, 3, 3, 4, 4, 4]
+        expected = 0
+        self.assertEqual(expected, count_inversion_pairs(nums))
+
+    def test_increasing_decreasing_array(self):
+        nums = [1, 2, 3, 2, 5]
+        expected = 1  # (3, 2)
+        self.assertEqual(expected, count_inversion_pairs(nums))
+
+    def test_decreasing_increasing_array(self):
+        nums = [0, -1, -2, -2, 2, 3]
+        expected = 5  # (0, -1), (0, -2), (0, -2), (-1, -2), (-1, -2)
+        self.assertEqual(expected, count_inversion_pairs(nums))
+
+    def test_unique_value_array(self):
+        nums = [0, 0, 0]
+        expected = 0
+        self.assertEqual(expected, count_inversion_pairs(nums))
+
+if __name__ == '__main__':
+    unittest.main(exit=False, verbosity=2)
+```
+
 ### May 19, 2021 \[Easy\] Add Two Numbers as a Linked List
 ---
 > **Question:** You are given two linked-lists representing two non-negative integers. The digits are stored in reverse order and each of their nodes contain a single digit. Add the two numbers and return it as a linked list.
