@@ -55,6 +55,97 @@ Output: 28
 Explanation: The maximum result is 5 XOR 25 = 28.
 ```
 
+**My thoughts:** The idea is to efficiently get the other number for each number such that xor is max. We can parellel this process with Trie: insert all number into trie, and for each number greedily choose the largest number that has different digit. 
+
+**Solution with Trie:** [https://replit.com/@trsong/Maximum-XOR-of-Two-Numbers-in-an-Array-2](https://replit.com/@trsong/Maximum-XOR-of-Two-Numbers-in-an-Array-2)
+```py
+import unittest
+
+def find_max_xor(nums):
+    trie = Trie()
+    for num in nums:
+        trie.insert(num)
+    return max(map(trie.max_xor_value, nums))
+
+
+class Trie(object):
+    def __init__(self):
+        self.children = [None, None]
+
+    def insert(self, number):
+        p = self
+        for i in xrange(32, -1, -1):
+            bit = 1 & (number >> i)
+            p.children[bit] = p.children[bit] or Trie()
+            p = p.children[bit]
+        
+    def max_xor_value(self, number):
+        p = self
+        accu = 0
+        for i in xrange(32, -1, -1):
+            bit = 1 & (number >> i)
+            if p.children[1 - bit]:
+                accu ^= 1 << i
+                p = p.children[1 - bit]
+            else:
+                p = p.children[bit]
+        return accu
+            
+
+class FindMaxXORSpec(unittest.TestCase):
+    def assert_result(self, expected, result):
+        self.assertEqual(bin(expected), bin(result))
+
+    def test_example(self):
+        nums = [  0b11,
+                0b1010,
+                 0b101,
+               0b11001,
+                  0b10,
+                0b1000]
+        expected = 0b101 ^ 0b11001
+        self.assert_result(expected, find_max_xor(nums))
+
+    def test_only_one_element(self):
+        nums = [0b11]
+        expected = 0b11 ^ 0b11
+        self.assert_result(expected, find_max_xor(nums))
+
+    def test_two_elements(self):
+        nums = [0b10, 0b100]
+        expected = 0b10 ^ 0b100
+        self.assert_result(expected, find_max_xor(nums))
+
+    def test_example2(self):
+        nums = [ 0b1110,
+              0b1000110,
+               0b110101,
+              0b1010011,
+               0b110001,
+              0b1011011,
+               0b100100,
+              0b1010000,
+              0b1011100,
+               0b110011,
+              0b1000010,
+              0b1000110]
+        expected = 0b1011011 ^ 0b100100
+        self.assert_result(expected, find_max_xor(nums))
+
+    def test_return_max_number_of_set_bit(self):
+        nums = [ 0b111,
+                  0b11,
+                   0b1,
+                     0]
+        expected = 0b111 ^ 0
+        self.assert_result(expected, find_max_xor(nums))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False, verbosity=2)
+```
+
+
 ### May 20, 2021 \[Hard\] Inversion Pairs
 ---
 > **Question:**  We can determine how "out of order" an array A is by counting the number of inversions it has. Two elements `A[i]` and `A[j]` form an inversion if `A[i] > A[j]` but `i < j`. That is, a smaller element appears after a larger element. Given an array, count the number of inversions it has. Do this faster than `O(N^2)` time. You may assume each element in the array is distinct.
