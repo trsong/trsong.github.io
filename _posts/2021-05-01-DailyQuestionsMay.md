@@ -19,6 +19,31 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
 
+### May 22, 2021 LC 166 \[Medium\] Fraction to Recurring Decimal
+---
+> **Question:** Given two integers representing the numerator and denominator of a fraction, return the fraction in string format.
+>
+> If the fractional part is repeating, enclose the repeating part in parentheses.
+
+**Example 1:**
+```py
+Input: numerator = 1, denominator = 2
+Output: "0.5"
+```
+
+**Example 2:**
+```py
+Input: numerator = 2, denominator = 1
+Output: "2"
+```
+
+**Example 3:**
+```py
+Input: numerator = 2, denominator = 3
+Output: "0.(6)"
+```
+
+
 ### May 21, 2021 LC 421 \[Medium\] Maximum XOR of Two Numbers in an Array
 ---
 > **Question:** Given an array of integers, find the maximum XOR of any two elements.
