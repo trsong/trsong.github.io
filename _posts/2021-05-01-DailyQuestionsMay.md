@@ -62,6 +62,76 @@ Input: numerator = 2, denominator = 3
 Output: "0.(6)"
 ```
 
+**Solution:** [https://replit.com/@trsong/Convert-Fraction-to-Recurring-Decimal-2](https://replit.com/@trsong/Convert-Fraction-to-Recurring-Decimal-2)
+```py
+import unittest
+
+def fraction_to_decimal(numerator, denominator):
+    if numerator == 0:
+        return '0'
+
+    res = []
+    is_negative = (numerator > 0) ^ (denominator > 0)
+    if is_negative:
+        res.append('-')
+
+    numerator = abs(numerator)
+    denominator = abs(denominator)
+    res.append(str(numerator // denominator))
+
+    numerator %= denominator
+    if numerator > 0:
+        res.append('.')
+
+    repeat_location = {}
+    while numerator:
+        if numerator in repeat_location:
+            pos = repeat_location[numerator]
+            res = res[:pos] + ['('] + res[pos:] + [')']
+            break
+        repeat_location[numerator] = len(res)
+        numerator *= 10
+        res.append(str(numerator // denominator))
+        numerator %= denominator
+    return ''.join(res)
+
+
+class FractionToDecimalSpec(unittest.TestCase):
+    def test_example(self):
+        self.assertEqual("0.5", fraction_to_decimal(1, 2))
+
+    def test_example2(self):
+        self.assertEqual("2", fraction_to_decimal(2, 1))
+
+    def test_example3(self):
+        self.assertEqual("0.(6)", fraction_to_decimal(2, 3))
+    
+    def test_decimal_has_duplicate_digits(self):
+        self.assertEqual("1011.(1011)", fraction_to_decimal(3370000, 3333))
+
+    def test_result_is_zero(self):
+        self.assertEqual("0", fraction_to_decimal(0, -42))
+
+    def test_negative_numerator_and_denominator(self):
+        self.assertEqual("1.75", fraction_to_decimal(-7, -4))
+
+    def test_negative_numerator(self):
+        self.assertEqual("-1.7(5)", fraction_to_decimal(-79, 45))
+
+    def test_negative_denominator(self):
+        self.assertEqual("-3", fraction_to_decimal(3, -1))
+
+    def test_non_recurring_decimal(self):
+        self.assertEqual("0.1234123", fraction_to_decimal(1234123, 10000000))
+
+    def test_recurring_decimal(self):
+        self.assertEqual("-0.03(571428)", fraction_to_decimal(-1, 28))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False, verbosity=2)
+```
+
 
 ### May 21, 2021 LC 421 \[Medium\] Maximum XOR of Two Numbers in an Array
 ---
