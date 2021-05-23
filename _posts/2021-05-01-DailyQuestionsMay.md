@@ -28,7 +28,7 @@ categories: Python/Java
 > For example, suppose your input is `[[1, 7, 3], [2, 1, 6, 7, 9], [3, 9, 5]]`. In this case a satisfactory playlist could be `[2, 1, 6, 7, 3, 9, 5]`.
 
 
-### May 23, 20210 LC 438 \[Medium\] Anagrams in a String
+### May 23, 2021 LC 438 \[Medium\] Anagrams in a String
 ---
 > **Question:** Given 2 strings s and t, find and return all indexes in string s where t is an anagram.
 
