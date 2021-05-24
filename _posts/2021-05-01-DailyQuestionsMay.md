@@ -37,6 +37,87 @@ categories: Python/Java
 find_anagrams('acdbacdacb', 'abc')  # gives [3, 7], anagrams: bac, acb
 ```
 
+**Solution:** [https://replit.com/@trsong/Find-All-Anagram-Indices-2](https://replit.com/@trsong/Find-All-Anagram-Indices-2)
+```py
+import unittest
+
+def find_anagrams(word, s):
+    if not s:
+        return []
+        
+    histogram = {}
+    for ch in s:
+        histogram[ch] = histogram.get(ch, 0) + 1
+    
+    res = []
+    for end, incoming_char in enumerate(word):
+        histogram[incoming_char] = histogram.get(incoming_char, 0) - 1
+        if histogram[incoming_char] == 0:
+            del histogram[incoming_char]
+
+        start = end - len(s)
+        if start >= 0:
+            outgoing_char = word[start]
+            histogram[outgoing_char] = histogram.get(outgoing_char, 0) + 1
+            if histogram[outgoing_char] == 0:
+                del histogram[outgoing_char]
+
+        if not histogram:
+            res.append(start + 1)
+    return res
+
+
+class FindAnagramSpec(unittest.TestCase):
+    def test_example(self):
+        word = 'abxaba'
+        s = 'ab'
+        self.assertEqual([0, 3, 4], find_anagrams(word, s))
+
+    def test_example2(self):
+        word = 'acdbacdacb'
+        s = 'abc'
+        self.assertEqual([3, 7], find_anagrams(word, s))
+
+    def test_empty_source(self):
+        self.assertEqual([], find_anagrams('', 'a'))
+    
+    def test_empty_pattern(self):
+        self.assertEqual([], find_anagrams('a', ''))
+
+    def test_pattern_contains_unseen_characters_in_source(self):
+        word = "abcdef"
+        s = "123"
+        self.assertEqual([], find_anagrams(word, s))
+    
+    def test_pattern_not_in_source(self):
+        word = 'ab9cd9abc9d'
+        s = 'abcd'
+        self.assertEqual([], find_anagrams(word, s))
+    
+    def test_matching_strings_have_overlapping_positions_in_source(self):
+        word = 'abab'
+        s = 'ab'
+        self.assertEqual([0, 1, 2], find_anagrams(word, s))
+    
+    def test_find_all_matching_positions(self):
+        word = 'cbaebabacd'
+        s = 'abc'
+        self.assertEqual([0, 6], find_anagrams(word, s))
+    
+    def test_find_all_matching_positions2(self):
+        word = 'BACDGABCDA'
+        s = 'ABCD'
+        self.assertEqual([0, 5, 6], find_anagrams(word, s))
+    
+    def test_find_all_matching_positions3(self):
+        word = 'AAABABAA'
+        s = 'AABA'
+        self.assertEqual([0, 1, 4], find_anagrams(word, s))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False, verbosity=2)
+```
 
 ### May 22, 2021 LC 166 \[Medium\] Fraction to Recurring Decimal
 ---
