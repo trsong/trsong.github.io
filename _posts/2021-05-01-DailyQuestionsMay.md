@@ -37,6 +37,102 @@ validMountainArray([1, 2, 3])  # False
 >
 > For example, suppose your input is `[[1, 7, 3], [2, 1, 6, 7, 9], [3, 9, 5]]`. In this case a satisfactory playlist could be `[2, 1, 6, 7, 3, 9, 5]`.
 
+**My thoughts:** create a graph with vertex being song and edge `(u, v)` representing that u is more preferred than v. A topological order will make sure that all more preferred song will go before less preferred ones. Thus gives a list that satisfies everyone's priorities, if there is one (no cycle).
+
+**Solution with Topological Sort:** [https://replit.com/@trsong/Satisfactory-Playlist-for-Everyone-2](https://replit.com/@trsong/Satisfactory-Playlist-for-Everyone-2)
+```py
+import unittest
+
+def calculate_satisfactory_playlist(preference):
+    song_set = set([song for songs in preference for song in songs])
+    neighbors = {}
+    inbound_edges = {}
+    
+    for song_lst in preference:
+        for i in range(1, len(song_lst)):
+            prev, cur = song_lst[i-1], song_lst[i]
+            neighbors[prev] = neighbors.get(prev, set())
+            if cur not in neighbors[prev]:
+                neighbors[prev].add(cur)
+                inbound_edges[cur] = inbound_edges.get(cur, 0) + 1
+
+    queue = filter(lambda song: inbound_edges.get(song, 0) == 0, song_set)
+
+    top_order = []
+    while queue:
+        cur = queue.pop(0)
+        top_order.append(cur)
+
+        if cur not in neighbors:
+            continue
+
+        for neighbor in neighbors[cur]:
+            inbound_edges[neighbor] -= 1
+            if inbound_edges[neighbor] == 0:
+                del inbound_edges[neighbor]
+                queue.append(neighbor)
+    return top_order if len(top_order) == len(song_set) else None
+
+
+class CalculateSatisfactoryPlaylistSpec(unittest.TestCase):
+    def validate_result(self, preference, suggested_order):
+        song_set = set([song for songs in preference for song in songs])
+        self.assertEqual(
+            song_set,
+            set(suggested_order),
+            "Missing song: " + str(str(song_set - set(suggested_order))))
+
+        for i in xrange(len(suggested_order)):
+            for j in xrange(i+1, len(suggested_order)):
+                for lst in preference:
+                    song1, song2 = suggested_order[i], suggested_order[j]
+                    if song1 in lst and song2 in lst:
+                        self.assertLess(
+                            lst.index(song1), 
+                            lst.index(song2),
+                            "Suggested order {} conflict: {} cannot be more popular than {}".format(suggested_order, song1, song2))
+
+    def test_example(self):
+        preference = [[1, 7, 3], [2, 1, 6, 7, 9], [3, 9, 5]]
+        # possible order: 2, 1, 6, 7, 3, 9, 5
+        suggested_order = calculate_satisfactory_playlist(preference) 
+        self.validate_result(preference, suggested_order)
+    
+    def test_preference_contains_duplicate(self):
+        preference = [[1, 2], [1, 2], [1, 2]]
+        # possible order: 1, 2
+        suggested_order = calculate_satisfactory_playlist(preference) 
+        self.validate_result(preference, suggested_order)
+
+    def test_empty_graph(self):
+        self.assertEqual([], calculate_satisfactory_playlist([]))
+
+    def test_cyclic_graph(self):
+        preference = [[1, 2, 3], [1, 3, 2]]
+        self.assertIsNone(calculate_satisfactory_playlist(preference))
+
+    def test_acyclic_graph(self):
+        preference = [[1, 2], [2, 3], [1, 3, 5], [2, 5], [2, 4]]
+        # possible order: 1, 2, 3, 4, 5
+        suggested_order = calculate_satisfactory_playlist(preference)
+        self.validate_result(preference, suggested_order)
+
+    def test_disconnected_graph(self):
+        preference = [[0, 1], [2, 3], [3, 4]]
+        # possible order: 0, 1, 2, 3, 4
+        suggested_order = calculate_satisfactory_playlist(preference)
+        self.validate_result(preference, suggested_order)
+
+    def test_disconnected_graph2(self):
+        preference = [[0, 1], [2], [3]]
+        # possible order: 0, 1, 2, 3
+        suggested_order = calculate_satisfactory_playlist(preference)
+        self.validate_result(preference, suggested_order)
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False, verbosity=2)
+```
 
 ### May 23, 2021 LC 438 \[Medium\] Anagrams in a String
 ---
