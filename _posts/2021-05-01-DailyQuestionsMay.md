@@ -19,6 +19,11 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
 
+### May 26, 2021 \[Easy\] Remove k-th Last Element From Linked List
+---
+> **Question:** You are given a singly linked list and an integer k. Return the linked list, removing the k-th last element from the list. 
+
+
 ### May 25, 2021 \[Easy\] Valid Mountain Array
 ---
 > **Question:** Given an array of heights, determine whether the array forms a "mountain" pattern. A mountain pattern goes up and then down.
