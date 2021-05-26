@@ -34,6 +34,77 @@ validMountainArray([1, 2, 3, 2, 1])  # True
 validMountainArray([1, 2, 3])  # False
 ```
 
+**Solution:** [https://replit.com/@trsong/Valid-Mountain-Array-2](https://replit.com/@trsong/Valid-Mountain-Array-2)
+```py
+import unittest
+
+def is_valid_mountain(arr):
+    if len(arr) < 3:
+        return False
+    
+    sign = 1
+    flip = 0
+    for i in range(1, len(arr)):
+        delta = arr[i] - arr[i - 1]
+        if sign * delta < 0:
+            flip += 1
+            sign *= -1
+        if flip > 1 or delta == 0:
+            return False
+    return flip == 1
+
+
+class IsValidMountainSpec(unittest.TestCase):
+    def test_example1(self):
+        self.assertTrue(is_valid_mountain([1, 2, 3, 2, 1]))
+
+    def test_example2(self):
+        self.assertFalse(is_valid_mountain([1, 2, 3]))
+
+    def test_empty_array(self):
+        self.assertFalse(is_valid_mountain([]))
+
+    def test_one_element_array(self):
+        self.assertFalse(is_valid_mountain([1]))
+
+    def test_two_elements_array(self):
+        self.assertFalse(is_valid_mountain([1, 2]))
+
+    def test_three_elements_array(self):
+        self.assertFalse(is_valid_mountain([1, 2, 3]))
+
+    def test_three_elements_array2(self):
+        self.assertTrue(is_valid_mountain([1, 2, 1]))
+
+    def test_duplicted_elements(self):
+        self.assertFalse(is_valid_mountain([1, 2, 2]))
+    
+    def test_duplicted_element2(self):
+        self.assertFalse(is_valid_mountain([1, 1, 2]))
+
+    def test_duplicted_elements2(self):
+        self.assertFalse(is_valid_mountain([0, 0, 0]))
+
+    def test_mutiple_mountains(self):
+        self.assertFalse(is_valid_mountain([1, 2, 1, 2]))
+
+    def test_mutiple_mountains2(self):
+        self.assertFalse(is_valid_mountain([1, 2, 1, 2, 1]))
+
+    def test_concave_array(self):
+        self.assertFalse(is_valid_mountain([0, -1, 1]))
+
+    def test_no_ascending(self):
+        self.assertFalse(is_valid_mountain([0, 0, -1]))
+
+    def test_no_ascending2(self):
+        self.assertFalse(is_valid_mountain([0, -1, -1]))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False, verbosity=2)
+```
+
 ### May 24, 2021 \[Medium\] Satisfactory Playlist
 ---
 > **Question:** You have access to ranked lists of songs for various users. Each song is represented as an integer, and more preferred songs appear earlier in each list. For example, the list `[4, 1, 7]` indicates that a user likes song `4` the best, followed by songs `1` and `7`.
