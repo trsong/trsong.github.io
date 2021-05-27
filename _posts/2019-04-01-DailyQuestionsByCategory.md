@@ -2733,6 +2733,20 @@ abracadabra => c
 <details>
 <summary class="lc_e">
 
+- [**\[Easy\] Remove k-th Last Element From Linked List**](https://trsong.github.io/python/java/2021/05/02/DailyQuestionsMay.html#may-26-2021-easy-remove-k-th-last-element-from-linked-list) -- *You are given a singly linked list and an integer k. Return the linked list, removing the k-th last element from the list.* [*\(Try ME\)*](https://replit.com/@trsong/Remove-the-k-th-Last-Element-From-LinkedList-1)
+
+</summary>
+<div>
+
+**Question:** You are given a singly linked list and an integer k. Return the linked list, removing the k-th last element from the list. 
+
+</div>
+</details>
+
+
+<details>
+<summary class="lc_e">
+
 - [**\[Easy\] Determine If Singly Linked List is Palindrome**](https://trsong.github.io/python/java/2021/02/02/DailyQuestionsFeb.html#mar-21-2021-easy-determine-if-singly-linked-list-is-palindrome) -- *Determine whether a singly linked list is a palindrome.* [*\(Try ME\)*](https://replit.com/@trsong/Determine-If-Singly-Linked-List-is-Palindrome-1)
 
 </summary>

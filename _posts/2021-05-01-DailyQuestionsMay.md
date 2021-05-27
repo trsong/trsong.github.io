@@ -40,6 +40,95 @@ For the diagram above, for example, this would be six, representing the 2 x 3 ar
 ---
 > **Question:** You are given a singly linked list and an integer k. Return the linked list, removing the k-th last element from the list. 
 
+**My thoughts:** Use two pointers, faster one are k position ahead of slower one. When fast one hit last element, the slow one will become the one before the kth last element.
+
+**Solution with Fast-Slow Pointers:** [https://replit.com/@trsong/Remove-the-k-th-Last-Element-From-LinkedList](https://replit.com/@trsong/Remove-the-k-th-Last-Element-From-LinkedList)
+```py
+import unittest
+
+def remove_last_kth_elem(k, lst):
+    if not lst:
+        return None
+    
+    dummy = fast = slow = ListNode(-1, lst)
+    for _ in range(k):
+        fast = fast.next
+        if not fast:
+            return lst
+
+    while fast.next:
+        slow = slow.next
+        fast = fast.next
+    
+    slow.next = slow.next.next
+    return dummy.next
+    
+
+###################
+# Testing Utilities
+###################
+class ListNode(object):
+    def __init__(self, x, next=None):
+        self.val = x
+        self.next = next
+
+    def __eq__(self, other):
+        return other and self.val == other.val and self.next == other.next
+
+    def __repr__(self):
+        return "{} -> {}".format(str(self.val), str(self.next))
+
+    @staticmethod
+    def List(*vals):
+        p = dummy = ListNode(-1)
+        for elem in vals:
+            p.next = ListNode(elem)
+            p = p.next
+        return dummy.next
+
+
+class RemoveLastKthElementSpec(unittest.TestCase):
+    def test_empty_list(self):
+        self.assertIsNone(remove_last_kth_elem(0, None))
+
+    def test_remove_the_only_element(self):
+        k, lst = 1, ListNode.List(42)
+        self.assertIsNone(remove_last_kth_elem(k, lst))
+    
+    def test_remove_the_last_element(self):
+        k, lst = 1, ListNode.List(1, 2, 3)
+        expected = ListNode.List(1, 2)
+        self.assertEqual(expected, remove_last_kth_elem(k, lst))
+
+    def test_remove_the_first_element(self):
+        k, lst = 4, ListNode.List(1, 2, 3, 4)
+        expected = ListNode.List(2, 3, 4)
+        self.assertEqual(expected, remove_last_kth_elem(k, lst))
+
+    def test_remove_element_in_the_middle(self):
+        k, lst = 3, ListNode.List(5, 4, 3, 2, 1)
+        expected = ListNode.List(5, 4, 2, 1)
+        self.assertEqual(expected, remove_last_kth_elem(k, lst))
+    
+    def test_k_beyond_the_range(self):
+        k, lst = 10, ListNode.List(3, 2, 1)
+        expected = ListNode.List(3, 2, 1)
+        self.assertEqual(expected, remove_last_kth_elem(k, lst))
+    
+    def test_k_beyond_the_range2(self):
+        k, lst = 4, ListNode.List(3, 2, 1)
+        expected = ListNode.List(3, 2, 1)
+        self.assertEqual(expected, remove_last_kth_elem(k, lst))
+
+    def test_remove_the_second_last_element(self):
+        k, lst = 2, ListNode.List(4, 3, 2, 1)
+        expected = ListNode.List(4, 3, 1)
+        self.assertEqual(expected, remove_last_kth_elem(k, lst))
+
+    
+if __name__ == '__main__':
+    unittest.main(exit=False, verbosity=2)
+```
 
 ### May 25, 2021 \[Easy\] Valid Mountain Array
 ---
