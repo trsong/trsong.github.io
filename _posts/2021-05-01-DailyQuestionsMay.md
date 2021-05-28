@@ -19,6 +19,16 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
 
+### May 28, 2021 \[Medium\] Detect Linked List Cycle
+---
+> **Question:** Given a linked list, determine if the linked list has a cycle in it. 
+
+**Example:**
+```py
+Input: 4 -> 3 -> 2 -> 1 -> 3 ... 
+Output: True
+```
+
 ### May 27, 2021 \[Medium\] Largest Rectangular Area in a Histogram
 ---
 > **Question:** You are given a histogram consisting of rectangles of different heights. Determine the area of the largest rectangle that can be formed only from the bars of the histogram.
