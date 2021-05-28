@@ -36,6 +36,131 @@ x x x x
 For the diagram above, for example, this would be six, representing the 2 x 3 area at the bottom right.
 ```
 
+**Solution with Stack:** [https://replit.com/@trsong/Find-Largest-Rectangular-Area-in-a-Histogram-2](https://replit.com/@trsong/Find-Largest-Rectangular-Area-in-a-Histogram-2)
+```py
+import unittest
+
+def largest_rectangle_in_histogram(histogram):
+    n = len(histogram)
+    stack = []
+    res = 0
+    i = 0
+
+    while i < n or stack:
+        if not stack or i < n and histogram[i] > histogram[stack[-1]]:
+            # mantain stack in non-descending order
+            stack.append(i)
+            i += 1
+        else:
+            # if stack starts decreasing,
+            # then left boundary must be stack[-2] and right boundary must be i. Note both boundaries are exclusive
+            # and height is stack[-1]
+            height = histogram[stack.pop()]
+            left = stack[-1] if stack else -1
+            width = i - left - 1
+            res = max(res, width * height)
+    return res
+
+
+class LargestRectangleInHistogramSpec(unittest.TestCase):
+    def test_example(self):
+        """
+              x
+              x  
+          x   x
+          X X X
+        x X X X
+        """
+        histogram = [1, 3, 2, 5]
+        expected = 2 * 3
+        self.assertEqual(expected, largest_rectangle_in_histogram(histogram))
+
+    def test_empty_histogram(self):
+        self.assertEqual(0, largest_rectangle_in_histogram([]))
+
+    def test_width_one_rectangle(self):
+        """
+              X
+              X
+              X
+              X 
+          x   X
+          x x X
+        x x x X
+        """
+        histogram = [1, 3, 2, 7]
+        expected = 7 * 1
+        self.assertEqual(expected, largest_rectangle_in_histogram(histogram))
+
+    def test_ascending_sequence(self):
+        """
+                x  
+              x x
+            X X X
+          x X X X
+        """
+        histogram = [0, 1, 2, 3, 4]
+        expected = 2 * 3
+        self.assertEqual(expected, largest_rectangle_in_histogram(histogram))
+
+    def test_descending_sequence(self):
+        """
+        x  
+        X X
+        X X x    
+        X X x x
+        """
+        histogram = [4, 3, 2, 1, 0]
+        expected = 3 * 2
+        self.assertEqual(expected, largest_rectangle_in_histogram(histogram))
+
+    def test_sequence3(self):
+        """
+            x
+          x x x 
+        X X X X X 
+        X X X X X
+        X X X X X
+        """       
+        histogram = [3, 4, 5, 4, 3]
+        expected = 3 * 5
+        self.assertEqual(expected, largest_rectangle_in_histogram(histogram))
+
+    def test_sequence4(self):
+        """
+          x   x   x   x
+          x   x   x   x
+          x   x   x   x
+          x   x   x   x
+          x   x x x   x
+          x   x x x   x
+          X X X X X X X 
+        x X X X X X X X x
+        x X X X X X X X x
+        x X X X X X X X x
+        """      
+        histogram = [3, 10, 4, 10, 5, 10, 4, 10, 3]
+        expected = 4 * 7
+        self.assertEqual(expected, largest_rectangle_in_histogram(histogram))
+
+    def test_sequence5(self):
+        """
+        x           x
+        x   x   x   x
+        x   X X X   x
+        x   X X X   x
+        x x X X X   x
+        x x X X X x x 
+        """
+        histogram = [6, 2, 5, 4, 5, 1, 6]
+        expected = 4 * 3
+        self.assertEqual(expected, largest_rectangle_in_histogram(histogram))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False, verbosity=2)
+```
+
 ### May 26, 2021 \[Easy\] Remove k-th Last Element From Linked List
 ---
 > **Question:** You are given a singly linked list and an integer k. Return the linked list, removing the k-th last element from the list. 
