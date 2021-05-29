@@ -29,6 +29,72 @@ Input: 4 -> 3 -> 2 -> 1 -> 3 ...
 Output: True
 ```
 
+**Solution with Fast-Slow Pointers:** [https://replit.com/@trsong/Detect-Linked-List-Cycle-2](https://replit.com/@trsong/Detect-Linked-List-Cycle-2)
+```py
+import unittest
+
+def contains_cycle(lst):
+    fast = slow = lst
+    while fast and fast.next:
+        fast = fast.next.next
+        slow = slow.next
+        if fast == slow:
+            return True
+    return False
+
+
+class ListNode(object):
+    def __init__(self, val, next=None):
+        self.val = val
+        self.next = next
+
+    @staticmethod
+    def List(intersect_index, vals):
+        dummy = p = ListNode(-1)
+        intersect_node = None
+        for val in vals:
+            p.next = ListNode(val)
+            p = p.next
+            if intersect_index == 0:
+                intersect_node = p
+            intersect_index -= 1
+        p.next = intersect_node
+        return dummy.next
+
+
+class ContainsCycleSpec(unittest.TestCase):
+    def test_example(self):
+        lst = ListNode.List(intersect_index = 1, vals=[4, 3, 2, 1])
+        self.assertTrue(contains_cycle(lst))
+
+    def test_empty_list(self):
+        self.assertFalse(contains_cycle(None))
+
+    def test_list_with_self_pointing_node(self):
+        lst = ListNode.List(intersect_index = 0, vals=[1])
+        self.assertTrue(contains_cycle(lst))
+
+    def test_acyclic_list_with_duplicates(self):
+        lst = ListNode.List(intersect_index = -1, vals=[1, 1, 1, 1, 1, 1])
+        self.assertFalse(contains_cycle(lst))
+
+    def test_acyclic_list_with_duplicates2(self):
+        lst = ListNode.List(intersect_index = -1, vals=[1, 2, 3, 1, 2, 3])
+        self.assertFalse(contains_cycle(lst))
+
+    def test_cyclic_list_with_duplicates(self):
+        lst = ListNode.List(intersect_index = 0, vals=[1, 2, 3, 1, 2, 3])
+        self.assertTrue(contains_cycle(lst))
+
+    def test_cyclic_list(self):
+        lst = ListNode.List(intersect_index = 6, vals=[0, 1, 2, 3, 4, 5, 6, 7])
+        self.assertTrue(contains_cycle(lst))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False, verbosity=2)
+```
+
 ### May 27, 2021 \[Medium\] Largest Rectangular Area in a Histogram
 ---
 > **Question:** You are given a histogram consisting of rectangles of different heights. Determine the area of the largest rectangle that can be formed only from the bars of the histogram.
