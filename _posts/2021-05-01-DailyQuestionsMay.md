@@ -55,6 +55,119 @@ Suppose k = 1, and the list of tuples is:
 Then a reasonable similarity metric would most likely conclude that a and e are the most similar, so your program should return [('a', 'e')].
 ```
 
+**Notes:** duplicate entry might occur, we have to treat normal set to multiset: treat `3, 3, 3` as `3(first), 3(second), 3(third)`. 
+```py
+a: 1 2 3(first) 3(second) 3(third)
+b: 1 2 3(first)
+The similarty between (a, b) is 3/5
+```
+
+**Solution:** [https://replit.com/@trsong/Find-Similar-Websites-2](https://replit.com/@trsong/Find-Similar-Websites-2)
+```py
+import unittest
+
+def top_similar_websites(website_log, k):
+    site_hits = {}
+    user_site_hits = {}
+    for site, user in website_log:
+        site_hits[site] = site_hits.get(site, 0) + 1
+        user_site_hits[user] = user_site_hits.get(user, {})
+        user_site_hits[user][site] = user_site_hits[user].get(site, 0) + 1
+
+    cross_site_hits = {}
+    for hits_per_site in user_site_hits.values():
+        sites = sorted(hits_per_site.keys())
+        for i in range(len(sites)):
+            site1 = sites[i]
+            for j in range(i):
+                site2 = sites[j]
+                cross_site_hits[(site1, site2)] = (
+                    cross_site_hits.get((site1, site2), 0) + 
+                    min(hits_per_site[site1], hits_per_site[site2]))
+
+    site_pairs = cross_site_hits.keys()
+    site_pairs.sort(key=lambda pair: calculate_similarity(
+        pair[0], pair[1], site_hits, cross_site_hits),
+        reverse=True)
+    if len(site_pairs) >= k:
+        return site_pairs[:k]
+    else:
+        return site_pairs + padding_dissimilar_sites(
+            site_hits, cross_site_hits)[k-len(site):]
+
+
+def calculate_similarity(site1, site2, site_hits, cross_site_hits):
+    total = site_hits[site1] + site_hits[site2]
+    intersection = cross_site_hits.get((site1, site2), 0)
+    union = total - intersection
+    return float(intersection) / union
+
+
+def padding_dissimilar_sites(site_hits, cross_site_hits):
+    res = []
+    sites = sorted(site_hits.keys())
+    for i in range(len(sites)):
+        site1 = sites[i]
+        for j in range(i):
+            site2 = sites[j]
+            if (site1, site2) not in cross_site_hits:
+                res.append((site1, site2))
+    return res
+
+
+class TopSimilarWebsiteSpec(unittest.TestCase):
+    def assert_result(self, expected, result):
+        # same length
+        self.assertEqual(len(expected), len(result))
+        for e, r in zip(expected, result):
+            # pair must be the same, order doesn't matter
+            self.assertEqual(set(e), set(r), "Expected %s but get %s" % (expected, result))
+
+    def test_example(self):
+        website_log = [
+            ('a', 1), ('a', 3), ('a', 5),
+            ('b', 2), ('b', 6),
+            ('c', 1), ('c', 2), ('c', 3), ('c', 4), ('c', 5),
+            ('d', 4), ('d', 5), ('d', 6), ('d', 7),
+            ('e', 1), ('e', 3), ('e', 5), ('e', 6)]
+        # Similarity: (a,e)=3/4, (a,c)=3/5, (c, e)=1/2
+        expected = [('a', 'e'), ('a', 'c'), ('c', 'e')]
+        self.assert_result(expected, top_similar_websites(website_log, len(expected)))
+
+    def test_no_overlapping(self):
+        website_log = [('a', 1), ('b', 2)]
+        expected = [('a', 'b')]
+        self.assert_result(expected, top_similar_websites(website_log, len(expected)))
+    
+    def test_should_return_correct_order(self):
+        website_log = [
+            ('a', 1),
+            ('b', 1), ('b', 2),
+            ('c', 1), ('c', 2), ('c', 3), 
+            ('d', 1), ('d', 2), ('d', 3), ('d', 4),
+            ('e', 1), ('e', 2), ('e', 3), ('e', 4), ('e', 5)]
+        # Similarity: (d,e)=4/5, (c,d)=3/4, (b,c)=2/3, (c,e)=3/5
+        expected = [('d', 'e'), ('c', 'd'), ('b', 'c'), ('c', 'e')]
+        self.assert_result(expected, top_similar_websites(website_log, len(expected)))
+        
+    def test_duplicated_entries(self):
+        website_log = [
+            ('a', 1), ('a', 1),
+            ('b', 1),
+            ('c', 1), ('c', 1), ('c', 2),
+            ('d', 1), ('d', 3), ('d', 3), ('d', 4),
+            ('e', 1), ('e', 1), ('e', 5), ('e', 6),
+            ('f', 1), ('f', 7), ('f', 8), ('f', 8)
+        ]
+        # Similarity: (a,c)=2/3
+        expected = [('a', 'c')]
+        self.assert_result(expected, top_similar_websites(website_log, len(expected)))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False, verbosity=2)
+```
+
 
 ### May 28, 2021 \[Medium\] Detect Linked List Cycle
 ---
