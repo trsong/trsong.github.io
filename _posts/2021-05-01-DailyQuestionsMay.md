@@ -29,7 +29,7 @@ categories: Python/Java
 
 **Example:**
 ```py
-Input: [3, 5, 0, 1, 3]
+Input: [0, 1, 3, 3, 5]
 Output: 3
 Explanation:
 There are 3 publications with 3 or more citations, hence the h-index is 3.
