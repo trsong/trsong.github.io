@@ -19,6 +19,34 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
 
+### May 31, 2021 LC 417 \[Medium\] Pacific Atlantic Water Flow
+---
+> **Question:** You are given an m x n integer matrix heights representing the height of each unit cell in a continent. The Pacific ocean touches the continent's left and top edges, and the Atlantic ocean touches the continent's right and bottom edges.
+>
+> Water can only flow in four directions: up, down, left, and right. Water flows from a cell to an adjacent one with an equal or lower height.
+>
+> Return a list of grid coordinates where water can flow to both the Pacific and Atlantic oceans.
+
+**Example 1:**
+```py
+Input: heights = [
+    [1,2,2,3,5],
+    [3,2,3,4,4],
+    [2,4,5,3,1],
+    [6,7,1,4,5],
+    [5,1,1,2,4]]
+Output: [[0,4],[1,3],[1,4],[2,2],[3,0],[3,1],[4,0]]
+```
+
+**Example 2:**
+```py
+Input: heights = [
+    [2,1],
+    [1,2]]
+Output: [[0,0],[0,1],[1,0],[1,1]]
+```
+
+     
 ### May 30, 2021 \[Medium\] H-Index II
 ---
 > **Question:** The h-index is a metric that attempts to measure the productivity and citation impact of the publication of a scholar. The definition of the h-index is if a scholar has at least h of their papers cited h times.
