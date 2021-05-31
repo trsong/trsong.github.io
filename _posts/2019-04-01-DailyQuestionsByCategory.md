@@ -1676,6 +1676,33 @@ Explanation: Because the new interval [4,8] overlaps with [3,5],[6,7],[8,10].
 <details>
 <summary class="lc_m">
 
+- [**\[Medium\] H-Index II**](https://trsong.github.io/python/java/2021/05/02/DailyQuestionsMay.html#may-30-2021-medium-h-index-ii) -- *The h-index is if a scholar has at least h of their papers cited h times. Given a sorted list of citation number, calculate h-index.* [*\(Try ME\)*](https://replit.com/@trsong/H-Index-II-1)
+
+</summary>
+<div>
+
+**Question:** The h-index is a metric that attempts to measure the productivity and citation impact of the publication of a scholar. The definition of the h-index is if a scholar has at least h of their papers cited h times.
+
+Given a list of publications of the number of citations a scholar has, find their h-index.
+
+Follow up for H-Index: What if the citations array is sorted in ascending order? Could you optimize your algorithm?
+
+**Example:**
+```py
+Input: [0, 1, 3, 3, 5]
+Output: 3
+Explanation:
+There are 3 publications with 3 or more citations, hence the h-index is 3.
+```
+
+
+</div>
+</details>
+
+
+<details>
+<summary class="lc_m">
+
 - [**\[Medium\] Minimum Days to Bloom Roses**](http://trsong.github.io/python/java/2021/05/02/DailyQuestionsMay.html#may-7-2021-medium-minimum-days-to-bloom-roses) -- *Given an array of roses. Return the earliest day that we can get n bouquets of roses.* [*\(Try ME\)*](https://replit.com/@trsong/Minimum-Days-to-Bloom-Roses-1)
 
 </summary>
