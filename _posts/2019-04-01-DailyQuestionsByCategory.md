@@ -2815,29 +2815,6 @@ You are given an array of length `n + 1` whose elements belong to the set `{1, 2
 ## Sort
 ---
 
-<details>
-<summary class="lc_m">
-
-- [**\[Medium\] LC 274. H-Index**](http://trsong.github.io/python/java/2020/11/02/DailyQuestionsAug.html#dec-5-2020-lc-274-medium-h-index) -- *The definition of the h-index is if a scholar has at least h of their papers cited h times.* [*\(Try ME\)*](https://repl.it/@trsong/Calculate-H-Index-1)
-
-</summary>
-<div>
-
-**Question:** The h-index is a metric that attempts to measure the productivity and citation impact of the publication of a scholar. The definition of the h-index is if a scholar has at least h of their papers cited h times.
-
-Given a list of publications of the number of citations a scholar has, find their h-index.
-
-**Example:**
-```py
-Input: [3, 5, 0, 1, 3]
-Output: 3
-Explanation:
-There are 3 publications with 3 or more citations, hence the h-index is 3.
-```
-
-</div>
-</details>
-
 
 <details>
 <summary class="lc_e">
@@ -5071,6 +5048,29 @@ Given a list of `N` people and the above operation, find a way to identify the c
 ## Heap / Priority Queue
 ---
 
+
+<details>
+<summary class="lc_m">
+
+- [**\[Medium\] LC 274. H-Index**](https://trsong.github.io/python/java/2019/08/02/DailyQuestionsAug.html#oct-31-2019-lc-274-medium-h-index) -- *The definition of the h-index is if a scholar has at least h of their papers cited h times.* [*\(Try ME\)*](https://repl.it/@trsong/Calculate-H-Index-1)
+
+</summary>
+<div>
+
+**Question:** The h-index is a metric that attempts to measure the productivity and citation impact of the publication of a scholar. The definition of the h-index is if a scholar has at least h of their papers cited h times.
+
+Given a list of publications of the number of citations a scholar has, find their h-index.
+
+**Example:**
+```py
+Input: [3, 5, 0, 1, 3]
+Output: 3
+Explanation:
+There are 3 publications with 3 or more citations, hence the h-index is 3.
+```
+
+</div>
+</details>
 
 <details>
 <summary class="lc_e">
