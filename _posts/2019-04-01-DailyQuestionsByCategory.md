@@ -6224,6 +6224,43 @@ Output: 1
 <details>
 <summary class="lc_m">
 
+- [**\[Medium\] LC 417 Pacific Atlantic Water Flow**](https://trsong.github.io/python/java/2021/05/02/DailyQuestionsMay.html#may-31-2021-lc-417-medium-pacific-atlantic-water-flow) -- *Return a list of grid coordinates where water can flow to both the Pacific and Atlantic oceans.* [*\(Try ME\)*](https://replit.com/@trsong/Pacific-Atlantic-Water-Flow-1)
+
+</summary>
+<div>
+
+**Question:** You are given an m x n integer matrix heights representing the height of each unit cell in a continent. The Pacific ocean touches the continent's left and top edges, and the Atlantic ocean touches the continent's right and bottom edges.
+
+Water can only flow in four directions: up, down, left, and right. Water flows from a cell to an adjacent one with an equal or lower height.
+
+Return a list of grid coordinates where water can flow to both the Pacific and Atlantic oceans.
+
+**Example 1:**
+```py
+Input: heights = [
+    [1,2,2,3,5],
+    [3,2,3,4,4],
+    [2,4,5,3,1],
+    [6,7,1,4,5],
+    [5,1,1,2,4]]
+Output: [[0,4],[1,3],[1,4],[2,2],[3,0],[3,1],[4,0]]
+```
+
+**Example 2:**
+```py
+Input: heights = [
+    [2,1],
+    [1,2]]
+Output: [[0,0],[0,1],[1,0],[1,1]]
+```
+
+</div>
+</details>
+
+
+<details>
+<summary class="lc_m">
+
 - [**\[Medium\] LC 1448. Count Good Nodes in Binary Tree**](https://trsong.github.io/python/java/2021/02/02/DailyQuestionsFeb.html#apr-25-2021-lc-1448-medium-count-good-nodes-in-binary-tree) -- *Given a binary tree root, a node X in the tree is named good if in the path from root to X there are no nodes with a value greater than X.* [*\(Try ME\)*](https://replit.com/@trsong/Count-Good-Nodes-in-Binary-Tree-1)
 
 </summary>

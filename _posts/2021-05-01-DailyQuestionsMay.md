@@ -46,6 +46,123 @@ Input: heights = [
 Output: [[0,0],[0,1],[1,0],[1,1]]
 ```
 
+**Solution with BFS:** [https://replit.com/@trsong/Pacific-Atlantic-Water-Flow](https://replit.com/@trsong/Pacific-Atlantic-Water-Flow)
+```py
+import unittest
+
+DIRECTIONS = [(-1, 0), (1, 0), (0, 1), (0, -1)]
+
+def ocean_channel(grid):
+    if not grid or not grid[0]:
+        return []
+
+    n, m = len(grid), len(grid[0])
+    pacific_highland = [[False for _ in range(m)] for _ in range(n)]
+    atlantic_highland = [[False for _ in range(m)] for _ in range(n)]
+
+    for r in range(n):
+        dfs_highland(grid, (r, 0), pacific_highland)
+        dfs_highland(grid, (r, m - 1), atlantic_highland)
+
+    for c in range(m):
+        dfs_highland(grid, (0, c), pacific_highland)
+        dfs_highland(grid, (n - 1, c), atlantic_highland)
+
+    res = [[r, c] for r in range(n) for c in range(m)
+           if pacific_highland[r][c] and atlantic_highland[r][c]]
+    return res
+
+
+def dfs_highland(grid, start, visited):
+    n, m = len(grid), len(grid[0])
+    stack = [start]
+    while stack:
+        r, c = stack.pop()
+        if visited[r][c]:
+            continue
+        visited[r][c] = True
+        for dr, dc in DIRECTIONS:
+            new_r, new_c = r + dr, c + dc
+            if (0 <= new_r < n and 0 <= new_c < m and not visited[new_r][new_c]
+                    and grid[r][c] <= grid[new_r][new_c]):
+                stack.append((new_r, new_c))
+
+
+class OceanChannelSpec(unittest.TestCase):
+    def test_example(self):
+        grid = [
+            [1, 2, 2, 3, 5],
+            [3, 2, 3, 4, 4],
+            [2, 4, 5, 3, 1],
+            [6, 7, 1, 4, 5],
+            [5, 1, 1, 2, 4]]
+        expected = [[0, 4], [1, 3], [1, 4], [2, 2], [3, 0], [3, 1], [4, 0]]
+        self.assertCountEqual(expected, ocean_channel(grid))
+
+    def test_example2(self):
+        grid = [
+            [2, 1],
+            [1, 2]]
+        expected = [[0, 0], [0, 1], [1, 0], [1, 1]]
+        self.assertCountEqual(expected, ocean_channel(grid))
+
+    def test_empty_grid(self):
+        self.assertEqual([], ocean_channel([]))
+        self.assertEqual([], ocean_channel([[]]))
+
+    def test_one_cell_grid(self):
+        grid = [[42]]
+        expected = [[0, 0]]
+        self.assertCountEqual(expected, ocean_channel(grid))
+        self.assertEqual([], ocean_channel([[]]))
+
+    def test_one_row_grid(self):
+        grid = [[1, 2, 3, 4]]
+        expected = [[0, 0], [0, 1], [0, 2], [0, 3]]
+        self.assertCountEqual(expected, ocean_channel(grid))
+        self.assertEqual([], ocean_channel([[]]))
+
+    def test_one_column_grid(self):
+        grid = [
+            [3],
+            [2],
+            [1]]
+        expected = [[0, 0], [1, 0], [2, 0]]
+        self.assertCountEqual(expected, ocean_channel(grid))
+
+    def test_bottom_right_is_high(self):
+        grid = [
+            [0, 1, 2],
+            [1, 2, 3],
+            [2, 3, 4]
+        ]
+        expected = [[0, 2], [1, 2], [2, 0], [2, 1], [2, 2]]
+        self.assertCountEqual(expected, ocean_channel(grid))
+
+    def test_top_left_is_high(self):
+        grid = [
+            [4, 3, 2],
+            [3, 2, 1],
+            [2, 1, 0]
+        ]
+        expected = [[0, 0], [0, 1], [0, 2], [1, 0], [2, 0]]
+        self.assertCountEqual(expected, ocean_channel(grid))
+        self.assertCountEqual(expected, ocean_channel(grid))
+
+    def test_top_right_is_high(self):
+        grid = [
+            [2, 3, 4],
+            [1, 2, 3],
+            [0, 1, 2]
+        ]
+        expected = [[0, 0], [0, 1], [0, 2], [1, 0], [1, 1], [1, 2], [2, 0], [2, 1], [2, 2]]
+        self.assertCountEqual(expected, ocean_channel(grid))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False, verbosity=2)
+```
+
      
 ### May 30, 2021 \[Medium\] H-Index II
 ---
