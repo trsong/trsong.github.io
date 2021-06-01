@@ -19,6 +19,15 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
 
+### June 1, 2021 \[Medium\] Integer Exponentiation
+---
+> **Question:** Implement integer exponentiation. That is, implement the `pow(x, y)` function, where `x` and `y` are integers and returns `x^y`.
+>
+> Do this faster than the naive method of repeated multiplication.
+>
+> For example, `pow(2, 10)` should return `1024`.
+
+
 ### May 31, 2021 LC 417 \[Medium\] Pacific Atlantic Water Flow
 ---
 > **Question:** You are given an m x n integer matrix heights representing the height of each unit cell in a continent. The Pacific ocean touches the continent's left and top edges, and the Atlantic ocean touches the continent's right and bottom edges.
@@ -46,7 +55,7 @@ Input: heights = [
 Output: [[0,0],[0,1],[1,0],[1,1]]
 ```
 
-**Solution with BFS:** [https://replit.com/@trsong/Pacific-Atlantic-Water-Flow](https://replit.com/@trsong/Pacific-Atlantic-Water-Flow)
+**Solution with DFS:** [https://replit.com/@trsong/Pacific-Atlantic-Water-Flow](https://replit.com/@trsong/Pacific-Atlantic-Water-Flow)
 ```py
 import unittest
 
@@ -163,7 +172,7 @@ if __name__ == '__main__':
     unittest.main(exit=False, verbosity=2)
 ```
 
-     
+
 ### May 30, 2021 \[Medium\] H-Index II
 ---
 > **Question:** The h-index is a metric that attempts to measure the productivity and citation impact of the publication of a scholar. The definition of the h-index is if a scholar has at least h of their papers cited h times.
