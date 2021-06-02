@@ -32,6 +32,61 @@ categories: Python/Java
 >
 > For example, `pow(2, 10)` should return `1024`.
 
+**Solution:** [https://replit.com/@trsong/Implement-Integer-Exponentiation](https://replit.com/@trsong/Implement-Integer-Exponentiation)
+```py
+import unittest
+
+def pow(x, y):
+    if y == 0:
+        return 1
+    elif y < 0:
+        return 1.0 / pow(x, -y)
+    elif y % 2 == 0:
+        return pow(x * x, y / 2)
+    else:
+        return x * pow(x, y - 1)
+
+
+class PowSpec(unittest.TestCase):
+    def test_power_of_zero(self):
+        self.assertAlmostEqual(1, pow(-2, 0))
+
+    def test_power_of_zero2(self):
+        self.assertAlmostEqual(1, pow(3, 0))
+
+    def test_power_of_zero3(self):
+        self.assertAlmostEqual(1, pow(0, 0))
+        
+    def test_power_of_zero4(self):
+        self.assertAlmostEqual(1, pow(0.5, 0))
+        
+    def test_power_of_zero5(self):
+        self.assertAlmostEqual(1, pow(0.6, 0))
+
+    def test_negative_power(self):
+        self.assertAlmostEqual(0.25, pow(-2, -2))
+    
+    def test_negative_power2(self):
+        self.assertAlmostEqual(4, pow(0.5, -2))
+
+    def test_negative_power3(self):
+        self.assertAlmostEqual(1.0/27, pow(3, -3))
+
+    def test_positive_power(self):
+        self.assertAlmostEqual(4, pow(-2, 2))
+
+    def test_positive_power2(self):
+        self.assertAlmostEqual(1024, pow(2, 10))
+
+    def test_positive_power3(self):
+        self.assertAlmostEqual(0.25, pow(-0.5, 2))
+
+    def test_positive_power4(self):
+        self.assertAlmostEqual(-1.0/512, pow(-2, -9))
+
+if __name__ == '__main__':
+    unittest.main(exit=False, verbosity=2)
+```
 
 ### May 31, 2021 LC 417 \[Medium\] Pacific Atlantic Water Flow
 ---

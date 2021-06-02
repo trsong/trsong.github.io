@@ -28,6 +28,24 @@ categories: Python/Java
 ---
 
 <details>
+<summary class="lc_m">
+
+- [**\[Medium\] Integer Exponentiation**](https://trsong.github.io/python/java/2021/05/02/DailyQuestionsMay.html#june-1-2021-medium-integer-exponentiation) -- *Implement integer exponentiation. That is, implement the `pow(x, y)` function, where `x` and `y` are integers and returns `x^y`.* [*\(Try ME\)*](https://replit.com/@trsong/Implement-Integer-Exponentiation-1)
+
+</summary>
+<div>
+
+**Question:** Implement integer exponentiation. That is, implement the `pow(x, y)` function, where `x` and `y` are integers and returns `x^y`.
+
+Do this faster than the naive method of repeated multiplication.
+
+For example, `pow(2, 10)` should return `1024`.
+
+</div>
+</details>
+
+
+<details>
 <summary class="lc_e">
 
 - [**\[Easy\] Rand7**](https://trsong.github.io/python/java/2021/05/02/DailyQuestionsMay.html#may-13-2021-easy-rand7) -- *Given a function rand5(), use that function to implement a function rand7()* [*\(Try ME\)*](https://replit.com/@trsong/Implement-Rand7-with-Rand5-1)
