@@ -19,6 +19,11 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
 
+### June 2, 2021 \[Medium\] Find Next Biggest Integer
+---
+> **Question:** Given an integer `n`, find the next biggest integer with the same number of 1-bits on. For example, given the number `6 (0110 in binary)`, return `9 (1001)`.
+
+
 ### June 1, 2021 \[Medium\] Integer Exponentiation
 ---
 > **Question:** Implement integer exponentiation. That is, implement the `pow(x, y)` function, where `x` and `y` are integers and returns `x^y`.
