@@ -880,7 +880,7 @@ Do this in faster than `O(N log N)` time.
 <details>
 <summary class="lc_m">
 
-- [**\[Medium\] Find Next Biggest Integer**](https://trsong.github.io/python/java/2020/05/02/DailyQuestionsMay.html#june-1-2020-medium-find-next-biggest-integer) -- *Given an integer n, find the next biggest integer with the same number of 1-bits on.* [*\(Try ME\)*](https://repl.it/@trsong/Find-the-Next-Biggest-Integer-1)
+- [**\[Medium\] Find Next Biggest Integer**](https://trsong.github.io/python/java/2021/05/02/DailyQuestionsMay.html#june-2-2021-medium-find-next-biggest-integer) -- *Given an integer n, find the next biggest integer with the same number of 1-bits on.* [*\(Try ME\)*](https://repl.it/@trsong/Find-the-Next-Biggest-Integer-1)
 
 </summary>
 <div>

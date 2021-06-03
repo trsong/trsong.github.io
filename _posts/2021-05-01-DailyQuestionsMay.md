@@ -23,6 +23,82 @@ categories: Python/Java
 ---
 > **Question:** Given an integer `n`, find the next biggest integer with the same number of 1-bits on. For example, given the number `6 (0110 in binary)`, return `9 (1001)`.
 
+> **Question:** Given an integer `n`, find the next biggest integer with the same number of 1-bits on. For example, given the number `6 (0110 in binary)`, return `9 (1001)`.
+
+**My thoughts:** The idea is to find the leftmost of rightmost ones, swap it with left zero and push remaining rightmost ones all the way till the end.
+
+**Example:**
+```py
+   10011100
+      ^      swap with left zero
+=> 10101100 
+       ^^    push till the end
+=> 10100011 
+```
+
+**Solution:** [https://replit.com/@trsong/Find-the-Next-Biggest-Integer-2](https://replit.com/@trsong/Find-the-Next-Biggest-Integer-2)
+```py
+import unittest
+
+def next_higher_number(num):
+    if num == 0:
+        return None
+
+    # Step1: count last group of 1s
+    last_one = num & -num
+    count_ones = 0
+    while num & last_one:
+        num ^= last_one
+        last_one <<= 1
+        count_ones += 1
+    
+    # Step2: move 1st bit of last group left 1 position
+    num |= last_one
+
+    # Step3: pull rest of last group all the way right 
+    if count_ones > 0:
+        num |= (1 << count_ones - 1) - 1
+    return num
+
+
+class NextHigherNumberSpec(unittest.TestCase):
+    def assert_result(self, expected, result):
+        self.assertEqual(bin(expected), bin(result))
+
+    def test_example(self):
+        self.assert_result(0b1001, next_higher_number(0b0110))
+
+    def test_example2(self):
+        self.assert_result(0b110, next_higher_number(0b101))
+
+    def test_example3(self):
+        self.assert_result(0b1101, next_higher_number(0b1011))
+
+    def test_zero(self):
+        self.assertIsNone(next_higher_number(0))
+
+    def test_end_in_one(self):
+        self.assert_result(0b10, next_higher_number(0b01))
+
+    def test_end_in_one2(self):
+        self.assert_result(0b1011, next_higher_number(0b111))
+
+    def test_end_in_one3(self):
+        self.assert_result(0b110001101101, next_higher_number(0b110001101011))
+
+    def test_end_in_zero(self):
+        self.assert_result(0b100, next_higher_number(0b010))
+
+    def test_end_in_zero2(self):
+        self.assert_result(0b1000011, next_higher_number(0b0111000))
+
+    def test_end_in_zero3(self):
+        self.assert_result(0b1101110001, next_higher_number(0b1101101100))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False, verbosity=2)
+```
 
 ### June 1, 2021 \[Medium\] Integer Exponentiation
 ---
