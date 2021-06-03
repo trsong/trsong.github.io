@@ -19,6 +19,15 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
 
+### June 3, 2021 \[Hard\] Find Next Sparse Number
+---
+> **Question:** We say a number is sparse if there are no adjacent ones in its binary representation. For example, `21 (10101)` is sparse, but `22 (10110)` is not. 
+> 
+> For a given input `N`, find the smallest sparse number greater than or equal to `N`.
+>
+> Do this in faster than `O(N log N)` time.
+
+
 ### June 2, 2021 \[Medium\] Find Next Biggest Integer
 ---
 > **Question:** Given an integer `n`, find the next biggest integer with the same number of 1-bits on. For example, given the number `6 (0110 in binary)`, return `9 (1001)`.
@@ -44,7 +53,7 @@ def next_higher_number(num):
     if num == 0:
         return None
 
-    # Step1: count last group of 1s
+    # Step1: count last chunk of 1s
     last_one = num & -num
     count_ones = 0
     while num & last_one:
@@ -52,10 +61,10 @@ def next_higher_number(num):
         last_one <<= 1
         count_ones += 1
     
-    # Step2: move 1st bit of last group left 1 position
+    # Step2: shift 1st bit of last chunk to left by 1 position
     num |= last_one
 
-    # Step3: pull rest of last group all the way right 
+    # Step3: pull rest of last chunk all the way right 
     if count_ones > 0:
         num |= (1 << count_ones - 1) - 1
     return num
