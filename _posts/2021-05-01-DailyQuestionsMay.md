@@ -19,6 +19,29 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
 
+### June 4, 2021  LC 872 \[Easy\] Leaf-Similar Trees
+---
+> **Question:** Given two trees, whether they are `"leaf similar"`. Two trees are considered `"leaf-similar"` if their leaf orderings are the same. 
+>
+> For instance, the following two trees are considered leaf-similar because their leaves are `[2, 1]`:
+
+```py
+# Tree1
+    3
+   / \ 
+  5   1
+   \
+    2 
+
+# Tree2
+    7
+   / \ 
+  2   1
+   \
+    2 
+```
+
+
 ### June 3, 2021 \[Hard\] Find Next Sparse Number
 ---
 > **Question:** We say a number is sparse if there are no adjacent ones in its binary representation. For example, `21 (10101)` is sparse, but `22 (10110)` is not. 
