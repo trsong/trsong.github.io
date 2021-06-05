@@ -19,6 +19,13 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
 
+### June 5, 2021 \[Easy\] Step Word Anagram
+---
+> **Question:** A step word is formed by taking a given word, adding a letter, and anagramming the result. For example, starting with the word `"APPLE"`, you can add an `"A"` and anagram to get `"APPEAL"`.
+>
+> Given a dictionary of words and an input word, create a function that returns all valid step words.
+
+
 ### June 4, 2021  LC 872 \[Easy\] Leaf-Similar Trees
 ---
 > **Question:** Given two trees, whether they are `"leaf similar"`. Two trees are considered `"leaf-similar"` if their leaf orderings are the same. 
