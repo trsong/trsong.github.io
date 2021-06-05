@@ -48,6 +48,104 @@ categories: Python/Java
     2 
 ```
 
+**Solution with DFS:** [https://replit.com/@trsong/Leaf-Similar-Trees-2](https://replit.com/@trsong/Leaf-Similar-Trees-2)
+```py
+import unittest
+
+def is_leaf_similar(t1, t2):
+    traversal1 = dfs_leaf_traversal(t1)
+    traversal2 = dfs_leaf_traversal(t2)
+    return traversal1 == traversal2
+
+
+def dfs_leaf_traversal(root):
+    if not root:
+        return []
+    
+    stack = [root]
+    res = []
+    while stack:
+        cur = stack.pop()
+        if not cur.left and not cur.right:
+            res.append(cur.val)
+        
+        if cur.right:
+            stack.append(cur.right)
+        if cur.left:
+            stack.append(cur.left)
+    
+    return res
+
+
+class TreeNode(object):
+    def __init__(self, val, left=None, right=None):
+        self.val = val
+        self.left = left
+        self.right = right
+
+
+class IsLeafSimilarSpec(unittest.TestCase):
+    def test_example(self):
+        """
+            3
+           / \ 
+          5   1
+           \
+            2 
+
+            7
+           / \ 
+          2   1
+           \
+            2 
+        """
+        t1 = TreeNode(3, TreeNode(5, right=TreeNode(2)), TreeNode(1))
+        t2 = TreeNode(7, TreeNode(2, right=TreeNode(2)), TreeNode(1))
+        self.assertTrue(is_leaf_similar(t1, t2))
+
+    def test_both_empty(self):
+        self.assertTrue(is_leaf_similar(None, None))
+
+    def test_one_tree_empty(self):
+        self.assertFalse(is_leaf_similar(TreeNode(0), None))
+
+    def test_tree_of_different_depths(self):
+        """
+          1
+         / \
+        2   3
+
+           1
+         /   \
+        5     4
+         \   /
+          2 3
+        """
+        t1 = TreeNode(1, TreeNode(2), TreeNode(3))
+        t2l = TreeNode(5, right=TreeNode(2))
+        t2r = TreeNode(4, TreeNode(3))
+        t2 = TreeNode(1, t2l, t2r)
+        self.assertTrue(is_leaf_similar(t1, t2))
+
+    def test_tree_with_different_number_of_leaves(self):
+        """
+          1
+         / \
+        2   3
+
+           1
+         /   
+        2     
+        """
+        t1 = TreeNode(1, TreeNode(2), TreeNode(3))
+        t2 = TreeNode(1, TreeNode(2))
+        self.assertFalse(is_leaf_similar(t1, t2))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False, verbosity=2)
+```
+
 
 ### June 3, 2021 \[Hard\] Find Next Sparse Number
 ---
