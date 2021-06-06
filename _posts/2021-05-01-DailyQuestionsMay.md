@@ -26,6 +26,78 @@ categories: Python/Java
 > Given a dictionary of words and an input word, create a function that returns all valid step words.
 
 
+**Solution:** [https://replit.com/@trsong/Step-Word-Anagram-2](https://replit.com/@trsong/Step-Word-Anagram-2)
+```py
+import unittest
+
+def find_step_anagrams(word, dictionary):
+    histogram = {}
+    for ch in word:
+        histogram[ch] = histogram.get(ch, 0) + 1
+    
+    res = []
+    for anagram in dictionary:
+        if len(anagram) - len(word) != 1:
+            continue
+            
+        for ch in anagram:
+            histogram[ch] = histogram.get(ch, 0) - 1
+            if histogram[ch] == 0:
+                del histogram[ch]
+
+        if len(histogram) == 1:
+            res.append(anagram)
+
+        for ch in anagram:
+            histogram[ch] = histogram.get(ch, 0) + 1
+            if histogram[ch] == 0:
+                del histogram[ch]
+    return res
+
+        
+class FindStepAnagramSpec(unittest.TestCase):
+    def test_example(self):
+        word = 'APPLE'
+        dictionary = ['APPEAL', 'CAPPLE', 'PALPED']
+        expected = ['APPEAL', 'CAPPLE', 'PALPED']
+        self.assertEqual(sorted(expected), sorted(find_step_anagrams(word, dictionary)))
+
+    def test_empty_word(self):
+        word = ''
+        dictionary = ['A', 'B', 'AB', 'ABC']
+        expected = ['A', 'B']
+        self.assertEqual(sorted(expected), sorted(find_step_anagrams(word, dictionary)))
+
+    def test_empty_dictionary(self):
+        word = 'ABC'
+        dictionary = []
+        expected = []
+        self.assertEqual(sorted(expected), sorted(find_step_anagrams(word, dictionary)))
+
+    def test_no_match(self):
+        word = 'ABC'
+        dictionary = ['BBB', 'ACCC']
+        expected = []
+        self.assertEqual(sorted(expected), sorted(find_step_anagrams(word, dictionary)))
+
+    def test_no_match2(self):
+        word = 'AA'
+        dictionary = ['ABB']
+        expected = []
+        self.assertEqual(sorted(expected), sorted(find_step_anagrams(word, dictionary)))
+
+    def test_repeated_chars(self):
+        word = 'AAA'
+        dictionary = ['A', 'AA', 'AAA', 'AAAA', 'AAAAB', 'AAB', 'AABA']
+        expected = ['AAAA', 'AABA']
+        self.assertEqual(sorted(expected), sorted(find_step_anagrams(word, dictionary)))
+
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False, verbosity=2)
+```
+
 ### June 4, 2021  LC 872 \[Easy\] Leaf-Similar Trees
 ---
 > **Question:** Given two trees, whether they are `"leaf similar"`. Two trees are considered `"leaf-similar"` if their leaf orderings are the same. 

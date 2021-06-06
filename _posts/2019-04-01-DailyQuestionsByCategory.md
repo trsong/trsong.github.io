@@ -3379,7 +3379,7 @@ Output: ''
 <details>
 <summary class="lc_e">
 
-- [**\[Easy\] Step Word Anagram**](https://trsong.github.io/python/java/2020/11/02/DailyQuestionsAug.html#jan-8-2021-easy-step-word-anagram) -- *Given a dictionary of words and an input word, create a function that returns all valid step words (word adding a letter, and anagramming).* [*\(Try ME\)*](https://repl.it/@trsong/Step-Word-Anagram-1)
+- [**\[Easy\] Step Word Anagram**](https://trsong.github.io/python/java/2021/05/02/DailyQuestionsMay.html#june-5-2021-easy-step-word-anagram) -- *Given a dictionary of words and an input word, create a function that returns all valid step words (word adding a letter, and anagramming).* [*\(Try ME\)*](https://repl.it/@trsong/Step-Word-Anagram-1)
 
 </summary>
 <div>
