@@ -6049,7 +6049,7 @@ The deepest node in this tree is d at depth 3.
 <details>
 <summary class="lc_m">
 
-- [**\[Medium\] Maximum Number of Connected Colors**](https://trsong.github.io/python/java/2020/05/02/DailyQuestionsMay.html#june-30-2020-medium-maximum-number-of-connected-colors) -- *Given a grid with cells in different colors, find the maximum number of same color cells that are connected.* [*\(Try ME\)*](https://repl.it/@trsong/Find-Maximum-Number-of-Connected-Colors-1)
+- [**\[Medium\] Maximum Number of Connected Colors**](https://trsong.github.io/python/java/2021/05/02/DailyQuestionsMay.html#june-7-2021-medium-maximum-number-of-connected-colors) -- *Given a grid with cells in different colors, find the maximum number of same color cells that are connected.* [*\(Try ME\)*](https://repl.it/@trsong/Find-Maximum-Number-of-Connected-Colors-1)
 
 </summary>
 <div>

@@ -35,6 +35,84 @@ categories: Python/Java
  ]
 ```
 
+**My thoughts:** Perform BFS/DFS or Union-Find on all unvisited cells, count its neighbors of same color and mark them as visited.
+
+**Solution with DFS:** [https://replit.com/@trsong/Find-Maximum-Number-of-Connected-Colors-2](https://replit.com/@trsong/Find-Maximum-Number-of-Connected-Colors-2)
+```py
+import unittest
+
+def max_connected_colors(grid):
+    if not grid or not grid[0]:
+        return 0
+    
+    n, m = len(grid), len(grid[0])
+    visited = [[False for _ in range(m)] for _ in range(n)]
+    res = 0
+    directions = [(-1, 0), (1, 0), (0, 1), (0, -1)]
+
+    for r in range(n):
+        for c in range(m):
+            if visited[r][c]:
+                continue
+
+            start_color = grid[r][c]
+            num_colors = 0
+            stack = [(r, c)]
+            while stack:
+                cur_r, cur_c = stack.pop()
+                if visited[cur_r][cur_c]:
+                    continue
+                num_colors += 1
+                visited[cur_r][cur_c] = True
+
+                for dr, dc in directions:
+                    new_r, new_c = cur_r + dr, cur_c + dc
+                    if (0 <= new_r < n and 
+                        0 <= new_c < m and 
+                        not visited[new_r][new_c] and 
+                        grid[new_r][new_c] == start_color):
+                        stack.append((new_r, new_c))
+            res = max(res, num_colors)
+    return res
+
+
+class MaxConnectedColorSpec(unittest.TestCase):
+    def test_empty_graph(self):
+        self.assertEqual(max_connected_colors([[]]), 0)   
+
+    def test_example(self):
+        self.assertEqual(max_connected_colors([
+            [1, 1, 2, 2, 3],
+            [1, 2, 3, 3, 1],
+            [2, 3, 3, 1, 2]
+        ]), 4)
+
+    def test_disconnected_colors(self):
+        self.assertEqual(max_connected_colors([
+            [1, 0, 1],
+            [0, 1, 0],
+            [1, 0, 1]
+        ]), 1)
+
+    def test_cross_shap(self):
+        self.assertEqual(max_connected_colors([
+            [1, 0, 1],
+            [0, 0, 0],
+            [1, 0, 1]
+        ]), 5)
+
+    def test_boundary(self):
+        self.assertEqual(max_connected_colors([
+            [1, 1, 1],
+            [1, 0, 1],
+            [1, 1, 1]
+        ]), 8)
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False, verbosity=2)
+```
+
 
 ### June 6, 2021 LC 1155 \[Medium\] Number of Dice Rolls With Target Sum
 ---
@@ -88,7 +166,7 @@ The answer must be returned modulo 10^9 + 7.
 ```py
 import unittest
 
-MODULE_NUM = 1000000007
+MODULE_NUM = 1000000007 
 
 def throw_dice(d, f, target):
     if d * f < target:
