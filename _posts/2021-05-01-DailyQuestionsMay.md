@@ -84,6 +84,75 @@ Explanation:
 The answer must be returned modulo 10^9 + 7.
 ```
 
+**Solution with DP:** [https://replit.com/@trsong/Number-of-Dice-Rolls-With-Target-Sum-2](https://replit.com/@trsong/Number-of-Dice-Rolls-With-Target-Sum-2)
+```py
+import unittest
+
+MODULE_NUM = 1000000007
+
+def throw_dice(d, f, target):
+    if d * f < target:
+        return 0
+    return throw_dice_with_cache(d, f, target, {})
+
+
+def throw_dice_with_cache(d, f, target, cache):
+    if d == 0 and target == 0:
+        return 1
+    elif d == 0:
+        return 0
+
+    if (d, target) not in cache:
+        res = 0
+        for v in range(1, f + 1):
+            res += throw_dice_with_cache(d - 1, f, target - v, cache)
+        res %= MODULE_NUM
+        cache[(d, target)] = res
+    return cache[(d, target)]
+
+
+class ThrowDiceSpec(unittest.TestCase):
+    def test_example(self):
+        self.assertEqual(15, throw_dice(3, 6, 7))
+
+    def test_example1(self):
+        self.assertEqual(1, throw_dice(1, 6, 3))
+
+    def test_example2(self):
+        self.assertEqual(6, throw_dice(2, 6, 7))
+
+    def test_example3(self):
+        self.assertEqual(1, throw_dice(2, 5, 10))
+
+    def test_example4(self):
+        self.assertEqual(0, throw_dice(1, 2, 3))
+
+    def test_example5(self):
+        self.assertEqual(222616187, throw_dice(30, 30, 500))
+
+    def test_target_total_too_large(self):
+        self.assertEqual(0, throw_dice(1, 6, 12))
+
+    def test_target_total_too_small(self):
+        self.assertEqual(0, throw_dice(4, 2, 1))
+
+    def test_throw_dice1(self):
+        self.assertEqual(2, throw_dice(2, 2, 3))
+
+    def test_throw_dice2(self):
+        self.assertEqual(21, throw_dice(6, 3, 8))
+
+    def test_throw_dice3(self):
+        self.assertEqual(4, throw_dice(4, 2, 5))
+
+    def test_throw_dice4(self):
+        self.assertEqual(6, throw_dice(3, 4, 5))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False, verbosity=2)
+```
+
 
 ### June 5, 2021 \[Easy\] Step Word Anagram
 ---
