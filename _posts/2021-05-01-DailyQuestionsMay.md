@@ -19,6 +19,24 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
 
+### June 9, 2021 \[Easy\] ZigZag Binary Tree
+---
+> **Questions:** In Ancient Greece, it was common to write text with the first line going left to right, the second line going right to left, and continuing to go back and forth. This style was called "boustrophedon".
+>
+> Given a binary tree, write an algorithm to print the nodes in boustrophedon order.
+
+**Example:**
+```py
+Given the following tree:
+       1
+    /     \
+  2         3
+ / \       / \
+4   5     6   7
+You should return [1, 3, 2, 4, 5, 6, 7].
+```
+
+
 ### June 8, 2021 \[Hard\] Find Next Greater Permutation
 ---
 > **Question:** Given a number represented by a list of digits, find the next greater permutation of a number, in terms of lexicographic ordering. If there is not greater permutation possible, return the permutation with the lowest value/ordering.
