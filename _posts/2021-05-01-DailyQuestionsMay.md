@@ -45,6 +45,98 @@ You should return [1, 3, 2, 4, 5, 6, 7].
 >
 > Can you perform the operation without allocating extra memory (disregarding the input memory)?
 
+**My thoughts:** Imagine the list as a number, if it’s in descending order, then there will be no number greater than that and we have to return the number in ascending order, that is, the smallest number. e.g. `321` will become `123`.
+
+Leave first part untouched. If the later part of array are first increasing then decreasing, like `1321`, then based on previous observation, we know the descending part will change from largest to smallest, we want the last increasing digit to increase as little as possible, i.e. slightly larger number on the right. e.g. `2113`
+
+Here are all the steps:
+
+1. Find last increase number, name it _pivot_
+2. Find the slightly larger number _pivot_plus_. i.e. the smallest one among all number greater than the last increase number on the right
+3. Swap the slightly larger number _pivot_plus_ with last increase number _pivot_
+4. Turn the descending array on right to be ascending array
+
+
+**Solution:** [https://replit.com/@trsong/Find-the-Next-Greater-Permutation-2](https://replit.com/@trsong/Find-the-Next-Greater-Permutation-2)
+```py
+import unittest
+
+def find_next_permutation(nums):
+    if not nums:
+        return nums
+
+    n = len(nums)
+    pivot = n - 2
+    while pivot >= 0 and nums[pivot] >= nums[pivot + 1]:
+        pivot -= 1
+
+    if pivot >= 0:
+        pivot_plus = pivot
+        for i in range(pivot + 1, n):
+            if nums[i] <= nums[pivot]:
+                break
+            pivot_plus = i
+        nums[pivot], nums[pivot_plus] = nums[pivot_plus], nums[pivot]
+    
+    lo, hi = pivot + 1, n - 1
+    while lo < hi:
+        nums[lo], nums[hi] = nums[hi], nums[lo]
+        lo += 1
+        hi -= 1
+    return nums
+
+
+class FindNextPermutationSpec(unittest.TestCase):
+    def test_example1(self):
+        nums = [1, 2, 3]
+        expected = [1, 3, 2]
+        self.assertEqual(expected, find_next_permutation(nums))
+    
+    def test_example2(self):
+        nums = [1, 3, 2]
+        expected = [2, 1, 3]
+        self.assertEqual(expected, find_next_permutation(nums))
+
+    def test_example3(self):
+        nums = [3, 2, 1]
+        expected = [1, 2, 3]
+        self.assertEqual(expected, find_next_permutation(nums))
+
+    def test_empty_array(self):
+        self.assertEqual([], find_next_permutation([]))
+
+    def test_one_elem_array(self):
+        self.assertEqual([1], find_next_permutation([1]))
+
+    def test_decrease_increase_decrease_array(self):
+        nums = [3, 2, 1, 6, 5, 4]
+        expected = [3, 2, 4, 1, 5, 6]
+        self.assertEqual(expected, find_next_permutation(nums))       
+
+    def test_decrease_increase_decrease_array2(self):    
+        nums = [3, 2, 4, 6, 5, 4]
+        expected = [3, 2, 5, 4, 4, 6]
+        self.assertEqual(expected, find_next_permutation(nums))
+
+    def test_increasing_decreasing_increasing_array(self):
+        nums = [4, 5, 6, 1, 2, 3]
+        expected = [4, 5, 6, 1, 3, 2]
+        self.assertEqual(expected, find_next_permutation(nums))
+
+    def test_increasing_decreasing_increasing_array2(self):
+        nums =     [1, 1, 2, 3, 4, 4, 10, 9, 8, 7, 6, 6, 5, 5, 4, 4, 3, 2, 1]
+        expected = [1, 1, 2, 3, 4, 5, 1, 2, 3, 4, 4, 4, 5, 6, 6, 7, 8, 9, 10]
+        self.assertEqual(expected, find_next_permutation(nums))
+
+    def test_multiple_decreasing_and_increasing_array(self):
+        nums = [5, 3, 4, 9, 7, 6]
+        expected = [5, 3, 6, 4, 7, 9]
+        self.assertEqual(expected, find_next_permutation(nums))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False, verbosity=2)
+```
 
 ### June 7, 2021 \[Medium\] Maximum Number of Connected Colors
 ---
