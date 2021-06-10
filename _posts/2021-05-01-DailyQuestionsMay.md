@@ -57,6 +57,109 @@ Given the following tree:
 You should return [1, 3, 2, 4, 5, 6, 7].
 ```
 
+**Solution with BFS:** [https://replit.com/@trsong/ZigZag-Order-of-Binary-Tree-2](https://replit.com/@trsong/ZigZag-Order-of-Binary-Tree-2)
+```py
+import unittest
+from queue import deque
+
+def zigzag_traversal(tree):
+    if not tree:
+        return []
+
+    reverse_order = False
+    dq = deque([tree])
+    res = []
+
+    while dq:
+        if reverse_order:
+            res.extend(reversed(dq))
+        else:
+            res.extend(dq)
+            
+        for _ in range(len(dq)):
+            cur = dq.popleft()
+            if cur.left:
+                dq.append(cur.left)
+            if cur.right:
+                dq.append(cur.right)
+        reverse_order = not reverse_order
+    return list(map(lambda node: node.val, res))
+    
+
+class TreeNode(object):
+    def __init__(self, val, left=None, right=None):
+        self.val = val
+        self.left = left
+        self.right = right
+
+
+class ZigzagTraversalSpec(unittest.TestCase):
+    def test_example(self):
+        """
+               1
+            /     \
+          2         3
+         / \       / \
+        4   5     6   7
+        """
+        left = TreeNode(2, TreeNode(4), TreeNode(5))
+        right = TreeNode(3, TreeNode(6), TreeNode(7))
+        root = TreeNode(1, left, right)
+        expected_traversal = [1, 3, 2, 4, 5, 6, 7]
+        self.assertEqual(expected_traversal, zigzag_traversal(root))
+
+    def test_empty(self):
+        self.assertEqual([], zigzag_traversal(None))
+
+    def test_right_heavy_tree(self):
+        """
+            3
+           / \
+          9  20
+            /  \
+           15   7
+        """
+        n20 = TreeNode(20, TreeNode(15), TreeNode(7))
+        n3 = TreeNode(3, TreeNode(9), n20)
+        expected_traversal = [3, 20, 9, 15, 7]
+        self.assertEqual(expected_traversal, zigzag_traversal(n3))
+    
+    def test_complete_tree(self):
+        """
+             1
+           /   \
+          3     2
+         / \   /  
+        4   5 6  
+        """
+        n3 = TreeNode(3, TreeNode(4), TreeNode(5))
+        n2 = TreeNode(2, TreeNode(6))
+        n1 = TreeNode(1, n3, n2)
+        expected_traversal = [1, 2, 3, 4, 5, 6]
+        self.assertEqual(expected_traversal, zigzag_traversal(n1))
+
+    def test_sparse_tree(self):
+        """
+             1
+           /   \
+          3     2
+           \   /  
+            4 5
+           /   \
+          7     6
+           \   /  
+            8 9
+        """
+        n3 = TreeNode(3, right=TreeNode(4, TreeNode(7, right=TreeNode(8))))
+        n2 = TreeNode(2, TreeNode(5, right=TreeNode(6, TreeNode(9))))
+        n1 = TreeNode(1, n3, n2)
+        expected_traversal = [1, 2, 3, 4, 5, 6, 7, 8, 9]
+        self.assertEqual(expected_traversal, zigzag_traversal(n1))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False, verbosity=2)
+```
 
 ### June 8, 2021 \[Hard\] Find Next Greater Permutation
 ---
