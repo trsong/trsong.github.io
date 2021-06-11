@@ -6239,6 +6239,38 @@ Output: 1
 ### DFS
 ---
 
+
+<details>
+<summary class="lc_m">
+
+- [**\[Medium\] Maximum Edge Removal to Make Even Forest**](http://trsong.github.io/python/java/2021/05/02/DailyQuestionsMay.html#june-10-2021-medium-maximum-edge-removal-to-make-even-forest) -- *Write a function that returns the maximum number of edges you can remove while still satisfying even number of children for each node.* [*\(Try ME\)*](https://replit.com/@trsong/Maximum-Edge-Removal-to-Make-Even-Forest-1)
+
+</summary>
+<div>
+
+**Questions:** You are given a tree with an even number of nodes. Consider each connection between a parent and child node to be an "edge". You would like to remove some of these edges, such that the disconnected subtrees that remain each have an even number of nodes.
+
+For example, suppose your input was the following tree:
+
+```py
+   1
+  / \ 
+ 2   3
+    / \ 
+   4   5
+ / | \
+6  7  8
+```
+
+In this case, removing the edge (3, 4) satisfies our requirement.
+
+Write a function that returns the maximum number of edges you can remove while still satisfying this requirement.
+
+
+</div>
+</details>
+
+
 <details>
 <summary class="lc_m">
 

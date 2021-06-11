@@ -39,6 +39,108 @@ categories: Python/Java
 >
 > Write a function that returns the maximum number of edges you can remove while still satisfying this requirement.
 
+**Solution with DFS:** [https://replit.com/@trsong/Maximum-Edge-Removal-to-Make-Even-Forest](https://replit.com/@trsong/Maximum-Edge-Removal-to-Make-Even-Forest)
+```py
+import unittest
+from collections import defaultdict
+from functools import reduce
+
+def max_edge_removal(graph):
+    if not graph:
+        return 0
+
+    node_count_map = defaultdict(int)
+    start = next(iter(graph))
+    count_nodes_recur(start, graph, node_count_map)
+
+    # count node with odd number of children
+    return reduce(
+        lambda accu, node: accu + 1 if node_count_map[node] % 2 else accu,
+        node_count_map.keys(), 0)
+
+
+def count_nodes_recur(node, graph, node_count_map):
+    res = 1
+    for child in graph[node]:
+        num_nodes = count_nodes_recur(child, graph, node_count_map)
+        res += num_nodes
+        node_count_map[child] += num_nodes - 1
+    return res
+
+
+class MaxEdgeRemovalSpec(unittest.TestCase):
+    def test_example(self):
+        """
+           1
+          / \ 
+         2   3
+            / \ 
+           4   5
+         / | \
+        6  7  8
+        """
+        graph = {
+            1: [2, 3],
+            2: [],
+            3: [4, 5],
+            4: [6, 7, 8],
+            5: [],
+            6: [],
+            7: [],
+            8: []
+        }
+        expected = 2  # remove edge (3, 4) and (1, 3)
+        self.assertEqual(expected, max_edge_removal(graph))
+
+    def test_example2(self):
+        """
+            0
+           /|\
+          2 4 1
+         /  |
+        3   5
+           / \
+          6   7
+        """
+        graph = {
+            0: [2, 4, 1],
+            1: [],
+            2: [3],
+            3: [],
+            4: [5],
+            5: [6, 7],
+            6: [],
+            7: []
+        }
+        expected = 2  # remove edge (0, 2) and (0, 4)
+        self.assertEqual(expected, max_edge_removal(graph))
+
+    def test_empty_graph(self):
+        self.assertEqual(0, max_edge_removal({}))
+
+    def test_one_node_graph(self):
+        self.assertEqual(0, max_edge_removal({0: []}))
+
+    def test_no_need_to_remove(self):
+        """
+          0
+         /|\
+        1 2 3
+        """
+        graph = {
+            0: [1, 2, 3],
+            1: [],
+            2: [],
+            3: []
+        }
+        expected = 0
+        self.assertEqual(expected, max_edge_removal(graph))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False, verbosity=2)
+```
+
 
 ### June 9, 2021 \[Easy\] ZigZag Binary Tree
 ---
