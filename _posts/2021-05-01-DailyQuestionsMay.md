@@ -34,6 +34,43 @@ Output: 7
 ---
 > **Question:** Assume you have access to a function toss_biased() which returns 0 or 1 with a probability that's not 50-50 (but also not 0-100 or 100-0). You do not know the bias of the coin. Write a function to simulate an unbiased coin toss.
 
+**Solution:** [https://replit.com/@trsong/Toss-Biased-Coins](https://replit.com/@trsong/Toss-Biased-Coins)
+```py
+from random import randint
+
+def toss_unbiased():
+    # Let P(T1, T2) represents probability to get T1, T2 in first and second toss: 
+    # P(0, 0) = p * p
+    # P(1, 1) = (1 - p) * (1 - p)
+    # P(1, 0) = (1 - p) * p
+    # P(0, 1) = p * (1 - p)
+    # Notice that P(1, 0) = P(0, 1)
+    while True:
+        t1 = toss_biased()
+        t2 = toss_biased()
+        if t1 != t2:
+            return t1
+    
+
+def toss_biased():
+    # suppose the toss has 1/4 chance to get 0 and 3/4 to get 1
+    return 0 if randint(0, 3) == 0 else 1
+
+
+def print_distribution(repeat):
+    histogram = {}
+    for _ in range(repeat):
+        res = toss_unbiased()
+        if res not in histogram:
+            histogram[res] = 0
+        histogram[res] += 1
+    print(histogram)
+
+
+if __name__ == '__main__':
+     # Distribution looks like {0: 99931, 1: 100069}
+    print_distribution(repeat=200000)
+```
 
 ### June 11, 2021  \[Hard\] Minimum Cost to Construct Pyramid with Stones
 ---
