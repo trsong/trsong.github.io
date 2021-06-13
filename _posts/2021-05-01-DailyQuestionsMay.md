@@ -19,6 +19,16 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
 
+### June 14, 2021 LC 228 \[Easy\] Extract Range
+---
+> **Question:** Given a sorted list of numbers, return a list of strings that represent all of the consecutive numbers.
+
+**Example:**
+```py
+Input: [0, 1, 2, 5, 7, 8, 9, 9, 10, 11, 15]
+Output: ['0->2', '5', '7->11', '15']
+```
+
 
 ### June 13, 2021 \[Easy\] Find the K-th Largest Number
 ---
