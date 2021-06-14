@@ -40,6 +40,83 @@ Input: 3, [8, 7, 2, 3, 4, 1, 5, 6, 9, 0]
 Output: 7
 ```
 
+**Solution with Quick Select:** [https://replit.com/@trsong/Find-the-K-th-Largest-Number-2](https://replit.com/@trsong/Find-the-K-th-Largest-Number-2)
+```py
+import unittest
+import random
+
+def find_kth_max(nums, k):
+    n = len(nums)
+    if k > n:
+        return None
+
+    lo, hi = 0, n - 1
+    while True:
+        pivot = quick_select(nums, lo, hi)
+        if pivot == n - k:
+            return nums[pivot]
+        elif pivot < n - k:
+            lo = pivot + 1
+        else:
+            hi = pivot - 1
+    return None
+
+
+def quick_select(nums, lo, hi):
+    pivot = random.randint(lo, hi)
+    pivot_num = nums[pivot]
+    nums[hi], nums[pivot] = nums[pivot], nums[hi]
+    
+    i = lo
+    for j in range(lo, hi):
+        if nums[j] < pivot_num:
+            nums[i], nums[j] = nums[j], nums[i]
+            i += 1
+    
+    nums[i], nums[hi] = nums[hi], nums[i]
+    return i
+
+    
+class FindKthMaxSpec(unittest.TestCase):
+    def test_example(self):
+        k, nums = 3, [8, 7, 2, 3, 4, 1, 5, 6, 9, 0]
+        expected = 7
+        self.assertEqual(expected, find_kth_max(nums, k))
+
+    def test_k_out_of_bound(self):
+        k, nums = 4, [1, 2, 3]
+        self.assertIsNone(find_kth_max(nums, k))
+
+    def test_find_max(self):
+        k, nums = 1, [1, 2, 3]
+        expected = 3
+        self.assertEqual(expected, find_kth_max(nums, k))
+
+    def test_find_min(self):
+        k, nums = 5, [1, 2, 3, 4, 5]
+        expected = 1
+        self.assertEqual(expected, find_kth_max(nums, k))
+
+    def test_array_with_duplicated_elements(self):
+        k, nums = 3, [1, 1, 3, 5, 5]
+        expected = 3
+        self.assertEqual(expected, find_kth_max(nums, k))
+
+    def test_array_with_duplicated_elements2(self):
+        k, nums = 4, [1, 1, 1, 1, 1, 1, 1, 1]
+        expected = 1
+        self.assertEqual(expected, find_kth_max(nums, k)) 
+
+    def test_array_with_duplicated_elements3(self):
+        k, nums = 2, [1, 2, 3, 1, 2, 3, 1, 2, 3]
+        expected = 3
+        self.assertEqual(expected, find_kth_max(nums, k)) 
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False, verbosity=2)
+```
+
 ### June 12, 2021 \[Medium\] Toss Biased Coin
 ---
 > **Question:** Assume you have access to a function toss_biased() which returns 0 or 1 with a probability that's not 50-50 (but also not 0-100 or 100-0). You do not know the bias of the coin. Write a function to simulate an unbiased coin toss.
