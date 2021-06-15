@@ -1589,7 +1589,7 @@ For example, suppose the integers from the data stream are `1, 3, 7, 2, 6, ...`,
 <details>
 <summary class="lc_e">
 
-- [**\[Easy\] LC 228. Extract Range**](https://trsong.github.io/python/java/2020/11/02/DailyQuestionsAug.html#nov-30-2020-lc-228-easy-extract-range) -- *Given a sorted list of numbers, return a list of strings that represent all of the consecutive numbers.* [*\(Try ME\)*](https://repl.it/@trsong/Extract-Range-1)
+- [**\[Easy\] LC 228. Extract Range**](https://trsong.github.io/python/java/2021/05/02/DailyQuestionsMay.html#june-14-2021-lc-228-easy-extract-range) -- *Given a sorted list of numbers, return a list of strings that represent all of the consecutive numbers.* [*\(Try ME\)*](https://repl.it/@trsong/Extract-Range-1)
 
 </summary>
 <div>
