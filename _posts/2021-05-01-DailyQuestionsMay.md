@@ -61,6 +61,57 @@ Return false. There is no way to jump to the last stone as
 the gap between the 5th and 6th stone is too large.
 ```
 
+**Solution with DFS:** [https://replit.com/@trsong/Solve-Frog-Jump-Problem-2](https://replit.com/@trsong/Solve-Frog-Jump-Problem-2)
+```py
+import unittest
+
+def can_cross(stones):
+    stone_set = set(stones)
+    visited = set()
+    stack = [(0, 0)]
+    goal = stones[-1]
+
+    while stack:
+        cur, step = stack.pop()
+        if cur == goal:
+            return True
+        visited.add((cur, step))
+        for step_delta in [-1, 0, 1]:
+            next_step = step + step_delta
+            next_stone = cur + next_step
+            if (next_stone >= cur and 
+                next_stone in stone_set and 
+                (next_stone, next_step) not in visited):
+                stack.append((next_stone, next_step))
+    return False
+        
+
+class CanCrossSpec(unittest.TestCase):
+    def test_example1(self):
+        self.assertTrue(can_cross([0, 1, 3, 5, 6, 8, 12, 17])) # step: 1(1), 2(3), 2(5), 3(8), 4(12), 5(17)
+
+    def test_example2(self):
+        self.assertFalse(can_cross([0, 1, 2, 3, 4, 8, 9, 11]))
+
+    def test_fast_then_slow(self):
+        self.assertTrue(can_cross([0, 1, 3, 6, 10, 13, 15, 16, 16]))
+
+    def test_fast_then_cooldown(self):
+        self.assertFalse(can_cross([0, 1, 3, 6, 10, 11]))
+
+    def test_unreachable_last_stone(self):
+        self.assertFalse(can_cross([0, 1, 3, 6, 11]))
+
+    def test_reachable_last_stone(self):
+        self.assertTrue(can_cross([0, 1, 3, 6, 10]))
+
+    def test_fall_into_water_in_the_middle(self):
+        self.assertFalse(can_cross([0, 1, 10, 1000, 1000]))
+    
+
+if __name__ == '__main__':
+    unittest.main(exit=False, verbosity=2)
+```
 
 ### June 14, 2021 LC 228 \[Easy\] Extract Range
 ---
