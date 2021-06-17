@@ -5687,6 +5687,25 @@ For example, if the list is `[1, 2, 3, 4, 5]` and `K` is `9`, then it should ret
 ## Greedy
 ---
 
+
+<details>
+<summary class="lc_m">
+
+- [**\[Medium\] Minimum Number of Jumps to Reach End**](https://trsong.github.io/python/java/2021/05/02/DailyQuestionsMay.html#june-16-2021-medium-minimum-number-of-jumps-to-reach-end) -- *Each element represents max jump. Return the minimum number of jumps you must take in order to get from the start to the end of the array.* [*\(Try ME\)*](https://replit.com/@trsong/Calculate-Minimum-Number-of-Jumps-to-Reach-End-1)
+
+</summary>
+<div>
+
+**Question:** You are given an array of integers, where each element represents the maximum number of steps that can be jumped going forward from that element. 
+ 
+Write a function to return the minimum number of jumps you must take in order to get from the start to the end of the array.
+
+For example, given `[6, 2, 4, 0, 5, 1, 1, 4, 2, 9]`, you should return `2`, as the optimal solution involves jumping from `6 to 5`, and then from `5 to 9`.
+
+</div>
+</details>
+
+
 <details>
 <summary class="lc_h">
 

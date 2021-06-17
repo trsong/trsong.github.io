@@ -38,6 +38,99 @@ Output: ['a', '2', 'b', 'c', '3']
 >
 > For example, given `[6, 2, 4, 0, 5, 1, 1, 4, 2, 9]`, you should return `2`, as the optimal solution involves jumping from `6 to 5`, and then from `5 to 9`.
 
+**My thoughts:** Instead of using DP to calculate min step required to reach current index, we can treat this problem as climbing floor with ladders. For each floor you reach, you will get a new ladder with length `i + step[i]`. Now all you need to do is to greedily use the max length ladder you have seen so far and swap to the next one when the current one reaches end. The answer will be the total number of max length ladder you have used. 
+
+**Greedy Solution:** [https://replit.com/@trsong/Calculate-Minimum-Number-of-Jumps-to-Reach-End](https://replit.com/@trsong/Calculate-Minimum-Number-of-Jumps-to-Reach-End)
+```py
+import unittest
+
+def min_jump_to_reach_end(steps):
+    if not steps:
+        return None
+    
+    ladder_usage = 0
+    max_ladder = cur_ladder = 0
+    for level, jump in enumerate(steps):
+        if level > max_ladder:
+            # Max ladder cannot reach current level
+            return None
+        elif level > cur_ladder:
+            # Need switch to a different ladder
+            cur_ladder = max_ladder
+            ladder_usage += 1
+
+        new_ladder = level + jump
+        max_ladder = max(max_ladder, new_ladder)
+    return ladder_usage
+
+
+class MinJumpToReachEndSpec(unittest.TestCase):
+    def test_example(self):
+        steps = [6, 2, 4, 0, 5, 1, 1, 4, 2, 9]
+        expected = 2  # 6 -> 5 -> 9
+        self.assertEqual(expected, min_jump_to_reach_end(steps))
+
+    def test_empty_steps(self):
+        self.assertIsNone(min_jump_to_reach_end([]))
+    
+    def test_trivial_case(self):
+        self.assertEqual(0, min_jump_to_reach_end([0]))
+
+    def test_multiple_ways_to_reach_end(self):
+        steps = [1, 3, 5, 6, 8, 12, 17]
+        expected = 3  # 1 -> 3 -> 5 -> 17
+        self.assertEqual(expected, min_jump_to_reach_end(steps)) 
+
+    def test_should_return_min_step_to_reach_end(self):
+        steps = [1, 3, 5, 8, 9, 2, 6, 7, 6, 8, 9]
+        expected = 3  # 1 -> 3 -> 9 -> 9
+        self.assertEqual(expected, min_jump_to_reach_end(steps))
+
+    def test_should_return_min_step_to_reach_end2(self):
+        steps = [15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16]
+        expected = 4
+        self.assertEqual(expected, min_jump_to_reach_end(steps))
+
+    def test_should_return_min_step_to_reach_end3(self):
+        steps = [1, 3, 6, 3, 2, 3, 6, 8, 9, 5]
+        expected = 4  # 1 -> 3 -> 6 -> 9 -> 5
+        self.assertEqual(expected, min_jump_to_reach_end(steps))
+
+    def test_should_return_min_step_to_reach_end4(self):
+        steps = [1, 3, 6, 1, 0, 9]
+        expected = 3  # 1 -> 3 -> 6 -> 9
+        self.assertEqual(expected, min_jump_to_reach_end(steps))
+
+    def test_unreachable_end(self):
+        steps = [1, -2, -3, 4, 8, 9, 11]
+        self.assertIsNone(min_jump_to_reach_end(steps))
+
+    def test_unreachable_end2(self):
+        steps = [1, 3, 2, -11, 0, 1, 0, 0, -1]
+        self.assertIsNone(min_jump_to_reach_end(steps))
+
+    def test_reachable_end(self):
+        steps = [1, 3, 6, 10]
+        expected = 2  # 1 -> 3 -> 10
+        self.assertEqual(expected, min_jump_to_reach_end(steps))
+
+    def test_stop_in_the_middle(self):
+        steps = [1, 2, 0, 0, 0, 1000, 1000]
+        self.assertIsNone(min_jump_to_reach_end(steps))
+
+    def test_stop_in_the_middle2(self):
+        steps = [2, 1, 0, 9]
+        self.assertIsNone(min_jump_to_reach_end(steps))
+
+    def test_greedy_solution_fails(self):
+        steps = [5, 3, 3, 3, 4, 2, 1, 1, 1]
+        expected = 2  # 5 -> 4 -> 1
+        self.assertEqual(expected, min_jump_to_reach_end(steps))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False, verbosity=2)
+```
 
 ### June 15, 2021 LC 403 \[Hard\] Frog Jump
 ---
