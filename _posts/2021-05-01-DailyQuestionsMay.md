@@ -19,6 +19,17 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
 
+### June 17, 2021 \[Easy\] String Compression
+---
+> **Question:** Given an array of characters with repeats, compress it in place. The length after compression should be less than or equal to the original array.
+
+**Example:**
+```py
+Input: ['a', 'a', 'b', 'c', 'c', 'c']
+Output: ['a', '2', 'b', 'c', '3']
+```
+
+
 ### June 16, 2021 \[Medium\] Minimum Number of Jumps to Reach End
 ---
 > **Question:** You are given an array of integers, where each element represents the maximum number of steps that can be jumped going forward from that element. 
