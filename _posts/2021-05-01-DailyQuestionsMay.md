@@ -40,6 +40,84 @@ Input: ['a', 'a', 'b', 'c', 'c', 'c']
 Output: ['a', '2', 'b', 'c', '3']
 ```
 
+**Solution with Two Pointers:** [https://replit.com/@trsong/String-Array-Compression](https://replit.com/@trsong/String-Array-Compression)
+```py
+import unittest
+
+def string_compression(msg):
+    n = len(msg)
+    count = 1
+    slow = 0
+    for fast in range(n):
+        if fast < n - 1 and msg[fast] == msg[fast + 1]:
+            count += 1
+        else:
+            msg[slow] = msg[fast]
+            slow += 1
+            if count > 1:
+                for ch in str(count):
+                    msg[slow] = ch
+                    slow += 1
+            count = 1
+    
+    for _ in range(slow, n):
+        msg.pop()
+
+
+class StringCompressionSpec(unittest.TestCase):
+    def test_example(self):
+        msg = ['a', 'a', 'b', 'c', 'c', 'c']
+        expected = ['a', '2', 'b', 'c', '3']
+        string_compression(msg)
+        self.assertEqual(expected, msg)
+
+    def test_empty_msg(self):
+        msg = []
+        expected = []
+        string_compression(msg)
+        self.assertEqual(expected, msg)
+
+    def test_msg_with_one_char(self):
+        msg = ['a']
+        expected = ['a']
+        string_compression(msg)
+        self.assertEqual(expected, msg)
+
+    def test_msg_with_distinct_chars(self):
+        msg = ['a', 'b', 'c', 'd']
+        expected = ['a', 'b', 'c', 'd']
+        string_compression(msg)
+        self.assertEqual(expected, msg)
+
+    def test_msg_with_repeated_chars(self):
+        msg = ['a'] * 12
+        expected = ['a', '1', '2']
+        string_compression(msg)
+        self.assertEqual(expected, msg)
+
+    def test_msg_with_repeated_chars2(self):
+        msg = ['a', 'b', 'b']
+        expected = ['a', 'b', '2']
+        string_compression(msg)
+        self.assertEqual(expected, msg)
+
+    def test_msg_with_repeated_chars3(self):
+        msg = ['a'] * 10 + ['b'] * 21 + ['c'] * 198
+        expected = ['a', '1', '0', 'b', '2', '1', 'c', '1', '9', '8']
+        string_compression(msg)
+        self.assertEqual(expected, msg)
+
+    def test_msg_contains_digits(self):
+        msg = ['a', '2', 'a', '3', '3']
+        expected = ['a', '2', 'a', '3', '2']
+        string_compression(msg)
+        self.assertEqual(expected, msg)
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False, verbosity=2)
+```
+
 
 ### June 16, 2021 \[Medium\] Minimum Number of Jumps to Reach End
 ---

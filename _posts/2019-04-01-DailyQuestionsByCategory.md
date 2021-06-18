@@ -2054,6 +2054,26 @@ missing_ranges(nums=[1, 3, 5, 10], lower=1, upper=10)
 
 
 <details>
+<summary class="lc_e">
+
+- [**\[Easy\] String Compression**](https://trsong.github.io/python/java/2021/05/02/DailyQuestionsMay.html#june-17-2021-easy-string-compression) -- *Given an array of characters with repeats, compress it in place.* [*\(Try ME\)*](https://replit.com/@trsong/String-Array-Compression-1)
+
+</summary>
+<div>
+
+**Question:** Given an array of characters with repeats, compress it in place. The length after compression should be less than or equal to the original array.
+
+**Example:**
+```py
+Input: ['a', 'a', 'b', 'c', 'c', 'c']
+Output: ['a', '2', 'b', 'c', '3']
+```
+
+</div>
+</details>
+
+
+<details>
 <summary class="lc_m">
 
 - [**\[Medium\] Mininum Adjacent Swaps to Make Palindrome**](https://trsong.github.io/python/java/2021/02/02/DailyQuestionsFeb.html#apr-26-2021-medium-mininum-adjacent-swaps-to-make-palindrome) -- *Given a string, what is the minimum number of adjacent swaps required to convert a string into a palindrome.* [*\(Try ME\)*](https://replit.com/@trsong/Mininum-Adjacent-Swaps-to-Make-Palindrome-1)
