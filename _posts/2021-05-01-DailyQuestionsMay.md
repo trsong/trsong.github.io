@@ -19,6 +19,17 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
 
+### June 18, 2021 \[Medium\] Sorting a List With 3 Unique Numbers
+---
+> **Question:** Given a list of numbers with only `3` unique numbers `(1, 2, 3)`, sort the list in `O(n)` time.
+
+**Example:**
+```py
+Input: [3, 3, 2, 1, 3, 2, 1]
+Output: [1, 1, 2, 2, 3, 3, 3]
+```
+
+
 ### June 17, 2021 \[Easy\] String Compression
 ---
 > **Question:** Given an array of characters with repeats, compress it in place. The length after compression should be less than or equal to the original array.
