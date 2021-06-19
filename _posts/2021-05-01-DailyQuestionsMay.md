@@ -29,6 +29,70 @@ Input: [3, 3, 2, 1, 3, 2, 1]
 Output: [1, 1, 2, 2, 3, 3, 3]
 ```
 
+**Solution with 3-way Quick Select:** [https://replit.com/@trsong/Sorting-a-List-With-3-Unique-Numbers-2](https://replit.com/@trsong/Sorting-a-List-With-3-Unique-Numbers-2)
+```py
+import unittest
+
+def sort(nums):
+    lo = mid = 0
+    hi = len(nums) - 1
+
+    while mid <= hi:
+        if nums[mid] == 2:
+            mid += 1
+        elif nums[mid] == 3:
+            nums[mid], nums[hi] = nums[hi], nums[mid]
+            hi -= 1
+        else:
+            nums[mid], nums[lo] = nums[lo], nums[mid]
+            lo += 1
+            mid += 1
+    return nums
+        
+
+class SortSpec(unittest.TestCase):
+    def test_example(self):
+        nums = [3, 3, 2, 1, 3, 2, 1]
+        expected = [1, 1, 2, 2, 3, 3, 3]
+        self.assertEqual(expected, sort(nums))
+
+    def test_empty_arry(self):
+        self.assertEqual([], sort([]))
+
+    def test_descending_array(self):
+        nums = [3, 2, 2, 1]
+        expected = [1, 2, 2, 3]
+        self.assertEqual(expected, sort(nums))
+
+    def test_sorted_array(self):
+        nums = [1, 1, 2, 3]
+        expected = [1, 1, 2, 3]
+        self.assertEqual(expected, sort(nums))
+
+    def test_array_without_one(self):
+        nums = [2, 3, 2, 2, 3, 3, 2]
+        expected = [2, 2, 2, 2, 3, 3, 3]
+        self.assertEqual(expected, sort(nums))
+
+    def test_array_without_two(self):
+        nums = [1, 3, 3, 1, 1, 1, 1]
+        expected = [1, 1, 1, 1, 1, 3, 3]
+        self.assertEqual(expected, sort(nums))
+    
+    def test_array_without_three(self):
+        nums = [2, 1, 1, 1, 2]
+        expected = [1, 1, 1, 2, 2]
+        self.assertEqual(expected, sort(nums))
+    
+    def test_last_elem_is_one(self):
+        nums = [2, 1, 1]
+        expected = [1, 1, 2]
+        self.assertEqual(expected, sort(nums))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False, verbosity=2)
+```
 
 ### June 17, 2021 \[Easy\] String Compression
 ---
