@@ -19,6 +19,26 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
 
+### June 19, 2021 \[Hard\] Construct Cartesian Tree from Inorder Traversal
+---
+> **Question:** A Cartesian tree with sequence S is a binary tree defined by the following two properties:
+>
+> - It is heap-ordered, so that each parent value is strictly less than that of its children.
+> - An in-order traversal of the tree produces nodes with values that correspond exactly to S.
+>
+> Given a sequence S, construct the corresponding Cartesian tree.
+
+**Example:**
+```py
+Given the sequence [3, 2, 6, 1, 9], the resulting Cartesian tree would be:
+      1
+    /   \   
+  2       9
+ / \
+3   6
+```
+
+
 ### June 18, 2021 \[Medium\] Sorting a List With 3 Unique Numbers
 ---
 > **Question:** Given a list of numbers with only `3` unique numbers `(1, 2, 3)`, sort the list in `O(n)` time.
