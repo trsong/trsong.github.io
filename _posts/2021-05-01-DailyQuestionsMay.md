@@ -19,6 +19,28 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
 
+### June 20, 2021 \[Easy\] Count Total Set Bits from 1 to n
+---
+> **Question:** Write an algorithm that finds the total number of set bits in all integers between 1 and N.
+
+**Examples:**
+```py
+Input: n = 3  
+Output:  4
+Explanation: The binary representation (01, 10, 11) contains 4 1s.
+
+Input: n = 6
+Output: 9
+Explanation: The binary representation (01, 10, 11, 100, 101, 110) contains 9 1s.
+
+Input: n = 7
+Output: 12
+
+Input: n = 8
+Output: 13
+```
+
+
 ### June 19, 2021 \[Hard\] Construct Cartesian Tree from Inorder Traversal
 ---
 > **Question:** A Cartesian tree with sequence S is a binary tree defined by the following two properties:
