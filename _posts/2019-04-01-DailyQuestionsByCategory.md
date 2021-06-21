@@ -7828,6 +7828,37 @@ For example, given `"2542540123"`, you should return `['254.25.40.123', '254.254
 ---
 
 <details>
+<summary class="lc_e">
+
+- [**\[Easy\] Count Total Set Bits from 1 to n**](http://trsong.github.io/python/java/2021/05/02/DailyQuestionsMay.html#june-20-2021-easy-count-total-set-bits-from-1-to-n) -- *Write an algorithm that finds the total number of set bits in all integers between 1 and N.* [*\(Try ME\)*](https://replit.com/@trsong/Count-Total-Number-of-Set-Bits-from-1-to-n-1)
+
+</summary>
+<div>
+
+**Question:** Write an algorithm that finds the total number of set bits in all integers between 1 and N.
+
+**Examples:**
+```py
+Input: n = 3  
+Output:  4
+Explanation: The binary representation (01, 10, 11) contains 4 1s.
+
+Input: n = 6
+Output: 9
+Explanation: The binary representation (01, 10, 11, 100, 101, 110) contains 9 1s.
+
+Input: n = 7
+Output: 12
+
+Input: n = 8
+Output: 13
+```
+
+</div>
+</details>
+
+
+<details>
 <summary class="lc_m">
 
 - [**\[Medium\] Maximum Non Adjacent Sum**](https://trsong.github.io/python/java/2021/02/02/DailyQuestionsFeb.html#apr-18-2021-medium-maximum-non-adjacent-sum) -- *Given a list of positive numbers, find the largest possible set such that no elements are adjacent numbers of each other.* [*\(Try ME\)*](https://replit.com/@trsong/Find-Maximum-Non-Adjacent-Sum-1)

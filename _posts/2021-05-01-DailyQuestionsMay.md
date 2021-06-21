@@ -45,6 +45,61 @@ Input: n = 8
 Output: 13
 ```
 
+**Solution with DP:** [https://replit.com/@trsong/Count-Total-Number-of-Set-Bits-from-1-to-n](https://replit.com/@trsong/Count-Total-Number-of-Set-Bits-from-1-to-n)
+```py
+import unittest
+
+def count_bits(target):
+    # Let dp[num] represents number of bits for number num
+    dp = [None] * (target + 1)
+    dp[0] = 0
+    res = 0
+    for num in range(1, target + 1):
+        if num % 2 == 0:
+            dp[num] = dp[num // 2]
+        else:
+            dp[num] = dp[num - 1] + 1
+        res += dp[num]
+    return res
+
+
+class CountBitSpec(unittest.TestCase):
+    def test_example1(self):
+        self.assertEqual(4, count_bits(3))  # 1, 10, 11
+
+    def test_example2(self):
+        self.assertEqual(9, count_bits(6))  # 1, 10, 11, 100, 101, 110
+
+    def test_example3(self):
+        self.assertEqual(12, count_bits(7))
+
+    def test_example4(self):
+        self.assertEqual(13, count_bits(8))
+
+    def test_example5(self):
+        self.assertEqual(35, count_bits(17))
+
+    def test_zero(self):
+        self.assertEqual(0, count_bits(0))
+
+    def test_one(self):
+        self.assertEqual(1, count_bits(1))
+
+    def test_power_of_two(self):
+        self.assertEqual(5121, count_bits(1024))
+
+    def test_all_ones(self):
+        self.assertEqual(1024, count_bits(0b11111111))
+
+    def test_mixed_digits(self):
+        self.assertEqual(515, count_bits(0b10010101))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False, verbosity=2)
+
+```
+
 
 ### June 19, 2021 \[Hard\] Construct Cartesian Tree from Inorder Traversal
 ---
