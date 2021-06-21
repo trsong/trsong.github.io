@@ -19,6 +19,11 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
 
+### June 21, 2021 \[Easy\] Zig-Zag Distinct LinkedList
+--- 
+> **Question:** Given a linked list with DISTINCT value, rearrange the node values such that they appear in alternating `low -> high -> low -> high ...` form. For example, given `1 -> 2 -> 3 -> 4 -> 5`, you should return `1 -> 3 -> 2 -> 5 -> 4`.
+
+
 ### June 20, 2021 \[Easy\] Count Total Set Bits from 1 to n
 ---
 > **Question:** Write an algorithm that finds the total number of set bits in all integers between 1 and N.
