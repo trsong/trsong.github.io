@@ -4189,7 +4189,7 @@ return 23 (5 + 4 + 6 + 8).
 <details>
 <summary class="lc_h">
 
-- [**\[Hard\] Construct Cartesian Tree from Inorder Traversal**](https://trsong.github.io/python/java/2020/11/02/DailyQuestionsAug.html#dec-12-2020-hard-construct-cartesian-tree-from-inorder-traversal) -- *Given in-order traversal, construct a Cartesian tree. A Cartesian tree is heap-ordered, so that each parent value is smaller than children.* [*\(Try ME\)*](https://repl.it/@trsong/Construct-Cartesian-Tree-from-Inorder-Traversal-1)
+- [**\[Hard\] Construct Cartesian Tree from Inorder Traversal**](http://trsong.github.io/python/java/2021/05/02/DailyQuestionsMay.html#june-19-2021-hard-construct-cartesian-tree-from-inorder-traversal) -- *Given in-order traversal, construct a Cartesian tree. A Cartesian tree is heap-ordered, so that each parent value is smaller than children.* [*\(Try ME\)*](https://repl.it/@trsong/Construct-Cartesian-Tree-from-Inorder-Traversal-1)
 
 </summary>
 <div>
