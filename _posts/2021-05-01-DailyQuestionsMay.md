@@ -19,6 +19,21 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
 
+### June 22, 2021 \[Medium\] Circle of Chained Words
+---
+> **Question:** Two words can be 'chained' if the last character of the first word is the same as the first character of the second word.
+>
+> Given a list of words, determine if there is a way to 'chain' all the words in a circle.
+
+**Example:**
+```py
+Input: ['eggs', 'karat', 'apple', 'snack', 'tuna']
+Output: True
+Explanation:
+The words in the order of ['apple', 'eggs', 'snack', 'karat', 'tuna'] creates a circle of chained words.
+```
+
+
 ### June 21, 2021 \[Easy\] Zig-Zag Distinct LinkedList
 --- 
 > **Question:** Given a linked list with DISTINCT value, rearrange the node values such that they appear in alternating `low -> high -> low -> high ...` form. For example, given `1 -> 2 -> 3 -> 4 -> 5`, you should return `1 -> 3 -> 2 -> 5 -> 4`.
