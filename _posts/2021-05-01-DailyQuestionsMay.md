@@ -39,6 +39,117 @@ The words in the order of ['apple', 'eggs', 'snack', 'karat', 'tuna'] creates a 
 > **Question:** Given a linked list with DISTINCT value, rearrange the node values such that they appear in alternating `low -> high -> low -> high ...` form. For example, given `1 -> 2 -> 3 -> 4 -> 5`, you should return `1 -> 3 -> 2 -> 5 -> 4`.
 
 
+**Solution:** [https://replit.com/@trsong/Zig-Zag-Order-of-Distinct-LinkedList-2](https://replit.com/@trsong/Zig-Zag-Order-of-Distinct-LinkedList-2)
+```py
+import unittest
+import copy
+
+def zig_zag_order(lst):
+    should_increase = True
+    dummy = prev = ListNode(-1, lst)
+    p = lst
+
+    while p and p.next:
+        has_increase = p.next.val > p.val
+        if should_increase == has_increase:
+            prev = p
+            p = p.next
+        else:
+            second = p.next
+
+            p.next = second.next
+            second.next = p
+            prev.next = second
+
+            prev = second
+        should_increase = not should_increase
+    return dummy.next
+            
+
+###################
+# Testing Utilities
+###################
+class ListNode(object):
+    def __init__(self, val, next=None):
+        self.val = val
+        self.next = next
+    
+    @staticmethod  
+    def List(*vals):
+        dummy = ListNode(-1)
+        p = dummy
+        for elem in vals:
+            p.next = ListNode(elem)
+            p = p.next
+        return dummy.next  
+
+    def __repr__(self):
+        return "{} -> {}".format(str(self.val), str(self.next))
+
+    def to_list(self):
+        res = []
+        p = self
+        while p:
+            res.append(p.val)
+            p = p.next
+        return res
+
+
+class ZigZagOrderSpec(unittest.TestCase):
+    def verify_order(self, original_lst):
+        lst = zig_zag_order(copy.deepcopy(original_lst))
+        self.assertIsNotNone(lst)
+        self.assertEqual(set(original_lst.to_list()), set(lst.to_list()))
+
+        isLessThanPrevious = False
+        p = lst.next
+        prev = lst
+        while p:
+            if isLessThanPrevious:
+                self.assertLess(p.val, prev.val, "%d in %s" % (p.val, lst))
+            else:
+                self.assertGreater(p.val, prev.val, "%d in %s" % (p.val, lst))
+
+            isLessThanPrevious = not isLessThanPrevious
+            prev = p
+            p = p.next
+
+    def test_example(self):
+        lst = ListNode.List(1, 2, 3, 4, 5)
+        self.verify_order(lst)
+
+    def test_empty_array(self):
+        self.assertIsNone(zig_zag_order(None))
+
+    def test_unsorted_list1(self):
+        lst = ListNode.List(10, 5, 6, 3, 2, 20, 100, 80)
+        self.verify_order(lst)
+
+    def test_unsorted_list2(self):
+        lst = ListNode.List(2, 4, 6, 8, 10, 20)
+        self.verify_order(lst)
+
+    def test_unsorted_list3(self):
+        lst = ListNode.List(3, 6, 5, 10, 7, 20)
+        self.verify_order(lst)
+
+    def test_unsorted_list4(self):
+        lst = ListNode.List(20, 10, 8, 6, 4, 2)
+        self.verify_order(lst)
+
+    def test_unsorted_list5(self):
+        lst = ListNode.List(6, 4, 2, 1, 8, 3)
+        self.verify_order(lst)
+
+    def test_sorted_list(self):
+        lst = ListNode.List(6, 5, 4, 3, 2, 1)
+        self.verify_order(lst)
+    
+
+if __name__ == '__main__':
+    unittest.main(exit=False, verbosity=2)
+```
+
 ### June 20, 2021 \[Easy\] Count Total Set Bits from 1 to n
 ---
 > **Question:** Write an algorithm that finds the total number of set bits in all integers between 1 and N.
