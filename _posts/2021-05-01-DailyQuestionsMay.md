@@ -19,6 +19,23 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
 
+### June 23, 2021 \[Easy\] Implement Prefix Map Sum
+---
+> **Question:** Implement a PrefixMapSum class with the following methods:
+>
+> - `insert(key: str, value: int)`: Set a given key's value in the map. If the key already exists, overwrite the value.
+> - `sum(prefix: str)`: Return the sum of all values of keys that begin with a given prefix.
+
+**Example:**
+```py
+mapsum.insert("columnar", 3)
+assert mapsum.sum("col") == 3
+
+mapsum.insert("column", 2)
+assert mapsum.sum("col") == 5
+```
+
+
 ### June 22, 2021 \[Medium\] Circle of Chained Words
 ---
 > **Question:** Two words can be 'chained' if the last character of the first word is the same as the first character of the second word.
