@@ -50,6 +50,93 @@ Explanation:
 The words in the order of ['apple', 'eggs', 'snack', 'karat', 'tuna'] creates a circle of chained words.
 ```
 
+**My thoughts:** Treat each non-empty word as an edge in a directed graph with vertices being the first and last letter of the word. Now, pick up any letter as a starting point. Perform DFS and remove any edge we visited from the graph. Check if all edges are used. And make sure the vertex we stop at is indeed the starting point. If all above statisfied, then there exists a cycle that chains all words. 
+
+**Solution with DFS:** [https://replit.com/@trsong/Contains-Circle-of-Chained-Words-2](https://replit.com/@trsong/Contains-Circle-of-Chained-Words-2)
+```py
+import unittest
+
+def exists_cycle(words):
+    neighbors = {}
+    for word in words:
+        if not word:
+            continue
+        start, end = word[0], word[-1]
+        neighbors[start] = neighbors.get(start, {})
+        neighbors[start][end] = neighbors[start].get(end, 0) + 1
+
+    if not neighbors:
+        return False
+
+    start = next(neighbors.iterkeys())
+    stack = [start]
+
+    while stack and neighbors:
+        cur = stack.pop()
+        if cur not in neighbors:
+            return False
+
+        nb = next(neighbors[cur].iterkeys())
+        neighbors[cur][nb] -= 1
+        if neighbors[cur][nb] == 0:
+            del neighbors[cur][nb]
+            if not neighbors[cur]:
+                del neighbors[cur]
+        stack.append(nb)
+    return not neighbors and len(stack) == 1 and stack[0] == start
+    
+            
+
+class ExistsCycleSpec(unittest.TestCase):
+    def test_example(self):
+        words = ['eggs', 'karat', 'apple', 'snack', 'tuna']
+        self.assertTrue(exists_cycle(words)) # ['apple', 'eggs', 'snack', 'karat', 'tuna']
+
+    def test_empty_words(self):
+        words = []
+        self.assertFalse(exists_cycle(words))
+    
+    def test_not_contains_cycle(self):
+        words = ['ab']
+        self.assertFalse(exists_cycle(words))
+
+    def test_not_contains_cycle2(self):
+        words = ['']
+        self.assertFalse(exists_cycle(words))
+
+    def test_not_exist_cycle(self):
+        words = ['ab', 'c', 'c', 'def', 'gh']
+        self.assertFalse(exists_cycle(words))
+
+    def test_exist_cycle_but_not_chaining_all_words(self):
+        words = ['ab', 'be', 'bf', 'bc', 'ca']
+        self.assertFalse(exists_cycle(words))
+    
+    def test_exist_cycle_but_not_chaining_all_words2(self):
+        words = ['ab', 'ba', 'bc', 'ca']
+        self.assertFalse(exists_cycle(words))
+
+    def test_duplicate_words_with_cycle(self):
+        words = ['ab', 'bc', 'ca', 'ab', 'bd', 'da' ]
+        self.assertTrue(exists_cycle(words))
+
+    def test_contains_mutiple_cycles(self):
+        words = ['ab', 'ba', 'ac', 'ca']
+        self.assertTrue(exists_cycle(words))
+
+    def test_disconnect_graph(self):
+        words = ['ab', 'ba', 'cd', 'de', 'ec']
+        self.assertFalse(exists_cycle(words))
+
+    def test_conains_empty_string(self):
+        words2 = ['', 'a', '', '', 'a']
+        self.assertTrue(exists_cycle(words2))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False, verbosity=2)
+```
+
 
 ### June 21, 2021 \[Easy\] Zig-Zag Distinct LinkedList
 --- 
