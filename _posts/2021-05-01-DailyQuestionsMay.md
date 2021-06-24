@@ -19,6 +19,13 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
 
+### June 24, 2021 \[Easy\] Permutations
+---
+> **Question:** Given a number in the form of a list of digits, return all possible permutations.
+>
+> For example, given `[1,2,3]`, return `[[1,2,3],[1,3,2],[2,1,3],[2,3,1],[3,1,2],[3,2,1]]`.
+
+
 ### June 23, 2021 \[Easy\] Implement Prefix Map Sum
 ---
 > **Question:** Implement a PrefixMapSum class with the following methods:
@@ -35,6 +42,99 @@ mapsum.insert("column", 2)
 assert mapsum.sum("col") == 5
 ```
 
+**Solution with Trie:** [https://replit.com/@trsong/Implement-Prefix-Map-Sum-3](https://replit.com/@trsong/Implement-Prefix-Map-Sum-3)
+```py
+import unittest
+
+class Trie(object):
+    def __init__(self):
+        self.children = None
+        self.accu_sum = 0
+
+
+class PrefixMap(object):
+    def __init__(self):
+        self.trie = Trie()
+        self.record = {}
+
+    def insert(self, word, val):
+        updated_val = val - self.record.get(word, 0) 
+        self.record[word] = val
+
+        p = self.trie
+        for ch in word:
+            p.accu_sum += updated_val
+            p.children = p.children or {}
+            p.children[ch] = p.children.get(ch, Trie())
+            p = p.children[ch]
+        p.accu_sum += updated_val
+
+    def sum(self, word):
+        p = self.trie
+        for ch in word:
+            if not p or not p.children or ch not in p.children:
+                return 0
+            p = p.children[ch]
+        return p.accu_sum if p else 0
+
+
+class PrefixMapSpec(unittest.TestCase):
+    def test_example(self):
+        prefix_map = PrefixMap()
+        prefix_map.insert("columnar", 3)
+        self.assertEqual(3, prefix_map.sum("col"))
+        prefix_map.insert("column", 2)
+        self.assertEqual(5, prefix_map.sum("col"))
+
+    def test_empty_map(self):
+        prefix_map = PrefixMap()
+        self.assertEqual(0, prefix_map.sum(""))
+        self.assertEqual(0, prefix_map.sum("unknown"))
+
+    def test_same_prefix(self):
+        prefix_map = PrefixMap()
+        prefix_map.insert("a", 1)
+        prefix_map.insert("aa", 2)
+        prefix_map.insert("aaa", 3)
+        self.assertEqual(0, prefix_map.sum("aaaa"))
+        self.assertEqual(3, prefix_map.sum("aaa"))
+        self.assertEqual(5, prefix_map.sum("aa"))
+        self.assertEqual(6, prefix_map.sum("a"))
+        self.assertEqual(6, prefix_map.sum(""))
+
+    def test_same_prefix2(self):
+        prefix_map = PrefixMap()
+        prefix_map.insert("aa", 1)
+        prefix_map.insert("a", 2)
+        prefix_map.insert("b", 1)
+        self.assertEqual(0, prefix_map.sum("aaa"))
+        self.assertEqual(1, prefix_map.sum("aa"))
+        self.assertEqual(3, prefix_map.sum("a"))
+        self.assertEqual(4, prefix_map.sum(""))
+
+    def test_double_prefix(self):
+        prefix_map = PrefixMap()
+        prefix_map.insert("abc", 1)
+        prefix_map.insert("abd", 2)
+        prefix_map.insert("abzz", 1)
+        prefix_map.insert("bazz", 1)
+        self.assertEqual(4, prefix_map.sum("ab"))
+        self.assertEqual(0, prefix_map.sum("abq"))
+        self.assertEqual(4, prefix_map.sum("a"))
+        self.assertEqual(1, prefix_map.sum("b"))
+
+    def test_update_value(self):
+        prefix_map = PrefixMap()
+        prefix_map.insert('a', 1)
+        prefix_map.insert('ab', 1)
+        prefix_map.insert('abc', 1)
+        prefix_map.insert('ab', 100)
+        self.assertEqual(102, prefix_map.sum('a'))
+
+
+if __name__ == '__main__':
+    unittest.main(verbosity=2, exit=False)
+```
 
 ### June 22, 2021 \[Medium\] Circle of Chained Words
 ---
