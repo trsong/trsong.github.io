@@ -19,6 +19,25 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
 
+### June 25, 2021 \[Easy\] Spreadsheet Columns
+--- 
+> **Question:** In many spreadsheet applications, the columns are marked with letters. From the 1st to the 26th column the letters are A to Z. Then starting from the 27th column it uses AA, AB, ..., ZZ, AAA, etc.
+>
+> Given a number n, find the n-th column name.
+
+**Examples:**
+```py
+Input          Output
+ 26             Z
+ 51             AY
+ 52             AZ
+ 80             CB
+ 676            YZ
+ 702            ZZ
+ 705            AAC
+```
+
+
 ### June 24, 2021 \[Easy\] Permutations
 ---
 > **Question:** Given a number in the form of a list of digits, return all possible permutations.
