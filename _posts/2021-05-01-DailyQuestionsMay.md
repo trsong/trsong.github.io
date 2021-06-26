@@ -37,6 +37,55 @@ Input          Output
  705            AAC
 ```
 
+**Solution:** [https://replit.com/@trsong/Find-Spreadsheet-Columns-2](https://replit.com/@trsong/Find-Spreadsheet-Columns-2)
+```py
+import unittest
+
+def spreadsheet_columns(n):
+    ord_a = ord('A')
+    alphabet_size = 26
+    res = []
+    while n > 0:
+        remainder = n % alphabet_size
+        # 1 -> A, 2 -> B, 26 -> Z
+        letter = (remainder - 1) % alphabet_size
+        res.append(chr(ord_a + letter))
+        n //= alphabet_size
+        if remainder == 0:
+            n -= 1
+    res.reverse()
+    return "".join(res)
+
+    
+class SpreadsheetColumnSpec(unittest.TestCase):
+    def test_trivial_example(self):
+        self.assertEqual("A", spreadsheet_columns(1))
+    
+    def test_example1(self):
+        self.assertEqual("Z", spreadsheet_columns(26))
+    
+    def test_example2(self):
+        self.assertEqual("AY", spreadsheet_columns(51))
+    
+    def test_example3(self):
+        self.assertEqual("AZ", spreadsheet_columns(52))
+    
+    def test_example4(self):
+        self.assertEqual("CB", spreadsheet_columns(80))
+    
+    def test_example5(self):
+        self.assertEqual("YZ", spreadsheet_columns(676))
+    
+    def test_example6(self):
+        self.assertEqual("ZZ", spreadsheet_columns(702))
+    
+    def test_example7(self):
+        self.assertEqual("AAC", spreadsheet_columns(705))
+
+
+if __name__ == '__main__':
+    unittest.main(verbosity=2, exit=False)
+```
 
 ### June 24, 2021 \[Easy\] Permutations
 ---
