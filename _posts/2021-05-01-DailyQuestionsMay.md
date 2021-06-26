@@ -19,6 +19,29 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
 
+### June 26, 2021 \[Medium\] LRU Cache
+---
+> **Question:** Implement an LRU (Least Recently Used) cache. It should be able to be initialized with a cache size n, and contain the following methods:
+>
+> - `put(key, value)`: sets key to value. If there are already n items in the cache and we are adding a new item, then it should also remove the least recently used item.
+> - `get(key)`: gets the value at key. If no such key exists, return null.
+>  
+> Each operation should run in O(1) time.
+
+**Example:**
+```py
+cache = LRUCache(2)
+cache.put(3, 3)
+cache.put(4, 4)
+cache.get(3)  # returns 3
+cache.get(2)  # returns None
+
+cache.put(2, 2)
+cache.get(4)  # returns None (pre-empted by 2)
+cache.get(3)  # returns 3
+```
+
+
 ### June 25, 2021 \[Easy\] Spreadsheet Columns
 --- 
 > **Question:** In many spreadsheet applications, the columns are marked with letters. From the 1st to the 26th column the letters are A to Z. Then starting from the 27th column it uses AA, AB, ..., ZZ, AAA, etc.
