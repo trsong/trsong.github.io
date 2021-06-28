@@ -19,6 +19,17 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
 
+### June 27, 2021  \[Easy\] Swap Even and Odd Nodes
+---
+> **Question:** Given the head of a singly linked list, swap every two nodes and return its head.
+>
+> **Note:** Make sure it’s acutally nodes that get swapped not value.
+
+**Example:**
+```py
+Given 1 -> 2 -> 3 -> 4, return 2 -> 1 -> 4 -> 3.
+```
+
 ### June 26, 2021 \[Medium\] LRU Cache
 ---
 > **Question:** Implement an LRU (Least Recently Used) cache. It should be able to be initialized with a cache size n, and contain the following methods:
