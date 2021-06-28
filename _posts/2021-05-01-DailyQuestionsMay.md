@@ -19,6 +19,26 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
 
+### June 28, 2021  LC 65 \[Medium\]  Determine if number
+---
+> **Question:** Given a string that may represent a number, determine if it is a number. Here's some of examples of how the number may be presented:
+```py
+"123" # Integer
+"12.3" # Floating point
+"-123" # Negative numbers
+"-.3" # Negative floating point
+"1.5e5" # Scientific notation
+```
+
+> Here's some examples of what isn't a proper number:
+```py
+"12a" # No letters
+"1 2" # No space between numbers
+"1e1.2" # Exponent can only be an integer (positive or negative or 0)
+```
+> Scientific notation requires the first number to be less than 10, however to simplify the solution assume the first number can be greater than 10. Do not parse the string with int() or any other python functions.
+
+
 ### June 27, 2021  \[Easy\] Swap Even and Odd Nodes
 ---
 > **Question:** Given the head of a singly linked list, swap every two nodes and return its head.
@@ -28,6 +48,82 @@ categories: Python/Java
 **Example:**
 ```py
 Given 1 -> 2 -> 3 -> 4, return 2 -> 1 -> 4 -> 3.
+```
+
+**Solution:** [https://replit.com/@trsong/Swap-Every-Even-and-Odd-Nodes-in-Linked-List-2](https://replit.com/@trsong/Swap-Every-Even-and-Odd-Nodes-in-Linked-List-2)
+```py
+import unittest
+
+def swap_list(lst):
+    prev = dummy = ListNode(-1, lst)
+    
+    while prev and prev.next and prev.next.next:
+        first = prev.next
+        second = first.next
+
+        first.next = second.next
+        second.next = first
+        prev.next = second
+
+        prev = first
+    return dummy.next
+
+
+class ListNode(object):
+    def __init__(self, val, next=None):
+        self.val = val
+        self.next = next
+
+
+class SwapListSpec(unittest.TestCase):
+    def assert_lists(self, lst, node_seq):
+        p = lst
+        for node in node_seq:
+            if p != node: print (p.data if p else "None"), (node.data if node else "None")
+            self.assertTrue(p == node)
+            p = p.next
+        self.assertTrue(p is None)
+
+    def test_empty(self):
+        self.assert_lists(swap_list(None), [])
+
+    def test_one_elem_list(self):
+        n1 = ListNode(1)
+        self.assert_lists(swap_list(n1), [n1])
+
+    def test_two_elems_list(self):
+        # 1 -> 2
+        n2 = ListNode(2)
+        n1 = ListNode(1, n2)
+        self.assert_lists(swap_list(n1), [n2, n1])
+
+    def test_three_elems_list(self):
+        # 1 -> 2 -> 3
+        n3 = ListNode(3)
+        n2 = ListNode(2, n3)
+        n1 = ListNode(1, n2)
+        self.assert_lists(swap_list(n1), [n2, n1, n3])
+
+    def test_four_elems_list(self):
+        # 1 -> 2 -> 3 -> 4
+        n4 = ListNode(4)
+        n3 = ListNode(3, n4)
+        n2 = ListNode(2, n3)
+        n1 = ListNode(1, n2)
+        self.assert_lists(swap_list(n1), [n2, n1, n4, n3])
+
+    def test_five_elems_list(self):
+        # 1 -> 2 -> 3 -> 4 -> 5
+        n5 = ListNode(5)
+        n4 = ListNode(4, n5)
+        n3 = ListNode(3, n4)
+        n2 = ListNode(2, n3)
+        n1 = ListNode(1, n2)
+        self.assert_lists(swap_list(n1), [n2, n1, n4, n3, n5])
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False, verbosity=2)
 ```
 
 ### June 26, 2021 \[Medium\] LRU Cache
