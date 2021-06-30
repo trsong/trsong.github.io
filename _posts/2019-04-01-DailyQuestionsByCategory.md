@@ -27,6 +27,36 @@ categories: Python/Java
 ## Math
 ---
 
+
+<details>
+<summary class="lc_m">
+
+- [**\[Medium\] LC 65. Determine if number**](http://trsong.github.io/python/java/2021/05/02/DailyQuestionsMay.html#june-28-2021--lc-65-medium--determine-if-number) -- *Given a string that may represent a number, determine if it is a number.* [*\(Try ME\)*](https://replit.com/@trsong/Determine-valid-number-1)
+
+</summary>
+<div>
+
+**Question:** Given a string that may represent a number, determine if it is a number. Here's some of examples of how the number may be presented:
+```py
+"123" # Integer
+"12.3" # Floating point
+"-123" # Negative numbers
+"-.3" # Negative floating point
+"1.5e5" # Scientific notation
+```
+
+Here's some examples of what isn't a proper number:
+```py
+"12a" # No letters
+"1 2" # No space between numbers
+"1e1.2" # Exponent can only be an integer (positive or negative or 0)
+```
+Scientific notation requires the first number to be less than 10, however to simplify the solution assume the first number can be greater than 10. Do not parse the string with int() or any other python functions.
+
+</div>
+</details>
+
+
 <details>
 <summary class="lc_m">
 

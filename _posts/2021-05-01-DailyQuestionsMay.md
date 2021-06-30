@@ -50,6 +50,145 @@ The output can be any random permutation of the input such that all permutation 
 ```
 > Scientific notation requires the first number to be less than 10, however to simplify the solution assume the first number can be greater than 10. Do not parse the string with int() or any other python functions.
 
+**Solution:** [https://replit.com/@trsong/Determine-valid-number](https://replit.com/@trsong/Determine-valid-number)
+```py
+import unittest
+
+def is_valid_number(raw_num):
+    """
+    (WHITE_SPACE) (SIGN) DIGITS (DOT DIGITS) (e (SIGN) DIGITS) (WHITE_SPACE)
+    or
+     (WHITE_SPACE) (SIGN) DOT DIGITS (e (SIGN) DIGITS) (WHITE_SPACE)
+    """
+    if not raw_num:
+        return False
+    n = len(raw_num)
+    start = 0
+    end = len(raw_num) - 1
+    has_digit = False
+    has_exponent = False
+    has_dot = False
+    has_sign = False
+
+    # Skip Whitespaces
+    while start < n and raw_num[start] == ' ':
+        start += 1
+    
+    while end >= 0 and raw_num[end] == ' ':
+        end -= 1
+    
+    if start > end:
+        return False
+    
+    for i in range(start, end+1):
+        char = raw_num[i]
+        if char == '-' or char == '+':
+            # SIGN must be before DIGIT OR DOT
+            if has_sign or has_digit or has_dot:
+                return False
+            has_sign = True
+        elif char == 'e':
+            # Must exits DIGIT before EXPONENT
+            if has_exponent or not has_digit: return False
+            has_exponent = True
+            has_sign = False
+            has_digit = False
+            has_dot = False
+        elif char == '.':
+            # Dot cannot go after EXPONENT
+            if has_exponent or has_dot: return False
+            has_dot = True
+        elif '0' <= char <= '9':
+            has_digit = True
+        else:
+            return False
+    
+    return has_digit
+
+
+class IsValidNumberSpec(unittest.TestCase):
+    def test_example1(self):
+        self.assertTrue(is_valid_number("123"))  # Integer
+
+    def test_example2(self):
+        self.assertTrue(is_valid_number("12.3"))  # Floating point
+    
+    def test_example3(self):
+        self.assertTrue(is_valid_number("-123"))  # Negative numbers
+    
+    def test_example4(self):
+        self.assertTrue(is_valid_number("-.3"))  # Negative floating point
+    
+    def test_example5(self):
+        self.assertTrue(is_valid_number("1.5e5")) # Scientific notation
+    
+    def test_example6(self):
+        self.assertFalse(is_valid_number("12a"))  # No letters
+    
+    def test_example7(self):
+        self.assertFalse(is_valid_number("1 2")) # No space between numbers
+    
+    def test_example8(self):
+        self.assertFalse(is_valid_number("1e1.2")) # Exponent can only be an integer (positive or negative or 0)
+
+    def test_empty_string(self):
+        self.assertFalse(is_valid_number(""))
+
+    def test_blank_string(self):
+        self.assertFalse(is_valid_number("   "))
+
+    def test_just_signs(self):
+        self.assertFalse(is_valid_number("+"))
+
+    def test_zero(self):
+        self.assertTrue(is_valid_number("0"))
+
+    def test_contains_no_number(self):
+        self.assertFalse(is_valid_number("e"))
+
+    def test_contains_white_spaces(self):
+        self.assertTrue(is_valid_number(" -123.456  "))
+
+    def test_scientific_notation(self):
+        self.assertTrue(is_valid_number("2e10"))
+
+    def test_scientific_notation2(self):
+        self.assertFalse(is_valid_number("10e5.4"))
+
+    def test_scientific_notation3(self):
+        self.assertTrue(is_valid_number("-24.35e-10"))
+
+    def test_scientific_notation4(self):
+        self.assertFalse(is_valid_number("1e1e1"))
+
+    def test_scientific_notation5(self):
+        self.assertTrue(is_valid_number("+.5e-23"))
+
+    def test_scientific_notation6(self):
+        self.assertFalse(is_valid_number("+e-23"))
+
+    def test_scientific_notation7(self):
+        self.assertFalse(is_valid_number("0e"))
+
+    def test_multiple_signs(self):
+        self.assertFalse(is_valid_number("+-2"))
+
+    def test_multiple_signs2(self):
+        self.assertFalse(is_valid_number("-2-2-2-2"))
+
+    def test_multiple_signs3(self):
+        self.assertFalse(is_valid_number("6+1"))
+
+    def test_multiple_dots(self):
+        self.assertFalse(is_valid_number("10.24.25"))
+
+    def test_sign_and_dot(self):
+        self.assertFalse(is_valid_number(".-4"))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False, verbosity=2)
+```
 
 ### June 27, 2021  \[Easy\] Swap Even and Odd Nodes
 ---
