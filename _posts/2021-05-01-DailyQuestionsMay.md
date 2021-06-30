@@ -19,6 +19,18 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
 
+### June 29, 2021  \[Hard\] Array Shuffle
+---
+> **Question:** Given an array, write a program to generate a random permutation of array elements. This question is also asked as “shuffle a deck of cards” or “randomize a given array”. Here shuffle means that every permutation of array element should equally likely.
+
+```
+Input: [1, 2, 3, 4, 5, 6]
+Output: [3, 4, 1, 5, 6, 2]
+The output can be any random permutation of the input such that all permutation are equally likely.
+```
+> **Hint:** Given a function that generates perfectly random numbers between 1 and k (inclusive) where k is an input, write a function that shuffles the input array using only swaps.
+
+
 ### June 28, 2021  LC 65 \[Medium\]  Determine if number
 ---
 > **Question:** Given a string that may represent a number, determine if it is a number. Here's some of examples of how the number may be presented:
