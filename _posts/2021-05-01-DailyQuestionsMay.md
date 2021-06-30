@@ -19,7 +19,7 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
 
-### June 29, 2021  \[Hard\] Array Shuffle
+### June 30, 2021 \[Hard\] Array Shuffle
 ---
 > **Question:** Given an array, write a program to generate a random permutation of array elements. This question is also asked as “shuffle a deck of cards” or “randomize a given array”. Here shuffle means that every permutation of array element should equally likely.
 
@@ -29,6 +29,14 @@ Output: [3, 4, 1, 5, 6, 2]
 The output can be any random permutation of the input such that all permutation are equally likely.
 ```
 > **Hint:** Given a function that generates perfectly random numbers between 1 and k (inclusive) where k is an input, write a function that shuffles the input array using only swaps.
+
+
+### June 29, 2021 \[Easy\] Balanced Brackets
+---
+> **Question:** Given a string of round, curly, and square open and closing brackets, return whether the brackets are balanced (well-formed).
+> For example, given the string `"([])[]({})"`, you should return true.
+> 
+> Given the string `"([)]"` or `"((()"`, you should return false.
 
 
 ### June 28, 2021  LC 65 \[Medium\]  Determine if number
