@@ -38,6 +38,78 @@ The output can be any random permutation of the input such that all permutation 
 > 
 > Given the string `"([)]"` or `"((()"`, you should return false.
 
+**My thoughts:** Whenever there is an open bracket, there should be a corresponding close bracket. Likewise, whenver we encounter a close bracket that does not match corresponding open braket, such string is not valid.
+
+So the idea is to iterate through the string, store all the open bracket, and whenever we see a close bracket we check and see if it matches the most rent open breaket we stored early. The data structure, **Stack**, staisfies all of our requirements.
+
+
+**Solution with Stack:** [https://replit.com/@trsong/Is-Balanced-Brackets](https://replit.com/@trsong/Is-Balanced-Brackets)
+```py
+import unittest
+
+def is_balanced_brackets(input):
+    bracket_mapping = {
+        '(': ')',
+        '[': ']',
+        '{': '}'
+    }
+
+    stack = []
+    for ch in input:
+        if ch in bracket_mapping:
+            stack.append(ch)
+        elif stack and ch == bracket_mapping[stack[-1]]:
+            stack.pop()
+        else:
+            return False
+
+    return not stack
+
+
+class IsBalancedBracketSpec(unittest.TestCase):
+    def test_example(self):
+        self.assertTrue(is_balanced_brackets('([])[]({})'))
+
+    def test_example2(self):
+        self.assertFalse(is_balanced_brackets('([)]'))
+
+    def test_example3(self):
+        self.assertFalse(is_balanced_brackets('((()'))
+
+    def test_empty_input(self):
+        self.assertTrue(is_balanced_brackets(''))
+
+    def test_close_bracket_only(self):
+        self.assertFalse(is_balanced_brackets(')'))
+
+    def test_mismatch_input(self):
+        self.assertFalse(is_balanced_brackets('(]'))
+
+    def test_mismatch_input2(self):
+        self.assertFalse(is_balanced_brackets('[}'))
+
+    def test_mismatch_input3(self):
+        self.assertFalse(is_balanced_brackets('((]]'))
+
+    def test_mismatch_input4(self):
+        self.assertFalse(is_balanced_brackets('(][)'))
+
+    def test_balanced_brackets(self):
+        self.assertTrue(is_balanced_brackets('(([]))'))
+
+    def test_balanced_brackets2(self):
+        self.assertTrue(is_balanced_brackets('[]{}()'))
+
+    def test_balanced_brackets3(self):
+        self.assertTrue(is_balanced_brackets('[](())'))
+
+    def test_imbalanced_brackets(self):
+        self.assertFalse(is_balanced_brackets('())))'))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False, verbosity=2)
+```
 
 ### June 28, 2021  LC 65 \[Medium\]  Determine if number
 ---

@@ -3320,6 +3320,24 @@ Output:  Either ['bed', 'bath', 'and', 'beyond'] or ['bedbath', 'and', 'beyond']
 ### Parenthesis
 ---
 
+
+<details>
+<summary class="lc_e">
+
+- [**\[Easy\] Balanced Brackets**](http://trsong.github.io/python/java/2021/05/02/DailyQuestionsMay.html#june-29-2021-easy-balanced-brackets) -- *Given a string of round, curly, and square open and closing brackets, return whether the brackets are balanced (well-formed).* [*\(Try ME\)*](https://replit.com/@trsong/Is-Balanced-Brackets-1)
+
+</summary>
+<div>
+
+**Question:** Given a string of round, curly, and square open and closing brackets, return whether the brackets are balanced (well-formed).
+For example, given the string `"([])[]({})"`, you should return true.
+ 
+Given the string `"([)]"` or `"((()"`, you should return false.
+
+</div>
+</details>
+
+
 <details>
 <summary class="lc_e">
 
