@@ -38,6 +38,64 @@ The output can be any random permutation of the input such that all permutation 
 ```
 > **Hint:** Given a function that generates perfectly random numbers between 1 and k (inclusive) where k is an input, write a function that shuffles the input array using only swaps.
 
+**My thoughts:** It's quite tricky to figure out how to evenly shuffle an array unless you understand there is no difference between shuffle an array versus randomly generate a permutation of that array.
+
+So, how to randomly generate a permutation of an array? That's simple. Just imagine you hold a deck of cards on your hand, and each time you randomly draw a card until not more cards available.
+
+| Round | Remaining Cards | Chosen Cards |
+|:------|:----------------|:-------------| 
+| 0     | `[1, 2, 3, 4, 5]` | `[]`           |
+| 1     | `[1, 3, 4, 5]`    | `[2]`          |
+| 2     | `[1, 3, 5]`       | `[4, 2]`       |
+| 3     | `[3, 5]`          | `[1, 4, 2]`    |
+| 4     | `[3]`             | `[5, 1, 4, 2]` |
+| 1     | `[]`              | `[3, 5, 1, 4, 2]` |
+
+It seems we can do that in-place:
+
+| Round | Remaining Cards \| Chosen Cards |
+|:------|:-----------------------------| 
+| 0     | `[1, 2, 3, 4, 5|]`           |
+| 1     | `[1, 3, 4, 5 | 2]`          |
+| 2     | `[1, 3, 5 | 4, 2]`       |
+| 3     | `[3, 5 | 1, 4, 2]`    |
+| 4     | `[3 | 5, 1, 4, 2]` |
+| 1     | `[|3, 5, 1, 4, 2]` |
+
+
+
+**Solution:** [https://replit.com/@trsong/Randomly-Shuffle-Array](https://replit.com/@trsong/Randomly-Shuffle-Array)
+```py
+from random import randint
+
+def array_shuffle(nums):
+    for last in range(len(nums) - 1, 0, -1):
+        chosen = randint(0, last)
+        # move the chosen number to last and move on
+        nums[chosen], nums[last] = nums[last], nums[chosen]
+
+
+def print_shuffle_histogram(nums, repeat):
+    """Print the frequency of each position get swapped"""
+    n = len(nums)
+    original = nums[:]
+    swap_freq = [0] * n
+    for _ in range(repeat):
+        array_shuffle(nums)
+        for i in range(n):
+            if original[i] != nums[i]:
+                swap_freq[i] += 1
+    print(swap_freq)
+
+
+if __name__ == '__main__':
+    nums = list(range(10))
+    # The frequency map for position get swapped should look like:
+    # [9010, 9036, 9015, 9035, 9006, 8935, 8990, 8951, 8926, 8985]
+    # Indicates each postion has same probability to be shuffled
+    print_shuffle_histogram(nums, repeat=10000)
+```
+
 
 ### June 29, 2021 \[Easy\] Balanced Brackets
 ---

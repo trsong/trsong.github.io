@@ -508,6 +508,29 @@ Return true as the first and third rectangle overlap each other.
 ---
 
 <details>
+<summary class="lc_h">
+
+- [**\[Hard\] Array Shuffle**](http://trsong.github.io/python/java/2021/05/02/DailyQuestionsMay.html#june-30-2021-hard-array-shuffle) -- *Given an array, write a program to generate a random permutation of array elements.* [*\(Try ME\)*](https://replit.com/@trsong/Randomly-Shuffle-Array-1)
+
+</summary>
+<div>
+
+
+**Question:** Given an array, write a program to generate a random permutation of array elements. This question is also asked as “shuffle a deck of cards” or “randomize a given array”. Here shuffle means that every permutation of array element should equally likely.
+
+```
+Input: [1, 2, 3, 4, 5, 6]
+Output: [3, 4, 1, 5, 6, 2]
+The output can be any random permutation of the input such that all permutation are equally likely.
+```
+
+**Hint:** Given a function that generates perfectly random numbers between 1 and k (inclusive) where k is an input, write a function that shuffles the input array using only swaps.
+
+</div>
+</details>
+
+
+<details>
 <summary class="lc_e">
 
 - [**\[Easy\] Maximum Time**](https://trsong.github.io/python/java/2021/05/02/DailyQuestionsMay.html#may-16-2021-easy-maximum-time) -- *Fill in ? such that the time represented by this string is the maximum possible.* [*\(Try ME\)*](https://replit.com/@trsong/Maximum-Time-1)
