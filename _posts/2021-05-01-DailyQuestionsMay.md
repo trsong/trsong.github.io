@@ -19,6 +19,14 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
 
+### Jul 1, 2021 \[Hard\] Sum of Consecutive Numbers
+---
+> **Question:** Given a number `n`, return the number of lists of consecutive numbers that sum up to `n`.
+>
+> For example, for `n = 9`, you should return `3` since the lists are: `[2, 3, 4]`, `[4, 5]`, and `[9]`. Can you do it in linear time?
+
+
+
 ### June 30, 2021 \[Hard\] Array Shuffle
 ---
 > **Question:** Given an array, write a program to generate a random permutation of array elements. This question is also asked as “shuffle a deck of cards” or “randomize a given array”. Here shuffle means that every permutation of array element should equally likely.
