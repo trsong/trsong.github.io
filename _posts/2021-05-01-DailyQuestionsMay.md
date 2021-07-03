@@ -20,6 +20,15 @@ categories: Python/Java
 
 
 
+### Jul 3, 2021 \[Hard\] Elo Rating System
+---
+> **Question:** In chess, the Elo rating system is used to calculate player strengths based on game results.
+>
+> A simplified description of the Elo system is as follows. Every player begins at the same score. For each subsequent game, the loser transfers some points to the winner, where the amount of points transferred depends on how unlikely the win is. For example, a 1200-ranked player should gain much more points for beating a 2000-ranked player than for beating a 1300-ranked player.
+>
+> Implement this system.
+
+
 ### Jul 2, 2021 \[Easy\] Goldbach’s conjecture
 ---
 > **Question:** Given an even number (greater than 2), return two prime numbers whose sum will be equal to the given number.
