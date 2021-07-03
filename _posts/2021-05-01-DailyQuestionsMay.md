@@ -19,6 +19,21 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
 
+
+### Jul 2, 2021 \[Easy\] Goldbach’s conjecture
+---
+> **Question:** Given an even number (greater than 2), return two prime numbers whose sum will be equal to the given number.
+>
+> A solution will always exist. See [Goldbach’s conjecture](https://en.wikipedia.org/wiki/Goldbach%27s_conjecture). If there are more than one solution possible, return the lexicographically smaller solution.
+
+**Example:**
+```py
+Input: 4
+Output: (2, 2)
+Explanation: 2 + 2 = 4
+```
+
+
 ### Jul 1, 2021 \[Hard\] Sum of Consecutive Numbers
 ---
 > **Question:** Given a number `n`, return the number of lists of consecutive numbers that sum up to `n`.
