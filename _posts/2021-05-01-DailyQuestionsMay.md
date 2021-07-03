@@ -25,7 +25,57 @@ categories: Python/Java
 >
 > For example, for `n = 9`, you should return `3` since the lists are: `[2, 3, 4]`, `[4, 5]`, and `[9]`. Can you do it in linear time?
 
+**Solution:** [https://replit.com/@trsong/Sum-of-Consecutive-Numbers](https://replit.com/@trsong/Sum-of-Consecutive-Numbers)
+```py
+import unittest
 
+def sum_of_consecutive_numbers(n):
+    # suppose sequence length is d (where d <= n) and sequence start from x (where x >= 1). 
+    #     x + (x + 1) + ... + (x + d - 1) = n
+    # =>  d * x + (1 + d - 1) * (d - 1) / 2 = n 
+    # =>  d * x = n - d * (d - 1) / 2
+    # Now, by knowing n, we want to find (d, x) pair such that above equation holds
+    res = 0
+    for d in range(1, n + 1):
+        rhs = n - d * (d - 1) // 2
+        if rhs <= 0:
+            break
+        
+        if rhs % d == 0:
+            # x is rhs / d
+            res += 1
+    return res
+
+
+class SumOfConsecutiveNumberSpec(unittest.TestCase):
+    def test_example(self):
+        # [2, 3, 4], [4, 5], and [9]
+        self.assertEqual(3, sum_of_consecutive_numbers(9))
+
+    def test_example2(self):
+        # [2]
+        self.assertEqual(1, sum_of_consecutive_numbers(2))
+
+    def test_example3(self):
+        # [1]
+        self.assertEqual(1, sum_of_consecutive_numbers(1))
+
+    def test_example4(self):
+        # [4]
+        self.assertEqual(1, sum_of_consecutive_numbers(4))
+
+    def test_example5(self):
+        # [1, 2, 3, 4, 5], [4, 5, 6], [7, 8], and [15]
+        self.assertEqual(4, sum_of_consecutive_numbers(15))
+
+    def test_example6(self):
+        # [2, 3], and [5]
+        self.assertEqual(2, sum_of_consecutive_numbers(5))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False, verbosity=2)
+```
 
 ### June 30, 2021 \[Hard\] Array Shuffle
 ---

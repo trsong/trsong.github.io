@@ -29,6 +29,22 @@ categories: Python/Java
 
 
 <details>
+<summary class="lc_h">
+
+- [**\[Hard\] Sum of Consecutive Numbers**](http://trsong.github.io/python/java/2021/05/02/DailyQuestionsMay.html#jul-1-2021-hard-sum-of-consecutive-numbers) -- *Given a number n, return the number of lists of consecutive numbers that sum up to n.* [*\(Try ME\)*](https://replit.com/@trsong/Sum-of-Consecutive-Numbers-1)
+
+</summary>
+<div>
+
+**Question:** Given a number `n`, return the number of lists of consecutive numbers that sum up to `n`.
+
+For example, for `n = 9`, you should return `3` since the lists are: `[2, 3, 4]`, `[4, 5]`, and `[9]`. Can you do it in linear time?
+
+</div>
+</details>
+
+
+<details>
 <summary class="lc_m">
 
 - [**\[Medium\] LC 65. Determine if number**](http://trsong.github.io/python/java/2021/05/02/DailyQuestionsMay.html#june-28-2021--lc-65-medium--determine-if-number) -- *Given a string that may represent a number, determine if it is a number.* [*\(Try ME\)*](https://replit.com/@trsong/Determine-valid-number-1)
