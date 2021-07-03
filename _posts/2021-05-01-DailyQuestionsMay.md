@@ -33,6 +33,63 @@ Output: (2, 2)
 Explanation: 2 + 2 = 4
 ```
 
+**Solution:** [https://replit.com/@trsong/Goldbachs-conjecture](https://replit.com/@trsong/Goldbachs-conjecture)
+```py
+import unittest
+from math import sqrt
+
+def goldbach_conjecture(n):
+    for term in range(n):
+        if is_prime(term) and is_prime(n - term):
+            return (term, n - term)
+    return None
+
+
+def is_prime(num):
+    if num < 2:
+        return False
+
+    for d in range(2, int(sqrt(num)) + 1):
+        if num % d == 0:
+            return False
+    
+    return True
+
+
+class GoldbachConjectureSpec(unittest.TestCase):
+    def test_example(self):
+        n, expected = 4, (2, 2)
+        self.assertEqual(expected, goldbach_conjecture(n))
+
+    def test_example2(self):
+        n, expected = 6, (3, 3)
+        self.assertEqual(expected, goldbach_conjecture(n))
+
+    def test_example3(self):
+        n, expected = 8, (3, 5)
+        self.assertEqual(expected, goldbach_conjecture(n))
+
+    def test_example4(self):
+        n, expected = 10, (3, 7)
+        self.assertEqual(expected, goldbach_conjecture(n))
+
+    def test_example6(self):
+        n, expected = 12, (5, 7)
+        self.assertEqual(expected, goldbach_conjecture(n))
+
+    def test_return_lexicographically_smaller_result(self):
+        # 14 = 3 + 11 = 7 + 7
+        n, expected = 14, (3, 11) 
+        self.assertEqual(expected, goldbach_conjecture(n))
+
+    def test_return_lexicographically_smaller_result2(self):
+        n, expected = 100, (3, 97)
+        self.assertEqual(expected, goldbach_conjecture(n))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False, verbosity=2)
+```
 
 ### Jul 1, 2021 \[Hard\] Sum of Consecutive Numbers
 ---

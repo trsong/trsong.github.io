@@ -27,6 +27,28 @@ categories: Python/Java
 ## Math
 ---
 
+<details>
+<summary class="lc_e">
+
+- [**\[Easy\] Goldbach’s conjecture**](http://trsong.github.io/python/java/2021/05/02/DailyQuestionsMay.html#jul-2-2021-easy-goldbachs-conjecture) -- *Given an even number (greater than 2), return two prime numbers whose sum will be equal to the given number.* [*\(Try ME\)*](https://replit.com/@trsong/Goldbachs-conjecture-1)
+
+</summary>
+<div>
+
+**Question:** Given an even number (greater than 2), return two prime numbers whose sum will be equal to the given number.
+
+A solution will always exist. See [Goldbach’s conjecture](https://en.wikipedia.org/wiki/Goldbach%27s_conjecture). If there are more than one solution possible, return the lexicographically smaller solution.
+
+**Example:**
+```py
+Input: 4
+Output: (2, 2)
+Explanation: 2 + 2 = 4
+```
+
+</div>
+</details>
+
 
 <details>
 <summary class="lc_h">
