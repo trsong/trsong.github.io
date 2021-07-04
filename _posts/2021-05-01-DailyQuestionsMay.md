@@ -54,6 +54,146 @@ gal_preferences = {
 > Implement this system.
 
 
+**10 Match Result:** Notice that there is a diminishing return when a player beats same opponent over and over again.
+```py
+  round    player1    player2
+-------  ---------  ---------
+      0       1000       1000
+      1       1016        984
+      2       1030        969
+      3       1043        956
+      4       1055        944
+      5       1066        933
+      6       1076        923
+      7       1086        913
+      8       1094        905
+      9       1102        897
+     10       1110        889
+```
+
+**Solution:** [https://replit.com/@trsong/Elo-Rating-System](https://replit.com/@trsong/Elo-Rating-System)
+```py
+import unittest
+import uuid
+
+class EloRatingSystem(object):
+    DISTRIBUTION_BASE = 10
+    DISTRIBUTION_SD = 400
+
+    class Outcome:
+        WIN = 1
+        DRAW = 0.5
+        LOSE = 0
+
+    def __init__(self, initial_score=1000, round_score=32):
+        self.score_board = {}
+        self.initial_score = initial_score
+        self.round_score = round_score
+
+    def new_player(self):
+        player_id = str(uuid.uuid4())
+        self.score_board[player_id] = self.initial_score
+        return player_id
+
+    def match(self, p1, p2, outcome):
+        score1, score2 = self.score_board[p1], self.score_board[p2]
+        prob1 = self.match_probability(score1, score2)
+        prob2 = self.match_probability(score2, score1)
+        outcome1 = 1 - outcome
+        outcome2 = outcome
+
+        self.score_board[p1] += self.round_score * (prob1 - outcome1)
+        self.score_board[p2] += self.round_score * (prob2 - outcome2)
+
+    def match_probability(self, score1, score2):
+        # logistic distribution predict the likelihood of match win result
+        return 1.0 / (1.0 + EloRatingSystem.DISTRIBUTION_BASE**(
+            (score2 - score1) / EloRatingSystem.DISTRIBUTION_SD))
+
+    def score(self, player_id):
+        return self.score_board.get(player_id, -1)
+
+
+class EloRatingSystemSpec(unittest.TestCase):
+    @staticmethod
+    def quick_match(elo_system, p1, p2, outcome):
+        elo_system.match(p1, p2, outcome)
+        new_score1 = elo_system.score(p1)
+        new_score2 = elo_system.score(p2)
+        return new_score1, new_score2
+
+    def test_player_creation_and_initial_score(self):
+        elo_system = EloRatingSystem(initial_score=100)
+        player_id = elo_system.new_player()
+        self.assertEqual(100, elo_system.score(player_id))
+
+    def test_match_draw_will_not_change_score(self):
+        elo_system = EloRatingSystem()
+        p1 = elo_system.new_player()
+        p2 = elo_system.new_player()
+        score1 = elo_system.score(p1)
+        score2 = elo_system.score(p2)
+        self.assertEqual(score1, score2)
+
+        round1_score1, round1_score2 = self.quick_match(
+            elo_system, p1, p2, EloRatingSystem.Outcome.DRAW)
+        self.assertEqual(round1_score1, score1)
+        self.assertEqual(round1_score2, score2)
+
+    def test_match_winner_add_points_and_loser_remove_points(self):
+        elo_system = EloRatingSystem()
+        p1 = elo_system.new_player()
+        p2 = elo_system.new_player()
+        score1 = elo_system.score(p1)
+        score2 = elo_system.score(p2)
+        
+        round1_score1, round1_score2 = self.quick_match(
+            elo_system, p1, p2, EloRatingSystem.Outcome.WIN)
+        self.assertGreater(round1_score1, score1)
+        self.assertLess(round1_score2, score2)
+
+        round2_score2, round2_score1 = self.quick_match(
+            elo_system, p2, p1, EloRatingSystem.Outcome.LOSE)
+        self.assertGreater(round2_score1, round1_score1)
+        self.assertLess(round2_score2, round1_score2)
+
+    def test_diminishing_return_when_winning_over_and_over(self):
+        elo_system = EloRatingSystem()
+        p1 = elo_system.new_player()
+        p2 = elo_system.new_player()
+        score1 = elo_system.score(p1)
+        
+        round1_score1, _ = self.quick_match(
+            elo_system, p1, p2, EloRatingSystem.Outcome.WIN)
+
+        round2_score2, _ = self.quick_match(
+            elo_system, p1, p2, EloRatingSystem.Outcome.WIN)
+        
+        self.assertLess(round2_score2 - round1_score1, round1_score1, score1)
+
+    def test_demo_win_10_round_in_a_row(self):
+        from tabulate import tabulate
+
+        match_result = []
+        elo_system = EloRatingSystem()
+        p1 = elo_system.new_player()
+        p2 = elo_system.new_player()
+        score1 = elo_system.score(p1)
+        score2 = elo_system.score(p2)
+        match_result.append([0, score1, score2])
+
+        for round in range(1, 11):
+            s1, s2 = self.quick_match(elo_system, p1, p2, EloRatingSystem.Outcome.WIN)
+            match_result.append([round, int(s1), int(s2)])
+        
+        print("\n10 Match Result\n")
+        print(tabulate(match_result, headers=['round', 'player1', 'player2']))
+
+        
+if __name__ == '__main__':
+    unittest.main(exit=False, verbosity=2)
+```
+
 ### Jul 2, 2021 \[Easy\] Goldbach’s conjecture
 ---
 > **Question:** Given an even number (greater than 2), return two prime numbers whose sum will be equal to the given number.

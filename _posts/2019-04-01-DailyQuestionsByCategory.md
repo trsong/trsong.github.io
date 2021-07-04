@@ -548,6 +548,25 @@ Return true as the first and third rectangle overlap each other.
 <details>
 <summary class="lc_h">
 
+- [**\[Hard\] Elo Rating System**](http://trsong.github.io/python/java/2021/05/02/DailyQuestionsMay.html#jul-3-2021-hard-elo-rating-system) -- *In chess, the Elo rating system is used to calculate player strengths based on game results.* [*\(Try ME\)*](https://replit.com/@trsong/Elo-Rating-System-1)
+
+</summary>
+<div>
+
+**Question:** In chess, the Elo rating system is used to calculate player strengths based on game results.
+
+A simplified description of the Elo system is as follows. Every player begins at the same score. For each subsequent game, the loser transfers some points to the winner, where the amount of points transferred depends on how unlikely the win is. For example, a 1200-ranked player should gain much more points for beating a 2000-ranked player than for beating a 1300-ranked player.
+
+Implement this system.
+
+
+</div>
+</details>
+
+
+<details>
+<summary class="lc_h">
+
 - [**\[Hard\] Array Shuffle**](http://trsong.github.io/python/java/2021/05/02/DailyQuestionsMay.html#june-30-2021-hard-array-shuffle) -- *Given an array, write a program to generate a random permutation of array elements.* [*\(Try ME\)*](https://replit.com/@trsong/Randomly-Shuffle-Array-1)
 
 </summary>
