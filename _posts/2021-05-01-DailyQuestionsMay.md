@@ -44,6 +44,149 @@ gal_preferences = {
 
 > Write an algorithm that pairs the men and women together in such a way that no two people of opposite sex would both rather be with each other than with their current partners.
  
+**Gale–Shapley Algorithm:** Consider the following example.
+```
+Let there be two men m1 and m2 and two women w1 and w2.
+Let m1's list of preferences be {w1, w2}
+Let m2's list of preferences be {w1, w2}
+Let w1's list of preferences be {m1, m2}
+Let w2's list of preferences be {m1, m2}
+```
+
+The matching { {m1, w2}, {w1, m2} } is not stable because m1 and w1 would prefer each other over their assigned partners. The matching {m1, w1} and {m2, w2} is stable because there are no two people of opposite sex that would prefer each other over their assigned partners.
+
+```
+function stableMatching {
+    Initialize all m ∈ M and w ∈ W to free
+    while ∃ free man m who still has a woman w to propose to {
+       w = first woman on m’s list to whom m has not yet proposed
+       if w is free
+         (m, w) become engaged
+       else some pair (m', w) already exists
+         if w prefers m to m'
+            m' becomes free
+           (m, w) become engaged 
+         else
+           (m', w) remain engaged
+    }
+}
+```
+
+**Solution with Gale–Shapley Algorithm:** [https://replit.com/@trsong/Solve-Stable-Marriage-Problem](https://replit.com/@trsong/Solve-Stable-Marriage-Problem)
+ ```py
+import unittest
+from collections import deque
+
+def stable_marriage_match(guy_preferences, gal_preferences):
+    woman_preference_ranking = {}
+    for woman in gal_preferences:
+        woman_preference_ranking[woman] = {}
+        for rank, man in enumerate(gal_preferences[woman]):
+            woman_preference_ranking[woman][man] = rank
+
+    woman_engagement = { woman: None for woman in gal_preferences }
+    single_men = deque(guy_preferences)
+    next_propose_index = { man: 0 for man in guy_preferences }
+    while single_men:
+        man = single_men.pop()
+        target_woman = guy_preferences[man][next_propose_index[man]]
+        if woman_engagement[target_woman] is None:
+            woman_engagement[target_woman] = man
+        elif woman_preference_ranking[target_woman][man] < woman_preference_ranking[target_woman][woman_engagement[target_woman]]:
+            evicted_man = woman_engagement[target_woman]
+            single_men.append(evicted_man)
+            woman_engagement[target_woman] = man
+        else:
+            single_men.appendleft(man)
+        next_propose_index[man] += 1
+
+    return list(woman_engagement.items())
+
+
+####################
+# Testing Utilities
+####################
+def find_all_unstable_pairs(match_pairs, guy_preferences, gal_preferences):
+    preferences = {**guy_preferences, **gal_preferences}
+    matched = dict(match_pairs + list(map(reversed, match_pairs)))
+    rank = lambda person, target: preferences[person].index(target)
+    prefer = lambda person, target: rank(person, target) < rank(
+        person, matched[person])
+
+    unstable_pairs = []
+    for person, preference_list in preferences.items():
+        for candidate in preference_list:
+            if matched[person] != candidate and prefer(
+                    person, candidate) and prefer(candidate, person):
+                # check if exists (person, candidate) not in match_pairs such that
+                # rank(person, candidate) < rank(person, matched[person]) and
+                # rank(candidate, person) < rank(candidate, matched[candidate])
+                unstable_pairs.append((person, candidate))
+    return unstable_pairs
+
+
+class StableMarriageMatchSpec(unittest.TestCase):
+    def assert_result(self, match_pairs, guy_preferences, gal_preferences):
+        # Check if all people are married as well as all match_pairs are stable
+        self.assertEqual(len(match_pairs), len(guy_preferences))
+        self.assertEqual([],
+                         find_all_unstable_pairs(match_pairs, guy_preferences,
+                                                 gal_preferences))
+
+    def test_unstable_marriage_should_return_correct_instability_pairs(self):
+        # Test utility method find_all_unstable_pairs
+        guy_preferences = {'m1': ['w1', 'w2'], 'm2': ['w1', 'w2']}
+        gal_preferences = {'w1': ['m1', 'm2'], 'w2': ['m1', 'm2']}
+        match_pairs = [('m1', 'w2'), ('m2', 'w1')]
+        instability_pairs = [('w1', 'm1'), ('m1', 'w1')]
+        self.assertEqual(
+            sorted(instability_pairs),
+            sorted(find_all_unstable_pairs(match_pairs, guy_preferences, gal_preferences)))
+
+    def test_stable_marriage_should_return_none_instability_pairs(self):
+        # Test utility method find_all_unstable_pairs
+        guy_preferences = {'m1': ['w1', 'w2'], 'm2': ['w1', 'w2']}
+        gal_preferences = {'w1': ['m1', 'm2'], 'w2': ['m1', 'm2']}
+        match_pairs = [('m1', 'w1'), ('m2', 'w2')]
+        self.assertEqual([],
+                         find_all_unstable_pairs(match_pairs, guy_preferences, gal_preferences))
+
+    def test_example(self):
+        guy_preferences = {
+            'andrew': ['caroline', 'abigail', 'betty'],
+            'bill': ['caroline', 'betty', 'abigail'],
+            'chester': ['betty', 'caroline', 'abigail'],
+        }
+        gal_preferences = {
+            'abigail': ['andrew', 'bill', 'chester'],
+            'betty': ['bill', 'andrew', 'chester'],
+            'caroline': ['bill', 'chester', 'andrew']
+        }
+        # Possible Matches: [('abigail', 'andrew'), ('betty', 'chester'), ('caroline', 'bill')]
+        res = stable_marriage_match(guy_preferences, gal_preferences)
+        self.assert_result(res, guy_preferences, gal_preferences)
+
+    def test_size4_problem(self):
+        guy_preferences = {
+            'm1': ['w1', 'w2', 'w3', 'w4'],
+            'm2': ['w1', 'w2', 'w3', 'w4'],
+            'm3': ['w1', 'w2', 'w3', 'w4'],
+            'm4': ['w1', 'w2', 'w3', 'w4']
+        }
+        gal_preferences = {
+            'w1': ['m4', 'm2', 'm3', 'm1'],
+            'w2': ['m2', 'm1', 'm3', 'm4'],
+            'w3': ['m1', 'm2', 'm3', 'm4'],
+            'w4': ['m1', 'm2', 'm3', 'm4']
+        }
+        # Possible Matches: [('w1', 'm4'), ('w2', 'm2'), ('w3', 'm1'), ('w4', 'm3')]
+        res = stable_marriage_match(guy_preferences, gal_preferences)
+        self.assert_result(res, guy_preferences, gal_preferences)
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False, verbosity=2)
+ ```
 
 ### Jul 3, 2021 \[Hard\] Elo Rating System
 ---

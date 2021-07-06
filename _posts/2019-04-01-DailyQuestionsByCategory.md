@@ -5837,6 +5837,39 @@ For example, if the list is `[1, 2, 3, 4, 5]` and `K` is `9`, then it should ret
 
 
 <details>
+<summary class="lc_h">
+
+- [**\[Hard\] Stable Marriage Problem**](https://trsong.github.io/python/java/2021/05/02/DailyQuestionsMay.html#jul-4-2021-hard-stable-marriage-problem) -- *Match the men and women together such that there are no two people of opposite sex who would both rather have each other.* [*\(Try ME\)*](https://replit.com/@trsong/Solve-Stable-Marriage-Problem-1)
+
+</summary>
+<div>
+
+**Question:** The stable marriage problem is defined as follows:
+
+Suppose you have `N` men and `N` women, and each person has ranked their prospective opposite-sex partners in order of preference.
+
+For example, if `N = 3`, the input could be something like this:
+```py
+guy_preferences = {
+    'andrew': ['caroline', 'abigail', 'betty'],
+    'bill': ['caroline', 'betty', 'abigail'],
+    'chester': ['betty', 'caroline', 'abigail'],
+}
+
+gal_preferences = {
+    'abigail': ['andrew', 'bill', 'chester'],
+    'betty': ['bill', 'andrew', 'chester'],
+    'caroline': ['bill', 'chester', 'andrew']
+}
+```
+
+Write an algorithm that pairs the men and women together in such a way that no two people of opposite sex would both rather be with each other than with their current partners. 
+
+</div>
+</details>
+
+
+<details>
 <summary class="lc_m">
 
 - [**\[Medium\] Minimum Number of Jumps to Reach End**](https://trsong.github.io/python/java/2021/05/02/DailyQuestionsMay.html#june-16-2021-medium-minimum-number-of-jumps-to-reach-end) -- *Each element represents max jump. Return the minimum number of jumps you must take in order to get from the start to the end of the array.* [*\(Try ME\)*](https://replit.com/@trsong/Calculate-Minimum-Number-of-Jumps-to-Reach-End-1)
