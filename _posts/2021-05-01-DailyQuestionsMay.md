@@ -19,6 +19,44 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
 
+### Jul 5, 2021 \[Medium\] Largest BST in a Binary Tree
+---
+> **Question:** You are given the root of a binary tree. Find and return the largest subtree of that tree, which is a valid binary search tree.
+
+**Example1:**
+```py
+Input: 
+      5
+    /  \
+   2    4
+ /  \
+1    3
+
+Output:
+   2  
+ /  \
+1    3
+```
+
+**Example2:**
+```py
+Input: 
+       50
+     /    \
+  30       60
+ /  \     /  \ 
+5   20   45    70
+              /  \
+            65    80
+            
+Output: 
+      60
+     /  \ 
+   45    70
+        /  \
+      65    80
+```
+
 
 ### Jul 4, 2021 \[Hard\] Stable Marriage Problem
 ---
