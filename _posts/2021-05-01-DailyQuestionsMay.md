@@ -19,6 +19,15 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
 
+### Jul 6, 2021 LC 665 \[Medium\] Off-by-One Non-Decreasing Array
+---
+> **Question:** Given an array of integers, write a function to determine whether the array could become non-decreasing by modifying at most 1 element.
+>
+> For example, given the array `[10, 5, 7]`, you should return true, since we can modify the `10` into a `1` to make the array non-decreasing.
+>
+> Given the array `[10, 5, 1]`, you should return false, since we can't modify any one element to get a non-decreasing array.
+
+
 ### Jul 5, 2021 \[Medium\] Largest BST in a Binary Tree
 ---
 > **Question:** You are given the root of a binary tree. Find and return the largest subtree of that tree, which is a valid binary search tree.
