@@ -5243,6 +5243,34 @@ Given a list of `N` people and the above operation, find a way to identify the c
 
 
 <details>
+<summary class="lc_e">
+
+- [**\[Easy\] Huffman Coding**](https://trsong.github.io/python/java/2021/05/02/DailyQuestionsMay.html#jul-7-2021-easy-huffman-coding) -- *Huffman coding is a method of encoding characters based on their frequency.* [*\(Try ME\)*](https://replit.com/@trsong/Huffman-Coding-1)
+
+</summary>
+<div>
+
+**Question:** Huffman coding is a method of encoding characters based on their frequency. Each letter is assigned a variable-length binary string, such as `0101` or `111110`, where shorter lengths correspond to more common letters. To accomplish this, a binary tree is built such that the path from the root to any leaf uniquely maps to a character. When traversing the path, descending to a left child corresponds to a `0` in the prefix, while descending right corresponds to 1.
+
+Here is an example tree (note that only the leaf nodes have letters):
+```py
+        *
+      /   \
+    *       *
+   / \     / \
+  *   a   t   *
+ /             \
+c               s
+```
+With this encoding, cats would be represented as `0000110111`.
+
+Given a dictionary of character frequencies, build a Huffman tree, and use it to determine a mapping between characters and their encoded binary strings.
+
+</div>
+</details>
+
+
+<details>
 <summary class="lc_m">
 
 - [**\[Medium\] LC 274. H-Index**](https://trsong.github.io/python/java/2019/08/02/DailyQuestionsAug.html#oct-31-2019-lc-274-medium-h-index) -- *The definition of the h-index is if a scholar has at least h of their papers cited h times.* [*\(Try ME\)*](https://repl.it/@trsong/Calculate-H-Index-1)

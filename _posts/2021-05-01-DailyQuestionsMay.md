@@ -37,6 +37,164 @@ c               s
 >
 > Given a dictionary of character frequencies, build a Huffman tree, and use it to determine a mapping between characters and their encoded binary strings.
 
+**My thoughts:** Huffman encoding has the following properties:
+- Less frequent letter has longer encoding
+- No encoding is prefix of any other encodings
+
+**Solution with Priority Queue:** [https://replit.com/@trsong/Huffman-Coding](https://replit.com/@trsong/Huffman-Coding)
+```py
+import unittest
+from queue import PriorityQueue
+
+def huffman_encode(histogram):
+    if len(histogram) < 2:
+        return None
+
+    root = build_huffman_tree(histogram)
+    res = {}
+    huffman_backtrack(root, res, [])
+    return res
+
+
+def build_huffman_tree(histogram):
+    pq = PriorityQueue()
+    for ch, freq in histogram.items():
+        pq.put((freq, TreeNode(ch)))
+
+    while pq.qsize() > 1:
+        left_freq, left_child = pq.get()
+        right_freq, right_child = pq.get()
+        pq.put((left_freq + right_freq, TreeNode(None, left_child, right_child)))
+        
+    _, root = pq.get()
+    return root
+
+
+def huffman_backtrack(root, encoding_map, path):
+    if root.left is None and root.right is None:
+        encoding_map[root.val] = ''.join(path)
+
+    if root.left:
+        path.append('0')
+        huffman_backtrack(root.left, encoding_map, path)
+        path.pop()
+
+    if root.right:
+        path.append('1')
+        huffman_backtrack(root.right, encoding_map, path)
+        path.pop()
+
+
+class TreeNode(object):
+    def __init__(self, val=None, left=None, right=None):
+        self.val = val
+        self.left = left
+        self.right = right
+
+
+class HuffmanEncodeSpec(unittest.TestCase):
+    def validate_huffman(self, histogram, encoding_map):
+        # Make sure the encoding contains exact character set
+        self.assertEqual(sorted(list(histogram.keys())), sorted(list(encoding_map.keys())))
+
+        for k1, freq1 in histogram.items():
+            for k2, freq2 in histogram.items():
+                if k1 == k2: 
+                    continue
+                # Make sure less frequent letter has longer encoding
+                if freq1 < freq2:
+                    self.assertGreaterEqual(len(encoding_map[k1]), len(encoding_map[k2]))
+                elif freq1 > freq2:
+                    self.assertLessEqual(len(encoding_map[k1]), len(encoding_map[k2]))
+                
+
+        for code in encoding_map.values():
+            # Make sure encoding just contains character 0 and 1
+            self.assertEqual(len(code), code.count("1") + code.count("0"))
+
+        for k1, code1 in encoding_map.items():
+            for k2, code2 in encoding_map.items():
+                if k1 == k2:
+                    continue
+                # Make sure any encoding is not prefix of any other encodings
+                self.assertFalse(code2.startswith(code1))
+
+    def test_example(self):
+        """
+        Step 1: Pop f(2), a(3) from heap. Create internal node n5
+          (5)
+         /   \
+        f     a
+
+        Step 2: Pop n5 and c(6) from heap. Create internal node n11
+              (11)
+             /    \  
+          (5)      c
+         /   \
+        f     a
+
+        Step 3: Pop e(8) and n11 from heap. Create internal node n19
+              (19)
+             /   \
+            e   (11)      
+               /    \
+             (5)      c
+            /   \
+           f     a
+        """
+        histogram = {'a': 3, 'c': 6, 'e': 8, 'f': 2}
+        # Possible encoding: {'e': '0', 'f': '100', 'a': '101', 'c': '11'} 
+        encoding_map = huffman_encode(histogram)
+        self.validate_huffman(histogram, encoding_map)
+
+    def test_example2(self):
+        """
+        Step 1: Pop a(5) and b(9) from heap. Create internal node n14
+         (14)
+         /  \
+        a    b
+
+        Step 2: Pop c(12) and d(13) from heap. Create internal node n25
+         (25)
+         /  \
+        c    d
+
+        Step 3: Pop n14 and e(16) from heap. Create internal node n30.
+            (30)
+           /   \
+         (14)   e
+         /  \
+        a    b
+
+        Step 4: Pop n25 and n30 from heap. Create internal node n55.
+            (55)
+           /    \      
+        (25)    (30)
+        /  \    /   \
+       c    d (14)   e
+              /  \
+             a    b
+
+        Step 5: Pop f(45) and n55 from heap. Create internal node n100
+                 (100)
+                 /   \
+                f   (55)
+                   /    \      
+                (25)    (30)
+                /  \    /   \
+               c    d (14)   e
+                      /  \
+                     a    b
+        """
+        histogram = {'a': 5, 'b': 9, 'c': 12, 'd': 13, 'e': 16, 'f': 45}
+        # Possible encoding: {'f': '0', 'c': '100', 'd': '101', 'a': '1100', 'b': '1101', 'e': '111'}
+        encoding_map = huffman_encode(histogram)
+        self.validate_huffman(histogram, encoding_map)
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False, verbosity=2)
+```
 
 
 ### Jul 6, 2021 LC 665 \[Medium\] Off-by-One Non-Decreasing Array
