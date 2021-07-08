@@ -19,6 +19,26 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
 
+### Jul 8, 2021 LC 218 \[Hard\] City Skyline
+---
+> **Question:** Given a list of building in the form of `(left, right, height)`, return what the skyline should look like. The skyline should be in the form of a list of `(x-axis, height)`, where x-axis is the point where there is a change in height starting from 0, and height is the new height starting from the x-axis.
+
+**Example:**
+```py
+Input: [(2, 8, 3), (4, 6, 5)]
+Output: [(2, 3), (4, 5), (7, 3), (9, 0)]
+Explanation:
+             2 2 2
+             2   2
+         1 1 2 1 2 1 1
+         1   2   2   1
+         1   2   2   1      
+pos: 0 1 2 3 4 5 6 7 8 9
+We have two buildings: one has height 3 and the other 5. The city skyline is just the outline of combined looking. 
+The result represents the scanned height of city skyline from left to right.
+```
+
+
 ### Jul 7, 2021 \[Easy\] Huffman Coding
 ---
 > **Question:** Huffman coding is a method of encoding characters based on their frequency. Each letter is assigned a variable-length binary string, such as `0101` or `111110`, where shorter lengths correspond to more common letters. To accomplish this, a binary tree is built such that the path from the root to any leaf uniquely maps to a character. When traversing the path, descending to a left child corresponds to a `0` in the prefix, while descending right corresponds to 1.
