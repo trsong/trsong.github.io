@@ -19,6 +19,11 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
 
+### Jul 11, 2021 \[Hard\] The Most Efficient Way to Sort a Million 32-bit Integers
+--- 
+> **Question:** Given an array of a million integers between zero and a billion, out of order, how can you efficiently sort it?
+
+
 ### Jul 10, 2021 \[Medium\] Tokenization
 ---
 > **Questions:** Given a dictionary of words and a string made up of those words (no spaces), return the original sentence in a list. If there is more than one possible reconstruction, return any of them. If there is no possible reconstruction, then return null.
