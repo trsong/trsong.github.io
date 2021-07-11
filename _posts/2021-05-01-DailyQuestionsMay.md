@@ -19,6 +19,23 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
 
+### Jul 10, 2021 \[Medium\] Tokenization
+---
+> **Questions:** Given a dictionary of words and a string made up of those words (no spaces), return the original sentence in a list. If there is more than one possible reconstruction, return any of them. If there is no possible reconstruction, then return null.
+
+**Example 1:**
+```py
+Input: ['quick', 'brown', 'the', 'fox'], 'thequickbrownfox'
+Output: ['the', 'quick', 'brown', 'fox']
+```
+
+**Example 2:**
+```py
+Input: ['bed', 'bath', 'bedbath', 'and', 'beyond'], 'bedbathandbeyond'
+Output:  Either ['bed', 'bath', 'and', 'beyond'] or ['bedbath', 'and', 'beyond']
+```
+
+
 ### Jul 9, 2021 LC 1021 \[Easy\] Remove One Layer of Parenthesis
 --- 
 > **Question:** Given a valid parenthesis string (with only '(' and ')', an open parenthesis will always end with a close parenthesis, and a close parenthesis will never start first), remove the outermost layers of the parenthesis string and return the new parenthesis string.
@@ -41,6 +58,56 @@ Output: '()()'
 ```py
 Input: '()()()'
 Output: ''
+```
+
+**Solution:** [https://replit.com/@trsong/Remove-One-Layer-of-Parenthesis-2](https://replit.com/@trsong/Remove-One-Layer-of-Parenthesis-2)
+```py
+import unittest
+
+def remove_one_layer_parenthesis(s):
+    balance = 0
+    res = []
+    for ch in s:
+        balance += 1 if ch == '(' else -1
+        if balance == 1 and ch == '(' or balance == 0 and ch == ')':
+            continue
+        res.append(ch)
+
+    return ''.join(res)
+
+
+class RemoveOneLayerParenthesisSpec(unittest.TestCase):
+    def test_example(self):
+        s = '(())()'
+        expected = '()'
+        self.assertEqual(expected, remove_one_layer_parenthesis(s))
+
+    def test_example2(self):
+        s = '(()())'
+        expected = '()()'
+        self.assertEqual(expected, remove_one_layer_parenthesis(s))
+
+    def test_example3(self):
+        s = '()()()'
+        expected = ''
+        self.assertEqual(expected, remove_one_layer_parenthesis(s))
+
+    def test_empty_string(self):
+        self.assertEqual('', remove_one_layer_parenthesis(''))
+
+    def test_nested_parenthesis(self):
+        s = '(()())(())'
+        expected = '()()()'
+        self.assertEqual(expected, remove_one_layer_parenthesis(s))
+
+    def test_complicated_parenthesis(self):
+        s = '(()())(())(()(()))'
+        expected = '()()()()(())'
+        self.assertEqual(expected, remove_one_layer_parenthesis(s))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False, verbosity=2)
 ```
 
 ### Jul 8, 2021 LC 218 \[Hard\] City Skyline
