@@ -19,10 +19,71 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
 
-### Jul 11, 2021 \[Hard\] The Most Efficient Way to Sort a Million 32-bit Integers
+### Jul 12, 2021 \[Hard\] The Most Efficient Way to Sort a Million 32-bit Integers
 --- 
 > **Question:** Given an array of a million integers between zero and a billion, out of order, how can you efficiently sort it?
 
+
+### Jul 11, 2021 \[Easy\] Sell Stock
+---
+> **Question:** Given an array of numbers representing the stock prices of a company in chronological order, write a function that calculates the maximum profit you could have made from buying and selling that stock once. You must buy before you can sell it.
+>
+> For example, given `[9, 11, 8, 5, 7, 10]`, you should return 5, since you could buy the stock at 5 dollars and sell it at 10 dollars.
+
+**Solution with DP:** [https://replit.com/@trsong/Best-Time-to-Buy-and-Sell-Stock-2](https://replit.com/@trsong/Best-Time-to-Buy-and-Sell-Stock-2)
+```py
+import unittest
+
+def max_profit(stock_data):
+    if not stock_data:
+        return 0
+
+    min_value_so_far = stock_data[0]
+    max_profit_so_far = 0
+
+    for val in stock_data:
+        min_value_so_far = min(min_value_so_far, val)
+        max_profit_so_far = max(max_profit_so_far, val - min_value_so_far)
+
+    return max_profit_so_far
+
+
+class MaxProfitSpec(unittest.TestCase):
+    def test_blank_data(self):
+        self.assertEqual(max_profit([]), 0)
+    
+    def test_1_day_data(self):
+        self.assertEqual(max_profit([9]), 0)
+        self.assertEqual(max_profit([-1]), 0)
+
+    def test_monotonically_increase(self):
+        self.assertEqual(max_profit([1, 2, 3]), 2)
+        self.assertEqual(max_profit([1, 1, 1, 2, 2, 3, 3, 3]), 2)
+    
+    def test_monotonically_decrease(self):
+        self.assertEqual(max_profit([3, 2, 1]), 0)
+        self.assertEqual(max_profit([3, 3, 3, 2, 2, 1, 1, 1]), 0)
+
+    def test_raise_suddenly(self):
+        self.assertEqual(max_profit([3, 2, 1, 1, 2]), 1)
+        self.assertEqual(max_profit([3, 2, 1, 1, 9]), 8)
+
+    def test_drop_sharply(self):
+        self.assertEqual(max_profit([1, 3, 0]), 2)
+        self.assertEqual(max_profit([1, 3, -1]), 2)
+
+    def test_bear_market(self):
+        self.assertEqual(max_profit([10, 11, 5, 7, 1, 2]), 2)
+        self.assertEqual(max_profit([10, 11, 1, 4, 2, 7, 5]), 6)
+
+    def test_bull_market(self):
+        self.assertEqual(max_profit([1, 5, 3, 7, 2, 14, 10]), 13)
+        self.assertEqual(max_profit([5, 1, 11, 10, 12]), 11)
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False, verbosity=2)
+```
 
 ### Jul 10, 2021 \[Medium\] Tokenization
 ---
@@ -38,6 +99,85 @@ Output: ['the', 'quick', 'brown', 'fox']
 ```py
 Input: ['bed', 'bath', 'bedbath', 'and', 'beyond'], 'bedbathandbeyond'
 Output:  Either ['bed', 'bath', 'and', 'beyond'] or ['bedbath', 'and', 'beyond']
+```
+
+**Solution with Backtracking:** [https://replit.com/@trsong/String-Tokenization-2](https://replit.com/@trsong/String-Tokenization-2)
+```py
+import unittest
+
+def tokenize(dictionary, sentence):
+    word_set = set(dictionary)
+    _, tokens = tokenize_recur(sentence, word_set)
+    return tokens
+
+
+def tokenize_recur(sentence, word_set):
+    if not sentence:
+        return True, []
+
+    for token_size in range(1, len(sentence) + 1):
+        token = sentence[:token_size]
+        if token not in word_set:
+            continue
+        
+        tokenizible, sub_res = tokenize_recur(sentence[token_size:], word_set)
+        if tokenizible:
+            return True, [token] + sub_res
+    
+    return False, None
+
+
+class TokenizeSpec(unittest.TestCase):
+    def test_example(self):
+        dictionary = ['quick', 'brown', 'the', 'fox']
+        sentence = 'thequickbrownfox'
+        expected = ['the', 'quick', 'brown', 'fox']
+        self.assertEqual(expected, tokenize(dictionary, sentence))
+
+    def test_example2(self):
+        dictionary = ['bed', 'bath', 'bedbath', 'and', 'beyond']
+        sentence = 'bedbathandbeyond'
+        expected1 = ['bed', 'bath', 'and', 'beyond']
+        expected2 = ['bedbath', 'and', 'beyond']
+        res = tokenize(dictionary, sentence)
+        self.assertIn(res, [expected1, expected2])
+
+    def test_match_entire_sentence(self):
+        dictionary = ['thequickbrownfox']
+        sentence = 'thequickbrownfox'
+        expected = ['thequickbrownfox']
+        self.assertEqual(expected, tokenize(dictionary, sentence))
+
+    def test_cannot_tokenize(self):
+        dictionary = ['thequickbrownfox']
+        sentence = 'thefox'
+        self.assertIsNone(tokenize(dictionary, sentence))
+
+    def test_longer_sentence(self):
+        dictionary = ['i', 'and', 'like', 'sam', 'sung', 'samsung', 'mobile', 'ice', 'cream', 'icecream', 'man', 'go', 'mango']
+        sentence = 'ilikesamsungmobile'
+        expected1 = ['i', 'like', 'samsung', 'mobile']
+        expected2 = ['i', 'like', 'sam', 'sung', 'mobile']
+        res = tokenize(dictionary, sentence)
+        self.assertIn(res, [expected1, expected2])
+
+    def test_longer_sentence2(self):
+        dictionary = ['i', 'and', 'like', 'sam', 'sung', 'samsung', 'mobile', 'ice', 'cream', 'icecream', 'go', 'mango']
+        sentence = 'ilikeicecreamandmango'
+        expected1 = ['i', 'like', 'icecream', 'and', 'mango']
+        expected2 = ['i', 'like', 'ice', 'cream', 'and', 'mango']
+        res = tokenize(dictionary, sentence)
+        self.assertIn(res, [expected1, expected2])
+
+    def test_greedy_approach_will_fail(self):
+        dictionary = ['ice', 'icecream', 'coffee']
+        sentence = 'icecream'
+        expected = ['icecream']
+        self.assertEqual(expected, tokenize(dictionary, sentence))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False, verbosity=2)
 ```
 
 
