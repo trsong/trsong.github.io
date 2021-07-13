@@ -19,6 +19,16 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
 
+### Jul 13, 2021 LC 78 \[Medium\] Generate All Subsets
+---
+> **Question:** Given a list of unique numbers, generate all possible subsets without duplicates. This includes the empty set as well.
+
+**Example:**
+```py
+generate_all_subsets([1, 2, 3])
+# [[], [3], [2], [2, 3], [1], [1, 3], [1, 2], [1, 2, 3]]
+```
+
 ### Jul 12, 2021 \[Hard\] The Most Efficient Way to Sort a Million 32-bit Integers
 --- 
 > **Question:** Given an array of a million integers between zero and a billion, out of order, how can you efficiently sort it?
