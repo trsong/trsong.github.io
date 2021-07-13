@@ -3131,6 +3131,20 @@ Output: [1, 1, 2, 2, 3, 3, 3]
 ---
 
 <details>
+<summary class="lc_h">
+
+- [**\[Hard\] The Most Efficient Way to Sort a Million 32-bit Integers**](https://trsong.github.io/python/java/2021/05/02/DailyQuestionsMay.html#jul-12-2021-hard-the-most-efficient-way-to-sort-a-million-32-bit-integers) -- *Given an array of a million integers between zero and a billion, out of order, how can you efficiently sort it?* [*\(Try ME\)*](https://replit.com/@trsong/Sort-a-Million-32-bit-Integers-1)
+
+</summary>
+<div>
+
+**Question:** Given an array of a million integers between zero and a billion, out of order, how can you efficiently sort it?
+
+</div>
+</details>
+
+
+<details>
 <summary class="lc_e">
 
 - [**\[Easy\] LC 451. Sort Characters By Frequency**](https://trsong.github.io/python/java/2020/08/02/DailyQuestionsAug.html#aug-22-2020-lc-451-easy-sort-characters-by-frequency) -- *Given a string, sort it in decreasing order based on the frequency of characters.* [*\(Try ME\)*](https://repl.it/@trsong/Sort-Characters-By-Frequency-1)
