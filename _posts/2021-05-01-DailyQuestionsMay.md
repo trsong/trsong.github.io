@@ -19,6 +19,15 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
 
+### Jul 14, 2021 \[Easy\] Merge Overlapping Intervals
+---
+> **Question:** Given a list of possibly overlapping intervals, return a new list of intervals where all overlapping intervals have been merged.
+>
+> The input list is not necessarily ordered in any way.
+>
+> For example, given `[(1, 3), (5, 8), (4, 10), (20, 25)]`, you should return `[(1, 3), (4, 10), (20, 25)]`.
+
+
 ### Jul 13, 2021 LC 78 \[Medium\] Generate All Subsets
 ---
 > **Question:** Given a list of unique numbers, generate all possible subsets without duplicates. This includes the empty set as well.
@@ -27,6 +36,60 @@ categories: Python/Java
 ```py
 generate_all_subsets([1, 2, 3])
 # [[], [3], [2], [2, 3], [1], [1, 3], [1, 2], [1, 2, 3]]
+```
+
+**Solution with Backtracking:** [https://replit.com/@trsong/Generate-All-the-Subsets-2](https://replit.com/@trsong/Generate-All-the-Subsets-2)
+```py
+import unittest
+
+def generate_all_subsets(nums):
+    res = []
+    backtrack(0, res, [], nums)
+    return res
+
+
+def backtrack(index, res, accu, nums):
+    res.append(accu[:])
+    for i in range(index, len(nums)):
+        accu.append(nums[i])
+        backtrack(i + 1, res, accu, nums)
+        accu.pop()
+    
+
+class GenerateAllSubsetSpec(unittest.TestCase):
+    def test_example(self):
+        nums = [1, 2, 3]
+        expected = [[], [3], [2], [2, 3], [1], [1, 3], [1, 2], [1, 2, 3]]
+        self.assertItemsEqual(expected, generate_all_subsets(nums))
+
+    def test_empty_list(self):
+        nums = []
+        expected = [[]]
+        self.assertItemsEqual(expected, generate_all_subsets(nums))
+
+    def test_one_elem_list(self):
+        nums = [1]
+        expected = [[], [1]]
+        self.assertItemsEqual(expected, generate_all_subsets(nums))
+
+    def test_two_elem_list(self):
+        nums = [1, 2]
+        expected = [[1], [2], [1, 2], []]
+        self.assertItemsEqual(expected, generate_all_subsets(nums))
+
+    def test_four_elem_list(self):
+        nums = [1, 2, 3, 4]
+        expected = [
+            [], 
+            [1], [2], [3],  [4],
+            [1, 2], [1, 3], [2, 3], [1, 4], [2, 4], [3, 4],
+            [1, 2, 3], [1, 2, 4], [1, 3, 4], [2, 3, 4], [1, 2, 3, 4]
+        ]
+        self.assertItemsEqual(expected, generate_all_subsets(nums))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False, verbosity=2)
 ```
 
 ### Jul 12, 2021 \[Hard\] The Most Efficient Way to Sort a Million 32-bit Integers
