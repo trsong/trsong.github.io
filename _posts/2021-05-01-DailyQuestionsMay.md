@@ -56,6 +56,74 @@ Output: [1, 2, 3, 4, 8, 12, 11, 10, 9, 5, 6, 7]
 > For example, given `[(1, 3), (5, 8), (4, 10), (20, 25)]`, you should return `[(1, 3), (4, 10), (20, 25)]`.
 
 
+**Solution:** [https://replit.com/@trsong/Merge-All-Overlapping-Intervals-2](https://replit.com/@trsong/Merge-All-Overlapping-Intervals-2)
+```py
+import unittest
+
+def merge_intervals(interval_seq):
+    interval_seq.sort()
+    res = []
+
+    for start, end in interval_seq:
+        if not res or res[-1][-1] < start:
+            res.append((start, end))
+        elif res[-1][-1] < end:
+            old_start, _ = res.pop()
+            res.append((old_start, end))
+
+    return res
+            
+
+
+class MergeIntervalSpec(unittest.TestCase):
+    def test_interval_with_zero_mergings(self):
+        self.assertItemsEqual(merge_intervals([]), [])
+
+    def test_interval_with_zero_mergings2(self):
+        interval_seq = [(1, 2), (3, 4), (5, 6)]
+        expected = [(1, 2), (3, 4), (5, 6)]
+        self.assertItemsEqual(expected, merge_intervals(interval_seq))
+
+    def test_interval_with_zero_mergings3(self):
+        interval_seq = [(-3, -2), (5, 6), (1, 4)]
+        expected = [(-3, -2), (1, 4), (5, 6)]
+        self.assertItemsEqual(expected, merge_intervals(interval_seq))
+
+    def test_interval_with_one_merging(self):
+        interval_seq = [(1, 3), (5, 7), (7, 11), (2, 4)]
+        expected = [(1, 4), (5, 11)]
+        self.assertItemsEqual(expected, merge_intervals(interval_seq))
+
+    def test_interval_with_one_merging2(self):
+        interval_seq = [(1, 4), (0, 8)]
+        expected = [(0, 8)]
+        self.assertItemsEqual(expected, merge_intervals(interval_seq))
+
+    def test_interval_with_two_mergings(self):
+        interval_seq = [(1, 3), (3, 5), (5, 8)]
+        expected = [(1, 8)]
+        self.assertItemsEqual(expected, merge_intervals(interval_seq))
+
+    def test_interval_with_two_mergings2(self):
+        interval_seq = [(5, 8), (1, 6), (0, 2)]
+        expected = [(0, 8)]
+        self.assertItemsEqual(expected, merge_intervals(interval_seq))
+
+    def test_interval_with_multiple_mergings(self):
+        interval_seq = [(-5, 0), (1, 4), (1, 4), (1, 4), (5, 7), (6, 10), (0, 1)]
+        expected = [(-5, 4), (5, 10)]
+        self.assertItemsEqual(expected, merge_intervals(interval_seq))
+
+    def test_interval_with_multiple_mergings2(self):
+        interval_seq = [(1, 3), (5, 8), (4, 10), (20, 25)]
+        expected = [(1, 3), (4, 10), (20, 25)]
+        self.assertItemsEqual(expected, merge_intervals(interval_seq))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False, verbosity=2)
+```
+
 ### Jul 13, 2021 LC 78 \[Medium\] Generate All Subsets
 ---
 > **Question:** Given a list of unique numbers, generate all possible subsets without duplicates. This includes the empty set as well.
