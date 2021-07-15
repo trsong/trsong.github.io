@@ -19,6 +19,34 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
 
+### Jul 15, 2021 LC 54 \[Medium\] Spiral Matrix 
+---
+> **Question:** Given a matrix of n x m elements (n rows, m columns), return all elements of the matrix in spiral order.
+
+**Example 1:**
+
+```py
+Input:
+[
+ [ 1, 2, 3 ],
+ [ 4, 5, 6 ],
+ [ 7, 8, 9 ]
+]
+Output: [1, 2, 3, 6, 9, 8, 7, 4, 5]
+```
+
+**Example 2:**
+
+```py
+Input:
+[
+  [1,  2,  3,  4],
+  [5,  6,  7,  8],
+  [9, 10, 11, 12]
+]
+Output: [1, 2, 3, 4, 8, 12, 11, 10, 9, 5, 6, 7]
+```
+
 ### Jul 14, 2021 \[Easy\] Merge Overlapping Intervals
 ---
 > **Question:** Given a list of possibly overlapping intervals, return a new list of intervals where all overlapping intervals have been merged.
