@@ -64,6 +64,92 @@ Input:
 Output: [1, 2, 3, 4, 8, 12, 11, 10, 9, 5, 6, 7]
 ```
 
+**Solution:** [https://replit.com/@trsong/Spiral-Matrix-Traversal-2](https://replit.com/@trsong/Spiral-Matrix-Traversal-2)
+```py
+import unittest
+
+def spiral_order(matrix):
+    if not matrix or not matrix[0]:
+        return []
+    r_lo, r_hi = 0, len(matrix) - 1
+    c_lo, c_hi = 0, len(matrix[0]) - 1
+
+    res = []
+    while r_lo <= r_hi and c_lo <= c_hi:
+        r, c = r_lo, c_lo
+
+        while c < c_hi:
+            res.append(matrix[r][c])
+            c += 1
+        c_hi -=1
+
+        while r < r_hi:
+            res.append(matrix[r][c])
+            r += 1
+        r_hi -= 1
+
+        if r_lo > r_hi or c_lo > c_hi:
+            res.append(matrix[r][c])
+            break
+
+        while c > c_lo:
+            res.append(matrix[r][c])
+            c -= 1
+        c_lo += 1
+
+        while r > r_lo:
+            res.append(matrix[r][c])
+            r -= 1
+        r_lo += 1
+
+    return res
+
+        
+class SpiralOrderSpec(unittest.TestCase):
+    def test_example1(self):
+        self.assertEqual([1, 2, 3, 6, 9, 8, 7, 4, 5], spiral_order([
+            [ 1, 2, 3 ],
+            [ 4, 5, 6 ],
+            [ 7, 8, 9 ]
+        ]))
+
+    def test_example2(self):
+        self.assertEqual([1, 2, 3, 4, 8, 12, 11, 10, 9, 5, 6, 7], spiral_order([
+            [1,  2,  3,  4],
+            [5,  6,  7,  8],
+            [9, 10, 11, 12]
+        ]))
+
+    def test_empty_table(self):
+        self.assertEqual(spiral_order([]), [])
+        self.assertEqual(spiral_order([[]]), [])
+
+    def test_two_by_two_table(self):
+        self.assertEqual([1, 2, 3, 4], spiral_order([
+            [1, 2],
+            [4, 3]
+        ]))
+
+    def test_one_element_table(self):
+        self.assertEqual([1], spiral_order([[1]]))
+
+    def test_one_by_k_table(self):
+        self.assertEqual([1, 2, 3, 4], spiral_order([
+            [1, 2, 3, 4]
+        ]))
+
+    def test_k_by_one_table(self):
+        self.assertEqual([1, 2, 3], spiral_order([
+            [1],
+            [2],
+            [3]
+        ]))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False, verbosity=2)
+```
+
 ### Jul 14, 2021 \[Easy\] Merge Overlapping Intervals
 ---
 > **Question:** Given a list of possibly overlapping intervals, return a new list of intervals where all overlapping intervals have been merged.
