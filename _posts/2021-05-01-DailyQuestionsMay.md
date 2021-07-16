@@ -19,6 +19,23 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
 
+### Jul 16, 2021 \[Medium\] Find Missing Positive
+---
+> **Question:** Given an unsorted integer array, find the first missing positive integer.
+
+**Example 1:**
+```py
+Input: [1, 2, 0]
+Output: 3
+```
+
+**Example 2:**
+```py
+Input: [3, 4, -1, 1]
+Output: 2
+```
+
+
 ### Jul 15, 2021 LC 54 \[Medium\] Spiral Matrix 
 ---
 > **Question:** Given a matrix of n x m elements (n rows, m columns), return all elements of the matrix in spiral order.
