@@ -19,6 +19,13 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
 
+### Jul 18, 2021 \[Medium\] Rearrange String with Repeated Characters
+---
+> **Question:** Given a string with repeated characters, rearrange the string so that no two adjacent characters are the same. If this is not possible, return None.
+>
+> For example, given `"aaabbc"`, you could return `"ababac"`. Given `"aaab"`, return `None`.
+
+
 ### Jul 17, 2021 \[Medium\] Tree Serialization
 ---
 > **Question:** You are given the root of a binary tree. You need to implement 2 functions:
