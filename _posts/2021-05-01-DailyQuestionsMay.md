@@ -19,6 +19,15 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
 
+### Jul 19, 2021 \[Easy\] Intersection of Lists
+---
+> **Question:** Given 3 sorted lists, find the intersection of those 3 lists.
+
+**Example:**
+```py
+intersection([1, 2, 3, 4], [2, 4, 6, 8], [3, 4, 5])  # returns [4]
+```
+
 ### Jul 18, 2021 \[Medium\] Rearrange String with Repeated Characters
 ---
 > **Question:** Given a string with repeated characters, rearrange the string so that no two adjacent characters are the same. If this is not possible, return None.
