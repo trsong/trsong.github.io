@@ -26,6 +26,87 @@ categories: Python/Java
 > For example, given `"aaabbc"`, you could return `"ababac"`. Given `"aaab"`, return `None`.
 
 
+**My thoughts:** This prblem is a special case of [Rearrange String K Distance Apart](https://trsong.github.io/python/java/2020/08/02/DailyQuestionsAug/#sep-11-2020-lc-358-hard-rearrange-string-k-distance-apart). Just Greedily choose the character with max remaining number for each window size 2. If no such character satisfy return None instead.
+
+**Solution with Max Heap:** [https://replit.com/@trsong/Rearrange-String-with-Repeated-Characters-2](https://replit.com/@trsong/Rearrange-String-with-Repeated-Characters-2)
+```py
+import unittest
+from Queue import PriorityQueue
+
+def rearrange_string(s):
+    histogram = {}
+    for ch in s:
+        histogram[ch] = histogram.get(ch, 0) + 1
+    
+    max_heap = PriorityQueue()
+    for ch, freq in histogram.items():
+        max_heap.put((-freq, ch))
+
+    window_size = 2
+    res = []
+    while not max_heap.empty():
+        queue = []
+        for _ in range(window_size):
+            if queue and max_heap.empty():
+                return None
+            elif max_heap.empty():
+                break
+            freq, ch = max_heap.get()
+            res.append(ch)
+
+            if abs(freq) > 1:
+                queue.append((abs(freq) - 1, ch))
+        
+        for freq, ch in queue:
+            max_heap.put((-freq, ch))
+    
+    return ''.join(res)
+
+
+class RearrangeStringSpec(unittest.TestCase):
+    def assert_result(self, original):
+        res = rearrange_string(original)
+        self.assertEqual(sorted(original), sorted(res))
+        for i in xrange(1, len(res)):
+            self.assertNotEqual(res[i], res[i-1])
+
+    def test_example1(self):
+        # possible solution: ababac
+        self.assert_result("aaabbc")
+    
+    def test_example2(self):
+        self.assertIsNone(rearrange_string("aaab"))
+    
+    def test_example3(self):
+        # possible solution: ababacdc
+        self.assert_result("aaadbbcc")
+    
+    def test_unable_to_rearrange(self):
+        self.assertIsNone(rearrange_string("aaaaaaaaa"))
+    
+    def test_unable_to_rearrange2(self):
+        self.assertIsNone(rearrange_string("121211"))
+
+    def test_empty_input_string(self):
+        self.assert_result("")
+    
+    def test_possible_to_arrange(self):
+        # possible solution: ababababab
+        self.assert_result("aaaaabbbbb")
+    
+    def test_possible_to_arrange2(self):
+        # possible solution: 1213141
+        self.assert_result("1111234")
+    
+    def test_possible_to_arrange3(self):
+        # possible solution: 1212
+        self.assert_result("1122")
+    
+
+if __name__ == '__main__':
+    unittest.main(verbosity=2, exit=False)
+```
+
 ### Jul 17, 2021 \[Medium\] Tree Serialization
 ---
 > **Question:** You are given the root of a binary tree. You need to implement 2 functions:
