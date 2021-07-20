@@ -19,6 +19,27 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
 
+### Jul 20, 2021 \[Medium\] Peaks and Troughs in an Array of Integers
+---
+> **Question:** Given an array of integers arr[], the task is to print a list of all the peaks and another list of all the troughs present in the array. A peak is an element in the array which is greater than its neighbouring elements. Similarly, a trough is an element that is smaller than its neighbouring elements.
+
+**Example 1:** 
+```py
+Input: arr[] = {5, 10, 5, 7, 4, 3, 5} 
+Output: 
+Peaks : 10 7 5 
+Troughs : 5 5 3
+```
+
+**Example 2:**
+```py
+Input: arr[] = {1, 2, 3, 4, 5} 
+Output: 
+Peaks : 5 
+Troughs : 1  
+```
+
+
 ### Jul 19, 2021 \[Easy\] Intersection of Lists
 ---
 > **Question:** Given 3 sorted lists, find the intersection of those 3 lists.
