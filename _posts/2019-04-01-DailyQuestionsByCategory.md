@@ -1132,6 +1132,24 @@ For example, if A is `'abcde'` and B is `'cdeab'`, return `True`. If A is `'abc'
 <details>
 <summary class="lc_e">
 
+- [**\[Easy\] Intersection of Lists**](https://trsong.github.io/python/java/2021/05/02/DailyQuestionsMay.html#jul-19-2021-easy-intersection-of-lists) -- *Given 3 sorted lists, find the intersection of those 3 lists.* [*\(Try ME\)*](https://replit.com/@trsong/Find-Intersection-of-3-Lists-1)
+
+</summary>
+<div>
+
+**Question:** Given 3 sorted lists, find the intersection of those 3 lists.
+
+**Example:**
+```py
+intersection([1, 2, 3, 4], [2, 4, 6, 8], [3, 4, 5])  # returns [4]
+```
+
+</div>
+</details>
+
+<details>
+<summary class="lc_e">
+
 - [**\[Easy\] Three Equal Sums**](https://trsong.github.io/python/java/2021/05/02/DailyQuestionsMay.html#may-12-2021-easy-three-equal-sums) -- *Given an array of numbers, determine whether it can be partitioned into 3 arrays of equal sums.* [*\(Try ME\)*](https://replit.com/@trsong/Three-Equal-Sums-1)
 
 </summary>
