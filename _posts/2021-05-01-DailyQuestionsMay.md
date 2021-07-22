@@ -19,6 +19,17 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
 
+### Jul 22, 2021  LC 209 \[Medium\] Minimum Size Subarray Sum
+---
+> **Question:** Given an array of n positive integers and a positive integer s, find the minimal length of a contiguous subarray of which the sum >= s. If there isn't one, return 0 instead.
+
+**Example:**
+```py
+Input: s = 7, nums = [2, 3, 1, 2, 4, 3]
+Output: 2
+Explanation: the subarray [4,3] has the minimal length under the problem constraint.
+```
+
 ### Jul 21, 2021 \[Easy\] Array of Equal Parts
 ---
 > **Question:** Given an array containing only positive integers, return if you can pick two integers from the array which cuts the array into three pieces such that the sum of elements in all pieces is equal.
