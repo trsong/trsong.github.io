@@ -47,6 +47,74 @@ Input: [1, 1, 1, 1]
 Output: False
 ```
 
+**Solution with Prefix Sum and Two Pointers:** [https://replit.com/@trsong/Array-of-Equal-Parts-2](https://replit.com/@trsong/Array-of-Equal-Parts-2)
+```py
+import unittest
+
+def contains_3_equal_parts(nums):
+    total = sum(nums)
+    i, j = 0, len(nums) - 1
+    prefix_sum = suffix_sum = 0
+
+    while i < j:
+        if prefix_sum < suffix_sum:
+            prefix_sum += nums[i]
+            i += 1
+        elif prefix_sum > suffix_sum:
+            suffix_sum += nums[j]
+            j -= 1
+        else:
+            middle_sum = total - prefix_sum - suffix_sum - nums[i] - nums[j]
+            if middle_sum == prefix_sum:
+                return True
+            prefix_sum += nums[i]
+            suffix_sum += nums[j]
+            i += 1
+            j -= 1
+    return False
+        
+        
+class Contains3EqualPartSpec(unittest.TestCase):
+    def test_example(self):
+        nums = [2, 4, 5, 3, 3, 9, 2, 2, 2]
+        # Remove 5, 9 to break array into [2, 4], [3, 3] and [2, 2, 2]
+        self.assertTrue(contains_3_equal_parts(nums))
+
+    def test_example2(self):
+        nums = [1, 1, 1, 1]
+        self.assertFalse(contains_3_equal_parts(nums))
+
+    def test_empty_array(self):
+        self.assertFalse(contains_3_equal_parts([]))
+
+    def test_two_element_array(self):
+        nums = [1, 2]
+        # [], [], []
+        self.assertTrue(contains_3_equal_parts(nums))
+
+    def test_three_element_array(self):
+        nums = [1, 2, 3]
+        self.assertFalse(contains_3_equal_parts(nums))
+
+    def test_symmetic_array(self):
+        nums = [1, 2, 4, 3, 5, 2, 1]
+        # remove 4, 5 gives [1, 2], [3], [2, 1]
+        self.assertTrue(contains_3_equal_parts(nums))
+
+    def test_sum_not_divisiable_by_3(self):
+        nums = [2, 2, 2, 2, 2, 2]
+        self.assertFalse(contains_3_equal_parts(nums))
+
+    def test_ascending_array(self):
+        nums = [1, 2, 3, 3, 3, 3, 4, 6]
+        # remove 3, 4 gives [1, 2, 3], [3, 3], [6]
+        self.assertTrue(contains_3_equal_parts(nums))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
+```
+
 ### Jul 20, 2021 \[Medium\] Peaks and Troughs in an Array of Integers
 ---
 > **Question:** Given an array of integers arr[], the task is to print a list of all the peaks and another list of all the troughs present in the array. A peak is an element in the array which is greater than its neighbouring elements. Similarly, a trough is an element that is smaller than its neighbouring elements.
