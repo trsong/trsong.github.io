@@ -56,6 +56,86 @@ Peaks : 5
 Troughs : 1  
 ```
 
+**Solution:** [https://replit.com/@trsong/Peaks-and-Troughs-in-an-Array-of-Integers](https://replit.com/@trsong/Peaks-and-Troughs-in-an-Array-of-Integers)
+```py
+import unittest
+
+def peak_and_trough(nums):
+    if len(nums) <= 1:
+        return [], []
+    peak = []
+    trough = []
+
+    for i, num in enumerate(nums):
+        if is_peak(nums, i):
+            peak.append(num)
+        elif is_trough(nums, i):
+            trough.append(num)
+    
+    return peak, trough
+
+
+def is_peak(nums, i):
+    if i > 0 and nums[i - 1] >= nums[i]:
+        return False
+    if i < len(nums) - 1 and nums[i] <= nums[i + 1]:
+        return False
+    return True
+
+
+def is_trough(nums, i):
+    if i > 0 and nums[i - 1] <= nums[i]:
+        return False
+    if i < len(nums) - 1 and nums[i] >= nums[i + 1]:
+        return False
+    return True
+    
+
+class PeakAndTroughSpec(unittest.TestCase):
+    def test_example(self):
+        nums = [5, 10, 5, 7, 4, 3, 5]
+        peak = [10, 7, 5]
+        trough = [5, 5, 3]
+        self.assertEqual((peak, trough), peak_and_trough(nums))
+
+    def test_example2(self):
+        nums = [1, 2, 3, 4, 5]
+        peak = [5]
+        trough = [1]
+        self.assertEqual((peak, trough), peak_and_trough(nums))
+        self.assertEqual((peak, trough), peak_and_trough(nums))
+
+    def test_empty_list(self):
+        nums = []
+        peak = []
+        trough = []
+        self.assertEqual((peak, trough), peak_and_trough(nums))
+        self.assertEqual((peak, trough), peak_and_trough(nums))
+
+    def test_one_elem_list(self):
+        nums = [42]
+        peak = []
+        trough = []
+        self.assertEqual((peak, trough), peak_and_trough(nums))
+        self.assertEqual((peak, trough), peak_and_trough(nums))
+
+    def test_two_elem_list(self):
+        nums = [1, 2]
+        peak = [2]
+        trough = [1]
+        self.assertEqual((peak, trough), peak_and_trough(nums))
+
+    def test_elem_with_tie(self):
+        nums = [4, 2, 2, 0, 0, 2, 2, 3, 3, 3, 2, 1]
+        peak = [4]
+        trough = [1]
+        self.assertEqual((peak, trough), peak_and_trough(nums))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False, verbosity=2)
+```
+
 
 ### Jul 19, 2021 \[Easy\] Intersection of Lists
 ---

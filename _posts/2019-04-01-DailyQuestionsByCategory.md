@@ -1129,6 +1129,37 @@ For example, if A is `'abcde'` and B is `'cdeab'`, return `True`. If A is `'abc'
 ## Array
 ---
 
+
+<details>
+<summary class="lc_m">
+
+- [**\[Medium\] Peaks and Troughs in an Array of Integers**](https://trsong.github.io/python/java/2021/05/02/DailyQuestionsMay.html#jul-20-2021-medium-peaks-and-troughs-in-an-array-of-integers) -- *Find a list of all the peaks and another list of all the troughs present in the array.* [*\(Try ME\)*](https://replit.com/@trsong/Peaks-and-Troughs-in-an-Array-of-Integers-1)
+
+</summary>
+<div>
+
+**Question:** Given an array of integers arr[], the task is to print a list of all the peaks and another list of all the troughs present in the array. A peak is an element in the array which is greater than its neighbouring elements. Similarly, a trough is an element that is smaller than its neighbouring elements.
+
+**Example 1:** 
+```py
+Input: arr[] = {5, 10, 5, 7, 4, 3, 5} 
+Output: 
+Peaks : 10 7 5 
+Troughs : 5 5 3
+```
+
+**Example 2:**
+```py
+Input: arr[] = {1, 2, 3, 4, 5} 
+Output: 
+Peaks : 5 
+Troughs : 1  
+```
+
+</div>
+</details>
+
+
 <details>
 <summary class="lc_e">
 
