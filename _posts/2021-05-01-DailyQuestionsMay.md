@@ -19,6 +19,23 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
 
+### Jul 21, 2021 \[Easy\] Array of Equal Parts
+---
+> **Question:** Given an array containing only positive integers, return if you can pick two integers from the array which cuts the array into three pieces such that the sum of elements in all pieces is equal.
+
+**Example 1:**
+```py
+Input: [2, 4, 5, 3, 3, 9, 2, 2, 2]
+Output: True
+Explanation: choosing the number 5 and 9 results in three pieces [2, 4], [3, 3] and [2, 2, 2]. Sum = 6.
+```
+
+**Example 2:**
+```py
+Input: [1, 1, 1, 1]
+Output: False
+```
+
 ### Jul 20, 2021 \[Medium\] Peaks and Troughs in an Array of Integers
 ---
 > **Question:** Given an array of integers arr[], the task is to print a list of all the peaks and another list of all the troughs present in the array. A peak is an element in the array which is greater than its neighbouring elements. Similarly, a trough is an element that is smaller than its neighbouring elements.
