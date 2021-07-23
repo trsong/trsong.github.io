@@ -19,6 +19,54 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
 
+
+### Jul 23, 2021 LC 987 \[Medium\] Vertical Order Traversal of a Binary Tree
+---
+> **Question:** Given a binary tree, return the vertical order traversal of its nodes' values. (ie, from top to bottom, column by column).
+>
+> If two nodes are in the same row and column, the order should be from left to right.
+
+**Example 1:**
+```py
+Given binary tree:
+
+    3
+   / \
+  9  20
+    /  \
+   15   7
+
+return its vertical order traversal as:
+
+[
+  [9],
+  [3,15],
+  [20],
+  [7]
+]
+```
+
+**Example 2:**
+```py
+Given binary tree:
+
+    _3_
+   /   \
+  9    20
+ / \   / \
+4   5 2   7
+
+return its vertical order traversal as:
+
+[
+  [4],
+  [9],
+  [3,5,2],
+  [20],
+  [7]
+]
+```
+
 ### Jul 22, 2021  LC 209 \[Medium\] Minimum Size Subarray Sum
 ---
 > **Question:** Given an array of n positive integers and a positive integer s, find the minimal length of a contiguous subarray of which the sum >= s. If there isn't one, return 0 instead.
