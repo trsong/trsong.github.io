@@ -30,6 +30,64 @@ Output: 2
 Explanation: the subarray [4,3] has the minimal length under the problem constraint.
 ```
 
+**Solution with Sliding Window:** [https://replit.com/@trsong/Find-the-Minimum-Size-Subarray-Sum-2](https://replit.com/@trsong/Find-the-Minimum-Size-Subarray-Sum-2)
+```py
+import unittest
+
+def min_size_subarray_sum(s, nums):
+    res = float('inf')
+    start = 0
+    accu = 0
+
+    for end, num in enumerate(nums):
+        accu += num
+        while accu >= s:
+            res = min(res, end - start + 1)
+            accu -= nums[start]
+            start += 1
+
+    return res if res != float('inf') else 0
+
+
+class MinSizeSubarraySumSpec(unittest.TestCase):
+    def test_example(self):
+        s, nums = 7, [2, 3, 1, 2, 4, 3]
+        expected = 2  # [4, 3]
+        self.assertEqual(expected, min_size_subarray_sum(s, nums))
+
+    def test_empty_array(self):
+        self.assertEqual(0,  min_size_subarray_sum(0, []))
+
+    def test_no_such_subarray_exists(self):
+        s, nums = 3, [1, 1]
+        expected = 0
+        self.assertEqual(expected, min_size_subarray_sum(s, nums))
+
+    def test_no_such_subarray_exists2(self):
+        s, nums = 8, [1, 2, 4]
+        expected = 0
+        self.assertEqual(expected, min_size_subarray_sum(s, nums))
+    
+    def test_target_subarray_size_greater_than_one(self):
+        s, nums = 51, [1, 4, 45, 6, 0, 19]
+        expected = 2  # [45, 6]
+        self.assertEqual(expected, min_size_subarray_sum(s, nums))
+
+    def test_target_subarray_size_one(self):
+        s, nums = 9, [1, 10, 5, 2, 7]
+        expected = 1  # [10]
+        self.assertEqual(expected, min_size_subarray_sum(s, nums))
+
+    def test_return_min_size_of_such_subarray(self):
+        s, nums = 200, [1, 11, 100, 1, 0, 200, 3, 2, 1, 250]
+        expected = 1   # [200]
+        self.assertEqual(expected, min_size_subarray_sum(s, nums))
+   
+
+if __name__ == '__main__':
+    unittest.main(exit=False, verbosity=2)
+```
+
 ### Jul 21, 2021 \[Easy\] Array of Equal Parts
 ---
 > **Question:** Given an array containing only positive integers, return if you can pick two integers from the array which cuts the array into three pieces such that the sum of elements in all pieces is equal.

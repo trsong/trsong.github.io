@@ -2632,7 +2632,7 @@ lengthOfLongestSubstring("abrkaabcdefghijjxxx") # => 10 as len("abcdefghij") == 
 <details>
 <summary class="lc_m">
 
-- [**\[Medium\] LC 209. Minimum Size Subarray Sum**](https://trsong.github.io/python/java/2020/05/02/DailyQuestionsMay.html#june-23-2020-lc-209-medium-minimum-size-subarray-sum) -- *Given an array of n positive integers and a positive integer s, find the minimal length of a contiguous subarray of which the sum >= s.* [*\(Try ME\)*](https://repl.it/@trsong/Find-the-Minimum-Size-Subarray-Sum-1)
+- [**\[Medium\] LC 209. Minimum Size Subarray Sum**](https://trsong.github.io/python/java/2021/05/02/DailyQuestionsMay.html#jul-22-2021--lc-209-medium-minimum-size-subarray-sum) -- *Given an array of n positive integers and a positive integer s, find the minimal length of a contiguous subarray of which the sum >= s.* [*\(Try ME\)*](https://repl.it/@trsong/Find-the-Minimum-Size-Subarray-Sum-1)
 
 </summary>
 <div>
