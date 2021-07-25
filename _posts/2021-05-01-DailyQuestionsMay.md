@@ -74,6 +74,107 @@ return its vertical order traversal as:
 ]
 ```
 
+**Solution with DFS:** [https://replit.com/@trsong/Find-Vertical-Order-Traversal-of-a-Binary-Tree](https://replit.com/@trsong/Find-Vertical-Order-Traversal-of-a-Binary-Tree)
+```py
+import unittest
+
+def vertical_traversal(root):
+    if not root:
+        return []
+
+    position_map = {}
+    stack = [(root, 0)]
+    lo = hi = 0
+    while stack:
+        cur, pos = stack.pop()
+        position_map[pos] = position_map.get(pos, [])
+        position_map[pos].append(cur.val)
+        lo = min(lo, pos)
+        hi = max(hi, pos)
+
+        if cur.right:
+            stack.append((cur.right, pos + 1))
+        
+        if cur.left:
+            stack.append((cur.left, pos - 1))
+
+    res = []
+    for pos in range(lo, hi + 1):
+        res.append(position_map[pos])
+    return res
+        
+
+class Node(object):
+    def __init__(self, val, left=None, right=None):
+        self.val = val
+        self.left = left
+        self.right = right
+
+
+class VerticalTraversalSpec(unittest.TestCase):
+    def test_example1(self):
+        """
+         3
+        / \
+       9  20
+         /  \
+        15   7
+        """
+        t = Node(3, Node(9), Node(20, Node(15), Node(7)))
+        self.assertEqual(vertical_traversal(t), [
+            [9],
+            [3,15],
+            [20],
+            [7]
+        ])
+    
+    def test_example2(self):
+        """
+            _3_
+           /   \
+          9    20
+         / \   / \
+        4   5 2   7
+        """
+        t9 = Node(9, Node(4), Node(5))
+        t20 = Node(20, Node(2), Node(7))
+        t = Node(3, t9, t20)
+
+        self.assertEqual(vertical_traversal(t), [
+            [4],
+            [9],
+            [3,5,2],
+            [20],
+            [7]
+        ])
+
+    def test_empty_tree(self):
+        self.assertEqual(vertical_traversal(None), [])
+
+    def test_left_heavy_tree(self):
+        """
+            1
+           / \
+          2   3
+         / \   \
+        4   5   6
+        """
+        t2 = Node(2, Node(4), Node(5))
+        t3 = Node(3, right=Node(6))
+        t = Node(1, t2, t3)
+        self.assertEqual(vertical_traversal(t), [
+            [4],
+            [2],
+            [1,5],
+            [3],
+            [6]
+        ])
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False, verbosity=2)
+```
+
 ### Jul 22, 2021  LC 209 \[Medium\] Minimum Size Subarray Sum
 ---
 > **Question:** Given an array of n positive integers and a positive integer s, find the minimal length of a contiguous subarray of which the sum >= s. If there isn't one, return 0 instead.
