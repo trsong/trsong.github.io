@@ -20,6 +20,13 @@ categories: Python/Java
 
 
 
+### Jul 24, 2021 \[Easy\] Longest Subarray Consisiting of Unique Elements from an Array
+---
+> **Question:** Given an array of elements, return the length of the longest subarray where all its elements are distinct.
+>
+> For example, given the array `[5, 1, 3, 5, 2, 3, 4, 1]`, return `5` as the longest subarray of distinct elements is `[5, 2, 3, 4, 1]`.
+
+
 ### Jul 23, 2021 LC 987 \[Medium\] Vertical Order Traversal of a Binary Tree
 ---
 > **Question:** Given a binary tree, return the vertical order traversal of its nodes' values. (ie, from top to bottom, column by column).
