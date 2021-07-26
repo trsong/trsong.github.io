@@ -683,7 +683,7 @@ if __name__ == '__main__':
 **My thoughts:** Since we only have one celebrity, there are only 3 situations:
 
 1. `knows(ordinary, celebrity)` gives `True`
-2. `knows(celebrity, ordinary)` gives `True` or `False`
+2. `knows(celebrity, ordinary)` gives `False`
 3. `knows(ordinary1, ordinary2)` gives `True` or `False`
 
 We only need to pair all persons, each iteration eliminate one that is definitely NOT the celebrity. Until there is only one person left.

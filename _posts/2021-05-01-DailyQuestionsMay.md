@@ -48,7 +48,99 @@ Output: False
 >
 > Given a list of `N` people and the above operation, find a way to identify the celebrity in `O(N)` time.
 
+**My thoughts:** Since we only have one celebrity, there are only 3 situations:
 
+1. `knows(ordinary, celebrity)` gives `True`
+2. `knows(celebrity, ordinary)` gives `False`
+3. `knows(ordinary1, ordinary2)` gives `True` or `False`
+
+We only need to pair all persons, each iteration eliminate one that is definitely NOT the celebrity. Until there is only one person left.
+
+**Solution with Stack:** [https://replit.com/@trsong/Solve-The-Celebrity-Problem-1](https://replit.com/@trsong/Solve-The-Celebrity-Problem-1)
+```py
+import unittest
+
+def find_celebrity(knows, people):
+    if not people:
+        return None
+
+    stack = people[:]
+    while len(stack) > 1:
+        first = stack.pop()
+        second = stack.pop()
+        if knows(first, second):
+            stack.append(second)
+        else:
+            stack.append(first)
+    return stack.pop()
+
+
+class FindCelebritySpec(unittest.TestCase):
+    def knows_factory(self, neighbors):
+        return lambda me, you: you in neighbors[me]
+        
+    def test_no_one_exist(self):
+        knows = lambda x, y: False
+        self.assertIsNone(find_celebrity(knows, []))
+        
+    def test_only_one_person(self):
+        neighbors = {
+            0: []
+        }
+        knows = self.knows_factory(neighbors)
+        self.assertEqual(0, find_celebrity(knows, neighbors.keys()))
+        
+    def test_no_one_knows_others_except_celebrity(self):
+        neighbors = {
+            0: [4],
+            1: [4],
+            2: [4],
+            3: [4],
+            4: []
+        }
+        knows = self.knows_factory(neighbors)
+        self.assertEqual(4, find_celebrity(knows, neighbors.keys()))
+        
+    def test_no_one_knows_others_except_celebrity2(self):
+        neighbors = {
+            0: [],
+            1: [0],
+            2: [0],
+            3: [0],
+            4: [0]
+        }
+        knows = self.knows_factory(neighbors)
+        self.assertEqual(0, find_celebrity(knows, neighbors.keys()))
+        
+    def test_every_one_not_know_someone2(self):
+        neighbors = {
+            0: [1, 2, 3, 4],
+            1: [0, 2, 3, 4],
+            2: [4],
+            3: [2, 4],
+            4: []
+        }
+        knows = self.knows_factory(neighbors)
+        self.assertEqual(4, find_celebrity(knows, neighbors.keys()))
+        
+    def test_every_one_not_know_someone3(self):
+        neighbors = {
+            0: [1, 4, 5],
+            1: [0, 4, 5],
+            
+            2: [3, 4, 5],
+            3: [2, 4, 5],
+            
+            4: [5, 0],
+            5: [],
+        }
+        knows = self.knows_factory(neighbors)
+        self.assertEqual(5, find_celebrity(knows, neighbors.keys()))
+        
+
+if __name__ == '__main__':
+    unittest.main(exit=False, verbosity=2)
+```
 
 ### Jul 24, 2021 \[Easy\] Longest Subarray Consisiting of Unique Elements from an Array
 ---
