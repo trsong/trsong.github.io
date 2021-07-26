@@ -19,6 +19,29 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
 
+### Jul 26, 2021 LC 680 \[Easy\] Remove Character to Create Palindrome
+---
+> **Question:** Given a string, determine if you can remove any character to create a palindrome.
+
+**Example 1:**
+```py
+Input: "abcdcbea"
+Output: True 
+Explanation: Remove 'e' gives "abcdcba"
+```
+
+**Example 2:**
+```py
+Input: "abccba"
+Output: True
+```
+
+**Example 3:**
+```py
+Input: "abccaa"
+Output: False
+```
+
 ### Jul 25, 2021 \[Medium\] The Celebrity Problem
 ---
 > **Question:** At a party, there is a single person who everyone knows, but who does not know anyone in return (the "celebrity"). To help figure out who this is, you have access to an `O(1)` method called `knows(a, b)`, which returns `True` if person `a` knows person `b`, else `False`.
