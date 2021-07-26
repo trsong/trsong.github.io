@@ -2609,6 +2609,21 @@ For example, given `"abcbbbbcccbdddadacb"`, the longest substring that contains 
 
 
 <details>
+<summary class="lc_e">
+
+- [**\[Easy\] Longest Subarray Consisiting of Unique Elements from an Array**](https://trsong.github.io/python/java/2021/05/02/DailyQuestionsMay.html#jul-24-2021-easy-longest-subarray-consisiting-of-unique-elements-from-an-array) -- *Given an array of elements, return the length of the longest subarray where all its elements are distinct.* [*\(Try ME\)*](https://replit.com/@trsong/Longest-Subarray-Consisiting-of-Unique-Elements-1)
+
+</summary>
+<div>
+
+**Question:** Given an array of elements, return the length of the longest subarray where all its elements are distinct.
+
+For example, given the array `[5, 1, 3, 5, 2, 3, 4, 1]`, return `5` as the longest subarray of distinct elements is `[5, 2, 3, 4, 1]`.
+ 
+</div>
+</details>
+
+<details>
 <summary class="lc_m">
 
 - [**\[Medium\] Longest Substring without Repeating Characters**](https://trsong.github.io/python/java/2020/05/02/DailyQuestionsMay.html#june-17-2020-medium-longest-substring-without-repeating-characters) -- *Given a string, find the length of the longest substring without repeating characters.* [*\(Try ME\)*](https://repl.it/@trsong/Find-Longest-Substring-without-Repeating-Characters-1)

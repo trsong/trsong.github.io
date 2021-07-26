@@ -56,6 +56,58 @@ Output: False
 >
 > For example, given the array `[5, 1, 3, 5, 2, 3, 4, 1]`, return `5` as the longest subarray of distinct elements is `[5, 2, 3, 4, 1]`.
 
+**Soltuion with Sliding Window:** [https://replit.com/@trsong/Longest-Subarray-Consisiting-of-Unique-Elements](https://replit.com/@trsong/Longest-Subarray-Consisiting-of-Unique-Elements)
+```py
+import unittest
+
+def longest_unique_subarray(nums):
+    last_pos_lookup = {}
+    res = 0
+    last_pos = -1
+    for i, num in enumerate(nums):
+        last_pos = max(last_pos, last_pos_lookup.get(num, -1))
+        res = max(res, i - last_pos)
+        last_pos_lookup[num] = i
+    return res
+
+
+class LongestUniqueSubarraySpec(unittest.TestCase):
+    def test_example(self):
+        nums = [5, 1, 3, 5, 2, 3, 4, 1]
+        expected = 5  # [5, 2, 3, 4, 1]
+        self.assertEqual(expected, longest_unique_subarray(nums))
+
+    def test_empty_array(self):
+        self.assertEqual(0, longest_unique_subarray([]))
+
+    def test_array_with_one_elem(self):
+        self.assertEqual(1, longest_unique_subarray([42]))
+
+    def test_array_with_only_uniq_elem(self):
+        nums = [1, 2, 3, 4, 5, 6, 7]
+        expected = 7
+        self.assertEqual(expected, longest_unique_subarray(nums))
+
+    def test_array_with_duplicated_elem(self):
+        nums = [1, 2, 2, 3, 3, 3]
+        expected = 2  # [1, 2]
+        self.assertEqual(expected, longest_unique_subarray(nums))
+
+    def test_array_with_duplicated_elem2(self):
+        nums = [1, 2, 3, 1, 2, 3, 4, 1, 2, 3, 4, 5, 1, 2, 3]
+        expected = 5  # [1, 2, 3, 4, 5]
+        self.assertEqual(expected, longest_unique_subarray(nums))
+
+    def test_array_with_duplicated_elem3(self):
+        nums = [1, 2, 3, 2, 1, 2, 3, 4, 3, 2, 1]
+        expected = 4  # [1, 2, 3, 4]
+        self.assertEqual(expected, longest_unique_subarray(nums))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False, verbosity=2)
+```
+
 
 ### Jul 23, 2021 LC 987 \[Medium\] Vertical Order Traversal of a Binary Tree
 ---
