@@ -72,6 +72,73 @@ Input: "abccaa"
 Output: False
 ```
 
+**Solution:** [https://replit.com/@trsong/Remove-Character-to-Create-Palindrome-2](https://replit.com/@trsong/Remove-Character-to-Create-Palindrome-2)
+```py
+import unittest
+
+def is_one_palindrome(s):
+    return check_palindrome(s, 0, len(s) - 1, 0)
+
+
+def check_palindrome(s, lo, hi, error_count):
+    if error_count > 1:
+        return False
+
+    while lo < hi:
+        if s[lo] != s[hi]:
+            return (
+                check_palindrome(s, lo + 1, hi, error_count + 1) or
+                check_palindrome(s, lo, hi - 1, error_count + 1))
+        lo += 1
+        hi -= 1
+    return True
+
+
+class IsOnePalindromeSpec(unittest.TestCase):
+    def test_example(self):
+        # remove e gives abcdcba
+        self.assertTrue(is_one_palindrome('abcdcbea'))
+
+    def test_example2(self):
+        self.assertTrue(is_one_palindrome('abccba'))
+
+    def test_example3(self):
+        self.assertFalse(is_one_palindrome('abccaa'))
+
+    def test_empty_string(self):
+        self.assertTrue(is_one_palindrome(''))
+
+    def test_one_char_string(self):
+        self.assertTrue(is_one_palindrome('a'))
+
+    def test_palindrome_string(self):
+        # remove 4 gives 012343210
+        self.assertTrue(is_one_palindrome('0123443210'))
+
+    def test_remove_first_letter(self):
+        # remove 9 gives 0123443210
+        self.assertTrue(is_one_palindrome('90123443210'))
+
+    def test_remove_last_letter(self):
+        # remove 9 gives 012343210
+        self.assertTrue(is_one_palindrome('0123432109'))
+
+    def test_impossible_string(self):
+        self.assertFalse(is_one_palindrome('abecbea'))
+
+    def test_string_with_duplicated_chars(self):
+        # remove second d gives eedee
+        self.assertTrue(is_one_palindrome('eedede'))
+
+    def test_longer_example(self):
+        # remove second e gives ebcbbccabbacecbbcbe
+        self.assertTrue(is_one_palindrome('ebcbbcecabbacecbbcbe'))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False, verbosity=2)
+```
+
 ### Jul 25, 2021 \[Medium\] The Celebrity Problem
 ---
 > **Question:** At a party, there is a single person who everyone knows, but who does not know anyone in return (the "celebrity"). To help figure out who this is, you have access to an `O(1)` method called `knows(a, b)`, which returns `True` if person `a` knows person `b`, else `False`.
