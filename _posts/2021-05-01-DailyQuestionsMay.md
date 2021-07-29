@@ -19,6 +19,15 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
 
+### Jul 29, 2021 LC 76 \[Hard\] Minimum Window Substring
+---
+> **Question:** Given a string and a set of characters, return the shortest substring containing all the characters in the set.
+>
+> For example, given the string `"figehaeci"` and the set of characters `{a, e, i}`, you should return `"aeci"`.
+>
+> If there is no substring containing all the characters in the set, return null.
+
+
 ### Jul 28, 2021  LC 42 \[Hard\] Trapping Rain Water
 ---
 > **Question:** You have a landscape, in which puddles can form. You are given an array of non-negative integers representing the elevation at each location. Return the amount of water that would accumulate if it rains.
