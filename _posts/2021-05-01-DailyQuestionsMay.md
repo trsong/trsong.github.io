@@ -64,6 +64,104 @@ Explanation: The words are in increasing alphabetical order
 # [0,1,0,2,1,0,1,3,2,1,2,1]
 ```
 
+**My thoughts:** Pre-record Left & Right Boundary
+
+Total water accumulation equals sum of each position's accumulation. For any position at index `i`, the reason why current position has water accumulation is due to the fact that there exist `l < i` such that `landscape[l] > landscape[i]` as well as `i < r` such that `landscape[r] > landscape[i]`. 
+
+We probably don't care about what l, r are. However, we do care about how much each position can accumulate at maximum. `min(left_height[i], right_height[i]) - landscape[i]`. Where left_height represents max height on the left of i and right_height represents max height on the right of i.
+
+Use the following as example: 
+
+![rainwatertrap](https://assets.leetcode.com/uploads/2018/10/22/rainwatertrap.png)
+
+| index                     | 0   | 1   | 2   | 3   | 4   | 5   | 6   | 7   | 8   | 9   | 10  | 11  |
+| :------------------------ | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: |
+| landscape                 | 0   | 1   | 0   | 2   | 1   | 0   | 1   | 3   | 2   | 1   | 2   | 1   |
+| left_height               | 0   | 0   | 1   | 2   | 2   | 2   | 2   | 2   | 3   | 3   | 3   | 3   |
+| right_height              | 3   | 3   | 3   | 3   | 3   | 3   | 3   | 2   | 2   | 2   | 1   | 0   |
+| accumulation(blue reigon) | 0   | 0   | 1   | 0   | 1   | 2   | 1   | 0   | 0   | 1   | 0   | 0   |
+
+**Solution:** [https://replit.com/@trsong/Trapping-the-Rain-Water](https://replit.com/@trsong/Trapping-the-Rain-Water)
+```py
+import unittest
+
+def trapping_rain_water_solver(landscape):
+    n = len(landscape)
+    left_height = [0] * n
+    right_height = [0] * n
+    left_accu = 0
+    right_accu = 0
+
+    for i in range(n):
+        left_height[i] = left_accu
+        right_height[n - 1 - i] = right_accu
+        left_accu = max(left_accu, landscape[i])
+        right_accu = max(right_accu, landscape[n - 1 - i])
+
+    res = 0
+    for i in range(n):
+        res += max(0, min(left_height[i], right_height[i]) - landscape[i])
+    return res
+
+
+class TrappingRainWaterSolverSpec(unittest.TestCase):
+    def test_example(self):
+        """
+               X               
+           X███XX█X              
+         X█XX█XXXXXX                   
+        """
+        landscape = [0, 1, 0, 2, 1, 0, 1, 3, 2, 1, 2, 1]
+        expected = 6
+        self.assertEqual(expected, trapping_rain_water_solver(landscape))
+
+    def test_water_leak(self):
+        landscape = [1, 1, 1, 2]
+        expected = 0
+        self.assertEqual(expected, trapping_rain_water_solver(landscape))
+
+    def test_water_leak2(self):
+        landscape = [2, 1, 1, 1]
+        expected = 0
+        self.assertEqual(expected, trapping_rain_water_solver(landscape))
+
+    def test_plain_landscape(self):
+        landscape = [1, 1, 1, 1]
+        expected = 0
+        self.assertEqual(expected, trapping_rain_water_solver(landscape))
+
+    def test_empty_landscape(self):
+        landscape = []
+        expected = 0
+        self.assertEqual(expected, trapping_rain_water_solver(landscape))
+
+    def test_trap_water(self):
+        """ 
+                 X
+                XXX
+           X███XXXXX███X
+          XXX█XXXXXXX█XXX
+        XXXXXXXXXXXXXXXXXX                  
+        """
+        landscape = [1, 1, 2, 3, 2, 1, 2, 3, 4, 5, 4, 3, 2, 1, 2, 3, 2, 1]
+        expected = 8
+        self.assertEqual(expected, trapping_rain_water_solver(landscape))
+
+    def test_trap_water2(self):
+        """
+          X███X               
+          XX█XX              
+          XXXXX                   
+        """
+        landscape = [3, 2, 1, 2, 3]
+        expected = 4
+        self.assertEqual(expected, trapping_rain_water_solver(landscape))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False, verbosity=2)
+```
+
 ### Jul 27, 2021  LC 838 \[Medium\] Push Dominoes
 ---
 > **Question:** Given a string with the initial condition of dominoes, where:

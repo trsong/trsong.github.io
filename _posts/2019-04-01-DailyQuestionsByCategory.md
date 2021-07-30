@@ -8190,6 +8190,27 @@ For example, given `"2542540123"`, you should return `['254.25.40.123', '254.254
 ---
 
 <details>
+<summary class="lc_h">
+
+- [**\[Hard\] LC 42. Trapping Rain Water**](https://trsong.github.io/python/java/2021/05/02/DailyQuestionsMay.html#jul-28-2021--lc-42-hard-trapping-rain-water) -- *Given an array of non-negative integers representing the elevation at each location, Return the amount of water that would accumulate if it rains.* [*\(Try ME\)*](https://replit.com/@trsong/Trapping-the-Rain-Water-1)
+
+</summary>
+<div>
+
+**Question:** You have a landscape, in which puddles can form. You are given an array of non-negative integers representing the elevation at each location. Return the amount of water that would accumulate if it rains.
+
+For example: `[0,1,0,2,1,0,1,3,2,1,2,1]` should return 6 because 6 units of water can get trapped here.
+```py
+       X               
+   X███XX█X              
+ X█XX█XXXXXX                   
+# [0,1,0,2,1,0,1,3,2,1,2,1]
+```
+
+</div>
+</details>
+
+<details>
 <summary class="lc_e">
 
 - [**\[Easy\] Count Total Set Bits from 1 to n**](http://trsong.github.io/python/java/2021/05/02/DailyQuestionsMay.html#june-20-2021-easy-count-total-set-bits-from-1-to-n) -- *Write an algorithm that finds the total number of set bits in all integers between 1 and N.* [*\(Try ME\)*](https://replit.com/@trsong/Count-Total-Number-of-Set-Bits-from-1-to-n-1)
