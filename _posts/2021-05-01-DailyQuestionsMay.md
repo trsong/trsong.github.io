@@ -19,6 +19,30 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
 
+### Jul 30, 2021 \[Easy\] Word Ordering in a Different Alphabetical Order
+---
+> **Question:** Given a list of words, and an arbitrary alphabetical order, verify that the words are in order of the alphabetical order.
+
+**Example 1:**
+```py
+Input: 
+words = ["abcd", "efgh"]
+order="zyxwvutsrqponmlkjihgfedcba"
+
+Output: False
+Explanation: 'e' comes before 'a' so 'efgh' should come before 'abcd'
+```
+
+**Example 2:**
+```py
+Input:
+words = ["zyx", "zyxw", "zyxwy"]
+order="zyxwvutsrqponmlkjihgfedcba"
+
+Output: True
+Explanation: The words are in increasing alphabetical order
+```
+
 ### Jul 29, 2021 LC 76 \[Hard\] Minimum Window Substring
 ---
 > **Question:** Given a string and a set of characters, return the shortest substring containing all the characters in the set.
