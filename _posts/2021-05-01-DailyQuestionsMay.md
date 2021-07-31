@@ -55,6 +55,70 @@ Output: True
 Explanation: The words are in increasing alphabetical order
 ```
 
+**Solution:** [https://replit.com/@trsong/Determine-Word-Ordering-in-a-Different-Alphabetical-Order-2](https://replit.com/@trsong/Determine-Word-Ordering-in-a-Different-Alphabetical-Order-2)
+```py
+import unittest
+
+def is_sorted(words, order):
+    order_lookup = { ch: index for index, ch in enumerate(order) }
+    for i in range(1, len(words)):
+        prev_word = words[i - 1]
+        current_word = words[i]
+        is_smaller = False
+
+        for prev_ch, cur_ch in zip(prev_word, current_word):
+            if order_lookup[prev_ch] > order_lookup[cur_ch]:
+                return False
+            elif order_lookup[prev_ch] < order_lookup[cur_ch]:
+                is_smaller = True
+                break
+
+        if not is_smaller and len(prev_word) > len(current_word):
+            return False
+    return True
+
+
+class IsSortedSpec(unittest.TestCase):
+    def test_example1(self):
+        words = ["abcd", "efgh"]
+        order = "zyxwvutsrqponmlkjihgfedcba"
+        self.assertFalse(is_sorted(words, order))
+
+    def test_example2(self):
+        words = ["zyx", "zyxw", "zyxwy"]
+        order = "zyxwvutsrqponmlkjihgfedcba"
+        self.assertTrue(is_sorted(words, order))
+
+    def test_empty_list(self):
+        self.assertTrue(is_sorted([], ""))
+        self.assertTrue(is_sorted([], "abc"))
+
+    def test_one_elem_list(self):
+        self.assertTrue(is_sorted(["z"], "xyz"))
+
+    def test_empty_words(self):
+        self.assertTrue(is_sorted(["", "", ""], ""))
+
+    def test_word_of_different_length(self):
+        words = ["", "1", "11", "111", "1111"]
+        order = "4321"
+        self.assertTrue(is_sorted(words, order))
+
+    def test_word_of_different_length2(self):
+        words = ["", "11", "", "111", "1111"]
+        order = "1"
+        self.assertFalse(is_sorted(words, order))
+
+    def test_large_word_dictionary(self):
+        words = ["123", "1a1b1A2ca", "ABC", "Aaa", "aaa", "bbb", "c11", "cCa"]
+        order = "".join(map(chr, range(256)))
+        self.assertTrue(is_sorted(words, order))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False, verbosity=2)
+```
+
 ### Jul 29, 2021 LC 76 \[Hard\] Minimum Window Substring
 ---
 > **Question:** Given a string and a set of characters, return the shortest substring containing all the characters in the set.
