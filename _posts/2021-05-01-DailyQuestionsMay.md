@@ -30,6 +30,110 @@ categories: Python/Java
 > 3. There must be a single space between each word.
 > 4. The sentence must end with a terminal mark immediately following a word.
 
+**Solution with Finite State Machine:** [https://replit.com/@trsong/Basic-Sentence-Checker](https://replit.com/@trsong/Basic-Sentence-Checker)
+```py
+import unittest
+
+def sentence_checker(sentence):
+    validator = SentenceValidator()
+    for ch in sentence:
+        if validator.is_error_state():
+            return False
+        validator.next_char(ch)
+    return validator.is_terminal()
+
+
+class CharacterState(object):
+    ERROR = -1
+    UPPER_CASE = 0
+    LOWER_CASE_OR_SAPARATOR = 1
+    WHITESPACE = 2
+    TERMINAL = 3
+    TERMINAL_WHITESPACE = 4
+
+
+class SentenceValidator(object):
+    def __init__(self):
+        self.cur_state = CharacterState.TERMINAL_WHITESPACE
+
+    def next_char(self, action):
+        if self.cur_state == CharacterState.LOWER_CASE_OR_SAPARATOR and action == " ":
+            self.cur_state = CharacterState.WHITESPACE
+        elif self.cur_state == CharacterState.WHITESPACE and action.islower():
+            self.cur_state = CharacterState.LOWER_CASE_OR_SAPARATOR
+        elif self.cur_state == CharacterState.TERMINAL and action == " ":
+            self.cur_state = CharacterState.TERMINAL_WHITESPACE
+        elif self.cur_state == CharacterState.TERMINAL_WHITESPACE and action.isupper():
+            self.cur_state = CharacterState.UPPER_CASE
+        elif self.cur_state in [CharacterState.UPPER_CASE, CharacterState.LOWER_CASE_OR_SAPARATOR]:
+            if action in ['!', '.', '?']:
+                self.cur_state = CharacterState.TERMINAL
+            elif action.islower() or action in [',', ';', ':']:
+                self.cur_state = CharacterState.LOWER_CASE_OR_SAPARATOR
+            else:
+                self.cur_state = CharacterState.ERROR
+        else:
+            self.cur_state = CharacterState.ERROR
+    
+    def is_error_state(self):
+        return self.cur_state == CharacterState.ERROR
+
+    def is_terminal(self):
+        return self.cur_state == CharacterState.TERMINAL
+
+
+class SentenceCheckerSpec(unittest.TestCase):
+    def test_not_end_with_terminal_mark(self):
+        sentence = "Hello world"
+        self.assertFalse(sentence_checker(sentence))
+
+    def test_valid_sentence(self):
+        sentence = "Talk is cheap."
+        self.assertTrue(sentence_checker(sentence))
+
+    def test_empty_sentence(self):
+        self.assertFalse(sentence_checker(""))
+
+    def test_sentence_with_only_terminal_mark(self):
+        for mark in ['!', '.', '?']:
+            self.assertFalse(sentence_checker(mark))
+
+    def test_too_many_spaces_between_words(self):
+        sentence = "I  robot."
+        self.assertFalse(sentence_checker(sentence))
+
+    def test_invalid_character(self):
+        sentence = "Answer can only be true/false."
+        self.assertFalse(sentence_checker(sentence))
+
+    def test_invalid_character2(self):
+        sentence = "An ."
+        self.assertFalse(sentence_checker(sentence))
+
+    def test_sentence_end_with_separator(self):
+        sentence = "Yet,"
+        self.assertFalse(sentence_checker(sentence))
+
+    def test_valid_sentence2(self):
+        sentence = "What is the difficulty of this question: easy, medium, or hard?"
+        self.assertTrue(sentence_checker(sentence))
+
+    def test_valid_sentence3(self):
+        sentence = "I!"
+        self.assertTrue(sentence_checker(sentence))
+    
+    def test_sentence_with_invalid_leading_white_space(self):
+        sentence = " This is sentence."
+        self.assertFalse(sentence_checker(sentence))
+    
+    def test_multiple_sentences(self):
+        sentence = "To be, or not to be, that is the question. To be, or not to be, is that the question? To be, or not to be, that is the question!"
+        self.assertTrue(sentence_checker(sentence))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False, verbosity=2)
+```
 
 ### Jul 30, 2021 \[Easy\] Word Ordering in a Different Alphabetical Order
 ---
