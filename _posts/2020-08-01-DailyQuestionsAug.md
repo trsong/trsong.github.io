@@ -4535,7 +4535,7 @@ if __name__ == '__main__':
 > For example, given `{'CSC300': ['CSC100', 'CSC200'], 'CSC200': ['CSC100'], 'CSC100': []}`, should return `['CSC100', 'CSC200', 'CSC300']`.
 
 
-**My thoughts:** there are two ways to produce toplogical sort order: DFS or count inward edge as below. For DFS technique see this [post](http://trsong.github.io/python/java/2019/05/01/DailyQuestions/#jul-5-2019-hard-order-of-course-prerequisites). For below method, we count number of inward edges for each node and recursively remove edges of each node that has no inward egdes. The node removal order is what we call topological order.
+**My thoughts:** there are two ways to produce toplogical sort order: DFS or count inward edge as below. For DFS technique see this [post](https://trsong.github.io/python/java/2019/05/01/DailyQuestions.html#jul-5-2019-hard-order-of-course-prerequisites). For below method, we count number of inward edges for each node and recursively remove edges of each node that has no inward egdes. The node removal order is what we call topological order.
 
 **Solution with Topological Sort:** [https://repl.it/@trsong/Find-Order-of-Course-Prerequisites](https://repl.it/@trsong/Find-Order-of-Course-Prerequisites)
 ```py
