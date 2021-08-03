@@ -21,6 +21,19 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
 
+### Aug 3, 2021 \[Medium\] Zig-Zag String
+--- 
+> **Question:** Given a string and a number of lines k, print the string in zigzag form. In zigzag, characters are printed out diagonally from top left to bottom right until reaching the kth line, then back up to top right, and so on.
+
+**Example:**
+```py
+Given the sentence "thisisazigzag" and k = 4, you should print:
+t     a     g
+ h   s z   a
+  i i   i z
+   s     g
+```
+
 ### Aug 2, 2021 \[Hard\] Exclusive Product
 ---
 > **Question:**  Given an array of integers, return a new array such that each element at index i of the new array is the product of all the numbers in the original array except the one at i.
@@ -28,6 +41,73 @@ categories: Python/Java
 > For example, if our input was [1, 2, 3, 4, 5], the expected output would be [120, 60, 40, 30, 24]. If our input was [3, 2, 1], the expected output would be [2, 3, 6].
 >
 > Follow-up: what if you can't use division?
+
+**Solution:** [https://replit.com/@trsong/Calculate-Exclusive-Product-2](https://replit.com/@trsong/Calculate-Exclusive-Product-2)
+```py
+import unittest
+
+def exclusive_product(nums):
+    n = len(nums)
+    res = [1] * n
+    left_accu = 1
+    right_accu = 1
+    for i in range(n):
+        res[i] *= left_accu
+        left_accu *= nums[i]
+
+        res[n - 1 - i] *= right_accu
+        right_accu *= nums[n - 1 - i]
+    return res
+
+
+class ExclusiveProductSpec(unittest.TestCase):
+    def test_example(self):
+        nums = [1, 2, 3, 4, 5]
+        expected = [120, 60, 40, 30, 24]
+        self.assertEqual(expected, exclusive_product(nums))
+
+    def test_example2(self):
+        nums = [3, 2, 1]
+        expected = [2, 3, 6]
+        self.assertEqual(expected, exclusive_product(nums))
+
+    def test_empty_array(self):
+        self.assertEqual([], exclusive_product([]))
+    
+    def test_one_element_array(self):
+        nums = [2]
+        expected = [1]
+        self.assertEqual(expected, exclusive_product(nums))
+    
+    def test_two_elements_array(self):
+        nums = [42, 98]
+        expected = [98, 42]
+        self.assertEqual(expected, exclusive_product(nums))
+    
+    def test_array_with_negative_elements(self):
+        nums = [-2, 3, -5]
+        expected = [-15, 10, -6]
+        self.assertEqual(expected, exclusive_product(nums))
+    
+    def test_array_with_negative_elements2(self):
+        nums = [-1, -3, -4, -5]
+        expected = [-60, -20, -15, -12]
+        self.assertEqual(expected, exclusive_product(nums))
+    
+    def test_array_with_zero(self):
+        nums = [1, -1, 0, 3]
+        expected = [0, 0, -3, 0]
+        self.assertEqual(expected, exclusive_product(nums))
+    
+    def test_array_with_zero2(self):
+        nums = [1, -1, 0, 3, 0, 1]
+        expected = [0, 0, 0, 0, 0, 0]
+        self.assertEqual(expected, exclusive_product(nums))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False, verbosity=2)
+```
 
 
 ### Aug 1, 2021 \[Hard\] Order of Course Prerequisites
