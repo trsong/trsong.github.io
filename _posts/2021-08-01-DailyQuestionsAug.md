@@ -21,6 +21,45 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
 
+### Aug 5, 2021 \[Hard\] First Unique Character from a Stream
+---
+> **Question:** Given a stream of characters, find the first unique (non-repeating) character from stream. You need to tell the first unique character in O(1) time at any moment.
+
+**Example:**
+```py
+Input: Stream.of('abracadabra')
+Output: Stream.of('aaabbbbbrcc')
+Explanation:
+a => a
+abr => a
+abra => b
+abracadab => r
+abracadabra => c
+```
+
+### Aug 4, 2021 \[Medium\] Invert a Binary Tree
+---
+> **Question:** You are given the root of a binary tree. Invert the binary tree in place. That is, all left children should become right children, and all right children should become left children.
+
+**Example:**
+```py
+Given the following tree:
+
+     a
+   /   \
+  b     c
+ / \   /
+d   e f
+
+should become:
+   a
+ /   \
+c     b
+ \   / \
+  f e   d
+```
+
+
 ### Aug 3, 2021 \[Medium\] Zig-Zag String
 --- 
 > **Question:** Given a string and a number of lines k, print the string in zigzag form. In zigzag, characters are printed out diagonally from top left to bottom right until reaching the kth line, then back up to top right, and so on.
