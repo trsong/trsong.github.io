@@ -34,6 +34,113 @@ t     a     g
    s     g
 ```
 
+**Solution:** [https://replit.com/@trsong/Print-Zig-Zag-String-2](https://replit.com/@trsong/Print-Zig-Zag-String-2)
+```py
+import unittest
+
+def zig_zag_format(sentence, k):
+    if k == 1:
+        return [sentence]
+
+    res = [[] for _ in range(min(k, len(sentence)))]
+    direction = -1
+    row = 0
+
+    for ch in sentence:
+        if not res[row]:
+            padding = row
+        elif direction < 0:
+            padding = 2 * (k - 1 - row) - 1
+        else:
+            padding = 2 * row - 1
+
+        res[row].append(" " * padding + ch)
+        if row == k - 1 or row == 0:
+            direction *= -1
+        row += direction
+    return list(map(lambda line: "".join(line), res))
+
+
+class ZigZagFormatSpec(unittest.TestCase):
+    def assert_result(self, expected, result):
+        self.assertEqual(len(expected), len(result))
+        for expected_line, result_line in zip(expected, result):
+            self.assertEqual(expected_line.rstrip(), result_line.rstrip())
+
+    def test_example(self):
+        k, sentence = 4, "thisisazigzag"
+        expected = [
+            "t     a     g",
+            " h   s z   a ",
+            "  i i   i z  ",
+            "   s     g   "
+        ]
+        self.assert_result(expected, zig_zag_format(sentence, k))
+
+    def test_empty_string(self):
+        k, sentence = 10, ""
+        expected = []
+        self.assert_result(expected, zig_zag_format(sentence, k))
+
+    def test_trivial_case(self):
+        k, sentence = 1, "lumberjack"
+        expected = ["lumberjack"]
+        self.assert_result(expected, zig_zag_format(sentence, k))
+
+    def test_split_into_2_rows(self):
+        k, sentence = 2, "cheese steak jimmy's"
+        expected = [
+            "c e s   t a   i m ' ",
+            " h e e s e k j m y s"
+        ]
+        self.assert_result(expected, zig_zag_format(sentence, k))
+
+    def test_k_large_than_sentence(self):
+        k, sentence = 10, "rock on"
+        expected = [
+           "r",
+           " o",
+           "  c",
+           "   k",
+           "     ",
+           "     o",
+           "      n"
+        ]
+        self.assert_result(expected, zig_zag_format(sentence, k)) 
+
+    def test_k_barely_make_two_folds(self):
+        k, sentence = 6, "robin hood"
+        expected = [
+            "r         ",
+            " o       d",
+            "  b     o ",
+            "   i   o  ",
+            "    n h   ",
+            "          "
+        ]
+        self.assert_result(expected, zig_zag_format(sentence, k))
+
+    def test_k_barely_make_three_folds(self):
+        k, sentence = 10, "how do you turn this on"
+        expected = [
+            "h                 i     ",
+            " o               h s    ",
+            "  w             t       ",
+            "                     o  ",
+            "    d         n       n ",
+            "     o       r          ",
+            "            u           ",
+            "       y   t            ",
+            "        o               ",
+            "         u              "
+        ]
+        self.assert_result(expected, zig_zag_format(sentence, k))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False, verbosity=2)
+```
+
 ### Aug 2, 2021 \[Hard\] Exclusive Product
 ---
 > **Question:**  Given an array of integers, return a new array such that each element at index i of the new array is the product of all the numbers in the original array except the one at i.
