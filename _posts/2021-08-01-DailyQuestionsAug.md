@@ -59,6 +59,118 @@ c     b
   f e   d
 ```
 
+**Solution with Post-order Traversal:** [https://replit.com/@trsong/Invert-All-Nodes-in-Binary-Tree-2](https://replit.com/@trsong/Invert-All-Nodes-in-Binary-Tree-2)
+```py
+import unittest
+
+def invert_tree(root):
+    if not root:
+        return None
+    
+    left_res = invert_tree(root.left)
+    right_res = invert_tree(root.right)
+    root.left = right_res
+    root.right = left_res
+    return root
+
+
+class TreeNode(object):
+    def __init__(self, val, left=None, right=None):
+        self.val = val
+        self.left = left
+        self.right = right
+
+    def __eq__(self, other):
+        return (other and
+            self.val == other.val and 
+            self.left == other.left and 
+            self.right == other.right)
+
+    def __repr__(self):
+        stack = [(self, 0)]
+        res = []
+        while stack:
+            node, depth = stack.pop()
+            res.append("\n" + "\t" * depth)
+            if not node:
+                res.append("* None")
+                continue
+
+            res.append("* " + str(node.val))
+            for child in [node.right, node.left]:
+                stack.append((child, depth+1))
+        return "\n" + "".join(res) + "\n"
+
+
+class InvertTreeSpec(unittest.TestCase):
+    def test_empty_tree(self):
+        self.assertIsNone(invert_tree(None))
+
+    def test_heavy_left_tree(self):
+        """
+            1
+           /
+          2
+         /
+        3
+        """
+        tree = TreeNode(1, TreeNode(2, TreeNode(3)))
+        """
+        1
+         \
+          2
+           \
+            3
+        """
+        expected_tree = TreeNode(1, right=TreeNode(2, right=TreeNode(3)))
+        self.assertEqual(invert_tree(tree), expected_tree)
+
+    def test_heavy_right_tree(self):
+        """
+          1
+         / \
+        2   3
+           /
+          4 
+        """
+        tree = TreeNode(1, TreeNode(2), TreeNode(3, TreeNode(4)))
+        """
+          1
+         / \
+        3   2
+         \ 
+          4         
+        """
+        expected_tree = TreeNode(1, TreeNode(3, right=TreeNode(4)), TreeNode(2))
+        self.assertEqual(invert_tree(tree), expected_tree)
+
+    def test_sample_tree(self):
+        """
+             1
+           /   \
+          2     3
+         / \   /
+        4   5 6
+        """
+        n2 = TreeNode(2, TreeNode(4), TreeNode(5))
+        n3 = TreeNode(3, TreeNode(6))
+        n1 = TreeNode(1, n2, n3)
+        """
+            1
+          /   \
+         3     2
+          \   / \
+           6 5   4
+        """
+        en2 = TreeNode(2, TreeNode(5), TreeNode(4))
+        en3 = TreeNode(3, right=TreeNode(6))
+        en1 = TreeNode(1, en3, en2)
+        self.assertEqual(invert_tree(n1), en1)
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False, verbosity=2)
+```
 
 ### Aug 3, 2021 \[Medium\] Zig-Zag String
 --- 
