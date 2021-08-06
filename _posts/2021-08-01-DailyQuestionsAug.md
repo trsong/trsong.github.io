@@ -50,6 +50,89 @@ abracadab => r
 abracadabra => c
 ```
 
+**Solution with Hashmap and Double-Linked List:** [https://replit.com/@trsong/First-Unique-Character-from-a-Stream-2](https://replit.com/@trsong/First-Unique-Character-from-a-Stream-2)
+```py
+import unittest
+
+def find_first_unique_letter(char_stream):
+    duplicates = set()
+    look_up = {}
+    head = ListNode()
+    tail = ListNode()
+    head.next = tail
+    tail.prev = head
+
+    for ch in char_stream:
+        if ch in look_up:
+            node = look_up[ch]
+            node.next.prev = node.prev
+            node.prev.next = node.next
+            del look_up[ch]
+            duplicates.add(ch)
+        elif ch not in duplicates:
+            tail.data = ch
+            look_up[ch] = tail
+            tail.next = ListNode(prev=tail)
+            tail = tail.next
+        yield head.next.data if head.next != tail else None
+    
+
+class ListNode(object):
+    def __init__(self, data=None, next=None, prev=None):
+        self.data = data
+        self.next = next
+        self.prev = prev
+
+
+class FindFirstUniqueLetter(unittest.TestCase):
+    def assert_result(self, expected, output):
+        self.assertEqual(list(expected), list(output))
+
+    def test_example(self):
+        char_stream = iter("abracadabra")
+        expected = iter("aaabbbbbrcc")
+        self.assert_result(expected, find_first_unique_letter(char_stream))
+
+    def test_empty_stream(self):
+        char_stream = iter("")
+        expected = iter("")
+        self.assert_result(expected, find_first_unique_letter(char_stream))
+
+    def test_duplicated_letter_stream(self):
+        char_stream = iter("aaa")
+        expected = iter(["a", None, None])
+        self.assert_result(expected, find_first_unique_letter(char_stream))
+
+    def test_duplicated_letter_stream2(self):
+        char_stream = iter("aaabbbccc")
+        expected = iter(["a", None, None, "b", None, None, "c", None, None])
+        self.assert_result(expected, find_first_unique_letter(char_stream))
+
+    def test_palindrome_stream(self):
+        char_stream = iter("abccba")
+        expected = iter(["a", "a", "a", "a", "a", None])
+        self.assert_result(expected, find_first_unique_letter(char_stream))
+
+    def test_repeated_pattern(self):
+        char_stream = iter("abcabc")
+        expected = iter(["a", "a", "a", "b", "c", None])
+        self.assert_result(expected, find_first_unique_letter(char_stream))
+
+    def test_repeated_pattern2(self):
+        char_stream = iter("aabbcc")
+        expected = iter(["a", None, "b", None, "c", None])
+        self.assert_result(expected, find_first_unique_letter(char_stream))
+
+    def test_unique_characters(self):
+        char_stream = iter("abcde")
+        expected = iter("aaaaa")
+        self.assert_result(expected, find_first_unique_letter(char_stream))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False, verbosity=2)
+```
+
 ### Aug 4, 2021 \[Medium\] Invert a Binary Tree
 ---
 > **Question:** You are given the root of a binary tree. Invert the binary tree in place. That is, all left children should become right children, and all right children should become left children.
