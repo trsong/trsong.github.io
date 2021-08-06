@@ -21,6 +21,19 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
 
+### Aug 6, 2021 \[Easy\] Move Zeros
+---
+> **Question:** Given an array nums, write a function to move all 0's to the end of it while maintaining the relative order of the non-zero elements.
+> 
+> You must do this in-place without making a copy of the array. Minimize the total number of operations.
+
+**Example:**
+```py
+Input: [0,1,0,3,12]
+Output: [1,3,12,0,0]
+```
+
+
 ### Aug 5, 2021 \[Hard\] First Unique Character from a Stream
 ---
 > **Question:** Given a stream of characters, find the first unique (non-repeating) character from stream. You need to tell the first unique character in O(1) time at any moment.
