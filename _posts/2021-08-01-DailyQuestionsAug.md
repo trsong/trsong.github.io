@@ -21,6 +21,30 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
 
+### Aug 7, 2021 LC 212 \[Hard\] Word Search II
+---
+> **Question:** Given an m x n board of characters and a list of strings words, return all words on the board.
+>
+> Each word must be constructed from letters of sequentially adjacent cells, where adjacent cells are horizontally or vertically neighboring. The same letter cell may not be used more than once in a word.
+ 
+**Example 1:**
+```py
+Input: words = ["oath","pea","eat","rain"], board = [
+    ["o","a","a","n"],
+    ["e","t","a","e"],
+    ["i","h","k","r"],
+    ["i","f","l","v"]]
+Output: ["eat", "oath"]
+```
+
+**Example 2:**
+```py
+Input: words = ["abcb"], board = [
+    ["a","b"],
+    ["c","d"]]
+Output: []
+```
+
 ### Aug 6, 2021 \[Easy\] Move Zeros
 ---
 > **Question:** Given an array nums, write a function to move all 0's to the end of it while maintaining the relative order of the non-zero elements.
