@@ -57,6 +57,64 @@ Input: [0,1,0,3,12]
 Output: [1,3,12,0,0]
 ```
 
+**Solution:** [https://replit.com/@trsong/Move-Zeros](https://replit.com/@trsong/Move-Zeros)
+```py
+import unittest
+
+def move_zeros(nums):
+    slow = fast = 0
+    while fast < len(nums):
+        if nums[fast] != 0:
+            nums[slow] = nums[fast]
+            slow += 1
+        fast += 1
+        
+    while slow < len(nums):
+        nums[slow] = 0
+        slow += 1
+
+
+class MoveZeroSpec(unittest.TestCase):
+    def test_example(self):
+        nums = [0, 1, 0, 3, 12]
+        move_zeros(nums)
+        expected = [1, 3, 12, 0, 0]
+        self.assertEqual(expected, nums)
+
+    def test_empty_array(self):
+        nums = []
+        move_zeros(nums)
+        expected = []
+        self.assertEqual(expected, nums)
+
+    def test_adjacent_zeros(self):
+        nums = [0, 0, 1, 2, 0, 0, 2, 1, 0, 0]
+        move_zeros(nums)
+        expected = [1, 2, 2, 1, 0, 0, 0, 0, 0, 0]
+        self.assertEqual(expected, nums)
+
+    def test_just_zeros(self):
+        nums = [0, 0, 0, 0]
+        move_zeros(nums)
+        expected = [0, 0, 0, 0]
+        self.assertEqual(expected, nums)
+
+    def test_array_with_negative_numbers(self):
+        nums = [0, -1, 1, -1, 1]
+        move_zeros(nums)
+        expected = [-1, 1, -1, 1, 0]
+        self.assertEqual(expected, nums)
+
+    def test_without_zeros(self):
+        nums = [-1, 1, 2, 3, -4]
+        move_zeros(nums)
+        expected = [-1, 1, 2, 3, -4]
+        self.assertEqual(expected, nums)
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False, verbosity=2)
+```
 
 ### Aug 5, 2021 \[Hard\] First Unique Character from a Stream
 ---

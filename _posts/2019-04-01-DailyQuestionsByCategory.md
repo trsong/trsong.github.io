@@ -3011,6 +3011,28 @@ abracadabra => c
 <details>
 <summary class="lc_e">
 
+- [**\[Easy\] Move Zeros**](https://trsong.github.io/python/java/2021/08/02/DailyQuestionsAug.html#aug-6-2021-easy-move-zeros) -- *Given an array nums, write a function to move all 0’s to the end of it while maintaining the relative order of the non-zero elements.* [*\(Try ME\)*](https://replit.com/@trsong/Move-Zeros-1)
+
+</summary>
+<div>
+
+**Question:** Given an array nums, write a function to move all 0's to the end of it while maintaining the relative order of the non-zero elements.
+ 
+You must do this in-place without making a copy of the array. Minimize the total number of operations.
+
+**Example:**
+```py
+Input: [0,1,0,3,12]
+Output: [1,3,12,0,0]
+```
+
+</div>
+</details>
+
+
+<details>
+<summary class="lc_e">
+
 - [**\[Easy\] Remove k-th Last Element From Linked List**](https://trsong.github.io/python/java/2021/05/02/DailyQuestionsMay.html#may-26-2021-easy-remove-k-th-last-element-from-linked-list) -- *You are given a singly linked list and an integer k. Return the linked list, removing the k-th last element from the list.* [*\(Try ME\)*](https://replit.com/@trsong/Remove-the-k-th-Last-Element-From-LinkedList-1)
 
 </summary>
