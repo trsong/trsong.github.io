@@ -21,6 +21,11 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
 
+### Aug 8, 2021 \[Easy\] Sevenish Number
+---
+> **Question:** Let's define a "sevenish" number to be one which is either a power of 7, or the sum of unique powers of 7. The first few sevenish numbers are 1, 7, 8, 49, and so on. Create an algorithm to find the nth sevenish number.
+
+
 ### Aug 7, 2021 LC 212 \[Hard\] Word Search II
 ---
 > **Question:** Given an m x n board of characters and a list of strings words, return all words on the board.
