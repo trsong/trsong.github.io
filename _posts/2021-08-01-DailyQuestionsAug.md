@@ -50,6 +50,103 @@ Input: words = ["abcb"], board = [
 Output: []
 ```
 
+
+**Solution with Trie and Backtracking:** [https://replit.com/@trsong/Word-Search-II-2](https://replit.com/@trsong/Word-Search-II-2)
+```py
+import unittest
+
+def search_word(board, words):
+    if not board or not board[0]:
+        return []
+
+    trie = Trie()
+    for word in words:
+        trie.insert(word)
+
+    n, m = len(board), len(board[0])
+    res = []
+    for r in range(n):
+        for c in range(m):
+            backtrack(board, res, trie, (r, c))
+
+    return res
+
+
+class Trie(object):
+    def __init__(self):
+        self.children = {}
+        self.word = None
+
+    def insert(self, word):
+        p = self
+        for ch in word:
+            p.children[ch] = p.children.get(ch, Trie())
+            p = p.children[ch]
+        p.word = word
+
+
+DIRECTIONS = [(-1, 0), (1, 0), (0, 1), (0, -1)]
+
+
+def backtrack(board, res, trie, pos):
+    r, c = pos
+    ch = board[r][c]
+    if not ch or ch not in trie.children:
+        return
+    trie = trie.children[ch]
+    if trie.word:
+        res.append(trie.word)
+        trie.word = None
+
+    board[r][c] = None
+    n, m = len(board), len(board[0])
+    for dr, dc in DIRECTIONS:
+        new_r, new_c = r + dr, c + dc
+        if 0 <= new_r < n and 0 <= new_c < m and board[new_r][new_c]:
+            backtrack(board, res, trie, (new_r, new_c))
+    board[r][c] = ch
+
+
+class SearchWordSpec(unittest.TestCase):
+    def assert_result(self, expected, res):
+        self.assertEqual(sorted(expected), sorted(res))
+
+    def test_example(self):
+        words = ['oath', 'pea', 'eat', 'rain']
+        board = [['o', 'a', 'a', 'n'], ['e', 't', 'a', 'e'],
+                 ['i', 'h', 'k', 'r'], ['i', 'f', 'l', 'v']]
+        expected = ['eat', 'oath']
+        self.assert_result(expected, search_word(board, words))
+
+    def test_example2(self):
+        words = ['abcb']
+        board = [['a', 'b'], ['c', 'd']]
+        expected = []
+        self.assert_result(expected, search_word(board, words))
+
+    def test_unique_char(self):
+        words = ['a', 'aa', 'aaa']
+        board = [['a', 'a'], ['a', 'a']]
+        expected = ['a', 'aa', 'aaa']
+        self.assert_result(expected, search_word(board, words))
+
+    def test_empty_grid(self):
+        self.assertEqual([], search_word([], ['a']))
+
+    def test_empty_empty_word(self):
+        self.assertEqual([], search_word(['a'], []))
+
+    def test_word_use_all_letters(self):
+        words = ['abcdef']
+        board = [['a', 'b'], ['f', 'c'], ['e', 'd']]
+        expected = ['abcdef']
+        self.assert_result(expected, search_word(board, words))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False, verbosity=2)
+```
+
 ### Aug 6, 2021 \[Easy\] Move Zeros
 ---
 > **Question:** Given an array nums, write a function to move all 0's to the end of it while maintaining the relative order of the non-zero elements.
