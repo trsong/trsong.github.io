@@ -30,6 +30,19 @@ categories: Python/Java
 <details>
 <summary class="lc_e">
 
+- [**\[Easy\] Sevenish Number**](https://trsong.github.io/python/java/2021/08/02/DailyQuestionsAug.html#aug-8-2021-easy-sevenish-number) -- *Define a "sevenish" number to be one which is either a power of 7, or the sum of unique powers of 7. Find the nth sevenish number.* [*\(Try ME\)*](https://replit.com/@trsong/Sevenish-Number-1)
+
+</summary>
+<div>
+
+**Question:** Let's define a "sevenish" number to be one which is either a power of 7, or the sum of unique powers of 7. The first few sevenish numbers are 1, 7, 8, 49, and so on. Create an algorithm to find the nth sevenish number.
+
+</div>
+</details>
+
+<details>
+<summary class="lc_e">
+
 - [**\[Easy\] Goldbach’s conjecture**](http://trsong.github.io/python/java/2021/05/02/DailyQuestionsMay.html#jul-2-2021-easy-goldbachs-conjecture) -- *Given an even number (greater than 2), return two prime numbers whose sum will be equal to the given number.* [*\(Try ME\)*](https://replit.com/@trsong/Goldbachs-conjecture-1)
 
 </summary>
