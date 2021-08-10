@@ -38,6 +38,63 @@ Explanation: Closest sum is -5+1+2 = -2 OR -5+1+4 = 0
 >
 > Determine how many times you would need to apply this operation to ensure that all x's come before all y's. In the preceding example, it suffices to flip the second and sixth characters, so you should return 2.
 
+**My thoughts:** Basically, the question is about finding a sweet cutting spot so that # flip on left plus # flip on right is minimized. We can simply scan through the array from left and right to allow constant time query for number of flip need on the left and right for a given spot. And the final answer is just the min of sum of left and right flips.
+
+**Solution with DP:** [https://replit.com/@trsong/Find-Number-of-Flips-to-Make-Binary-String-2](https://replit.com/@trsong/Find-Number-of-Flips-to-Make-Binary-String-2)
+```py
+import unittest
+
+def min_flip_to_make_binary(s):
+    n = len(s)
+    left_y_count = [None] * n
+    right_x_count = [None] * n
+    left_accu = right_accu = 0
+
+    for i in range(n):
+        left_y_count[i] = left_accu
+        left_accu += 1 if s[i] == 'y' else 0
+
+        right_x_count[n - 1 - i] = right_accu
+        right_accu += 1 if s[n - 1 - i] == 'x' else 0
+
+    res = n
+    for i in range(n):
+        res = min(res, left_y_count[i] + right_x_count[i]) 
+    return res
+
+
+class MinFlipToMakeBinarySpec(unittest.TestCase):
+    def test_example(self):
+        self.assertEqual(2, min_flip_to_make_binary('xyxxxyxyy'))  # xxxxxxxyy
+
+    def test_empty_string(self):
+        self.assertEqual(0, min_flip_to_make_binary(''))
+    
+    def test_already_binary(self):
+        self.assertEqual(0, min_flip_to_make_binary('xxxxxxxyy'))
+
+    def test_flipped_string(self):
+        self.assertEqual(3, min_flip_to_make_binary('yyyxxx'))  # yyyyyy
+
+    def test_flip_all_x(self):
+        self.assertEqual(1, min_flip_to_make_binary('yyx'))  # yyy
+
+    def test_flip_all_y(self):
+        self.assertEqual(2, min_flip_to_make_binary('yyxxx'))  # xxxxx
+
+    def test_flip_all_y2(self):
+        self.assertEqual(4, min_flip_to_make_binary('xyxxxyxyyxxx'))  # xxxxxxxxxxxx
+
+    def test_flip_y(self):
+        self.assertEqual(2, min_flip_to_make_binary('xyxxxyxyyy'))  # xxxxxxxyyy
+
+    def test_flip_x_and_y(self):
+        self.assertEqual(3, min_flip_to_make_binary('xyxxxyxyyx'))  # xxxxxyyyyy
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False, verbosity=2)
+```
 
 ### Aug 8, 2021 \[Easy\] Sevenish Number
 ---
