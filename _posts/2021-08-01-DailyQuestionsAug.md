@@ -21,6 +21,17 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
 
+### Aug 10, 2021 LC 16 \[Medium\] Closest to 3 Sum
+---
+> **Question:** Given a list of numbers and a target number n, find 3 numbers in the list that sums closest to the target number n. There may be multiple ways of creating the sum closest to the target number, you can return any combination in any order.
+
+**Example:**
+```py
+Input: [2, 1, -5, 4], -1
+Output: [-5, 1, 2]
+Explanation: Closest sum is -5+1+2 = -2 OR -5+1+4 = 0
+```
+
 ### Aug 9, 2021 \[Medium\] Number of Flips to Make Binary String
 ---
 > **Question:** You are given a string consisting of the letters `x` and `y`, such as `xyxxxyxyy`. In addition, you have an operation called flip, which changes a single `x` to `y` or vice versa.
