@@ -21,6 +21,15 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
 
+### Aug 11, 2021 \[Easy\] Permutation with Given Order
+---
+> **Question:** A permutation can be specified by an array `P`, where `P[i]` represents the location of the element at `i` in the permutation. For example, `[2, 1, 0]` represents the permutation where elements at the index `0` and `2` are swapped.
+>
+> Given an array and a permutation, apply the permutation to the array. 
+>
+> For example, given the array `["a", "b", "c"]` and the permutation `[2, 1, 0]`, return `["c", "b", "a"]`.
+
+
 ### Aug 10, 2021 LC 16 \[Medium\] Closest to 3 Sum
 ---
 > **Question:** Given a list of numbers and a target number n, find 3 numbers in the list that sums closest to the target number n. There may be multiple ways of creating the sum closest to the target number, you can return any combination in any order.
