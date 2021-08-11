@@ -32,6 +32,82 @@ Output: [-5, 1, 2]
 Explanation: Closest sum is -5+1+2 = -2 OR -5+1+4 = 0
 ```
 
+**Solution with Sorting and Two-Pointers:** [https://replit.com/@trsong/Closest-to-3-Sum-2](https://replit.com/@trsong/Closest-to-3-Sum-2)
+```py
+import unittest
+
+def closest_3_sum(nums, target):
+    nums.sort()
+
+    res = None
+    min_delta = float('inf')
+    n = len(nums)
+    for i in range(n - 2):
+        lo = i + 1
+        hi = n - 1
+        while lo < hi:
+            total = nums[i] + nums[lo] + nums[hi]
+            if abs(total - target) < min_delta:
+                min_delta = abs(total - target)
+                res = [nums[i], nums[lo], nums[hi]]
+
+            if total < target:
+                lo += 1
+            elif  total > target:
+                hi -= 1
+    return res
+
+    
+class Closest3SumSpec(unittest.TestCase):
+    def test_example(self):
+        target, nums = -1, [2, 1, -5, 4]
+        expected1 = [-5, 1, 2]
+        expected2 = [-5, 1, 4]
+        self.assertIn(sorted(closest_3_sum(nums, target)), [expected1, expected2])
+
+    def test_example2(self):
+        target, nums = 1, [-1, 2, 1, -4]
+        expected = [-1, 2, 1]
+        self.assertEqual(sorted(expected), sorted(closest_3_sum(nums, target)))
+
+    def test_example3(self):
+        target, nums = 10, [1, 2, 3, 4, -5]
+        expected = [2, 3, 4]
+        self.assertEqual(sorted(expected), sorted(closest_3_sum(nums, target)))
+
+    def test_empty_array(self):
+        target, nums = 0, []
+        self.assertIsNone(closest_3_sum(nums, target))
+
+    def test_array_without_enough_elements(self):
+        target, nums = 3, [1, 2]
+        self.assertIsNone(closest_3_sum(nums, target))
+
+    def test_array_without_enough_elements2(self):
+        target, nums = 3, [3]
+        self.assertIsNone(closest_3_sum(nums, target))
+
+
+    def test_all_negatives(self):
+        target, nums = 10, [-2, -1, -5]
+        expected = [-2, -1, -5]
+        self.assertEqual(sorted(expected), sorted(closest_3_sum(nums, target)))
+
+    def test_all_negatives2(self):
+        target, nums = -10, [-2, -1, -5, -10]
+        expected = [-2, -1, -5]
+        self.assertEqual(sorted(expected), sorted(closest_3_sum(nums, target)))
+
+    def test_negative_target(self):
+        target, nums = -10, [0, 0, 0, 0, 0, 1, 1, 1, 1]
+        expected = [0, 0, 0]
+        self.assertEqual(sorted(expected), sorted(closest_3_sum(nums, target)))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False, verbosity=2)
+```
+
 ### Aug 9, 2021 \[Medium\] Number of Flips to Make Binary String
 ---
 > **Question:** You are given a string consisting of the letters `x` and `y`, such as `xyxxxyxyy`. In addition, you have an operation called flip, which changes a single `x` to `y` or vice versa.
