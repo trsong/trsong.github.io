@@ -36,6 +36,86 @@ categories: Python/Java
 >
 > For example, given the array `["a", "b", "c"]` and the permutation `[2, 1, 0]`, return `["c", "b", "a"]`.
 
+**My thoughts:** In-place solution requires swapping `i` with `j` if `j > i`. However, if `j < i`, then `j`'s position has been swapped, we backtrack recursively to find `j`'s new position.
+
+**Solution:** [https://replit.com/@trsong/Find-Permutation-with-Given-Order](https://replit.com/@trsong/Find-Permutation-with-Given-Order)
+```py
+import unittest
+
+def permute(arr, order):
+    for i in range(len(order)):
+        target_pos = order[i]
+
+        # Check index if it has already been swapped before
+        while target_pos < i:
+            target_pos = order[target_pos]
+            
+        arr[i], arr[target_pos] = arr[target_pos], arr[i]
+    return arr
+        
+
+class PermuteSpec(unittest.TestCase):
+    def test_example(self):
+        arr = ["a", "b", "c"]
+        order = [2, 1, 0]
+        expected = ["c", "b", "a"]
+        self.assertEqual(expected, permute(arr, order))
+
+    def test_example2(self):
+        arr = ["11", "32", "3", "42"]
+        order = [2, 3, 0, 1]
+        expected = ["3", "42", "11", "32"]
+        self.assertEqual(expected, permute(arr, order))
+
+    def test_empty_array(self):
+        self.assertEqual([], permute([], []))
+
+    def test_order_form_different_cycles(self):
+        arr = ["a", "b", "c", "d", "e"]
+        order = [1, 0, 4, 2, 3]
+        expected = ["b", "a", "e", "c", "d"]
+        self.assertEqual(expected, permute(arr, order))
+    
+    def test_reverse_order(self):
+        arr = ["a", "b", "c", "d"]
+        order = [3, 2, 1, 0]
+        expected = ["d", "c", "b", "a"]
+        self.assertEqual(expected, permute(arr, order))
+
+    def test_nums_array(self):
+        arr = [50, 40, 70, 60, 90]
+        order = [3,  0,  4,  1,  2]
+        expected = [60, 50, 90, 40, 70]
+        self.assertEqual(expected, permute(arr, order))
+
+    def test_nums_array2(self):
+        arr = [9, 3, 7, 6, 2]
+        order = [4, 0, 3, 1, 2]
+        expected = [2, 9, 6, 3, 7]
+        self.assertEqual(expected, permute(arr, order))
+
+    def test_array_with_duplicate_number(self):
+        arr = ['a', 'a', 'b', 'c']
+        order = [0, 2, 1, 3]
+        expected = ['a', 'b', 'a', 'c']
+        self.assertEqual(expected, permute(arr, order))
+
+    def test_fail_to_swap(self):
+        arr = [50, 30, 40, 70, 60, 90]
+        order = [3, 5, 0, 4, 1, 2]
+        expected = [70, 90, 50, 60, 30, 40]
+        self.assertEqual(expected, permute(arr, order))
+
+    def test_already_in_correct_order(self):
+        arr = [0, 1, 2, 3]
+        order = [0, 1, 2, 3]
+        expected = [0, 1, 2, 3]
+        self.assertEqual(expected, permute(arr, order))
+        
+
+if __name__ == '__main__':
+    unittest.main(exit=False, verbosity=2)
+```
 
 ### Aug 10, 2021 LC 16 \[Medium\] Closest to 3 Sum
 ---

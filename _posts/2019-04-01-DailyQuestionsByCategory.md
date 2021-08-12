@@ -1144,6 +1144,24 @@ For example, if A is `'abcde'` and B is `'cdeab'`, return `True`. If A is `'abc'
 
 
 <details>
+<summary class="lc_e">
+
+- [**\[Easy\] Permutation with Given Order**](https://trsong.github.io/python/java/2021/08/02/DailyQuestionsAug.html#aug-11-2021-easy-permutation-with-given-order) -- *Given an array and a permutation, apply the permutation to the array.* [*\(Try ME\)*](https://replit.com/@trsong/Find-Permutation-with-Given-Order-1)
+
+</summary>
+<div>
+
+**Question:** A permutation can be specified by an array `P`, where `P[i]` represents the location of the element at `i` in the permutation. For example, `[2, 1, 0]` represents the permutation where elements at the index `0` and `2` are swapped.
+
+Given an array and a permutation, apply the permutation to the array. 
+
+For example, given the array `["a", "b", "c"]` and the permutation `[2, 1, 0]`, return `["c", "b", "a"]`.
+ 
+</div>
+</details>
+
+
+<details>
 <summary class="lc_m">
 
 - [**\[Medium\] Peaks and Troughs in an Array of Integers**](https://trsong.github.io/python/java/2021/05/02/DailyQuestionsMay.html#jul-20-2021-medium-peaks-and-troughs-in-an-array-of-integers) -- *Find a list of all the peaks and another list of all the troughs present in the array.* [*\(Try ME\)*](https://replit.com/@trsong/Peaks-and-Troughs-in-an-Array-of-Integers-1)
