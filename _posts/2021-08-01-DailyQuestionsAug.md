@@ -73,16 +73,16 @@ class XORLinkedList(object):
 class Node(object):
     # Workaround to prevent GC
     all_nodes = []
-    
+
     def __init__(self, val):
         self.val = val
         self.both = 0
         Node.all_nodes.append(self)
 
+
 get_pointer = id
 dereference_pointer = lambda ptr: ctypes.cast(ptr, ctypes.py_object).value
-get_pointer = id
-dereference_pointer = lambda ptr: ctypes.cast(ptr, ctypes.py_object).value
+
 
 class XORLinkedListSpec(unittest.TestCase):
     def test_empty_list(self):
@@ -114,7 +114,7 @@ class XORLinkedListSpec(unittest.TestCase):
         lst = XORLinkedList()
         for i in range(1000):
             lst.add(Node(i))
-        
+
         for i in range(100):
             self.assertEqual(i, lst.get(i).val)
 
