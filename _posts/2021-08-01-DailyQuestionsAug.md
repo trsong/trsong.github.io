@@ -36,6 +36,93 @@ categories: Python/Java
 >
 > If using a language that has no pointers (such as Python), you can assume you have access to `get_pointer` and `dereference_pointer` functions that converts between nodes and memory addresses.
 
+**My thoughts:** For each node, store XOR(prev pointer, next pointer) value. Upon retrival, take advantage of XOR's property `(prev XOR next) XOR prev = next` and  `(prev XOR next) XOR next = prev` and we shall be able to iterative through entire list.
+
+**Solution:** [https://replit.com/@trsong/XOR-Linked-List](https://replit.com/@trsong/XOR-Linked-List)
+```py
+import ctypes
+import unittest
+
+class XORLinkedList(object):
+    def __init__(self):
+        self.head = None
+        self.tail = None
+
+    def add(self, node):
+        if not self.head:
+            self.head = node
+            self.tail = node
+        else:
+            self.tail.both ^= get_pointer(node)
+            node.both = get_pointer(self.tail)
+            self.tail = node
+
+    def get(self, index):
+        prev_pointer = 0
+        node = self.head
+        for _ in range(index):
+            next_pointer = prev_pointer ^ node.both
+            prev_pointer = get_pointer(node)
+            node = dereference_pointer(next_pointer)
+        return node
+
+
+#######################
+# Testing Utilities
+#######################
+class Node(object):
+    # Workaround to prevent GC
+    all_nodes = []
+    
+    def __init__(self, val):
+        self.val = val
+        self.both = 0
+        Node.all_nodes.append(self)
+
+get_pointer = id
+dereference_pointer = lambda ptr: ctypes.cast(ptr, ctypes.py_object).value
+get_pointer = id
+dereference_pointer = lambda ptr: ctypes.cast(ptr, ctypes.py_object).value
+
+class XORLinkedListSpec(unittest.TestCase):
+    def test_empty_list(self):
+        self.assertIsNotNone(XORLinkedList())
+
+    def test_one_element_list(self):
+        lst = XORLinkedList()
+        lst.add(Node(1))
+        self.assertEqual(1, lst.get(0).val)
+
+    def test_two_element_list(self):
+        lst = XORLinkedList()
+        lst.add(Node(1))
+        lst.add(Node(2))
+        self.assertEqual(2, lst.get(1).val)
+
+    def test_list_with_duplicated_values(self):
+        lst = XORLinkedList()
+        lst.add(Node(1))
+        lst.add(Node(2))
+        lst.add(Node(1))
+        lst.add(Node(2))
+        self.assertEqual(1, lst.get(0).val)
+        self.assertEqual(2, lst.get(1).val)
+        self.assertEqual(1, lst.get(2).val)
+        self.assertEqual(2, lst.get(3).val)
+
+    def test_larger_example(self):
+        lst = XORLinkedList()
+        for i in range(1000):
+            lst.add(Node(i))
+        
+        for i in range(100):
+            self.assertEqual(i, lst.get(i).val)
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False, verbosity=2)
+```
+
 
 ### Aug 11, 2021 \[Easy\] Permutation with Given Order
 ---
