@@ -21,6 +21,15 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
 
+### Aug 13, 2021 \[Easy\] N-th Perfect Number
+---
+> **Question:** A number is considered perfect if its digits sum up to exactly 10.
+> 
+> Given a positive integer n, return the n-th perfect number.
+> 
+> For example, given 1, you should return 19. Given 2, you should return 28.
+
+
 ### Aug 12, 2021 \[Medium\] XOR Linked List
 --- 
 > **Question:** An XOR linked list is a more memory efficient doubly linked list. Instead of each node holding next and prev fields, it holds a field named both, which is an XOR of the next node and the previous node. Implement an XOR linked list; it has an `add(element)` which adds the element to the end, and a `get(index)` which returns the node at index.
