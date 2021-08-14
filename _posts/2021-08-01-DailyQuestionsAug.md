@@ -50,6 +50,51 @@ add_subtract(1)(2)(3) -> 1 + 2 - 3 -> 0
 add_subtract(-5)(10)(3)(9) -> -5 + 10 - 3 + 9 -> 11
 ```
 
+**Solution:** [https://replit.com/@trsong/Add-and-Subtract-Currying](https://replit.com/@trsong/Add-and-Subtract-Currying)
+```py
+import unittest
+
+def add_subtract(first=None):
+    class Number:
+        def __init__(self, val, sign=None):
+            self.val = val
+            self.sign = sign if sign else 1
+
+        def __call__(self, val):
+            new_val = self.val + self.sign * val
+            new_sign = -1 * self.sign 
+            return Number(new_val, new_sign)
+
+        def __str__(self):
+            return str(self.val)
+
+    return Number(first if first else 0)
+
+
+class AddSubtractSpec(unittest.TestCase):
+    def test_example(self):
+        self.assertEqual('7', str(add_subtract(7)))
+
+    def test_example2(self):
+        self.assertEqual('0', str(add_subtract(1)(2)(3)))
+
+    def test_example3(self):
+        self.assertEqual('11', str(add_subtract(-5)(10)(3)(9)))
+
+    def test_empty_argument(self):
+        self.assertEqual('0', str(add_subtract()))
+
+    def test_positive_arguments(self):
+        self.assertEqual('4', str(add_subtract(1)(2)(3)(4)))
+
+    def test_negative_arguments(self):
+        self.assertEqual('9', str(add_subtract(-1)(-3)(-5)(-1)(-9)))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False, verbosity=2)
+```
+
 ### Aug 13, 2021 \[Easy\] N-th Perfect Number
 ---
 > **Question:** A number is considered perfect if its digits sum up to exactly `10`.

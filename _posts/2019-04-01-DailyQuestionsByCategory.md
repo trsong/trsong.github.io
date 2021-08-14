@@ -578,6 +578,29 @@ Return true as the first and third rectangle overlap each other.
 ---
 
 <details>
+<summary class="lc_e">
+
+- [**\[Medium\] Add Subtract Currying**](http://trsong.github.io/python/java/2021/08/02/DailyQuestionsAug.html#aug-14-2021-medium-add-subtract-currying) -- *Write a function, add_subtract, which alternately adds and subtracts curried arguments.* [*\(Try ME\)*](https://replit.com/@trsong/Add-and-Subtract-Currying-1)
+
+</summary>
+<div>
+
+**Question:** Write a function, add_subtract, which alternately adds and subtracts curried arguments. 
+
+**Example:**
+```py
+add_subtract(7) -> 7
+
+add_subtract(1)(2)(3) -> 1 + 2 - 3 -> 0
+
+add_subtract(-5)(10)(3)(9) -> -5 + 10 - 3 + 9 -> 11
+```
+
+</div>
+</details>
+
+
+<details>
 <summary class="lc_h">
 
 - [**\[Hard\] Elo Rating System**](http://trsong.github.io/python/java/2021/05/02/DailyQuestionsMay.html#jul-3-2021-hard-elo-rating-system) -- *In chess, the Elo rating system is used to calculate player strengths based on game results.* [*\(Try ME\)*](https://replit.com/@trsong/Elo-Rating-System-1)
