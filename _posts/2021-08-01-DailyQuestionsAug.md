@@ -21,6 +21,19 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
 
+### Aug 14, 2021 \[Medium\] Add Subtract Currying
+---
+> **Question:** Write a function, add_subtract, which alternately adds and subtracts curried arguments. 
+
+**Example:**
+```py
+add_subtract(7) -> 7
+
+add_subtract(1)(2)(3) -> 1 + 2 - 3 -> 0
+
+add_subtract(-5)(10)(3)(9) -> -5 + 10 - 3 + 9 -> 11
+```
+
 ### Aug 13, 2021 \[Easy\] N-th Perfect Number
 ---
 > **Question:** A number is considered perfect if its digits sum up to exactly 10.
