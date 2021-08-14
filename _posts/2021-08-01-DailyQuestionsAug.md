@@ -36,12 +36,79 @@ add_subtract(-5)(10)(3)(9) -> -5 + 10 - 3 + 9 -> 11
 
 ### Aug 13, 2021 \[Easy\] N-th Perfect Number
 ---
-> **Question:** A number is considered perfect if its digits sum up to exactly 10.
+> **Question:** A number is considered perfect if its digits sum up to exactly `10`.
 > 
-> Given a positive integer n, return the n-th perfect number.
+> Given a positive integer `n`, return the n-th perfect number.
 > 
-> For example, given 1, you should return 19. Given 2, you should return 28.
+> For example, given `1`, you should return `19`. Given `2`, you should return `28`.
 
+**My thougths:** notice the pattern that consecutive terms differ by `9`. But there is exception: `100` is not perfect number.
+
+**Solution:** [https://replit.com/@trsong/Find-N-th-Perfect-Number](https://replit.com/@trsong/Find-N-th-Perfect-Number)
+```py
+import unittest
+
+def perfect_number_at(n):
+    target = 10
+    diff = 9
+    res = 19
+    for _ in range(n - 1):
+        while True:
+            res += diff
+            if sum_digits(res) == target:
+                break
+    return res
+
+
+def sum_digits(num):
+    res = 0
+    while num > 0:
+        res += num % 10
+        num //= 10
+    return res
+
+
+class PerfectNumberAtSpec(unittest.TestCase):
+    """
+    Perfect number from 1st to 50th term:
+    
+    [ 19,  28,  37,  46,  55,  64,  73,  82,  91, 109,
+     118, 127, 136, 145, 154, 163, 172, 181, 190, 208,
+     217, 226, 235, 244, 253, 262, 271, 280, 307, 316,
+     325, 334, 343, 352, 361, 370, 406, 415, 424, 433,
+     442, 451, 460, 505, 514, 523, 532, 541, 550, 604]
+    """
+    def test_1st_term(self):
+        self.assertEqual(19, perfect_number_at(1))
+
+    def test_2nd_term(self):
+        self.assertEqual(28, perfect_number_at(2))
+
+    def test_3rd_term(self):
+        self.assertEqual(37, perfect_number_at(3))
+
+    def test_4th_term(self):
+        self.assertEqual(46, perfect_number_at(4))
+
+    def test_5th_term(self):
+        self.assertEqual(55, perfect_number_at(5))
+
+    def test_6th_term(self):
+        self.assertEqual(64, perfect_number_at(6))
+
+    def test_10th_term(self):
+        self.assertEqual(109, perfect_number_at(10))
+
+    def test_42nd_term(self):
+        self.assertEqual(451, perfect_number_at(42))
+
+    def test_51th_term(self):
+        self.assertEqual(604, perfect_number_at(50))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False, verbosity=2)
+```
 
 ### Aug 12, 2021 \[Medium\] XOR Linked List
 --- 

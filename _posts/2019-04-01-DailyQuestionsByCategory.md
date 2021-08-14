@@ -30,6 +30,25 @@ categories: Python/Java
 <details>
 <summary class="lc_e">
 
+- [**\[Easy\] N-th Perfect Number**](http://trsong.github.io/python/java/2021/08/02/DailyQuestionsAug.html#aug-13-2021-easy-n-th-perfect-number) -- *A number is considered perfect if its digits sum up to exactly 10.* [*\(Try ME\)*](https://replit.com/@trsong/Find-N-th-Perfect-Number-1)
+
+</summary>
+<div>
+
+
+**Question:** A number is considered perfect if its digits sum up to exactly `10`.
+ 
+Given a positive integer `n`, return the n-th perfect number.
+ 
+For example, given `1`, you should return `19`. Given `2`, you should return `28`.
+
+</div>
+</details>
+
+
+<details>
+<summary class="lc_e">
+
 - [**\[Easy\] Sevenish Number**](https://trsong.github.io/python/java/2021/08/02/DailyQuestionsAug.html#aug-8-2021-easy-sevenish-number) -- *Define a "sevenish" number to be one which is either a power of 7, or the sum of unique powers of 7. Find the nth sevenish number.* [*\(Try ME\)*](https://replit.com/@trsong/Sevenish-Number-1)
 
 </summary>
