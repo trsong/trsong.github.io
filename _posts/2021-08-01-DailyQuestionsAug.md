@@ -21,6 +21,22 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
 
+### Aug 15, 2021 \[Medium\] Power of 4
+---
+> **Questions:** Given a 32-bit positive integer N, determine whether it is a power of four in faster than `O(log N)` time.
+
+**Example1:**
+```py
+Input: 16
+Output: 16 is a power of 4
+```
+
+**Example2:**
+```py
+Input: 20
+Output: 20 is not a power of 4
+```
+
 ### Aug 14, 2021 \[Medium\] Add Subtract Currying
 ---
 > **Question:** Write a function, add_subtract, which alternately adds and subtracts curried arguments. 
