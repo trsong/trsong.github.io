@@ -21,6 +21,34 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
 
+### Aug 16, 2021 \[Easy\] Zombie in Matrix
+---
+> **Question:** Given a 2D grid, each cell is either a zombie 1 or a human 0. Zombies can turn adjacent (up/down/left/right) human beings into zombies every hour. Find out how many hours does it take to infect all humans?
+
+**Example:**
+```py
+Input:
+[[0, 1, 1, 0, 1],
+ [0, 1, 0, 1, 0],
+ [0, 0, 0, 0, 1],
+ [0, 1, 0, 0, 0]]
+
+Output: 2
+
+Explanation:
+At the end of the 1st hour, the status of the grid:
+[[1, 1, 1, 1, 1],
+ [1, 1, 1, 1, 1],
+ [0, 1, 0, 1, 1],
+ [1, 1, 1, 0, 1]]
+
+At the end of the 2nd hour, the status of the grid:
+[[1, 1, 1, 1, 1],
+ [1, 1, 1, 1, 1],
+ [1, 1, 1, 1, 1],
+ [1, 1, 1, 1, 1]]
+ ```
+
 ### Aug 15, 2021 \[Medium\] Power of 4
 ---
 > **Questions:** Given a 32-bit positive integer N, determine whether it is a power of four in faster than `O(log N)` time.
