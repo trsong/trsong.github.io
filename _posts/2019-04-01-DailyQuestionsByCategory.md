@@ -1926,6 +1926,32 @@ Explanation: Because the new interval [4,8] overlaps with [3,5],[6,7],[8,10].
 <details>
 <summary class="lc_m">
 
+- [**\[Medium\] Power of 4**](https://trsong.github.io/python/java/2021/08/02/DailyQuestionsAug.html#aug-15-2021-medium-power-of-4) -- *Given a 32-bit positive integer `N`, determine whether it is a power of four in faster than `O(log N)` time.* [*\(Try ME\)*](https://replit.com/@trsong/Determine-If-Number-Is-Power-of-4-1)
+
+</summary>
+<div>
+
+**Questions:** Given a 32-bit positive integer N, determine whether it is a power of four in faster than `O(log N)` time.
+
+**Example1:**
+```py
+Input: 16
+Output: 16 is a power of 4
+```
+
+**Example2:**
+```py
+Input: 20
+Output: 20 is not a power of 4
+```
+
+</div>
+</details>
+
+
+<details>
+<summary class="lc_m">
+
 - [**\[Medium\] H-Index II**](https://trsong.github.io/python/java/2021/05/02/DailyQuestionsMay.html#may-30-2021-medium-h-index-ii) -- *The h-index is if a scholar has at least h of their papers cited h times. Given a sorted list of citation number, calculate h-index.* [*\(Try ME\)*](https://replit.com/@trsong/H-Index-II-1)
 
 </summary>

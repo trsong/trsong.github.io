@@ -65,6 +65,67 @@ Input: 20
 Output: 20 is not a power of 4
 ```
 
+**My thoughts:** A power-of-4 number must be power-of-2. Thus `n & (n-1) == 0` must hold. The only different between pow-4 and pow-2 is the number of trailing zeros. pow-4 must have even number of trailing zeros. So we can either check that through `n & 0xAAAAAAAA` (`0xA` in binary `0b1010`) or just use binary search to count zeros. 
+
+**Solution with Binary Search:** [https://replit.com/@trsong/Determine-If-Number-Is-Power-of-4](https://replit.com/@trsong/Determine-If-Number-Is-Power-of-4)
+```py
+import unittest
+
+def is_power_of_four(num):
+    is_positive = num > 0
+    is_power_two = num & (num - 1) == 0
+    
+    if is_positive and is_power_two:
+        # binary search number of zeros
+        lo = 0
+        hi = 32
+        while lo <= hi:
+            mid = lo + (hi - lo) // 2
+            if num == (1 << mid):
+                return mid % 2 == 0
+            elif num >= (1 << mid):
+                lo = mid + 1
+            else:
+                hi = mid - 1
+    return False
+
+
+class IsPowerOfFourSpec(unittest.TestCase):
+    def test_example1(self):
+        self.assertTrue(is_power_of_four(16))
+
+    def test_example2(self):
+        self.assertFalse(is_power_of_four(20))
+
+    def test_zero(self):
+        self.assertFalse(is_power_of_four(0))
+    
+    def test_one(self):
+        self.assertTrue(is_power_of_four(1))
+
+    def test_number_smaller_than_four(self):
+        self.assertFalse(is_power_of_four(3))
+
+    def test_negative_number(self):
+        self.assertFalse(is_power_of_four(-4))
+    
+    def test_all_bit_being_one(self):
+        self.assertFalse(is_power_of_four(4**8 - 1))
+
+    def test_power_of_two_not_four(self):
+        self.assertFalse(is_power_of_four(2 ** 5))
+
+    def test_all_power_4_bit_being_one(self):
+        self.assertFalse(is_power_of_four(4**0 + 4**1 + 4**2 + 4**3 + 4**4))
+    
+    def test_larger_number(self):
+        self.assertTrue(is_power_of_four(2 ** 32))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False, verbosity=2)
+```
+
 ### Aug 14, 2021 \[Medium\] Add Subtract Currying
 ---
 > **Question:** Write a function, add_subtract, which alternately adds and subtracts curried arguments. 
