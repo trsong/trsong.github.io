@@ -54,6 +54,99 @@ At the end of the 2nd hour, the status of the grid:
  [1, 1, 1, 1, 1]]
  ```
 
+**My thoughts:** The problem can be solved with BFS. Just imagining initially all zombines are virtually associated with a single root where after we perform a BFS, the result will be depth of the BFS search tree.
+
+**Solution with BFS:** [https://replit.com/@trsong/Zombie-Infection-in-Matrix](https://replit.com/@trsong/Zombie-Infection-in-Matrix)
+```py
+import unittest
+
+DIRECTIONS = [(-1, 0), (1, 0), (0, -1), (0, 1)]
+
+def zombie_infection_time(grid):
+    if not grid or not grid[0]:
+        return -1
+    
+    n, m = len(grid), len(grid[0])
+    queue = []
+    for r in range(n):
+        for c in range(m):
+            if grid[r][c] == 1:
+                queue.append((r, c))
+    
+    time = -1
+    while queue:
+        for _ in range(len(queue)):
+            r, c = queue.pop(0)
+            if time > 0 and grid[r][c] == 1:
+                continue
+            grid[r][c] = 1
+            
+            for dr, dc in DIRECTIONS:
+                new_r, new_c = r + dr, c + dc
+                if 0 <= new_r < n and 0 <= new_c < m and grid[new_r][new_c] == 0:
+                    queue.append((new_r, new_c))
+        time += 1
+    return time
+
+
+class ZombieInfectionTimeSpec(unittest.TestCase):
+    def test_example(self):
+        self.assertEqual(2, zombie_infection_time([
+            [0, 1, 1, 0, 1],
+            [0, 1, 0, 1, 0],
+            [0, 0, 0, 0, 1],
+            [0, 1, 0, 0, 0]]))
+
+    def test_empty_grid(self):
+        # Assume grid with no zombine returns -1
+        self.assertEqual(-1, zombie_infection_time([]))
+    
+    def test_grid_without_zombie(self):
+        # Assume grid with no zombine returns -1
+        self.assertEqual(-1, zombie_infection_time([
+            [0, 0, 0],
+            [0, 0, 0]
+        ]))
+
+    def test_1x1_grid(self):
+        self.assertEqual(0, zombie_infection_time([[1]]))
+
+    def test_when_all_human_are_infected(self):
+        self.assertEqual(0, zombie_infection_time([
+            [1, 1],
+            [1, 1]]))
+    
+    def test_grid_with_one_zombie(self):
+        self.assertEqual(4, zombie_infection_time([
+            [1, 0, 0],
+            [0, 0, 0],
+            [0, 0, 0]]))
+    
+    def test_grid_with_one_zombie2(self):
+        self.assertEqual(2, zombie_infection_time([
+            [0, 0, 0],
+            [0, 1, 0],
+            [0, 0, 0]]))
+    
+    def test_grid_with_multiple_zombies(self):
+        self.assertEqual(4, zombie_infection_time([
+            [0, 0, 0, 0, 1],
+            [0, 0, 0, 1, 0],
+            [0, 0, 1, 0, 0],
+            [0, 1, 0, 0, 0]]))
+    
+    def test_grid_with_multiple_zombies2(self):
+        self.assertEqual(4, zombie_infection_time([
+            [0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 1],
+            [1, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0]]))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False, verbosity=2)
+ ```
+
 ### Aug 15, 2021 \[Medium\] Power of 4
 ---
 > **Questions:** Given a 32-bit positive integer N, determine whether it is a power of four in faster than `O(log N)` time.

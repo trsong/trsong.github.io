@@ -6678,6 +6678,44 @@ Output: [4, 2, 1, 3, 6] or [5, 2, 1, 3, 6]
 <details>
 <summary class="lc_e">
 
+- [**\[Easy\] Zombie in Matrix**](https://trsong.github.io/python/java/2021/08/02/DailyQuestionsAug.html#aug-16-2021-easy-zombie-in-matrix) -- *Zombies can turn adjacent human beings into zombies every hour. Find out how many hours does it take to infect all humans?* [*\(Try ME\)*](https://replit.com/@trsong/Zombie-Infection-in-Matrix-1)
+
+</summary>
+<div>
+
+**Question:** Given a 2D grid, each cell is either a zombie 1 or a human 0. Zombies can turn adjacent (up/down/left/right) human beings into zombies every hour. Find out how many hours does it take to infect all humans?
+
+**Example:**
+```py
+Input:
+[[0, 1, 1, 0, 1],
+ [0, 1, 0, 1, 0],
+ [0, 0, 0, 0, 1],
+ [0, 1, 0, 0, 0]]
+
+Output: 2
+
+Explanation:
+At the end of the 1st hour, the status of the grid:
+[[1, 1, 1, 1, 1],
+ [1, 1, 1, 1, 1],
+ [0, 1, 0, 1, 1],
+ [1, 1, 1, 0, 1]]
+
+At the end of the 2nd hour, the status of the grid:
+[[1, 1, 1, 1, 1],
+ [1, 1, 1, 1, 1],
+ [1, 1, 1, 1, 1],
+ [1, 1, 1, 1, 1]]
+```
+
+</div>
+</details>
+
+
+<details>
+<summary class="lc_e">
+
 - [**\[Easy\] Minimum Depth of Binary Tree**](https://trsong.github.io/python/java/2021/02/02/DailyQuestionsFeb.html#apr-11-2021-easy-minimum-depth-of-binary-tree) -- * Given a binary tree, find the minimum depth of the binary tree. The minimum depth is the shortest distance from the root to a leaf.* [*\(Try ME\)*](https://replit.com/@trsong/Minimum-Depth-of-Binary-Tree-3)
 
 </summary>
