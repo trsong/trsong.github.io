@@ -25,6 +25,140 @@ categories: Python/Java
 ---
 > **Question:** Given a binary tree, determine whether or not it is height-balanced. A height-balanced binary tree can be defined as one in which the heights of the two subtrees of any node never differ by more than one.
 
+**Solution with Recursion:** [https://replit.com/@trsong/Determine-If-Height-balanced-Binary-Tree](https://replit.com/@trsong/Determine-If-Height-balanced-Binary-Tree)
+```py
+import unittest
+
+def is_balanced_tree(root):
+    res, _ = check_height_recur(root)
+    return res
+
+
+def check_height_recur(node):
+    if node is None:
+        return True, 0
+
+    left_res, left_height = check_height_recur(node.left)
+    if not left_res:
+        return False, -1
+
+    right_res, right_height = check_height_recur(node.right)
+    if not right_res or abs(left_height - right_height) > 1:
+        return False, -1
+
+    return True, max(left_height, right_height) + 1
+
+
+class TreeNode(object):
+    def __init__(self, val, left=None, right=None):
+        self.val = val
+        self.left = left
+        self.right = right
+
+
+class IsBalancedTreeSpec(unittest.TestCase):
+    def test_empty_tree(self):
+        self.assertTrue(is_balanced_tree(None))
+
+    def test_tree_with_only_one_node(self):
+        self.assertTrue(is_balanced_tree(TreeNode(1)))
+
+    def test_depth_one_tree_is_always_balanced(self):
+        """
+        0
+         \
+          1
+        """
+        root = TreeNode(0, right=TreeNode(1))
+        self.assertTrue(is_balanced_tree(root))
+
+    def test_depth_two_unbalanced_tree(self):
+        """
+         0
+          \
+           1
+          / \
+         2   3
+        """
+        right_tree = TreeNode(1, TreeNode(2), TreeNode(3))
+        root = TreeNode(0, right=right_tree)
+        self.assertFalse(is_balanced_tree(root))
+
+    def test_left_heavy_tree(self):
+        """
+          0
+         / \
+        1   4
+         \
+          2
+         /
+        3
+        """
+        left_tree = TreeNode(1, right=TreeNode(2, TreeNode(3)))
+        root = TreeNode(0, left_tree, TreeNode(4))
+        self.assertFalse(is_balanced_tree(root))
+
+    def test_complete_tree(self):
+        """
+            0
+           / \
+          1   2
+         / \ 
+        3   4
+        """
+        left_tree = TreeNode(1, TreeNode(3), TreeNode(4))
+        root = TreeNode(0, left_tree, TreeNode(2))
+        self.assertTrue(is_balanced_tree(root))
+
+    def test_unbalanced_internal_node(self):
+        """
+            0
+           / \
+          1   3
+         /     \
+        2       4
+               /
+              5 
+        """
+        left_tree = TreeNode(1, TreeNode(2))
+        right_tree = TreeNode(3, right=TreeNode(4, TreeNode(5)))
+        root = TreeNode(0, left_tree, right_tree)
+        self.assertFalse(is_balanced_tree(root))
+
+    def test_balanced_internal_node(self):
+        """
+            0
+           / \
+          1   3
+         /   / \
+        2   6   4
+               /
+              5 
+        """
+        left_tree = TreeNode(1, TreeNode(2))
+        right_tree = TreeNode(3, TreeNode(6), TreeNode(4, TreeNode(5)))
+        root = TreeNode(0, left_tree, right_tree)
+        self.assertTrue(is_balanced_tree(root))
+
+    def test_unbalanced_tree_with_all_children_filled(self):
+        """
+            0
+           / \ 
+          1   2
+         / \
+        3   4
+           / \
+          5   6
+        """
+        n4 = TreeNode(4, TreeNode(5), TreeNode(6))
+        n1 = TreeNode(1, TreeNode(3), n4)
+        root = TreeNode(0, n1, TreeNode(2))
+        self.assertFalse(is_balanced_tree(root))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False, verbosity=2)
+```
 
 ### Aug 16, 2021 \[Easy\] Zombie in Matrix
 ---

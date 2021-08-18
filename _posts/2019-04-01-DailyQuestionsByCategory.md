@@ -4268,6 +4268,20 @@ For example, given the array `[3, 4, 9, 6, 1]`, return `[1, 1, 2, 1, 0]`, since:
 ---
 
 <details>
+<summary class="lc_e>
+
+- [**\[Easy\] Height-balanced Binary Tree**](https://replit.com/@trsong/Determine-If-Height-balanced-Binary-Tree) -- *Given a binary tree, determine whether or not it is height-balanced.* [*\(Try ME\)*](https://replit.com/@trsong/Determine-If-Height-balanced-Binary-Tree-1)
+
+</summary>
+<div>
+
+**Question:** Given a binary tree, determine whether or not it is height-balanced. A height-balanced binary tree can be defined as one in which the heights of the two subtrees of any node never differ by more than one.
+
+</div>
+</details>
+
+
+<details>
 <summary class="lc_e">
 
 - [**\[Easy\] Count Complete Binary Tree**](https://trsong.github.io/python/java/2021/02/02/DailyQuestionsFeb.html#apr-10-2021-easy-count-complete-binary-tree) -- *Given a complete binary tree, count the number of nodes in faster than O(n) time.* [*\(Try ME\)*](https://replit.com/@trsong/Count-Complete-Binary-Tree-1)
