@@ -21,6 +21,22 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
 
+### Aug 19, 2021 \[Medium\] Forward DNS Look Up Cache
+----
+> **Question:** Forward DNS look up is getting IP address for a given domain name typed in the web browser. e.g. Given "www.samsung.com" should return "107.108.11.123"
+> 
+> The cache should do the following operations:
+> 1. Add a mapping from URL to IP address
+> 2. Find IP address for a given URL.
+> 
+> Note: 
+> - You can assume all domain name contains only lowercase characters
+> 
+> Hint:
+> - The idea is to store URLs in Trie nodes and store the corresponding IP address in last or leaf node.
+
+
+
 ### Aug 18, 2021 \[Easy\] Rearrange Array in Alternating Positive & Negative Order
 ---
 > **Question:** Given an array of positive and negative numbers, arrange them in an alternate fashion such that every positive number is followed by negative and vice-versa maintaining the order of appearance.
