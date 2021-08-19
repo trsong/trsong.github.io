@@ -1184,6 +1184,33 @@ For example, if A is `'abcde'` and B is `'cdeab'`, return `True`. If A is `'abc'
 ## Array
 ---
 
+<details>
+<summary class="lc_e">
+
+- [**\[Easy\] Rearrange Array in Alternating Positive & Negative Order**](https://trsong.github.io/python/java/2021/08/02/DailyQuestionsAug.html#aug-18-2021-easy--rearrange-array-in-alternating-positive--negative-order) -- *Given an array of positive and negative numbers, arrange them in an alternate fashion.* [*\(Try ME\)*](https://replit.com/@trsong/Rearrange-the-Array-in-Alternating-Positive-and-Negative-Ord-1)
+
+</summary>
+<div>
+
+**Question:** Given an array of positive and negative numbers, arrange them in an alternate fashion such that every positive number is followed by negative and vice-versa maintaining the order of appearance.
+
+Number of positive and negative numbers need not be equal. If there are more positive numbers they appear at the end of the array. If there are more negative numbers, they too appear in the end of the array.
+
+**Example1:**
+```py
+Input:  arr[] = {1, 2, 3, -4, -1, 4}
+Output: arr[] = {-4, 1, -1, 2, 3, 4}
+```
+
+**Example2:**
+```py
+Input:  arr[] = {-5, -2, 5, 2, 4, 7, 1, 8, 0, -8}
+output: arr[] = {-5, 5, -2, 2, -8, 4, 7, 1, 8, 0} 
+```
+
+</div>
+</details>
+
 
 <details>
 <summary class="lc_e">
