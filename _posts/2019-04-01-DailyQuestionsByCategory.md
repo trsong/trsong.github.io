@@ -5079,6 +5079,31 @@ sumRange(0, 2) -> 8
 <details>
 <summary class="lc_m">
 
+- [**\[Medium\] Forward DNS Look Up Cache**](https://trsong.github.io/python/java/2021/08/02/DailyQuestionsAug.html#aug-19-2021-medium-forward-dns-look-up-cache) -- *Forward DNS look up is getting IP address for a given domain name typed in the web browser. e.g. Given “www.samsung.com” should return “107.108.11.123”* [*\(Try ME\)*](https://replit.com/@trsong/Design-Forward-DNS-Look-Up-Cache-1)
+
+</summary>
+<div>
+
+**Question:** Forward DNS look up is getting IP address for a given domain name typed in the web browser. e.g. Given "www.samsung.com" should return "107.108.11.123"
+ 
+The cache should do the following operations:
+1. Add a mapping from URL to IP address
+2. Find IP address for a given URL.
+ 
+Note: 
+- You can assume all domain name contains only lowercase characters
+ 
+Hint:
+- The idea is to store URLs in Trie nodes and store the corresponding IP address in last or leaf node.
+ 
+
+</div>
+</details>
+
+
+<details>
+<summary class="lc_m">
+
 - [**\[Medium\] Maximum Distance among Binary Strings**](http://trsong.github.io/python/java/2021/02/02/DailyQuestionsFeb.html#apr-29-2021-medium-maximum-distance-among-binary-strings) -- *The distance between 2 binary strings is the sum of their lengths after removing the common prefix.* [*\(Try ME\)*](https://replit.com/@trsong/Maximum-Distance-among-Binary-Strings-1)
 
 </summary>

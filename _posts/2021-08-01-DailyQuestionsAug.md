@@ -35,7 +35,81 @@ categories: Python/Java
 > Hint:
 > - The idea is to store URLs in Trie nodes and store the corresponding IP address in last or leaf node.
 
+**Solution with Trie:** [https://replit.com/@trsong/Design-Forward-DNS-Look-Up-Cache](https://replit.com/@trsong/Design-Forward-DNS-Look-Up-Cache)
+```py
+import unittest
 
+class ForwardDNSCache(object):
+    def __init__(self):
+        self.trie = Trie()
+
+    def insert(self, url, ip):
+        self.trie.insert(url, ip)
+
+    def search(self, url):
+        return self.trie.search(url)
+
+
+class Trie(object):
+    def __init__(self):
+        self.ip = None
+        self.children = None
+    
+    def insert(self, url, ip):
+        p = self
+        for ch in url:
+            p.children = p.children or {}
+            p.children[ch] = p.children.get(ch, Trie())
+            p = p.children[ch]
+        p.ip = ip
+
+    def search(self, url):
+        p = self
+        for ch in url:
+            if not p or not p.children or ch not in p.children:
+                return None
+            p = p.children[ch]
+        return p.ip
+
+
+class ForwardDNSCacheSpec(unittest.TestCase):
+    def setUp(self):
+        self.cache = ForwardDNSCache()
+    
+    def test_fail_to_get_out_of_bound_result(self):
+        self.assertIsNone(self.cache.search("www.google.ca"))
+        self.cache.insert("www.google.com", "1.1.1.1")
+        self.assertIsNone(self.cache.search("www.google.com.ca"))
+
+    def test_result_not_found(self):
+        self.cache.insert("www.cnn.com", "2.2.2.2")
+        self.assertIsNone(self.cache.search("www.amazon.ca"))
+        self.assertIsNone(self.cache.search("www.cnn.ca"))
+
+    def test_overwrite_url(self):
+        self.cache.insert("www.apple.com", "1.2.3.4")
+        self.assertEqual( "1.2.3.4", self.cache.search("www.apple.com"))
+        self.cache.insert("www.apple.com", "5.6.7.8")
+        self.assertEqual("5.6.7.8", self.cache.search("www.apple.com"))
+    
+    def test_url_with_same_prefix(self):
+        self.cache.insert("www.apple.com", "1.2.3.4")
+        self.cache.insert("www.apple.com.ca", "5.6.7.8")
+        self.cache.insert("www.apple.com.hk", "9.10.11.12")
+        self.assertEqual("1.2.3.4", self.cache.search("www.apple.com"), )
+        self.assertEqual("5.6.7.8", self.cache.search("www.apple.com.ca"))
+        self.assertEqual("9.10.11.12", self.cache.search("www.apple.com.hk"))
+
+    def test_non_overlapping_url(self):
+        self.cache.insert("bilibili.tv", "11.22.33.44")
+        self.cache.insert("taobao.com", "55.66.77.88")
+        self.assertEqual("11.22.33.44", self.cache.search("bilibili.tv"))
+        self.assertEqual("55.66.77.88", self.cache.search("taobao.com"))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False, verbosity=2)
+```
 
 ### Aug 18, 2021 \[Easy\] Rearrange Array in Alternating Positive & Negative Order
 ---
