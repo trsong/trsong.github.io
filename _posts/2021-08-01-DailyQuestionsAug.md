@@ -21,6 +21,27 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
 
+### Aug 20, 2021 \[Medium\] Cutting a Rod
+---
+> **Question:** Given a rod of length n inches and an array of prices that contains prices of all pieces of size smaller than n. Determine the maximum value obtainable by cutting up the rod and selling the pieces. 
+>
+> For example, if length of the rod is 8 and the values of different pieces are given as following, then the maximum obtainable value is 22 (by cutting in two pieces of lengths 2 and 6) = 5 + 17
+
+```
+length   | 1   2   3   4   5   6   7   8  
+--------------------------------------------
+price    | 1   5   8   9  10  17  17  20
+```
+
+> And if the prices are as following, then the maximum obtainable value is 24 (by cutting in eight pieces of length 1) = 3 + 3 + 3 + 3 + 3 + 3 + 3 + 3
+
+```
+length   | 1   2   3   4   5   6   7   8  
+--------------------------------------------
+price    | 3   5   8   9  10  17  17  20
+```
+
+
 ### Aug 19, 2021 \[Medium\] Forward DNS Look Up Cache
 ----
 > **Question:** Forward DNS look up is getting IP address for a given domain name typed in the web browser. e.g. Given "www.samsung.com" should return "107.108.11.123"
