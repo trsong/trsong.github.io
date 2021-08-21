@@ -69,6 +69,52 @@ length   | 1   2   3   4   5   6   7   8
 price    | 3   5   8   9  10  17  17  20
 ```
 
+**My thoughts:** Think about the problem backwards: among all rot cutting spaces, at the very last step we have to choose one cut the length n rod into `{ all (first_rod, second_rod)} = {(0, n), (1, n-1), (2, n-2), ..., (n-1, 1)}` And suppose there is a magic function f(n) that can gives the max price we can get when rod length is n, then we can say that `f(n) = max of f(first_rod) + price of second_rod for all (first_rod, second_roc)`, that means, `f(n) = max(f(n-k) + price(k)) (index is 1-based) for all k` which can be solved using DP.
+
+**Solution with DP:** [https://replit.com/@trsong/Max-Value-to-Cut-a-Rod](https://replit.com/@trsong/Max-Value-to-Cut-a-Rod)
+```py
+import unittest
+
+def max_cut_rod_price(piece_prices):
+    # Let dp[i] where 0 <= i <= n, represents max cut price with i pieces of rods
+    # dp[i] = max(dp[i - k] + piece_prices[k - 1]) for all k <= i
+    n = len(piece_prices)
+    dp = [0] * (n + 1)
+    for i in range(n + 1):
+        for k in range(1, i + 1):
+            dp[i] = max(dp[i], dp[i - k] + piece_prices[k - 1])
+    return dp[n]
+
+
+class MaxCutRodPriceSpec(unittest.TestCase):
+    def test_all_cut_to_one(self):
+        # 3 + 3 + 3 = 9
+        self.assertEqual(9, max_cut_rod_price([3, 4, 5])) 
+
+    def test_cut_to_one_and_two(self):
+        # 3 + 7 = 10
+        self.assertEqual(10, max_cut_rod_price([3, 7, 8])) 
+
+    def test_when_cut_has_tie(self):
+        # 4 or 1 + 3
+        self.assertEqual(4, max_cut_rod_price([1, 3, 4])) 
+
+    def test_no_need_to_cut(self):
+        self.assertEqual(5, max_cut_rod_price([1, 2, 5]))
+
+    def test_example1(self):
+        # 5 + 17 = 22
+        self.assertEqual(22, max_cut_rod_price([1, 5, 8, 9, 10, 17, 17, 20]))
+
+    def test_example2(self):
+        # 3 * 8 = 24
+        self.assertEqual(24, max_cut_rod_price([3, 5, 8, 9, 10, 17, 17, 20]))
+        
+
+if __name__ == '__main__':
+    unittest.main(exit=False, verbosity=2)
+```
+
 
 ### Aug 19, 2021 \[Medium\] Forward DNS Look Up Cache
 ----
