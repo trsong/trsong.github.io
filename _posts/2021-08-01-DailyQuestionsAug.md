@@ -48,6 +48,101 @@ Explanation:
 No course can be studied because they depend on each other.
 ```
 
+**My thoughts:** Treat each course as vertex and prerequisite relation as edges. We will have a directed acyclic graph (DAG) with edge weight = 1. The problem then convert to find the longest path in a DAG. To find the answer, we need to find topological order of courses and then find longest path based on topological order.  
+
+**Solution with Topological Search:** [https://replit.com/@trsong/Calculate-Parallel-Courses](https://replit.com/@trsong/Calculate-Parallel-Courses)
+```py
+import unittest
+
+def min_semesters(total_courses, prerequisites):
+    if total_courses == 0:
+        return 0
+
+    neighbors = [[] for _ in range(total_courses + 1)]
+    inbound = [0] * (total_courses + 1)
+    for cur, next in prerequisites:
+        neighbors[cur].append(next)
+        inbound[next] += 1
+    
+    semesters = [1] * (total_courses + 1)
+    queue = [course for course in range(1, total_courses + 1) if inbound[course] == 0]
+    
+    while queue:
+        cur = queue.pop(0)
+        for next in neighbors[cur]:
+            inbound[next] -= 1
+            if inbound[next] == 0:
+                queue.append(next)
+            semesters[next] = semesters[cur] + 1
+
+    if any(inbound):
+        # exist circular dependencies
+        return -1
+
+    return max(semesters)
+
+
+class min_semesterss(unittest.TestCase):
+    def test_example(self):
+        total_courses = 3
+        prerequisites = [[1, 3], [2, 3]]
+        expected = 2  # gradudation path: 1/2, 3
+        self.assertEqual(expected, min_semesters(total_courses, prerequisites))
+
+    def test_no_course_to_take(self):
+        total_courses = 0
+        prerequisites = []
+        expected = 0
+        self.assertEqual(expected, min_semesters(total_courses, prerequisites))
+
+    def test_all_courses_are_independent(self):
+        total_courses = 3
+        prerequisites = []
+        expected = 1  # gradudation path: 1/2/3
+        self.assertEqual(expected, min_semesters(total_courses, prerequisites))
+
+    def test_grap_with_cycle(self):
+        total_courses = 3
+        prerequisites = [[1, 2], [3, 1], [2, 3]]
+        expected = -1
+        self.assertEqual(expected, min_semesters(total_courses, prerequisites))
+
+    def test_grap_with_cycle2(self):
+        total_courses = 2
+        prerequisites = [[1, 2], [2, 1]]
+        expected = -1
+        self.assertEqual(expected, min_semesters(total_courses, prerequisites))
+
+    def test_disconnected_graph(self):
+        total_courses = 5
+        prerequisites = [[1, 2], [3, 4], [4, 5]]
+        expected = 3  # gradudation path: 1/3, 2/4, 5
+        self.assertEqual(expected, min_semesters(total_courses, prerequisites))
+
+    def test_graph_with_two_paths(self):
+        total_courses = 5
+        prerequisites = [[1, 2], [2, 5], [1, 3], [3, 4], [4, 5]]
+        expected = 4  # gradudation path: 1, 2/3, 4, 5
+        self.assertEqual(expected, min_semesters(total_courses, prerequisites))
+
+    def test_graph_with_two_paths2(self):
+        total_courses = 5
+        prerequisites = [[1, 3], [3, 4], [4, 5], [1, 2], [2, 5]]
+        expected = 4  # gradudation path: 1, 2/3, 4, 5
+        self.assertEqual(expected, min_semesters(total_courses, prerequisites))
+
+    def test_connected_graph_with_paths_of_different_lenghths(self):
+        total_courses = 7
+        prerequisites = [[1, 3], [1, 4], [2, 3], [2, 4], [3, 4], [3, 6],
+                         [4, 5], [4, 6], [4, 7], [3, 6], [6, 7]]
+        expected = 5  # path: 1/2, 3, 4, 5/6, 7
+        self.assertEqual(expected, min_semesters(total_courses, prerequisites))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False, verbosity=2)
+```
+
 
 ### Aug 20, 2021 \[Medium\] Cutting a Rod
 ---
