@@ -1187,6 +1187,26 @@ For example, if A is `'abcde'` and B is `'cdeab'`, return `True`. If A is `'abc'
 <details>
 <summary class="lc_e">
 
+- [**\[Easy\] Plus One**](https://trsong.github.io/python/java/2021/08/02/DailyQuestionsAug.html#aug-22-2021-easy-plus-one) -- *Given a non-empty array where each element represents a digit of a non-negative integer, add one to the integer.* [*\(Try ME\)*](https://replit.com/@trsong/Integer-Plus-One-1)
+
+</summary>
+<div>
+
+**Question:** Given a non-empty array where each element represents a digit of a non-negative integer, add one to the integer. The most significant digit is at the front of the array and each element in the array contains only one digit. Furthermore, the integer does not have leading zeros, except in the case of the number '0'.
+
+**Example:**
+```py
+Input: [2, 3, 4]
+Output: [2, 3, 5]
+```
+
+</div>
+</details>
+
+
+<details>
+<summary class="lc_e">
+
 - [**\[Easy\] Rearrange Array in Alternating Positive & Negative Order**](https://trsong.github.io/python/java/2021/08/02/DailyQuestionsAug.html#aug-18-2021-easy--rearrange-array-in-alternating-positive--negative-order) -- *Given an array of positive and negative numbers, arrange them in an alternate fashion.* [*\(Try ME\)*](https://replit.com/@trsong/Rearrange-the-Array-in-Alternating-Positive-and-Negative-Ord-1)
 
 </summary>

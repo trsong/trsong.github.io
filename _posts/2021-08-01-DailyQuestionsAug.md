@@ -31,6 +31,55 @@ Input: [2, 3, 4]
 Output: [2, 3, 5]
 ```
 
+**Solution:** [https://replit.com/@trsong/Integer-Plus-One](https://replit.com/@trsong/Integer-Plus-One)
+```py
+import unittest
+
+def add_one(digits):
+    carry = 1
+    for i in range(len(digits) - 1, -1, -1):
+        digits[i] += carry
+        carry = digits[i] // 10
+        digits[i] %= 10
+
+        if carry == 0:
+            break
+    
+    if carry:
+        digits.insert(0, 1)
+    return digits
+
+
+class AddOneSpec(unittest.TestCase):
+    def test_example(self):
+        self.assertEqual([2, 3, 5], add_one([2, 3, 4]))
+
+    def test_zero(self):
+        self.assertEqual([1], add_one([0]))
+    
+    def test_two_digit_number(self):
+        self.assertEqual([9, 0], add_one([8, 9]))
+    
+    def test_four_digit_number(self):
+        self.assertEqual([3, 1, 0, 0], add_one([3, 0, 9, 9]))
+
+    def test_carryover(self):
+        self.assertEqual([1, 0], add_one([9]))
+
+    def test_carryover_and_early_break(self):
+        self.assertEqual([2, 8, 3, 0, 0], add_one([2, 8, 2, 9, 9]))
+
+    def test_early_break(self):
+        self.assertEqual([1, 0, 0, 1], add_one([1, 0, 0, 0]))
+
+    def test_carryover2(self):
+        self.assertEqual([1, 0, 0, 0, 0], add_one([9, 9, 9, 9]))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False, verbosity=2)
+```
+
 ### Aug 21, 2021 LC 1136 \[Hard\] Parallel Courses
 ---
 > **Question:** There are N courses, labelled from 1 to N.
