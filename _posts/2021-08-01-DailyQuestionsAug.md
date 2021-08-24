@@ -32,6 +32,73 @@ Input: 105
 Output: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 12, 21, 23, 32, 34, 43, 45, 54, 56, 65, 67, 76, 78, 87, 89, 98, 101]
 ```
 
+**My thoughts:** We can use Brutal Force to search from 0 to given upperbound to find jumping numbers which might not be so efficient. Or we can take advantage of the property of jummping number: a jumping number is:
+- either one of all single digit numbers 
+- or 10 * some jumping number + last digit of that jumping number +/- by 1
+
+For example, 
+
+```
+1 -> 10, 12.
+2 -> 21, 23.
+3 -> 32, 34.
+...
+10 -> 101
+12 -> 121, 123
+```
+
+We can get all qualified jumping number by BFS searching for all candidates.
+
+**Solution with BFS:** [https://replit.com/@trsong/Generate-Jumping-Numbers](https://replit.com/@trsong/Generate-Jumping-Numbers)
+```py
+import unittest
+
+def generate_jumping_numbers(upper_bound):
+    if upper_bound < 0:
+        return []
+
+    queue = [num for num in range(1, 10)]
+    res = [0]
+    while queue:
+        cur = queue.pop(0)
+        if cur > upper_bound:
+            break
+
+        res.append(cur)
+        last_digit = cur % 10
+        if last_digit > 0:
+            queue.append(10 * cur + last_digit - 1)
+        
+        if last_digit < 9:
+            queue.append(10 * cur + last_digit + 1)
+    return res
+
+
+class GenerateJumpingNumberSpec(unittest.TestCase):
+    def test_zero_as_upperbound(self):
+        self.assertEqual([0], generate_jumping_numbers(0))
+
+    def test_single_digits_are_all_jummping_numbers(self):
+        self.assertEqual([0, 1, 2, 3, 4, 5, 6, 7, 8, 9], generate_jumping_numbers(9))
+
+    def test_five_as_upperbound(self):
+        self.assertEqual([0, 1, 2, 3, 4, 5], generate_jumping_numbers(5))
+
+    def test_not_always_contains_upperbound(self):
+        self.assertEqual([0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 12], generate_jumping_numbers(13))
+
+    def test_example(self):
+        expected = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 12, 21, 23, 32, 34, 43, 45, 54, 56, 65, 67, 76, 78, 87, 89, 98, 101]
+        self.assertEqual(expected, generate_jumping_numbers(105))
+    
+    def test_negative_upperbound(self):
+        self.assertEqual([], generate_jumping_numbers(-1))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False, verbosity=2)
+```
+
 ### Aug 22, 2021 \[Easy\] Plus One
 --- 
 > **Question:** Given a non-empty array where each element represents a digit of a non-negative integer, add one to the integer. The most significant digit is at the front of the array and each element in the array contains only one digit. Furthermore, the integer does not have leading zeros, except in the case of the number '0'.
