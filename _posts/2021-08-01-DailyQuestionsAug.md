@@ -21,6 +21,20 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
 
+### Aug 25, 2021 \[Medium\] Fixed Order Task Scheduler with Cooldown
+--- 
+> **Question:** We have a list of tasks to perform, with a cooldown period. We can do multiple of these at the same time, but we cannot run the same task simultaneously.
+>
+> Given a list of tasks, find how long it will take to complete the tasks in the order they are input.
+
+**Example:**
+```py
+tasks = [1, 1, 2, 1]
+cooldown = 2
+output: 7 (order is 1 _ _ 1 2 _ 1)
+```
+
+
 ### Aug 24, 2021 \[Hard\] Longest Common Subsequence of Three Strings
 --- 
 > **Question:** Write a program that computes the length of the longest common subsequence of three given strings. For example, given `"epidemiologist"`, `"refrigeration"`, and `"supercalifragilisticexpialodocious"`, it should return `5`, since the longest common subsequence is `"eieio"`.
