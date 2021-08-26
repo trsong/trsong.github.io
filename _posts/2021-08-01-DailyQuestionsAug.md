@@ -34,6 +34,72 @@ cooldown = 2
 output: 7 (order is 1 _ _ 1 2 _ 1)
 ```
 
+**My thoughts:** Since we have to execute the task with specific order and each task has a cooldown time, we can use a map to record the last occurence of the same task and set up a threshold in order to make sure we will always wait at least the cooldown amount of time before proceed.
+
+**Solution with Hashmap:** [https://replit.com/@trsong/Calculate-Fixed-Order-Task-Scheduler-with-Cooldown](https://replit.com/@trsong/Calculate-Fixed-Order-Task-Scheduler-with-Cooldown)
+```py
+import unittest
+
+def multitasking_time(task_seq, cooldown):
+    cur_time = 0
+    last_occurrence = {}
+    for task in task_seq:
+        delta = cur_time - last_occurrence.get(task, float('-inf'))
+        idle = max(cooldown - delta + 1, 0)
+        cur_time += idle
+
+        last_occurrence[task] = cur_time
+        cur_time += 1
+    return cur_time
+
+    
+class MultitaskingTimeSpec(unittest.TestCase):
+    def test_example(self):
+        tasks = [1, 1, 2, 1]
+        cooldown = 2
+        # order is 1 _ _ 1 2 _ 1
+        self.assertEqual(7, multitasking_time(tasks, cooldown))
+
+    def test_example2(self):
+        tasks = [1, 1, 2, 1, 2]
+        cooldown = 2
+        # order is 1 _ _ 1 2 _ 1 2
+        self.assertEqual(8, multitasking_time(tasks, cooldown))
+    
+    def test_zero_cool_down_time(self):
+        tasks = [1, 1, 1]
+        cooldown = 0
+        # order is 1 1 1 
+        self.assertEqual(3, multitasking_time(tasks, cooldown))
+    
+    def test_task_queue_is_empty(self):
+        tasks = []
+        cooldown = 100
+        self.assertEqual(0, multitasking_time(tasks, cooldown))
+
+    def test_cooldown_is_three(self):
+        tasks = [1, 2, 1, 2, 1, 1, 2, 2]
+        cooldown = 3
+        # order is 1 2 _ _ 1 2 _ _ 1 _ _ _ 1 2 _ _ _ 2
+        self.assertEqual(18, multitasking_time(tasks, cooldown))
+    
+    def test_multiple_takes(self):
+        tasks = [1, 2, 3, 1, 3, 2, 1, 2]
+        cooldown = 2
+        # order is 1 2 3 1 _ 3 2 1 _ 2
+        self.assertEqual(10, multitasking_time(tasks, cooldown))
+
+    def test_when_cool_down_is_huge(self):
+        tasks = [1, 2, 2, 1, 2]
+        cooldown = 100
+        # order is 1 2 [_ * 100] 2 1 [_ * 99] 2
+        self.assertEqual(204, multitasking_time(tasks, cooldown))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False, verbosity=2)
+```
+
 
 ### Aug 24, 2021 \[Hard\] Longest Common Subsequence of Three Strings
 --- 
