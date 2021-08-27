@@ -32,6 +32,68 @@ categories: Python/Java
 >
 > Given a 5 by 5 matrix, there are 70 ways to get to the bottom-right.
 
+**Solution with DP:** [https://replit.com/@trsong/Count-Number-of-Moves-on-a-Grid](https://replit.com/@trsong/Count-Number-of-Moves-on-a-Grid)
+```py
+import unittest
+
+def calc_num_moves(grid_height, grid_width):
+    if grid_height <= 0 or grid_width <= 0:
+        return 0
+
+    dp_prev = [1] * grid_width
+    dp_cur = [1] * grid_width
+
+    for _ in range(1, grid_height):
+        for col in range(1, grid_width):
+            dp_cur[col] = dp_cur[col - 1] + dp_prev[col]
+        dp_cur, dp_prev = dp_prev, dp_cur
+    return dp_prev[-1]
+        
+
+class CalcNumMoveSpec(unittest.TestCase):
+    def test_size_zero_grid(self):
+        self.assertEqual(calc_num_moves(0, 0), 0)
+    
+    def test_size_zero_grid2(self):
+        self.assertEqual(calc_num_moves(1, 0), 0)
+    
+    def test_size_zero_grid3(self):
+        self.assertEqual(calc_num_moves(0, 1), 0)
+
+    def test_square_grid(self):
+        self.assertEqual(calc_num_moves(1, 1), 1)
+    
+    def test_square_grid2(self):
+        self.assertEqual(calc_num_moves(3, 3), 6)
+    
+    def test_square_grid3(self):
+        self.assertEqual(calc_num_moves(5, 5), 70)
+
+    def test_rectangle_grid(self):
+        self.assertEqual(calc_num_moves(1, 5), 1)
+
+    def test_rectangle_grid2(self):
+        self.assertEqual(calc_num_moves(5, 1), 1)
+
+    def test_rectangle_grid3(self):
+        self.assertEqual(calc_num_moves(2, 3), 3)
+    
+    def test_rectangle_grid4(self):
+        self.assertEqual(calc_num_moves(3, 2), 3)
+
+    def test_large_grid(self):
+         self.assertEqual(calc_num_moves(10, 20), 6906900)
+    
+    def test_large_grid2(self):
+         self.assertEqual(calc_num_moves(20, 10), 6906900)
+
+    def test_large_grid3(self):
+         self.assertEqual(calc_num_moves(20, 20), 35345263800)
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False, verbosity=2)
+```
 
 ### Aug 25, 2021 \[Medium\] Fixed Order Task Scheduler with Cooldown
 --- 

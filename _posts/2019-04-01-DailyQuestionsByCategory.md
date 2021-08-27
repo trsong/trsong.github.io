@@ -8552,6 +8552,26 @@ For example, given `"2542540123"`, you should return `['254.25.40.123', '254.254
 ### 1D DP
 ---
 
+<details>
+<summary class="lc_m">
+
+- [**\[Medium\] Number of Moves on a Grid**](https://trsong.github.io/python/java/2021/08/02/DailyQuestionsAug.html#aug-26-2021-medium-number-of-moves-on-a-grid) -- *Write a function to count the number of ways of starting at the top-left corner and getting to the bottom-right corner.* [*\(Try ME\)*](https://replit.com/@trsong/Count-Number-of-Moves-on-a-Grid-1)
+
+</summary>
+<div>
+
+**Question:**  There is an N by M matrix of zeroes. Given N and M, write a function to count the number of ways of starting at the top-left corner and getting to the bottom-right corner. You can only move right or down.
+
+For example, given a 2 by 2 matrix, you should return 2, since there are two ways to get to the bottom-right:
+
+- Right, then down
+- Down, then right
+
+Given a 5 by 5 matrix, there are 70 ways to get to the bottom-right.
+
+</div>
+</details>
+
 
 <details>
 <summary class="lc_h">
