@@ -1970,6 +1970,42 @@ Explanation: Because the new interval [4,8] overlaps with [3,5],[6,7],[8,10].
 ### Binary Search
 ---
 
+
+<details>
+<summary class="lc_h">
+
+- [**\[Medium\] Allocate Minimum Number of Pages**](https://trsong.github.io/python/java/2021/08/02/DailyQuestionsAug.html#aug-27-2021-medium-allocate-minimum-number-of-pages) -- *The task is to assign books in such a way that the maximum number of pages assigned to a student is minimum.* [*\(Try ME\)*](https://replit.com/@trsong/Minimize-the-Maximum-Page-Assigned-to-Students-1)
+
+</summary>
+<div>
+
+**Question:** Given number of pages in n different books and m students. The books are arranged in ascending order of number of pages. Every student is assigned to read some consecutive books. The task is to assign books in such a way that the maximum number of pages assigned to a student is minimum.
+
+**Example:**
+```py
+Input : pages[] = {12, 34, 67, 90}
+        m = 2
+Output : 113
+
+Explanation:
+There are 2 number of students. Books can be distributed 
+in following fashion : 
+  1) [12] and [34, 67, 90]
+      Max number of pages is allocated to student 
+      2 with 34 + 67 + 90 = 191 pages
+  2) [12, 34] and [67, 90]
+      Max number of pages is allocated to student
+      2 with 67 + 90 = 157 pages 
+  3) [12, 34, 67] and [90]
+      Max number of pages is allocated to student 
+      1 with 12 + 34 + 67 = 113 pages
+Of the 3 cases, Option 3 has the minimum pages = 113.       
+```
+
+</div>
+</details>
+
+
 <details>
 <summary class="lc_m">
 

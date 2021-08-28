@@ -46,6 +46,75 @@ in following fashion :
 Of the 3 cases, Option 3 has the minimum pages = 113.       
 ```
 
+**Solution with Binary Search:** [https://replit.com/@trsong/Minimize-the-Maximum-Page-Assigned-to-Students](https://replit.com/@trsong/Minimize-the-Maximum-Page-Assigned-to-Students)
+```py
+import unittest
+
+def allocate_min_num_books(pages, num_students):
+    lo = max(pages)
+    hi = sum(pages)
+
+    # Binary search smallest group_capacity that can form groups
+    while lo < hi:
+        mid = lo + (hi - lo) // 2
+        if can_form_group(mid, pages, num_students):
+            hi = mid
+        else:
+            lo = mid + 1 
+    return lo
+
+    
+def can_form_group(group_capacity, pages, num_students):
+    """
+    Set max capacity per group and check if there are enough students
+    """
+    accu = 0
+    group = 0
+    for page in pages:
+        accu += page
+        if accu > group_capacity:
+            group += 1
+            accu = page
+    
+        if group >= num_students:
+            return False
+    return True
+
+
+class AllocateMinNumBooks(unittest.TestCase):
+    def test_two_students(self):
+        pages = [12, 34, 67, 90]
+        num_students = 2
+        # max of book sum([12, 34, 67], [90]) = 12 + 34 + 67 = 113
+        expected = 113
+        self.assertEqual(expected, allocate_min_num_books(pages, num_students)) 
+
+    def test_three_students(self):
+        pages = [1, 1, 1, 1, 1, 1, 1, 1, 1]
+        num_students = 3
+        # max of book sum([1, 1, 1], [1, 1, 1], [1, 1, 1]) = 1 + 1 + 1 = 3
+        expected = 3
+        self.assertEqual(expected, allocate_min_num_books(pages, num_students)) 
+
+    def test_four_students(self):
+        pages = [100, 101, 102, 103, 104]
+        num_students = 4
+        # max of book sum([100, 101], [102], [103], [104]) = 100 + 101 = 201
+        expected = 201
+        self.assertEqual(expected, allocate_min_num_books(pages, num_students)) 
+
+    def test_five_students(self):
+        pages = [8, 9, 8, 8, 6, 7, 8, 9, 10]
+        num_students = 5
+        # max of book sum([9, 8], [8, 8], [6, 7], [8, 9], [10]) = 9 + 8 = 17
+        expected = 17
+        self.assertEqual(expected, allocate_min_num_books(pages, num_students)) 
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False, verbosity=2)
+```
+
 ### Aug 26, 2021 \[Medium\] Number of Moves on a Grid
 ---
 > **Question:**  There is an N by M matrix of zeroes. Given N and M, write a function to count the number of ways of starting at the top-left corner and getting to the bottom-right corner. You can only move right or down.
