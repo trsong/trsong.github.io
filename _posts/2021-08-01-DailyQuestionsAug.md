@@ -21,6 +21,31 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
 
+### Aug 29, 2021 LC 375 \[Medium\] Guess Number Higher or Lower II
+---
+> **Question:** We are playing the Guess Game. The game is as follows:
+>
+> I pick a number from 1 to n. You have to guess which number I picked.
+> 
+> Every time you guess wrong, I'll tell you whether the number I picked is higher or lower.
+> 
+> However, when you guess a particular number x, and you guess wrong, you pay $x. You win the game when you guess the number I picked.
+>
+> Given a particular n ≥ 1, find out how much money you need to have to guarantee a win.
+
+**Example:**
+```py
+n = 10, I pick 8.
+
+First round:  You guess 5, I tell you that it's higher. You pay $5.
+Second round: You guess 7, I tell you that it's higher. You pay $7.
+Third round:  You guess 9, I tell you that it's lower. You pay $9.
+
+Game over. 8 is the number I picked.
+
+You end up paying $5 + $7 + $9 = $21.
+```
+
 ### Aug 28, 2021 LC 312 \[Hard\] Burst Balloons
 ---
 > **Question:** Given n balloons, indexed from 0 to n-1. Each balloon is painted with a number on it represented by array nums. You are asked to burst all the balloons. If the you burst balloon i you will get `nums[left] * nums[i] * nums[right]` coins. Here left and right are adjacent indices of i. After the burst, the left and right then becomes adjacent.
@@ -50,7 +75,7 @@ burst_in_range_recur(left, right) = max of (coins[left] * coins[i] * coins[right
 The final result is by calling `burst_in_range_recur(-1, n)`.
 
 
-**Solution with Bottom-up DP:** [https://replit.com/@trsong/Max-Profit-from-Bursting-Balloons](https://replit.com/@trsong/Max-Profit-from-Bursting-Balloons)
+**Solution with Top-down DP:** [https://replit.com/@trsong/Max-Profit-from-Bursting-Balloons](https://replit.com/@trsong/Max-Profit-from-Bursting-Balloons)
 ```py
 def burst_balloons(coins):
     n = len(coins)
@@ -73,7 +98,7 @@ def burst_balloons_recur(coins, left, right, cache):
     return cache[left][right]
 ```
 
-**Solution with Top-down DP:** [https://replit.com/@trsong/Max-Profit-from-Bursting-Balloons-Top-down-DP](https://replit.com/@trsong/Max-Profit-from-Bursting-Balloons-Top-down-DP)
+**Solution with Bottom-up DP:** [https://replit.com/@trsong/Max-Profit-from-Bursting-Balloons-Top-down-DP](https://replit.com/@trsong/Max-Profit-from-Bursting-Balloons-Top-down-DP)
 ```py
 import unittest
 
