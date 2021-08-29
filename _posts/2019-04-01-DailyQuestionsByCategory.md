@@ -2567,7 +2567,7 @@ Output: false
 <details>
 <summary class="lc_m">
 
-- [**\[Medium\] Find Pythagorean Triplets**](https://trsong.github.io/python/java/2020/08/02/DailyQuestionsAug.html#oct-22-2020-medium-find-pythagorean-triplets) -- *Given a list of numbers, find if there exists a Pythagorean triplet in that list. * [*\(Try ME\)*](https://repl.it/@trsong/Find-Pythagorean-Triplets-1)
+- [**\[Medium\] Find Pythagorean Triplets**](https://trsong.github.io/python/java/2020/08/02/DailyQuestionsAug.html#oct-22-2020-medium-find-pythagorean-triplets) -- *Given a list of numbers, find if there exists a Pythagorean triplet in that list.* [*\(Try ME\)*](https://repl.it/@trsong/Find-Pythagorean-Triplets-1)
 
 </summary>
 <div>
@@ -9123,6 +9123,35 @@ Given such an array, determine the denominations that must be in use. In the cas
 
 ### 2D DP
 ---
+
+<details>
+<summary class="lc_h">
+
+- [**\[Hard\] LC 312. Burst Balloons**](https://trsong.github.io/python/java/2021/08/02/DailyQuestionsAug.html#aug-28-2021-lc-312-hard-burst-balloons) -- *If the you burst balloon i you will get `nums[left] * nums[i] * nums[right]` coins. Find the maximum coins by bursting the balloons wisely.* [*\(Try ME\)*](https://replit.com/@trsong/Max-Profit-from-Bursting-Balloons-2)
+
+</summary>
+<div>
+
+**Question:** Given n balloons, indexed from 0 to n-1. Each balloon is painted with a number on it represented by array nums. You are asked to burst all the balloons. If the you burst balloon i you will get `nums[left] * nums[i] * nums[right]` coins. Here left and right are adjacent indices of i. After the burst, the left and right then becomes adjacent.
+
+Find the maximum coins you can collect by bursting the balloons wisely.
+
+Note:
+
+You may imagine nums[-1] = nums[n] = 1. They are not real therefore you can not burst them.
+
+**Example:**
+```py
+Input: [3,1,5,8]
+Output: 167 
+Explanation: nums = [3,1,5,8] --> [3,5,8] -->   [3,8]   -->  [8]  --> []
+             coins =  3*1*5      +  3*5*8    +  1*3*8      + 1*8*1   = 167
+```
+
+
+</div>
+</details>
+
 
 <details>
 <summary class="lc_m">

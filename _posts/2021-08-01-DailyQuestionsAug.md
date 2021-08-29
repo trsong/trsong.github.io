@@ -32,12 +32,107 @@ categories: Python/Java
 > You may imagine nums[-1] = nums[n] = 1. They are not real therefore you can not burst them.
 
 **Example:**
-
-```
+```py
 Input: [3,1,5,8]
 Output: 167 
 Explanation: nums = [3,1,5,8] --> [3,5,8] -->   [3,8]   -->  [8]  --> []
              coins =  3*1*5      +  3*5*8    +  1*3*8      + 1*8*1   = 167
+```
+
+
+**My thoughts:** think about the problem backwards: the last balloon will have coins coins[-1] * coins[i] * coins[n] for some i. 
+We can solve this problem recursively to figure out the index i at each step to give the maximum coins. That gives recursive formula:
+
+```py
+burst_in_range_recur(left, right) = max of (coins[left] * coins[i] * coins[right] + burst_in_range_recur(left, i) + burst_in_range_recur(i, right)) for all i between left and right.
+```
+
+The final result is by calling `burst_in_range_recur(-1, n)`.
+
+
+**Solution with Bottom-up DP:** [https://replit.com/@trsong/Max-Profit-from-Bursting-Balloons](https://replit.com/@trsong/Max-Profit-from-Bursting-Balloons)
+```py
+def burst_balloons(coins):
+    n = len(coins)
+    cache = [[None for _ in range(n + 2)] for _ in range(n + 2)]
+    return burst_balloons_recur(coins, -1, n, cache)
+
+
+def burst_balloons_recur(coins, left, right, cache):
+    if right - left <= 1:
+        return 0
+    elif cache[left][right] is None:
+        res = 0
+        left_coin = coins[left] if left >= 0 else 1
+        right_coin = coins[right] if right < len(coins) else 1
+        for i in range(left + 1, right):
+            left_res = burst_balloons_recur(coins, left, i, cache)
+            right_res = burst_balloons_recur(coins, i, right, cache)
+            res = max(res, left_coin * coins[i] * right_coin + left_res + right_res)
+        cache[left][right] = res
+    return cache[left][right]
+```
+
+**Solution with Top-down DP:** [https://replit.com/@trsong/Max-Profit-from-Bursting-Balloons-Top-down-DP](https://replit.com/@trsong/Max-Profit-from-Bursting-Balloons-Top-down-DP)
+```py
+import unittest
+
+def burst_balloons(coins):
+    if not coins:
+        return 0
+
+    n = len(coins)
+    # Let dp[left][right] represents max profit for coins[left:right + 1]
+    # dp[left][right] = max {dp[left][i - 1] + dp[i + 1][right] + coins[i] * coins[left - 1] * coins[right + 1] } for all i btw left and right
+    dp = [[None for _ in range(n)] for _ in range(n)]
+    for delta in range(n):
+        for left in range(n):
+            right = left + delta
+            if right >= n:
+                break
+            res = 0
+            left_coin = coins[left - 1] if left > 0 else 1
+            right_coin = coins[right + 1] if right < n - 1 else 1
+            for i in range(left, right + 1):
+                left_res = dp[left][i - 1] if i > left else 0
+                right_res = dp[i + 1][right] if i < right else 0
+                res = max(res, left_res + right_res + coins[i] * left_coin * right_coin)
+            dp[left][right] = res
+    return dp[0][n - 1]
+                
+
+class BurstBalloonSpec(unittest.TestCase):
+    def test_example(self):
+        # Burst 1, 5, 3, 8 in order gives:
+        # 3*1*5 + 3*5*8 + 1*3*8 + 1*8*1 = 167
+        self.assertEqual(167, burst_balloons([3, 1, 5, 8])) 
+
+    def test_ascending_balloons(self):
+        # Burst 3, 2, 1, 4 in order gives:
+        # 2*3*4 + 1*2*4 + 1*1*4 + 1*4*1 = 40
+        self.assertEqual(40, burst_balloons([1, 2, 3, 4]))
+
+    def test_empty_array(self):
+        self.assertEqual(0, burst_balloons([]))
+
+    def test_one_elem_array(self):
+        self.assertEqual(24, burst_balloons([24]))
+
+    def test_two_elem_array(self):
+        # 2*4 + 4 = 12
+        self.assertEqual(12, burst_balloons([2, 4]))
+
+    def test_two_elem_array2(self):
+        # 1*5 + 5 = 10
+        self.assertEqual(10, burst_balloons([1, 5]))
+
+    def test_three_elem_array(self):
+        # 3*6*2 + 3*2 + 3 = 45
+        self.assertEqual(45, burst_balloons([3, 6, 2]))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False, verbosity=2)
 ```
 
 
