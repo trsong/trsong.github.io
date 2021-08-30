@@ -46,6 +46,85 @@ Game over. 8 is the number I picked.
 You end up paying $5 + $7 + $9 = $21.
 ```
 
+**My thoughts:** The guarantee amount is the maximum amount of money you have to pay no matter how unlucky you are. i.e. the strategy is to take the best move given the worest luck. 
+
+Suppose `n = 4`. The best garentee to lose minimum strategy is to first guess 1, if not work, then guess 3. If you are just unlucky, the target number is 2 or 4, then you only need to pay at most `$1 + $3 = $4` in worest case scenario whereas other strategies like choosing 1 through 4 one by one will yield `$1 + $2 + $3 = $6` in worest case when the target is `$4`.
+
+The game play strategy is called ***Minimax***, which is basically choose the maximum among the minimum gain.
+
+
+**Solution with Minimax:** [https://replit.com/@trsong/Calculate-Guarantee-Money-to-Guess-Number-Higher-or-Lower-II](https://replit.com/@trsong/Calculate-Guarantee-Money-to-Guess-Number-Higher-or-Lower-II)
+```py
+import unittest
+
+def guess_number_cost(n):
+    cache = [[None for _ in range(n+1)] for _ in range(n+1)]
+    return -guess_number_between(1, n, cache)
+
+
+def guess_number_between(lo, hi, cache):
+    if lo >= hi:
+        return 0
+    elif cache[lo][hi] is not None:
+        return cache[lo][hi]
+    
+    res = float('-inf')
+    for i in range(lo, hi+1):
+        # Assuming we are just so unlucky.
+        # The guarantee amount should always be the best among those worest choices
+        res = max(res, -i + min(guess_number_between(lo, i-1, cache), guess_number_between(i+1, hi, cache)))
+    cache[lo][hi] = res
+    return res
+
+
+class GuessNumberCostSpec(unittest.TestCase):
+    def test_n_equals_one(self):
+        self.assertEqual(0, guess_number_cost(1))
+
+    def test_n_equals_two(self):
+        # pick: 1
+        self.assertEqual(1, guess_number_cost(2)) 
+
+    def test_n_equals_three(self):
+        # Worest case target=3
+        # choose 2, target is higher, pay $2
+        # total = $2
+        self.assertEqual(2, guess_number_cost(3)) 
+
+    def test_n_equals_four(self):
+        # Worest case target=4
+        # choose 1, target is higher, pay $1
+        # choose 3, target is higher, pay $3
+        # total = $4
+        self.assertEqual(4, guess_number_cost(4)) 
+
+    def test_n_equals_five(self):
+        # pick: 2, 4
+        self.assertEqual(6, guess_number_cost(5)) 
+
+    def test_n_equals_six(self):
+        # pick: 3, 5
+        self.assertEqual(8, guess_number_cost(6)) 
+
+    def test_n_equals_5(self):
+        # Worest case target=5
+        # choose 2, target is higher, pay $2
+        # choose 4, target is higher, pay $4
+        # total = $6
+        self.assertEqual(6, guess_number_cost(5))
+
+    def test_n_equals_10(self):
+        # Worest case target=10
+        # choose 7, target is higher, pay $7
+        # choose 9, target is higher, pay $9
+        # total = $16
+        self.assertEqual(16, guess_number_cost(10))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False, verbosity=2)
+```
+
 ### Aug 28, 2021 LC 312 \[Hard\] Burst Balloons
 ---
 > **Question:** Given n balloons, indexed from 0 to n-1. Each balloon is painted with a number on it represented by array nums. You are asked to burst all the balloons. If the you burst balloon i you will get `nums[left] * nums[i] * nums[right]` coins. Here left and right are adjacent indices of i. After the burst, the left and right then becomes adjacent.
