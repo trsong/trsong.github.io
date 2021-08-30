@@ -21,6 +21,16 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
 
+### Aug 30, 2021  \[Easy\] Find Unique Element among Array of Duplicates
+---
+> **Question:** Given an array of integers, arr, where all numbers occur twice except one number which occurs once, find the number. Your solution should ideally be `O(n)` time and use constant extra space.
+
+**Example:**
+```py
+Input: arr = [7, 3, 5, 5, 4, 3, 4, 8, 8]
+Output: 7
+```
+
 ### Aug 29, 2021 LC 375 \[Medium\] Guess Number Higher or Lower II
 ---
 > **Question:** We are playing the Guess Game. The game is as follows:
