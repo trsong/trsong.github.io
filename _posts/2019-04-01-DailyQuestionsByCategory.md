@@ -31,26 +31,6 @@ categories: Python/Java
 <details>
 <summary class="lc_e">
 
-- [**\[Easy\] Find Unique Element among Array of Duplicates**](https://trsong.github.io/python/java/2021/08/02/DailyQuestionsAug.html#aug-30-2021--easy-find-unique-element-among-array-of-duplicates) -- *Given an array of integers, arr, where all numbers occur twice except one number which occurs once, find the number.* [*\(Try ME\)*](https://replit.com/@trsong/Find-the-Unique-Element-among-Array-of-Duplicates-1)
-
-</summary>
-<div>
-
-**Question:** Given an array of integers, arr, where all numbers occur twice except one number which occurs once, find the number. Your solution should ideally be `O(n)` time and use constant extra space.
-
-**Example:**
-```py
-Input: arr = [7, 3, 5, 5, 4, 3, 4, 8, 8]
-Output: 7
-```
-
-</div>
-</details>
-
-
-<details>
-<summary class="lc_e">
-
 - [**\[Easy\] N-th Perfect Number**](http://trsong.github.io/python/java/2021/08/02/DailyQuestionsAug.html#aug-13-2021-easy-n-th-perfect-number) -- *A number is considered perfect if its digits sum up to exactly 10.* [*\(Try ME\)*](https://replit.com/@trsong/Find-N-th-Perfect-Number-1)
 
 </summary>
@@ -1072,6 +1052,26 @@ Do this in faster than `O(N log N)` time.
 <div>
 
 **Question:** Given an integer `n`, find the next biggest integer with the same number of 1-bits on. For example, given the number `6 (0110 in binary)`, return `9 (1001)`.
+
+</div>
+</details>
+
+
+<details>
+<summary class="lc_e">
+
+- [**\[Easy\] Find Unique Element among Array of Duplicates**](https://trsong.github.io/python/java/2021/08/02/DailyQuestionsAug.html#aug-30-2021--easy-find-unique-element-among-array-of-duplicates) -- *Given an array of integers, arr, where all numbers occur twice except one number which occurs once, find the number.* [*\(Try ME\)*](https://replit.com/@trsong/Find-the-Unique-Element-among-Array-of-Duplicates-1)
+
+</summary>
+<div>
+
+**Question:** Given an array of integers, arr, where all numbers occur twice except one number which occurs once, find the number. Your solution should ideally be `O(n)` time and use constant extra space.
+
+**Example:**
+```py
+Input: arr = [7, 3, 5, 5, 4, 3, 4, 8, 8]
+Output: 7
+```
 
 </div>
 </details>
