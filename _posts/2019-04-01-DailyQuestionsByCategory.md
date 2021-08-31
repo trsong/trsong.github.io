@@ -27,6 +27,27 @@ categories: Python/Java
 ## Math
 ---
 
+
+<details>
+<summary class="lc_e">
+
+- [**\[Easy\] Find Unique Element among Array of Duplicates**](https://trsong.github.io/python/java/2021/08/02/DailyQuestionsAug.html#aug-30-2021--easy-find-unique-element-among-array-of-duplicates) -- *Given an array of integers, arr, where all numbers occur twice except one number which occurs once, find the number.* [*\(Try ME\)*]()
+
+</summary>
+<div>
+
+**Question:** Given an array of integers, arr, where all numbers occur twice except one number which occurs once, find the number. Your solution should ideally be `O(n)` time and use constant extra space.
+
+**Example:**
+```py
+Input: arr = [7, 3, 5, 5, 4, 3, 4, 8, 8]
+Output: 7
+```
+
+</div>
+</details>
+
+
 <details>
 <summary class="lc_e">
 
