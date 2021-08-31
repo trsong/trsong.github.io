@@ -31,7 +31,7 @@ categories: Python/Java
 <details>
 <summary class="lc_e">
 
-- [**\[Easy\] Find Unique Element among Array of Duplicates**](https://trsong.github.io/python/java/2021/08/02/DailyQuestionsAug.html#aug-30-2021--easy-find-unique-element-among-array-of-duplicates) -- *Given an array of integers, arr, where all numbers occur twice except one number which occurs once, find the number.* [*\(Try ME\)*]()
+- [**\[Easy\] Find Unique Element among Array of Duplicates**](https://trsong.github.io/python/java/2021/08/02/DailyQuestionsAug.html#aug-30-2021--easy-find-unique-element-among-array-of-duplicates) -- *Given an array of integers, arr, where all numbers occur twice except one number which occurs once, find the number.* [*\(Try ME\)*](https://replit.com/@trsong/Find-the-Unique-Element-among-Array-of-Duplicates-1)
 
 </summary>
 <div>
