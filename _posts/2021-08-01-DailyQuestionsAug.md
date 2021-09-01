@@ -27,6 +27,107 @@ categories: Python/Java
 > 
 > Given this information, reconstruct an array that is consistent with it. For example, given `[None, +, +, -, +]`, you could return `[1, 2, 3, 0, 4]`.
 
+**My thoughts:** treat `+` as `+1`, `+2`, `+3` and `-` as `-1`, `-2` from `0` you can generate an array with satisfied condition yet incorrect range. Then all we need to do is to shift to range from `0` to `N` by minusing each element with global minimum value. 
+
+**Solution:** [https://replit.com/@trsong/Reconstruct-a-Jumbled-Array-by-Given-Order](https://replit.com/@trsong/Reconstruct-a-Jumbled-Array-by-Given-Order)
+```py
+import unittest
+
+def build_jumbled_array(clues):
+    n = len(clues)
+    res = [0] * n
+    upper = lower = 0
+
+    for i in range(n):
+        if clues[i] == '+':
+            res[i] = upper + 1
+            upper += 1
+        elif clues[i] == '-':
+            res[i] = lower - 1
+            lower -= 1
+    
+    for i in range(n):
+        res[i] -= lower
+    
+    return res
+    
+
+class BuildJumbledArraySpec(unittest.TestCase):
+    @staticmethod
+    def generate_clues(nums):
+        nums_signs = [None] * len(nums)
+        for i in range(1, len(nums)):
+            nums_signs[i] = '+' if nums[i] > nums[i-1] else '-'
+        return nums_signs
+
+    def validate_result(self, cludes, res):
+        res_set = set(res)
+        res_signs = BuildJumbledArraySpec.generate_clues(res)
+        msg = "Incorrect result %s. Expect %s but gives %s." % (res, cludes, res_signs)
+        self.assertEqual(len(cludes), len(res_set), msg)
+        self.assertEqual(0, min(res), msg)
+        self.assertEqual(len(cludes) - 1, max(res), msg)
+        self.assertEqual(cludes, res_signs, msg)
+
+    def test_example(self):
+        clues = [None, '+', '+', '-', '+']
+        # possible solution: [1, 2, 3, 0, 4]
+        res = build_jumbled_array(clues)
+        self.validate_result(clues, res)
+
+    def test_empty_array(self):
+        self.assertEqual([], build_jumbled_array([]))
+
+    def test_one_element_array(self):
+        self.assertEqual([0], build_jumbled_array([None]))
+
+    def test_two_elements_array(self):
+        self.assertEqual([1, 0], build_jumbled_array([None, '-']))
+
+    def test_ascending_array(self):
+        clues = [None, '+', '+', '+']
+        expected = [0, 1, 2, 3]
+        self.assertEqual(expected, build_jumbled_array(clues))
+
+    def test_descending_array(self):
+        clues = [None, '-', '-', '-', '-']
+        expected = [4, 3, 2, 1, 0]
+        self.assertEqual(expected, build_jumbled_array(clues))
+
+    def test_random_array(self):
+        clues = [None, '+', '-', '+', '-']
+        # possible solution: [1, 4, 2, 3, 0]
+        res = build_jumbled_array(clues)
+        self.validate_result(clues, res)
+
+    def test_random_array2(self):
+        clues = [None, '-', '+', '-', '-', '+']
+        # possible solution: [3, 1, 4, 2, 0, 5]
+        res = build_jumbled_array(clues)
+        self.validate_result(clues, res)
+
+    def test_random_array3(self):
+        clues = [None, '+', '-', '+', '-', '+', '+', '+']
+        # possible solution: [1, 7, 0, 6, 2, 3, 4, 5]
+        res = build_jumbled_array(clues)
+        self.validate_result(clues, res)
+    
+    def test_random_array4(self):
+        clues = [None, '+', '+', '-', '+']
+        # possible solution: [1, 2, 3, 0, 4]
+        res = build_jumbled_array(clues)
+        self.validate_result(clues, res)
+
+    def test_random_array5(self):
+        clues = [None, '-', '-', '-', '+']
+        # possible solution: [3, 2, 1, 0, 4]
+        res = build_jumbled_array(clues)
+        self.validate_result(clues, res)
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False, verbosity=2)
+```
 
 ### Aug 30, 2021  \[Easy\] Find Unique Element among Array of Duplicates
 ---
