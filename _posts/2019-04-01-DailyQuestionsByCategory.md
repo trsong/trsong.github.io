@@ -6106,6 +6106,52 @@ Explanation: A -> B -> idle -> A -> B -> idle -> A -> B.
 ## Hashmap
 ---
 
+	
+<details>
+<summary class="lc_m">
+
+- [**\[Medium\] Numbers With Equal Digit Sum**](http://trsong.github.io/python/java/2021/08/02/DailyQuestionsAug.html#sep-1-2021-medium-numbers-with-equal-digit-sum) -- *Find two integers a, b such that sum of digits of a and b is equal. Return maximum sum of a and b.* [*\(Try ME\)*](https://replit.com/@trsong/Numbers-With-Max-Equal-Digit-Sum-1)
+
+</summary>
+<div>
+
+**Question:** Given an array containing integers, find two integers a, b such that sum of digits of a and b is equal. Return maximum sum of a and b. Return -1 if no such numbers exist.
+
+**Example 1:**
+```py
+Input: [51, 71, 17, 42, 33, 44, 24, 62]
+Output: 133
+Explanation: Max sum can be formed by 71 + 62 which has same digit sum of 8
+```
+
+
+**Example 2:**
+```py
+Input: [51, 71, 17, 42]
+Output: 93
+Explanation: Max sum can be formed by 51 + 42 which has same digit sum of 6
+```
+
+
+**Example 3:**
+```py
+Input: [42, 33, 60]
+Output: 102
+Explanation: Max sum can be formed by 42 + 60 which has same digit sum of 6
+```
+
+
+**Example 4:**
+```py
+Input: [51, 32, 43]
+Output: -1
+Explanation: There are no 2 numbers with same digit sum
+```
+
+	
+</div>
+</details>
+	
 <details>
 <summary class="lc_m">
 
