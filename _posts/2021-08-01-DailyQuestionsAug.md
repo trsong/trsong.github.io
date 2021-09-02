@@ -21,6 +21,11 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
 
+### Sep 2, 2021 \[Medium\] Sum of Squares
+---
+> **Question:** Given a number n, find the least number of squares needed to sum up to the number. For example, `13 = 3^2 + 2^2`, thus the least number of squares requried is 2. 
+
+
 ### Sep 1, 2021 \[Medium\] Numbers With Equal Digit Sum
 ---
 > **Question:** Given an array containing integers, find two integers a, b such that sum of digits of a and b is equal. Return maximum sum of a and b. Return -1 if no such numbers exist.
