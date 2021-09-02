@@ -56,6 +56,68 @@ Output: -1
 Explanation: There are no 2 numbers with same digit sum
 ```
 
+
+**Solution:** [https://replit.com/@trsong/Numbers-With-Max-Equal-Digit-Sum](https://replit.com/@trsong/Numbers-With-Max-Equal-Digit-Sum)
+```py
+import unittest
+
+def find_max_digit_sum(nums):
+    groupby_dsum = {}
+    for num in nums:
+        dsum = digit_sum(num)
+        if dsum not in groupby_dsum:
+            groupby_dsum[dsum] = []
+        
+        dsum_group = groupby_dsum[dsum]
+        if len(dsum_group) > 1:
+            larger, smaller = dsum_group
+            dsum_group[0] = max(larger, num)
+            dsum_group[1] = larger + smaller + num - dsum_group[0] - min(num, smaller)
+        else:
+            dsum_group.append(num)
+    
+    res = -1
+    for dsum_group in groupby_dsum.values():
+        if len(dsum_group) == 2:
+            res = max(res, sum(dsum_group))
+    return res
+
+
+def digit_sum(num):
+    res = 0
+    while num > 0:
+        res += num % 10
+        num //= 10
+    return res
+
+
+class FindMaxDigitSumSpec(unittest.TestCase):
+    def test_example1(self):
+        self.assertEqual(133, find_max_digit_sum([51, 71, 17, 42, 33, 44, 24, 62]))  # 71 + 62
+
+    def test_example2(self):
+        self.assertEqual(93, find_max_digit_sum([51, 71, 17, 42]))  # 51 + 42
+
+    def test_example3(self):
+        self.assertEqual(102, find_max_digit_sum([42, 33, 60]))  # 63 + 60
+
+    def test_example4(self):
+        self.assertEqual(-1, find_max_digit_sum([51, 32, 43]))
+
+    def test_empty_array(self):
+        self.assertEqual(-1, find_max_digit_sum([]))
+
+    def test_same_digit_sum_yet_different_digits(self):
+        self.assertEqual(11000, find_max_digit_sum([0, 1, 10, 100, 1000, 10000]))  # 10000 + 1000
+
+    def test_special_edge_case(self):
+        self.assertEqual(22, find_max_digit_sum([11, 11, 22, 33]))  # 11 + 11
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False, verbosity=2)
+```
+
 ### Aug 31, 2021 \[Easy\] Reconstruct a Jumbled Array
 ---
 > **Question:** The sequence `[0, 1, ..., N]` has been jumbled, and the only clue you have for its order is an array representing whether each number is larger or smaller than the last. 
