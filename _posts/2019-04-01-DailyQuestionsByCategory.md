@@ -9190,6 +9190,20 @@ Given such an array, determine the denominations that must be in use. In the cas
 
 ### 2D DP
 ---
+	
+<details>
+<summary class="lc_m">
+
+- [**\[Medium\] Sum of Squares**](http://trsong.github.io/python/java/2021/08/02/DailyQuestionsAug.html#sep-2-2021-medium-sum-of-squares) -- *Given a number n, find the least number of squares needed to sum up to the number.* [*\(Try ME\)*](https://replit.com/@trsong/Least-Number-of-Squares-Sum-to-Target-1)
+
+</summary>
+<div>
+
+**Question:** Given a number n, find the least number of squares needed to sum up to the number. For example, `13 = 3^2 + 2^2`, thus the least number of squares requried is 2. 	
+
+</div>
+</details>	
+	
 
 <details>
 <summary class="lc_h">
