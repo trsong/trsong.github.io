@@ -25,6 +25,63 @@ categories: Python/Java
 ---
 > **Question:** Given a number n, find the least number of squares needed to sum up to the number. For example, `13 = 3^2 + 2^2`, thus the least number of squares requried is 2. 
 
+**My thoughts:** This problem is equivalent to given a list of sorted square number of 0 to n, find the minimum number of chosen elements st. their sum equal to target. Note that we only need to check 1 to square root of n.
+
+**Solution with DP:** [https://replit.com/@trsong/Least-Number-of-Squares-Sum-to-Target](https://replit.com/@trsong/Least-Number-of-Squares-Sum-to-Target)
+```py
+import unittest
+from math import sqrt
+
+def sum_of_squares(target):
+    if is_square(target):
+        return 1
+
+    # Let dp[s][i] represents min number of squares sum to s using num from 1 to i
+    # dp[s][i] = min(dp[s][i - 1], dp[s - i * i] + 1)
+    sqrt_target = int(sqrt(target))
+    dp = [[target for _ in range(sqrt_target + 1)] for _ in range(target + 1)]
+    for i in range(sqrt_target+1):
+        dp[0][i] = 0
+
+    for s in range(1, target + 1):
+        for i in range(1, sqrt_target + 1):
+            dp[s][i] = dp[s][i - 1]
+            if s >= i * i:
+                dp[s][i] = min(dp[s][i], dp[s - i * i][i] + 1)
+    return dp[target][sqrt_target]
+
+
+def is_square(num):
+    sqrt_num = int(sqrt(num))
+    return sqrt_num * sqrt_num == num
+
+
+class SumOfSquareSpec(unittest.TestCase):        
+    def test_example(self):
+        self.assertEqual(2, sum_of_squares(13))  # return 2 since 13 = 3^2 + 2^2 = 9 + 4.
+
+    def test_example2(self):
+        self.assertEqual(3, sum_of_squares(27))  # return 3 since 27 = 3^2 + 3^2 + 3^2 = 9 + 9 + 9
+
+    def test_zero(self):
+        self.assertEqual(1, sum_of_squares(0)) # 0 = 0^2
+
+    def test_perfect_square(self):
+        self.assertEqual(1, sum_of_squares(100))  # 10^2 = 100
+
+    def test_random_number(self):
+        self.assertEqual(4, sum_of_squares(63))  # return 4 since 63 = 7^2+ 3^2 + 2^2 + 1^2
+
+    def test_random_number2(self):
+        self.assertEqual(3, sum_of_squares(12))  # return 3 since 12 = 4 + 4 + 4
+
+    def test_random_number3(self):
+        self.assertEqual(3, sum_of_squares(6))  # 6 = 2 + 2 + 2
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False, verbosity=2)
+```
 
 ### Sep 1, 2021 \[Medium\] Numbers With Equal Digit Sum
 ---
