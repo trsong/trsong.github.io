@@ -21,6 +21,16 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
 
+### Sep 4, 2021 \[Easy\] Sum Binary Numbers
+---
+> **Question:** Given two binary numbers represented as strings, return the sum of the two binary numbers as a new binary represented as a string. Do this without converting the whole binary string into an integer.
+
+**Example:**
+```py
+sum_binary("11101", "1011")
+# returns "101000"
+```
+
 
 ### Sep 3, 2021 LC 134 \[Medium\] Gas Station
 ---
