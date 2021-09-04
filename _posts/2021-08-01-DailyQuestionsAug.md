@@ -21,6 +21,7 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
 
+
 ### Sep 3, 2021 LC 134 \[Medium\] Gas Station
 ---
 > **Question:** There are `N` gas stations along a circular route, where the amount of gas at station `i` is `gas[i]`.
@@ -68,6 +69,80 @@ Travel to station 1. Your tank = 3 - 3 + 3 = 3
 You cannot travel back to station 2, as it requires 4 unit of gas but you only have 3.
 Therefore, you can't travel around the circuit once no matter where you start.
 ```
+
+**My thougths:** If there exists such a gas station at index `i` then for all stop we will have `gas_level >= 0` when we reach `k` for `all k`. However if starts `i`, `i+1`, ..., `k`  and at `k`,  `gas_level < 0`. Then instead of starting again from `i+1`, we starts from `k+1` as without `i` sum from `i+1` to `k` can only go lower. 
+
+**Solution with Greedy Approach:** [https://replit.com/@trsong/Gas-Station-Problem](https://replit.com/@trsong/Gas-Station-Problem)
+```py
+import unittest
+
+def valid_starting_station(gas, cost):
+    if sum(gas) - sum(cost) < 0:
+        return -1
+
+    gas_level = 0
+    start = 0
+    for i in range(len(gas)):
+        gas_level += gas[i] - cost[i]
+        if gas_level < 0:
+            start = (i + 1) % len(gas)
+            gas_level = 0
+    return start
+
+
+class ValidStartingStationSpec(unittest.TestCase):
+    def assert_valid_starting_station(self, gas, cost, start):
+        gas_level = 0
+        n = len(gas)
+        for i in range(n):
+            shifted_index = (start + i) % n
+            gas_level += gas[shifted_index] - cost[shifted_index]
+            self.assertTrue(gas_level >= 0)
+
+    def test_example(self):
+        gas  = [1, 2, 3, 4, 5]
+        cost = [3, 4, 5, 1, 2]
+        start = valid_starting_station(gas, cost)
+        self.assert_valid_starting_station(gas, cost, start)
+
+    def test_example2(self):
+        gas  = [2, 3, 4]
+        cost = [3, 4, 3]
+        self.assertEqual(-1, valid_starting_station(gas, cost))
+
+    def test_decreasing_gas_level(self):
+        gas = [1, 1, 1]
+        cost = [2, 2, 2]
+        self.assertEqual(-1, valid_starting_station(gas, cost))
+
+    def test_increasing_gas_level(self):
+        gas = [2, 1, 0]
+        cost = [1, 1, 0]
+        start = valid_starting_station(gas, cost)
+        self.assert_valid_starting_station(gas, cost, start)
+
+    def test_decreasing_increasing_decreasing_increasing(self):
+        gas = [0, 1, 0, 13]
+        cost = [3, 0, 10, 1]
+        start = valid_starting_station(gas, cost)
+        self.assert_valid_starting_station(gas, cost, start)
+
+    def test_total_gas_level_decrease(self):
+        gas = [3, 2, 1, 0, 0]
+        cost = [2, 3, 1, 1, 0]
+        self.assertEqual(-1, valid_starting_station(gas, cost))
+
+    def test_total_gas_level_increase(self):
+        gas = [1, 1, 0, 2]
+        cost = [0, 0, -3, 0]
+        start = valid_starting_station(gas, cost)
+        self.assert_valid_starting_station(gas, cost, start)
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False, verbosity=2)
+```
+
 
 ### Sep 2, 2021 \[Medium\] Sum of Squares
 ---
