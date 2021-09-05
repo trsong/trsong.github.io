@@ -27,6 +27,23 @@ categories: Python/Java
 ## Math
 ---
 
+<details>
+<summary class="lc_e">
+
+- [**\[Easy\] GCD of N Numbers**](http://trsong.github.io/python/java/2021/08/02/DailyQuestionsAug.html#sep-5-2021-easy-gcd-of-n-numbers) -- *Given n numbers, find the greatest common denominator between them.* [*\(Try ME\)*](https://replit.com/@trsong/Calculate-GCD-of-N-Numbers-1)
+
+</summary>
+<div>
+
+
+**Question:** Given `n` numbers, find the greatest common denominator between them.
+
+For example, given the numbers `[42, 56, 14]`, return `14`.
+
+
+</div>
+</details>
+
 
 <details>
 <summary class="lc_e">

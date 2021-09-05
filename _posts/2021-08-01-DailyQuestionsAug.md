@@ -52,11 +52,49 @@ Explanation:
 
 
 ### Sep 5, 2021 \[Easy\] GCD of N Numbers
---- 
+---
 > **Question:** Given `n` numbers, find the greatest common denominator between them.
 >
 > For example, given the numbers `[42, 56, 14]`, return `14`.
 
+**Solution:** [https://replit.com/@trsong/Calculate-GCD-of-N-Numbers](https://replit.com/@trsong/Calculate-GCD-of-N-Numbers)
+```py
+import unittest
+
+def gcd_n_numbers(nums):
+    # gcd(a, b, c) = gcd(gcd(a, b), c)
+    res = nums[0]
+    for num in nums:
+        res = gcd(res, num)
+    return res
+
+
+def gcd(a, b):
+    while b:
+        a, b = b, a % b
+    return a
+
+
+class GCDNNumberSpec(unittest.TestCase):
+    def test_example(self):
+        self.assertEqual(14, gcd_n_numbers([42, 56, 14]))
+
+    def test_co_prime_numbers(self):
+        self.assertEqual(1, gcd_n_numbers([6, 5, 7, 11]))
+
+    def test_composite_numbers(self):
+        self.assertEqual(11, gcd_n_numbers([11 * 3, 11 * 5, 11 * 7]))
+
+    def test_even_numbers(self):
+        self.assertEqual(2, gcd_n_numbers([2, 8, 6, 4]))
+    
+    def test_odd_numbers(self):
+        self.assertEqual(5, gcd_n_numbers([3 * 5, 3 * 2 * 5, 5 * 2 * 2]))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False, verbosity=2)
+```
 
 ### Sep 4, 2021 \[Easy\] Sum Binary Numbers
 ---
