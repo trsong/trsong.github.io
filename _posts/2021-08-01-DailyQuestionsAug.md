@@ -21,6 +21,36 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
 
+### Sep 6, 2021 LT 623 \[Hard\] K Edit Distance
+---
+> **Question:** Given a set of strings which just has lower case letters and a target string, output all the strings for each the edit distance with the target no greater than k.
+You have the following 3 operations permitted on a word:
+> - Insert a character
+> - Delete a character
+> - Replace a character
+
+**Example 1:**
+```py
+Given words = ["abc", "abd", "abcd", "adc"] and target = "ac", k = 1
+Return ["abc", "adc"]
+Explanation:
+- "abc" remove "b"
+- "adc" remove "d"
+```
+
+**Example 2:**
+```py
+Given words = ["acc","abcd","ade","abbcd"] and target = "abc", k = 2
+Return ["acc","abcd","ade","abbcd"]
+Explanation:
+- "acc" turns "c" into "b"
+- "abcd" remove "d"
+- "ade" turns "d" into "b" turns "e" into "c"
+- "abbcd" gets rid of "b" and "d"
+```
+
+
+
 ### Sep 5, 2021 \[Easy\] GCD of N Numbers
 --- 
 > **Question:** Given `n` numbers, find the greatest common denominator between them.
