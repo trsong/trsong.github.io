@@ -31,6 +31,63 @@ sum_binary("11101", "1011")
 # returns "101000"
 ```
 
+**Solution:** [https://replit.com/@trsong/Add-Two-Binary-Numbers](https://replit.com/@trsong/Add-Two-Binary-Numbers)
+```py
+import unittest
+
+def binary_sum(bin1, bin2):
+    i = len(bin1) - 1
+    j = len(bin2) - 1
+    carry = 0
+    res = []
+
+    while i >= 0 or j >= 0 or carry:
+        carry += 1 if i >= 0 and bin1[i] == '1' else 0
+        carry += 1 if j >= 0 and bin2[j] == '1' else 0
+        res.append(str(carry % 2))
+        carry //= 2
+        i -= 1
+        j -= 1
+    
+    res.reverse()
+    return ''.join(res)
+
+
+class BinarySumSpec(unittest.TestCase):
+    def test_example(self):
+        bin1 = "11101"
+        bin2 = "1011"
+        expected = "101000"
+        self.assertEqual(expected, binary_sum(bin1, bin2))
+
+    def test_add_zero(self):
+        bin1 = "0"
+        bin2 = "0"
+        expected = "0"
+        self.assertEqual(expected, binary_sum(bin1, bin2))
+
+    def test_should_not_overflow(self):
+        bin1 = "1111111"
+        bin2 = "1111111"
+        expected = "11111110"
+        self.assertEqual(expected, binary_sum(bin1, bin2))
+
+    def test_calculate_carry_correctly(self):
+        bin1 = "1111111"
+        bin2 = "100"
+        expected = "10000011"
+        self.assertEqual(expected, binary_sum(bin1, bin2))
+        
+    def test_no_overlapping_digits(self):
+        bin1 = "10100101"
+        bin2 =  "1011010"
+        expected = "11111111"
+        self.assertEqual(expected, binary_sum(bin1, bin2))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False, verbosity=2)
+```
 
 ### Sep 3, 2021 LC 134 \[Medium\] Gas Station
 ---

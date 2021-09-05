@@ -1205,6 +1205,27 @@ For example, if A is `'abcde'` and B is `'cdeab'`, return `True`. If A is `'abc'
 ## Array
 ---
 
+
+<details>
+<summary class="lc_e">
+
+- [**\[Easy\] Sum Binary Numbers**](http://trsong.github.io/python/java/2021/08/02/DailyQuestionsAug.html#sep-4-2021-easy-sum-binary-numbers) -- *Given two binary numbers represented as strings, return the sum of the two binary numbers.* [*\(Try ME\)*](https://replit.com/@trsong/Add-Two-Binary-Numbers-1)
+
+</summary>
+<div>
+
+**Question:** Given two binary numbers represented as strings, return the sum of the two binary numbers as a new binary represented as a string. Do this without converting the whole binary string into an integer.
+
+**Example:**
+```py
+sum_binary("11101", "1011")
+# returns "101000"
+```
+
+</div>
+</details>
+
+
 <details>
 <summary class="lc_e">
 
