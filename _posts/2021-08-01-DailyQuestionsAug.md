@@ -21,6 +21,13 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
 
+### Sep 5, 2021 \[Easy\] GCD of N Numbers
+--- 
+> **Question:** Given `n` numbers, find the greatest common denominator between them.
+>
+> For example, given the numbers `[42, 56, 14]`, return `14`.
+
+
 ### Sep 4, 2021 \[Easy\] Sum Binary Numbers
 ---
 > **Question:** Given two binary numbers represented as strings, return the sum of the two binary numbers as a new binary represented as a string. Do this without converting the whole binary string into an integer.
