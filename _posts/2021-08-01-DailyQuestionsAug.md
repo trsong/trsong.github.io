@@ -21,6 +21,27 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
 
+### Sep 7, 2021 LC 937 \[Easy\] Reorder Log Files
+---
+> **Question:** You have an array of logs. Each log is a space delimited string of words.
+>
+> For each log, the first word in each log is an alphanumeric identifier.  Then, either:
+>
+> - Each word after the identifier will consist only of lowercase letters, or;
+> - Each word after the identifier will consist only of digits.
+We will call these two varieties of logs letter-logs and digit-logs.  It is guaranteed that each log has at least one word after its identifier.
+>
+> Reorder the logs so that all of the letter-logs come before any digit-log.  The letter-logs are ordered lexicographically ignoring identifier, with the identifier used in case of ties.  The digit-logs should be put in their original order.
+>
+> Return the final order of the logs.
+
+**Example:**
+
+```py
+Input: ["a1 9 2 3 1","g1 act car","zo4 4 7","ab1 off key dog","a8 act zoo"]
+Output: ["g1 act car","a8 act zoo","ab1 off key dog","a1 9 2 3 1","zo4 4 7"]
+```
+
 ### Sep 6, 2021 LT 623 \[Hard\] K Edit Distance
 ---
 > **Question:** Given a set of strings which just has lower case letters and a target string, output all the strings for each the edit distance with the target no greater than k.
