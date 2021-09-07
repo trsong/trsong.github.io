@@ -49,6 +49,111 @@ Explanation:
 - "abbcd" gets rid of "b" and "d"
 ```
 
+**My thoughts:** The brutal force way is to calculate the distance between each word and target and filter those qualified words. However, notice that word might have exactly the same prefix and that share the same DP array. So we can build a prefix tree that contains all words and calculate the DP array along the way.
+
+**Solution with DP, Trie and DFS:** [https://replit.com/@trsong/All-Strings-within-K-Edit-Distance](https://replit.com/@trsong/All-Strings-within-K-Edit-Distance)
+```py
+import unittest
+
+def filter_k_edit_distance(words, target, k):
+    n = len(target)
+    trie = Trie()
+    filtered_words = filter(lambda word: n - k <= len(word) <= n + k, words)
+    for word in filtered_words:
+        trie.insert(word)
+    
+    # Let trie node dp[i] represents edit distance between prefix trie to target[:i]
+    trie.dp = [i for i in range(n + 1)]
+    stack = [trie]
+    res = []
+    while stack:
+        cur = stack.pop()
+        prev_dp = cur.dp
+        if cur.count and prev_dp[-1] <= k:
+            res.extend([cur.word] * cur.count)
+        if not cur.children:
+            continue
+        
+        for ch, child in cur.children.items():
+            dp = [0] * (n + 1)
+            dp[0] = prev_dp[0] + 1
+            for i in range(1, n + 1):
+                if ch == target[i - 1]:
+                    dp[i] = prev_dp[i - 1]
+                else:
+                    dp[i] = 1 + min(dp[i - 1], prev_dp[i], prev_dp[i - 1])
+            child.dp = dp
+            stack.append(child)
+    return res
+
+
+class Trie(object):
+    def __init__(self):
+        self.count = 0
+        self.dp = None
+        self.children = None
+        self.word = None
+
+    def insert(self, word):
+        p = self
+        for ch in word:
+            p.children = p.children or {}
+            p.children[ch] = p.children.get(ch, Trie())
+            p = p.children[ch]
+        p.word = word
+        p.count += 1
+
+
+class FilterKEditDistanceSpec(unittest.TestCase):
+    def assert_k_distance_array(self, res, expected):
+        self.assertEqual(sorted(res), sorted(expected))
+
+    def test_example1(self):
+        words =["abc", "abd", "abcd", "adc"] 
+        target = "ac"
+        k = 1
+        expected = ["abc", "adc"]
+        self.assert_k_distance_array(expected, filter_k_edit_distance(words, target, k))
+    
+    def test_example2(self):
+        words = ["acc","abcd","ade","abbcd"]
+        target = "abc"
+        k = 2
+        expected = ["acc","abcd","ade","abbcd"]
+        self.assert_k_distance_array(expected, filter_k_edit_distance(words, target, k))
+
+    def test_duplicated_words(self):
+        words = ["a","b","a","c", "bb", "cc"]
+        target = ""
+        k = 1
+        expected = ["a","b","a","c"]
+        self.assert_k_distance_array(expected, filter_k_edit_distance(words, target, k))
+
+    def test_empty_words(self):
+        words = ["", "", "", "c", "bbbbb", "cccc"]
+        target = "ab"
+        k = 2
+        expected = ["", "", "", "c"]
+        self.assert_k_distance_array(expected, filter_k_edit_distance(words, target, k))
+
+    def test_same_word(self):
+        words = ["ab", "ab", "ab"]
+        target = "ab"
+        k = 1000
+        expected = ["ab", "ab", "ab"]
+        self.assert_k_distance_array(expected, filter_k_edit_distance(words, target, k))
+
+    def test_unqualified_words(self):
+        words = ["", "a", "aa", "aaa", "aaaa", "aaaaa", "aaaaaa", "aaaaaaa", "aaaaaaaa"]
+        target = "aaaaa"
+        k = 2
+        expected = ["aaa", "aaaa", "aaaaa", "aaaaaa", "aaaaaaa"]
+        self.assert_k_distance_array(expected, filter_k_edit_distance(words, target, k))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False, verbosity=2)
+```
 
 
 ### Sep 5, 2021 \[Easy\] GCD of N Numbers
