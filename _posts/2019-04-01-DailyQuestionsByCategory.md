@@ -9685,6 +9685,20 @@ You should return the following:
 </div>
 </details>
 
+<details>
+<summary class="lc_h">
+
+- [**\[Hard\] Edit Distance**](https://trsong.github.io/python/java/2021/08/02/DailyQuestionsAug.html#sep-8-2021-hard-edit-distance) -- *The edit distance between two strings refers to the minimum number of character insertions, deletions, and substitutions required to change one string to the other.* [*\(Try ME\)*](https://replit.com/@trsong/Calculate-Edit-Distance-1)
+
+</summary>
+<div>
+
+**Question:**  The edit distance between two strings refers to the minimum number of character insertions, deletions, and substitutions required to change one string to the other. For example, the edit distance between “kitten” and “sitting” is three: substitute the “k” for “s”, substitute the “e” for “i”, and append a “g”.
+
+Given two strings, compute the edit distance between them.
+
+</div>
+</details>
 
 
 ### DP+ 

@@ -27,6 +27,34 @@ categories: Python/Java
 > 
 > Given two strings, compute the edit distance between them.
 
+
+**Solution with Bottom-up DP:** [https://replit.com/@trsong/Calculate-Edit-Distance-with-Bottom-up-DP](https://replit.com/@trsong/Calculate-Edit-Distance-with-Bottom-up-DP)
+```py
+def edit_distance(source, target):
+    n = len(source)
+    m = len(target)
+
+    # Let dp[n][m] represents edit distance between substring of source[:n] and target[:m]
+    # dp[n][m] = dp[n - 1][m - 1]                                       if last char of both word match
+    # or       = 1 + min(dp[n - 1][m], dp[n][m - 1], dp[n - 1][m - 1])  otherwise 
+    dp = [[0 for _ in range(m + 1)] for _ in range(n + 1)]
+
+    for i in range(n + 1):
+        dp[i][0] = i
+
+    for j in range(m + 1):
+        dp[0][j] = j
+
+    for i in range(1, n + 1):
+        for j in range(1, m + 1):
+            if source[i - 1] == target[j - 1]:
+                dp[i][j] = dp[i - 1][j - 1]
+            else:
+                # insert, delete, and update
+                dp[i][j] = 1 + min(dp[i][j - 1], dp[i - 1][j], dp[i - 1][j - 1])
+    return dp[n][m]
+```
+
  **A little bit background information:** I first learnt this question in my 3rd year algorithem class. At that moment, this question was introduced to illustrate how dynamic programming works. And even nowadays, I can still recall the formula to be something like `dp[i][j] = min(dp[i-1][j] + 1, dp[i][j-1] + 1, dp[i-1][j-1] + (0 if source[i] == target[j] else 1)`. However, when I ask my friends what dp represents in this question and how above formula works, few can give me convincing explanation. So the same thing could happen to readers like you: if you just know the formula without understanding which part represents insertion, removal or updating, then probably you just memorize the solution and pretend you understand the answer. And what could happen in the near future is that the next time when a similar question, like May 19 Regular expression, shows up during interview, you end up spending 20 min, got stuck trying to come up w/ dp formula.
 
 **My thoughts:** My suggestion is that let's forget about dp at first, and we should just focus on recursion. (The idea between those two is kinda the same.) Just use the following template you learnt in first year of university to figure out the solution:
@@ -81,7 +109,7 @@ Then let's think about how we can shrink the size of source and target. In above
 
 Note that any of res1, res2 and res3 might give the mimum edit. So we need to apply min to get the smallest among them.
 
-**Python Solution:** [https://replit.com/@trsong/Calculate-Edit-Distance](https://replit.com/@trsong/Calculate-Edit-Distance)
+**Solution with Recursion:** [https://replit.com/@trsong/Calculate-Edit-Distance](https://replit.com/@trsong/Calculate-Edit-Distance)
 ```py
 import unittest
 
@@ -118,8 +146,7 @@ def edit_distance2(source, target):
 
 > **Note:** Above solution can be optimized using a cache. Or based on recursive formula, generate DP array. However, I feel too lazy for DP solution, you can probably google ***Levenshtein Distance*** or "edit distance". Here, I just give the optimized solution w/ cache. You can see how similar the dp solution vs optimziation w/ cache. And the benefit of using cache is that, you don't need to figure out the order to fill dp array as well as the initial value for dp array which is quite helpful. If you are curious about what question can give a weird dp filling order, just check May 19 question: Regular Expression and try to solve that w/ dp. 
 
-**Python Solution w/ Cache:** [https://replit.com/@trsong/Calculate-Edit-Distance-with-Cache](https://replit.com/@trsong/Calculate-Edit-Distance-with-Cache)
-
+**Solution with Top-down DP:** [https://replit.com/@trsong/Calculate-Edit-Distance-with-Cache](https://replit.com/@trsong/Calculate-Edit-Distance-with-Cache)
 ```py
 def edit_distance(source, target):
     n, m = len(source), len(target)
