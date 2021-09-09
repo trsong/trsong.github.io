@@ -204,17 +204,81 @@ if __name__ == "__main__":
 >
 > - Each word after the identifier will consist only of lowercase letters, or;
 > - Each word after the identifier will consist only of digits.
-We will call these two varieties of logs letter-logs and digit-logs.  It is guaranteed that each log has at least one word after its identifier.
+>
+> We will call these two varieties of logs letter-logs and digit-logs.  It is guaranteed that each log has at least one word after its identifier.
 >
 > Reorder the logs so that all of the letter-logs come before any digit-log.  The letter-logs are ordered lexicographically ignoring identifier, with the identifier used in case of ties.  The digit-logs should be put in their original order.
 >
 > Return the final order of the logs.
 
 **Example:**
-
 ```py
 Input: ["a1 9 2 3 1","g1 act car","zo4 4 7","ab1 off key dog","a8 act zoo"]
 Output: ["g1 act car","a8 act zoo","ab1 off key dog","a1 9 2 3 1","zo4 4 7"]
+```
+
+**Solution:** [https://replit.com/@trsong/Reorder-the-Log-Files](https://replit.com/@trsong/Reorder-the-Log-Files)
+```py
+import unittest
+
+def reorder_log_files(logs):
+    logs.sort(key=compute_log_key)
+    return logs
+
+
+def compute_log_key(log):
+    tokens = log.split()
+    is_digit_log = len(tokens) > 1 and tokens[1].isdigit()
+    order_key1 = None if is_digit_log else tokens[1:]
+    order_key2 = None if is_digit_log else tokens[0]
+    return is_digit_log, order_key1, order_key2
+
+
+class ReorderLogFileSpec(unittest.TestCase):
+    dlog1 = "a1 9 2 3 1"
+    dlog2 = "zo4 4 7"
+    dlog3 = "a2 act car"
+    llog1 = "g1 act car"
+    llog2 = "ab1 off key dog"
+    llog3 = "a8 act zoo"
+    llog4 = "g1 act car jet jet jet"
+    llog5 = "hhh1 act car"
+    llog6 = "g1 act car jet"
+
+    def assert_result(self, expected_order, original_order):
+        self.assertEqual(str(expected_order), str(reorder_log_files(original_order)))
+
+    def test_example(self):
+        original_order = [self.dlog1, self.llog1, self.dlog2, self.llog2, self.llog3]
+        expected_order = [self.llog1,self.llog3, self.llog2, self.dlog1, self.dlog2]
+        self.assert_result(expected_order, reorder_log_files(original_order))
+
+    def test_empty_logs(self):
+        self.assert_result(reorder_log_files([]), [])
+
+    def test_digit_logs_maintaining_same_order(self):
+        original_order = [self.dlog1, self.dlog2]
+        expected_order = [self.dlog1, self.dlog2]
+        self.assert_result(expected_order, reorder_log_files(original_order))
+
+    def test_digit_logs_maintaining_same_order2(self):
+        original_order = [self.dlog2, self.dlog1, self.dlog2]
+        expected_order = [self.dlog2, self.dlog1, self.dlog2]
+        self.assert_result(expected_order, reorder_log_files(original_order))
+
+    def test_when_letter_logs_have_a_tie(self):
+        original_order = [self.llog6, self.llog4, self.llog1, self.llog5]
+        expected_order = [self.llog1, self.llog5, self.llog6, self.llog4]
+        self.assert_result(expected_order, reorder_log_files(original_order))
+    
+    def test_when_letter_logs_have_a_tie2(self):
+        original_order = [self.dlog1, self.llog1, self.dlog2, self.llog2, self.llog3, self.dlog3]
+        expected_order = [self.dlog3, self.llog1, self.llog3, self.llog2, self.dlog1, self.dlog2]
+        self.assert_result(expected_order, reorder_log_files(original_order))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False, verbosity=2)
 ```
 
 ### Sep 6, 2021 LT 623 \[Hard\] K Edit Distance

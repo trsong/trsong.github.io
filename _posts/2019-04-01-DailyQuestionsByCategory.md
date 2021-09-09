@@ -3375,6 +3375,37 @@ You are given an array of length `n + 1` whose elements belong to the set `{1, 2
 <details>
 <summary class="lc_e">
 
+- [**\[Easy\] LC 937. Reorder Log Files**](https://trsong.github.io/python/java/2021/08/02/DailyQuestionsAug.html#sep-7-2021-lc-937-easy-reorder-log-files) -- *Reorder the logs so that all of the letter-logs come before any digit-log.* [*\(Try ME\)*](https://replit.com/@trsong/Reorder-the-Log-Files-1)
+
+</summary>
+<div>
+
+**Question:** You have an array of logs. Each log is a space delimited string of words.
+
+For each log, the first word in each log is an alphanumeric identifier.  Then, either:
+
+- Each word after the identifier will consist only of lowercase letters, or;
+- Each word after the identifier will consist only of digits.
+
+We will call these two varieties of logs letter-logs and digit-logs.  It is guaranteed that each log has at least one word after its identifier.
+
+Reorder the logs so that all of the letter-logs come before any digit-log.  The letter-logs are ordered lexicographically ignoring identifier, with the identifier used in case of ties.  The digit-logs should be put in their original order.
+
+Return the final order of the logs.
+
+**Example:**
+```py
+Input: ["a1 9 2 3 1","g1 act car","zo4 4 7","ab1 off key dog","a8 act zoo"]
+Output: ["g1 act car","a8 act zoo","ab1 off key dog","a1 9 2 3 1","zo4 4 7"]
+```
+
+</div>
+</details>
+
+
+<details>
+<summary class="lc_e">
+
 - [**\[Easy\] Sorted Square of Integers**](https://trsong.github.io/python/java/2020/08/02/DailyQuestionsAug.html#oct-20-2020-easy-sorted-square-of-integers) -- *Given a sorted list of integers, square the elements and give the output in sorted order.* [*\(Try ME\)*](https://repl.it/@trsong/Calculate-Sorted-Square-of-Integers-1)
 
 </summary>
