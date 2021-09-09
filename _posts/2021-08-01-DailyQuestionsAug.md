@@ -21,6 +21,17 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
 
+### Sep 9, 2021 \[Easy\] Flip Bit to Get Longest Sequence of 1s
+---
+> **Question:** Given an integer, can you flip exactly one bit from a 0 to a 1 to get the longest sequence of 1s? Return the longest possible length of 1s after flip.
+
+**Example:**
+```py
+Input: 183 (or binary: 10110111)
+Output: 6
+Explanation: 10110111 => 10111111. The longest sequence of 1s is of length 6.
+```
+
 ### Sep 8, 2021 \[Hard\] Edit Distance
 ---
 > **Question:**  The edit distance between two strings refers to the minimum number of character insertions, deletions, and substitutions required to change one string to the other. For example, the edit distance between “kitten” and “sitting” is three: substitute the “k” for “s”, substitute the “e” for “i”, and append a “g”.
