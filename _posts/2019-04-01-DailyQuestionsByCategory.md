@@ -4410,7 +4410,7 @@ For example, given the array `[3, 4, 9, 6, 1]`, return `[1, 1, 2, 1, 0]`, since:
 ---
 
 <details>
-<summary class="lc_e>
+<summary class="lc_e">
 
 - [**\[Easy\] Height-balanced Binary Tree**](http://trsong.github.io/python/java/2021/08/02/DailyQuestionsAug.html#aug-17-2021-easy-height-balanced-binary-tree) -- *Given a binary tree, determine whether or not it is height-balanced.* [*\(Try ME\)*](https://replit.com/@trsong/Determine-If-Height-balanced-Binary-Tree-1)
 
