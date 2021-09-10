@@ -921,6 +921,26 @@ Can you perform the operation without allocating extra memory (disregarding the 
 ### Bitwise Operations
 ---
 
+<details>
+<summary class="lc_e">
+
+- [**\[Easy\] Flip Bit to Get Longest Sequence of 1s**](https://trsong.github.io/python/java/2021/08/02/DailyQuestionsAug.html#sep-9-2021-easy-flip-bit-to-get-longest-sequence-of-1s) -- *Given an integer, flip exactly one bit from a 0 to a 1 to get the longest sequence of 1s.* [*\(Try ME\)*](https://replit.com/@trsong/Flip-Bit-in-a-Binary-Number-to-Get-Longest-Sequence-of-1s-1)
+
+</summary>
+<div>
+
+**Question:** Given an integer, can you flip exactly one bit from a 0 to a 1 to get the longest sequence of 1s? Return the longest possible length of 1s after flip.
+
+**Example:**
+```py
+Input: 183 (or binary: 10110111)
+Output: 6
+Explanation: 10110111 => 10111111. The longest sequence of 1s is of length 6.
+```
+
+</div>
+</details>
+
 
 <details>
 <summary class="lc_e">

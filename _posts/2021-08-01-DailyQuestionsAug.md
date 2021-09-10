@@ -32,6 +32,47 @@ Output: 6
 Explanation: 10110111 => 10111111. The longest sequence of 1s is of length 6.
 ```
 
+**Solution:** [https://replit.com/@trsong/Flip-Bit-in-a-Binary-Number-to-Get-Longest-Sequence-of-1s](https://replit.com/@trsong/Flip-Bit-in-a-Binary-Number-to-Get-Longest-Sequence-of-1s)
+```py
+import unittest
+
+def flip_bits(num):
+    prev_bits = 0
+    cur_bits = 0
+    max_bits = 0
+
+    while num > 0:
+        if num & 1:
+            cur_bits += 1
+        else:
+            max_bits = max(max_bits, cur_bits + prev_bits + 1)
+            prev_bits = cur_bits
+            cur_bits = 0
+        num >>= 1
+    return max(max_bits, cur_bits + prev_bits + 1)
+            
+
+class FlipBitSpec(unittest.TestCase):
+    def test_example(self):
+        self.assertEqual(6, flip_bits(0b10110111))  # 10110111 => 10111111
+
+    def test_not_exist_ones(self):
+        self.assertEqual(1, flip_bits(0))  # 0 => 1
+
+    def test_flip_last_digit(self):
+        self.assertEqual(3, flip_bits(0b100110))  # 100110 => 100111
+
+    def test_three_zeros(self):
+        self.assertEqual(7, flip_bits(0b1011110110111))  # 1011110110111 => 1011111110111
+
+    def test_one(self):
+        self.assertEqual(2, flip_bits(1))  # 01 => 11
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False, verbosity=2)
+```
+
 ### Sep 8, 2021 \[Hard\] Edit Distance
 ---
 > **Question:**  The edit distance between two strings refers to the minimum number of character insertions, deletions, and substitutions required to change one string to the other. For example, the edit distance between “kitten” and “sitting” is three: substitute the “k” for “s”, substitute the “e” for “i”, and append a “g”.
