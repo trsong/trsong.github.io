@@ -21,6 +21,59 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
 
+### Sep 11, 2021 LC 296 \[Hard\] Best Meeting Point
+---
+> **Question:** A group of two or more people wants to meet and minimize the total travel distance. You are given a 2D grid of values 0 or 1, where each 1 marks the home of someone in the group. The distance is calculated using *Manhattan Distance*, where `distance(p1, p2) = |p2.x - p1.x| + |p2.y - p1.y|`.
+> 
+> Hint: Try to solve it in one dimension first. How can this solution apply to the two dimension case?
+
+**Example:**
+
+```py
+Input: 
+
+1 - 0 - 0 - 0 - 1
+|   |   |   |   |
+0 - 0 - 0 - 0 - 0
+|   |   |   |   |
+0 - 0 - 1 - 0 - 0
+
+Output: 6 
+
+Explanation: Given three people living at (0,0), (0,4), and (2,2):
+             The point (0,2) is an ideal meeting point, as the total travel distance 
+             of 2+2+2=6 is minimal. So return 6.
+```
+
+### Sep 10, 2021 LC 317 \[Hard\] Shortest Distance from All Buildings
+---
+> **Question:** You want to build a house on an empty land which reaches all buildings in the shortest amount of distance. You can only move up, down, left and right. You are given a 2D grid of values 0, 1 or 2, where:
+>
+> - Each 0 marks an empty land which you can pass by freely.
+> - Each 1 marks a building which you cannot pass through.
+> - Each 2 marks an obstacle which you cannot pass through.
+> 
+> **Note:**
+There will be at least one building. If it is not possible to build such house according to the above rules, return -1.
+
+**Example:**
+
+```py
+Input: [[1,0,2,0,1],[0,0,0,0,0],[0,0,1,0,0]]
+
+1 - 0 - 2 - 0 - 1
+|   |   |   |   |
+0 - 0 - 0 - 0 - 0
+|   |   |   |   |
+0 - 0 - 1 - 0 - 0
+
+Output: 7 
+
+Explanation: Given three buildings at (0,0), (0,4), (2,2), and an obstacle at (0,2),
+             the point (1,2) is an ideal empty land to build a house, as the total 
+             travel distance of 3+3+1=7 is minimal. So return 7.
+```
+
 ### Sep 9, 2021 \[Easy\] Flip Bit to Get Longest Sequence of 1s
 ---
 > **Question:** Given an integer, can you flip exactly one bit from a 0 to a 1 to get the longest sequence of 1s? Return the longest possible length of 1s after flip.
