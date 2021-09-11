@@ -74,6 +74,112 @@ Explanation: Given three buildings at (0,0), (0,4), (2,2), and an obstacle at (0
              travel distance of 3+3+1=7 is minimal. So return 7.
 ```
 
+**My thoughts:** There is no easy way to find the shortest distance to all building. Due to the fact that obstacle is unpredictable. There could be exponentially many different situations that obstacle can affect our shortest path. And sometimes it might simply just block the way to some building which cause the problem to short-circuit and return -1. 
+
+Thus, what we can do for this problem is to run BFS on each building and calculate the accumulated/aggregated distance to current building for EACH empty land. And once done that, simple iterate through the aggregated distance array to find mimimum distance which will be the answer.
+
+
+**Solution with DFS:** [https://replit.com/@trsong/Calculate-Shortest-Distance-from-All-Buildings](https://replit.com/@trsong/Calculate-Shortest-Distance-from-All-Buildings)
+```py
+import unittest
+
+class CellType:
+    LAND = 0
+    BUILDING = 1
+    OBSTACLE = 2
+
+
+def shortest_distance(grid):
+    if not grid or not grid[0]:
+        return -1
+    
+    n, m = len(grid), len(grid[0])
+    buildings = [(r, c) for r in range(n) for c in range(m) if grid[r][c] == CellType.BUILDING]
+
+    if not buildings:
+        return -1
+
+    accu_distance = [[0 for _ in range(m)] for _ in range(n)]
+    for building in buildings:
+        num_building = dfs_building(grid, building, accu_distance)
+        if num_building != len(buildings):
+            return -1
+
+    return min(accu_distance[r][c] for r in range(n) for c in range(m) if grid[r][c] == CellType.LAND)
+
+
+DIRECTIONS = [(-1, 0), (1, 0), (0, 1), (0, -1)]
+
+def dfs_building(grid, start_pos, accu_distance):
+    n, m = len(grid), len(grid[0])
+    num_building = 0
+    distance = 0
+    visited = [[False for _ in range(m)] for _ in range(n)]
+    queue = [start_pos]
+    
+    while queue:
+        for _ in range(len(queue)):
+            r, c = queue.pop(0)
+            if visited[r][c]:
+                continue
+            visited[r][c] = True
+            accu_distance[r][c] += distance
+            if grid[r][c] == CellType.BUILDING:
+                num_building += 1
+
+            for dr, dc in DIRECTIONS:
+                new_r, new_c = r + dr, c + dc
+                if (0 <= new_r < n and 
+                    0 <= new_c < m and 
+                    not visited[new_r][new_c] and 
+                    grid[new_r][new_c] != CellType.OBSTACLE):
+                    queue.append((new_r, new_c))
+        distance += 1
+    return num_building
+
+
+class ShortestDistanceSpec(unittest.TestCase):
+    def test_example(self):
+        self.assertEqual(7, shortest_distance([
+            [1, 0, 2, 0, 1],
+            [0, 0, 0, 0, 0],
+            [0, 0, 1, 0, 0]
+        ]))  # target location is [1, 2] which has distance 3 + 3 + 1 = 7
+
+    def test_inaccessible_buildings(self):
+        self.assertEqual(-1, shortest_distance([
+            [1, 0, 0],
+            [1, 2, 2],
+            [2, 1, 1]
+        ]))
+
+    def test_no_building_at_all(self):
+        self.assertEqual(-1, shortest_distance([
+            [0, 2, 0],
+            [0, 0, 0],
+            [0, 0, 0]
+        ]))
+
+    def test_empty_grid(self):
+        self.assertEqual(-1, shortest_distance([]))
+
+    def test_building_on_same_line(self):
+        self.assertEqual(6, shortest_distance([
+            [2, 1, 0, 1, 0, 0, 1]  # target is at index 2, which has distance = 1 + 1 + 4
+        ]))
+
+    def test_multiple_road_same_distance(self):
+        self.assertEqual(7, shortest_distance([
+            [0, 1, 0],
+            [1, 2, 0],
+            [2, 1, 0]
+        ]))  # either top-left or top-right will give 7
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False, verbosity=2)
+```
+
 ### Sep 9, 2021 \[Easy\] Flip Bit to Get Longest Sequence of 1s
 ---
 > **Question:** Given an integer, can you flip exactly one bit from a 0 to a 1 to get the longest sequence of 1s? Return the longest possible length of 1s after flip.
