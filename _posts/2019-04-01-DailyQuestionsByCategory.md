@@ -2474,6 +2474,40 @@ missing_ranges(nums=[1, 3, 5, 10], lower=1, upper=10)
 
 
 <details>
+<summary class="lc_h">
+
+- [**\[Hard\] LC 296. Best Meeting Point**](https://trsong.github.io/python/java/2021/08/02/DailyQuestionsAug.html#sep-11-2021-lc-296-hard-best-meeting-point) -- *A group of two or more people wants to meet and minimize the total travel distance.* [*\(Try ME\)*](https://replit.com/@trsong/Find-Best-Meeting-Point-1)
+
+</summary>
+<div>
+
+**Question:** A group of two or more people wants to meet and minimize the total travel distance. You are given a 2D grid of values 0 or 1, where each 1 marks the home of someone in the group. The distance is calculated using *Manhattan Distance*, where `distance(p1, p2) = |p2.x - p1.x| + |p2.y - p1.y|`.
+
+Hint: Try to solve it in one dimension first. How can this solution apply to the two dimension case?
+
+**Example:**
+
+```py
+Input: 
+
+1 - 0 - 0 - 0 - 1
+|   |   |   |   |
+0 - 0 - 0 - 0 - 0
+|   |   |   |   |
+0 - 0 - 1 - 0 - 0
+
+Output: 6 
+
+Explanation: Given three people living at (0,0), (0,4), and (2,2):
+             The point (0,2) is an ideal meeting point, as the total travel distance 
+             of 2+2+2=6 is minimal. So return 6.
+```
+
+</div>
+</details>
+
+
+<details>
 <summary class="lc_e">
 
 - [**\[Easy\] String Compression**](https://trsong.github.io/python/java/2021/05/02/DailyQuestionsMay.html#june-17-2021-easy-string-compression) -- *Given an array of characters with repeats, compress it in place.* [*\(Try ME\)*](https://replit.com/@trsong/String-Array-Compression-1)

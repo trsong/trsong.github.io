@@ -45,6 +45,106 @@ Explanation: Given three people living at (0,0), (0,4), and (2,2):
              of 2+2+2=6 is minimal. So return 6.
 ```
 
+**My thoughts:** Exactly as the hint mentioned, let's first check the 1D case. 
+
+Example 1:
+If the array look like `[0, 1, 0, 0, 0, 1, 0, 0]` then by the definition of Manhattan Distance, any location between two 1s should be optimal. ie. all x spot in `[0, 1, x, x, x, 1, 0, 0]`
+
+Example2:
+If the array look like `[0, 1, 0, 1, 0, 1, 0, 0, 1]`, then we can reduce the result to  `[0, x, x, x, x, 1, 0, 0, 1]` and `[0, 0, 0, 1, x, 1, 0, 0, 0]` where x is the target spots. We shrink the optimal to the x spot in `[0, 0, 0, 1, x, 1, 0, 0, 0]`. 
+
+So if we have 2D array, then notice that the target position's (x, y) co-ordinates are indepent of each other, ie, x and y won't affect each other. Why? Because by definition of *Manhattan Distance*, `distance(p1, p2) = |p2.x - p1.x| + |p2.y - p1.y|`. Suppose we have an optimal positon x, y. Then `total distance = all projected x-distance + all projected y-distance`. 
+
+Example 3:
+Suppose we use the example from the question body, our projected_row is `[1, 0, 1, 0, 1]` which gives best meeting distance 4, and projected_col is `[1, 0, 1]` which gives best meeting distance 2. Therefore the total best meeting distance equals `4 + 2 = 6`
+
+
+**Solution:** [https://replit.com/@trsong/Find-Best-Meeting-Point](https://replit.com/@trsong/Find-Best-Meeting-Point)
+```py
+import unittest
+
+def best_meeting_distance(grid):
+    if not grid or not grid[0]:
+        return 0
+    
+    n, m = len(grid), len(grid[0])
+    projected_row = [0] * m
+    projected_col = [0] * n
+
+    for r in range(n):
+        for c in range(m):
+            if grid[r][c]:
+                projected_row[c] += 1
+                projected_col[r] += 1
+    return best_meeting_distance_1D(projected_row) + best_meeting_distance_1D(projected_col)
+
+
+def best_meeting_distance_1D(arr):
+    i, j = 0, len(arr) - 1
+    res = 0
+    while True:
+        if i >= j:
+            break
+        elif arr[i] > 0 and arr[j] > 0:
+            res += j - i
+            arr[i] -= 1
+            arr[j] -= 1
+        elif arr[i] == 0:
+            i += 1
+        elif arr[j] == 0:
+            j -= 1
+    return res
+
+
+class BestMeetingPointSpec(unittest.TestCase):
+    def test_example(self):
+        self.assertEqual(6, best_meeting_distance([
+            [1, 0, 0, 0, 1],
+            [0, 0, 0, 0, 0],
+            [0, 0, 1, 0, 0]
+        ])) # best position at [0, 2]
+    
+    def test_1D_array(self):
+        self.assertEqual(5, best_meeting_distance([
+            [1, 0, 1, 0, 0, 1]
+        ])) # best position at index 2
+    
+    def test_a_city_with_no_one(self):
+        self.assertEqual(0, best_meeting_distance([
+            [0, 0, 0],
+            [0, 0, 0],
+        ]))
+
+    def test_empty_grid(self):
+       self.assertEqual(0, best_meeting_distance([
+            []
+        ]))
+
+    def test_even_number_of_points(self):
+        self.assertEqual(17, best_meeting_distance([
+            [1, 0, 0, 0, 1],
+            [0, 0, 0, 0, 0],
+            [0, 0, 1, 0, 0],
+            [1, 0, 0, 0, 1],
+            [0, 0, 0, 0, 0],
+            [0, 0, 1, 0, 0]
+        ])) # best distance = x-distance + y-distance = 8 + 9 = 17. Best position at [3, 2]
+
+    def test_odd_number_of_points(self):
+        self.assertEqual(24, best_meeting_distance([
+            [1, 0, 0, 0, 1],
+            [0, 1, 0, 0, 0],
+            [0, 0, 1, 0, 0],
+            [1, 0, 0, 0, 1],
+            [0, 1, 0, 0, 0],
+            [0, 1, 1, 0, 0]
+        ])) # best distance = x-distance + y-distance = 10 + 14 = 24. 
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False, verbosity=2)
+```
+
 ### Sep 10, 2021 LC 317 \[Hard\] Shortest Distance from All Buildings
 ---
 > **Question:** You want to build a house on an empty land which reaches all buildings in the shortest amount of distance. You can only move up, down, left and right. You are given a 2D grid of values 0, 1 or 2, where:
