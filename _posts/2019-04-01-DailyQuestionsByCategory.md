@@ -7089,6 +7089,37 @@ Output: [4, 2, 1, 3, 6] or [5, 2, 1, 3, 6]
 <details>
 <summary class="lc_e">
 
+- [**\[Easy\] Grid Path**](https://trsong.github.io/python/java/2021/08/02/DailyQuestionsAug.html#sep-12-2021-easy-grid-path) -- *Given this matrix, a start coordinate, and an end coordinate, return the minimum number of steps required to reach the end coordinate from the start.* [*\(Try ME\)*](https://replit.com/@trsong/Find-the-Min-Grid-Path-Distance-1)
+
+</summary>
+<div>
+
+**Question:** You are given an M by N matrix consisting of booleans that represents a board. Each True boolean represents a wall. Each False boolean represents a tile you can walk on.
+
+Given this matrix, a start coordinate, and an end coordinate, return the minimum number of steps required to reach the end coordinate from the start. If there is no possible path, then return null. You can move up, left, down, and right. You cannot move through walls. You cannot wrap around the edges of the board.
+
+**Example:**
+```py
+Given the following grid: 
+
+[
+  [F, F, F, F],
+  [T, T, F, T],
+  [F, F, F, F],
+  [F, F, F, F]
+]
+and start = (3, 0) (bottom left) and end = (0, 0) (top left),
+
+The minimum number of steps required to reach the end is 7, since we would need to go through (1, 2) because there is a wall everywhere else on the second row.
+```
+
+
+</div>
+</details>
+
+<details>
+<summary class="lc_e">
+
 - [**\[Easy\] Zombie in Matrix**](https://trsong.github.io/python/java/2021/08/02/DailyQuestionsAug.html#aug-16-2021-easy-zombie-in-matrix) -- *Zombies can turn adjacent human beings into zombies every hour. Find out how many hours does it take to infect all humans?* [*\(Try ME\)*](https://replit.com/@trsong/Zombie-Infection-in-Matrix-1)
 
 </summary>

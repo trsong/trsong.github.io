@@ -26,18 +26,107 @@ categories: Python/Java
 > **Question:** You are given an M by N matrix consisting of booleans that represents a board. Each True boolean represents a wall. Each False boolean represents a tile you can walk on.
 >
 > Given this matrix, a start coordinate, and an end coordinate, return the minimum number of steps required to reach the end coordinate from the start. If there is no possible path, then return null. You can move up, left, down, and right. You cannot move through walls. You cannot wrap around the edges of the board.
->
-> For example, given the following board:
+
+**Example:**
 ```py
+Given the following grid: 
+
 [
   [F, F, F, F],
   [T, T, F, T],
   [F, F, F, F],
   [F, F, F, F]
 ]
-```
-> and start = (3, 0) (bottom left) and end = (0, 0) (top left), the minimum number of steps required to reach the end is 7, since we would need to go through (1, 2) because there is a wall everywhere else on the second row.
+and start = (3, 0) (bottom left) and end = (0, 0) (top left),
 
+The minimum number of steps required to reach the end is 7, since we would need to go through (1, 2) because there is a wall everywhere else on the second row.
+```
+
+**Solution with BFS:** [https://replit.com/@trsong/Find-the-Min-Grid-Path-Distance](https://replit.com/@trsong/Find-the-Min-Grid-Path-Distance)
+```py
+import unittest
+
+F = False
+T = True
+DIRECTIONS = [(-1, 0), (1, 0), (0, 1), (0, -1)]
+
+def grid_path(grid_wall, start, end):
+    if not grid_wall or not grid_wall[0]:
+        return -1
+    
+    n, m = len(grid_wall), len(grid_wall[0])
+    queue = [start]
+    distance = 0
+    visited = [[False for _ in range(m)] for _ in range(n)]
+
+    while queue:
+        for _ in range(len(queue)):
+            r, c = queue.pop(0)
+            if (r, c) == end:
+                return distance
+
+            if visited[r][c]:
+                continue
+            visited[r][c] = True
+
+            for dr, dc in DIRECTIONS:
+                new_r, new_c = r + dr, c + dc
+                if (0 <= new_r < n and 
+                    0 <= new_c < m and
+                    not visited[new_r][new_c] and
+                    not grid_wall[new_r][new_c]):
+                    queue.append((new_r, new_c))
+        distance += 1
+    return -1
+            
+
+class GridPathSpec(unittest.TestCase):
+    def test_one_row(self):
+        grid_wall= [
+            [F, F]
+        ]
+        start = (0, 0)
+        end = (0, 1)
+        self.assertEqual(1, grid_path(grid_wall, start, end))
+
+    def test_example(self):
+        grid_wall= [
+            [F, F, F, F],
+            [T, T, F, T],
+            [F, F, F, F],
+            [F, F, F, F]
+        ]
+        start = (0, 0)
+        end = (3, 0)
+        self.assertEqual(7, grid_path(grid_wall, start, end))
+
+    def test_not_valid_path(self):
+        grid_wall= [
+            [F, F, F, F],
+            [T, T, T, T],
+            [F, F, F, F],
+            [F, F, F, F]
+        ]
+        start = (0, 0)
+        end = (3, 0)
+        self.assertEqual(-1, grid_path(grid_wall, start, end))
+
+    def test_large_grid(self):
+        grid_wall= [
+            [F, F, F, F, T, F, F, F],
+            [T, T, T, F, T, F, T, T],
+            [F, F, F, F, T, F, F, F],
+            [F, T, T, T, T, T, T, F] ,
+            [F, F, F, F, F, F, F, F]
+        ]
+        start = (0, 0)
+        end = (0, 7)
+        self.assertEqual(25, grid_path(grid_wall, start, end))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False, verbosity=2)
+```
 
 ### Sep 11, 2021 LC 296 \[Hard\] Best Meeting Point
 ---
