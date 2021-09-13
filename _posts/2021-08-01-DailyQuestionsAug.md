@@ -21,6 +21,26 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
 
+### Sep 13, 2021 LC 722 \[Medium\] Remove Comments
+---
+> **Question:** Given a C/C++ program, remove comments from it.
+
+**Example 1:**
+```py
+Input: 
+source = ["/*Test program */", "int main()", "{ ", "  // variable declaration ", "int a, b, c;", "/* This is a test", "   multiline  ", "   comment for ", "   testing */", "a = b + c;", "}"]
+
+Output: ["int main()","{ ","  ","int a, b, c;","a = b + c;","}"]
+```
+
+**Example 2:**
+```py
+Input: 
+source = ["a/*comment", "line", "more_comment*/b"]
+
+Output: ["ab"]
+```
+
 ### Sep 12, 2021 \[Easy\] Grid Path
 ---
 > **Question:** You are given an M by N matrix consisting of booleans that represents a board. Each True boolean represents a wall. Each False boolean represents a tile you can walk on.
