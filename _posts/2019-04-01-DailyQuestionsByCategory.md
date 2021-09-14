@@ -3630,6 +3630,34 @@ For example, given the string `tweet`, return `tteew`. `eettw` would also be acc
 ## String
 ---
 
+<details>
+<summary class="lc_m">
+
+- [**\[Medium\] LC 722. Remove Comments**](https://trsong.github.io/python/java/2021/08/02/DailyQuestionsAug.html#sep-13-2021-lc-722-medium-remove-comments) -- *Given a C/C++ program, remove comments from it.* [*\(Try ME\)*](https://replit.com/@trsong/Remove-C-Comments-1)
+
+</summary>
+<div>
+
+**Question:** Given a C/C++ program, remove comments from it.
+
+**Example 1:**
+```py
+Input: 
+source = ["/*Test program */", "int main()", "{ ", "  // variable declaration ", "int a, b, c;", "/* This is a test", "   multiline  ", "   comment for ", "   testing */", "a = b + c;", "}"]
+
+Output: ["int main()","{ ","  ","int a, b, c;","a = b + c;","}"]
+```
+
+**Example 2:**
+```py
+Input: 
+source = ["a/*comment", "line", "more_comment*/b"]
+
+Output: ["ab"]
+```
+
+</div>
+</details>
 
 <details>
 <summary class="lc_m">

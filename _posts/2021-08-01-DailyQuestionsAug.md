@@ -41,6 +41,71 @@ source = ["a/*comment", "line", "more_comment*/b"]
 Output: ["ab"]
 ```
 
+**Solution:** [https://replit.com/@trsong/Remove-C-Comments](https://replit.com/@trsong/Remove-C-Comments)
+```py
+import unittest
+
+def remove_comments(source):
+    res = []
+    in_block = False
+    for line in source:
+        i = 0
+        n = len(line)
+        if not in_block:
+            new_line = []
+        while i < n:
+            if not in_block and i < n - 1 and line[i] == '/' and line[i + 1] == '*':
+                in_block = True
+                i += 1
+            elif in_block and i < n - 1 and line[i] == '*' and line[i + 1] == '/':
+                in_block = False
+                i += 1
+            elif not in_block and i < n - 1 and line[i] == line[i + 1] == '/':
+                break
+            elif not in_block:
+                new_line.append(line[i])
+            i += 1
+        
+        if not in_block and new_line:
+            res.append(''.join(new_line))
+    return res
+
+
+class RemoveCommentSpec(unittest.TestCase):
+    def test_example1(self):
+        source = ["/*Test program */", "int main()", "{ ", "  // variable declaration ", "int a, b, c;", "/* This is a test", "   multiline  ", "   comment for ", "   testing */", "a = b + c;", "}"]
+        output = ["int main()","{ ","  ","int a, b, c;","a = b + c;","}"]
+        self.assertEqual(output, remove_comments(source))
+
+    def test_example2(self):
+        source = ["a/*comment", "line", "more_comment*/b"]
+        output = ["ab"]
+        self.assertEqual(output, remove_comments(source))
+
+    def test_empty_source(self):
+        self.assertEqual([], remove_comments([]))
+    
+    def test_empty_source2(self):
+        self.assertEqual([], remove_comments(["//"]))
+
+    def test_empty_source3(self):
+        self.assertEqual([], remove_comments(["/*","","*/"]))
+
+    def test_block_comments_has_line_comment(self):
+        source = ["return 1;", "/*", "function // ", "*/"]
+        output = ["return 1;"]
+        self.assertEqual(output, remove_comments(source))
+
+    def test_multiple_block_comment_on_same_line(self):
+        source = ["return 1 /*don't*/+ 2/*don't*//*don't*/ - 1; "]
+        output = ["return 1 + 2 - 1; "]
+        self.assertEqual(output, remove_comments(source))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False, verbosity=2)
+```
+
 ### Sep 12, 2021 \[Easy\] Grid Path
 ---
 > **Question:** You are given an M by N matrix consisting of booleans that represents a board. Each True boolean represents a wall. Each False boolean represents a tile you can walk on.
