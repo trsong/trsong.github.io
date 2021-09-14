@@ -46,7 +46,6 @@ There are 3 nodes which have children in this tree:
 18 has the maximum average so output 18.
 ```
 
-
 ### Sep 13, 2021 LC 722 \[Medium\] Remove Comments
 ---
 > **Question:** Given a C/C++ program, remove comments from it.
