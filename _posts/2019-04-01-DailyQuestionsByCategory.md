@@ -4523,6 +4523,41 @@ For example, given the array `[3, 4, 9, 6, 1]`, return `[1, 1, 2, 1, 0]`, since:
 ---
 
 <details>
+<summary class="lc_m">
+
+- [**\[Medium\] Subtree with Maximum Average**](https://trsong.github.io/python/java/2021/08/02/DailyQuestionsAug.html#sep-14-2021-medium-subtree-with-maximum-average) -- *Given an N-ary tree, find the subtree with the maximum average. Return the root of the subtree.* [*\(Try ME\)*](https://replit.com/@trsong/Find-Subtree-with-Maximum-Average-1)
+
+</summary>
+<div>
+
+**Question:** Given an N-ary tree, find the subtree with the maximum average. Return the root of the subtree.
+
+A subtree of a tree is the node which have at least 1 child plus all its descendants. The average value of a subtree is the sum of its values, divided by the number of nodes.
+
+**Example:**
+```py
+Input:
+     _20_
+    /    \
+   12    18
+ / | \   / \
+11 2  3 15  8
+
+Output: 18
+Explanation:
+There are 3 nodes which have children in this tree:
+12 => (11 + 2 + 3 + 12) / 4 = 7
+18 => (18 + 15 + 8) / 3 = 13.67
+20 => (12 + 11 + 2 + 3 + 18 + 15 + 8 + 20) / 8 = 11.125
+
+18 has the maximum average so output 18.
+```
+
+</div>
+</details>
+
+
+<details>
 <summary class="lc_e">
 
 - [**\[Easy\] Height-balanced Binary Tree**](http://trsong.github.io/python/java/2021/08/02/DailyQuestionsAug.html#aug-17-2021-easy-height-balanced-binary-tree) -- *Given a binary tree, determine whether or not it is height-balanced.* [*\(Try ME\)*](https://replit.com/@trsong/Determine-If-Height-balanced-Binary-Tree-1)

@@ -46,6 +46,118 @@ There are 3 nodes which have children in this tree:
 18 has the maximum average so output 18.
 ```
 
+**Solution with Recursion:** [https://replit.com/@trsong/Find-Subtree-with-Maximum-Average](https://replit.com/@trsong/Find-Subtree-with-Maximum-Average)
+```py
+import unittest
+
+def max_avg_subtree(tree):
+    _, _, (_, accu_max_avg_node) = max_avg_subtree_recur(tree)
+    return accu_max_avg_node
+
+
+def max_avg_subtree_recur(tree):
+    accu_sum, accu_count, accu_max_avg_and_node = tree.val, 1, (float('-inf'), tree.val)
+    if not tree.children:
+        return accu_sum, accu_count, accu_max_avg_and_node
+    
+    child_results = map(max_avg_subtree_recur, tree.children)
+    for child_sum, child_count, child_max_avg_and_node in child_results:
+        accu_sum += child_sum
+        accu_count += child_count
+        accu_max_avg_and_node = max(accu_max_avg_and_node, child_max_avg_and_node)
+    return accu_sum, accu_count, max(accu_max_avg_and_node, (accu_sum / accu_count, tree.val))
+        
+
+class Node(object):
+    def __init__(self, val, *children):
+        self.val = val
+        self.children = children
+
+
+class MaxAvgSubtreeSpec(unittest.TestCase):
+    def test_example(self):
+        """
+             _20_
+            /    \
+           12    18
+         / | \   / \
+        11 2  3 15  8
+
+        12 => (11 + 2 + 3 + 12) / 4 = 7
+        18 => (18 + 15 + 8) / 3 = 13.67
+        20 => (12 + 11 + 2 + 3 + 18 + 15 + 8 + 20) / 8 = 11.125
+        """
+        n12 = Node(12, Node(12), Node(2), Node(3))
+        n18 = Node(18, Node(15), Node(8))
+        n20 = Node(20, n12, n18)
+        self.assertEqual(18, max_avg_subtree(n20)) 
+
+    def test_tree_with_negative_node(self):
+        """
+             1
+           /   \
+         -5     11
+         / \   /  \
+        1   2 4   -2
+
+        -5 => (-5 + 1 + 2) / 3 = -0.67
+        11 => (11 + 4 - 2) / 3 = 4.333
+        1 => (1 -5 + 11 + 1 + 2 + 4 - 2) / 7 = 1
+        """
+        n5 = Node(-5, Node(1), Node(2))
+        n11 = Node(11, Node(4), Node(-2))
+        n1 = Node(1, n5, n11)
+        self.assertEqual(11, max_avg_subtree(n1))
+
+    def test_right_heavy_tree(self):
+        """
+          0
+         / \
+        10  1
+          / | \
+         0  4  3
+         1 => (0 + 4 + 3 + 1) / 4 = 2
+         0 => (10 + 1 + 4 + 3) / 6 = 3
+        """
+        n1 = Node(1, Node(0), Node(4), Node(3))
+        n0 = Node(0, Node(10), n1)
+        self.assertEqual(0, max_avg_subtree(n0))
+
+    def test_multiple_level_tree(self):
+        """
+         0
+          \ 
+           0
+            \
+             2
+              \
+               4
+
+        0 => (0 + 2 + 4) / 4 = 1.5
+        2 => (2 + 4) / 2 = 3       
+        """
+        t = Node(2, Node(0, Node(2, Node(4))))
+        self.assertEqual(2, max_avg_subtree(t))
+
+    def test_all_negative_value(self):
+        """
+        -4
+          \
+          -2
+            \
+             0
+
+        -2 => -2 / 2 = -1
+        -4 => (-4 + -2) / 2 = -3
+        """
+        t = Node(-4, Node(-2, Node(0)))
+        self.assertEqual(-2, max_avg_subtree(t))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False, verbosity=2)
+```
+
 ### Sep 13, 2021 LC 722 \[Medium\] Remove Comments
 ---
 > **Question:** Given a C/C++ program, remove comments from it.
