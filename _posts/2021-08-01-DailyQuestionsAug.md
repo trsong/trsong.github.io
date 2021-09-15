@@ -21,6 +21,25 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
 
+### Sep 15, 2021 LC 392 \[Medium\] Is Subsequence
+---
+> **Question:** Given a string s and a string t, check if s is subsequence of t.
+>
+> A subsequence of a string is a new string which is formed from the original string by deleting some (can be none) of the characters without disturbing the relative positions of the remaining characters. (ie, "ace" is a subsequence of "abcde" while "aec" is not).
+
+**Example 1:**
+```
+s = "abc", t = "ahbgdc"
+Return true.
+```
+
+**Example 2:**
+```
+s = "axc", t = "ahbgdc"
+Return false.
+```
+
+
 ### Sep 14, 2021 \[Medium\] Subtree with Maximum Average
 ---
 > **Question:** Given an N-ary tree, find the subtree with the maximum average. Return the root of the subtree.
