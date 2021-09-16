@@ -21,6 +21,16 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
 
+### Sep 16, 2021 \[Medium\] Strongly Connected Directed Graph
+--- 
+> **Question:** Given a directed graph, find out whether the graph is strongly connected or not. A directed graph is strongly connected if there is a path between any two pair of vertices.
+
+**Example: **
+```py
+is_SCDG(vertices=5, edges=[(0, 1), (1, 2), (2, 3), (3, 0), (2, 4), (4, 2)])  # returns True
+is_SCDG(vertices=4, edges=[(0, 1), (1, 2), (2, 3)])  # returns False
+```
+
 ### Sep 15, 2021 LC 392 \[Medium\] Is Subsequence
 ---
 > **Question:** Given a string s and a string t, check if s is subsequence of t.
