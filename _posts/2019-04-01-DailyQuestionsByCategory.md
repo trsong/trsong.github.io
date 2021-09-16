@@ -3631,6 +3631,34 @@ For example, given the string `tweet`, return `tteew`. `eettw` would also be acc
 ---
 
 <details>
+<summary class="lc_e">
+
+- [**\[Easy\] LC 392. Is Subsequence**](https://trsong.github.io/python/java/2021/08/02/DailyQuestionsAug.html#sep-15-2021-lc-392-medium-is-subsequence) -- *Given a string s and a string t, check if s is subsequence of t.* [*\(Try ME\)*](https://replit.com/@trsong/Check-if-Subsequence-1)
+
+</summary>
+<div>
+
+**Question:** Given a string s and a string t, check if s is subsequence of t.
+
+A subsequence of a string is a new string which is formed from the original string by deleting some (can be none) of the characters without disturbing the relative positions of the remaining characters. (ie, "ace" is a subsequence of "abcde" while "aec" is not).
+
+**Example 1:**
+```
+s = "abc", t = "ahbgdc"
+Return true.
+```
+
+**Example 2:**
+```
+s = "axc", t = "ahbgdc"
+Return false.
+```
+
+</div>
+</details>
+
+
+<details>
 <summary class="lc_m">
 
 - [**\[Medium\] LC 722. Remove Comments**](https://trsong.github.io/python/java/2021/08/02/DailyQuestionsAug.html#sep-13-2021-lc-722-medium-remove-comments) -- *Given a C/C++ program, remove comments from it.* [*\(Try ME\)*](https://replit.com/@trsong/Remove-C-Comments-1)

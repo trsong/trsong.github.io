@@ -39,6 +39,58 @@ s = "axc", t = "ahbgdc"
 Return false.
 ```
 
+**My thoughts:** Just base on the definition of subsequence, mantaining an pointer of s to the next letter we are about to checking and check it against all letter of t.
+
+**Solution:** [https://replit.com/@trsong/Check-if-Subsequence](https://replit.com/@trsong/Check-if-Subsequence)
+```py
+import unittest
+
+def is_subsequence(s, t):
+    if not s:
+        return True
+    
+    i = 0
+    for ch in t:
+        if i >= len(s):
+            break
+        if ch == s[i]:
+            i += 1
+    
+    return i >= len(s)
+
+
+class isSubsequenceSpec(unittest.TestCase):
+    def test_empty_s(self):
+        self.assertTrue(is_subsequence("", ""))
+
+    def test_empty_s2(self):
+        self.assertTrue(is_subsequence("", "a"))
+
+    def test_empty_t(self):
+        self.assertFalse(is_subsequence("a", ""))
+
+    def test_s_longer_than_t(self):
+        self.assertFalse(is_subsequence("ab", "a"))
+
+    def test_size_one_input(self):
+        self.assertTrue(is_subsequence("a", "a"))
+    
+    def test_size_one_input2(self):
+        self.assertFalse(is_subsequence("a", "b"))
+
+    def test_end_with_same_letter(self):
+        self.assertTrue(is_subsequence("ab", "aaaaccb"))
+
+    def test_example(self):
+        self.assertTrue(is_subsequence("abc", "ahbgdc"))
+
+    def test_example2(self):
+        self.assertFalse(is_subsequence("axc", "ahbgdc"))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False, verbosity=2)
+```
 
 ### Sep 14, 2021 \[Medium\] Subtree with Maximum Average
 ---
