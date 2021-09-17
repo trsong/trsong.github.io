@@ -31,6 +31,65 @@ is_SCDG(vertices=5, edges=[(0, 1), (1, 2), (2, 3), (3, 0), (2, 4), (4, 2)])  # r
 is_SCDG(vertices=4, edges=[(0, 1), (1, 2), (2, 3)])  # returns False
 ```
 
+**My thoughts:** A directed graph being strongly connected indicates that for any vertex v, there exists a path to all other vertices and for all other vertices there exists a path to v. Here we can just pick any vertex from which we run DFS and see if it covers all vertices. And once done that, we can show v can go to all other vertices (excellent departure). Then we reverse the edges and run DFS from v again to test if v can be reach by all other vertices (excellent destination). 
+
+Therefore, as v can be connected from any other vertices as well as can be reach by any other vertices. For any vertices u, w, we can simply connect them to v to reach each other. Thus, we can show such algorithm can test if a directed graph is strongly connected or not.
+
+**Solution with DFS:** [https://replit.com/@trsong/Determine-if-Strongly-Connected-Directed-Graph](https://replit.com/@trsong/Determine-if-Strongly-Connected-Directed-Graph)
+```py
+import unittest
+
+def is_SCDG(vertices, edges):
+    # Neigbors relation in original graph
+    neighbors = [None] * vertices
+
+    # Neigbors in reverse graph
+    reverse_neighbors = [None] * vertices
+
+    for u, v in edges:
+        neighbors[u] = neighbors[u] or []
+        neighbors[u].append(v)
+
+        reverse_neighbors[v] = reverse_neighbors[v] or []
+        reverse_neighbors[v].append(u)
+
+    start = 0
+    return vertices == dfs_count_nodes(neighbors, start) == dfs_count_nodes(reverse_neighbors, start)
+
+
+def dfs_count_nodes(neighbors, start):
+    visited = set()
+    stack = [start]
+    
+    while stack:
+        cur = stack.pop()
+        if cur in visited:
+            continue
+        visited.add(cur)
+
+        if not neighbors[cur]:
+            continue
+        for child in neighbors[cur]:
+            if child not in visited:
+                stack.append(child)
+    return len(visited)
+
+
+class IsSCDGSpec(unittest.TestCase):
+    def test_unconnected_graph(self):
+        self.assertFalse(is_SCDG(3, [(0, 1), (1, 0)]))
+    
+    def test_strongly_connected_graph(self):
+        self.assertTrue(is_SCDG(5, [(0, 1), (1, 2), (2, 3), (3, 0), (2, 4), (4, 2)]))
+
+    def test_not_strongly_connected_graph(self):
+        self.assertFalse(is_SCDG(4, [(0, 1), (1, 2), (2, 3)]))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False, verbosity=2)
+```
+
 ### Sep 15, 2021 LC 392 \[Medium\] Is Subsequence
 ---
 > **Question:** Given a string s and a string t, check if s is subsequence of t.

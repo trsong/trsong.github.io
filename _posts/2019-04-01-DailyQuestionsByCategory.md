@@ -7347,6 +7347,26 @@ Output: 1
 ---
 
 <details>
+<summary class="lc_m">
+
+- [**\[Medium\] Strongly Connected Directed Graph**](https://trsong.github.io/python/java/2021/08/02/DailyQuestionsAug.html#sep-16-2021-medium-strongly-connected-directed-graph) -- *Given a directed graph, find out whether the graph is strongly connected or not.* [*\(Try ME\)*](https://replit.com/@trsong/Determine-if-Strongly-Connected-Directed-Graph-1)
+
+</summary>
+<div>
+
+**Question:** Given a directed graph, find out whether the graph is strongly connected or not. A directed graph is strongly connected if there is a path between any two pair of vertices.
+
+**Example:**
+```py
+is_SCDG(vertices=5, edges=[(0, 1), (1, 2), (2, 3), (3, 0), (2, 4), (4, 2)])  # returns True
+is_SCDG(vertices=4, edges=[(0, 1), (1, 2), (2, 3)])  # returns False
+```
+
+</div>
+</details>
+
+
+<details>
 <summary class="lc_h">
 
 - [**\[Hard\] LC 317. Shortest Distance from All Buildings**](https://trsong.github.io/python/java/2021/08/02/DailyQuestionsAug.html#sep-10-2021-lc-317-hard-shortest-distance-from-all-buildings) -- *You want to build a house on an empty land which reaches all buildings in the shortest amount of distance.* [*\(Try ME\)*](https://replit.com/@trsong/Calculate-Shortest-Distance-from-All-Buildings-1)
