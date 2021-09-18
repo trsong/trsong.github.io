@@ -21,6 +21,24 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
 
+### Sep 18, 2021 LC 308 \[Hard\] Range Sum Query 2D - Mutable
+---
+> **Question:** Given a 2D matrix matrix, find the sum of the elements inside the rectangle defined by its upper left corner (row1, col1) and lower right corner (row2, col2).
+
+**Example:**
+```py
+Given matrix = [
+  [3, 0, 1, 4, 2],
+  [5, 6, 3, 2, 1],
+  [1, 2, 0, 1, 5],
+  [4, 1, 0, 1, 7],
+  [1, 0, 3, 0, 5]
+]
+
+sum_region(2, 1, 4, 3)   # returns 8
+update(3, 2, 2)
+sum_region(2, 1, 4, 3)   # returns 10
+```
 
 ### Sep 17, 2021 \[Easy\] Markov Chain
 --- 
