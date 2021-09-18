@@ -24,7 +24,7 @@ categories: Python/Java
 
 ### Sep 17, 2021 \[Easy\] Markov Chain
 --- 
-> **Question:**You are given a starting state start, a list of transition probabilities for a Markov chain, and a number of steps num_steps. Run the Markov chain starting from start for num_steps and compute the number of times we visited each state.
+> **Question:** You are given a starting state start, a list of transition probabilities for a Markov chain, and a number of steps num_steps. Run the Markov chain starting from start for num_steps and compute the number of times we visited each state.
 >
 > For example, given the starting state a, number of steps 5000, and the following transition probabilities:
 
@@ -41,6 +41,96 @@ categories: Python/Java
   ('c', 'c', 0.5)
 ]
 One instance of running this Markov chain might produce { 'a': 3012, 'b': 1656, 'c': 332 }.
+```
+
+**Solution with Binary Search:** [https://replit.com/@trsong/Run-the-Markov-Chain](https://replit.com/@trsong/Run-the-Markov-Chain)
+```py
+import random
+import unittest
+
+def markov_chain(start_state, num_steps, transition_probabilities):
+    transition_map = {}
+    for src, dst, prob in transition_probabilities:
+        if src not in transition_map:
+            transition_map[src] = [[], []]
+        transition_map[src][0].append(dst)
+        transition_map[src][1].append(prob)
+    
+    for src in transition_map:
+        dst_probs = transition_map[src][1]
+        for i in range(1, len(dst_probs)):
+            # accumulate probability
+            dst_probs[i] += dst_probs[i-1]
+    
+    state_counter = {}
+    current_state = start_state
+    for _ in range(num_steps):
+        state_counter[current_state] = state_counter.get(current_state, 0) + 1
+        dst_list, des_prob = transition_map[current_state]
+        random_number = random.random()
+        next_state_index = binary_search(des_prob, random_number)
+        next_state = dst_list[next_state_index]
+        current_state = next_state
+
+    return state_counter
+
+
+def binary_search(dst_probs, target_prob):
+    lo = 0
+    hi = len(dst_probs) - 1
+    while lo < hi:
+        mid = lo + (hi - lo) // 2
+        if dst_probs[mid] < target_prob:
+            lo = mid + 1
+        else:
+            hi = mid
+    return lo
+
+    
+class MarkovChainSpec(unittest.TestCase):
+    def test_example(self):
+        start_state = 'a'
+        num_steps = 5000
+        transition_probabilities = [
+            ('a', 'a', 0.9),
+            ('a', 'b', 0.075),
+            ('a', 'c', 0.025),
+            ('b', 'a', 0.15),
+            ('b', 'b', 0.8),
+            ('b', 'c', 0.05),
+            ('c', 'a', 0.25),
+            ('c', 'b', 0.25),
+            ('c', 'c', 0.5)
+        ]
+        random.seed(42)
+        expected = {'a': 3205, 'c': 330, 'b': 1465}
+        self.assertEqual(expected, markov_chain(start_state, num_steps, transition_probabilities))
+    
+    def test_transition_matrix2(self):
+        start_state = '4'
+        num_steps = 100
+        transition_probabilities = [
+            ('1', '2', 0.23),
+            ('2', '1', 0.09),
+            ('1', '4', 0.77),
+            ('2', '3', 0.06),
+            ('2', '6', 0.85),
+            ('6', '2', 0.62),
+            ('3', '4', 0.63),
+            ('3', '6', 0.37),
+            ('6', '5', 0.38),
+            ('5', '6', 1),
+            ('4', '5', 0.65),
+            ('4', '6', 0.35),
+
+        ]
+        random.seed(42)
+        expected = {'1': 3, '3': 2, '2': 27, '5': 21, '4': 4, '6': 43}
+        self.assertEqual(expected, markov_chain(start_state, num_steps, transition_probabilities))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False, verbosity=2)
 ```
 
 

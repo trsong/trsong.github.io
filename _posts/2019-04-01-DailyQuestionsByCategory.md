@@ -2051,6 +2051,37 @@ Explanation: Because the new interval [4,8] overlaps with [3,5],[6,7],[8,10].
 
 
 <details>
+<summary class="lc_e">
+
+- [**\[Easy\] Markov Chain**](https://trsong.github.io/python/java/2021/08/02/DailyQuestionsAug.html#sep-17-2021-easy-markov-chain) -- *Run the Markov chain starting from start for num_steps and compute the number of times we visited each state.* [*\(Try ME\)*](https://replit.com/@trsong/Run-the-Markov-Chain-1)
+
+</summary>
+<div>
+
+
+**Question:** You are given a starting state start, a list of transition probabilities for a Markov chain, and a number of steps num_steps. Run the Markov chain starting from start for num_steps and compute the number of times we visited each state.
+
+For example, given the starting state a, number of steps 5000, and the following transition probabilities:
+```py
+[
+  ('a', 'a', 0.9),
+  ('a', 'b', 0.075),
+  ('a', 'c', 0.025),
+  ('b', 'a', 0.15),
+  ('b', 'b', 0.8),
+  ('b', 'c', 0.05),
+  ('c', 'a', 0.25),
+  ('c', 'b', 0.25),
+  ('c', 'c', 0.5)
+]
+One instance of running this Markov chain might produce { 'a': 3012, 'b': 1656, 'c': 332 }.
+```
+
+</div>
+</details>
+
+
+<details>
 <summary class="lc_h">
 
 - [**\[Medium\] Allocate Minimum Number of Pages**](https://trsong.github.io/python/java/2021/08/02/DailyQuestionsAug.html#aug-27-2021-medium-allocate-minimum-number-of-pages) -- *The task is to assign books in such a way that the maximum number of pages assigned to a student is minimum.* [*\(Try ME\)*](https://replit.com/@trsong/Minimize-the-Maximum-Page-Assigned-to-Students-1)
