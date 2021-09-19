@@ -5394,6 +5394,34 @@ sumRange(0, 2) -> 8
 </div>
 </details>
 
+<details>
+<summary class="lc_h">
+
+- [**\[Hard\] LC 308. Range Sum Query 2D - Mutable**](https://trsong.github.io/python/java/2021/08/02/DailyQuestionsAug.html#sep-18-2021-lc-308-hard-range-sum-query-2d---mutable) -- *Given a 2D matrix matrix, find the sum of the elements inside the rectangle.* [*\(Try ME\)*](https://replit.com/@trsong/Solve-Range-Sum-Query-2D-Mutable-1)
+
+</summary>
+<div>
+
+**Question:** Given a 2D matrix matrix, find the sum of the elements inside the rectangle defined by its upper left corner (row1, col1) and lower right corner (row2, col2).
+
+**Example:**
+```py
+Given matrix = [
+  [3, 0, 1, 4, 2],
+  [5, 6, 3, 2, 1],
+  [1, 2, 0, 1, 5],
+  [4, 1, 0, 1, 7],
+  [1, 0, 3, 0, 5]
+]
+
+sum_region(2, 1, 4, 3)   # returns 8
+update(3, 2, 2)
+sum_region(2, 1, 4, 3)   # returns 10
+```
+
+</div>
+</details>
+
 
 ## Trie
 ---
