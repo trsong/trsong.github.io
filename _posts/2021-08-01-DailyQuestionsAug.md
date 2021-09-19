@@ -21,6 +21,20 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
 
+### Sep 19, 2021 LC 133 \[Medium\] Deep Copy Graph
+---
+> **Question:** Given a node in a connected directional graph, create a deep copy of it.
+>
+> Each node in the graph contains a val (int) and a list (List[Node]) of its neighbors:
+
+```py
+class Node(object):
+    def __init__(self, val, neighbors=None):
+        self.val = val
+        self.neighbors = neighbors
+```
+
+
 ### Sep 18, 2021 LC 308 \[Hard\] Range Sum Query 2D - Mutable
 ---
 > **Question:** Given a 2D matrix matrix, find the sum of the elements inside the rectangle defined by its upper left corner (row1, col1) and lower right corner (row2, col2).
