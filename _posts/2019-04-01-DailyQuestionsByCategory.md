@@ -7408,6 +7408,29 @@ Output: 1
 <details>
 <summary class="lc_m">
 
+- [**\[Medium\] LC 133. Deep Copy Graph**](https://trsong.github.io/python/java/2021/08/02/DailyQuestionsAug.html#sep-19-2021-lc-133-medium-deep-copy-graph) -- *Given a node in a connected directional graph, create a deep copy of it.* [*\(Try ME\)*](https://replit.com/@trsong/Deep-Copy-A-Connected-Directional-Graph-1)
+
+</summary>
+<div>
+
+**Question:** Given a node in a connected directional graph, create a deep copy of it.
+
+Each node in the graph contains a val (int) and a list (List[Node]) of its neighbors:
+
+```py
+class Node(object):
+    def __init__(self, val, neighbors=None):
+        self.val = val
+        self.neighbors = neighbors
+```
+
+</div>
+</details>
+
+
+<details>
+<summary class="lc_m">
+
 - [**\[Medium\] Strongly Connected Directed Graph**](https://trsong.github.io/python/java/2021/08/02/DailyQuestionsAug.html#sep-16-2021-medium-strongly-connected-directed-graph) -- *Given a directed graph, find out whether the graph is strongly connected or not.* [*\(Try ME\)*](https://replit.com/@trsong/Determine-if-Strongly-Connected-Directed-Graph-1)
 
 </summary>

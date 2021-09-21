@@ -34,6 +34,134 @@ class Node(object):
         self.neighbors = neighbors
 ```
 
+**Solution with DFS:** [https://replit.com/@trsong/Deep-Copy-A-Connected-Directional-Graph](https://replit.com/@trsong/Deep-Copy-A-Connected-Directional-Graph)
+```py
+import unittest
+
+def deep_copy(root):
+    if not root:
+        return None
+
+    node_lookup = { node: Node(node.val) for node in dfs_traversal(root) }
+    for node, copy in node_lookup.items():
+        if not node.neighbors:
+            continue
+        copy.neighbors = list(map(lambda child: node_lookup[child], node.neighbors))
+    return node_lookup[root]
+
+
+def dfs_traversal(root):
+    stack = [root]
+    visited = set()
+    res = []
+    while stack:
+        cur = stack.pop()
+        if cur in visited:
+            continue
+        visited.add(cur)
+        res.append(cur)
+
+        if not cur.neighbors:
+            continue
+        for child in cur.neighbors:
+            stack.append(child)
+    return res
+
+
+###################
+# Testing Utilities
+###################
+class Node(object):
+    def __init__(self, val, neighbors=None):
+        self.val = val
+        self.neighbors = neighbors
+
+    def __eq__(self, other):
+        if not other:
+            return False
+
+        nodes = dfs_traversal(self)
+        other_nodes = dfs_traversal(other)
+        if len(nodes) != len(other_nodes):
+            return False
+        
+        for n1, n2 in zip(nodes, other_nodes):
+            if n1.val != n2.val:
+                return False
+
+            num_neighbor1 = len(n1.neighbors) if n1.neighbors else 0
+            num_neighbor2 = len(n2.neighbors) if n2.neighbors else 0
+            if num_neighbor1 != num_neighbor2:
+                return False
+
+        return True
+
+    def __repr__(self):
+        res = []
+        for node in dfs_traversal(self):
+            res.append(str(node.val))
+        return "DFS: " + ",".join(res)     
+    
+    def __hash__(self):
+        return id(self)
+
+
+class DeepCopySpec(unittest.TestCase):
+    def assert_result(self, root1, root2):
+        # check against each node if two graph have same value yet different memory addresses
+        self.assertEqual(root1, root2)
+        node_set1 = set(dfs_traversal(root1))
+        node_set2 = set(dfs_traversal(root2))
+        self.assertEqual(set(), node_set1 & node_set2)
+
+    def test_empty_graph(self):
+        self.assertIsNone(deep_copy(None))
+
+    def test_graph_with_one_node(self):
+        root = Node(1)
+        self.assert_result(root, deep_copy(root))
+
+    def test_k3(self):
+        n = [Node(i) for i in range(3)]
+        n[0].neighbors = [n[1], n[2]]
+        n[1].neighbors = [n[0], n[2]]
+        n[2].neighbors = [n[1], n[0]]
+        self.assert_result(n[0], deep_copy(n[0]))
+    
+    def test_DAG(self):
+        n = [Node(i) for i in range(4)]
+        n[0].neighbors = [n[1], n[2]]
+        n[1].neighbors = [n[2], n[3]]
+        n[2].neighbors = [n[3]]
+        n[3].neighbors = []
+        self.assert_result(n[0], deep_copy(n[0]))
+
+    def test_graph_with_cycle(self):
+        n = [Node(i) for i in range(6)]
+        n[0].neighbors = [n[1]]
+        n[1].neighbors = [n[2]]
+        n[2].neighbors = [n[3]]
+        n[3].neighbors = [n[4]]
+        n[4].neighbors = [n[5]]
+        n[5].neighbors = [n[2]]
+        self.assert_result(n[0], deep_copy(n[0]))
+
+    def test_k10(self):
+        n = [Node(i) for i in range(10)]
+        for i in range(10):
+            n[i].neighbors = n[:i] + n[i+1:]
+        self.assert_result(n[0], deep_copy(n[0]))
+
+    def test_tree(self):
+        n = [Node(i) for i in range(5)]
+        n[0].neighbors = [n[1], n[2]]
+        n[2].neighbors = [n[3], n[4]]
+        self.assert_result(n[0], deep_copy(n[0]))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False, verbosity=2)
+```
 
 ### Sep 18, 2021 LC 308 \[Hard\] Range Sum Query 2D - Mutable
 ---
