@@ -26,6 +26,7 @@ categories: Python/Java
 > **Question:** Check if a given number is Fancy. A fancy number is one which when rotated 180 degrees is the same. Given a number, find whether it is fancy or not.
 >
 > 180 degree rotations of 6, 9, 1, 0 and 8 are 9, 6, 1, 0 and 8 respectively
+
 ```py
 import unittest
 

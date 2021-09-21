@@ -336,6 +336,20 @@ Given an integer N, write a program that returns, in order, the first N regular 
 </details>
 
 
+<details>
+<summary class="lc_e">
+
+- [**\[Easy\] Fancy Number**](https://trsong.github.io/python/java/2021/08/02/DailyQuestionsAug.html#sep-20-2021-easy-fancy-number) -- *Check if a given number is Fancy. A fancy number is one which when rotated 180 degrees is the same.* [*\(Try ME\)*](https://replit.com/@trsong/Determine-If-Fancy-Number-1)
+
+</summary>
+<div>
+
+**Question:** Check if a given number is Fancy. A fancy number is one which when rotated 180 degrees is the same. Given a number, find whether it is fancy or not.
+
+180 degree rotations of 6, 9, 1, 0 and 8 are 9, 6, 1, 0 and 8 respectively
+
+</div>
+</details>
 
 
 <details>
