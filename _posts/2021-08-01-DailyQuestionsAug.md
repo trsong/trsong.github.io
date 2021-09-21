@@ -21,6 +21,29 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
 
+### Sep 21, 2021 \[Medium\] 4 Sum
+---
+> **Question:** Given a list of numbers, and a target number n, find all unique combinations of a, b, c, d, such that a + b + c + d = n.
+
+**Example 1:**
+```py
+fourSum([1, 1, -1, 0, -2, 1, -1], 0)
+# returns [[-1, -1, 1, 1], [-2, 0, 1, 1]]
+```
+
+**Example 2:**
+```py
+fourSum([3, 0, 1, -5, 4, 0, -1], 1)
+# returns [[-5, -1, 3, 4]]
+```
+
+**Example 3:**
+```py
+fourSum([0, 0, 0, 0, 0], 0)
+# returns [[0, 0, 0, 0]]
+```
+
+
 ### Sep 20, 2021 \[Easy\] Fancy Number
 ---
 > **Question:** Check if a given number is Fancy. A fancy number is one which when rotated 180 degrees is the same. Given a number, find whether it is fancy or not.
