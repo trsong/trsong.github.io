@@ -21,6 +21,62 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
 
+### Sep 20, 2021 \[Easy\] Fancy Number
+---
+> **Question:** Check if a given number is Fancy. A fancy number is one which when rotated 180 degrees is the same. Given a number, find whether it is fancy or not.
+>
+> 180 degree rotations of 6, 9, 1, 0 and 8 are 9, 6, 1, 0 and 8 respectively
+```py
+import unittest
+
+ROTATION_MAP = {
+    0: 0,
+    1: 1,
+    6: 9,
+    8: 8,
+    9: 6
+}
+
+
+def is_fancy_number(num):
+    return num == rotate(num)
+
+
+def rotate(num):
+    res = 0
+    while num > 0:
+        digit = num % 10
+        if digit not in ROTATION_MAP:
+            return None
+        res = 10 * res + ROTATION_MAP[digit]
+        num //= 10
+    return res
+
+
+class IsFancyNumberSpec(unittest.TestCase):
+    def test_fancy_number(self):
+        self.assertTrue(is_fancy_number(69))
+    
+    def test_fancy_number2(self):
+        self.assertTrue(is_fancy_number(916))
+
+    def test_fancy_number3(self):
+        self.assertTrue(is_fancy_number(0))
+
+    def test_not_fancy_number(self):
+        self.assertFalse(is_fancy_number(996))
+    
+    def test_not_fancy_number2(self):
+        self.assertFalse(is_fancy_number(121))
+
+    def test_not_fancy_number3(self):
+        self.assertFalse(is_fancy_number(110))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False, verbosity=2)
+```
+
 ### Sep 19, 2021 LC 133 \[Medium\] Deep Copy Graph
 ---
 > **Question:** Given a node in a connected directional graph, create a deep copy of it.
