@@ -43,6 +43,100 @@ fourSum([0, 0, 0, 0, 0], 0)
 # returns [[0, 0, 0, 0]]
 ```
 
+**Solution:** [https://replit.com/@trsong/Solve-4-Sum-Problem](https://replit.com/@trsong/Solve-4-Sum-Problem)
+```py
+import unittest
+
+def four_sum(nums, target):
+    nums.sort()
+    n = len(nums)
+    res = []
+    for i, first in enumerate(nums):
+        if i > 0 and nums[i - 1] == nums[i]:
+            continue
+
+        for j in range(i + 1, n - 2):
+            if j > i + 1 and nums[j - 1] == nums[j]:
+                continue
+            second = nums[j]
+            sub_target = target - first - second
+            
+            for third, fourth in two_sum(nums, sub_target, j + 1, n - 1):
+                res.append([first, second, third, fourth])
+    return res
+
+
+def two_sum(nums, target, start, end):
+    while start < end:
+        total = nums[start] + nums[end]
+        if total < target:
+            start += 1
+        elif total > target:
+            end -= 1
+        else:
+            yield nums[start], nums[end]
+            start += 1
+            end -= 1
+            
+            while start < end and nums[start - 1] == nums[start]:
+                start += 1
+
+            while start < end and nums[end] == nums[end + 1]:
+                end -= 1
+     
+            
+class FourSumSpec(unittest.TestCase):
+    def assert_result(self, expected, result):
+        self.assertEqual(len(expected), len(result))
+        for lst in expected:
+            lst.sort()
+        for lst2 in result:
+            lst2.sort()
+        expected.sort()
+        result.sort()
+        self.assertEqual(expected, result)
+
+    def test_example1(self):
+        target, nums = 0, [1, 1, -1, 0, -2, 1, -1]
+        expected = [[-1, -1, 1, 1], [-2, 0, 1, 1]]
+        self.assert_result(expected, four_sum(nums, target))
+
+    def test_example2(self):
+        target, nums = 1, [3, 0, 1, -5, 4, 0, -1]
+        expected = [[-5, -1, 3, 4]]
+        self.assert_result(expected, four_sum(nums, target))
+
+    def test_example3(self):
+        target, nums = 0, [0, 0, 0, 0, 0]
+        expected = [[0, 0, 0, 0]]
+        self.assert_result(expected, four_sum(nums, target))
+
+    def test_not_enough_elements(self):
+        target, nums = 0, [0, 0, 0]
+        expected = []
+        self.assert_result(expected, four_sum(nums, target))
+
+    def test_unable_to_find_target_sum(self):
+        target, nums = 0, [-1, -2, -3, -1, 0, 0, 0]
+        expected = []
+        self.assert_result(expected, four_sum(nums, target))
+
+    def test_all_positives(self):
+        target, nums = 23, [10, 2, 3, 4, 5, 9, 7, 8]
+        expected = [
+            [2, 3, 8, 10], 
+            [2, 4, 7, 10], 
+            [2, 4, 8, 9], 
+            [2, 5, 7, 9], 
+            [3, 4, 7, 9], 
+            [3, 5, 7, 8]
+        ]
+        self.assert_result(expected, four_sum(nums, target))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False, verbosity=2)
+```
 
 ### Sep 20, 2021 \[Easy\] Fancy Number
 ---

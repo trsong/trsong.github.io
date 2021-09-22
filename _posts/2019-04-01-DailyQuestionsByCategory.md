@@ -2633,6 +2633,37 @@ Explanation: Closest sum is -5+1+2 = -2 OR -5+1+4 = 0
 </div>
 </details>
 
+<details>
+<summary class="lc_m">
+
+- [**\[Medium\] 4 Sum**](https://trsong.github.io/python/java/2021/08/02/DailyQuestionsAug.html#sep-21-2021-medium-4-sum) -- *Given a list of numbers, and a target number n, find all unique combinations of a, b, c, d, such that a + b + c + d = n.* [*\(Try ME\)*](https://replit.com/@trsong/Solve-4-Sum-Problem-1)
+
+</summary>
+<div>
+
+**Question:** Given a list of numbers, and a target number n, find all unique combinations of a, b, c, d, such that a + b + c + d = n.
+
+**Example 1:**
+```py
+fourSum([1, 1, -1, 0, -2, 1, -1], 0)
+# returns [[-1, -1, 1, 1], [-2, 0, 1, 1]]
+```
+
+**Example 2:**
+```py
+fourSum([3, 0, 1, -5, 4, 0, -1], 1)
+# returns [[-5, -1, 3, 4]]
+```
+
+**Example 3:**
+```py
+fourSum([0, 0, 0, 0, 0], 0)
+# returns [[0, 0, 0, 0]]
+```
+
+</div>
+</details>
+
 
 <details>
 <summary class="lc_e">
