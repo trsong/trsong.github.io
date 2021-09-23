@@ -10321,6 +10321,35 @@ Explanation: we choose the numbers 5 and 1.
 <details>
 <summary class="lc_m">
 
+- [**\[Medium\] Egg Dropping Puzzle**](https://trsong.github.io/python/java/2021/08/02/DailyQuestionsAug.html#sep-22-2021-medium-egg-dropping-puzzle) -- *Given N identical eggs and access to a building with k floors. Your task is to find the lowest floor that will cause an egg to break.* [*\(Try ME\)*](https://replit.com/@trsong/Egg-Dropping-Puzzle-Problem-1)
+
+</summary>
+<div>
+
+**Questions:** You are given N identical eggs and access to a building with k floors. Your task is to find the lowest floor that will cause an egg to break, if dropped from that floor. Once an egg breaks, it cannot be dropped again. If an egg breaks when dropped from the xth floor, you can assume it will also break when dropped from any floor greater than x.
+
+Write an algorithm that finds the minimum number of trial drops it will take, in the worst case, to identify this floor.
+
+**Example1:**
+```py
+Input: N = 1, k = 5, 
+Output: 5
+we will need to try dropping the egg at every floor, beginning with the first, until we reach the fifth floor, so our solution will be 5.
+```
+
+**Example2:**
+```py
+Input: N = 2, k = 36
+Minimum number of trials in worst case with 2 eggs and 36 floors is 8
+```
+
+</div>
+</details>
+
+
+<details>
+<summary class="lc_m">
+
 - [**\[Medium\] LC 375. Guess Number Higher or Lower II**](https://trsong.github.io/python/java/2021/08/02/DailyQuestionsAug.html#aug-29-2021-lc-375-medium-guess-number-higher-or-lower-ii) -- *When you guess a particular number x, and you guess wrong, you pay $x. Given a particular n ≥ 1, find out how much money you need to have to guarantee a win.* [*\(Try ME\)*](https://replit.com/@trsong/Calculate-Guarantee-Money-to-Guess-Number-Higher-or-Lower-1)
 
 </summary>
