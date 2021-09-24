@@ -1300,6 +1300,23 @@ Output: [2, 3, 5]
 
 
 <details>
+<summary class="lc_m">
+
+- [**\[Medium\] Longest Alternating Subsequence Problem**](https://trsong.github.io/python/java/2021/08/02/DailyQuestionsAug.html#sep-23-2021-medium-longest-alternating-subsequence-problem) -- *Finding the length of a subsequence of a given sequence in which the elements are in alternating order.* [*\(Try ME\)*](https://replit.com/@trsong/Solve-Longest-Alternating-Subsequence-Problem-1)
+
+</summary>
+<div>
+
+**Question:** Finding the length of a subsequence of a given sequence in which the elements are in alternating order, and in which the sequence is as long as possible. 
+
+For example, consider array `A[] = [8, 9, 6, 4, 5, 7, 3, 2, 4]` The length of longest subsequence is `6` and the subsequence is `[8, 9, 6, 7, 3, 4]` as `(8 < 9 > 6 < 7 > 3 < 4)`.
+
+
+</div>
+</details>
+
+
+<details>
 <summary class="lc_e">
 
 - [**\[Easy\] Rearrange Array in Alternating Positive & Negative Order**](https://trsong.github.io/python/java/2021/08/02/DailyQuestionsAug.html#aug-18-2021-easy--rearrange-array-in-alternating-positive--negative-order) -- *Given an array of positive and negative numbers, arrange them in an alternate fashion.* [*\(Try ME\)*](https://replit.com/@trsong/Rearrange-the-Array-in-Alternating-Positive-and-Negative-Ord-1)
