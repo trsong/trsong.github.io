@@ -21,6 +21,13 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
 
+### Sep 24, 2021 \[Easy\] Phone Number to Words Based on The Dictionary
+--- 
+> **Question:** Given a phone number, return all valid words that can be created using that phone number.
+>
+> For instance, given the phone number `364` and dictionary `['dog', 'fish', 'cat', 'fog']`, we can construct the words `['dog', 'fog']`.
+
+
 ### Sep 23, 2021 \[Medium\] Longest Alternating Subsequence Problem
 ---
 > **Question:** Finding the length of a subsequence of a given sequence in which the elements are in alternating order, and in which the sequence is as long as possible. 
