@@ -8823,6 +8823,21 @@ Output: [["a"]]
 </details>
 
 
+<details>
+<summary class="lc_e">
+
+- [**\[Easy\] Phone Number to Words Based on The Dictionary**](https://trsong.github.io/python/java/2021/08/02/DailyQuestionsAug.html#sep-24-2021-easy-phone-number-to-words-based-on-the-dictionary) -- *Given a phone number, return all valid words that can be created using that phone number.* [*\(Try ME\)*](https://replit.com/@trsong/Calculate-Phone-Number-to-Words-Based-on-The-Dictionary-1)
+
+</summary>
+<div>
+
+**Question:** Given a phone number, return all valid words that can be created using that phone number.
+
+For instance, given the phone number `364` and dictionary `['dog', 'fish', 'cat', 'fog']`, we can construct the words `['dog', 'fog']`.
+
+</div>
+</details>
+
 
 <details>
 <summary class="lc_e">

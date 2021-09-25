@@ -27,6 +27,64 @@ categories: Python/Java
 >
 > For instance, given the phone number `364` and dictionary `['dog', 'fish', 'cat', 'fog']`, we can construct the words `['dog', 'fog']`.
 
+**Solution:** [https://replit.com/@trsong/Calculate-Phone-Number-to-Words-Based-on-The-Dictionary](https://replit.com/@trsong/Calculate-Phone-Number-to-Words-Based-on-The-Dictionary)
+```py
+import unittest
+from functools import reduce 
+
+def phone_number_to_words(phone, dictionary):
+    letter_map = {
+        1: [],
+        2: ['a', 'b', 'c'],
+        3: ['d', 'e', 'f'],
+        4: ['g', 'h', 'i'],
+        5: ['j', 'k', 'l'],
+        6: ['m', 'n', 'o'],
+        7: ['p', 'q', 'r', 's'],
+        8: ['t', 'u', 'v'],
+        9: ['w', 'x', 'y', 'z'],
+        0: []
+    }
+    digit_lookup = {ch: num for num in letter_map for ch in letter_map[num] }
+    word_to_digits = lambda word: reduce(lambda accu, ch: 10 * accu + digit_lookup[ch], word, 0)
+    return list(filter(lambda word: phone == word_to_digits(word), dictionary))
+
+
+class PhoneNumberToWordSpec(unittest.TestCase):
+    def test_example(self):
+        phone = 364
+        dictionary = ['dog', 'fish', 'cat', 'fog']
+        expected = ['dog', 'fog']
+        self.assertCountEqual(expected,
+                              phone_number_to_words(phone, dictionary))
+
+    def test_empty_dictionary(self):
+        phone = 42
+        dictionary = []
+        expected = []
+        self.assertCountEqual(expected,
+                              phone_number_to_words(phone, dictionary))
+
+    def test_single_digit(self):
+        phone = 5
+        dictionary = ['a', 'b', 'cd', 'ef', 'g', 'k', 'j', 'kl']
+        expected = ['j', 'k']
+        self.assertCountEqual(expected,
+                              phone_number_to_words(phone, dictionary))
+
+    def test_contains_empty_word(self):
+        phone = 222
+        dictionary = [
+            "", "", "abc", "def", "ghi", "jkl", "mno", "pqrs", "tuv", "wxyz"
+        ]
+        expected = ['abc']
+        self.assertCountEqual(expected,
+                              phone_number_to_words(phone, dictionary))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False, verbosity=2)
+```
 
 ### Sep 23, 2021 \[Medium\] Longest Alternating Subsequence Problem
 ---
