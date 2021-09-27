@@ -9232,6 +9232,27 @@ For example, given `"2542540123"`, you should return `['254.25.40.123', '254.254
 ---
 
 <details>
+<summary class="lc_h">
+
+- [**\[Medium\] Climb Staircase**](https://trsong.github.io/python/java/2021/08/02/DailyQuestionsAug.html#sep-26-2021-medium-climb-staircase) -- *You can climb up either 1 or 2 steps at a time. Returns  the total number of unique ways you can climb the staircase.* [*\(Try ME\)*](https://replit.com/@trsong/Solve-Climb-Staircase-Problem-1)
+
+</summary>
+<div>
+
+**Question:** There exists a staircase with N steps, and you can climb up either 1 or 2 steps at a time. Given N, write a function that returns a number represents the total number of unique ways you can climb the staircase.
+
+For example, if N is 4, then there are 5 unique ways:
+* 1, 1, 1, 1
+* 2, 1, 1
+* 1, 2, 1
+* 1, 1, 2
+* 2, 2
+
+</div>
+</details>
+
+
+<details>
 <summary class="lc_m">
 
 - [**\[Medium\] Number of Moves on a Grid**](https://trsong.github.io/python/java/2021/08/02/DailyQuestionsAug.html#aug-26-2021-medium-number-of-moves-on-a-grid) -- *Write a function to count the number of ways of starting at the top-left corner and getting to the bottom-right corner.* [*\(Try ME\)*](https://replit.com/@trsong/Count-Number-of-Moves-on-a-Grid-1)

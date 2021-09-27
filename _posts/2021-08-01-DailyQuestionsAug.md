@@ -23,7 +23,6 @@ categories: Python/Java
 
 ### Sep 27, 2021 \[Hard\] Print Ways to Climb Staircase
 ---
-
 > **Question:** There exists a staircase with N steps, and you can climb up either 1 or 2 steps at a time. Given N, write a function that **PRINT** out all possible unique ways you can climb the staircase. The **ORDER** of the steps matters. 
 >
 > For example, if N is 4, then there are 5 unique ways (accoding to May 5's question). This time we print them out as the following:
@@ -46,7 +45,6 @@ categories: Python/Java
 
 ### Sep 26, 2021 \[Medium\] Climb Staircase
 ---
-
 > **Question:** There exists a staircase with N steps, and you can climb up either 1 or 2 steps at a time. Given N, write a function that returns a number represents the total number of unique ways you can climb the staircase.
 >
 > For example, if N is 4, then there are 5 unique ways:
@@ -55,6 +53,59 @@ categories: Python/Java
 > * 1, 2, 1
 > * 1, 1, 2
 > * 2, 2
+
+**Solution with DP:** [https://replit.com/@trsong/Solve-Climb-Staircase-Problem](https://replit.com/@trsong/Solve-Climb-Staircase-Problem)
+```py
+import unittest
+
+def climb_stairs(n):
+    # Let dp[i] represents number of ways to climb i stairs
+    # dp[i] = dp[i - 1] + dp[i - 2] 
+    dp = [1] * (n + 1)
+    for i in range(2, n + 1):
+        dp[i] = dp[i - 1] + dp[i - 2]
+    return dp[n]
+
+
+class ClimbStairSpec(unittest.TestCase):
+    def test_example(self):
+        """
+        1, 1, 1, 1
+        2, 1, 1
+        1, 2, 1
+        1, 1, 2
+        2, 2
+        """
+        self.assertEqual(5, climb_stairs(4))
+    
+    def test_base_case(self):
+        self.assertEqual(1, climb_stairs(1))
+    
+    def test_two_stairs(self):
+        """
+        1, 1
+        2
+        """
+        self.assertEqual(2, climb_stairs(2))
+    
+    def test_three_stairs(self):
+        """
+        1, 1, 1
+        1, 2
+        2, 1
+        """
+        self.assertEqual(3, climb_stairs(3))
+    
+    def test_five_stairs(self):
+        self.assertEqual(8, climb_stairs(5))
+    
+    def test_six_stairs(self):
+        self.assertEqual(13, climb_stairs(6))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False, verbosity=2)
+```
 
 
 ### Sep 25, 2021 \[Medium\] Favorite Genres
