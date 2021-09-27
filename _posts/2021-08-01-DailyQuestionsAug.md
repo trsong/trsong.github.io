@@ -67,6 +67,79 @@ Output: {
 }
 ```
 
+**Solution:** [https://replit.com/@trsong/Find-Favorite-Genres](https://replit.com/@trsong/Find-Favorite-Genres)
+```py
+import unittest
+
+def favorite_genre(user_map, genre_map):
+    genre_lookup = {}
+    for genre, songs in genre_map.items():
+        for song in songs:
+            genre_lookup[song] = genre_lookup.get(song, [])
+            genre_lookup[song].append(genre)
+
+    res = {}
+    for user, songs in user_map.items():
+        genre_freq = {}
+        for song in songs:
+            for genre in genre_lookup.get(song, []):
+                genre_freq[genre] = genre_freq.get(genre, 0) + 1
+
+        favorites = []
+        max_freq = 0
+        for genere, freq in genre_freq.items():
+            if freq > max_freq:
+                max_freq = freq
+                favorites = [genere]
+            elif freq == max_freq:
+                favorites.append(genere)
+        res[user] = favorites
+    return res
+
+
+class FavoriteGenreSpec(unittest.TestCase):
+    def assert_map(self, map1, map2):
+        for _, values in map1.items():
+            values.sort()
+        for _, values in map2.items():
+            values.sort()
+        self.assertEqual(map1, map2)
+
+    def test_example1(self):
+        user_map = {
+            "David": ["song1", "song2", "song3", "song4", "song8"],
+            "Emma": ["song5", "song6", "song7"]
+        }
+        genre_map = {
+            "Rock": ["song1", "song3"],
+            "Dubstep": ["song7"],
+            "Techno": ["song2", "song4"],
+            "Pop": ["song5", "song6"],
+            "Jazz": ["song8", "song9"]
+        }
+        expected = {"David": ["Rock", "Techno"], "Emma": ["Pop"]}
+        self.assert_map(expected, favorite_genre(user_map, genre_map))
+
+    def test_example2(self):
+        user_map = {"David": ["song1", "song2"], "Emma": ["song3", "song4"]}
+        genre_map = {}
+        expected = {"David": [], "Emma": []}
+        self.assert_map(expected, favorite_genre(user_map, genre_map))
+
+    def test_same_song_with_multiple_genres(self):
+        user_map = {"David": ["song1", "song2"], "Emma": ["song3", "song4"]}
+        genre_map = {
+            "Rock": ["song1", "song3"],
+            "Dubstep": ["song1"],
+        }
+        expected = {"David": ["Rock", "Dubstep"], "Emma": ["Rock"]}
+        self.assert_map(expected, favorite_genre(user_map, genre_map))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False, verbosity=2)
+```
+
 ### Sep 24, 2021 \[Easy\] Phone Number to Words Based on The Dictionary
 --- 
 > **Question:** Given a phone number, return all valid words that can be created using that phone number.

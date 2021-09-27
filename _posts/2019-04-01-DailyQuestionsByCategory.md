@@ -6443,6 +6443,61 @@ Explanation: A -> B -> idle -> A -> B -> idle -> A -> B.
 ## Hashmap
 ---
 
+<details>
+<summary class="lc_m">
+
+- [**\[Medium\] Favorite Genres**](https://trsong.github.io/python/java/2021/08/02/DailyQuestionsAug.html#sep-25-2021-medium-favorite-genres) -- *Given a userMap, return a map, where the key is a username and the value is a list of the user's favorite genres.* [*\(Try ME\)*](https://replit.com/@trsong/Find-Favorite-Genres-1)
+
+</summary>
+<div>
+
+**Question:** Given a map Map<String, List<String>> userMap, where the key is a username and the value is a list of user's songs.
+Also given a map Map<String, List<String>> genreMap, where the key is a genre and the value is a list of songs belonging to this genre.
+The task is to return a map Map<String, List<String>>, where the key is a username and the value is a list of the user's favorite genres. Favorite genre is a genre with the most song.
+
+**Example 1:**
+```py
+Input:
+userMap = {  
+   "David": ["song1", "song2", "song3", "song4", "song8"],
+   "Emma":  ["song5", "song6", "song7"]
+},
+genreMap = {  
+   "Rock":    ["song1", "song3"],
+   "Dubstep": ["song7"],
+   "Techno":  ["song2", "song4"],
+   "Pop":     ["song5", "song6"],
+   "Jazz":    ["song8", "song9"]
+}
+
+Output: {  
+   "David": ["Rock", "Techno"],
+   "Emma":  ["Pop"]
+}
+
+Explanation:
+David has 2 Rock, 2 Techno and 1 Jazz song. So he has 2 favorite genres.
+Emma has 2 Pop and 1 Dubstep song. Pop is Emma's favorite genre.
+```
+
+**Example 2:**
+```py
+Input:
+userMap = {  
+   "David": ["song1", "song2"],
+   "Emma":  ["song3", "song4"]
+},
+genreMap = {}
+
+Output: {  
+   "David": [],
+   "Emma":  []
+}
+```
+
+</div>
+</details>
+
 	
 <details>
 <summary class="lc_m">
