@@ -21,6 +21,29 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
 
+### Sep 27, 2021 \[Hard\] Print Ways to Climb Staircase
+---
+
+> **Question:** There exists a staircase with N steps, and you can climb up either 1 or 2 steps at a time. Given N, write a function that **PRINT** out all possible unique ways you can climb the staircase. The **ORDER** of the steps matters. 
+>
+> For example, if N is 4, then there are 5 unique ways (accoding to May 5's question). This time we print them out as the following:
+
+```py
+1, 1, 1, 1
+2, 1, 1
+1, 2, 1
+1, 1, 2
+2, 2
+```
+
+> What if, instead of being able to climb 1 or 2 steps at a time, you could climb any number from a set of positive integers X? 
+>
+> For example, if N is 6, and X = {2, 5}. You could climb 2 or 5 steps at a time. Then there is only 1 unique way, so we print the following:
+
+```py
+2, 2, 2
+```
+
 ### Sep 26, 2021 \[Medium\] Climb Staircase
 ---
 
