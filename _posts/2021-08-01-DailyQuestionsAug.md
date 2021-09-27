@@ -21,6 +21,19 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
 
+### Sep 26, 2021 \[Medium\] Climb Staircase
+---
+
+> **Question:** There exists a staircase with N steps, and you can climb up either 1 or 2 steps at a time. Given N, write a function that returns a number represents the total number of unique ways you can climb the staircase.
+>
+> For example, if N is 4, then there are 5 unique ways:
+> * 1, 1, 1, 1
+> * 2, 1, 1
+> * 1, 2, 1
+> * 1, 1, 2
+> * 2, 2
+
+
 ### Sep 25, 2021 \[Medium\] Favorite Genres
 ---
 > **Question:** Given a map Map<String, List<String>> userMap, where the key is a username and the value is a list of user's songs.
