@@ -21,6 +21,33 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
 
+### Sep 28, 2021 LT 867 \[Medium\] 4 Keys Keyboard
+---
+> **Question:** Imagine you have a special keyboard with the following keys:
+
+```py
+Key 1: (A): Print one 'A' on screen.
+Key 2: (Ctrl-A): Select the whole screen.
+Key 3: (Ctrl-C): Copy selection to buffer.
+Key 4: (Ctrl-V): Print buffer on screen appending it after what has already been printed.
+```
+> Now, you can only press the keyboard for N times (with the above four keys), find out the maximum numbers of 'A' you can print on screen.
+
+**Example 1:**
+```py
+Input: 3
+Output: 3
+Explanation: A, A, A
+```
+
+**Example 2:**
+```py
+Input: 7
+Output: 9
+Explanation: A, A, A, Ctrl A, Ctrl C, Ctrl V, Ctrl V
+```
+
+
 ### Sep 27, 2021 \[Hard\] Print Ways to Climb Staircase
 ---
 > **Question:** There exists a staircase with N steps, and you can climb up either 1 or 2 steps at a time. Given N, write a function that **PRINT** out all possible unique ways you can climb the staircase. The **ORDER** of the steps matters. 
