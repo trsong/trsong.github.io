@@ -8696,6 +8696,38 @@ We can consider a sentence valid if it conforms to the following rules:
 ---
 
 <details>
+<summary class="lc_h">
+
+- [**\[Hard\] Print Ways to Climb Staircase**](https://trsong.github.io/python/java/2021/08/02/DailyQuestionsAug.html#sep-27-2021-hard-print-ways-to-climb-staircase) -- *You can climb up either 1 or 2 steps at a time. Print out all possible unique ways you can climb the staircase.* [*\(Try ME\)*](https://replit.com/@trsong/Print-Ways-to-Climb-Staircase-1)
+
+</summary>
+<div>
+
+**Question:** There exists a staircase with N steps, and you can climb up either 1 or 2 steps at a time. Given N, write a function that **PRINT** out all possible unique ways you can climb the staircase. The **ORDER** of the steps matters. 
+
+For example, if N is 4, then there are 5 unique ways (accoding to May 5's question). This time we print them out as the following:
+
+```py
+1, 1, 1, 1
+2, 1, 1
+1, 2, 1
+1, 1, 2
+2, 2
+```
+
+What if, instead of being able to climb 1 or 2 steps at a time, you could climb any number from a set of positive integers X? 
+
+For example, if N is 6, and X = {2, 5}. You could climb 2 or 5 steps at a time. Then there is only 1 unique way, so we print the following:
+
+```py
+2, 2, 2
+```
+
+</div>
+</details>
+
+
+<details>
 <summary class="lc_m">
 
 - [**\[Medium\] Boggle Game**](https://trsong.github.io/python/java/2021/05/02/DailyQuestionsMay.html#may-18-2021-medium-boggle-game) -- *Given a boggle grid and dictionary. Find all possible words that can be formed by a sequence of adjacent characters.* [*\(Try ME\)*](https://replit.com/@trsong/Boggle-Game-1)

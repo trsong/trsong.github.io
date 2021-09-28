@@ -43,6 +43,117 @@ categories: Python/Java
 2, 2, 2
 ```
 
+
+**My thoughts:** The only way to figure out each path is to manually test all outcomes. However, certain cases are invalid (like exceed the target value while climbing) so we try to modify certain step until its valid. Such technique is called ***Backtracking***.
+
+We may use recursion to implement backtracking, each recursive step will create a separate branch which also represent different recursive call stacks. Once the branch is invalid, the call stack will bring us to a different branch, i.e. backtracking to a different solution space.
+
+For example, if N is 4, and feasible steps are `[1, 2]`, then there are 5 different solution space/path. Each node represents a choice we made and each branch represents a recursive call.
+
+Note we also keep track of the remaining steps while doing recursion. 
+```py
+├ 1 
+│ ├ 1
+│ │ ├ 1
+│ │ │ └ 1 SUCCEED
+│ │ └ 2 SUCCEED
+│ └ 2 
+│   └ 1 SUCCEED
+└ 2 
+  ├ 1
+  │ └ 1 SUCCEED
+  └ 2 SUCCEED
+```
+
+If N is 6 and fesible step is `[5, 2]`:
+```
+├ 5 FAILURE
+└ 2 
+  └ 2
+    └ 2 SUCCEED
+```
+
+
+**Solution with Backtracking:** [https://replit.com/@trsong/Print-Ways-to-Climb-Staircase](https://replit.com/@trsong/Print-Ways-to-Climb-Staircase)
+```py
+import unittest
+
+def climb_stairs(num_stairs, steps):
+    res = []
+    backtrack(num_stairs, steps, [], res)
+    return res
+
+
+def backtrack(remain_stairs, steps, accu, res):
+    if remain_stairs == 0:
+        res.append(', '.join(accu))
+    else:
+        for step in steps:
+            if step > remain_stairs:
+                continue
+            accu.append(str(step))
+            backtrack(remain_stairs - step, steps, accu, res)
+            accu.pop()
+
+
+class ClimbStairSpec(unittest.TestCase):
+    def assert_result(self, expected, res):
+        self.assertEqual(sorted(res), sorted(expected))
+
+    def test_example(self):
+        num_stairs, steps = 4, [1, 2]
+        expected = [
+            '1, 1, 1, 1',
+            '2, 1, 1',
+            '1, 2, 1',
+            '1, 1, 2',
+            '2, 2'
+        ]
+        self.assert_result(expected, climb_stairs(num_stairs, steps))
+
+    def test_example2(self):
+        num_stairs, steps = 5, [1, 3, 5]
+        expected = [
+            '1, 1, 1, 1, 1', 
+            '3, 1, 1', 
+            '1, 3, 1', 
+            '1, 1, 3', 
+            '5'
+        ]
+        self.assert_result(expected, climb_stairs(num_stairs, steps))
+
+    def test_example3(self):
+        num_stairs, steps = 4, [1, 2, 3, 4]
+        expected = [
+            '1, 1, 1, 1', 
+            '1, 1, 2', 
+            '1, 2, 1', 
+            '1, 3', 
+            '2, 1, 1', 
+            '2, 2', 
+            '3, 1',
+            '4'
+        ]
+        self.assert_result(expected, climb_stairs(num_stairs, steps))
+    
+    def test_infeasible_steps(self):
+        self.assert_result([], climb_stairs(9, []))
+    
+    def test_infeasible_steps2(self):
+        self.assert_result([], climb_stairs(99, [7]))
+    
+    def test_trivial_case(self):
+        num_stairs, steps = 42, [42]
+        expected = [
+            '42'
+        ]
+        self.assert_result(expected, climb_stairs(num_stairs, steps))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False, verbosity=2)
+```
+
 ### Sep 26, 2021 \[Medium\] Climb Staircase
 ---
 > **Question:** There exists a staircase with N steps, and you can climb up either 1 or 2 steps at a time. Given N, write a function that returns a number represents the total number of unique ways you can climb the staircase.
