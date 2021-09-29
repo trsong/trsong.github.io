@@ -21,6 +21,36 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
 
+### Sep 29, 2021 LC 47 \[Medium\] All Distinct Permutations
+---
+> **Question:** Print all distinct permutations of a given string with duplicates
+Given a string that may contain duplicates, write a function to return all permutations of given string such that no permutation is repeated in output.
+
+**Example 1:**
+```py
+Input: "112"
+Output: ["112", "121", "211"]
+```
+
+**Example 2:**
+```py
+Input: "AB"
+Output: ["AB", "BA"]
+```
+
+**Example 3:**
+```py
+Input: "ABC"
+Output: ["ABC", "ACB", "BAC", "BCA", "CBA", "CAB"]
+```
+
+**Example 4:**
+```py
+Input: "ABA"
+Output: ["ABA", "AAB", "BAA"]
+```
+
+
 ### Sep 28, 2021 LT 867 \[Medium\] 4 Keys Keyboard
 ---
 > **Question:** Imagine you have a special keyboard with the following keys:
