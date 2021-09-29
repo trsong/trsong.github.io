@@ -9264,6 +9264,40 @@ For example, given `"2542540123"`, you should return `['254.25.40.123', '254.254
 ---
 
 <details>
+<summary class="lc_m">
+
+- [**\[Medium\] LT 867. 4 Keys Keyboard**](https://trsong.github.io/python/java/2021/08/02/DailyQuestionsAug.html#sep-28-2021-lt-867-medium-4-keys-keyboard) -- *You can only press four keys: A, ctrl-A, ctrl-C, ctrl-V, find out the maximum numbers of 'A' you can print on screen.* [*\(Try ME\)*](https://replit.com/@trsong/4-Keys-Keyboard-Problem-1)
+
+</summary>
+<div>
+
+**Question:** Imagine you have a special keyboard with the following keys:
+```py
+Key 1: (A): Print one 'A' on screen.
+Key 2: (Ctrl-A): Select the whole screen.
+Key 3: (Ctrl-C): Copy selection to buffer.
+Key 4: (Ctrl-V): Print buffer on screen appending it after what has already been printed.
+```
+Now, you can only press the keyboard for N times (with the above four keys), find out the maximum numbers of 'A' you can print on screen.
+
+**Example 1:**
+```py
+Input: 3
+Output: 3
+Explanation: A, A, A
+```
+
+**Example 2:**
+```py
+Input: 7
+Output: 9
+Explanation: A, A, A, Ctrl A, Ctrl C, Ctrl V, Ctrl V
+```
+
+</div>
+</details>
+
+<details>
 <summary class="lc_h">
 
 - [**\[Medium\] Climb Staircase**](https://trsong.github.io/python/java/2021/08/02/DailyQuestionsAug.html#sep-26-2021-medium-climb-staircase) -- *You can climb up either 1 or 2 steps at a time. Returns  the total number of unique ways you can climb the staircase.* [*\(Try ME\)*](https://replit.com/@trsong/Solve-Climb-Staircase-Problem-1)

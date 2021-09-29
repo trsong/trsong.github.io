@@ -47,6 +47,50 @@ Output: 9
 Explanation: A, A, A, Ctrl A, Ctrl C, Ctrl V, Ctrl V
 ```
 
+**My thoughts:** This question can be solved with DP. Let dp[n] to be the max number of A's when the problem size is n. Then we want to define sub-problems and combine result of subproblems: 
+
+First, notice that when max number of A's equals n when n <= 6. Second, if n > 6, we want to accumulate enought A's before we can double the result. Thus the last few keys must all be Ctrl + V.  But we also see that the overhead of double the total number of A's is 3: we need Ctrl + A, Ctrl + C and Ctrl + V to double the size of n - 3 problem. And we can do Ctrl + V and another Ctrl + V back-to-back to bring two copys of original string. That will triple the number of A's of n - 4 problem.
+
+Thus based on above observation, we find that the recursive formula is `dp[n] = max(2 * dp[n-3], 3 * dp[n - 4], 4 * dp[n - 5], ..., (k-1) * dp[n-k], ..., (n-2) * dp[1])`. As for certain problem size k, it is calculated over and over again, we will need to cache the result. 
+
+**Solution with DP:** [https://replit.com/@trsong/4-Keys-Keyboard-Problem](https://replit.com/@trsong/4-Keys-Keyboard-Problem)
+```py
+import unittest
+
+def solve_four_keys_keyboard(n):
+    if n <= 6:
+        return n
+        
+    # Let dp[n] represents max fesisble A's with problem size n
+    # dp[n] = max(2 * dp[n - 3], 3 * dp[n - 4], ..., (k - 1)  * dp[n - k])
+    dp = [0] * (n + 1)
+    for i in range(7):
+        dp[i] = i
+
+    for i in range(6, n + 1):
+        for k in range(3, n + 1):
+            dp[i] = max(dp[i], (k - 1) * dp[n - k])
+    return dp[n]        
+
+
+class SolveFourKeysKeyboardSpec(unittest.TestCase):
+    def test_n_less_than_7(self):
+        self.assertEqual(solve_four_keys_keyboard(0), 0) 
+        self.assertEqual(solve_four_keys_keyboard(1), 1) # A
+        self.assertEqual(solve_four_keys_keyboard(2), 2) # A, A
+        self.assertEqual(solve_four_keys_keyboard(3), 3) # A, A, A
+        self.assertEqual(solve_four_keys_keyboard(4), 4) # A, A, A, A
+        self.assertEqual(solve_four_keys_keyboard(5), 5) # A, A, A, A, A
+        self.assertEqual(solve_four_keys_keyboard(6), 6) # A, A, A, Ctrl + A, Ctrl + C, Ctrl + V
+
+    def test_n_greater_than_7(self):
+        self.assertEqual(solve_four_keys_keyboard(7), 9) # A, A, A, Ctrl + A, Ctrl + C, Ctrl + V, Ctrl + V
+        self.assertEqual(solve_four_keys_keyboard(8), 12) # A, A, A, A, Ctrl + A, Ctrl + C, Ctrl + V, Ctrl + V
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False, verbosity=2)
+```
 
 ### Sep 27, 2021 \[Hard\] Print Ways to Climb Staircase
 ---
