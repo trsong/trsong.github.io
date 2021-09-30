@@ -9006,6 +9006,44 @@ For example, given `[1,2,3]`, return `[[1,2,3],[1,3,2],[2,1,3],[2,3,1],[3,1,2],[
 
 
 <details>
+<summary class="lc_m">
+
+- [**\[Medium\] LC 47. All Distinct Permutations**](https://trsong.github.io/python/java/2021/08/02/DailyQuestionsAug.html#sep-29-2021-lc-47-medium-all-distinct-permutations) -- *Print all distinct permutations of a given string with duplicates.* [*\(Try ME\)*](https://replit.com/@trsong/Find-All-Distinct-Permutations-1)
+
+</summary>
+<div>
+
+**Question:** Given a string that may contain duplicates, write a function to return all permutations of given string such that no permutation is repeated in output.
+
+**Example 1:**
+```py
+Input: "112"
+Output: ["112", "121", "211"]
+```
+
+**Example 2:**
+```py
+Input: "AB"
+Output: ["AB", "BA"]
+```
+
+**Example 3:**
+```py
+Input: "ABC"
+Output: ["ABC", "ACB", "BAC", "BCA", "CBA", "CAB"]
+```
+
+**Example 4:**
+```py
+Input: "ABA"
+Output: ["ABA", "AAB", "BAA"]
+```
+
+</div>
+</details>
+
+
+<details>
 <summary class="lc_h">
 
 - [**\[Hard\] LC 301. Remove Invalid Parentheses**](https://trsong.github.io/python/java/2020/11/02/DailyQuestionsAug.html#dec-22-2020-lc-301-hard-remove-invalid-parentheses) -- *Remove the minimum number of invalid parentheses in order to make the input string valid. Return all possible results.* [*\(Try ME\)*](https://repl.it/@trsong/Ways-to-Remove-Invalid-Parentheses-1)

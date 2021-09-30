@@ -23,8 +23,7 @@ categories: Python/Java
 
 ### Sep 29, 2021 LC 47 \[Medium\] All Distinct Permutations
 ---
-> **Question:** Print all distinct permutations of a given string with duplicates
-Given a string that may contain duplicates, write a function to return all permutations of given string such that no permutation is repeated in output.
+> **Question:** Given a string that may contain duplicates, write a function to return all permutations of given string such that no permutation is repeated in output.
 
 **Example 1:**
 ```py
@@ -50,6 +49,73 @@ Input: "ABA"
 Output: ["ABA", "AAB", "BAA"]
 ```
 
+**Solution with Backtracking:** [https://replit.com/@trsong/Find-All-Distinct-Permutations](https://replit.com/@trsong/Find-All-Distinct-Permutations)
+```py
+import unittest
+
+def distinct_permutation(s):
+    res = []
+    backtrack(res, [], list(sorted(s)))
+    return res
+
+
+def backtrack(res, accu, remain):
+    if not remain:
+        res.append("".join(accu))
+    else:
+        for i, ch in enumerate(remain):
+            if i > 0 and remain[i - 1] == ch:
+                continue
+            accu.append(ch)
+            remain.pop(i)
+            backtrack(res, accu, remain)
+            remain.insert(i, ch)
+            accu.pop()
+
+
+class DistinctPermutationSpec(unittest.TestCase):
+    def assert_result(self, los1, los2):
+        self.assertEqual(sorted(los1), sorted(los2))
+
+    def test_example1(self):
+        input = "112"
+        output = ["112", "121", "211"]
+        self.assert_result(output, distinct_permutation(input))
+
+    def test_example2(self):
+        input = "AB"
+        output = ["AB", "BA"]
+        self.assert_result(output, distinct_permutation(input))
+
+    def test_example3(self):
+        input = "ABC"
+        output =  ["ABC", "ACB", "BAC", "BCA", "CBA", "CAB"]
+        self.assert_result(output, distinct_permutation(input))
+
+    def test_example4(self):
+        input = "ABA"
+        output = ["ABA", "AAB", "BAA"]
+        self.assert_result(output, distinct_permutation(input))
+
+    def test_empty_input(self):
+        input = ""
+        output = [""]
+        self.assert_result(output, distinct_permutation(input))
+
+    def test_input_with_unique_char(self):
+        input = "FFF"
+        output = ["FFF"]
+        self.assert_result(output, distinct_permutation(input))
+
+    def test_unsorted_string(self):
+        input = "1212"
+        output = ["1122", "2112", "2211", "1212", "2121", "1221"]
+        self.assert_result(output, distinct_permutation(input))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False, verbosity=2)
+```
 
 ### Sep 28, 2021 LT 867 \[Medium\] 4 Keys Keyboard
 ---
