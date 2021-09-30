@@ -21,6 +21,22 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
 
+### Oct 1, 2021 \[Medium\] Look-and-Say Sequence
+--- 
+> **Question:** The "look and say" sequence is defined as follows: beginning with the term 1, each subsequent term visually describes the digits appearing in the previous term. The first few terms are as follows:
+
+```py
+1
+11
+21
+1211
+111221
+```
+
+> As an example, the fourth term is 1211, since the third term consists of one 2 and one 1.
+>
+> Given an integer N, print the Nth term of this sequence
+
 ### Sep 30, 2021 LC 435 \[Medium\] Non-overlapping Intervals
 ---
 > **Question:** Given a collection of intervals, find the minimum number of intervals you need to remove to make the rest of the intervals non-overlapping.
