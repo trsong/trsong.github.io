@@ -21,6 +21,17 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
 
+### Sep 30, 2021 LC 435 \[Medium\] Non-overlapping Intervals
+---
+> **Question:** Given a collection of intervals, find the minimum number of intervals you need to remove to make the rest of the intervals non-overlapping.
+>
+> Intervals can "touch", such as `[0, 1]` and `[1, 2]`, but they won't be considered overlapping.
+>
+> For example, given the intervals `(7, 9), (2, 4), (5, 8)`, return `1` as the last interval can be removed and the first two won't overlap.
+>
+> The intervals are not necessarily sorted in any order.
+
+
 ### Sep 29, 2021 LC 47 \[Medium\] All Distinct Permutations
 ---
 > **Question:** Given a string that may contain duplicates, write a function to return all permutations of given string such that no permutation is repeated in output.
