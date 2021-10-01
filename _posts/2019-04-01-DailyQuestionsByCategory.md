@@ -2079,6 +2079,26 @@ Explanation: Because the new interval [4,8] overlaps with [3,5],[6,7],[8,10].
 </div>
 </details>
 
+<details>
+<summary class="lc_m">
+
+- [**\[Medium\] LC 435. Non-overlapping Intervals**](https://trsong.github.io/python/java/2021/08/02/DailyQuestionsAug.html#sep-30-2021-lc-435-medium-non-overlapping-intervals) -- *Given a collection of intervals, find the minimum number of intervals you need to remove to make the rest of the intervals non-overlapping.* [*\(Try ME\)*](https://replit.com/@trsong/Min-Removal-to-Make-Non-overlapping-Intervals-1)
+
+</summary>
+<div>
+
+**Question:** Given a collection of intervals, find the minimum number of intervals you need to remove to make the rest of the intervals non-overlapping.
+
+Intervals can "touch", such as `[0, 1]` and `[1, 2]`, but they won't be considered overlapping.
+
+For example, given the intervals `(7, 9), (2, 4), (5, 8)`, return `1` as the last interval can be removed and the first two won't overlap.
+
+The intervals are not necessarily sorted in any order.
+
+</div>
+</details>
+
+
 ### Binary Search
 ---
 
