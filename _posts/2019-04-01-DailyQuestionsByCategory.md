@@ -1260,6 +1260,33 @@ For example, if A is `'abcde'` and B is `'cdeab'`, return `True`. If A is `'abc'
 
 
 <details>
+<summary class="lc_m">
+
+- [**\[Medium\] Look-and-Say Sequence**](https://trsong.github.io/python/java/2021/08/02/DailyQuestionsAug.html#oct-1-2021-medium-look-and-say-sequence) -- *The “look and say”: beginning with the term 1, each subsequent term visually describes the digits appearing in the previous term.* [*\(Try ME\)*](https://replit.com/@trsong/Print-Look-and-Say-Sequence-1)
+
+</summary>
+<div>
+
+
+**Question:** The "look and say" sequence is defined as follows: beginning with the term 1, each subsequent term visually describes the digits appearing in the previous term. The first few terms are as follows:
+
+```py
+1
+11
+21
+1211
+111221
+```
+
+As an example, the fourth term is 1211, since the third term consists of one 2 and one 1.
+
+Given an integer N, print the Nth term of this sequence
+
+</div>
+</details>
+
+
+<details>
 <summary class="lc_e">
 
 - [**\[Easy\] Sum Binary Numbers**](http://trsong.github.io/python/java/2021/08/02/DailyQuestionsAug.html#sep-4-2021-easy-sum-binary-numbers) -- *Given two binary numbers represented as strings, return the sum of the two binary numbers.* [*\(Try ME\)*](https://replit.com/@trsong/Add-Two-Binary-Numbers-1)

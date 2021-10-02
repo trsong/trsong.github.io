@@ -37,6 +37,60 @@ categories: Python/Java
 >
 > Given an integer N, print the Nth term of this sequence
 
+
+**Solution:** [https://replit.com/@trsong/Print-Look-and-Say-Sequence](https://replit.com/@trsong/Print-Look-and-Say-Sequence)
+```py
+import unittest
+
+def look_and_say(n):
+    res = "1"
+    for _ in xrange(n-1):
+        prev = res[0]
+        count = 0
+        str_buffer = []
+        for i in xrange(len(res)+1):
+            char = res[i] if i < len(res) else None
+            if prev == char:
+                count += 1
+            else:
+                str_buffer.append(str(count))
+                str_buffer.append(prev)
+                prev = char
+                count = 1
+        res = "".join(str_buffer)
+    
+    return res
+
+
+class LookAndSaySpec(unittest.TestCase):
+    def test_1st_term(self):
+        self.assertEqual("1", look_and_say(1))
+        
+    def test_2nd_term(self):
+        self.assertEqual("11", look_and_say(2))
+        
+    def test_3rd_term(self):
+        self.assertEqual("21", look_and_say(3))
+        
+    def test_4th_term(self):
+        self.assertEqual("1211", look_and_say(4))
+        
+    def test_5th_term(self):
+        self.assertEqual("111221", look_and_say(5))
+        
+    def test_6th_term(self):
+        self.assertEqual("312211", look_and_say(6))
+        
+    def test_7th_term(self):
+        self.assertEqual("13112221", look_and_say(7))
+
+    def test_10th_term(self):
+        self.assertEqual("13211311123113112211", look_and_say(10))
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
+```
+
 ### Sep 30, 2021 LC 435 \[Medium\] Non-overlapping Intervals
 ---
 > **Question:** Given a collection of intervals, find the minimum number of intervals you need to remove to make the rest of the intervals non-overlapping.
