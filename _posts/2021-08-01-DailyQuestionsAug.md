@@ -21,6 +21,13 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
 
+### Oct 2, 2021 \[Easy\] Count Complete Binary Tree
+---
+> **Question:** Given a complete binary tree, count the number of nodes in faster than `O(n)` time. 
+> 
+> Recall that a complete binary tree has every level filled except the last, and the nodes in the last level are filled starting from the left.
+
+
 ### Oct 1, 2021 \[Medium\] Look-and-Say Sequence
 --- 
 > **Question:** The "look and say" sequence is defined as follows: beginning with the term 1, each subsequent term visually describes the digits appearing in the previous term. The first few terms are as follows:
