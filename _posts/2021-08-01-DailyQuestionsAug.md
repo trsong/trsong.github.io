@@ -28,6 +28,112 @@ categories: Python/Java
 > Recall that a complete binary tree has every level filled except the last, and the nodes in the last level are filled starting from the left.
 
 
+**Solution:** [https://replit.com/@trsong/Count-Complete-Binary-Tree-2](https://replit.com/@trsong/Count-Complete-Binary-Tree-2)
+```py
+import unittest
+
+def count_complete_tree(root):
+    left_height, right_height = measure_height(root)
+    if left_height == right_height:
+        return 2**left_height - 1
+    else:
+        return 1 + count_complete_tree(root.left) + count_complete_tree(
+            root.right)
+
+
+def measure_height(root):
+    left_node = right_node = root
+    left_height = right_height = 0
+    while left_node:
+        left_node = left_node.left
+        left_height += 1
+
+    while right_node:
+        right_node = right_node.right
+        right_height += 1
+    return left_height, right_height
+
+
+class TreeNode(object):
+    def __init__(self, val=None, left=None, right=None):
+        self.val = val
+        self.left = left
+        self.right = right
+
+
+class CountCompleteTreeSpec(unittest.TestCase):
+    def test_empty_tree(self):
+        self.assertEqual(0, count_complete_tree(None))
+
+    def test_one_node_tree(self):
+        root = TreeNode(1)
+        self.assertEqual(1, count_complete_tree(root))
+
+    def test_level_2_full_tree(self):
+        """
+          1
+         / \
+        2   3
+        """
+        root = TreeNode(1, TreeNode(2), TreeNode(3))
+        self.assertEqual(3, count_complete_tree(root))
+
+    def test_level_3_full_tree(self):
+        """
+             1
+           /   \
+          2     3
+         / \   / \
+        4   5 6   7
+        """
+        left = TreeNode(2, TreeNode(4), TreeNode(5))
+        right = TreeNode(3, TreeNode(6), TreeNode(7))
+        root = TreeNode(1, left, right)
+        self.assertEqual(7, count_complete_tree(root))
+
+    def test_level_3_left_heavy_tree(self):
+        """
+            1
+           / \
+          2   3
+         / \
+        4   5
+        """
+        left = TreeNode(2, TreeNode(4), TreeNode(5))
+        root = TreeNode(1, left, TreeNode(3))
+        self.assertEqual(5, count_complete_tree(root))
+
+    def test_level_3_left_heavy_tree2(self):
+        """
+             1
+           /   \
+          2     3
+         / \   /
+        4   5 6
+        """
+        left = TreeNode(2, TreeNode(4), TreeNode(5))
+        right = TreeNode(3, TreeNode(6))
+        root = TreeNode(1, left, right)
+        self.assertEqual(6, count_complete_tree(root))
+
+    def test_level_3_left_heavy_tree3(self):
+        """
+             1
+           /   \
+          2     3
+         /
+        4  
+        """
+        left = TreeNode(2, TreeNode(4))
+        right = TreeNode(3)
+        root = TreeNode(1, left, right)
+        self.assertEqual(4, count_complete_tree(root))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False, verbosity=2)
+```
+
 ### Oct 1, 2021 \[Medium\] Look-and-Say Sequence
 --- 
 > **Question:** The "look and say" sequence is defined as follows: beginning with the term 1, each subsequent term visually describes the digits appearing in the previous term. The first few terms are as follows:
