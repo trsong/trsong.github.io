@@ -21,6 +21,23 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
 
+### Oct 4, 2021 LC 1014 \[Medium\] Best Sightseeing Pair
+---
+> **Question:** Given an array `A` of positive integers, `A[i]` represents the value of the i-th sightseeing spot, and two sightseeing spots `i` and `j` have distance `j - i` between them.
+>
+> The score of a pair (`i < j`) of sightseeing spots is (`A[i] + A[j] + i - j`) : the sum of the values of the sightseeing spots, minus the distance between them.
+>
+> Return the maximum score of a pair of sightseeing spots.
+
+**Example:**
+
+```py
+Input: [8,1,5,2,6]
+Output: 11
+Explanation: i = 0, j = 2, A[i] + A[j] + i - j = 8 + 5 + 0 - 2 = 11
+```
+
+
 ### Oct 3, 2021 \[Easy\] Binary Tree Level Sum
 ---
 > **Question:** Given a binary tree and an integer which is the depth of the target level. Calculate the sum of the nodes in the target level. 
