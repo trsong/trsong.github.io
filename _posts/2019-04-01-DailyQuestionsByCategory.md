@@ -8102,7 +8102,7 @@ Output: 01100
 <details>
 <summary class="lc_e">
 
-- [**\[Easy\] Binary Tree Level Sum**]() -- *Calculate the sum of the nodes in the target level.* [*\(Try ME\)*](https://replit.com/@trsong/Given-Certain-Level-Calculate-Binary-Tree-Sum-1)
+- [**\[Easy\] Binary Tree Level Sum**](https://trsong.github.io/python/java/2021/08/02/DailyQuestionsAug.html#oct-3-2021-easy-binary-tree-level-sum) -- *Calculate the sum of the nodes in the target level.* [*\(Try ME\)*](https://replit.com/@trsong/Given-Certain-Level-Calculate-Binary-Tree-Sum-1)
 
 </summary>
 <div>
