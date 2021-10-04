@@ -21,6 +21,20 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
 
+### Oct 5, 2021 \[Medium\] Longest Path in A Directed Acyclic Graph
+--- 
+> **Question:** Given a Directed Acyclic Graph (DAG), find the longest distances in the given graph.
+>
+> **Note:** The longest path problem for a general graph is not as easy as the shortest path problem because the longest path problem doesn’t have optimal substructure property. In fact, the Longest Path problem is NP-Hard for a general graph. However, the longest path problem has a linear time solution for directed acyclic graphs. The idea is similar to linear time solution for shortest path in a directed acyclic graph. We use Topological Sorting.
+
+Example: 
+
+```py
+# Following returns 3, as longest path is: 5, 2, 3, 1
+longest_path_in_DAG(vertices=6, edges=[(5, 2), (5, 0), (4, 0), (4, 1), (2, 3), (3, 1)])
+```
+
+
 ### Oct 4, 2021 LC 1014 \[Medium\] Best Sightseeing Pair
 ---
 > **Question:** Given an array `A` of positive integers, `A[i]` represents the value of the i-th sightseeing spot, and two sightseeing spots `i` and `j` have distance `j - i` between them.
