@@ -37,6 +37,47 @@ Output: 11
 Explanation: i = 0, j = 2, A[i] + A[j] + i - j = 8 + 5 + 0 - 2 = 11
 ```
 
+**My thoughts:** You probably don't even notice, but the problem already presents a hint in the question. So to say, `A[i] + A[j] - (j - i) = A[i] + A[j] + i - j`, if we re-arrange the terms even further, we can get `(A[i] + i) + (A[j] - j)`. Remember we want to maximize `(A[i] + i) + (A[j] - j)`. Notice that when we iterate throught the list along the way, before process `A[j]` we should've seen `A[i]` and `i` already. Thus we can store the max of `(A[i] + i)` so far and plus `(A[j] - j)` to get max along the way. This question is just a variant of selling stock problem. 
+
+**Solution:** [https://replit.com/@trsong/Find-Best-Sightseeing-Pair](https://replit.com/@trsong/Find-Best-Sightseeing-Pair)
+```py
+import unittest
+
+def max_score_sightseeing_pair(A):
+    #    A[i] + A[j] + i - j
+    # = (A[i] + i) + (A[j] - j) 
+    max_term1 = A[0] + 0
+    res = 0
+    for j in range(1, len(A)):
+        term2 = A[j] - j
+        res = max(res, max_term1 + term2)
+        max_term1 = max(max_term1, A[j] + j)
+    return res
+
+
+class MaxScoreSightseeingPairSpec(unittest.TestCase):
+    def test_example(self):
+        self.assertEqual(max_score_sightseeing_pair([8, 1, 5, 2, 6]), 11) # i = 0, j = 2, A[i] + A[j] + i - j = 8 + 5 + 0 - 2 = 11
+
+    def test_two_high_value_spots(self):
+        self.assertEqual(max_score_sightseeing_pair([1, 9, 1, 10]), 17) # i = 1, j = 3, 9 + 10 + 1 - 3 = 17
+
+    def test_decreasing_value(self):
+        self.assertEqual(max_score_sightseeing_pair([3, 1, 1, 1]), 3) # i = 0, j = 1, 3 + 1 + 0 - 1 = 3
+
+    def test_increasing_value(self):
+        self.assertEqual(max_score_sightseeing_pair([1, 2, 4, 8]), 11) # i = 2, j = 3, 4 + 8 + 2 - 3 = 11
+
+    def test_tie(self):
+        self.assertEqual(max_score_sightseeing_pair([2, 2, 2, 2]), 3) # i = 0, j = 1, 2 + 2 + 0 - 1 = 3
+
+    def test_two_elements(self):
+        self.assertEqual(max_score_sightseeing_pair([5, 4]), 8) # i = 0, j = 1, 5 + 4 + 0 - 1 = 8
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False, verbosity=2)
+```
 
 ### Oct 3, 2021 \[Easy\] Binary Tree Level Sum
 ---

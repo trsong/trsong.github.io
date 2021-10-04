@@ -1669,6 +1669,34 @@ Explanation: Here, the optimal trade is to buy when the price is 5, and sell whe
 
 
 <details>
+<summary class="lc_m">
+
+- [**\[Medium\] LC 1014. Best Sightseeing Pair**](https://trsong.github.io/python/java/2021/08/02/DailyQuestionsAug.html#oct-4-2021-lc-1014-medium-best-sightseeing-pair) -- *The score of a pair (i < j) of sightseeing spots is (A[i] + A[j] + i - j) : the sum of the values of the sightseeing spots, minus the distance between them.* [*\(Try ME\)*](https://replit.com/@trsong/Find-Best-Sightseeing-Pair-1)
+
+</summary>
+<div>
+
+**Question:** Given an array `A` of positive integers, `A[i]` represents the value of the i-th sightseeing spot, and two sightseeing spots `i` and `j` have distance `j - i` between them.
+
+The score of a pair (`i < j`) of sightseeing spots is (`A[i] + A[j] + i - j`) : the sum of the values of the sightseeing spots, minus the distance between them.
+
+Return the maximum score of a pair of sightseeing spots.
+
+**Example:**
+
+```py
+Input: [8,1,5,2,6]
+Output: 11
+Explanation: i = 0, j = 2, A[i] + A[j] + i - j = 8 + 5 + 0 - 2 = 11
+```
+
+
+
+</div>
+</details>
+
+
+<details>
 <summary class="lc_h">
 
 - [**\[Hard\] Exclusive Product**](https://trsong.github.io/python/java/2020/08/02/DailyQuestionsAug.html#oct-28-2020-hard-exclusive-product) -- *Given an array of integers, return a new array such that each element at index i of the new array is the product of all the numbers except i.* [*\(Try ME\)*](https://repl.it/@trsong/Calculate-Exclusive-Product-1)
