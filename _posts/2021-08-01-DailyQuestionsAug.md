@@ -21,6 +21,103 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
 
+### Oct 3, 2021 \[Easy\] Binary Tree Level Sum
+---
+> **Question:** Given a binary tree and an integer which is the depth of the target level. Calculate the sum of the nodes in the target level. 
+
+**Solution with BFS:** [https://replit.com/@trsong/Given-Certain-Level-Calculate-Binary-Tree-Sum](https://replit.com/@trsong/Given-Certain-Level-Calculate-Binary-Tree-Sum)
+```py
+import unittest
+
+def tree_level_sum(tree, level):
+    if not tree:
+        return 0
+
+    queue = [tree]
+    level_sum = 0
+    while queue and level >= 0:
+        level_sum = 0
+        for _ in range(len(queue)):
+            cur = queue.pop(0)
+            level_sum += cur.val
+            
+            for child in [cur.left, cur.right]:
+                if not child:
+                    continue
+                queue.append(child)
+        level -= 1
+    return level_sum if level < 0 else 0
+
+
+class TreeNode(object):
+    def __init__(self, val, left=None, right=None):
+        self.val = val
+        self.left = left
+        self.right = right
+
+
+class TreeLevelSumSpec(unittest.TestCase):
+    def test_empty_tree(self):
+        self.assertEqual(0, tree_level_sum(None, 0))
+        self.assertEqual(0, tree_level_sum(None, 1))
+
+    def test_complete_tree(self):
+        """
+             1
+           /   \
+          2     3
+         / \   /
+        4   5 6
+        """
+        n2 = TreeNode(2, TreeNode(4), TreeNode(5))
+        n3 = TreeNode(3, TreeNode(6))
+        n1 = TreeNode(1, n2, n3)
+        self.assertEqual(15, tree_level_sum(n1, 2))
+        self.assertEqual(1, tree_level_sum(n1, 0))
+
+    def test_heavy_left_tree(self):
+        """
+              1
+             /
+            2
+           /
+          3
+         /
+        4
+        """
+        n3 = TreeNode(3, TreeNode(4))
+        n2 = TreeNode(2, n3)
+        n1 = TreeNode(1, n2)
+        self.assertEqual(1, tree_level_sum(n1, 0))
+        self.assertEqual(4, tree_level_sum(n1, 3))
+
+    def test_heavy_right_tree(self):
+        """
+          1
+         / \
+        2   3
+       /   / \
+      8   4   5
+         / \   \
+        6   7   9
+        """
+        n5 = TreeNode(5, right=TreeNode(9))
+        n4 = TreeNode(4, TreeNode(6), TreeNode(7))
+        n3 = TreeNode(3, n4, n5)
+        n2 = TreeNode(2, TreeNode(8))
+        n1 = TreeNode(1, n2, n3)
+        self.assertEqual(1, tree_level_sum(n1, 0))
+        self.assertEqual(5, tree_level_sum(n1, 1))
+        self.assertEqual(17, tree_level_sum(n1, 2))
+        self.assertEqual(22, tree_level_sum(n1, 3))
+        self.assertEqual(0, tree_level_sum(n1, 4))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False, verbosity=2)
+```
+
+
 ### Oct 2, 2021 \[Easy\] Count Complete Binary Tree
 ---
 > **Question:** Given a complete binary tree, count the number of nodes in faster than `O(n)` time. 

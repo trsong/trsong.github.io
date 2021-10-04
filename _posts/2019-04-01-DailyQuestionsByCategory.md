@@ -8098,6 +8098,23 @@ Output: 01100
 </details>
 
 
+
+<details>
+<summary class="lc_e">
+
+- [**\[Easy\] Binary Tree Level Sum**]() -- *Calculate the sum of the nodes in the target level.* [*\(Try ME\)*](https://replit.com/@trsong/Given-Certain-Level-Calculate-Binary-Tree-Sum-1)
+
+</summary>
+<div>
+
+**Question:** Given a binary tree and an integer which is the depth of the target level. Calculate the sum of the nodes in the target level. 
+
+
+</div>
+</details>
+
+
+
 <details>
 <summary class="lc_e">
 
