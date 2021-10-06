@@ -33,6 +33,85 @@ categories: Python/Java
 longest_path_in_DAG(vertices=6, edges=[(5, 2), (5, 0), (4, 0), (4, 1), (2, 3), (3, 1)])
 ```
 
+**Solution with Topological Sort:** [https://replit.com/@trsong/Find-the-Longest-Path-in-A-Directed-Acyclic-Graph](https://replit.com/@trsong/Find-the-Longest-Path-in-A-Directed-Acyclic-Graph)
+```py
+import unittest
+
+def longest_path_in_DAG(vertices, edges):
+    neighbors = [None] * vertices
+    inbound = [0] * vertices
+    for u, v in edges:
+        neighbors[u] = neighbors[u] or []
+        neighbors[u].append(v)
+        inbound[v] += 1
+
+    distance = [0] * vertices
+    top_order = top_sort(neighbors, inbound)
+    if len(top_order) != vertices:
+        return -1
+
+    for node in top_order:
+        if not neighbors[node]:
+            continue
+        for nb in neighbors[node]:
+            distance[nb] = max(distance[nb], distance[node] + 1)
+    return max(distance)
+
+
+def top_sort(neighbors, inbound):
+    queue = []
+    for node in range(len(neighbors)):
+        if inbound[node] == 0:
+            queue.append(node)
+
+    top_order = []
+    while queue:
+        cur = queue.pop(0)
+        top_order.append(cur)
+        if not neighbors[cur]:
+            continue
+        for nb in neighbors[cur]:
+            inbound[nb] -= 1
+            if inbound[nb] == 0:
+                queue.append(nb)
+    return top_order
+    
+
+class LongestPathInDAGSpec(unittest.TestCase):
+    def test_grap_with_cycle(self):
+        v = 3
+        e = [(0, 1), (2, 0), (1, 2)]
+        self.assertEqual(-1, longest_path_in_DAG(v, e))
+    
+    def test_grap_with_cycle2(self):
+        v = 2
+        e = [(0, 1), (0, 0)]
+        self.assertEqual(-1, longest_path_in_DAG(v, e))
+
+    def test_disconnected_graph(self):
+        v = 5
+        e = [(0, 1), (2, 3), (3, 4)]
+        self.assertEqual(2, longest_path_in_DAG(v, e))  # path: 2, 3, 4
+
+    def test_graph_with_two_paths(self):
+        v = 5
+        e = [(0, 1), (1, 4), (0, 2), (2, 3), (3, 4)]
+        self.assertEqual(3, longest_path_in_DAG(v, e))  # path: 0, 2, 3, 4
+    
+    def test_graph_with_two_paths2(self):
+        v = 5
+        e = [(0, 2), (2, 3), (3, 4), (0, 1), (1, 4)]
+        self.assertEqual(3, longest_path_in_DAG(v, e))  # path: 0, 2, 3, 4
+    
+    def test_connected_graph_with_paths_of_different_lenghths(self):
+        v = 7
+        e = [(0, 2), (0, 3), (1, 2), (1, 3), (2, 3), (2, 5), (3, 4), (3, 5), (3, 6), (2, 5), (5, 6)]
+        self.assertEqual(4, longest_path_in_DAG(v, e))  # path: 0, 2, 3, 5, 6
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False, verbosity=2)
+```
 
 ### Oct 4, 2021 LC 1014 \[Medium\] Best Sightseeing Pair
 ---

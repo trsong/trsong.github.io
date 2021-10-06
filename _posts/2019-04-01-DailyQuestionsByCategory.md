@@ -8258,6 +8258,27 @@ The words in the order of ['apple', 'eggs', 'snack', 'karat', 'tuna'] creates a 
 <details>
 <summary class="lc_h">
 
+- [**\[Hard\] Longest Path in A Directed Acyclic Graph**](https://trsong.github.io/python/java/2021/08/02/DailyQuestionsAug.html#oct-5-2021-hard-longest-path-in-a-directed-acyclic-graph) -- *Given a Directed Acyclic Graph (DAG), find the longest distances in the given graph.* [*\(Try ME\)*](https://replit.com/@trsong/Find-the-Longest-Path-in-A-Directed-Acyclic-Graph-1)
+
+</summary>
+<div>
+
+**Question:** Given a Directed Acyclic Graph (DAG), find the longest distances in the given graph.
+
+**Note:** The longest path problem for a general graph is not as easy as the shortest path problem because the longest path problem doesn’t have optimal substructure property. In fact, the Longest Path problem is NP-Hard for a general graph. However, the longest path problem has a linear time solution for directed acyclic graphs. The idea is similar to linear time solution for shortest path in a directed acyclic graph. We use Topological Sorting.
+
+**Example:** 
+```py
+# Following returns 3, as longest path is: 5, 2, 3, 1
+longest_path_in_DAG(vertices=6, edges=[(5, 2), (5, 0), (4, 0), (4, 1), (2, 3), (3, 1)])
+```
+
+</div>
+</details>
+
+<details>
+<summary class="lc_h">
+
 - [**\[Hard\] Max Path Value in Directed Graph**](http://trsong.github.io/python/java/2021/02/02/DailyQuestionsFeb.html#feb-13-2021-hard-max-path-value-in-directed-graph) -- *Given a directed graph, return the largest value path of the graph. Define a path’s value as the number of most frequent letters along path.* [*\(Try ME\)*](https://repl.it/@trsong/Find-Max-Letter-Path-Value-in-Directed-Graph-1)
 
 </summary>
