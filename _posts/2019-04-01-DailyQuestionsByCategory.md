@@ -612,6 +612,30 @@ Return true as the first and third rectangle overlap each other.
 ---
 
 <details>
+<summary class="lc_m">
+
+- [**\[Medium\] LC 289. Conway's Game of Life**](https://trsong.github.io/python/java/2021/08/02/DailyQuestionsAug.html#oct-6-2021-lc-289-medium-conways-game-of-life) -- *Conway’s Game of Life takes place on an infinite two-dimensional board of square cells. Implement Conway’s Game of Life.* [*\(Try ME\)*](https://replit.com/@trsong/Solve-Conways-Game-of-Life-Problem-1)
+
+</summary>
+<div>
+
+**Question:** Conway's Game of Life takes place on an infinite two-dimensional board of square cells. Each cell is either dead or alive, and at each tick, the following rules apply:
+
+- Any live cell with less than two live neighbours dies.
+- Any live cell with two or three live neighbours remains living.
+- Any live cell with more than three live neighbours dies.
+- Any dead cell with exactly three live neighbours becomes a live cell.
+- A cell neighbours another cell if it is horizontally, vertically, or diagonally adjacent.
+
+Implement Conway's Game of Life. It should be able to be initialized with a starting list of live cell coordinates and the number of steps it should run for. Once initialized, it should print out the board state at each step. Since it's an infinite board, print out only the relevant coordinates, i.e. from the top-leftmost live cell to bottom-rightmost live cell.
+
+You can represent a live cell with an asterisk (*) and a dead cell with a dot (.).
+
+</div>
+</details>
+
+
+<details>
 <summary class="lc_e">
 
 - [**\[Medium\] Add Subtract Currying**](http://trsong.github.io/python/java/2021/08/02/DailyQuestionsAug.html#aug-14-2021-medium-add-subtract-currying) -- *Write a function, add_subtract, which alternately adds and subtracts curried arguments.* [*\(Try ME\)*](https://replit.com/@trsong/Add-and-Subtract-Currying-1)

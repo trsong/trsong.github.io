@@ -35,6 +35,170 @@ categories: Python/Java
 >
 > You can represent a live cell with an asterisk (*) and a dead cell with a dot (.).
 
+**Solution:** [https://replit.com/@trsong/Solve-Conways-Game-of-Life-Problem](https://replit.com/@trsong/Solve-Conways-Game-of-Life-Problem)
+```py
+import unittest
+
+DIRECTIONS = [-1, 0, 1]
+
+class ConwaysGameOfLife(object):
+    def __init__(self, initial_life_coordinates=[]):
+        self.cells = set(initial_life_coordinates)
+
+    def get_neighbors(self, pos):
+        r, c = pos
+        return {(r + dr, c + dc)
+                for dr in DIRECTIONS for dc in DIRECTIONS
+                if not (dr == dc == 0)}
+
+    def count_live_neighbors(self, pos):
+        r, c = pos
+        res = 0
+        for row, col in self.cells:
+            if abs(row - r) > 1 or abs(col - c) > 1 or row == r and col == c:
+                continue
+            res += 1
+        return res
+
+    def proceed(self, n_round):
+        for _ in range(n_round):
+            self.next()
+
+    def next(self):
+        live = set()
+        dead = set()
+        for pos in self.cells:
+            if 2 <= self.count_live_neighbors(pos) <= 3:
+                live.add(pos)
+
+            for nb in self.get_neighbors(pos):
+                if nb in self.cells or nb in live or nb in dead:
+                    continue
+
+                if self.count_live_neighbors(nb) == 3:
+                    live.add(nb)
+                else:
+                    dead.add(nb)
+        self.cells = live
+
+    def display_grid(self):
+        rows = set(map(lambda pos: pos[0], self.cells))
+        cols = set(map(lambda pos: pos[1], self.cells))
+        r_min, r_max, c_min, c_max = min(rows), max(rows), min(cols), max(cols)
+        res = []
+        for r in range(r_min, r_max + 1):
+            row = []
+            for c in range(c_min, c_max + 1):
+                if (r, c) in self.cells:
+                    row.append('*')
+                else:
+                    row.append('.')
+            res.append(''.join(row))
+        return res
+
+
+class ConwaysGameOfLifeSpec(unittest.TestCase):
+    def test_still_lives_scenario(self):
+        game = ConwaysGameOfLife([(1, 1), (1, 2), (2, 1), (2, 2)])
+        self.assertEqual(game.display_grid(), [
+            "**",
+            "**"
+        ])
+        game.proceed(1)
+        self.assertEqual(game.display_grid(), [
+            "**",
+            "**"
+        ])
+
+        game2 = ConwaysGameOfLife([(0, 1), (0, 2), (1, 0), (1, 3), (2, 1), (2, 2)])
+        self.assertEqual(game2.display_grid(), [
+            ".**.",
+            "*..*",
+            ".**."
+        ])
+        game2.proceed(2)
+        self.assertEqual(game2.display_grid(), [
+            ".**.",
+            "*..*",
+            ".**."
+        ])
+
+    def test_oscillators_scenario(self):
+        game = ConwaysGameOfLife([(-100, 0), (-100, 1), (-100, 2)])
+        self.assertEqual(game.display_grid(), [
+            "***",
+        ])
+        game.proceed(1)
+        self.assertEqual(game.display_grid(), [
+            "*",
+            "*",
+            "*"
+        ])
+        game.proceed(3)
+        self.assertEqual(game.display_grid(), [
+           "***",
+        ])
+
+        game2 = ConwaysGameOfLife([(0, 0), (0, 1), (1, 0), (2, 3), (3, 2), (3, 3)])
+        self.assertEqual(game2.display_grid(), [
+            "**..",
+            "*...",
+            "...*",
+            "..**"
+        ])
+        game2.proceed(1)
+        self.assertEqual(game2.display_grid(), [
+            "**..",
+            "**..",
+            "..**",
+            "..**",
+        ])
+        game2.proceed(3)
+        self.assertEqual(game2.display_grid(), [
+            "**..",
+            "*...",
+            "...*",
+            "..**"
+        ])
+
+
+    def test_spaceships_scenario(self):
+        game = ConwaysGameOfLife([(0, 2), (1, 0), (1, 2), (2, 1), (2, 2)])
+        self.assertEqual(game.display_grid(), [
+            "..*",
+            "*.*",
+            ".**"
+        ])
+        game.proceed(1)
+        self.assertEqual(game.display_grid(), [
+           "*..",
+           ".**",
+           "**."
+        ])
+        game.proceed(1)
+        self.assertEqual(game.display_grid(), [
+            ".*.",
+            "..*",
+            "***"
+        ])
+        game.proceed(1)
+        self.assertEqual(game.display_grid(), [
+            "*.*",
+            ".**",
+            ".*."
+        ])
+        game.proceed(1)
+        self.assertEqual(game.display_grid(), [
+            "..*",
+            "*.*",
+            ".**"
+        ])
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False, verbosity=2)
+```
+
 ### Oct 5, 2021 \[Hard\] Longest Path in A Directed Acyclic Graph
 --- 
 > **Question:** Given a Directed Acyclic Graph (DAG), find the longest distances in the given graph.
