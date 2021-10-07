@@ -21,6 +21,16 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
 
+### Oct 7, 2021 LC 390 \[Easy\] Josephus Problem
+---
+> **Question:** There are `N` prisoners standing in a circle, waiting to be executed. The executions are carried out starting with the `kth` person, and removing every successive `kth` person going clockwise until there is no one left.
+>
+> Given `N` and `k`, write an algorithm to determine where a prisoner should stand in order to be the last survivor.
+>
+> For example, if `N = 5` and `k = 2`, the order of executions would be `[2, 4, 1, 5, 3]`, so you should return `3`.
+>
+> Note: if k = 2, exists `O(log N)` solution
+
 ### Oct 6, 2021 LC 289 \[Medium\] Conway's Game of Life
 ---
 > **Question:** Conway's Game of Life takes place on an infinite two-dimensional board of square cells. Each cell is either dead or alive, and at each tick, the following rules apply:
