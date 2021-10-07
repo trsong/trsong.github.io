@@ -47,9 +47,8 @@ class ConwaysGameOfLife(object):
 
     def get_neighbors(self, pos):
         r, c = pos
-        return {(r + dr, c + dc)
-                for dr in DIRECTIONS for dc in DIRECTIONS
-                if not (dr == dc == 0)}
+        return iter((r + dr, c + dc) for dr in DIRECTIONS for dc in DIRECTIONS
+                    if not (dr == dc == 0))
 
     def count_live_neighbors(self, pos):
         r, c = pos
