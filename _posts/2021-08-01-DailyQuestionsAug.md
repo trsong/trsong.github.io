@@ -31,6 +31,61 @@ categories: Python/Java
 >
 > Note: if k = 2, exists `O(log N)` solution
 
+**Solution with Recursion:** [https://replit.com/@trsong/Solve-Josephus-Problem](https://replit.com/@trsong/Solve-Josephus-Problem)
+```py
+import unittest
+
+def solve_josephus(n, k):
+    if n == 1:
+        return 1
+    else:
+        # First mark each person from 1 to n, the survivor person is x
+        # After kill kth person. We start the game again from k-1.
+        # Then mark each person from 1 to n-1 again from the k-1 person. 
+        # Notice the survivor person x is the same as we skip first k-1 person and then begin a new game with n-1 person
+        # That is josephus(n, k) = k-1 + josephus(n-1, k). 
+        # Of course, we need to loop around the number to avoid overflow
+        return (k - 1 + solve_josephus(n - 1, k)) % n + 1
+
+
+class SolveJosephuSpec(unittest.TestCase):
+    def test_example(self):
+        n, k = 5, 2
+        expected = 3  # [2, 4, 1, 5, 3]
+        self.assertEqual(expected, solve_josephus(n, k))
+
+    def test_example2(self):
+        n, k = 7, 3
+        expected = 4  # [3, 6, 2, 7, 5, 1]
+        self.assertEqual(expected, solve_josephus(n, k))
+
+    def test_example3(self):
+        n, k = 14, 2
+        expected = 13  # [2, 4, 6, 8, 10, 12, 14, 3, 7, 11, 1, 9, 5]
+        self.assertEqual(expected, solve_josephus(n, k))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False, verbosity=2)
+```
+
+**Special Case When k=2:** [https://repl.it/@trsong/Josephus-Problem-with-k2](https://repl.it/@trsong/Josephus-Problem-with-k2)
+```py
+def solve_josephus2(n):
+    if n == 0:
+        return 0
+    elif n % 2 == 0:
+        # Suppose n = 8
+        # first round: 2, 4, 6, 8 were killed
+        # remaining: original 1, 3, 5, 7 => 1, 2, 3, 4 in next round
+        return 2 * solve_josephus2(n//2) - 1
+    else:
+        # Suppose n = 7
+        # first round: 2, 4, 6 were killed
+        # remaining: original 1, 3, 5, 7 => 1, 2, 3, 4
+        return 2 * solve_josephus2((n-1)//2) + 1
+```
+
 ### Oct 6, 2021 LC 289 \[Medium\] Conway's Game of Life
 ---
 > **Question:** Conway's Game of Life takes place on an infinite two-dimensional board of square cells. Each cell is either dead or alive, and at each tick, the following rules apply:

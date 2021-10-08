@@ -4745,6 +4745,26 @@ For example, given the array `[3, 4, 9, 6, 1]`, return `[1, 1, 2, 1, 0]`, since:
 ---
 
 <details>
+<summary class="lc_e">
+
+- [**\[Easy\] LC 390. Josephus Problem**](https://trsong.github.io/python/java/2021/08/02/DailyQuestionsAug.html#oct-7-2021-lc-390-easy-josephus-problem) -- *There are N prisoners standing in a circle, waiting to be executed. Determine where a prisoner should stand in order to be the last survivor.* [*\(Try ME\)*](https://replit.com/@trsong/Solve-Josephus-Problem-1)
+
+</summary>
+<div>
+
+**Question:** There are `N` prisoners standing in a circle, waiting to be executed. The executions are carried out starting with the `kth` person, and removing every successive `kth` person going clockwise until there is no one left.
+
+Given `N` and `k`, write an algorithm to determine where a prisoner should stand in order to be the last survivor.
+
+For example, if `N = 5` and `k = 2`, the order of executions would be `[2, 4, 1, 5, 3]`, so you should return `3`.
+
+Note: if k = 2, exists `O(log N)` solution
+
+</div>
+</details>
+
+
+<details>
 <summary class="lc_m">
 
 - [**\[Medium\] Subtree with Maximum Average**](https://trsong.github.io/python/java/2021/08/02/DailyQuestionsAug.html#sep-14-2021-medium-subtree-with-maximum-average) -- *Given an N-ary tree, find the subtree with the maximum average. Return the root of the subtree.* [*\(Try ME\)*](https://replit.com/@trsong/Find-Subtree-with-Maximum-Average-1)
