@@ -21,6 +21,16 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
 
+### Oct 10, 2021 \[Medium\] All Max-size Subarrays with Distinct Elements
+---
+> **Question:** Given an array of integers, print all maximum size sub-arrays having all distinct elements in them.
+
+**Example:**
+```py
+Input: [5, 2, 3, 5, 4, 3]
+Output: [[5, 2, 3], [2, 3, 5, 4], [5, 4, 3]]
+```
+
 ### Oct 9, 2021 LT 612 \[Medium\] K Closest Points
 --- 
 > **Question:** Given some points and a point origin in two dimensional space, find k points out of the some points which are nearest to origin.
