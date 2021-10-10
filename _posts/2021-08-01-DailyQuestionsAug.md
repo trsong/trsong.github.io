@@ -62,9 +62,7 @@ def print_distribution(stream, repeat):
     histogram = {}
     for _ in range(repeat):
         res = random_one_elem(stream)
-        if res not in histogram:
-            histogram[res] = 0
-        histogram[res] += 1
+        histogram[res] = histogram.get(res, 0) + 1
     print(histogram)
 
 
@@ -108,9 +106,7 @@ def print_distribution(stream, k, repeat):
     for _ in range(repeat):
         res = random_k_elem(stream, k)
         for e in res:
-            if e not in histogram:
-                histogram[e] = 0
-            histogram[e] += 1
+            histogram[e] = histogram.get(e, 0) + 1
     print(histogram)
 
 
@@ -123,8 +119,6 @@ def main():
 if __name__ == '__main__':
     main()
 ```
-
-
 
 ### Oct 7, 2021 LC 390 \[Easy\] Josephus Problem
 ---
