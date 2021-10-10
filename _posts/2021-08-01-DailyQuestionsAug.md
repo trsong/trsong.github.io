@@ -26,6 +26,106 @@ categories: Python/Java
 > **Question:** Randomly choosing a sample of k items from a list S containing n items, where n is either a very large or unknown number. Typically, n is too large to fit the whole list into main memory.
 
 
+**My thoughts:** Choose k elems randomly from an infitite stream can be tricky. We should simplify this question, find the pattern and then generalize the solution. So, let's first think about how to randomly get one element from the stream:
+
+As the input stream can be arbitrarily large, our solution must be able to calculate the chosen element on the fly. So here comes the strategy:
+
+```
+When consume the i-th element:
+- Either choose the i-th element with 1/(i+1) chance. 
+- Or, keep the last chosen element with 1 - 1/(i+1) chance.
+```
+
+Above is also called ***Reservoir Sampling***.
+
+**Proof by Induction:**
+- Base case: when there is 1 element, then the 0th element is chosen by `1/(0+1) = 100%` chance.
+- Inductive Hypothesis: Suppose for above strategy works for all elemements between 0th and i-1th, which means all elem has `1/i` chance to be chosen.
+- Inductive Step: when consume the i-th element:
+  - If the i-th element is selected with `1/(i+1)` chance, then it works for the i-th element 
+  - As for other elements to be choosen, we will have `1-1/(i+1)` chance not to choose the i-th element. And also based on the Inductive Hypothesis: all elemements between 0th and i-1th has 1/i chance to be chosen. Thus, the chance of any elem between 0-th to i-th element to be chosen in this round eqauls `1/i * (1-(1/(i+1))) = 1/(i+1)`, which means you cannot choose the i-th element and at the same time you choose any element between 0-th and i-th element. Therefore it works for all previous elements as each element has `1/(i+1)` chance to be chosen.
+
+
+**Base Case: when pick one element**: [https://replit.com/@trsong/Reservoir-Sampling-One-element](https://replit.com/@trsong/Reservoir-Sampling-One-element)
+```py
+from random import randint
+
+def random_one_elem(stream):
+    picked = None
+    for i, num in enumerate(stream):
+        if randint(0, i) == 0:
+            picked = num
+    return picked
+
+
+def print_distribution(stream, repeat):
+    histogram = {}
+    for _ in range(repeat):
+        res = random_one_elem(stream)
+        if res not in histogram:
+            histogram[res] = 0
+        histogram[res] += 1
+    print(histogram)
+
+
+def main():
+    # Distribution looks like {1: 10111, 3: 9946, 9: 10166, 0: 9875, 4: 10071, 7: 9925, 6: 9800, 8: 10024, 5: 10119, 2: 9963}
+    print_distribution(range(10), repeat=100000)
+
+
+if __name__ == '__main__':
+    main()
+```
+
+Ever since for randomly choose 1 element, we keep 1 chosen element during execution, k elements will be kept and we will use the following strategy to keep and kick out elements:
+
+```
+When consume the i-th element:
+- Either choose the i-th element with k/(i+1) chance. (And kick out any of the chosen k element)
+- Or, keep the last chosen elements with 1 - k/(i+1) chance.
+```
+
+Similar to previous proof to show that each element has `1/(i+1)` chance. It can be easily shown that each element has `k/(i+1)` to be chosen. Just google ***Reservoir Sampling*** if you are curious about other strategies.
+
+
+**General Case: when pick k elements** [https://replit.com/@trsong/Reservoir-Sampling](https://replit.com/@trsong/Reservoir-Sampling)
+```py
+from random import randint
+
+def random_k_elem(stream, k):
+    picked = [None] * k
+    for i, num in enumerate(stream):
+        if i < k:
+            picked[i] = num
+        elif randint(0, i) < k:
+            swap_index = randint(0, k - 1) 
+            picked[swap_index] = num
+    return picked
+            
+
+def print_distribution(stream, k, repeat):
+    histogram = {}
+    for _ in range(repeat):
+        res = random_k_elem(stream, k)
+        for e in res:
+            if e not in histogram:
+                histogram[e] = 0
+            histogram[e] += 1
+    print(histogram)
+
+
+def main():
+    # Distribution looks like:
+    # {3: 300078, 8: 299965, 2: 299798, 4: 300247, 5: 299746, 9: 300793, 6: 299301, 7: 299629, 0: 300313, 1: 300130}
+    print_distribution(range(10), k=3, repeat=1000000)
+
+
+if __name__ == '__main__':
+    main()
+```
+
+
+
 ### Oct 7, 2021 LC 390 \[Easy\] Josephus Problem
 ---
 > **Question:** There are `N` prisoners standing in a circle, waiting to be executed. The executions are carried out starting with the `kth` person, and removing every successive `kth` person going clockwise until there is no one left.

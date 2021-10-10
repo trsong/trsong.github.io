@@ -612,6 +612,20 @@ Return true as the first and third rectangle overlap each other.
 ---
 
 <details>
+<summary class="lc_h">
+
+- [**\[Hard\] Random Elements from Infinite Stream (Reservoir Sampling)**](https://trsong.github.io/python/java/2021/08/02/DailyQuestionsAug.html#oct-8-2021-hard-random-elements-from-infinite-stream-reservoir-sampling) -- *Randomly choosing a sample of k items from a list S containing n items* [*\(Try ME\)*](https://replit.com/@trsong/Reservoir-Sampling-2#main.py)
+
+</summary>
+<div>
+
+**Question:** Randomly choosing a sample of k items from a list S containing n items, where n is either a very large or unknown number. Typically, n is too large to fit the whole list into main memory.
+
+</div>
+</details>
+
+
+<details>
 <summary class="lc_m">
 
 - [**\[Medium\] LC 289. Conway's Game of Life**](https://trsong.github.io/python/java/2021/08/02/DailyQuestionsAug.html#oct-6-2021-lc-289-medium-conways-game-of-life) -- *Conway’s Game of Life takes place on an infinite two-dimensional board of square cells. Implement Conway’s Game of Life.* [*\(Try ME\)*](https://replit.com/@trsong/Solve-Conways-Game-of-Life-Problem-1)
