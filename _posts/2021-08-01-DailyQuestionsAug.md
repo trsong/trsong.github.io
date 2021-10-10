@@ -21,6 +21,28 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
 
+### Oct 11, 2021 LC 787 \[Medium\] Cheapest Flights Within K Stops
+---
+> **Question:**  There are `n` cities connected by `m` flights. Each fight starts from city `u` and arrives at `v` with a price `w`.
+>
+> Now given all the cities and flights, together with starting city `src` and the destination `dst`, your task is to find the cheapest price from `src` to `dst` with up to `k` stops. If there is no such route, output `-1`.
+
+Example 1:
+```py
+Input: 
+n = 3, edges = [[0,1,100],[1,2,100],[0,2,500]]
+src = 0, dst = 2, k = 1
+Output: 200
+```
+
+Example 2:
+```py
+Input: 
+n = 3, edges = [[0,1,100],[1,2,100],[0,2,500]]
+src = 0, dst = 2, k = 0
+Output: 500
+```
+
 ### Oct 10, 2021 \[Medium\] All Max-size Subarrays with Distinct Elements
 ---
 > **Question:** Given an array of integers, print all maximum size sub-arrays having all distinct elements in them.
