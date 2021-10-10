@@ -21,6 +21,20 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
 
+### Oct 9, 2021 LT 612 \[Medium\] K Closest Points
+--- 
+> **Question:** Given some points and a point origin in two dimensional space, find k points out of the some points which are nearest to origin.
+> 
+> Return these points sorted by distance, if they are same with distance, sorted by x-axis, otherwise sorted by y-axis.
+
+
+**Example:**
+```py
+Given points = [[4, 6], [4, 7], [4, 4], [2, 5], [1, 1]], origin = [0, 0], k = 3
+return [[1, 1], [2, 5], [4, 4]]
+```
+
+
 ### Oct 8, 2021 \[Hard\] Random Elements from Infinite Stream (Reservoir Sampling)
 ---
 > **Question:** Randomly choosing a sample of k items from a list S containing n items, where n is either a very large or unknown number. Typically, n is too large to fit the whole list into main memory.
