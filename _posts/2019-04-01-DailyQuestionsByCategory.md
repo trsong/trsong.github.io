@@ -6165,6 +6165,29 @@ Given a list of `N` people and the above operation, find a way to identify the c
 
 
 <details>
+<summary class="lc_m">
+
+- [**\[Medium\] LT 612. K Closest Points**](https://trsong.github.io/python/java/2021/08/02/DailyQuestionsAug.html#oct-9-2021-lt-612-medium-k-closest-points) -- *Given some points and a point origin in two dimensional space, find k points out of the some points which are nearest to origin.* [*\(Try ME\)*](https://replit.com/@trsong/Find-K-Closest-Points-1)
+
+</summary>
+<div>
+
+**Question:** Given some points and a point origin in two dimensional space, find k points out of the some points which are nearest to origin.
+
+Return these points sorted by distance, if they are same with distance, sorted by x-axis, otherwise sorted by y-axis.
+
+
+**Example:**
+```py
+Given points = [[4, 6], [4, 7], [4, 4], [2, 5], [1, 1]], origin = [0, 0], k = 3
+return [[1, 1], [2, 5], [4, 4]]
+```
+
+</div>
+</details>
+
+
+<details>
 <summary class="lc_e">
 
 - [**\[Easy\] Huffman Coding**](https://trsong.github.io/python/java/2021/05/02/DailyQuestionsMay.html#jul-7-2021-easy-huffman-coding) -- *Huffman coding is a method of encoding characters based on their frequency.* [*\(Try ME\)*](https://replit.com/@trsong/Huffman-Coding-1)

@@ -34,6 +34,79 @@ Given points = [[4, 6], [4, 7], [4, 4], [2, 5], [1, 1]], origin = [0, 0], k = 3
 return [[1, 1], [2, 5], [4, 4]]
 ```
 
+**Solution with Max Heap:** [https://replit.com/@trsong/Find-K-Closest-Points](https://replit.com/@trsong/Find-K-Closest-Points)
+```py
+import unittest
+from queue import PriorityQueue
+
+def k_closest_points(points, origin, k):
+    max_heap = PriorityQueue()
+    for p in points:
+        dist = distance2(origin, p)
+        key = (-dist, -p[0], -p[1])
+        max_heap.put((key, p))
+
+        if max_heap.qsize() > k:
+            max_heap.get()
+    
+    res = []
+    while not max_heap.empty():
+        _, p = max_heap.get()
+        res.append(p)
+    res.reverse()
+    return res
+
+
+def distance2(p1, p2):
+    dx = p1[0] - p2[0]
+    dy = p1[1] - p2[1]
+    return dx * dx + dy * dy 
+
+
+class KClosestPointSpec(unittest.TestCase):
+    def test_example(self):
+        points = [[4, 6], [4, 7], [4, 4], [2, 5], [1, 1]]
+        origin = [0, 0]
+        k = 3
+        expected = [[1, 1], [2, 5], [4, 4]]
+        self.assertEqual(expected, k_closest_points(points, origin, k))
+
+    def test_empty_points(self):
+        self.assertEqual([], k_closest_points([], [0, 0], 0))
+        self.assertEqual([], k_closest_points([], [0, 0], 1))
+
+    def test_descending_distance(self):
+        points = [[1, 6], [1, 5], [1, 4], [1, 3], [1, 2], [1, 1]]
+        origin = [1, 1]
+        k = 2
+        expected = [[1, 1], [1, 2]]
+        self.assertEqual(expected, k_closest_points(points, origin, k))
+
+    def test_ascending_distance(self):
+        points = [[-1, -1], [-2, -1], [-3, -1], [-4, -1], [-5, -1], [-6, -1]]
+        origin = [-1, -1]
+        k = 1
+        expected = [[-1, -1]]
+        self.assertEqual(expected, k_closest_points(points, origin, k))
+
+    def test_same_distance_sorted_by_distance(self):
+        points = [[1, 0], [0, 1], [-1, -1], [1, 1], [2, 1], [-2, 0]]
+        origin = [0, 0]
+        k = 5
+        expected = [[0, 1], [1, 0], [-1, -1], [1, 1], [-2, 0]]
+        self.assertEqual(expected, k_closest_points(points, origin, k))
+
+    def test_same_distance_sorted_by_x_then_by_y2(self):
+        points = [[1, 1], [1, -1], [-1, -1], [-1, 1], [2, 2], [0, 0]]
+        origin = [0, 0]
+        k = 5
+        expected = [[0, 0], [-1, -1], [-1, 1], [1, -1], [1, 1]]
+        self.assertEqual(expected, k_closest_points(points, origin, k))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False, verbosity=2)
+```
 
 ### Oct 8, 2021 \[Hard\] Random Elements from Infinite Stream (Reservoir Sampling)
 ---
