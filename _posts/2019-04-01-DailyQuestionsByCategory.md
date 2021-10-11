@@ -3037,6 +3037,25 @@ Explanation: ab - aba, aba - ba
 </div>
 </details>
 
+<details>
+<summary class="lc_m">
+
+- [**\[Medium\] All Max-size Subarrays with Distinct Elements**](https://trsong.github.io/python/java/2021/08/02/DailyQuestionsAug.html#oct-10-2021-medium-all-max-size-subarrays-with-distinct-elements) -- *Given an array of integers, print all maximum size sub-arrays having all distinct elements in them.* [*\(Try ME\)*](https://replit.com/@trsong/Find-All-Max-size-Subarrays-with-Distinct-Elements-1)
+
+</summary>
+<div>
+
+**Question:** Given an array of integers, print all maximum size sub-arrays having all distinct elements in them.
+
+**Example:**
+```py
+Input: [5, 2, 3, 5, 4, 3]
+Output: [[5, 2, 3], [2, 3, 5, 4], [5, 4, 3]]
+```
+
+</div>
+</details>
+
 
 <details>
 <summary class="lc_m">
