@@ -55,7 +55,7 @@ def findCheapestPrice(n, flights, src, dst, k):
         neighbors[u][v] = w
 
     pq = PriorityQueue()
-    max_stops_history = [float('inf')] * n
+    historical_min_stops = [float('inf')] * n
     
     pq.put((0, src, -1))
     while not pq.empty():
@@ -64,9 +64,9 @@ def findCheapestPrice(n, flights, src, dst, k):
             return dist
 
         # If previous cheap flights have even fewer stops than current, skip current one
-        if max_stops_history[node] < stops:
+        if historical_min_stops[node] < stops:
             continue
-        max_stops_history[node] = stops
+        historical_min_stops[node] = stops
 
         if stops < k:
             for nb in neighbors[node] or []:
