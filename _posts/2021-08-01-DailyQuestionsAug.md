@@ -21,6 +21,11 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
 
+### Oct 12, 2021 \[Medium\] Insert into Sorted Circular Linked List
+---
+> **Question:** Insert a new value into a sorted circular linked list (last element points to head). Return the node with smallest value.  
+
+
 ### Oct 11, 2021 LC 787 \[Medium\] Cheapest Flights Within K Stops
 ---
 > **Question:**  There are `n` cities connected by `m` flights. Each fight starts from city `u` and arrives at `v` with a price `w`.
