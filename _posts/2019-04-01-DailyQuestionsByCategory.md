@@ -8810,6 +8810,38 @@ Output: False
 
 ### Uniform-Cost Search / Dijkstra
 
+
+<details>
+<summary class="lc_m">
+
+- [**\[Medium\] LC 787. Cheapest Flights Within K Stops**](https://trsong.github.io/python/java/2021/08/02/DailyQuestionsAug.html#oct-11-2021-lc-787-medium-cheapest-flights-within-k-stops) -- *There are n cities connected by m flights. Each fight starts from city u and arrives at v with a price w. Find the cheapest price  with up to k stops.* [*\(Try ME\)*](https://replit.com/@trsong/Find-Cheapest-Flights-Within-K-Stops-1)
+
+</summary>
+<div>
+
+**Question:**  There are `n` cities connected by `m` flights. Each fight starts from city `u` and arrives at `v` with a price `w`.
+
+Now given all the cities and flights, together with starting city `src` and the destination `dst`, your task is to find the cheapest price from `src` to `dst` with up to `k` stops. If there is no such route, output `-1`.
+
+**Example 1:**
+```py
+Input: 
+n = 3, edges = [[0,1,100],[1,2,100],[0,2,500]]
+src = 0, dst = 2, k = 1
+Output: 200
+```
+
+**Example 2:**
+```py
+Input: 
+n = 3, edges = [[0,1,100],[1,2,100],[0,2,500]]
+src = 0, dst = 2, k = 0
+Output: 500
+```
+
+</div>
+</details>
+
 <details>
 <summary class="lc_m">
 
