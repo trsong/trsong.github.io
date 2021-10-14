@@ -21,6 +21,22 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
 
+### Oct 13, 2021 \[Medium\] Root to Leaf Numbers Summed
+---
+> **Question:** A number can be constructed by a path from the root to a leaf. Given a binary tree, sum all the numbers that can be constructed from the root to all leaves.
+
+**Example:**
+```py
+Input:
+       1
+     /   \
+    2     3
+   / \
+  4   5
+Output: 262
+Explanation: 124 + 125 + 13 = 262
+```
+
 ### Oct 12, 2021 \[Medium\] Insert into Sorted Circular Linked List
 ---
 > **Question:** Insert a new value into a sorted circular linked list (last element points to head). Return the node with smallest value.  
