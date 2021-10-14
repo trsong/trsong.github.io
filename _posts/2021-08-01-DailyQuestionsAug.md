@@ -25,6 +25,15 @@ categories: Python/Java
 ---
 > **Question:** Insert a new value into a sorted circular linked list (last element points to head). Return the node with smallest value.  
 
+**My thoughts:** This question isn't hard. It's just it has so many edge case we need to cover:
+
+* original list is empty
+* original list contains duplicate numbers
+* the first element of original list is not the smallest
+* the insert elem is the smallest
+* the insert elem is the largest
+* etc.
+
 **Solution:** [https://replit.com/@trsong/Insert-into-Already-Sorted-Circular-Linked-List](https://replit.com/@trsong/Insert-into-Already-Sorted-Circular-Linked-List)
 ```py
 import unittest
