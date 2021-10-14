@@ -37,6 +37,111 @@ Output: 262
 Explanation: 124 + 125 + 13 = 262
 ```
 
+**Solution with DFS:** [https://replit.com/@trsong/Find-Root-to-Leaf-Numbers-Summed](https://replit.com/@trsong/Find-Root-to-Leaf-Numbers-Summed)
+```py
+import unittest
+
+def all_path_sum(root):
+    if not root:
+        return 0
+
+    stack = [(root, 0)]
+    res = 0
+    while stack:
+        cur, prev_num = stack.pop()
+        cur_num = 10 * prev_num + cur.val
+        if cur.left is None and cur.right is None:
+            res += cur_num
+        
+        for child in [cur.left, cur.right]:
+            if child is None:
+                continue
+            stack.append((child, cur_num))
+    return res
+
+
+class TreeNode(object):
+    def __init__(self, val, left=None, right=None):
+        self.val = val
+        self.left = left
+        self.right = right
+
+
+class AllPathSumSpec(unittest.TestCase):
+    def test_example(self):
+        """
+              1
+            /   \
+           2     3
+          / \
+         4   5
+        """
+        left_tree = TreeNode(2, TreeNode(4), TreeNode(5))
+        root = TreeNode(1, left_tree, TreeNode(3))
+        expected = 262  # 124 + 125 + 13 = 262 
+        self.assertEqual(expected, all_path_sum(root))
+
+    def test_empty_tree(self):
+        self.assertEqual(0, all_path_sum(None))
+    
+    def test_one_node_tree(self):
+        self.assertEqual(8, all_path_sum(TreeNode(8)))
+
+    def test_tree_as_a_list(self):
+        """
+        1
+         \
+          2
+         /
+        3
+         \
+          4  
+        """
+        n3 = TreeNode(3, right=TreeNode(4))
+        n2 = TreeNode(2, n3)
+        root = TreeNode(1, right=n2)
+        expected = 1234
+        self.assertEqual(expected, all_path_sum(root))
+
+    def test_TreeNode_contains_zero(self):
+        """
+          0
+         / \
+        1   2
+           / \
+          0   0
+         /   / \
+        1   4   5
+        """
+        right_left_tree = TreeNode(0, TreeNode(1))
+        right_right_tree = TreeNode(0, TreeNode(4), TreeNode(5))
+        right_tree = TreeNode(2, right_left_tree, right_right_tree)
+        root = TreeNode(0, TreeNode(1), right_tree)
+        expected = 611  # 1 + 201 + 204 + 205 = 611
+        self.assertEqual(expected, all_path_sum(root))
+
+    def test_tree(self):
+        """
+              6
+             / \
+            3   5
+           / \   \
+          2   5   4  
+             / \
+            7   4
+        """
+        n5 = TreeNode(5, TreeNode(7), TreeNode(4))
+        n3 = TreeNode(3, TreeNode(2), n5)
+        nn5 = TreeNode(5, right=TreeNode(4))
+        root = TreeNode(6, n3, nn5)
+        expected = 13997  # 632 + 6357 + 6354 + 654 = 13997
+        self.assertEqual(expected, all_path_sum(root))
+        
+
+if __name__ == '__main__':
+    unittest.main(exit=False, verbosity=2)
+```
+
 ### Oct 12, 2021 \[Medium\] Insert into Sorted Circular Linked List
 ---
 > **Question:** Insert a new value into a sorted circular linked list (last element points to head). Return the node with smallest value.  

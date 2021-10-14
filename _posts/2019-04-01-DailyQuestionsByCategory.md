@@ -3543,7 +3543,7 @@ abracadabra => c
 ---
 
 <details>
-<summary class="lc_h">
+<summary class="lc_m">
 
 - [**\[Medium\] Insert into Sorted Circular Linked List**](https://trsong.github.io/python/java/2021/08/02/DailyQuestionsAug.html#oct-12-2021-medium-insert-into-sorted-circular-linked-list) -- *Insert a new value into a sorted circular linked list (last element points to head). Return the node with smallest value.* [*\(Try ME\)*](https://replit.com/@trsong/Insert-into-Already-Sorted-Circular-Linked-List-1)
 
@@ -4951,6 +4951,32 @@ After filtering the result should be:
 <div>
 
 **Question:** Given a sorted list, create a height balanced binary search tree, meaning the height differences of each node can only differ by at most 1.
+
+</div>
+</details>
+
+
+<details>
+<summary class="lc_m">
+
+- [**\[Medium\] Root to Leaf Numbers Summed**](https://trsong.github.io/python/java/2021/08/02/DailyQuestionsAug.html#oct-13-2021-medium-root-to-leaf-numbers-summed) -- *Given a binary tree, sum all the numbers that can be constructed from the root to all leaves.* [*\(Try ME\)*](https://replit.com/@trsong/Find-Root-to-Leaf-Numbers-Summed-1)
+
+</summary>
+<div>
+
+**Question:** A number can be constructed by a path from the root to a leaf. Given a binary tree, sum all the numbers that can be constructed from the root to all leaves.
+
+**Example:**
+```py
+Input:
+       1
+     /   \
+    2     3
+   / \
+  4   5
+Output: 262
+Explanation: 124 + 125 + 13 = 262
+```
 
 </div>
 </details>
