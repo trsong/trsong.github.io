@@ -21,6 +21,12 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
 
+### Oct 14, 2021 \[Medium\] Rescue Boat Problem
+---
+> **Question:** An imminent hurricane threatens the coastal town of Codeville. If at most 2 people can fit in a rescue boat, and the maximum weight limit for a given boat is `k`, determine how many boats will be needed to save everyone.
+>
+> For example, given a population with weights `[100, 200, 150, 80]` and a boat limit of `200`, the smallest number of boats required will be three.
+
 ### Oct 13, 2021 \[Medium\] Root to Leaf Numbers Summed
 ---
 > **Question:** A number can be constructed by a path from the root to a leaf. Given a binary tree, sum all the numbers that can be constructed from the root to all leaves.
