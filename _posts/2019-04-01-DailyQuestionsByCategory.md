@@ -3542,6 +3542,20 @@ abracadabra => c
 ### Circular Linked List
 ---
 
+<details>
+<summary class="lc_h">
+
+- [**\[Medium\] Insert into Sorted Circular Linked List**](https://trsong.github.io/python/java/2021/08/02/DailyQuestionsAug.html#oct-12-2021-medium-insert-into-sorted-circular-linked-list) -- *Insert a new value into a sorted circular linked list (last element points to head). Return the node with smallest value.* [*\(Try ME\)*](https://replit.com/@trsong/Insert-into-Already-Sorted-Circular-Linked-List-1)
+
+</summary>
+<div>
+
+**Question:** Insert a new value into a sorted circular linked list (last element points to head). Return the node with smallest value.  
+
+</div>
+</details>
+
+
 ### Fast-slow Pointers
 ---
 

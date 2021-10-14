@@ -25,6 +25,137 @@ categories: Python/Java
 ---
 > **Question:** Insert a new value into a sorted circular linked list (last element points to head). Return the node with smallest value.  
 
+**Solution:** [https://replit.com/@trsong/Insert-into-Already-Sorted-Circular-Linked-List](https://replit.com/@trsong/Insert-into-Already-Sorted-Circular-Linked-List)
+```py
+import unittest
+
+def insert(root, val):
+    new_node = Node(val)
+    if root is None:
+        new_node.next = new_node
+        return new_node
+
+    max_node = search_node(start=root.next,
+                           end=root,
+                           cond=lambda n: n.val <= n.next.val)
+    min_node = max_node.next
+    if val < min_node.val:
+        insert_node(max_node, new_node)
+        return new_node
+    elif val > max_node.val:
+        insert_node(max_node, new_node)
+        return min_node
+
+    p = search_node(start=min_node,
+                    end=max_node,
+                    cond=lambda n: n.next.val < val)
+    insert_node(p, new_node)
+    return min_node
+
+
+def search_node(start, end, cond):
+    p = start
+    while p != end and cond(p):
+        p = p.next
+    return p
+
+
+def insert_node(n1, n2):
+    n2.next = n1.next
+    n1.next = n2
+
+
+##############################
+# Testing utilities
+##############################
+class Node(object):
+    def __init__(self, val, next=None):
+        self.val = val
+        self.next = next
+
+    def __str__(self):
+        return str(Node.flatten(self))
+
+    @staticmethod
+    def flatten(root):
+        if not root:
+            return []
+        p = root
+        res = []
+        while True:
+            res.append(p.val)
+            p = p.next
+            if p == root:
+                break
+        return res
+
+    @staticmethod
+    def list(*vals):
+        dummy = Node(-1)
+        t = dummy
+        for v in vals:
+            t.next = Node(v)
+            t = t.next
+        t.next = dummy.next
+        return dummy.next
+
+
+class InsertSpec(unittest.TestCase):
+    def assert_result(self, expected, res):
+        self.assertEqual(str(expected), str(res))
+
+    def test_empty_list(self):
+        self.assert_result(Node.list(1), insert(None, 1))
+
+    def test_prepend_list(self):
+        self.assert_result(Node.list(0, 1), insert(Node.list(1), 0))
+
+    def test_append_list(self):
+        self.assert_result(Node.list(1, 2, 3), insert(Node.list(1, 2), 3))
+
+    def test_insert_into_correct_position(self):
+        self.assert_result(Node.list(1, 2, 3, 4, 5),
+                           insert(Node.list(1, 2, 4, 5), 3))
+
+    def test_duplicated_elements(self):
+        self.assert_result(Node.list(0, 0, 1, 2),
+                           insert(Node.list(0, 0, 2), 1))
+
+    def test_duplicated_elements2(self):
+        self.assert_result(Node.list(0, 0, 1), insert(Node.list(0, 0), 1))
+
+    def test_duplicated_elements3(self):
+        self.assert_result(Node.list(0, 0, 0, 0),
+                           insert(Node.list(0, 0, 0), 0))
+
+    def test_first_element_is_not_smallest(self):
+        self.assert_result(Node.list(0, 1, 2, 3),
+                           insert(Node.list(2, 3, 0), 1))
+
+    def test_first_element_is_not_smallest2(self):
+        self.assert_result(Node.list(0, 1, 2, 3),
+                           insert(Node.list(3, 0, 2), 1))
+
+    def test_first_element_is_not_smallest3(self):
+        self.assert_result(Node.list(0, 1, 2, 3),
+                           insert(Node.list(2, 0, 1), 3))
+
+    def test_first_element_is_not_smallest4(self):
+        self.assert_result(Node.list(0, 1, 2, 3),
+                           insert(Node.list(2, 3, 1), 0))
+
+    def test_first_element_is_not_smallest5(self):
+        self.assert_result(Node.list(0, 0, 1, 2, 2),
+                           insert(Node.list(2, 0, 0, 2), 1))
+
+    def test_first_element_is_not_smallest6(self):
+        self.assert_result(Node.list(-1, 0, 0, 2, 2),
+                           insert(Node.list(2, 0, 0, 2), -1))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False, verbosity=2)
+```
 
 ### Oct 11, 2021 LC 787 \[Medium\] Cheapest Flights Within K Stops
 ---
