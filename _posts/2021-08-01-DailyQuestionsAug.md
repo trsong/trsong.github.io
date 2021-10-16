@@ -21,6 +21,26 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
 
+### Oct 16, 2021 \[Easy\] Busiest Period in the Building
+--- 
+> **Question:** You are given a list of data entries that represent entries and exits of groups of people into a building. 
+> 
+> Find the busiest period in the building, that is, the time with the most people in the building. Return it as a pair of (start, end) timestamps. 
+> 
+> You can assume the building always starts off and ends up empty, i.e. with 0 people inside.
+>
+> An entry looks like this:
+
+```py
+{"timestamp": 1526579928, count: 3, "type": "enter"}
+
+This means 3 people entered the building. An exit looks like this:
+
+{"timestamp": 1526580382, count: 2, "type": "exit"}
+
+This means that 2 people exited the building. timestamp is in Unix time.
+```
+
 ### Oct 15, 2021 \[Easy\] Reverse Bits
 ---
 > **Questions:** Given a 32 bit integer, reverse the bits and return that number.
