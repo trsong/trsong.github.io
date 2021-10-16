@@ -33,6 +33,54 @@ Output: 1260388352
 # Reversed bits is 0100 1011 0010 0000 0000 0000 0000 0000
 ```
 
+**Solution:** [https://replit.com/@trsong/Reverse-Binary-Number](https://replit.com/@trsong/Reverse-Binary-Number)
+```py
+import unittest
+
+INT_BIT_SIZE = 32
+
+def reverse_bits(num):
+    res = 0
+    for pos in range(INT_BIT_SIZE):
+        res <<= 1
+        if num & (1 << pos):
+            res |= 1
+    return res
+
+
+class ReverseBitSpec(unittest.TestCase):
+    def test_example(self):
+        input =    0b00000000000000000000010011010010
+        expected = 0b01001011001000000000000000000000
+        self.assertEqual(expected, reverse_bits(input))
+
+    def test_zero(self):
+        self.assertEqual(0, reverse_bits(0))
+
+    def test_one(self):
+        input = 1
+        expected = 1 << (INT_BIT_SIZE - 1)
+        self.assertEqual(expected, reverse_bits(input))
+
+    def test_number_with_every_other_bits(self):
+        input = 0b10101010101010101010101010101010
+        expected = 0b01010101010101010101010101010101
+        self.assertEqual(expected, reverse_bits(input))
+
+    def test_random_number1(self):
+        input = 0b00100100101001000011000111000101
+        expected = 0b10100011100011000010010100100100
+        self.assertEqual(expected, reverse_bits(input))
+
+    def test_random_number2(self):
+        input = 0b00111001101110011110000100101100
+        expected = 0b00110100100001111001110110011100
+        self.assertEqual(expected, reverse_bits(input))
+    
+
+if __name__ == '__main__':
+    unittest.main(exit=False, verbosity=2)
+```
 
 ### Oct 14, 2021 \[Medium\] Rescue Boat Problem
 ---

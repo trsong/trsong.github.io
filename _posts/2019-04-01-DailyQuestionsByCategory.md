@@ -978,6 +978,28 @@ Can you perform the operation without allocating extra memory (disregarding the 
 <details>
 <summary class="lc_e">
 
+- [**\[Easy\] Reverse Bits**](https://trsong.github.io/python/java/2021/08/02/DailyQuestionsAug.html#oct-15-2021-easy-reverse-bits) -- *Given a 32 bit integer, reverse the bits and return that number.* [*\(Try ME\)*](https://replit.com/@trsong/Reverse-Binary-Number-1)
+
+</summary>
+<div>
+
+**Questions:** Given a 32 bit integer, reverse the bits and return that number.
+
+**Example:**
+```py
+Input: 1234 
+# In bits this would be 0000 0000 0000 0000 0000 0100 1101 0010
+Output: 1260388352
+# Reversed bits is 0100 1011 0010 0000 0000 0000 0000 0000
+```
+
+</div>
+</details>
+
+
+<details>
+<summary class="lc_e">
+
 - [**\[Easy\] Flip Bit to Get Longest Sequence of 1s**](https://trsong.github.io/python/java/2021/08/02/DailyQuestionsAug.html#sep-9-2021-easy-flip-bit-to-get-longest-sequence-of-1s) -- *Given an integer, flip exactly one bit from a 0 to a 1 to get the longest sequence of 1s.* [*\(Try ME\)*](https://replit.com/@trsong/Flip-Bit-in-a-Binary-Number-to-Get-Longest-Sequence-of-1s-1)
 
 </summary>
