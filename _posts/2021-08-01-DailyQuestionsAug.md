@@ -21,6 +21,19 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
 
+### Oct 15, 2021 \[Easy\] Reverse Bits
+---
+> **Questions:** Given a 32 bit integer, reverse the bits and return that number.
+
+**Example:**
+```py
+Input: 1234 
+# In bits this would be 0000 0000 0000 0000 0000 0100 1101 0010
+Output: 1260388352
+# Reversed bits is 0100 1011 0010 0000 0000 0000 0000 0000
+```
+
+
 ### Oct 14, 2021 \[Medium\] Rescue Boat Problem
 ---
 > **Question:** An imminent hurricane threatens the coastal town of Codeville. If at most 2 people can fit in a rescue boat, and the maximum weight limit for a given boat is `k`, determine how many boats will be needed to save everyone.
