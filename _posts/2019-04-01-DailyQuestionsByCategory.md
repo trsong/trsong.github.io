@@ -6991,6 +6991,22 @@ For example, if the list is `[1, 2, 3, 4, 5]` and `K` is `9`, then it should ret
 
 
 <details>
+<summary class="lc_h">
+
+- [**\[Medium\] Rescue Boat Problem**](https://trsong.github.io/python/java/2021/08/02/DailyQuestionsAug.html#oct-14-2021-medium-rescue-boat-problem) -- *If at most 2 people can fit in a rescue boat, and the maximum weight limit for a given boat is k, determine how many boats will be needed to save everyone.* [*\(Try ME\)*](https://replit.com/@trsong/Solve-Rescue-Boat-Problem-1)
+
+</summary>
+<div>
+
+**Question:** An imminent hurricane threatens the coastal town of Codeville. If at most 2 people can fit in a rescue boat, and the maximum weight limit for a given boat is `k`, determine how many boats will be needed to save everyone.
+
+For example, given a population with weights `[100, 200, 150, 80]` and a boat limit of `200`, the smallest number of boats required will be three.
+
+</div>
+</details>
+
+
+<details>
 <summary class="lc_m">
 
 - [**\[Medium\] LC 134. Gas Station**](http://trsong.github.io/python/java/2021/08/02/DailyQuestionsAug.html#sep-3-2021-lc-134-medium-gas-station) -- *There are N gas stations along a circular route. Return the starting gas station’s index if you can travel around the circuit once in the clockwise direction.* [*\(Try ME\)*](https://replit.com/@trsong/Gas-Station-Problem-1)

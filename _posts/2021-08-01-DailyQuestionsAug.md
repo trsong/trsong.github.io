@@ -27,6 +27,53 @@ categories: Python/Java
 >
 > For example, given a population with weights `[100, 200, 150, 80]` and a boat limit of `200`, the smallest number of boats required will be three.
 
+**Greeedy Solution:** [https://replit.com/@trsong/Solve-Rescue-Boat-Problem](https://replit.com/@trsong/Solve-Rescue-Boat-Problem)
+```py
+import unittest
+
+def minimum_rescue_boats(weights, limit):
+    weights.sort()
+    i = 0
+    j = len(weights) - 1
+    res = 0
+
+    while i <= j:
+        res += 1
+        if weights[i] + weights[j] <= limit:
+            i += 1
+        j -=1
+    return res
+            
+
+class MinimumRescueBoatSpec(unittest.TestCase):
+    def test_example(self):
+        limit, weights = 200, [100, 200, 150, 80]
+        expected_min_boats = 3  # Boats: [100, 80], [200], [150]
+        self.assertEqual(expected_min_boats, minimum_rescue_boats(weights, limit))
+
+    def test_empty_weights(self):
+        self.assertEqual(0, minimum_rescue_boats([], 100))
+
+    def test_a_boat_can_fit_in_two_people(self):
+        limit, weights = 300, [100, 200]
+        expected_min_boats = 1  # Boats: [100, 200]
+        self.assertEqual(expected_min_boats, minimum_rescue_boats(weights, limit))
+    
+    def test_make_max_and_min_weight_same_boat_is_not_correct(self):
+        limit, weights = 3, [3, 2, 2, 1]
+        expected_min_boats = 3  # Boats: [3], [2], [2, 1]
+        self.assertEqual(expected_min_boats, minimum_rescue_boats(weights, limit))
+
+    def test_no_two_can_fit_in_same_boat(self):
+        limit, weights = 5, [3, 5, 4, 5]
+        expected_min_boats = 4  # Boats: [3], [5], [4], [5]
+        self.assertEqual(expected_min_boats, minimum_rescue_boats(weights, limit))
+    
+
+if __name__ == '__main__':
+    unittest.main(exit=False, verbosity=2)
+```
+
 ### Oct 13, 2021 \[Medium\] Root to Leaf Numbers Summed
 ---
 > **Question:** A number can be constructed by a path from the root to a leaf. Given a binary tree, sum all the numbers that can be constructed from the root to all leaves.
