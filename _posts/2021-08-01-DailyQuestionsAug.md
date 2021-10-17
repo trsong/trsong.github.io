@@ -41,6 +41,84 @@ This means 3 people entered the building. An exit looks like this:
 This means that 2 people exited the building. timestamp is in Unix time.
 ```
 
+**Solution:** [https://replit.com/@trsong/Find-Busiest-Period-in-the-Building](https://replit.com/@trsong/Find-Busiest-Period-in-the-Building)
+```py
+import unittest
+
+class EventType:
+    EXIT = 'exit'
+    ENTER = 'enter'
+
+
+def busiest_period(event_entries):
+    event_entries.sort(key=lambda e: e['timestamp'])
+    balance = 0
+    max_index = 0
+    max_balance = 0
+    for index, entry in enumerate(event_entries):
+        if entry['type'] == EventType.ENTER:
+            balance += entry['count']
+        else:
+            balance -= entry['count']
+
+        if balance > max_balance:
+            max_index = index
+            max_balance = balance
+
+    start = event_entries[max_index]['timestamp']
+    end = event_entries[max_index + 1]['timestamp']
+    return (start, end)
+
+
+class BusiestPeriodSpec(unittest.TestCase):
+    def test_example(self):
+        # Number of people: 0, 3, 1, 0
+        events = [
+            {'timestamp': 1526579928, 'count': 3, 'type': EventType.ENTER},
+            {'timestamp': 1526580382, 'count': 2, 'type': EventType.EXIT},
+            {'timestamp': 1526600382, 'count': 1, 'type': EventType.EXIT}
+        ]
+        self.assertEqual((1526579928, 1526580382), busiest_period(events))
+
+    def test_multiple_entering_and_exiting(self):
+        # Number of people: 0, 3, 1, 7, 8, 3, 2
+        events = [
+            {'timestamp': 1526579928, 'count': 3, 'type': EventType.ENTER},
+            {'timestamp': 1526580382, 'count': 2, 'type': EventType.EXIT},
+            {'timestamp': 1526579938, 'count': 6, 'type': EventType.ENTER},
+            {'timestamp': 1526579943, 'count': 1, 'type': EventType.ENTER},
+            {'timestamp': 1526579944, 'count': 0, 'type': EventType.ENTER},
+            {'timestamp': 1526580345, 'count': 5, 'type': EventType.EXIT},
+            {'timestamp': 1526580351, 'count': 3, 'type': EventType.EXIT}
+        ]
+        self.assertEqual((1526579943, 1526579944), busiest_period(events))
+
+    def test_timestamp_not_sorted(self):
+        # Number of people: 0, 1, 3, 0
+        events = [
+            {'timestamp': 2, 'count': 2, 'type': EventType.ENTER},
+            {'timestamp': 3, 'count': 3, 'type': EventType.EXIT},
+            {'timestamp': 1, 'count': 1, 'type': EventType.ENTER}
+        ]
+        self.assertEqual((2, 3), busiest_period(events))
+
+    def test_max_period_reach_a_tie(self):
+        # Number of people: 0, 1, 10, 1, 10, 1, 0
+        events = [
+            {'timestamp': 5, 'count': 9, 'type': EventType.EXIT},
+            {'timestamp': 3, 'count': 9, 'type': EventType.EXIT},
+            {'timestamp': 6, 'count': 1, 'type': EventType.EXIT},
+            {'timestamp': 1, 'count': 1, 'type': EventType.ENTER},
+            {'timestamp': 4, 'count': 9, 'type': EventType.ENTER},
+            {'timestamp': 2, 'count': 9, 'type': EventType.ENTER}
+        ]
+        self.assertEqual((2, 3), busiest_period(events))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False, verbosity=2)
+```
+
 ### Oct 15, 2021 \[Easy\] Reverse Bits
 ---
 > **Questions:** Given a 32 bit integer, reverse the bits and return that number.
