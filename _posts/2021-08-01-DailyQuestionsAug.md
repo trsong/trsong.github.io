@@ -21,7 +21,7 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
 
-### Oct 17, 2021 \[Easy\] More Than 3 Times Badge-access In One-hour Period
+### Oct 17, 2021 \[Medium\] More Than 3 Times Badge-access In One-hour Period
 --- 
 > **Question:**  We are working on a security system for a badged-access room in our company's building.
 >
@@ -29,6 +29,7 @@ categories: Python/Java
 >
 > Write a function that finds anyone who badged into the room three or more times in a one-hour period, and returns each time that they badged in during that period. (If there are multiple one-hour periods where this was true, just return the first one.)
 
+**Example:**
 ```py
 badge_times = [
     ["Paul", 1355],
