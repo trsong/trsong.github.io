@@ -54,6 +54,186 @@ John: 830 835 855 915 930
 Paul: 1315 1355 1405
 ```
 
+**Solution with Sliding Window:** [https://replit.com/@trsong/More-Than-3-Times-Badge-access-In-One-hour-Period](https://replit.com/@trsong/More-Than-3-Times-Badge-access-In-One-hour-Period)
+```py
+import unittest
+
+def frequent_badge_user(badge_times):
+    badge_times_groupby_user = {}
+    for user, time in badge_times:
+        badge_times_groupby_user[user] = badge_times_groupby_user.get(user, [])
+        badge_times_groupby_user[user].append(time)
+
+    res = {}
+    for user, times in badge_times_groupby_user.items():
+        frquent_usage = detect_frequent_usage(sorted(times))
+        if frquent_usage:
+            res[user] = frquent_usage
+    return res
+
+
+def detect_frequent_usage(sorted_times):    
+    n = len(sorted_times)
+    end = 0
+    for start in range(n):
+        while end < n and within_one_hour(sorted_times[start], sorted_times[end]):
+            end += 1
+        
+        if end - start >= 3:
+            return sorted_times[start: end]
+    return []
+    
+
+def within_one_hour(t1, t2):
+    h1, m1 = t1 // 100, t1 % 100
+    h2, m2 = t2 // 100, t2 % 100
+    time_diff = abs(60 * (h1 - h2) + m1 - m2)
+    return time_diff <= 60
+
+
+class FrequentBadgeUserSpec(unittest.TestCase):
+    def test_example(self):
+        badge_times = [
+            ['Paul', 1355],
+            ['Jennifer', 1910],
+            ['John', 830],
+            ['Paul', 1315],
+            ['John', 1615],
+            ['John', 1640],
+            ['John', 835],
+            ['Paul', 1405],
+            ['John', 855],
+            ['John', 930],
+            ['John', 915],
+            ['John', 730],
+            ['Jennifer', 1335],
+            ['Jennifer', 730],
+            ['John', 1630],
+        ]
+        expected = {
+            'John': [830, 835, 855, 915, 930],
+            'Paul': [1315, 1355, 1405]
+        }
+        self.assertEqual(expected, frequent_badge_user(badge_times))
+
+    def test_example2(self):
+        badge_times = [
+            ['Paul', 1355],
+            ['Jennifer', 1910],
+            ['Jose', 835],
+            ['Jose', 830],
+            ['Paul', 1315],
+            ['Chloe', 0],
+            ['Chloe', 1910],
+            ['Jose', 1615],
+            ['Jose', 1640],
+            ['Paul', 1405],
+            ['Jose', 855],
+            ['Jose', 930],
+            ['Jose', 915],
+            ['Jose', 730],
+            ['Jose', 940],
+            ['Jennifer', 1335],
+            ['Jennifer', 730],
+            ['Jose', 1630],
+            ['Jennifer', 5],
+            ['Chloe', 1909],
+            ['Zhang', 1],
+            ['Zhang', 10],
+            ['Zhang', 109],
+            ['Zhang', 110],
+            ['Amos', 1],
+            ['Amos', 2],
+            ['Amos', 400],
+            ['Amos', 500],
+            ['Amos', 503],
+            ['Amos', 504],
+            ['Amos', 601],
+            ['Amos', 602],
+        ]
+        expected = {
+            'Paul': [1315, 1355, 1405],
+            'Jose': [830, 835, 855, 915, 930],
+            'Zhang': [10, 109, 110],
+            'Amos': [500, 503, 504]
+        }
+        self.assertEqual(expected, frequent_badge_user(badge_times))
+
+    def test_empty_badge_times(self):
+        self.assertEqual({}, frequent_badge_user([]))
+
+    def test_not_enough_badge_time(self):
+        badge_times = [
+            ['Sunny', 2],
+            ['Sunny', 1],
+            ['Sam', 0],
+            ['Sam', 0],
+            ['Sunny', 0],
+        ]
+        expected = {
+            'Sunny': [0, 1, 2]
+        }
+        self.assertEqual(expected, frequent_badge_user(badge_times))
+
+    def test_not_enough_badge_time2(self):
+        badge_times = [
+            ['A', 2],
+            ['B', 1],
+            ['C', 0],
+        ]
+        expected = {}
+        self.assertEqual(expected, frequent_badge_user(badge_times))
+
+    def test_edge_case(self):
+        badge_times = [
+            ['Sunny', 2359],
+            ['Sunny', 2300],
+            ['Sam', 0],
+            ['Sam', 2359],
+            ['Sam', 30],
+            ['Sam', 45],
+            ['Sam', 1000],
+            ['Sunny', 2258],
+            ['Sunny', 2259],
+        ]
+        expected = {
+            'Sam': [0, 30, 45],
+            'Sunny': [2258, 2259, 2300]
+        }
+        self.assertEqual(expected, frequent_badge_user(badge_times))
+
+    def test_always_return_first_one(self):
+        badge_times = [
+            ['Sunny', 830],
+            ['Sunny', 900],
+            ['Sunny', 915],
+            ['Sunny', 920],
+            ['Sunny', 950],
+        ]
+        expected = {
+            'Sunny': [830, 900, 915, 920]
+        }
+        self.assertEqual(expected, frequent_badge_user(badge_times))
+
+    def test_always_contains_duplicates(self):
+        badge_times = [
+            ['Sunny', 0],
+            ['Sunny', 0],
+            ['Sunny', 20],
+            ['Sunny', 2322],
+            ['Sunny', 2222],
+            ['Sunny', 2122]
+        ]
+        expected = {
+            'Sunny': [0, 0, 20]
+        }
+        self.assertEqual(expected, frequent_badge_user(badge_times))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False, verbosity=2)
+```
+
 ### Oct 16, 2021 \[Easy\] Busiest Period in the Building
 --- 
 > **Question:** You are given a list of data entries that represent entries and exits of groups of people into a building. 

@@ -3020,6 +3020,48 @@ Output: False
 <details>
 <summary class="lc_m">
 
+- [**\[Medium\] More Than 3 Times Badge-access In One-hour Period**](https://trsong.github.io/python/java/2021/08/02/DailyQuestionsAug.html#oct-17-2021-medium-more-than-3-times-badge-access-in-one-hour-period) -- *Given an unordered list of names and entry times over a single day. Finds anyone who badged into the room three or more times in a one-hour period* [*\(Try ME\)*](https://replit.com/@trsong/More-Than-3-Times-Badge-access-In-One-hour-Period-1)
+
+</summary>
+<div>
+
+**Question:**  We are working on a security system for a badged-access room in our company's building.
+
+We want to find employees who badged into our secured room unusually often. We have an unordered list of names and entry times over a single day. Access times are given as numbers up to four digits in length using 24-hour time, such as "800" or "2250".
+
+Write a function that finds anyone who badged into the room three or more times in a one-hour period, and returns each time that they badged in during that period. (If there are multiple one-hour periods where this was true, just return the first one.)
+
+**Example:**
+```py
+badge_times = [
+    ["Paul", 1355],
+    ["Jennifer", 1910],
+    ["John", 830],
+    ["Paul", 1315],
+    ["John", 1615],
+    ["John", 1640],
+    ["John", 835],
+    ["Paul", 1405],
+    ["John", 855],
+    ["John", 930],
+    ["John", 915],
+    ["John", 730],
+    ["Jennifer", 1335],
+    ["Jennifer", 730],
+    ["John", 1630],
+]
+
+Expected output (in any order)
+John: 830 835 855 915 930
+Paul: 1315 1355 1405
+```
+</div>
+</details>
+
+
+<details>
+<summary class="lc_m">
+
 - [**\[Medium\] LC 838. Push Dominoes**](https://trsong.github.io/python/java/2021/05/02/DailyQuestionsMay.html#jul-27-2021--lc-838-medium-push-dominoes) -- *Figure out the final position of the dominoes. If there are dominoes that get pushed on both ends, the force cancels out and that domino remains upright.* [*\(Try ME\)*](https://replit.com/@trsong/Push-the-Dominoes-1)
 
 </summary>
