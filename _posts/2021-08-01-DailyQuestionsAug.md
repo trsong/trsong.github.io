@@ -21,6 +21,13 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
 
+### Oct 18, 2021 \[Medium\] Contiguous Sum to K
+---
+> **Question:** Given a list of integers and a number K, return which contiguous elements of the list sum to K.
+>
+> For example, if the list is `[1, 2, 3, 4, 5]` and K is 9, then it should return `[2, 3, 4]`, since 2 + 3 + 4 = 9.
+
+
 ### Oct 17, 2021 \[Medium\] More Than 3 Times Badge-access In One-hour Period
 --- 
 > **Question:**  We are working on a security system for a badged-access room in our company's building.
