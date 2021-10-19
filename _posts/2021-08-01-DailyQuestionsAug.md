@@ -21,12 +21,83 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
 
+### Oct 19, 2021 LC 1171 \[Medium\] Remove Consecutive Nodes that Sum to 0
+---
+> **Question:** Given a linked list of integers, remove all consecutive nodes that sum up to 0.
+
+**Example 1:**
+```py
+Input: 10 -> 5 -> -3 -> -3 -> 1 -> 4 -> -4
+Output: 10
+Explanation: The consecutive nodes 5 -> -3 -> -3 -> 1 sums up to 0 so that sequence should be removed. 4 -> -4 also sums up to 0 too so that sequence should also be removed.
+```
+
+**Example 2:**
+
+```py
+Input: 1 -> 2 -> -3 -> 3 -> 1
+Output: 3 -> 1
+Note: 1 -> 2 -> 1 would also be accepted.
+```
+
+**Example 3:**
+```py
+Input: 1 -> 2 -> 3 -> -3 -> 4
+Output: 1 -> 2 -> 4
+```
+
+**Example 4:**
+```py
+Input: 1 -> 2 -> 3 -> -3 -> -2
+Output: 1
+```
+
 ### Oct 18, 2021 \[Medium\] Contiguous Sum to K
 ---
 > **Question:** Given a list of integers and a number K, return which contiguous elements of the list sum to K.
 >
 > For example, if the list is `[1, 2, 3, 4, 5]` and K is 9, then it should return `[2, 3, 4]`, since 2 + 3 + 4 = 9.
 
+**Solution:** [https://replit.com/@trsong/Find-Number-of-Sub-array-Sum-Equals-K-2](https://replit.com/@trsong/Find-Number-of-Sub-array-Sum-Equals-K-2)
+```py
+import unittest
+
+def subarray_sum(nums, k):
+    prefix_sum = 0
+    prefix_history = {0: 1}
+    res = 0
+
+    for num in nums:
+        prefix_sum += num
+        res += prefix_history.get(prefix_sum - k, 0)
+        prefix_history[prefix_sum] = prefix_history.get(prefix_sum, 0) + 1
+    return res
+
+        
+class SubarraySumSpec(unittest.TestCase):
+    def test_example(self):
+        self.assertEqual(subarray_sum([1, 1, 1], 2), 2)  # [1, 1] and [1, 1]
+    
+    def test_empty_array(self):
+        self.assertEqual(subarray_sum([], 2), 0) 
+
+    def test_target_is_zero(self):
+        self.assertEqual(subarray_sum([0, 0], 0), 3) # [0], [0], [0, 0]
+
+    def test_array_with_one_elem(self):
+        self.assertEqual(subarray_sum([1], 0), 0)
+    
+    def test_array_with_one_elem2(self):
+        self.assertEqual(subarray_sum([1], 1), 1) # [1]
+
+    def test_array_with_unique_target_prefix(self):
+        # suppose the prefix_sum = [1, 2, 3, 3, 2, 1]
+        self.assertEqual(subarray_sum([1, 1, 1, 0, -1, -1], 2), 4)  # [1, 1], [1, ,1], [1, 1, 0], [1, 1, 1, 0, -1]
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False, verbosity=2)
+```
 
 ### Oct 17, 2021 \[Medium\] More Than 3 Times Badge-access In One-hour Period
 --- 
