@@ -21,6 +21,27 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
 
+### Oct 20, 2021 \[Hard\] Minimum Appends to Craft a Palindrome
+---
+> **Question:** Given a string s we need to append (insertion at end) minimum characters to make a string palindrome.
+>
+> Follow-up: Don't use Manacher’s Algorithm, even though Longest Palindromic Substring can be efficiently solved with that algorithm.  
+
+**Example 1:**
+```
+Input : s = "abede"
+Output : "abedeba"
+We can make string palindrome as "abedeba" by adding ba at the end of the string.
+```
+
+**Example 2:**
+```
+Input : s = "aabb"
+Output : "aabbaa"
+We can make string palindrome as"aabbaa" by adding aa at the end of the string.
+```
+
+
 ### Oct 19, 2021 LC 1171 \[Medium\] Remove Consecutive Nodes that Sum to 0
 ---
 > **Question:** Given a linked list of integers, remove all consecutive nodes that sum up to 0.
