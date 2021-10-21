@@ -42,6 +42,85 @@ We can make string palindrome as"aabbaa" by adding aa at the end of the string.
 ```
 
 
+
+**My thoughts:** An efficient way to solve this problem is to find the max len of suffix that is a palindrome. We can use a rolling hash function to quickly convert string into a number and by comparing the forward and backward hash value we can easily tell if a string is a palidrome or not. 
+Example 1:
+```py
+Hash("123") = 123, Hash("321") = 321. Not Palindrome 
+```
+Example 2:
+```py
+Hash("101") = 101, Hash("101") = 101. Palindrome.
+```
+Rolling hashes are amazing, they provide you an ability to calculate the hash values without rehashing the whole string. eg. Hash("123") = Hash("12") ~ 3.  ~ is some function that can efficient using previous hashing value to build new caching value. 
+
+However, we should not use Hash("123") = 123 as when the number become too big, the hash value be come arbitrarily big. Thus we use the following formula for rolling hash:
+
+```py
+hash("1234") = (1*p0^3 + 2*p0^2 + 3*p0^1 + 4*p0^0) % p1. where p0 is a much smaller prime and p1 is relatively large prime. 
+```
+
+There might be some hashing collision. However by choosing a much smaller p0 and relatively large p1, such collison is highly unlikely. Here I choose to remember a special large prime number `666667` and smaller number you can just use any smaller prime number, it shouldn't matter.
+
+
+**Solution with Rolling Hash:** [https://replit.com/@trsong/Find-Minimum-Appends-to-Craft-a-Palindrome](https://replit.com/@trsong/Find-Minimum-Appends-to-Craft-a-Palindrome)
+```py
+import unittest
+
+P0 = 17  # small prime number
+P1 = 666667  # large prime number 
+
+
+def craft_palindrome_with_min_appends(input_string):
+    reversed_string = input_string[::-1]
+    max_suffix_len = 0
+
+    forward_hash = 0
+    backward_hash = 0
+    for i, ch in enumerate(reversed_string):
+        ord_ch = ord(ch)
+        forward_hash = (P0 * forward_hash + ord_ch) % P1
+        backward_hash = (ord_ch * pow(P0, i) + backward_hash) % P1
+        if forward_hash == backward_hash:
+            max_suffix_len = i + 1
+    
+    return input_string + reversed_string[max_suffix_len:]
+    
+
+class CraftPalindromeWithMinAppendSpec(unittest.TestCase):
+    def test_example1(self):
+        self.assertEqual('abedeba', craft_palindrome_with_min_appends('abede'))
+
+    def test_example2(self):
+        self.assertEqual('aabbaa', craft_palindrome_with_min_appends('aabb'))
+
+    def test_empty_string(self):
+        self.assertEqual('', craft_palindrome_with_min_appends(''))
+    
+    def test_already_palindrome(self):
+        self.assertEqual('147313741', craft_palindrome_with_min_appends('147313741'))
+    
+    def test_already_palindrome2(self):
+        self.assertEqual('328823', craft_palindrome_with_min_appends('328823'))
+
+    def test_ascending_sequence(self):
+        self.assertEqual('123454321', craft_palindrome_with_min_appends('12345'))
+
+    def test_binary_sequence(self):
+        self.assertEqual('100010010001', craft_palindrome_with_min_appends('10001001'))
+    
+    def test_binary_sequence2(self):
+        self.assertEqual('100101001', craft_palindrome_with_min_appends('100101'))
+
+    def test_binary_sequence3(self):
+        self.assertEqual('0101010', craft_palindrome_with_min_appends('010101'))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False, verbosity=2)
+```
+
+
 ### Oct 19, 2021 LC 1171 \[Medium\] Remove Consecutive Nodes that Sum to 0
 ---
 > **Question:** Given a linked list of integers, remove all consecutive nodes that sum up to 0.

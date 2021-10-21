@@ -1215,6 +1215,36 @@ Output: [4, 8] order does not matter
 <details>
 <summary class="lc_h">
 
+- [**\[Hard\] Minimum Appends to Craft a Palindrome**](https://trsong.github.io/python/java/2021/08/02/DailyQuestionsAug.html#oct-20-2021-hard-minimum-appends-to-craft-a-palindrome) -- *Given a string s we need to append (insertion at end) minimum characters to make a string palindrome.* [*\(Try ME\)*](https://replit.com/@trsong/Find-Minimum-Appends-to-Craft-a-Palindrome-1)
+
+</summary>
+<div>
+
+**Question:** Given a string s we need to append (insertion at end) minimum characters to make a string palindrome.
+
+Follow-up: Don't use Manacher’s Algorithm, even though Longest Palindromic Substring can be efficiently solved with that algorithm.  
+
+**Example 1:**
+```
+Input : s = "abede"
+Output : "abedeba"
+We can make string palindrome as "abedeba" by adding ba at the end of the string.
+```
+
+**Example 2:**
+```
+Input : s = "aabb"
+Output : "aabbaa"
+We can make string palindrome as"aabbaa" by adding aa at the end of the string.
+```
+
+</div>
+</details>
+
+
+<details>
+<summary class="lc_h">
+
 - [**\[Medium\] Bloom Filter**](https://trsong.github.io/python/java/2021/02/02/DailyQuestionsFeb.html#apr-23-2021-medium-bloom-filter) -- *Bloom Filter is a data structure features fast and space-efficient element checking.* [*\(Try ME\)*](https://replit.com/@trsong/Implement-Bloom-Filter-1)
 
 </summary>
