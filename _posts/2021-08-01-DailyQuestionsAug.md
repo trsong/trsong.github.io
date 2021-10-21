@@ -21,6 +21,14 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
 
+### Oct 21, 2021 \[Easy\] Valid Binary Search Tree
+---
+> **Question:** Determine whether a tree is a valid binary search tree.
+>
+> A binary search tree is a tree with two children, left and right, and satisfies the constraint that the key in the left child must be less than or equal to the root and the key in the right child must be greater than or equal to the root.
+
+
+
 ### Oct 20, 2021 \[Hard\] Minimum Appends to Craft a Palindrome
 ---
 > **Question:** Given a string s we need to append (insertion at end) minimum characters to make a string palindrome.
