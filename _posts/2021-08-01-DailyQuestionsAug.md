@@ -21,6 +21,17 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
 
+### Oct 22, 2021 \[Easy\] Longest Common Prefix
+---
+> **Question:** Given a list of strings, find the longest common prefix between all strings.
+
+**Example:**
+```py 
+longest_common_prefix(['helloworld', 'hellokitty', 'helly'])
+# returns 'hell'
+```
+
+
 ### Oct 21, 2021 \[Easy\] Valid Binary Search Tree
 ---
 > **Question:** Determine whether a tree is a valid binary search tree.
