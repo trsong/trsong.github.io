@@ -28,6 +28,89 @@ categories: Python/Java
 > A binary search tree is a tree with two children, left and right, and satisfies the constraint that the key in the left child must be less than or equal to the root and the key in the right child must be greater than or equal to the root.
 
 
+**Solution with Recursion:** [https://replit.com/@trsong/Determine-If-Valid-Binary-Search-Tree](https://replit.com/@trsong/Determine-If-Valid-Binary-Search-Tree)
+```py
+import unittest
+
+def is_valid_BST(tree):
+    return is_valid_BST_recur(tree, float('-inf'), float('inf'))
+
+
+def is_valid_BST_recur(tree, left_boundary, right_boundary):
+    if not tree:
+        return True
+    return (left_boundary <= tree.val <= right_boundary and
+            is_valid_BST_recur(tree.left, left_boundary, tree.val) and 
+            is_valid_BST_recur(tree.right, tree.val, right_boundary))
+
+
+class TreeNode(object):
+    def __init__(self, val, left=None, right=None):
+        self.val = val
+        self.left = left
+        self.right = right
+
+
+class IsValidBSTSpec(unittest.TestCase):
+    def test_empty_tree(self):
+        self.assertTrue(is_valid_BST(None))
+
+    def test_left_tree_invalid(self):
+        """
+          0
+         /
+        1
+        """
+        self.assertFalse(is_valid_BST(TreeNode(0, TreeNode(1))))
+
+
+    def test_right_right_invalid(self):
+        """
+          1
+         / \
+        0   0
+        """
+        self.assertFalse(is_valid_BST(TreeNode(1, TreeNode(0), TreeNode(0))))
+
+    
+    def test_multi_level_BST(self):
+        """
+               50
+             /    \
+           20       60
+          /  \     /  \ 
+         5   30   55    70
+                       /  \
+                     65    80
+        """
+        n20 = TreeNode(20, TreeNode(5), TreeNode(30))
+        n70 = TreeNode(70, TreeNode(65), TreeNode(80))
+        n60 = TreeNode(60, TreeNode(55), n70)
+        n50 = TreeNode(50, n20, n60)
+        self.assertTrue(is_valid_BST(n50))
+
+    
+    def test_multi_level_invalid_BST(self):
+        """
+               50
+             /    \
+           30       60
+          /  \     /  \ 
+         5   20   45    70
+                       /  \
+                     45    80
+        """
+        n30 = TreeNode(30, TreeNode(5), TreeNode(20))
+        n70 = TreeNode(70, TreeNode(45), TreeNode(80))
+        n60 = TreeNode(60, TreeNode(45), n70)
+        n50 = TreeNode(50, n30, n60)
+        self.assertFalse(is_valid_BST(n50))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False, verbosity=2)
+```
+
 
 ### Oct 20, 2021 \[Hard\] Minimum Appends to Craft a Palindrome
 ---

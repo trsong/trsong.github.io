@@ -4915,6 +4915,24 @@ For example, given the array `[3, 4, 9, 6, 1]`, return `[1, 1, 2, 1, 0]`, since:
 ### Recursion
 ---
 
+
+<details>
+<summary class="lc_e">
+
+- [**\[Easy\] Valid Binary Search Tree**](https://trsong.github.io/python/java/2021/08/02/DailyQuestionsAug.html#oct-21-2021-easy-valid-binary-search-tree) -- *You are given the root of a binary tree. Find and return the largest subtree of that tree, which is a valid binary search tree.* [*\(Try ME\)*](https://replit.com/@trsong/Determine-If-Valid-Binary-Search-Tree-1)
+
+</summary>
+<div>
+
+**Question:** Determine whether a tree is a valid binary search tree.
+
+A binary search tree is a tree with two children, left and right, and satisfies the constraint that the key in the left child must be less than or equal to the root and the key in the right child must be greater than or equal to the root.
+
+
+</div>
+</details>
+
+
 <details>
 <summary class="lc_e">
 
