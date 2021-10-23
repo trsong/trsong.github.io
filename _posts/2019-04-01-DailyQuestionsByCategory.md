@@ -3998,6 +3998,26 @@ For example, given the string `tweet`, return `tteew`. `eettw` would also be acc
 <details>
 <summary class="lc_e">
 
+- [**\[Easy\] Longest Common Prefix**](https://trsong.github.io/python/java/2021/08/02/DailyQuestionsAug.html#oct-22-2021-easy-longest-common-prefix) -- *Given a list of strings, find the longest common prefix between all strings.* [*\(Try ME\)*](https://replit.com/@trsong/Find-Longest-Common-Prefix-1)
+
+</summary>
+<div>
+
+**Question:** Given a list of strings, find the longest common prefix between all strings.
+
+**Example:**
+```py 
+longest_common_prefix(['helloworld', 'hellokitty', 'helly'])
+# returns 'hell'
+```
+
+</div>
+</details>
+
+
+<details>
+<summary class="lc_e">
+
 - [**\[Easy\] LC 392. Is Subsequence**](https://trsong.github.io/python/java/2021/08/02/DailyQuestionsAug.html#sep-15-2021-lc-392-medium-is-subsequence) -- *Given a string s and a string t, check if s is subsequence of t.* [*\(Try ME\)*](https://replit.com/@trsong/Check-if-Subsequence-1)
 
 </summary>

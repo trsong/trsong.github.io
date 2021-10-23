@@ -31,6 +31,63 @@ longest_common_prefix(['helloworld', 'hellokitty', 'helly'])
 # returns 'hell'
 ```
 
+**Solution:** [https://replit.com/@trsong/Find-Longest-Common-Prefix](https://replit.com/@trsong/Find-Longest-Common-Prefix)
+```py
+import unittest
+
+def longest_common_prefix(words):
+    if not words:
+        return ''
+
+    for i, ch in enumerate(words[0]):
+        for word in words:
+            if i >= len(word) or ch != word[i]:
+                return words[0][:i]
+
+    return ''
+        
+
+class LongestCommonPrefixSpec(unittest.TestCase):
+    def test_example(self):
+        words = ['helloworld', 'hellokitty', 'helly']
+        expected = 'hell'
+        self.assertEqual(expected, longest_common_prefix(words))
+
+    def test_words_share_prefix(self):
+        words = ['flower', 'flow', 'flight']
+        expected = 'fl'
+        self.assertEqual(expected, longest_common_prefix(words))
+
+    def test_words_not_share_prefix(self):
+        words = ['dog', 'racecar', 'car']
+        expected = ''
+        self.assertEqual(expected, longest_common_prefix(words))
+
+    def test_list_with_empty_word(self):
+        words = ['abc', 'abc', '']
+        expected = ''
+        self.assertEqual(expected, longest_common_prefix(words))
+
+    def test_empty_array(self):
+        words = []
+        expected = ''
+        self.assertEqual(expected, longest_common_prefix(words))
+
+    def test_prefix_words(self):
+        words = ['abcdefgh', 'abcdefg', 'abcd', 'abcde']
+        expected = 'abcd'
+        self.assertEqual(expected, longest_common_prefix(words))
+
+    def test_nothing_in_common(self):
+        words = ['abc', 'def', 'ghi', '123']
+        expected = ''
+        self.assertEqual(expected, longest_common_prefix(words))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False, verbosity=2)
+```
+
 
 ### Oct 21, 2021 \[Easy\] Valid Binary Search Tree
 ---
