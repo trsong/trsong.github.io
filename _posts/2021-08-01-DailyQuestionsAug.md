@@ -21,6 +21,13 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
 
+### Oct 23, 2021 \[Medium\] Partition Linked List
+---
+> **Question:** Given a linked list of numbers and a pivot `k`, partition the linked list so that all nodes less than `k` come before nodes greater than or equal to `k`.
+>
+> For example, given the linked list `5 -> 1 -> 8 -> 0 -> 3` and `k = 3`, the solution could be `1 -> 0 -> 5 -> 8 -> 3`.
+
+
 ### Oct 22, 2021 \[Easy\] Longest Common Prefix
 ---
 > **Question:** Given a list of strings, find the longest common prefix between all strings.
