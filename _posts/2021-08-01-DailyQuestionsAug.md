@@ -25,8 +25,123 @@ categories: Python/Java
 ---
 > **Question:** Given a linked list of numbers and a pivot `k`, partition the linked list so that all nodes less than `k` come before nodes greater than or equal to `k`.
 >
-> For example, given the linked list `5 -> 1 -> 8 -> 0 -> 3` and `k = 3`, the solution could be `1 -> 0 -> 3 -> 5 -> 8`.
+> For example, given the linked list `5 -> 1 -> 8 -> 0 -> 3` and `k = 3`, the solution could be `1 -> 0 -> 5 -> 8 -> 3`.
 
+**Solution with Two Pointers:** [https://replit.com/@trsong/Partition-Linked-List](https://replit.com/@trsong/Partition-Linked-List)
+```py
+import unittest
+
+def partition(lst, target):
+    p1 = dummy1 = Node(-1)
+    p2 = dummy2 = Node(-1)
+
+    while lst:
+        if lst.val < target:
+            p1.next = lst
+            p1 = p1.next
+        else:
+            p2.next = lst
+            p2 = p2.next
+        lst = lst.next
+    
+    p2.next = None
+    p1.next = dummy2.next
+    return dummy1.next
+            
+
+##############################
+# Below are testing utilities
+##############################
+class Node(object):
+    def __init__(self, val, next=None):
+        self.val = val
+        self.next = next
+
+    @staticmethod
+    def flatten(lst):
+        res = []
+        while lst:
+            res.append(lst.val)
+            lst = lst.next
+        return res
+
+    @staticmethod
+    def create(*vals):
+        t = dummy = Node(-1)
+        for v in vals:
+            t.next = Node(v)
+            t = t.next
+        return dummy.next
+
+
+class PartitionSpec(unittest.TestCase):
+    def assert_result(self, expected_list, result_list, target):
+        expected_arr = Node.flatten(expected_list)
+        result_arr = Node.flatten(result_list)
+        
+        self.assertEqual(len(expected_arr), len(result_arr))
+        split_index = 0
+        for i in range(len(expected_arr)):
+            if expected_arr[i] >= target:
+                split_index = i
+                break
+        e1, e2 = set(expected_arr[:split_index]), set(expected_arr[split_index:]) 
+        r1, r2 = set(result_arr[:split_index]), set(result_arr[split_index:]) 
+    
+        self.assertEqual(e1, r1)
+        self.assertEqual(e2, r2)
+
+    def test_example(self):
+        original  = Node.create(5, 1, 8, 0, 3)
+        expected = Node.create(1, 0, 5, 8, 3)
+        target = 3
+        self.assert_result(expected, partition(original, target), target)
+
+    def test_empty_list(self):
+        self.assertIsNone(partition(None, 42))
+
+    def test_one_element_list(self):
+        original  = Node.create(1)
+        expected = Node.create(1)
+        target = 0
+        self.assert_result(expected, partition(original, target), target)
+        target = 1
+        self.assert_result(expected, partition(original, target), target)
+
+    def test_list_with_duplicated_elements(self):
+        original  = Node.create(1, 1, 0, 1, 1)
+        expected = Node.create(0, 1, 1, 1, 1)
+        target = 1
+        self.assert_result(expected, partition(original, target), target)
+
+    def test_list_with_duplicated_elements2(self):
+        original  = Node.create(0, 2, 0, 2, 0)
+        expected = Node.create(0, 0, 0, 2, 2)
+        target = 1
+        self.assert_result(expected, partition(original, target), target)
+
+    def test_list_with_duplicated_elements3(self):
+        original  = Node.create(1, 1, 1, 1)
+        expected = Node.create(1, 1, 1, 1)
+        target = 2
+        self.assert_result(expected, partition(original, target), target)
+
+    def test_unsorted_array(self):
+        original  = Node.create(10, 4, 20, 10, 3)
+        expected = Node.create(3, 10, 4, 20, 10)
+        target = 3
+        self.assert_result(expected, partition(original, target), target)
+
+    def test_unsorted_array2(self):
+        original  = Node.create(1, 4, 3, 2, 5, 2, 3)
+        expected = Node.create(1, 2, 2, 3, 3, 4, 5)
+        target = 3
+        self.assert_result(expected, partition(original, target), target)
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False, verbosity=2)
+```
 
 ### Oct 22, 2021 \[Easy\] Longest Common Prefix
 ---
