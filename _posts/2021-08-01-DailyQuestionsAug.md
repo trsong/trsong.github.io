@@ -44,6 +44,35 @@ Return the nodes 5 and 15.
 > Given a function `rand50()` that returns `0` or `1` with equal probability, write a function that returns `1` with `75%` probability and `0` with `25%` probability using `rand50()` only. Minimize the number of calls to `rand50()` method. Also, use of any other library function and floating point arithmetic are not allowed.
 
 
+**Solution:** [https://replit.com/@trsong/Solve-Rand25-Rand75](https://replit.com/@trsong/Solve-Rand25-Rand75)
+```py
+from random import randint
+
+def rand50():
+    return randint(0, 1)
+
+def rand25_rand75():
+    return rand50() | rand50()
+
+def print_distribution(func, repeat):
+    histogram = {}
+    for _ in range(repeat):
+        res = func()
+        if res not in histogram:
+            histogram[res] = 0
+        histogram[res] += 1
+    print(histogram)
+
+
+def main():
+    # Distribution looks like {0: 2520, 1: 7480}
+    print_distribution(rand25_rand75, repeat=10000)
+
+
+if __name__ == '__main__':
+    main()
+```
+
 ### Oct 23, 2021 \[Medium\] Partition Linked List
 ---
 > **Question:** Given a linked list of numbers and a pivot `k`, partition the linked list so that all nodes less than `k` come before nodes greater than or equal to `k`.

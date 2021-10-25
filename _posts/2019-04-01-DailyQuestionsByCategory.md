@@ -612,6 +612,22 @@ Return true as the first and third rectangle overlap each other.
 ---
 
 <details>
+<summary class="lc_e">
+
+- [**\[Easy\] Rand25, Rand75**](https://trsong.github.io/python/java/2021/08/02/DailyQuestionsAug.html#oct-24-2021-easy-rand25-rand75) -- *Generate `0` and `1` with `25%` and `75%` probability.* [*\(Try ME\)*](https://replit.com/@trsong/Solve-Rand25-Rand75-1)
+
+</summary>
+<div>
+
+**Question:** Generate `0` and `1` with `25%` and `75%` probability.
+
+Given a function `rand50()` that returns `0` or `1` with equal probability, write a function that returns `1` with `75%` probability and `0` with `25%` probability using `rand50()` only. Minimize the number of calls to `rand50()` method. Also, use of any other library function and floating point arithmetic are not allowed.
+
+</div>
+</details>
+
+
+<details>
 <summary class="lc_h">
 
 - [**\[Hard\] Random Elements from Infinite Stream (Reservoir Sampling)**](https://trsong.github.io/python/java/2021/08/02/DailyQuestionsAug.html#oct-8-2021-hard-random-elements-from-infinite-stream-reservoir-sampling) -- *Randomly choosing a sample of k items from a list S containing n items* [*\(Try ME\)*](https://replit.com/@trsong/Reservoir-Sampling-2#main.py)
