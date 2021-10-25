@@ -21,6 +21,29 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
 
+### Oct 25, 2021 \[Easy\] BST Nodes Sum up to K
+---
+> **Question:** Given the root of a binary search tree, and a target K, return two nodes in the tree whose sum equals K.
+
+**Example:** 
+```py
+Given the following tree and K of 20
+
+    10
+   /   \
+ 5      15
+       /  \
+     11    15
+Return the nodes 5 and 15.
+```
+
+### Oct 24, 2021 \[Easy\] Rand25, Rand75
+---
+> **Question:** Generate `0` and `1` with `25%` and `75%` probability.
+>
+> Given a function `rand50()` that returns `0` or `1` with equal probability, write a function that returns `1` with `75%` probability and `0` with `25%` probability using `rand50()` only. Minimize the number of calls to `rand50()` method. Also, use of any other library function and floating point arithmetic are not allowed.
+
+
 ### Oct 23, 2021 \[Medium\] Partition Linked List
 ---
 > **Question:** Given a linked list of numbers and a pivot `k`, partition the linked list so that all nodes less than `k` come before nodes greater than or equal to `k`.
