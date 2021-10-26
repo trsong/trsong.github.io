@@ -21,6 +21,27 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
 
+### Oct 26, 2021 \[Easy\] Inorder Successor in BST
+---
+> **Question:** Given a node in a binary search tree (may not be the root), find the next largest node in the binary search tree (also known as an inorder successor). The nodes in this binary search tree will also have a parent field to traverse up the tree.
+
+**Example:**
+```py
+Given the following BST:
+    20
+   / \
+  8   22
+ / \
+4  12
+   / \
+ 10  14
+
+inorder successor of 8 is 10, 
+inorder successor of 10 is 12 and
+inorder successor of 14 is 20.
+```
+
+
 ### Oct 25, 2021 \[Easy\] BST Nodes Sum up to K
 ---
 > **Question:** Given the root of a binary search tree, and a target K, return two nodes in the tree whose sum equals K.
