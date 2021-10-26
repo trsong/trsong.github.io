@@ -37,6 +37,124 @@ Given the following tree and K of 20
 Return the nodes 5 and 15.
 ```
 
+
+**My thoughts:** BST in-order traversal is equivalent to sorted list. Therefore the question can be converted to 2-sum with sorted input. 
+
+**Solution with In-order Traversal:** [https://replit.com/@trsong/Find-BST-Nodes-Sum-up-to-K](https://replit.com/@trsong/Find-BST-Nodes-Sum-up-to-K)
+```py
+import unittest
+
+def find_pair(tree, k):
+    if not tree:
+        return None
+        
+    left_traversal = generate_in_order_traversal(tree)
+    right_traversal = generate_reversed_in_order_traversal(tree)
+    left_node = next(left_traversal)
+    right_node = next(right_traversal)
+    while left_node != right_node:
+        total = left_node.val + right_node.val 
+        if total == k:
+            return [left_node.val, right_node.val]
+        elif total < k:
+            left_node = next(left_traversal)
+        else:
+            right_node = next(right_traversal)
+    return None
+        
+
+def generate_in_order_traversal(root):
+    if root:
+        for left in generate_in_order_traversal(root.left):
+            yield left
+        yield root
+        for right in generate_in_order_traversal(root.right):
+            yield right
+
+
+def generate_reversed_in_order_traversal(root):
+    if  root:
+        for right in generate_reversed_in_order_traversal(root.right):
+            yield right
+        yield root
+        for left in generate_reversed_in_order_traversal(root.left):
+            yield left
+
+
+class Node(object):
+    def __init__(self, val, left=None, right=None):
+        self.val = val
+        self.left = left
+        self.right = right
+
+
+class FindPairSpec(unittest.TestCase):
+    def test_example(self):
+        """
+            10
+           /   \
+         5      15
+               /  \
+             11    15
+        """
+        n15 = Node(15, Node(11), Node(15))
+        n10 = Node(10, Node(5), n15)
+        self.assertEqual([5, 15], find_pair(n10, 20))
+
+    def test_empty_tree(self):
+        self.assertIsNone(find_pair(None, 0))
+
+    def test_full_tree(self):
+        """
+             7
+           /   \
+          3     13
+         / \   /  \
+        2   5 11   17
+        """
+        n3 = Node(3, Node(2), Node(5))
+        n13 = Node(13, Node(11), Node(17))
+        n7 = Node(7, n3, n13)
+        self.assertEqual([2, 5], find_pair(n7, 7))
+        self.assertEqual([5, 13], find_pair(n7, 18))
+        self.assertEqual([7, 17], find_pair(n7, 24))
+        self.assertEqual([11, 17], find_pair(n7, 28))
+        self.assertIsNone(find_pair(n7, 4))
+
+    def test_tree_with_same_value(self):
+        """
+        42
+          \
+           42
+        """
+        tree = Node(42, right=Node(42))
+        self.assertEqual([42, 42], find_pair(tree, 84))
+        self.assertIsNone(find_pair(tree, 42))
+
+    def test_sparse_tree(self):
+        """
+           7
+         /   \
+        2     17
+         \   /
+          5 11
+         /   \
+        3     13
+        """
+        n2 = Node(2, right=Node(5, Node(3)))
+        n17 = Node(17, Node(11, right=Node(13)))
+        n7 = Node(7, n2, n17)
+        self.assertEqual([2, 5], find_pair(n7, 7))
+        self.assertEqual([5, 13], find_pair(n7, 18))
+        self.assertEqual([7, 17], find_pair(n7, 24))
+        self.assertEqual([11, 17], find_pair(n7, 28))
+        self.assertIsNone(find_pair(n7, 4))
+
+
+if __name__ == '__main__':
+   unittest.main(exit=False, verbosity=2)
+```
+
 ### Oct 24, 2021 \[Easy\] Rand25, Rand75
 ---
 > **Question:** Generate `0` and `1` with `25%` and `75%` probability.

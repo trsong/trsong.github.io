@@ -5351,6 +5351,32 @@ return 23 (5 + 4 + 6 + 8).
 ---
 
 <details>
+<summary class="lc_e">
+
+- [**\[Easy\] BST Nodes Sum up to K**](https://trsong.github.io/python/java/2021/08/02/DailyQuestionsAug.html#oct-25-2021-easy-bst-nodes-sum-up-to-k) -- *Given the root of a binary search tree, and a target K, return two nodes in the tree whose sum equals K.* [*\(Try ME\)*](https://replit.com/@trsong/Find-BST-Nodes-Sum-up-to-K-1)
+
+</summary>
+<div>
+
+**Question:** Given the root of a binary search tree, and a target K, return two nodes in the tree whose sum equals K.
+
+**Example:** 
+```py
+Given the following tree and K of 20
+
+    10
+   /   \
+ 5      15
+       /  \
+     11    15
+Return the nodes 5 and 15.
+```
+
+</div>
+</details>
+
+
+<details>
 <summary class="lc_m">
 
 - [**\[Medium\] LC 987. Vertical Order Traversal of a Binary Tree**](https://trsong.github.io/python/java/2021/05/02/DailyQuestionsMay.html#jul-23-2021-lc-987-medium-vertical-order-traversal-of-a-binary-tree) -- *Given a binary tree, return the vertical order traversal of its nodes’ values. (ie, from top to bottom, column by column).* [*\(Try ME\)*](https://replit.com/@trsong/Find-Vertical-Order-Traversal-of-a-Binary-Tree-1)
