@@ -5350,6 +5350,38 @@ return 23 (5 + 4 + 6 + 8).
 ### Traversal
 ---
 
+
+<details>
+<summary class="lc_e">
+
+- [**\[Easy\] Inorder Successor in BST**](https://trsong.github.io/python/java/2021/08/02/DailyQuestionsAug.html#oct-26-2021-easy-inorder-successor-in-bst) -- *Given a node in a binary search tree (may not be the root), find the next largest node in the binary search tree.* [*\(Try ME\)*](https://replit.com/@trsong/Find-the-Inorder-Successor-in-BST-1)
+
+</summary>
+<div>
+
+**Question:** Given a node in a binary search tree (may not be the root), find the next largest node in the binary search tree (also known as an inorder successor). The nodes in this binary search tree will also have a parent field to traverse up the tree.
+
+**Example:**
+```py
+Given the following BST:
+    20
+   / \
+  8   22
+ / \
+4  12
+   / \
+ 10  14
+
+inorder successor of 8 is 10, 
+inorder successor of 10 is 12 and
+inorder successor of 14 is 20.
+```
+
+</div>
+</details>
+
+
+
 <details>
 <summary class="lc_e">
 
