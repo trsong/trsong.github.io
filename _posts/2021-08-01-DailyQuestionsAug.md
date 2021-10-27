@@ -21,6 +21,24 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
 
+### Oct 27, 2021 LC 394 \[Medium\] Decode String (Invariant)
+---
+> **Question:** Given an encoded string in form of `"ab[cd]{2}def"`. You have to return decoded string `"abcdcddef"`
+>
+> Notice that if there is a number inside curly braces, then it means preceding string in square brackets has to be repeated the same number of times. It becomes tricky where you have nested braces.
+
+**Example 1:**
+```py
+Input: "ab[cd]{2}"
+Output: "abcdcd"
+```
+
+**Example 2:**
+```py
+Input: "def[ab[cd]{2}]{3}ghi"
+Output: "defabcdcdabcdcdabcdcdghi"
+```
+
 ### Oct 26, 2021 \[Easy\] Inorder Successor in BST
 ---
 > **Question:** Given a node in a binary search tree (may not be the root), find the next largest node in the binary search tree (also known as an inorder successor). The nodes in this binary search tree will also have a parent field to traverse up the tree.
