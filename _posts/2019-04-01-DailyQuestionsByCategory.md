@@ -4011,6 +4011,35 @@ For example, given the string `tweet`, return `tteew`. `eettw` would also be acc
 ## String
 ---
 
+
+<details>
+<summary class="lc_m">
+
+- [**\[Medium\] LC 394. Decode String (Invariant)**](https://trsong.github.io/python/java/2021/08/02/DailyQuestionsAug.html#oct-27-2021-lc-394-medium-decode-string-invariant) -- *Given an encoded string in form of `"ab[cd]{2}def"`. You have to return decoded string `"abcdcddef"`* [*\(Try ME\)*](https://replit.com/@trsong/Solve-Decode-String-Invariant-Problem-1)
+
+</summary>
+<div>
+
+**Question:** Given an encoded string in form of `"ab[cd]{2}def"`. You have to return decoded string `"abcdcddef"`
+
+Notice that if there is a number inside curly braces, then it means preceding string in square brackets has to be repeated the same number of times. It becomes tricky where you have nested braces.
+
+**Example 1:**
+```py
+Input: "ab[cd]{2}"
+Output: "abcdcd"
+```
+
+**Example 2:**
+```py
+Input: "def[ab[cd]{2}]{3}ghi"
+Output: "defabcdcdabcdcdabcdcdghi"
+```
+
+</div>
+</details>
+
+
 <details>
 <summary class="lc_e">
 

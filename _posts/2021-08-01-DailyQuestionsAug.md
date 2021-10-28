@@ -39,6 +39,100 @@ Input: "def[ab[cd]{2}]{3}ghi"
 Output: "defabcdcdabcdcdabcdcdghi"
 ```
 
+**Solution:** [https://replit.com/@trsong/Solve-Decode-String-Invariant-Problem](https://replit.com/@trsong/Solve-Decode-String-Invariant-Problem)
+```py
+import unittest
+
+def decode_string(encoded_string):
+    stream = iter(encoded_string)
+    stack = []
+    buff = []
+    for ch in stream:
+        if ch == '{':
+            count = decode_number(stream)
+            prev_str = stack.pop()
+            combined_str = prev_str + ''.join(buff * count)
+            buff = [combined_str]
+        elif ch == '[':
+            stack.append(''.join(buff))
+            buff = []
+        elif ch == ']':
+            continue
+        else:
+            buff.append(ch)
+    return ''.join(buff)
+
+
+def decode_number(stream):
+    res = 0
+    for ch in stream:
+        if ch == '}':
+            break
+        res = 10 * res + int(ch)
+    return res
+        
+
+class DecodeStringSpec(unittest.TestCase):
+    def test_example(self):
+        input = "ab[cd]{2}"
+        expected = "abcdcd"
+        self.assertEqual(expected, decode_string(input))
+    
+    def test_example2(self):
+        input = "def[ab[cd]{2}]{3}ghi"
+        expected = "defabcdcdabcdcdabcdcdghi"
+        self.assertEqual(expected, decode_string(input))
+
+    def test_empty_string(self):
+        self.assertEqual("", decode_string(""))
+    
+    def test_empty_string2(self):
+        self.assertEqual("", decode_string("[]{42}"))
+
+    def test_two_pattern_back_to_back(self):
+        input = "[a]{3}[bc]{2}"
+        expected = "aaabcbc"
+        self.assertEqual(expected, decode_string(input)) 
+    
+    def test_nested_pattern(self):
+        input = "[a[c]{2}]{3}"
+        expected = "accaccacc"
+        self.assertEqual(expected, decode_string(input)) 
+    
+    def test_nested_pattern2(self):
+        input = "[a[b]{2}c]{2}"
+        expected = 2 * ('a' + 2 * 'b' + 'c')
+        self.assertEqual(expected, decode_string(input)) 
+
+    def test_back_to_back_pattern_with_extra_appending(self):
+        input = "[abc]{2}[cd]{3}ef"
+        expected = "abcabccdcdcdef"
+        self.assertEqual(expected, decode_string(input)) 
+    
+    def test_simple_pattern(self):
+        input = "[abc]{3}"
+        expected = 3 * "abc"
+        self.assertEqual(expected, decode_string(input))
+    def test_duplicate_more_than_10_times(self):
+        input = "[ab]{233}"
+        expected =  233 * "ab"
+        self.assertEqual(expected, decode_string(input))
+
+    def test_2Level_nested_encoded_string(self):
+        input = "[[a]{3}[bc]{3}[d]{2}]{2}[[e]{2}]{4}"
+        expected = 2 * (3*"a" + 3*"bc" + 2*"d") + 4*2*"e"
+        self.assertEqual(expected, decode_string(input))
+
+    def test_3Level_nested_encoded_string(self):
+        input = "[a[b[c]{3}d[ef]{4}g]{2}h]{2}"
+        expected = 2*('a' + 2*('b' + 3*'c' + 'd' + 4 * 'ef' + 'g' ) + 'h')
+        self.assertEqual(expected, decode_string(input))
+
+
+if __name__ == "__main__":
+    unittest.main(exit=False, verbosity=2)
+```
+
 ### Oct 26, 2021 \[Easy\] Inorder Successor in BST
 ---
 > **Question:** Given a node in a binary search tree (may not be the root), find the next largest node in the binary search tree (also known as an inorder successor). The nodes in this binary search tree will also have a parent field to traverse up the tree.
