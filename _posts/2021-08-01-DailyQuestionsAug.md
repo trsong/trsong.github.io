@@ -21,6 +21,10 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
 
+### Oct 28, 2021 LC 394 \[Medium\] Decode String
+---
+> **Question:** Given a string with a certain rule: `k[string]` should be expanded to string `k` times. So for example, `3[abc]` should be expanded to `abcabcabc`. Nested expansions can happen, so `2[a2[b]c]` should be expanded to `abbcabbc`.
+
 ### Oct 27, 2021 LC 394 \[Medium\] Decode String (Invariant)
 ---
 > **Question:** Given an encoded string in form of `"ab[cd]{2}def"`. You have to return decoded string `"abcdcddef"`
