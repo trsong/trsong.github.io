@@ -21,6 +21,20 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
 
+
+### Oct 29, 2021 \[Hard\] Ordered Minimum Window Subsequence
+---
+> **Question:** Given an array nums and a subsequence sub, find the shortest subarray of nums that contains sub.
+> 
+> * If such subarray does not exist, return -1, -1.
+> * Note that the subarray must contain the elements of sub in the correct order.
+
+**Example:**
+```py
+Input: nums = [1, 2, 3, 5, 8, 7, 6, 9, 5, 7, 3, 0, 5, 2, 3, 4, 4, 7], sub = [5, 7]
+Output: start = 8, size = 2
+```
+
 ### Oct 28, 2021 LC 394 \[Medium\] Decode String
 ---
 > **Question:** Given a string with a certain rule: `k[string]` should be expanded to string `k` times. So for example, `3[abc]` should be expanded to `abcabcabc`. Nested expansions can happen, so `2[a2[b]c]` should be expanded to `abbcabbc`.
