@@ -4015,6 +4015,20 @@ For example, given the string `tweet`, return `tteew`. `eettw` would also be acc
 <details>
 <summary class="lc_m">
 
+- [**\[Medium\] LC 394. Decode String**](https://trsong.github.io/python/java/2021/08/02/DailyQuestionsAug.html#oct-28-2021-lc-394-medium-decode-string) -- *Given a string with a certain rule: `k[string]` should be expanded to string `k` times.* [*\(Try ME\)*](https://replit.com/@trsong/Solve-Decode-String-Problem-1)
+
+</summary>
+<div>
+
+**Question:** Given a string with a certain rule: `k[string]` should be expanded to string `k` times. So for example, `3[abc]` should be expanded to `abcabcabc`. Nested expansions can happen, so `2[a2[b]c]` should be expanded to `abbcabbc`.
+
+</div>
+</details>
+
+
+<details>
+<summary class="lc_m">
+
 - [**\[Medium\] LC 394. Decode String (Invariant)**](https://trsong.github.io/python/java/2021/08/02/DailyQuestionsAug.html#oct-27-2021-lc-394-medium-decode-string-invariant) -- *Given an encoded string in form of `"ab[cd]{2}def"`. You have to return decoded string `"abcdcddef"`* [*\(Try ME\)*](https://replit.com/@trsong/Solve-Decode-String-Invariant-Problem-1)
 
 </summary>

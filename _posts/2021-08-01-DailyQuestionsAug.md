@@ -25,6 +25,86 @@ categories: Python/Java
 ---
 > **Question:** Given a string with a certain rule: `k[string]` should be expanded to string `k` times. So for example, `3[abc]` should be expanded to `abcabcabc`. Nested expansions can happen, so `2[a2[b]c]` should be expanded to `abbcabbc`.
 
+**Solution:** [https://replit.com/@trsong/Solve-Decode-String-Problem](https://replit.com/@trsong/Solve-Decode-String-Problem)
+```py
+import unittest
+
+def decode_string(encoded_string):
+    count = 0
+    stack = []
+    buff = []
+    for ch in encoded_string:
+        if ch.isdigit():
+            count = 10 * count + int(ch)
+        elif ch == '[':
+            stack.append((''.join(buff), count))
+            buff = []
+            count = 0
+        elif ch == ']':
+            prev_string, count = stack.pop()
+            combined = prev_string + ''.join(buff * count)
+            buff = [combined]
+            count = 0
+        else:
+            buff.append(ch)
+    return ''.join(buff)
+        
+
+class DecodeStringSpec(unittest.TestCase):
+    def test_example1(self):
+        input = "3[abc]"
+        expected = 3 * "abc"
+        self.assertEqual(expected, decode_string(input))
+
+    def test_example2(self):
+        input = "2[a2[b]c]"
+        expected = 2 * ('a' + 2 * 'b' + 'c')
+        self.assertEqual(expected, decode_string(input)) 
+
+    def test_example3(self):
+        input = "3[a]2[bc]"
+        expected = "aaabcbc"
+        self.assertEqual(expected, decode_string(input)) 
+    
+    def test_example4(self):
+        input = "3[a2[c]]"
+        expected = "accaccacc"
+        self.assertEqual(expected, decode_string(input)) 
+
+    def test_example5(self):
+        input = "2[abc]3[cd]ef"
+        expected = "abcabccdcdcdef"
+        self.assertEqual(expected, decode_string(input)) 
+
+    def test_empty_string(self):
+        self.assertEqual("", decode_string(""))
+        self.assertEqual("", decode_string("42[]"))
+
+    def test_not_decode_negative_number_of_strings(self):
+        input = "-3[abc]"
+        expected = "-abcabcabc"
+        self.assertEqual(expected, decode_string(input))
+
+    def test_duplicate_more_than_10_times(self):
+        input = "233[ab]"
+        expected =  233 * "ab"
+        self.assertEqual(expected, decode_string(input))
+
+    def test_2Level_nested_encoded_string(self):
+        input = "2[3[a]3[bc]2[d]]4[2[e]]"
+        expected = 2 * (3*"a" + 3*"bc" + 2*"d") + 4*2*"e"
+        self.assertEqual(expected, decode_string(input))
+
+    def test_3Level_nested_encoded_string(self):
+        input = "2[a2[b3[c]d4[ef]g]h]"
+        expected = 2*('a' + 2*('b' + 3*'c' + 'd' + 4 * 'ef' + 'g' ) + 'h')
+        self.assertEqual(expected, decode_string(input))
+
+
+if __name__ == "__main__":
+    unittest.main(exit=False, verbosity=2)
+```
+
 ### Oct 27, 2021 LC 394 \[Medium\] Decode String (Invariant)
 ---
 > **Question:** Given an encoded string in form of `"ab[cd]{2}def"`. You have to return decoded string `"abcdcddef"`
