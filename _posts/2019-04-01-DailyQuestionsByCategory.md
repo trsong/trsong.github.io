@@ -10472,6 +10472,30 @@ Given such an array, determine the denominations that must be in use. In the cas
 ### 2D DP
 ---
 	
+
+<details>
+<summary class="lc_h">
+
+- [**\[Hard\] Ordered Minimum Window Subsequence**](https://trsong.github.io/python/java/2021/08/02/DailyQuestionsAug.html#oct-29-2021-hard-ordered-minimum-window-subsequence) -- *Given an array nums and a subsequence sub, find the shortest subarray of nums that contains sub.* [*\(Try ME\)*](https://replit.com/@trsong/Solve-Ordered-Minimum-Window-Subsequence-Problem-1)
+
+</summary>
+<div>
+
+**Question:** Given an array nums and a subsequence sub, find the shortest subarray of nums that contains sub.
+
+* If such subarray does not exist, return -1, -1.
+* Note that the subarray must contain the elements of sub in the correct order.
+
+**Example:**
+```py
+Input: nums = [1, 2, 3, 5, 8, 7, 6, 9, 5, 7, 3, 0, 5, 2, 3, 4, 4, 7], sub = [5, 7]
+Output: start = 8, size = 2
+```
+
+</div>
+</details>
+
+
 <details>
 <summary class="lc_m">
 

@@ -35,6 +35,100 @@ Input: nums = [1, 2, 3, 5, 8, 7, 6, 9, 5, 7, 3, 0, 5, 2, 3, 4, 4, 7], sub = [5, 
 Output: start = 8, size = 2
 ```
 
+**Solution with DP:** [https://replit.com/@trsong/Solve-Ordered-Minimum-Window-Subsequence-Problem](https://replit.com/@trsong/Solve-Ordered-Minimum-Window-Subsequence-Problem)
+```py
+import unittest
+import sys
+
+def min_window(nums, sub):
+    n, m = len(nums), len(sub)
+    if n == 0 or n < m:
+        return -1, -1
+    
+    # Let dp[n][m] represents max index i < n st. nums[i:n] contains subsequence of sub[:m],
+    # dp[n][m] = dp[n-1][m-1]  when nums[n-1] matches sub[m-1]
+    # or       = dp[n-1][m]    otherwise
+    dp = [[None for _ in range(m + 1)] for _ in range(n + 1)]
+    for i in range(n + 1):
+        dp[i][0] = i
+    
+    for i in range(1, n + 1):
+        for j in range(1, min(m, i) + 1):
+            if nums[i - 1] == sub[j - 1]:
+                dp[i][j] = dp[i - 1][j - 1]
+            else:
+                dp[i][j] = dp[i - 1][j]
+    
+    min_window_size = float('inf')
+    min_window_start = -1
+    for i in range(n + 1):
+        if dp[i][m] is None:
+            continue
+        window_size = i - dp[i][m]
+        if window_size < min_window_size:
+            min_window_size = window_size
+            min_window_start = dp[i][m]
+    
+    return (min_window_start, min_window_size) if min_window_size < float('inf') else (-1, -1)
+    
+
+class MinWindowSpec(unittest.TestCase):
+    def test_example(self):
+        nums = [1, 2, 3, 5, 8, 7, 6, 9, 5, 7, 3, 0, 5, 2, 3, 4, 4, 7]
+        sub = [5, 7]
+        self.assertEqual((8, 2), min_window(nums, sub))
+
+    def test_sub_not_exits(self):
+        nums = [0, 1, 0, 2, 0, 0, 3, 4]
+        sub = [2, 1, 3]
+        self.assertEqual((-1, -1), min_window(nums, sub))
+
+    def test_nums_is_empty(self):
+        self.assertEqual((-1, -1), min_window([], [42]))
+
+    def test_sub_is_empty(self):
+        self.assertEqual((0, 0), min_window([1, 4, 3, 2], []))
+
+    def test_both_nums_and_sub_are_empty(self):
+        self.assertEqual((-1, -1), min_window([], []))
+
+    def test_duplicated_numbers(self):
+        nums = [1, 1, 1, 1]
+        sub = [1, 1, 1, 1]
+        self.assertEqual((0, 4), min_window(nums, sub))
+
+    def test_duplicated_numbers2(self):
+        nums = [1, 1, 1]
+        sub = [1, 1, 1, 1]
+        self.assertEqual((-1, -1), min_window(nums, sub))
+
+    def test_duplicated_numbers3(self):
+        nums = [1, 1]
+        sub = [1, 0]
+        self.assertEqual((-1, -1), min_window(nums, sub))
+
+    def test_min_window(self):
+        nums = [1, 0, 2, 0, 0, 1, 0, 2, 1, 1, 2]
+        sub = [1, 2, 1]
+        self.assertEqual((5, 4), min_window(nums, sub))
+        sub2 = [1, 2, 2, 2, 1]
+        self.assertEqual((-1, -1), min_window(nums, sub2))
+
+    def test_moving_window(self):
+        nums = [1, 1, 2, 1, 2, 3, 1, 2]
+        sub = [1, 2, 3]
+        self.assertEqual((3, 3), min_window(nums, sub))
+
+    def test_min_window2(self):
+        nums = [1, 1, 1, 0, 2, 2, 1, 1, 2, 2, 2, 2]
+        sub = [1, 2]
+        self.assertEqual((7, 2), min_window(nums, sub))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False, verbosity=2)
+```
+
 ### Oct 28, 2021 LC 394 \[Medium\] Decode String
 ---
 > **Question:** Given a string with a certain rule: `k[string]` should be expanded to string `k` times. So for example, `3[abc]` should be expanded to `abcabcabc`. Nested expansions can happen, so `2[a2[b]c]` should be expanded to `abbcabbc`.
