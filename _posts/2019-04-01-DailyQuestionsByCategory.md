@@ -4403,6 +4403,29 @@ Output:  Either ['bed', 'bath', 'and', 'beyond'] or ['bedbath', 'and', 'beyond']
 <details>
 <summary class="lc_e">
 
+- [**\[Easy\] Fix Brackets**](https://trsong.github.io/python/java/2021/08/02/DailyQuestionsAug.html#oct-31-2021-easy-fix-brackets) -- *Given a string with only `(` and `)`, find the minimum number of characters to add or subtract to fix the string such that the brackets are balanced.* [*\(Try ME\)*](https://replit.com/@trsong/Fix-Unbalanced-Brackets-1)
+
+</summary>
+<div>
+
+**Question:** Given a string with only `(` and `)`, find the minimum number of characters to add or subtract to fix the string such that the brackets are balanced.
+
+**Example:**
+```py
+Input: '(()()'
+Output: 1
+Explanation:
+The fixed string could either be ()() by deleting the first bracket, or (()()) by adding a bracket. 
+These are not the only ways of fixing the string, there are many other ways by adding it in different positions!
+```
+
+</div>
+</details>
+
+
+<details>
+<summary class="lc_e">
+
 - [**\[Easy\] Balanced Brackets**](http://trsong.github.io/python/java/2021/05/02/DailyQuestionsMay.html#june-29-2021-easy-balanced-brackets) -- *Given a string of round, curly, and square open and closing brackets, return whether the brackets are balanced (well-formed).* [*\(Try ME\)*](https://replit.com/@trsong/Is-Balanced-Brackets-1)
 
 </summary>

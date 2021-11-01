@@ -31,8 +31,69 @@ categories: Python/Java
 Input: '(()()'
 Output: 1
 Explanation:
+The fixed string could either be ()() by deleting the first bracket, or (()()) by adding a bracket. 
+These are not the only ways of fixing the string, there are many other ways by adding it in different positions!
+```
 
-The fixed string could either be ()() by deleting the first bracket, or (()()) by adding a bracket. These are not the only ways of fixing the string, there are many other ways by adding it in different positions!
+**Solution:** [https://replit.com/@trsong/Fix-Unbalanced-Brackets](https://replit.com/@trsong/Fix-Unbalanced-Brackets)
+```py
+import unittest
+
+def fix_brackets(brackets):
+    balance = 0
+    invalid = 0
+    for ch in brackets:
+        if ch == '(':
+            balance += 1
+        elif balance == 0:
+            invalid += 1
+        else:
+            balance -= 1
+    return balance + invalid
+    
+
+class FixBracketSpec(unittest.TestCase):
+    def test_example(self):
+        brackets = '(()()'
+        expected = 1  # (()())
+        self.assertEqual(expected, fix_brackets(brackets))
+
+    def test_empty_string(self):
+        self.assertEqual(0, fix_brackets(''))
+
+    def test_balanced_brackets(self):
+        brackets = '()(())'
+        expected = 0
+        self.assertEqual(expected, fix_brackets(brackets))
+
+    def test_balanced_brackets2(self):
+        brackets = '((()())())(())()'
+        expected = 0
+        self.assertEqual(expected, fix_brackets(brackets))
+    
+    def test_remove_brackets_to_balance(self):
+        brackets = '((())))'
+        expected = 1  # (((())))
+        self.assertEqual(expected, fix_brackets(brackets))
+    
+    def test_remove_brackets_to_balance2(self):
+        brackets = '()())()'
+        expected = 1  # (((())))
+        self.assertEqual(expected, fix_brackets(brackets))        
+
+    def test_remove_and_append(self):
+        brackets = ')()('
+        expected = 2  # ()()
+        self.assertEqual(expected, fix_brackets(brackets))        
+
+    def test_without_close_brackets(self):
+        brackets = '((('
+        expected = 3  # ((()))
+        self.assertEqual(expected, fix_brackets(brackets))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False, verbosity=2)
 ```
 
 
