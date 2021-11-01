@@ -4015,6 +4015,25 @@ For example, given the string `tweet`, return `tteew`. `eettw` would also be acc
 <details>
 <summary class="lc_m">
 
+- [**\[Medium\] Break Sentence**](https://trsong.github.io/python/java/2021/08/02/DailyQuestionsAug.html#oct-30-2021-medium-break-sentence) -- *Given a string s and an integer k, break up the string into multiple lines such that each line has a length of k or less.* [*\(Try ME\)*](https://replit.com/@trsong/Break-Sentence-into-Multiple-Lines-1)
+
+</summary>
+<div>
+
+**Question:** Given a string s and an integer k, break up the string into multiple lines such that each line has a length of k or less. You must break it up so that words don't break across lines. Each line has to have the maximum possible amount of words. If there's no way to break the text up, then return null.
+
+You can assume that there are no spaces at the ends of the string and that there is exactly one space between each word.
+
+For example, given the string "the quick brown fox jumps over the lazy dog" and `k = 10`, you should return: `["the quick", "brown fox", "jumps over", "the lazy", "dog"]`. No string in the list has a length of more than 10.
+
+
+</div>
+</details>
+
+
+<details>
+<summary class="lc_m">
+
 - [**\[Medium\] LC 394. Decode String**](https://trsong.github.io/python/java/2021/08/02/DailyQuestionsAug.html#oct-28-2021-lc-394-medium-decode-string) -- *Given a string with a certain rule: `k[string]` should be expanded to string `k` times.* [*\(Try ME\)*](https://replit.com/@trsong/Solve-Decode-String-Problem-1)
 
 </summary>

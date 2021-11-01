@@ -30,6 +30,76 @@ categories: Python/Java
 >
 > For example, given the string "the quick brown fox jumps over the lazy dog" and `k = 10`, you should return: `["the quick", "brown fox", "jumps over", "the lazy", "dog"]`. No string in the list has a length of more than 10.
 
+**Solution:** [https://replit.com/@trsong/Break-Sentence-into-Multiple-Lines](https://replit.com/@trsong/Break-Sentence-into-Multiple-Lines)
+```py
+import unittest
+
+def break_sentence(sentence, k):
+    if not sentence:
+        return None
+
+    i = 0
+    n = len(sentence)
+    res = []
+    while i < n:
+        end = i + k
+        while i <= end < n and sentence[end] != ' ':
+            end -= 1
+        if end < i:
+            return None
+        res.append(sentence[i: end])
+        i = end + 1
+    return res
+
+
+class BreakSentenceSpec(unittest.TestCase):
+    def test_empty_sentence(self):
+        self.assertIsNone(break_sentence("", 0))
+
+    def test_empty_sentence2(self):
+        self.assertIsNone(break_sentence("", 1))
+
+    def test_sentence_with_unbreakable_words(self):
+        self.assertIsNone(break_sentence("How do you turn this on", 3))
+
+    def test_sentence_with_unbreakable_words2(self):
+        self.assertIsNone(break_sentence("Internationalization", 10))
+
+    def test_window_fit_one_word(self):
+        self.assertEqual(["Banana", "Leaf"], break_sentence("Banana Leaf", 7))
+
+    def test_window_fit_one_word2(self):
+        self.assertEqual(["Banana", "Leaf"], break_sentence("Banana Leaf", 6))
+
+    def test_window_fit_one_word3(self):
+        self.assertEqual(["Ebi", "Ten"], break_sentence("Ebi Ten", 5))
+
+    def test_window_fit_more_than_two_words(self):
+        self.assertEqual(["Cheese Steak", "Jimmy's"],
+                         break_sentence("Cheese Steak Jimmy's", 12))
+
+    def test_window_fit_more_than_two_words2(self):
+        self.assertEqual(["I see dead", "people"],
+                         break_sentence("I see dead people", 10))
+
+    def test_window_fit_more_than_two_words3(self):
+        self.assertEqual(["See no evil.", "Hear no evil.", "Speak no evil."],
+                         break_sentence(
+                             "See no evil. Hear no evil. Speak no evil.", 14))
+
+    def test_window_fit_more_than_two_words4(self):
+        self.assertEqual(
+            ["the quick", "brown fox", "jumps over", "the lazy", "dog"],
+            break_sentence("the quick brown fox jumps over the lazy dog", 10))
+
+    def test_window_fit_more_than_two_words5(self):
+        self.assertEqual(["To be or not to be"],
+                         break_sentence("To be or not to be", 1000))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False, verbosity=2)
+```
 
 ### Oct 29, 2021 \[Hard\] Ordered Minimum Window Subsequence
 ---
