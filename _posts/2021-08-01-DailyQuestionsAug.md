@@ -22,6 +22,20 @@ categories: Python/Java
 
 
 
+### Oct 31, 2021 \[Easy\] Fix Brackets
+---
+> **Question:** Given a string with only `(` and `)`, find the minimum number of characters to add or subtract to fix the string such that the brackets are balanced.
+
+**Example:**
+```py
+Input: '(()()'
+Output: 1
+Explanation:
+
+The fixed string could either be ()() by deleting the first bracket, or (()()) by adding a bracket. These are not the only ways of fixing the string, there are many other ways by adding it in different positions!
+```
+
+
 ### Oct 30, 2021 \[Medium\] Break Sentence
 ---
 > **Question:** Given a string s and an integer k, break up the string into multiple lines such that each line has a length of k or less. You must break it up so that words don't break across lines. Each line has to have the maximum possible amount of words. If there's no way to break the text up, then return null.
