@@ -21,6 +21,30 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
 
+### Nov 2, 2021 LC 525 \[Medium\] Largest Subarray with Equal Number of 0s and 1s
+---
+> **Question:** Given an array containing only 0s and 1s, find the largest subarray which contain equal number of 0s and 1s. Expected time complexity is O(n).
+
+
+**Example 1:**
+```py
+Input: arr[] = [1, 0, 1, 1, 1, 0, 0]
+Output: 1 to 6 (Starting and Ending indexes of output subarray)
+```
+
+**Example 2:**
+```py
+Input: arr[] = [1, 1, 1, 1]
+Output: No such subarray
+```
+
+**Example 3:**
+```py
+Input: arr[] = [0, 0, 1, 1, 0]
+Output: 0 to 3 Or 1 to 4
+```
+
+
 ### Nov 1, 2021 \[Medium\] Smallest Number of Perfect Squares
 ---
 > **Question:** Write a program that determines the smallest number of perfect squares that sum up to N.
