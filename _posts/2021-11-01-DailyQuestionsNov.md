@@ -44,6 +44,62 @@ Input: arr[] = [0, 0, 1, 1, 0]
 Output: 0 to 3 Or 1 to 4
 ```
 
+**Solution:** [https://replit.com/@trsong/Find-Largest-Subarray-with-Equal-Number-of-0s-and-1s](https://replit.com/@trsong/Find-Largest-Subarray-with-Equal-Number-of-0s-and-1s)
+```py
+import unittest
+
+def largest_even_subarray(nums):
+    balance = 0
+    balance_occurance = {0: -1}
+    max_window_size = -1
+    max_window_start = -1
+    
+    for index, num in enumerate(nums):
+        balance += 1 if num == 1 else -1
+
+        if balance not in balance_occurance:
+            balance_occurance[balance] = index
+        window_size = index - balance_occurance[balance]
+
+        if window_size > max_window_size:
+            max_window_size = window_size
+            max_window_start = balance_occurance[balance] + 1
+    return (max_window_start, max_window_start + max_window_size - 1) if max_window_size > 0 else None
+
+
+class LargestEvenSubarraySpec(unittest.TestCase):
+    def test_example1(self):
+        self.assertEqual((1, 6), largest_even_subarray([1, 0, 1, 1, 1, 0, 0]))
+
+    def test_example2(self):
+        self.assertTrue(largest_even_subarray([0, 0, 1, 1, 0]) in [(0, 3), (1, 4)])
+
+    def test_entire_array_is_even(self):
+        self.assertEqual((0, 1), largest_even_subarray([0, 1]))
+
+    def test_no_even_subarray(self):
+        self.assertIsNone(largest_even_subarray([0, 0, 0, 0, 0]))
+
+    def test_no_even_subarray2(self):
+        self.assertIsNone(largest_even_subarray([1]))
+
+    def test_no_even_subarray3(self):
+        self.assertIsNone(largest_even_subarray([]))
+
+    def test_larger_array(self):
+        self.assertEqual((0, 9), largest_even_subarray([0, 1, 0, 1, 1, 0, 1, 0, 0, 1, 1, 1, 1, 1]))
+
+    def test_larger_array2(self):
+        self.assertEqual((3, 8), largest_even_subarray([1, 1, 1, 0, 0, 1, 1, 1, 0, 1, 1]))
+
+    def test_larger_array3(self):
+        self.assertEqual((0, 13), largest_even_subarray([1, 0, 1, 1, 0, 0, 0, 1, 1, 0, 0, 0, 1, 1])) 
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False, verbosity=2)
+```
+
 
 ### Nov 1, 2021 \[Medium\] Smallest Number of Perfect Squares
 ---
