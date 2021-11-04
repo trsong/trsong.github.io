@@ -30,6 +30,82 @@ categories: Python/Java
 > - the 2nd missing number is 5,
 > - the 3rd missing number is 6
 
+**Solution with Binary Search:** [https://replit.com/@trsong/Find-K-th-Missing-Number-in-Sorted-Array-2](https://replit.com/@trsong/Find-K-th-Missing-Number-in-Sorted-Array-2)
+```py
+import unittest
+
+def find_kth_missing_number(nums, k):
+    if not nums or k <= 0 or count_left_missing(nums, len(nums) - 1) < k:
+        return None
+
+    lo = 0
+    hi = len(nums) - 1
+    while lo < hi:
+        mid = lo + (hi - lo) // 2
+        if count_left_missing(nums, mid) < k:
+            lo = mid + 1
+        else:
+            hi = mid
+    
+    offset = count_left_missing(nums, lo) - k + 1
+    return nums[lo] - offset
+
+
+def count_left_missing(nums, index):
+    return nums[index] - nums[0] - index
+
+
+class FindKthMissingNumberSpec(unittest.TestCase):
+    def test_empty_source(self):
+        self.assertIsNone(find_kth_missing_number([], 0))
+    
+    def test_empty_source2(self):
+        self.assertIsNone(find_kth_missing_number([], 1))
+
+    def test_missing_number_not_exists(self):
+        self.assertIsNone(find_kth_missing_number([1, 2, 3], 0))
+    
+    def test_missing_number_not_exists2(self):
+        self.assertIsNone(find_kth_missing_number([1, 2, 3], 1))
+
+    def test_missing_number_not_exists3(self):
+        self.assertIsNone(find_kth_missing_number([1, 3], 2))
+
+    def test_one_gap_in_source(self):
+        self.assertEqual(5, find_kth_missing_number([3, 4, 8, 9, 10, 11, 12], 1))
+    
+    def test_one_gap_in_source2(self):
+        self.assertEqual(6, find_kth_missing_number([3, 4, 8, 9, 10, 11, 12], 2))
+
+    def test_one_gap_in_source3(self):
+        self.assertEqual(7, find_kth_missing_number([3, 4, 8, 9, 10, 11, 12], 3))
+
+    def test_one_gap_in_source4(self):
+        self.assertEqual(4, find_kth_missing_number([3, 6, 7], 1))
+
+    def test_one_gap_in_source5(self):
+        self.assertEqual(5, find_kth_missing_number([3, 6, 7], 2))
+    
+    def test_multiple_gap_in_source(self):
+        self.assertEqual(3, find_kth_missing_number([2, 4, 7, 8, 9, 15], 1))
+    
+    def test_multiple_gap_in_source2(self):
+        self.assertEqual(5, find_kth_missing_number([2, 4, 7, 8, 9, 15], 2))
+    
+    def test_multiple_gap_in_source3(self):
+        self.assertEqual(6, find_kth_missing_number([2, 4, 7, 8, 9, 15], 3))
+
+    def test_multiple_gap_in_source4(self):
+        self.assertEqual(10, find_kth_missing_number([2, 4, 7, 8, 9, 15], 4))
+
+    def test_multiple_gap_in_source5(self):
+        self.assertEqual(11, find_kth_missing_number([2, 4, 7, 8, 9, 15], 5))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False, verbosity=2)
+```
+
 
 ### Nov 2, 2021 LC 525 \[Medium\] Largest Subarray with Equal Number of 0s and 1s
 ---
