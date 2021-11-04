@@ -21,6 +21,24 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
 
+### Nov 4, 2021 LC 448 \[Easy\] Find Missing Numbers in an Array
+--- 
+> **Question:** Given an array of integers of size n, where all elements are between 1 and n inclusive, find all of the elements of [1, n] that do not appear in the array. Some numbers may appear more than once.
+> 
+> Follow-up: Could you do it without extra space and in O(n) runtime?
+
+**Example1:**
+```py
+Input: [4, 3, 2, 7, 8, 2, 3, 1]
+Output: [5, 6]
+```
+
+**Example2:**
+```py
+Input: [4, 5, 2, 6, 8, 2, 1, 5]
+Output: [3, 7]
+```
+
 ### Nov 3, 2021 \[Medium\] K-th Missing Number in Sorted Array
 ---
 > **Question:** Given a sorted without any duplicate integer array, define the missing numbers to be the gap among numbers. Write a function to calculate K-th missing number. If such number does not exist, then return null.
