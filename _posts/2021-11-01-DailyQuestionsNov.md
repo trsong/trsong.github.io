@@ -39,6 +39,77 @@ Input: [4, 5, 2, 6, 8, 2, 1, 5]
 Output: [3, 7]
 ```
 
+**Solution:** [https://replit.com/@trsong/Find-Missing-Numbers-in-an-Array-of-Range-n](https://replit.com/@trsong/Find-Missing-Numbers-in-an-Array-of-Range-n)
+```py
+import unittest
+
+def find_missing_numbers(nums):
+    n = len(nums)
+    for num in nums:
+        index = abs(num) - 1
+        if 0 <= index < n:
+            nums[index] = -abs(nums[index])
+    
+    res = []
+    for i in range(n):
+        if nums[i] > 0:
+            res.append(i + 1)
+        nums[i] = abs(nums[i])
+    return res
+    
+
+class FindMissingNumberSpec(unittest.TestCase):
+    def assert_result(self, expected, result):
+        self.assertEqual(sorted(expected), sorted(result))
+
+    def test_example1(self):
+        input = [4, 3, 2, 7, 8, 2, 3, 1]
+        expected = [5, 6]
+        self.assert_result(expected, find_missing_numbers(input))
+
+    def test_example2(self):
+        input = [4, 5, 2, 6, 8, 2, 1, 5]
+        expected = [3, 7]
+        self.assert_result(expected, find_missing_numbers(input))
+
+    def test_empty_array(self):
+        self.assertEqual([], find_missing_numbers([]))
+
+    def test_no_missing_numbers(self):
+        input = [6, 1, 4, 3, 2, 5]
+        expected = []
+        self.assert_result(expected, find_missing_numbers(input))
+
+    def test_duplicated_number1(self):
+        input = [1, 1, 2]
+        expected = [3]
+        self.assert_result(expected, find_missing_numbers(input))
+
+    def test_duplicated_number2(self):
+        input = [1, 1, 3, 5, 6, 8, 8, 1, 1]
+        expected = [2, 4, 7, 9]
+        self.assert_result(expected, find_missing_numbers(input))
+    
+    def test_missing_first_number(self):
+        input = [2, 2]
+        expected = [1]
+        self.assert_result(expected, find_missing_numbers(input))
+    
+    def test_missing_multiple_numbers1(self):
+        input = [1, 3, 3]
+        expected = [2]
+        self.assert_result(expected, find_missing_numbers(input))
+    
+    def test_missing_multiple_numbers2(self):
+        input = [3, 2, 3, 2, 3, 2, 7]
+        expected = [1, 4, 5, 6]
+        self.assert_result(expected, find_missing_numbers(input))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False, verbosity=2)
+```
+
 ### Nov 3, 2021 \[Medium\] K-th Missing Number in Sorted Array
 ---
 > **Question:** Given a sorted without any duplicate integer array, define the missing numbers to be the gap among numbers. Write a function to calculate K-th missing number. If such number does not exist, then return null.
