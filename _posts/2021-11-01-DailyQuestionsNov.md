@@ -21,6 +21,13 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
 
+### Nov 6, 2021 \[Hard\] Order of Alien Dictionary
+--- 
+> **Question:** You come across a dictionary of sorted words in a language you've never seen before. Write a program that returns the correct order of letters in this language.
+>
+> For example, given `['xww', 'wxyz', 'wxyw', 'ywx', 'ywz']`, you should return `['x', 'z', 'w', 'y']`.
+
+
 ### Nov 5, 2021 \[Medium\] Tree Serialization
 ---
 > **Question:** You are given the root of a binary tree. You need to implement 2 functions:
