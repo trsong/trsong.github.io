@@ -33,7 +33,7 @@ Suppose the dictionary contains: `01234`. Then the words can be `023, 024, 12, 1
 
 With relative relation, we can build a graph with each occurring letters being veteces and edge `(u, v)` represents `u < v`. If there exists a loop that means we have something like `a < b < c < a` and total order not exists. Otherwise we preform a topological sort to generate the total order which reveals the alien dictionary. 
 
-As for implementation of topological sort, there are two ways, one is the following by constantly removing edges from visited nodes. The other is to [first DFS to find the reverse topological order then reverse again to find the result](https://trsong.github.io/python/java/2019/11/02/DailyQuestionsNov/#nov-9-2019-hard-order-of-alien-dictionary). 
+As for implementation of topological sort, there are two ways, one is the following by constantly removing edges from visited nodes. The other is to [first DFS to find the reverse topological order then reverse again to find the result](https://trsong.github.io/python/java/2019/11/02/DailyQuestionsNov.html#nov-9-2019-hard-order-of-alien-dictionary). 
 
 
 **Solution with Topological Sort:** [https://replit.com/@trsong/Alien-Dictionary-Order-2](https://replit.com/@trsong/Alien-Dictionary-Order-2)
