@@ -27,6 +27,116 @@ categories: Python/Java
 >
 > For example, given `['xww', 'wxyz', 'wxyw', 'ywx', 'ywz']`, you should return `['x', 'z', 'w', 'y']`.
 
+**My thoughts:** As the alien letters are topologically sorted, we can just mimic what topological sort with numbers and try to find pattern.
+
+Suppose the dictionary contains: `01234`. Then the words can be `023, 024, 12, 133, 2433`. Notice that we can only find the relative order by finding first unequal letters between consecutive words. eg.  `023, 024 => 3 < 4`.  `024, 12 => 0 < 1`.  `12, 133 => 2 < 3`
+
+With relative relation, we can build a graph with each occurring letters being veteces and edge `(u, v)` represents `u < v`. If there exists a loop that means we have something like `a < b < c < a` and total order not exists. Otherwise we preform a topological sort to generate the total order which reveals the alien dictionary. 
+
+As for implementation of topological sort, there are two ways, one is the following by constantly removing edges from visited nodes. The other is to [first DFS to find the reverse topological order then reverse again to find the result](https://trsong.github.io/python/java/2019/11/02/DailyQuestionsNov/#nov-9-2019-hard-order-of-alien-dictionary). 
+
+
+**Solution with Topological Sort:** [https://replit.com/@trsong/Alien-Dictionary-Order-2](https://replit.com/@trsong/Alien-Dictionary-Order-2)
+```py
+import unittest
+
+def dictionary_order(sorted_words):
+    neighbors = {}
+    inward_degree = {}
+    for i in range(1, len(sorted_words)):
+        cur_word = sorted_words[i]
+        prev_word = sorted_words[i - 1]
+        for prev_ch, cur_ch in zip(prev_word, cur_word):
+            if prev_ch != cur_ch:
+                neighbors[prev_ch] = neighbors.get(prev_ch, [])
+                neighbors[prev_ch].append(cur_ch)
+                inward_degree[cur_ch] = inward_degree.get(cur_ch, 0) + 1
+                break
+
+    char_set = { ch for word in sorted_words for ch in word }
+    queue = [ch for ch in char_set if ch not in inward_degree]
+    top_order = []
+    while queue:
+        cur = queue.pop(0)
+        top_order.append(cur)
+        for nb in neighbors.get(cur, []):
+            inward_degree[nb] -= 1
+            if inward_degree[nb] == 0:
+                del inward_degree[nb]
+                queue.append(nb)
+    return top_order if len(top_order) == len(char_set) else None
+
+
+class DictionaryOrderSpec(unittest.TestCase):
+    def test_example(self):
+        # 0123
+        # xzwy
+        # Decode Array: 022, 2031, 2032, 320, 321
+        self.assertEqual(['x', 'z', 'w', 'y'], dictionary_order(['xww', 'wxyz', 'wxyw', 'ywx', 'ywz']))
+
+    def test_empty_dictionary(self):
+        self.assertEqual([], dictionary_order([]))
+
+    def test_unique_characters(self):
+        self.assertEqual(['z', 'x'], dictionary_order(["z", "x"]), )
+
+    def test_invalid_order(self):
+        self.assertIsNone(dictionary_order(["a", "b", "a"]))
+
+    def test_invalid_order2(self):
+        # 012
+        # abc
+        # decode array result become 210, 211, 212, 012
+        self.assertIsNone(dictionary_order(["cba", "cbb", "cbc", "abc"]))
+
+    def test_invalid_order3(self):
+        # 012
+        # abc
+        # decode array result become 10, 11, 211, 22, 20 
+        self.assertIsNone(dictionary_order(["ba", "bb", "cbb", "cc", "ca"]))
+    
+    def test_valid_order(self):
+        # 01234
+        # wertf
+        # decode array result become 023, 024, 12, 133, 2433
+        self.assertEqual(['w', 'e', 'r', 't', 'f'], dictionary_order(["wrt", "wrf", "er", "ett", "rftt"]))
+
+    def test_valid_order2(self):
+        # 012
+        # abc
+        # decode array result become 01111, 122, 20
+        self.assertEqual(['a', 'b', 'c'], dictionary_order(["abbbb", "bcc", "ca"]))
+
+    def test_valid_order3(self):
+        # 0123
+        # bdac
+        # decode array result become 022, 2031, 2032, 320, 321
+        self.assertEqual(['b', 'd', 'a', 'c'], dictionary_order(["baa", "abcd", "abca", "cab", "cad"]))
+
+    def test_multiple_valid_result(self):
+        self.assertEqual(['a', 'b', 'c', 'd', 'e'], sorted(dictionary_order(["edcba"])))
+
+    def test_multiple_valid_result2(self):
+        # 01
+        # ab
+        # cd
+        res = dictionary_order(["aa", "ab", "cc", "cd"])
+        expected_set = [['a', 'b', 'c', 'd'], ['a', 'c', 'b', 'd'], ['a', 'd', 'c', 'b'], ['a', 'c', 'd', 'b']]
+        self.assertTrue(res in expected_set)
+
+    def test_multiple_valid_result3(self):
+        # 01
+        # ab
+        #  c
+        #  d
+        res = dictionary_order(["aaaaa", "aaad", "aab", "ac"])
+        one_res = ['a', 'b', 'c', 'd']
+        self.assertTrue(len(res) == len(one_res) and res[0] == one_res[0] and sorted(res) == one_res)
+        
+
+if __name__ == '__main__':
+    unittest.main(exit=False, verbosity=2)
+```
 
 ### Nov 5, 2021 \[Medium\] Tree Serialization
 ---
