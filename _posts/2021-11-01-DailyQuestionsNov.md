@@ -45,6 +45,121 @@ Explanation:
 Surrounded regions shouldn’t be on the border, which means that any 'O' on the border of the board are not flipped to 'X'. Any 'O' that is not on the border and it is not connected to an 'O' on the border will be flipped to 'X'. Two cells are connected if they are adjacent cells connected horizontally or vertically.
 ```
 
+**Solution with DisjointSet(Union-Find):** [https://replit.com/@trsong/Flip-Surrounded-Regions-2](https://replit.com/@trsong/Flip-Surrounded-Regions-2)
+```py
+import unittest
+
+X, O = 'X', 'O'
+
+def flip_region(grid):
+    if not grid or not grid[0]:
+        return grid
+    
+    n, m = len(grid), len(grid[0])
+    uf = DisjointSet(n * m + 1)
+    rc_to_pos = lambda r, c: r * m + c
+    for r in range(n):
+        for c in range(m):
+            if grid[r][c] == 'X':
+                continue
+            if r > 0 and grid[r - 1][c] == 'O':
+                uf.union(rc_to_pos(r - 1, c), rc_to_pos(r, c))
+            if c > 0 and grid[r][c - 1] == 'O':
+                uf.union(rc_to_pos(r, c - 1), rc_to_pos(r, c))
+
+    edge_root = n * m
+    for r in range(n):
+        uf.union(rc_to_pos(r, 0), edge_root)
+        uf.union(rc_to_pos(r, m - 1), edge_root)
+    
+    for c in range(m):
+        uf.union(rc_to_pos(0, c), edge_root)
+        uf.union(rc_to_pos(n - 1, c), edge_root)
+
+    for r in range(n):
+        for c in range(m):
+            if (grid[r][c] == 'O' and 
+                not uf.is_connected(rc_to_pos(r, c), edge_root)):
+                grid[r][c] = 'X'
+    return grid
+
+
+class DisjointSet(object):
+    def __init__(self, size):
+        self.parent = [-1] * size
+
+    def union(self, p1, p2):
+        r1 = self.find(p1)
+        r2 = self.find(p2)
+        if r1 != r2:
+            self.parent[r1] = r2
+
+    def find(self, p):
+        while self.parent[p] != -1:
+            p = self.parent[p]
+        return p
+
+    def is_connected(self, p1, p2):
+        return self.find(p1) == self.find(p2)
+
+
+class FlipRegionSpec(unittest.TestCase):
+    def test_example(self):
+        grid = [
+            [X, X, X, X], 
+            [X, O, O, X], 
+            [X, X, O, X], 
+            [X, O, X, X]]
+        expected = [
+            [X, X, X, X], 
+            [X, X, X, X], 
+            [X, X, X, X], 
+            [X, O, X, X]]
+        self.assertEqual(expected, flip_region(grid))
+    
+    def test_empty_grid(self):
+        self.assertEqual([], flip_region([]))
+        self.assertEqual([[]], flip_region([[]]))
+
+    def test_non_surrounded_region(self):
+        grid = [
+            [O, O, O, O, O], 
+            [O, O, O, O, O],
+            [O, O, O, O, O],
+            [O, O, O, O, O]]
+        expected = [
+            [O, O, O, O, O],
+            [O, O, O, O, O],
+            [O, O, O, O, O],
+            [O, O, O, O, O]]
+        self.assertEqual(expected, flip_region(grid))
+
+    def test_all_surrounded_region(self):
+        grid = [
+            [X, X, X], 
+            [X, X, X]]
+        expected = [
+            [X, X, X], 
+            [X, X, X]]
+        self.assertEqual(expected, flip_region(grid))
+
+    def test_region_touching_boundary(self):
+        grid = [
+            [X, O, X, X, O],
+            [X, X, O, O, X],
+            [X, O, X, X, O],
+            [O, O, O, X, O]]
+        expected = [
+            [X, O, X, X, O],
+            [X, X, X, X, X],
+            [X, O, X, X, O],
+            [O, O, O, X, O]]
+        self.assertEqual(expected, flip_region(grid))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False, verbosity=2)
+```
 
 ### Nov 6, 2021 \[Hard\] Order of Alien Dictionary
 --- 
