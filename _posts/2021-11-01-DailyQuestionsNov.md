@@ -21,6 +21,39 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
 
+### Nov 8, 2021 \[Hard\] Power Supply to All Cities
+---
+> **Question:** Given a graph of possible electricity connections (each with their own cost) between cities in an area, find the cheapest way to supply power to all cities in the area. 
+
+**Example 1:**
+```py
+Input: cities = ['Vancouver', 'Richmond', 'Burnaby']
+       cost_btw_cities = [
+           ('Vancouver', 'Richmond', 1),
+           ('Vancouver', 'Burnaby', 1),
+           ('Richmond', 'Burnaby', 2)]
+Output: 2  
+Explanation: 
+Min cost to supply all cities is to connect the following cities with total cost 1 + 1 = 2: 
+(Vancouver, Burnaby), (Vancouver, Richmond)
+```
+
+**Example 2:**
+```py
+Input: cities = ['Toronto', 'Mississauga', 'Waterloo', 'Hamilton']
+       cost_btw_cities = [
+           ('Mississauga', 'Toronto', 1),
+           ('Toronto', 'Waterloo', 2),
+           ('Waterloo', 'Hamilton', 3),
+           ('Toronto', 'Hamilton', 2),
+           ('Mississauga', 'Hamilton', 1),
+           ('Mississauga', 'Waterloo', 2)]
+Output: 4
+Explanation: Min cost to connect to all cities is 4:
+(Toronto, Mississauga), (Toronto, Waterloo), (Mississauga, Hamilton)
+```
+
+
 ### Nov 7, 2021 LC 130 \[Medium\] Surrounded Regions
 ---
 
