@@ -53,6 +53,88 @@ Explanation: Min cost to connect to all cities is 4:
 (Toronto, Mississauga), (Toronto, Waterloo), (Mississauga, Hamilton)
 ```
 
+**My thoughts**: This question is an undirected graph problem asking for total cost of minimum spanning tree. Both of the follwing algorithms can solve this problem: Kruskal’s and Prim’s MST Algorithm. First one keeps choosing edges whereas second one starts from connecting vertices. Either one will work.
+
+**Solution with Kruskal Algorithm:** [https://replit.com/@trsong/Design-Power-Supply-to-All-Cities-2#main.py](https://replit.com/@trsong/Design-Power-Supply-to-All-Cities-2)
+```py
+import unittest
+
+def min_cost_power_supply(cities, cost_btw_cities):
+    city_lookup = { city: index for index, city in enumerate(cities) }
+    uf = DisjointSet(len(cities))
+    res = 0
+
+    cost_btw_cities.sort(key=lambda uvw: uvw[-1])
+    for u, v, w in cost_btw_cities:
+        uid, vid = city_lookup[u], city_lookup[v]
+        if not uf.is_connected(uid, vid):
+            uf.union(uid, vid)
+            res += w
+    return res
+
+
+class DisjointSet(object):
+    def __init__(self, size):
+        self.parent = range(size)
+
+    def find(self, p):
+        while p != self.parent[p]:
+            self.parent[p] = self.parent[self.parent[p]]
+            p = self.parent[p]
+        return p
+
+    def union(self, p1, p2):
+        r1 = self.find(p1)
+        r2 = self.find(p2)
+        if r1 != r2:
+            self.parent[r1] = r2
+    
+    def is_connected(self, p1, p2):
+        return self.find(p1) == self.find(p2)
+
+
+class MinCostPowerSupplySpec(unittest.TestCase):
+    def test_k3_graph(self):
+        cities = ['Vancouver', 'Richmond', 'Burnaby']
+        cost_btw_cities = [
+            ('Vancouver', 'Richmond', 1),
+            ('Vancouver', 'Burnaby', 1),
+            ('Richmond', 'Burnaby', 2)
+        ]
+        # (Vancouver, Burnaby), (Vancouver, Richmond)
+        self.assertEqual(2, min_cost_power_supply(cities, cost_btw_cities))  
+
+    def test_k4_graph(self):
+        cities = ['Toronto', 'Mississauga', 'Waterloo', 'Hamilton']
+        cost_btw_cities = [
+            ('Mississauga', 'Toronto', 1),
+            ('Toronto', 'Waterloo', 2),
+            ('Waterloo', 'Hamilton', 3),
+            ('Toronto', 'Hamilton', 2),
+            ('Mississauga', 'Hamilton', 1),
+            ('Mississauga', 'Waterloo', 2)
+        ]
+        # (Toronto, Mississauga), (Toronto, Waterloo), (Mississauga, Hamilton)
+        self.assertEqual(4, min_cost_power_supply(cities, cost_btw_cities)) 
+
+    def test_connected_graph(self):
+        cities = ['Shanghai', 'Nantong', 'Suzhou', 'Hangzhou', 'Ningbo']
+        cost_btw_cities = [
+            ('Shanghai', 'Nantong', 1),
+            ('Nantong', 'Suzhou', 1),
+            ('Suzhou', 'Shanghai', 1),
+            ('Suzhou', 'Hangzhou', 3),
+            ('Hangzhou', 'Ningbo', 2),
+            ('Hangzhou', 'Shanghai', 2),
+            ('Ningbo', 'Shanghai', 2)
+        ]
+        # (Shanghai, Nantong), (Shanghai, Suzhou), (Shanghai, Hangzhou), (Shanghai, Nantong)
+        self.assertEqual(6, min_cost_power_supply(cities, cost_btw_cities)) 
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False, verbosity=2)
+```
 
 ### Nov 7, 2021 LC 130 \[Medium\] Surrounded Regions
 ---
