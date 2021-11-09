@@ -20,6 +20,10 @@ categories: Python/Java
 
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
+### Nov 9, 2021 \[Medium\] Integer Division
+---
+> **Question:** Implement division of two positive integers without using the division, multiplication, or modulus operators. Return the quotient as an integer, ignoring the remainder.
+
 
 ### Nov 8, 2021 \[Hard\] Power Supply to All Cities
 ---
