@@ -25,6 +25,76 @@ categories: Python/Java
 > **Question:** Implement division of two positive integers without using the division, multiplication, or modulus operators. Return the quotient as an integer, ignoring the remainder.
 
 
+**Solution:** [https://replit.com/@trsong/Divide-Two-Integers-2](https://replit.com/@trsong/Divide-Two-Integers-2)
+```py
+import unittest
+
+def divide(dividend, divisor):
+    INT_DIGITS = 32
+    divisor_sign = -1 if divisor < 0 else 1
+    sign = -1 if (dividend > 0) ^ (divisor > 0) else 1
+    dividend, divisor = abs(dividend), abs(divisor)
+    quotient = 0
+
+    for i in xrange(INT_DIGITS, -1, -1):
+        if dividend >= (divisor << i):
+            quotient |= 1 << i
+            dividend -= (divisor << i)
+
+    if dividend == 0:
+        return sign * quotient, 0
+    elif sign > 0:
+        return quotient, divisor_sign * dividend
+    else:
+        return -quotient-1, divisor_sign * (divisor-dividend)
+
+
+class DivideSpec(unittest.TestCase):
+    def test_example(self):
+        dividend, divisor = 10, 3
+        expected = 3, 1
+        self.assertEqual(expected, divide(dividend, divisor))
+
+    def test_product_is_zero(self):
+        dividend, divisor = 0, 1
+        expected = 0, 0
+        self.assertEqual(expected, divide(dividend, divisor))
+
+    def test_divisor_is_one(self):
+        dividend, divisor = 42, 1
+        expected = 42, 0
+        self.assertEqual(expected, divide(dividend, divisor))
+
+    def test_product_is_negative(self):
+        dividend, divisor = -17, 3
+        expected = -6, 1
+        self.assertEqual(expected, divide(dividend, divisor))
+
+    def test_divisor_is_negative(self):
+        dividend, divisor = 42, -5
+        expected = -9, -3
+        self.assertEqual(expected, divide(dividend, divisor))
+
+    def test_both_num_are_negative(self):
+        dividend, divisor = -42, -5
+        expected = 8, -2
+        self.assertEqual(expected, divide(dividend, divisor))
+
+    def test_product_is_divisible(self):
+        dividend, divisor = 42, 3
+        expected = 14, 0
+        self.assertEqual(expected, divide(dividend, divisor))
+
+    def test_product_is_divisible2(self):
+        dividend, divisor = 42, -3
+        expected = -14, 0
+        self.assertEqual(expected, divide(dividend, divisor))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False, verbosity=2)
+```
+
 ### Nov 8, 2021 \[Hard\] Power Supply to All Cities
 ---
 > **Question:** Given a graph of possible electricity connections (each with their own cost) between cities in an area, find the cheapest way to supply power to all cities in the area. 
