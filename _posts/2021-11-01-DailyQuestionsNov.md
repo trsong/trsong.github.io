@@ -20,6 +20,26 @@ categories: Python/Java
 
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
+
+### Nov 10, 2021 \[Medium\] Amazing Number
+---
+> **Question:** Define amazing number as: its value is less than or equal to its index. Given a circular array, find the starting position, such that the total number of amazing numbers in the array is maximized. 
+> 
+> Follow-up: Should get a solution with time complexity less than O(N^2)
+
+**Example 1:**
+```py
+Input: [0, 1, 2, 3]
+Ouptut: 0. When starting point at position 0, all the elements in the array are equal to its index. So all the numbers are amazing number.
+```
+
+**Example 2:** 
+```py
+Input: [1, 0, 0]
+Output: 1. When starting point at position 1, the array becomes 0, 0, 1. All the elements are amazing number.
+If there are multiple positions, return the smallest one.
+```
+
 ### Nov 9, 2021 \[Medium\] Integer Division
 ---
 > **Question:** Implement division of two positive integers without using the division, multiplication, or modulus operators. Return the quotient as an integer, ignoring the remainder.
