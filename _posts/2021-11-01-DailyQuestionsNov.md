@@ -40,6 +40,84 @@ Output: 1. When starting point at position 1, the array becomes 0, 0, 1. All the
 If there are multiple positions, return the smallest one.
 ```
 
+**My thoughts:** We can use Brute-force Solution to get answer in O(n^2). But can we do better? Well, some smart observation is needed.
+
+- First, we know that 0 and all negative numbers are amazing numbers. 
+- Second, if a number is too big, i.e. greater than the length of array, then there is no way for that number to be an amazing number. 
+- Finally, if a number is neither too small nor too big, i.e. between `(0, n-1)`, then we can define "invalid" range as `[i - nums[i] + 1, i]`.
+
+We accumlate those intervals by using interval counting technique: define interval_accu array, for each interval `(start, end)`, `interval_accu[start] += 1` and `interval_accu[end+1] -= 1` so that when we can make interval accumulation by `interval_accu[i] += interval_accu[i-1]` for all `i`. 
+
+Find max amazing number is equivalent to find min overllaping of invalid intervals. We can find min number of overllaping intervals along the interval accumulation.
+
+
+**Solution:** [https://replit.com/@trsong/Calculate-Amazing-Number](https://replit.com/@trsong/Calculate-Amazing-Number)
+```py
+import unittest
+
+def max_amazing_number_index(nums):
+    n = len(nums)
+    interval_accumulation = [0] * n
+    for i in range(n):
+        for invalid_start, invalid_end in invalid_intervals_at(nums, i):
+            interval_accumulation[invalid_start] += 1
+            if invalid_end + 1 < n:
+                interval_accumulation[invalid_end + 1] -= 1
+    
+    min_count = interval_accumulation[0]
+    min_count_index = 0
+    for i in range(1, n):
+        interval_accumulation[i] += interval_accumulation[i-1]
+        if interval_accumulation[i] < min_count:
+            min_count = interval_accumulation[i]
+            min_count_index = i
+    return min_count_index 
+
+
+def invalid_intervals_at(nums, i):
+    # invalid zone starts from i - nums[i] + 1 and ends at i
+    # 0 0 0 0 0 3 0 0 0 0 0 
+    #       ^ ^ ^
+    #      invalid
+    n = len(nums)
+    if 0 < nums[i] < n:
+        start = (i - nums[i] + 1) % n
+        end = i
+        if start <= end:
+            yield start, end
+        else:
+            yield 0, end
+            yield start, n - 1
+
+
+class MaxAmazingNumberIndexSpec(unittest.TestCase):
+    def test_example1(self):
+        self.assertEqual(0, max_amazing_number_index([0, 1, 2, 3]))  # max # amazing number = 4 at [0, 1, 2, 3]
+
+    def test_example2(self):
+        self.assertEqual(1, max_amazing_number_index([1, 0, 0]))  # max # amazing number = 3 at [0, 0, 1]
+
+    def test_non_descending_array(self):
+        self.assertEqual(0, max_amazing_number_index([0, 0, 0, 1, 2, 3]))  # max # amazing number = 0 at [0, 0, 0, 1, 2, 3]
+
+    def test_random_array(self):
+        self.assertEqual(1, max_amazing_number_index([1, 4, 3, 2]))  # max # amazing number = 2 at [4, 3, 2, 1]
+
+    def test_non_ascending_array(self):
+        self.assertEqual(2, max_amazing_number_index([3, 3, 2, 1, 0]))  # max # amazing number = 4 at [2, 1, 0, 3, 3]
+
+    def test_return_smallest_index_when_no_amazing_number(self):
+        self.assertEqual(0, max_amazing_number_index([99, 99, 99, 99]))  # max # amazing number = 0 thus return smallest possible index
+
+    def test_negative_number(self):
+        self.assertEqual(1, max_amazing_number_index([3, -99, -99, -99]))  # max # amazing number = 4 at [-1, -1, -1, 3])
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False, verbosity=2)
+```
+
+
 ### Nov 9, 2021 \[Medium\] Integer Division
 ---
 > **Question:** Implement division of two positive integers without using the division, multiplication, or modulus operators. Return the quotient as an integer, ignoring the remainder.

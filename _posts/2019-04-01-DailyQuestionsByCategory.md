@@ -2143,6 +2143,35 @@ Follow-up: What if you couldn't use any extra space?
 ---
 
 <details>
+<summary class="lc_m">
+
+- [**\[Medium\] Amazing Number**](https://trsong.github.io/python/java/2021/11/02/DailyQuestionsNov.html#nov-10-2021-medium-amazing-number) -- *Given a circular array, find the starting position, such that the total number of amazing numbers in the array is maximized.* [*\(Try ME\)*](https://replit.com/@trsong/Calculate-Amazing-Number-1)
+
+</summary>
+<div>
+
+**Question:** Define amazing number as: its value is less than or equal to its index. Given a circular array, find the starting position, such that the total number of amazing numbers in the array is maximized. 
+
+Follow-up: Should get a solution with time complexity less than O(N^2)
+
+**Example 1:**
+```py
+Input: [0, 1, 2, 3]
+Ouptut: 0. When starting point at position 0, all the elements in the array are equal to its index. So all the numbers are amazing number.
+```
+
+**Example 2:** 
+```py
+Input: [1, 0, 0]
+Output: 1. When starting point at position 1, the array becomes 0, 0, 1. All the elements are amazing number.
+If there are multiple positions, return the smallest one.
+```
+
+</div>
+</details>
+
+
+<details>
 <summary class="lc_h">
 
 - [**\[Hard\] LC 352. Data Stream as Disjoint Intervals**](https://trsong.github.io/python/java/2020/11/02/DailyQuestionsAug.html#dec-17-2020-lc-352-hard-data-stream-as-disjoint-intervals) -- *Given a data stream input of non-negative integers a1, a2, ..., an, ..., summarize the numbers seen so far as a list of disjoint intervals.* [*\(Try ME\)*](https://repl.it/@trsong/Print-Data-Stream-as-Disjoint-Intervals-1)
