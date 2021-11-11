@@ -21,6 +21,19 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
 
+
+### Nov 11, 2021 \[Easy\] Smallest Sum Not Subset Sum
+---
+> **Question:** Given a sorted list of positive numbers, find the smallest positive number that cannot be a sum of any subset in the list.
+
+**Example:**
+```py
+Input: [1, 2, 3, 8, 9, 10]
+Output: 7
+Numbers 1 to 6 can all be summed by a subset of the list of numbers, but 7 cannot.
+```
+
+
 ### Nov 10, 2021 \[Medium\] Amazing Number
 ---
 > **Question:** Define amazing number as: its value is less than or equal to its index. Given a circular array, find the starting position, such that the total number of amazing numbers in the array is maximized. 
