@@ -51,7 +51,27 @@ We accumlate those intervals by using interval counting technique: define interv
 Find max amazing number is equivalent to find min overllaping of invalid intervals. We can find min number of overllaping intervals along the interval accumulation.
 
 
-**Solution:** [https://replit.com/@trsong/Calculate-Amazing-Number](https://replit.com/@trsong/Calculate-Amazing-Number)
+
+**Brute-force Solution:** [https://repl.it/@trsong/Amazing-Number-Brute-force](https://repl.it/@trsong/Amazing-Number-Brute-force)
+```py
+def max_amazing_number_index(nums):
+    n = len(nums)
+    max_count = 0
+    max_count_index = 0
+    for i in xrange(n):
+        count = 0
+        for j in xrange(i, i + n):
+            index = (j - i) % n
+            if nums[j % n] <= index:
+                count += 1
+        
+        if count > max_count:
+            max_count = count
+            max_count_index = i
+    return max_count_index
+```
+
+**Efficient Solution with Interval Count:** [https://replit.com/@trsong/Calculate-Amazing-Number](https://replit.com/@trsong/Calculate-Amazing-Number)
 ```py
 import unittest
 
@@ -64,14 +84,14 @@ def max_amazing_number_index(nums):
             if invalid_end + 1 < n:
                 interval_accumulation[invalid_end + 1] -= 1
     
-    min_count = interval_accumulation[0]
-    min_count_index = 0
+    min_cut = interval_accumulation[0]
+    min_cut_index = 0
     for i in range(1, n):
         interval_accumulation[i] += interval_accumulation[i-1]
-        if interval_accumulation[i] < min_count:
-            min_count = interval_accumulation[i]
-            min_count_index = i
-    return min_count_index 
+        if interval_accumulation[i] < min_cut:
+            min_cut = interval_accumulation[i]
+            min_cut_index = i
+    return min_cut_index 
 
 
 def invalid_intervals_at(nums, i):
