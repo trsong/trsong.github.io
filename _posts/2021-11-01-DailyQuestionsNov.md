@@ -22,6 +22,31 @@ categories: Python/Java
 
 
 
+### Nov 12, 2021 LC 301 \[Hard\] Remove Invalid Parentheses
+--- 
+> **Question:** Remove the minimum number of invalid parentheses in order to make the input string valid. Return all possible results.
+>
+> **Note:** The input string may contain letters other than the parentheses ( and ).
+
+**Example 1:**
+```py
+Input: "()())()"
+Output: ["()()()", "(())()"]
+```
+
+**Example 2:**
+```py
+Input: "(a)())()"
+Output: ["(a)()()", "(a())()"]
+```
+
+**Example 3:**
+```py
+Input: ")("
+Output: [""]
+```
+
+
 ### Nov 11, 2021 \[Easy\] Smallest Sum Not Subset Sum
 ---
 > **Question:** Given a sorted list of positive numbers, find the smallest positive number that cannot be a sum of any subset in the list.
