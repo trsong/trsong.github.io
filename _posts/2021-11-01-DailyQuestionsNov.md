@@ -33,6 +33,83 @@ Output: 7
 Numbers 1 to 6 can all be summed by a subset of the list of numbers, but 7 cannot.
 ```
 
+**My thoughts:** Suppose the array is sorted and all elements are positive, then max positive subset sum is the `prefix_sum` of the array. Thus the min number subset sum cannot reach is `prefix_sum + 1`. 
+
+We can prove above statement by Math Induction. 
+
+**Case 1:** We want to show that if each elem is less than `prefix_sum`, the subset sum range from `0` to `prefix_sum` of array: 
+- Base case: for empty array, subset sum max is `0` which equals prefix sum `0`. 
+- Inductive Hypothesis: for the `i-th element`, if i-th element smaller than prefix sum, then subset sum range is `0` to `prefix_sum[i]` ie. sum(nums[0..i]).
+- Induction Step: upon `i-th` step, the range is `0` to `prefix_sum[i]`. If the `(i + 1)-th` element `nums[i + 1]` is within that range, then smaller subset sum is still `0`. Largest subset sum is `prefix_sum[i] + nums[i + 1]` which equals `prefix_sum[i + 1]`
+
+**Case 2:** If the i-th element is greater than `prefix_sum`, then we can omit the result of element as there is a hole in that range. 
+Because the previous subset sum ranges from `[0, prefix_sum]`, then for `nums[i] > prefix_sum`, there is a hole that `prefix sum + 1` cannot be covered with the introduction of new element.
+
+As the max positive sum we can reach is prefix sum, the min positive subset sum we cannot reach is prefix sum + 1. 
+
+
+**Solution with Induction:** [https://replit.com/@trsong/Smallest-Sum-Not-Subset-Sum-2](https://replit.com/@trsong/Smallest-Sum-Not-Subset-Sum-2)
+```py
+import unittest
+
+def smallest_non_subset_sum(nums):
+    # Initially sum has range [0, 1)
+    upper_bound = 1
+    for num in nums:
+        if num > upper_bound:
+            break
+        # Previously sum has range [0, upper_bound), 
+        # with introduction of num, that range becomes
+        # new range [0, upper_bound + num)
+        upper_bound += num
+    return upper_bound
+
+
+class SmallestNonSubsetSumSpec(unittest.TestCase):
+    def test_example(self):
+        nums = [1, 2, 3, 8, 9, 10]
+        expected = 7
+        self.assertEqual(expected, smallest_non_subset_sum(nums))
+
+    def test_empty_array(self):
+        nums = []
+        expected = 1
+        self.assertEqual(expected, smallest_non_subset_sum(nums))
+
+    def test_first_num_not_one(self):
+        nums = [2]
+        expected = 1
+        self.assertEqual(expected, smallest_non_subset_sum(nums))
+
+    def test_array_with_duplicated_numbers(self):
+        nums = [1, 1, 1, 1, 1]
+        expected = 6
+        self.assertEqual(expected, smallest_non_subset_sum(nums))
+
+    def test_result_larger_than_sum_of_all(self):
+        nums = [1, 1, 3, 4]
+        expected = 10
+        self.assertEqual(expected, smallest_non_subset_sum(nums))
+
+    def test_result_larger_than_sum_of_all2(self):
+        nums = [1, 2, 3, 4, 5, 6]
+        expected = 22
+        self.assertEqual(expected, smallest_non_subset_sum(nums))
+
+    def test_result_smaller_than_max(self):
+        nums = [1, 3, 6, 10, 11, 15]
+        expected = 2
+        self.assertEqual(expected, smallest_non_subset_sum(nums))
+
+    def test_result_smaller_than_max2(self):
+        nums = [1, 2, 5, 10, 20, 40]
+        expected = 4
+        self.assertEqual(expected, smallest_non_subset_sum(nums))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False, verbosity=2)
+```
 
 ### Nov 10, 2021 \[Medium\] Amazing Number
 ---
