@@ -21,6 +21,41 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
 
+### Nov 13, 2021 \[Medium\] Max Number of Edges Added to Tree to Stay Bipartite
+---
+> **Question:** Maximum number of edges to be added to a tree so that it stays a Bipartite graph
+>
+> A tree is always a Bipartite Graph as we can always break into two disjoint sets with alternate levels. In other words we always color it with two colors such that alternate levels have same color. The task is to compute the maximum no. of edges that can be added to the tree so that it remains Bipartite Graph.
+
+**Example 1:**
+```py
+Input : Tree edges as vertex pairs 
+        1 2
+        1 3
+Output : 0
+Explanation :
+The only edge we can add is from node 2 to 3.
+But edge 2, 3 will result in odd cycle, hence 
+violation of Bipartite Graph property.
+```
+
+**Example 2:**
+```py
+Input : Tree edges as vertex pairs 
+        1 2
+        1 3
+        2 4
+        3 5
+Output : 2
+Explanation : On colouring the graph, {1, 4, 5} 
+and {2, 3} form two different sets. Since, 1 is 
+connected from both 2 and 3, we are left with 
+edges 4 and 5. Since, 4 is already connected to
+2 and 5 to 3, only options remain {4, 3} and 
+{5, 2}.
+```
+
+
 
 ### Nov 12, 2021 LC 301 \[Hard\] Remove Invalid Parentheses
 --- 
