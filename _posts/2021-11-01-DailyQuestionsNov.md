@@ -46,6 +46,109 @@ Input: ")("
 Output: [""]
 ```
 
+**Solution with Backtracking:** [https://replit.com/@trsong/Ways-to-Remove-Invalid-Parentheses-2](https://replit.com/@trsong/Ways-to-Remove-Invalid-Parentheses-2)
+```py
+import unittest
+
+def remove_invalid_parenthese(s):
+    invalid_open = invalid_close = 0
+    for ch in s:
+        if ch == ')' and invalid_open == 0:
+            invalid_close += 1
+        elif ch == '(':
+            invalid_open += 1
+        elif ch == ')':
+            invalid_open -= 1
+    res = []
+    backtrack(res, s, 0, invalid_open, invalid_close)
+    return res
+
+
+def backtrack(res, s, next_index, invalid_open, invalid_close):
+    if invalid_open == invalid_close == 0:
+        if is_valid(s):
+            res.append(s)
+    else:
+        for i in range(next_index, len(s)):
+            if i > next_index and s[i] == s[i - 1]:
+                continue
+            elif s[i] == '(' and invalid_open > 0:
+                backtrack(res, s[:i] + s[i + 1:], i, invalid_open - 1, invalid_close)
+            elif s[i] == ')' and invalid_close > 0:
+                backtrack(res, s[:i] + s[i + 1:], i, invalid_open, invalid_close - 1)
+
+
+def is_valid(s):
+    balance = 0
+    for ch in s:
+        if balance < 0:
+            return False
+        elif ch == '(':
+            balance += 1
+        elif ch == ')':
+            balance -= 1
+    return balance == 0
+
+
+
+class RemoveInvalidParentheseSpec(unittest.TestCase):
+    def assert_result(self, expected, output):
+        self.assertEqual(sorted(expected), sorted(output))
+
+    def test_example1(self):
+        input = "()())()"
+        expected = ["()()()", "(())()"]
+        self.assert_result(expected, remove_invalid_parenthese(input))
+
+    def test_example2(self):
+        input = "(a)())()"
+        expected = ["(a)()()", "(a())()"]
+        self.assert_result(expected, remove_invalid_parenthese(input))
+
+    def test_example3(self):
+        input = ")("
+        expected = [""]
+        self.assert_result(expected, remove_invalid_parenthese(input))
+
+    def test_valid_string1(self):
+        input = "(a)((b))(c)"
+        expected = ["(a)((b))(c)"]
+        self.assert_result(expected, remove_invalid_parenthese(input))
+
+    def test_empty_string(self):
+        input = ""
+        expected = [""]
+        self.assert_result(expected, remove_invalid_parenthese(input))
+
+    def test_unique_result1(self):
+        input = "(a)(((a)"
+        expected = ["(a)(a)"]
+        self.assert_result(expected, remove_invalid_parenthese(input))
+
+    def test_unique_result2(self):
+        input = "()))((()"
+        expected = ["()()"]
+        self.assert_result(expected, remove_invalid_parenthese(input))
+
+    def test_unique_result3(self):
+        input = "a))b))c)d"
+        expected = ["abcd"]
+        self.assert_result(expected, remove_invalid_parenthese(input))
+
+    def test_multiple_results(self):
+        input = "a(b(c(d)"
+        expected = ["a(bcd)", "ab(cd)", "abc(d)"]
+        self.assert_result(expected, remove_invalid_parenthese(input))
+
+    def test_multiple_results2(self):
+        input = "(a)b)c)d)"
+        expected = ["(a)bcd", "(ab)cd", "(abc)d", "(abcd)"]
+        self.assert_result(expected, remove_invalid_parenthese(input))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False, verbosity=2)
+```
 
 ### Nov 11, 2021 \[Easy\] Smallest Sum Not Subset Sum
 ---
