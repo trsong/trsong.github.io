@@ -20,6 +20,22 @@ categories: Python/Java
 
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
+### Nov 14, 2021 LC 790 \[Medium\] Domino and Tromino Tiling
+---
+> **Question:**  You are given a 2 x N board, and instructed to completely cover the board with the following shapes:
+>
+> - Dominoes, or 2 x 1 rectangles.
+> - Trominoes, or L-shapes.
+>
+> Given an integer N, determine in how many ways this task is possible.
+ 
+**Example:**
+```py
+if N = 4, here is one possible configuration, where A is a domino, and B and C are trominoes.
+
+A B B C
+A B C C
+```
 
 ### Nov 13, 2021 \[Medium\] Max Number of Edges Added to Tree to Stay Bipartite
 ---
