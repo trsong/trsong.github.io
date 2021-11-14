@@ -7779,6 +7779,49 @@ Move 1 to 3
 <details>
 <summary class="lc_m">
 
+- [**\[Medium\] Max Number of Edges Added to Tree to Stay Bipartite**](https://trsong.github.io/python/java/2021/11/02/DailyQuestionsNov.html#nov-13-2021-medium-max-number-of-edges-added-to-tree-to-stay-bipartite) -- *Maximum number of edges to be added to a tree so that it stays a Bipartite graph.* [*\(Try ME\)*](https://replit.com/@trsong/Find-the-Max-Number-of-Edges-Added-to-Tree-to-Stay-Biparti-1)
+
+</summary>
+<div>
+
+**Question:** Maximum number of edges to be added to a tree so that it stays a Bipartite graph
+
+A tree is always a Bipartite Graph as we can always break into two disjoint sets with alternate levels. In other words we always color it with two colors such that alternate levels have same color. The task is to compute the maximum no. of edges that can be added to the tree so that it remains Bipartite Graph.
+
+**Example 1:**
+```py
+Input : Tree edges as vertex pairs 
+        1 2
+        1 3
+Output : 0
+Explanation :
+The only edge we can add is from node 2 to 3.
+But edge 2, 3 will result in odd cycle, hence 
+violation of Bipartite Graph property.
+```
+
+**Example 2:**
+```py
+Input : Tree edges as vertex pairs 
+        1 2
+        1 3
+        2 4
+        3 5
+Output : 2
+Explanation : On colouring the graph, {1, 4, 5} 
+and {2, 3} form two different sets. Since, 1 is 
+connected from both 2 and 3, we are left with 
+edges 4 and 5. Since, 4 is already connected to
+2 and 5 to 3, only options remain {4, 3} and 
+{5, 2}.
+```
+
+</div>
+</details>
+
+<details>
+<summary class="lc_m">
+
 - [**\[Medium\] Jumping Numbers**](https://trsong.github.io/python/java/2021/08/02/DailyQuestionsAug.html#aug-23-2021-medium-jumping-numbers) -- *Print all jumping numbers smaller than or equal to n. A number is called a jumping number if all adjacent digits in it differ by 1* [*\(Try ME\)*](https://replit.com/@trsong/Generate-Jumping-Numbers-1)
 
 </summary>
