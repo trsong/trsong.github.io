@@ -20,6 +20,84 @@ categories: Python/Java
 
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
+
+### Nov 16, 2021 \[Medium\] Toss Biased Coin
+---
+> **Question:** Assume you have access to a function toss_biased() which returns 0 or 1 with a probability that's not 50-50 (but also not 0-100 or 100-0). You do not know the bias of the coin. Write a function to simulate an unbiased coin toss.
+
+**Solution:** [https://replit.com/@trsong/Toss-Biased-Coins](https://replit.com/@trsong/Toss-Biased-Coins)
+```py
+from random import randint
+
+def toss_unbiased():
+    # Let P(T1, T2) represents probability to get T1, T2 in first and second toss: 
+    # P(0, 0) = p * p
+    # P(1, 1) = (1 - p) * (1 - p)
+    # P(1, 0) = (1 - p) * p
+    # P(0, 1) = p * (1 - p)
+    # Notice that P(1, 0) = P(0, 1)
+    while True:
+        t1 = toss_biased()
+        t2 = toss_biased()
+        if t1 != t2:
+            return t1
+    
+
+def toss_biased():
+    # suppose the toss has 1/4 chance to get 0 and 3/4 to get 1
+    return 0 if randint(0, 3) == 0 else 1
+
+
+def print_distribution(repeat):
+    histogram = {}
+    for _ in range(repeat):
+        res = toss_unbiased()
+        if res not in histogram:
+            histogram[res] = 0
+        histogram[res] += 1
+    print(histogram)
+
+
+if __name__ == '__main__':
+     # Distribution looks like {0: 99931, 1: 100069}
+    print_distribution(repeat=200000)
+```
+
+
+### Nov 15, 2021 \[Easy\] Single Bit Switch
+---
+> **Question:** Given three 32-bit integers x, y, and b, return x if b is 1 and y if b is 0, using only mathematical or bit operations. You can assume b can only be 1 or 0.
+
+**Solution:** [https://replit.com/@trsong/Create-a-single-bit-switch](https://replit.com/@trsong/Create-a-single-bit-switch)
+```py
+import unittest
+
+def single_bit_switch(b, x, y):
+    return b * x + (1 - b) * y
+
+
+class SingleBitSwitchSpec(unittest.TestCase):
+    def test_b_is_zero(self):
+        x, y = 8, 16
+        self.assertEqual(y, single_bit_switch(0, x, y))
+        self.assertEqual(x, single_bit_switch(1, x, y))
+
+    def test_b_is_one(self):
+        x, y = 8, 16
+        self.assertEqual(y, single_bit_switch(0, x, y))
+        self.assertEqual(x, single_bit_switch(1, x, y))
+
+    def test_negative_numbers(self):
+        x, y = -1, -2
+        self.assertEqual(y, single_bit_switch(0, x, y))
+        self.assertEqual(x, single_bit_switch(1, x, y))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False, verbosity=2)
+```
+
+
 ### Nov 14, 2021 LC 790 \[Medium\] Domino and Tromino Tiling
 ---
 > **Question:**  You are given a 2 x N board, and instructed to completely cover the board with the following shapes:
