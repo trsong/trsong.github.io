@@ -614,6 +614,33 @@ Return true as the first and third rectangle overlap each other.
 <details>
 <summary class="lc_e">
 
+- [**\[Easy\] Single Bit Switch**](https://trsong.github.io/python/java/2021/11/02/DailyQuestionsNov.html#nov-15-2021-easy-single-bit-switch) -- *Given three 32-bit integers x, y, and b, return x if b is 1 and y if b is 0, using only mathematical or bit operations.* [*\(Try ME\)*](https://replit.com/@trsong/Create-a-single-bit-switch-1)
+
+</summary>
+<div>
+
+**Question:** Given three 32-bit integers x, y, and b, return x if b is 1 and y if b is 0, using only mathematical or bit operations. You can assume b can only be 1 or 0.
+
+</div>
+</details>
+
+<details>
+<summary class="lc_m">
+
+- [**\[Medium\] Toss Biased Coin**](https://trsong.github.io/python/java/2021/11/02/DailyQuestionsNov.html#nov-16-2021-medium-toss-biased-coin) -- *You do not know the bias of the coin. Write a function to simulate an unbiased coin toss.* [*\(Try ME\)*](https://replit.com/@trsong/Toss-Biased-Coins-1)
+
+</summary>
+<div>
+
+**Question:** Assume you have access to a function toss_biased() which returns 0 or 1 with a probability that's not 50-50 (but also not 0-100 or 100-0). You do not know the bias of the coin. Write a function to simulate an unbiased coin toss.
+
+</div>
+</details>
+
+
+<details>
+<summary class="lc_e">
+
 - [**\[Easy\] Rand25, Rand75**](https://trsong.github.io/python/java/2021/08/02/DailyQuestionsAug.html#oct-24-2021-easy-rand25-rand75) -- *Generate `0` and `1` with `25%` and `75%` probability.* [*\(Try ME\)*](https://replit.com/@trsong/Solve-Rand25-Rand75-1)
 
 </summary>

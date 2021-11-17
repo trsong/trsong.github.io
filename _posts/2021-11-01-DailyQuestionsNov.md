@@ -21,6 +21,29 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
 
+### Nov 17, 2021 LC 743 \[Medium\] Network Delay Time
+---
+> **Question:** A network consists of nodes labeled 0 to N. You are given a list of edges `(a, b, t)`, describing the time `t` it takes for a message to be sent from node `a` to node `b`. Whenever a node receives a message, it immediately passes the message on to a neighboring node, if possible.
+>
+> Assuming all nodes are connected, determine how long it will take for every node to receive a message that begins at node 0.
+
+**Example:** 
+```py
+given N = 5, and the following edges:
+
+edges = [
+    (0, 1, 5),
+    (0, 2, 3),
+    (0, 5, 4),
+    (1, 3, 8),
+    (2, 3, 1),
+    (3, 5, 10),
+    (3, 4, 5)
+]
+
+You should return 9, because propagating the message from 0 -> 2 -> 3 -> 4 will take that much time.
+```
+
 ### Nov 16, 2021 \[Medium\] Toss Biased Coin
 ---
 > **Question:** Assume you have access to a function toss_biased() which returns 0 or 1 with a probability that's not 50-50 (but also not 0-100 or 100-0). You do not know the bias of the coin. Write a function to simulate an unbiased coin toss.
