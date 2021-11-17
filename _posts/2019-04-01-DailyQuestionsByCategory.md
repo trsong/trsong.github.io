@@ -10057,6 +10057,33 @@ For example, given `"2542540123"`, you should return `['254.25.40.123', '254.254
 ### 1D DP
 ---
 
+
+<details>
+<summary class="lc_h">
+
+- [**\[Medium\] LC 790. Domino and Tromino Tiling**](https://trsong.github.io/python/java/2021/11/02/DailyQuestionsNov.html#nov-14-2021-lc-790-medium-domino-and-tromino-tiling) -- *Given a 2 x N board and instructed to completely cover the board with Dominoes and Trominoes, determine in how many ways this task is possible.* [*\(Try ME\)*](https://replit.com/@trsong/Domino-and-Tromino-Tiling-Problem-1)
+
+</summary>
+<div>
+
+**Question:**  You are given a 2 x N board, and instructed to completely cover the board with the following shapes:
+
+- Dominoes, or 2 x 1 rectangles.
+- Trominoes, or L-shapes.
+
+Given an integer N, determine in how many ways this task is possible.
+ 
+**Example:**
+```py
+if N = 4, here is one possible configuration, where A is a domino, and B and C are trominoes.
+
+A B B C
+A B C C
+```
+</div>
+</details>
+
+
 <details>
 <summary class="lc_m">
 
