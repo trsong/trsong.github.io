@@ -21,6 +21,34 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
 
+
+### Nov 18, 2021 LC 54 \[Medium\] Spiral Matrix 
+---
+> **Question:** Given a matrix of n x m elements (n rows, m columns), return all elements of the matrix in spiral order.
+
+**Example 1:**
+```py
+Input:
+[
+ [ 1, 2, 3 ],
+ [ 4, 5, 6 ],
+ [ 7, 8, 9 ]
+]
+Output: [1, 2, 3, 6, 9, 8, 7, 4, 5]
+```
+
+**Example 2:**
+```py
+Input:
+[
+  [1,  2,  3,  4],
+  [5,  6,  7,  8],
+  [9, 10, 11, 12]
+]
+Output: [1, 2, 3, 4, 8, 12, 11, 10, 9, 5, 6, 7]
+```
+
+
 ### Nov 17, 2021 LC 743 \[Medium\] Network Delay Time
 ---
 > **Question:** A network consists of nodes labeled 0 to N. You are given a list of edges `(a, b, t)`, describing the time `t` it takes for a message to be sent from node `a` to node `b`. Whenever a node receives a message, it immediately passes the message on to a neighboring node, if possible.
@@ -42,6 +70,127 @@ edges = [
 ]
 
 You should return 9, because propagating the message from 0 -> 2 -> 3 -> 4 will take that much time.
+```
+
+**Solution with Uniform Cost Search (Dijkstra’s Algorithm):** [https://replit.com/@trsong/Find-Network-Delay-Time-3](https://replit.com/@trsong/Find-Network-Delay-Time-3)
+```py
+import unittest
+import sys
+from Queue import PriorityQueue
+
+def max_network_delay(times, nodes):
+    neighbors = [None] * (nodes + 1)
+    for u, v, w in times:
+        neighbors[u] = neighbors[u] or []
+        neighbors[u].append((v, w))
+    
+    distance = [sys.maxint] * (nodes + 1)
+    pq = PriorityQueue()
+    pq.put((0, 0))
+
+    while not pq.empty():
+        cur_dist, cur = pq.get()
+        if distance[cur] != sys.maxint:
+            continue
+        distance[cur] = cur_dist
+
+        for v, w in neighbors[cur] or []:
+            alt_dist = cur_dist + w
+            if alt_dist < distance[v]:
+                pq.put((alt_dist, v))
+
+    res = max(distance)
+    return res if res < sys.maxint else -1
+
+
+class MaxNetworkDelay(unittest.TestCase):
+    def test_example(self):
+        times = [
+            (0, 1, 5), (0, 2, 3), (0, 5, 4), (1, 3, 8), 
+            (2, 3, 1), (3, 5, 10), (3, 4, 5)
+        ]
+        self.assertEqual(9, max_network_delay(times, nodes=5))  # max path: 0 - 2 - 3 - 4
+
+    def test_discounted_graph(self):
+        self.assertEqual(-1, max_network_delay([], nodes=2))
+
+    def test_disconnected_graph2(self):
+        """
+        0(start)    3
+        |           |
+        v           v
+        2           1
+        """
+        times = [(0, 2, 1), (3, 1, 2)]
+        self.assertEqual(-1, max_network_delay(times, nodes=3))
+
+    def test_unreachable_node(self):
+        """
+        1
+        |
+        v
+        2 
+        |
+        v
+        0 (start)
+        |
+        v
+        3
+        """
+        times = [(1, 2, 1), (2, 0, 2), (0, 3, 3)]
+        self.assertEqual(-1, max_network_delay(times, nodes=3))
+
+    def test_given_example(self):
+        """
+    (start)
+        0 --> 3
+        |     |
+        v     v
+        1     2
+        """
+        times = [(0, 1, 1), (0, 3, 1), (3, 2, 1)]
+        self.assertEqual(2, max_network_delay(times, nodes=3))
+
+    def test_exist_alternative_path(self):
+        """
+    (start)  1
+        0 ---> 3
+      1 | \ 4  | 2
+        v  \   v
+        2   -> 1
+        """
+        times = [(0, 2, 1), (0, 3, 1), (0, 1, 4), (3, 1, 2)]
+        self.assertEqual(3, max_network_delay(times, nodes=3))  # max path: 0 - 3 - 1
+
+    def test_graph_with_cycle(self):
+        """
+    (start) 
+        0 --> 2
+        ^     |
+        |     v
+        1 <-- 3
+        """
+        times = [(0, 2, 1), (2, 3, 1), (3, 1, 1), (1, 0, 1)]
+        self.assertEqual(3, max_network_delay(times, nodes=3))  # max path: 0 - 2 - 3
+
+    def test_multiple_paths(self):
+        """
+            0 (start)
+           /|\
+          / | \
+        1| 2| 3|
+         v  v  v
+         2  3  4
+        2| 3| 1|
+         v  v  v
+         5  6  1
+        """
+        times = [(0, 2, 1), (0, 3, 2), (0, 4, 3), (2, 5, 2), (3, 6, 3), (4, 1, 1)]
+        self.assertEqual(5, max_network_delay(times, nodes=6))  # max path: 0 - 3 - 6
+
+    
+if __name__ == '__main__':
+    unittest.main(exit=False, verbosity=2)
 ```
 
 ### Nov 16, 2021 \[Medium\] Toss Biased Coin
