@@ -48,6 +48,93 @@ Input:
 Output: [1, 2, 3, 4, 8, 12, 11, 10, 9, 5, 6, 7]
 ```
 
+**Solution:** [https://replit.com/@trsong/Spiral-Matrix-Traversal-3](https://replit.com/@trsong/Spiral-Matrix-Traversal-3)
+```py
+import unittest
+
+def spiral_order(matrix):
+    if not matrix or not matrix[0]:
+        return []
+
+    rlo = 0
+    rhi = len(matrix) - 1
+    clo = 0
+    chi = len(matrix[0]) - 1
+
+    res = []
+    while rlo <= rhi and clo <= chi:
+        r = rlo
+        c = clo
+        while c < chi:
+            res.append(matrix[r][c])
+            c += 1
+        chi -= 1
+
+        while r < rhi:
+            res.append(matrix[r][c])
+            r += 1
+        rhi -= 1
+
+        if rlo > rhi or clo > chi:
+            res.append(matrix[r][c])
+            break
+
+        while c > clo:
+            res.append(matrix[r][c])
+            c -= 1
+        clo += 1
+
+        while r > rlo:
+            res.append(matrix[r][c])
+            r -= 1
+        rlo += 1
+    return res
+
+
+class SpiralOrderSpec(unittest.TestCase):
+    def test_example1(self):
+        self.assertEqual([1, 2, 3, 6, 9, 8, 7, 4, 5], spiral_order([
+            [ 1, 2, 3 ],
+            [ 4, 5, 6 ],
+            [ 7, 8, 9 ]
+        ]))
+
+    def test_example2(self):
+        self.assertEqual([1, 2, 3, 4, 8, 12, 11, 10, 9, 5, 6, 7], spiral_order([
+            [1,  2,  3,  4],
+            [5,  6,  7,  8],
+            [9, 10, 11, 12]
+        ]))
+
+    def test_empty_table(self):
+        self.assertEqual([], spiral_order([]))
+        self.assertEqual([], spiral_order([[]]))
+
+    def test_two_by_two_table(self):
+        self.assertEqual([1, 2, 3, 4], spiral_order([
+            [1, 2],
+            [4, 3]
+        ]))
+
+    def test_one_element_table(self):
+        self.assertEqual([1], spiral_order([[1]]))
+
+    def test_one_by_k_table(self):
+        self.assertEqual([1, 2, 3, 4], spiral_order([
+            [1, 2, 3, 4]
+        ]))
+
+    def test_k_by_one_table(self):
+        self.assertEqual([1, 2, 3], spiral_order([
+            [1],
+            [2],
+            [3]
+        ]))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False, verbosity=2)
+```
 
 ### Nov 17, 2021 LC 743 \[Medium\] Network Delay Time
 ---
