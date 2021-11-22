@@ -41,7 +41,43 @@ categories: Python/Java
 >
 > Bonus: Can you do this using only O(k) space?
 
+**Solution:** [https://replit.com/@trsong/Pascals-triangle](https://replit.com/@trsong/Pascals-triangle)
+```py
+import unittest
 
+def pascal_triangle(k):
+    res = [0] * k
+    res[0] = 1
+    for r in range(2, k + 1):
+        prev_num = 0
+        for i in range(r):
+            prev_num, res[i] = res[i], res[i] + prev_num
+    return res
+
+
+class PascalTriangleSpec(unittest.TestCase):
+    def test_1st_row(self):
+        self.assertEqual([1], pascal_triangle(1))
+
+    def test_2nd_row(self):
+        self.assertEqual([1, 1], pascal_triangle(2))
+
+    def test_3rd_row(self):
+        self.assertEqual([1, 2, 1], pascal_triangle(3))
+
+    def test_4th_row(self):
+        self.assertEqual([1, 3, 3, 1], pascal_triangle(4))
+
+    def test_5th_row(self):
+        self.assertEqual([1, 4, 6, 4, 1], pascal_triangle(5))
+
+    def test_6th_row(self):
+        self.assertEqual([1, 5, 10, 10, 5, 1], pascal_triangle(6))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False, verbosity=2)
+```
 
 ### Nov 19, 2021 LC 240 \[Medium\] Search a 2D Matrix II
 ---

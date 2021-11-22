@@ -30,6 +30,36 @@ categories: Python/Java
 <details>
 <summary class="lc_e">
 
+- [**\[Easy\] Pascal's triangle**](https://trsong.github.io/python/java/2021/11/02/DailyQuestionsNov.html#nov-20-2021-easy-pascals-triangle) -- *Given an input k, return the kth row of Pascal’s triangle.* [*\(Try ME\)*](https://replit.com/@trsong/Pascals-triangle-1)
+
+</summary>
+<div>
+
+**Question:** Pascal's triangle is a triangular array of integers constructed with the following formula:
+
+- The first row consists of the number 1.
+- For each subsequent row, each element is the sum of the numbers directly above it, on either side.
+
+For example, here are the first few rows:
+```py
+    1
+   1 1
+  1 2 1
+ 1 3 3 1
+1 4 6 4 1
+```
+Given an input k, return the kth row of Pascal's triangle.
+
+Bonus: Can you do this using only O(k) space?
+
+
+</div>
+</details>
+
+
+<details>
+<summary class="lc_e">
+
 - [**\[Easy\] GCD of N Numbers**](http://trsong.github.io/python/java/2021/08/02/DailyQuestionsAug.html#sep-5-2021-easy-gcd-of-n-numbers) -- *Given n numbers, find the greatest common denominator between them.* [*\(Try ME\)*](https://replit.com/@trsong/Calculate-GCD-of-N-Numbers-1)
 
 </summary>
