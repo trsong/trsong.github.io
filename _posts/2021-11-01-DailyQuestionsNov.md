@@ -36,6 +36,62 @@ Step 3: reducing 2 -> 1 [1, 1, 1]
 So final number of steps required is 3.
 ```
 
+**Solution with Max Heap:** [https://replit.com/@trsong/Min-Steps-to-Make-Piles-Equal-Height](https://replit.com/@trsong/Min-Steps-to-Make-Piles-Equal-Height)
+```py
+import unittest
+from queue import PriorityQueue
+
+def min_step_remove_piles(piles):
+    histogram = {}
+    for height in piles:
+        histogram[height] = histogram.get(height, 0) + 1
+
+    max_heap = PriorityQueue()
+    for height, count in histogram.items():
+        max_heap.put((-height, count))
+
+    prev_count = 0
+    res = 0
+    while not max_heap.empty():
+        res += prev_count
+        _, count = max_heap.get()
+        prev_count += count
+    return res
+
+
+class MinStepRemovePileSpec(unittest.TestCase):
+    def test_example(self):
+        self.assertEqual(3, min_step_remove_piles([5, 2, 1]))
+
+    def test_one_pile(self):
+        self.assertEqual(0, min_step_remove_piles([42]))
+
+    def test_same_height_piles(self):
+        self.assertEqual(0, min_step_remove_piles([42, 42]))
+
+    def test_pile_with_duplicated_heights(self):
+        self.assertEqual(2, min_step_remove_piles([4, 4, 8, 8]))
+
+    def test_different_height_piles(self):
+        self.assertEqual(6, min_step_remove_piles([4, 5, 5, 4, 2]))
+
+    def test_different_height_piles2(self):
+        self.assertEqual(6, min_step_remove_piles([4, 8, 16, 32]))
+
+    def test_different_height_piles3(self):
+        self.assertEqual(2, min_step_remove_piles([4, 8, 8]))
+
+    def test_sorted_heights(self):
+        self.assertEqual(9, min_step_remove_piles([1, 2, 2, 3, 3, 4]))
+
+    def test_sorted_heights2(self):
+        self.assertEqual(15, min_step_remove_piles([1, 1, 2, 2, 2, 3, 3, 3, 4, 4]))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False, verbosity=2)
+```
+
 ### Nov 20, 2021 \[Easy\] Pascal's triangle
 ---
 > **Question:** Pascal's triangle is a triangular array of integers constructed with the following formula:

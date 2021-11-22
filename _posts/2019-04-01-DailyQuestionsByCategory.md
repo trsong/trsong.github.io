@@ -6660,6 +6660,31 @@ Given a list of `N` people and the above operation, find a way to identify the c
 
 
 <details>
+<summary class="lc_e">
+
+- [**\[Easy\] Min Steps to Make Piles Equal Height**](https://trsong.github.io/python/java/2021/11/02/DailyQuestionsNov.html#nov-21-2021-easy-min-steps-to-make-piles-equal-height) -- *Determine the minimum number of steps required to make all of the piles equal in height.* [*\(Try ME\)*](https://replit.com/@trsong/Min-Steps-to-Make-Piles-Equal-Height-1)
+
+</summary>
+<div>
+
+**Question:** Alexa is given n piles of equal or unequal heights. In one step, Alexa can remove any number of boxes from the pile which has the maximum height and try to make it equal to the one which is just lower than the maximum height of the stack. Determine the minimum number of steps required to make all of the piles equal in height.
+
+**Example:**
+```py
+Input: piles = [5, 2, 1]
+Output: 3
+Explanation:
+Step 1: reducing 5 -> 2 [2, 2, 1]
+Step 2: reducing 2 -> 1 [2, 1, 1]
+Step 3: reducing 2 -> 1 [1, 1, 1]
+So final number of steps required is 3.
+```
+
+</div>
+</details>
+
+
+<details>
 <summary class="lc_m">
 
 - [**\[Medium\] LT 612. K Closest Points**](https://trsong.github.io/python/java/2021/08/02/DailyQuestionsAug.html#oct-9-2021-lt-612-medium-k-closest-points) -- *Given some points and a point origin in two dimensional space, find k points out of the some points which are nearest to origin.* [*\(Try ME\)*](https://replit.com/@trsong/Find-K-Closest-Points-1)
