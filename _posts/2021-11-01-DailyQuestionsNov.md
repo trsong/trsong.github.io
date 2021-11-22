@@ -21,6 +21,37 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
 
+### Nov 22, 2021 LC 1647 \[Medium\] Minimum Deletions to Make Character Frequencies Unique
+---
+> **Question:** A string s is called good if there are no two different characters in s that have the same frequency.
+>
+> Given a string s, return the minimum number of characters you need to delete to make s good.
+>
+> The frequency of a character in a string is the number of times it appears in the string. For example, in the string "aab", the frequency of 'a' is 2, while the frequency of 'b' is 1.
+
+**Example 1:**
+```py
+Input: s = "aab"
+Output: 0
+Explanation: s is already good.
+```
+
+**Example 2:**
+```py
+Input: s = "aaabbbcc"
+Output: 2
+Explanation: You can delete two 'b's resulting in the good string "aaabcc".
+Another way it to delete one 'b' and one 'c' resulting in the good string "aaabbc".
+```
+
+**Example 3:**
+```py
+Input: s = "ceabaacb"
+Output: 2
+Explanation: You can delete both 'c's resulting in the good string "eabaab".
+Note that we only care about characters that are still in the string at the end (i.e. frequency of 0 is ignored).
+```
+
 ### Nov 21, 2021 \[Easy\] Min Steps to Make Piles Equal Height
 ---
 > **Question:** Alexa is given n piles of equal or unequal heights. In one step, Alexa can remove any number of boxes from the pile which has the maximum height and try to make it equal to the one which is just lower than the maximum height of the stack. Determine the minimum number of steps required to make all of the piles equal in height.
