@@ -22,6 +22,26 @@ categories: Python/Java
 
 
 
+### Nov 20, 2021 \[Medium\] Pascal's triangle
+---
+> **Question:** Pascal's triangle is a triangular array of integers constructed with the following formula:
+>
+> - The first row consists of the number 1.
+> - For each subsequent row, each element is the sum of the numbers directly above it, on either side.
+>
+> For example, here are the first few rows:
+```py
+    1
+   1 1
+  1 2 1
+ 1 3 3 1
+1 4 6 4 1
+```
+> Given an input k, return the kth row of Pascal's triangle.
+>
+> Bonus: Can you do this using only O(k) space?
+
+
 
 ### Nov 19, 2021 LC 240 \[Medium\] Search a 2D Matrix II
 ---
@@ -44,6 +64,91 @@ Consider the following matrix:
 ]
 Given target = 5, return True.
 Given target = 20, return False.
+```
+
+**Divide and Conquer Solution**: [https://replit.com/@trsong/Search-in-a-Sorted-2D-Matrix-2](https://replit.com/@trsong/Search-in-a-Sorted-2D-Matrix-2)
+```py
+import unittest
+
+def search_matrix(matrix, target):
+    if not matrix or not matrix[0]:
+        return False
+
+    stack = [(0, len(matrix) - 1, 0, len(matrix[0]) - 1)]
+    while stack:
+        rlo, rhi, clo, chi = stack.pop()
+        if rlo > rhi or clo > chi:
+            continue
+
+        rmid = rlo + (rhi - rlo) // 2
+        cmid = clo + (chi - clo) // 2
+        if matrix[rmid][cmid] == target:
+            return True
+        elif matrix[rmid][cmid] < target:
+            # taget cannot exist in top-left
+            stack.append((rlo, rmid, cmid + 1, chi))  # top-right
+            stack.append((rmid + 1, rhi, clo, chi))   # buttom
+        else:
+            # target cannot exist in bottom-right
+            stack.append((rmid, rhi, clo, cmid - 1))  # bottom-left
+            stack.append((rlo, rmid - 1, clo, chi))  # top
+    return False
+
+
+class SearchMatrixSpec(unittest.TestCase):
+    def test_empty_matrix(self):
+        self.assertFalse(search_matrix([], target=0))
+        self.assertFalse(search_matrix([[]], target=0))
+
+    def test_example(self):
+        matrix = [
+            [ 1, 4, 7,11,15],
+            [ 2, 5, 8,12,19],
+            [ 3, 6, 9,16,22],
+            [10,13,14,17,24],
+            [18,21,23,26,30]
+        ]
+        self.assertTrue(search_matrix(matrix, target=5))
+        self.assertFalse(search_matrix(matrix, target=20))
+
+    def test_mid_less_than_top_right(self):
+        matrix = [
+            [ 1, 2, 3, 4, 5],
+            [ 6, 7, 8, 9,10],
+            [11,12,13,14,15],
+            [16,17,18,19,20],
+            [21,22,23,24,25]
+        ]
+        self.assertTrue(search_matrix(matrix, target=5))
+
+    def test_mid_greater_than_top_right(self):
+        matrix = [
+            [5 , 6,10,14],
+            [6 ,10,13,18],
+            [10,13,18,19]
+        ]
+        self.assertTrue(search_matrix(matrix, target=14))
+
+    def test_mid_less_than_bottom_right(self):
+        matrix = [
+            [1,4],
+            [2,5]
+        ]
+        self.assertTrue(search_matrix(matrix, target=5))
+
+    def test_element_out_of_matrix_range(self):
+        matrix = [
+            [ 1, 4, 7,11,15],
+            [ 2, 5, 8,12,19],
+            [ 3, 6, 9,16,22],
+            [10,13,14,17,24],
+            [18,21,23,26,30]
+        ]
+        self.assertFalse(search_matrix(matrix, target=-1))
+        self.assertFalse(search_matrix(matrix, target=31))
+
+if __name__ == '__main__':
+    unittest.main(verbosity=2, exit=False)
 ```
 
 
