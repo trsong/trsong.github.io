@@ -22,7 +22,7 @@ categories: Python/Java
 
 
 
-### Nov 20, 2021 \[Medium\] Pascal's triangle
+### Nov 20, 2021 \[Easy\] Pascal's triangle
 ---
 > **Question:** Pascal's triangle is a triangular array of integers constructed with the following formula:
 >
