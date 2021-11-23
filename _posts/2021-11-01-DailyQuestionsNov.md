@@ -52,6 +52,66 @@ Explanation: You can delete both 'c's resulting in the good string "eabaab".
 Note that we only care about characters that are still in the string at the end (i.e. frequency of 0 is ignored).
 ```
 
+**My thoughts:** sort frequency in descending order, while iterate through all frequencies, keep track of biggest next frequency we can take. Then the min deletion for that letter is `freq - biggestNextFreq`. Remember to reduce the biggest next freq by 1 for each step.  
+
+**Greedy Solution:** [https://replit.com/@trsong/Minimum-Deletions-to-Make-Character-Frequencies-Unique-2](https://replit.com/@trsong/Minimum-Deletions-to-Make-Character-Frequencies-Unique-2)
+```py
+import unittest
+
+def min_deletions(s):
+    histogram = {}
+    for ch in s:
+        histogram[ch] = histogram.get(ch, 0) + 1
+
+    next_count = float('inf')
+    res = 0
+    for count in sorted(histogram.values(), reverse=True):
+        if count <= next_count:
+            next_count = count - 1
+        else:
+            res += count - next_count
+            next_count -= 1
+        next_count = max(next_count, 0)
+    return res
+
+
+class MinDeletionSpec(unittest.TestCase):
+    def test_example(self):
+        self.assertEqual(0, min_deletions("aab"))
+        
+    def test_example2(self):
+        # remove 2b's
+        self.assertEqual(2, min_deletions("aaabbbcc"))
+        
+    def test_example3(self):
+        # remove 2b's
+        self.assertEqual(2, min_deletions("ceabaacb"))
+        
+    def test_empty_string(self):
+        self.assertEqual(0, min_deletions(""))
+        
+    def test_string_with_same_char_freq(self):
+        s = 'a' * 100 + 'b' * 100 + 'c' * 2 + 'd' * 1
+        self.assertEqual(1, min_deletions(s))
+        
+    def test_remove_all_other_string(self):
+        self.assertEqual(4, min_deletions("abcde"))
+        
+    def test_collision_after_removing(self):
+        # remove 1b, 1c, 2d, 2e, 1f 
+        s = 'a' * 10 + 'b' * 10 + 'c' * 9 + 'd' * 9 + 'e' * 8 + 'f' * 6
+        self.assertEqual(7, min_deletions(s))
+
+    def test_remove_all_of_certain_letters(self):
+        # remove 3b, 1f
+        s = 'a' * 3 + 'b' * 3 + 'c' * 2 + 'd' + 'f' 
+        self.assertEqual(4, min_deletions(s))
+    
+
+if __name__ == '__main__':
+    unittest.main(exit=False, verbosity=2)
+```
+
 ### Nov 21, 2021 \[Easy\] Min Steps to Make Piles Equal Height
 ---
 > **Question:** Alexa is given n piles of equal or unequal heights. In one step, Alexa can remove any number of boxes from the pile which has the maximum height and try to make it equal to the one which is just lower than the maximum height of the stack. Determine the minimum number of steps required to make all of the piles equal in height.
