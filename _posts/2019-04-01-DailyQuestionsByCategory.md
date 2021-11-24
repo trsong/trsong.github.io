@@ -4128,6 +4128,37 @@ For example, given the string `tweet`, return `tteew`. `eettw` would also be acc
 
 
 <details>
+<summary class="lc_e">
+
+- [**\[Easy\] LC 696. Count Binary Substrings**](https://trsong.github.io/python/java/2021/11/02/DailyQuestionsNov.html#nov-23-2021-lc-696-easy-count-binary-substrings) -- *Give a binary string s, return the number of non-empty substrings that have the same number of 0’s and 1’s* [*\(Try ME\)*](https://replit.com/@trsong/Count-Binary-Substrings-1)
+
+</summary>
+<div>
+
+**Question:** Give a binary string s, return the number of non-empty substrings that have the same number of 0's and 1's, and all the 0's and all the 1's in these substrings are grouped consecutively.
+
+Substrings that occur multiple times are counted the number of times they occur.
+
+**Example 1:**
+```py
+Input: s = "00110011"
+Output: 6
+Explanation: There are 6 substrings that have equal number of consecutive 1's and 0's: "0011", "01", "1100", "10", "0011", and "01".
+Notice that some of these substrings repeat and are counted the number of times they occur.
+Also, "00110011" is not a valid substring because all the 0's (and 1's) are not grouped together.
+```
+
+**Example 2:**
+```py
+Input: s = "10101"
+Output: 4
+Explanation: There are 4 substrings: "10", "01", "10", "01" that have equal number of consecutive 1's and 0's.
+```
+
+</div>
+</details>
+
+<details>
 <summary class="lc_m">
 
 - [**\[Medium\] Break Sentence**](https://trsong.github.io/python/java/2021/08/02/DailyQuestionsAug.html#oct-30-2021-medium-break-sentence) -- *Given a string s and an integer k, break up the string into multiple lines such that each line has a length of k or less.* [*\(Try ME\)*](https://replit.com/@trsong/Break-Sentence-into-Multiple-Lines-1)

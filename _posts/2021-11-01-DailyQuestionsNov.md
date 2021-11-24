@@ -53,6 +53,55 @@ Output: 4
 Explanation: There are 4 substrings: "10", "01", "10", "01" that have equal number of consecutive 1's and 0's.
 ```
 
+**My thoughts:** Group by consecutive one's and zero's, like `110001111000000` becomes `[2, 3, 4, 5]`. Notice that each consecutive group `g[i]` and `g[i - 1]` can at most form `min(g[i], g[i - 1])` substrings, because we can only match equal number of zero's and one's like `01`, `0011`, `000111`, etc. and the smaller group becomes a bottleneck. Finally, we can scan through groups of zero's and one's and we will get final answer. 
+
+**Solution:** [https://replit.com/@trsong/Count-Binary-Substrings](https://replit.com/@trsong/Count-Binary-Substrings)
+```py
+import unittest
+
+def count_bin_substring(s):
+    previous_group = current_group = 0
+    res = 0
+    n = len(s)
+    for i in range(n + 1):
+        if 0 < i < n and s[i] == s[i - 1]:
+            current_group += 1
+        else:
+            res += min(previous_group, current_group)
+            previous_group, current_group = current_group, 1
+    return res
+
+
+class CountBinSubstringSpec(unittest.TestCase):
+    def test_example(self):
+        self.assertEqual(6, count_bin_substring('00110011'))
+
+    def test_example2(self):
+        self.assertEqual(4, count_bin_substring('10101'))
+
+    def test_ascending_group_numbers(self):
+        self.assertEqual(9, count_bin_substring('110001111000000'))
+
+    def test_descending_group_numbers(self):
+        self.assertEqual(6, count_bin_substring('0000111001'))
+
+    def test_empty_input(self):
+        self.assertEqual(0, count_bin_substring(''))
+
+    def test_unique_number(self):
+        self.assertEqual(0, count_bin_substring('0000000000'))
+
+    def test_even_number_of_ones_and_zeros(self):
+        self.assertEqual(3, count_bin_substring('000111'))
+
+    def test_edge_case(self):
+        self.assertEqual(1, count_bin_substring('0011'))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False, verbosity=2)
+```
+
 
 ### Nov 22, 2021 LC 1647 \[Medium\] Minimum Deletions to Make Character Frequencies Unique
 ---
