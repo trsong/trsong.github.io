@@ -21,6 +21,16 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
 
+### Nov 24, 2021 \[Hard\] Largest Sum of Non-adjacent Numbers
+---
+
+> **Question:** Given a list of integers, write a function that returns the largest sum of non-adjacent numbers. Numbers can be 0 or negative.
+>
+> For example, `[2, 4, 6, 2, 5]` should return 13, since we pick 2, 6, and 5. `[5, 1, 1, 5]` should return 10, since we pick 5 and 5.
+>
+> Follow-up: Can you do this in O(N) time and constant space?
+
+
 ### Nov 23, 2021 LC 696 \[Easy\] Count Binary Substrings
 ---
 > **Question:** Give a binary string s, return the number of non-empty substrings that have the same number of 0's and 1's, and all the 0's and all the 1's in these substrings are grouped consecutively.
