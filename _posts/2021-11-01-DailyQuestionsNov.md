@@ -21,6 +21,54 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
 
+### Nov 25, 2021 \[Easy\] Count Number of Unival Subtrees
+---
+> **Question:** A unival tree is a tree where all the nodes have the same value. Given a binary tree, return the number of unival subtrees in the tree.
+
+**Example 1:**
+```py
+The following tree should return 5:
+
+   0
+  / \
+ 1   0
+    / \
+   1   0
+  / \
+ 1   1
+
+The 5 trees are:
+- The three single '1' leaf nodes. (+3)
+- The single '0' leaf node. (+1)
+- The [1, 1, 1] tree at the bottom. (+1)
+```
+
+**Example 2:**
+```py
+Input: root of below tree
+              5
+             / \
+            1   5
+           / \   \
+          5   5   5
+Output: 4
+There are 4 subtrees with single values.
+```
+
+**Example 3:**
+```py
+Input: root of below tree
+              5
+             / \
+            4   5
+           / \   \
+          4   4   5                
+Output: 5
+There are five subtrees with single values.
+```
+
+
+
 ### Nov 24, 2021 \[Hard\] Largest Sum of Non-adjacent Numbers
 ---
 
