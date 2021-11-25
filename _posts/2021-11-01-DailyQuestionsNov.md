@@ -30,6 +30,105 @@ categories: Python/Java
 >
 > Follow-up: Can you do this in O(N) time and constant space?
 
+**Solution with DP:** [https://replit.com/@trsong/Find-Largest-Sum-of-Non-adjacent-Numbers-2](https://replit.com/@trsong/Find-Largest-Sum-of-Non-adjacent-Numbers-2)
+```py
+import unittest
+
+def max_non_adj_sum(nums):
+    # Let dp[i] represents max non-adj sum for num[:i]
+    # dp[i] = max(dp[i-1], nums[i-1] + dp[i-2])
+    # That is max_so_far = max(prev_max, prev_prev_max + cur)
+    prev_prev_max = prev_max = 0
+    for num in nums:
+        max_so_far = max(prev_max, prev_prev_max + num)
+        prev_prev_max = prev_max
+        prev_max = max_so_far
+    return prev_max
+
+
+class MaxNonAdjSumSpec(unittest.TestCase):
+    def test_example(self):
+        nums = [2, 4, 6, 2, 5]
+        expected = 13  # 2, 6, 5
+        self.assertEqual(expected, max_non_adj_sum(nums))
+
+    def test_example2(self):
+        nums = [5, 1, 1, 5]
+        expected = 10  # 5, 5
+        self.assertEqual(expected, max_non_adj_sum(nums))
+
+    def test_empty_array(self):
+        self.assertEqual(0, max_non_adj_sum([]))
+
+    def test_one_elem_array(self):
+        nums = [42]
+        expected = 42
+        self.assertEqual(expected, max_non_adj_sum(nums))
+
+    def test_one_elem_array2(self):
+        nums = [-42]
+        expected = 0
+        self.assertEqual(expected, max_non_adj_sum(nums))
+
+    def test_two_elem_array(self):
+        nums = [2, 4]
+        expected = 4
+        self.assertEqual(expected, max_non_adj_sum(nums))
+
+    def test_unique_element(self):
+        nums = [1, 1, 1]
+        expected = 2
+        self.assertEqual(expected, max_non_adj_sum(nums))
+
+    def test_unique_element2(self):
+        nums = [1, 1, 1, 1, 1, 1]
+        expected = 3
+        self.assertEqual(expected, max_non_adj_sum(nums))
+
+    def test_array_with_non_positive_elem(self):
+        nums = [10, 0, 0, 0, 0, 10, 0, 0, 10]
+        expected = 30  # 10, 10, 10
+        self.assertEqual(expected, max_non_adj_sum(nums))
+
+    def test_array_with_non_positive_elem2(self):
+        nums = [2, 4, -1]
+        expected = 4
+        self.assertEqual(expected, max_non_adj_sum(nums))
+
+    def test_array_with_non_positive_elem3(self):
+        nums = [2, 4, -1, 0]
+        expected = 4
+        self.assertEqual(expected, max_non_adj_sum(nums))
+
+    def test_array_with_non_positive_elem4(self):
+        nums = [-1, -2, -3, -4]
+        expected = 0
+        self.assertEqual(expected, max_non_adj_sum(nums))
+
+    def test_array_with_non_positive_elem5(self):
+        nums = [1, -1, 1, -1]
+        expected = 2
+        self.assertEqual(expected, max_non_adj_sum(nums))
+
+    def test_array_with_non_positive_elem6(self):
+        nums = [1, -1, -1, -1]
+        expected = 1  
+        self.assertEqual(expected, max_non_adj_sum(nums))
+
+    def test_array_with_non_positive_elem7(self):
+        nums = [1, -1, -1, 1, 2]
+        expected = 3  # 1, 2
+        self.assertEqual(expected, max_non_adj_sum(nums))
+
+    def test_array_with_non_positive_elem8(self):
+        nums = [1, -1, -1, 2, 1]
+        expected = 3  # 1, 2
+        self.assertEqual(expected, max_non_adj_sum(nums))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False, verbosity=2)
+```
 
 ### Nov 23, 2021 LC 696 \[Easy\] Count Binary Substrings
 ---
