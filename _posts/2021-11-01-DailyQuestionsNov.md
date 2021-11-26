@@ -86,6 +86,139 @@ There are five subtrees with single values.
 ```
 
 
+**Solution:** [https://replit.com/@trsong/Count-Total-Number-of-Uni-val-Subtrees-2](https://replit.com/@trsong/Count-Total-Number-of-Uni-val-Subtrees-2)
+```py
+import unittest
+
+def count_unival_subtrees(tree):
+    return count_unival_subtrees_recur(tree)[0]
+
+
+def count_unival_subtrees_recur(tree):
+    if not tree:
+        return 0, True
+
+    left_res, is_left_unival = count_unival_subtrees_recur(tree.left)
+    right_res, is_right_unival = count_unival_subtrees_recur(tree.right)
+    is_current_unival = is_left_unival and is_right_unival
+    if is_current_unival and tree.left and tree.left.val != tree.val:
+        is_current_unival = False
+    if is_current_unival and tree.right and tree.right.val != tree.val:
+        is_current_unival = False
+    current_count = left_res + right_res + (1 if is_current_unival else 0)
+    return current_count, is_current_unival
+
+
+class TreeNode(object):
+    def __init__(self, val, left=None, right=None):
+        self.val = val
+        self.left = left
+        self.right = right
+
+
+class CountUnivalSubTreeSpec(unittest.TestCase):
+    def test_example1(self):
+        """
+           0
+          / \
+         1   0
+            / \
+           1   0
+          / \
+         1   1
+        """
+        rl = TreeNode(1, TreeNode(1), TreeNode(1))
+        r = TreeNode(0, rl, TreeNode(0))
+        root = TreeNode(0, TreeNode(1), r)
+        self.assertEqual(5, count_unival_subtrees(root))
+
+    def test_example2(self):
+        """
+              5
+             / \
+            1   5
+           / \   \
+          5   5   5
+        """
+        l = TreeNode(1, TreeNode(5), TreeNode(5))
+        r = TreeNode(5, right=TreeNode(5))
+        root = TreeNode(5, l, r)
+        self.assertEqual(4, count_unival_subtrees(root))
+
+    def test_example3(self):
+        """
+              5
+             / \
+            4   5
+           / \   \
+          4   4   5  
+        """
+        l = TreeNode(4, TreeNode(4), TreeNode(4))
+        r = TreeNode(5, right=TreeNode(5))
+        root = TreeNode(5, l, r)
+        self.assertEqual(5, count_unival_subtrees(root))
+
+    def test_empty_tree(self):
+        self.assertEqual(0, count_unival_subtrees(None))
+
+    def test_left_heavy_tree(self):
+        """
+            1
+           /
+          1
+         / \ 
+        1   0
+        """
+        root = TreeNode(1, TreeNode(1, TreeNode(1), TreeNode(0)))
+        self.assertEqual(2, count_unival_subtrees(root))
+
+    def test_right_heavy_tree(self):
+        """
+          0
+         / \
+        1   0
+             \
+              0
+               \
+                0
+        """
+        rr = TreeNode(0, right=TreeNode(0))
+        r = TreeNode(0, right=rr)
+        root = TreeNode(0, TreeNode(1), r)
+        self.assertEqual(4, count_unival_subtrees(root))
+
+    def test_unival_tree(self):
+        """
+            0
+           / \
+          0   0
+         /   /
+        0   0          
+        """
+        l = TreeNode(0, TreeNode(0))
+        r = TreeNode(0, TreeNode(0))
+        root = TreeNode(0, l, r)
+        self.assertEqual(5, count_unival_subtrees(root))
+
+    def test_distinct_value_trees(self):
+        """
+               _0_
+              /   \
+             1     2
+            / \   / \
+           3   4 5   6
+          /
+         7
+        """
+        n1 = TreeNode(1, TreeNode(3, TreeNode(7)), TreeNode(4))
+        n2 = TreeNode(2, TreeNode(5), TreeNode(6))
+        n0 = TreeNode(0, n1, n2)
+        self.assertEqual(4, count_unival_subtrees(n0))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False, verbosity=2)
+```
 
 ### Nov 24, 2021 \[Hard\] Largest Sum of Non-adjacent Numbers
 ---
