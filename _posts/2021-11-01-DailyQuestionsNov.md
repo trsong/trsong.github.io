@@ -20,6 +20,24 @@ categories: Python/Java
 
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
+### Nov 26, 2021 \[Medium\] Autocompletion
+---
+> **Question:**  Implement auto-completion. Given a large set of words (for instance 1,000,000 words) and then a single word prefix, find all words that it can complete to.
+
+**Example:**
+```py
+class Solution:
+  def build(self, words):
+    # Fill this in.
+    
+  def autocomplete(self, word):
+    # Fill this in.
+
+s = Solution()
+s.build(['dog', 'dark', 'cat', 'door', 'dodge'])
+s.autocomplete('do')  # Return ['dog', 'door', 'dodge']
+```
+
 
 ### Nov 25, 2021 \[Easy\] Count Number of Unival Subtrees
 ---
