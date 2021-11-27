@@ -38,6 +38,92 @@ s.build(['dog', 'dark', 'cat', 'door', 'dodge'])
 s.autocomplete('do')  # Return ['dog', 'door', 'dodge']
 ```
 
+**Solution with Trie:** [https://replit.com/@trsong/Autocompletion-Problem](https://replit.com/@trsong/Autocompletion-Problem)
+```py
+import unittest
+
+class Autocomplete:
+    def __init__(self):
+        self.trie = Trie()
+
+    def build(self, words):
+        for word in words:
+            self.trie.insert(word)
+
+    def run(self, word):
+        return self.trie.search(word)
+
+
+class Trie(object):
+    def __init__(self):
+        self.children = {}
+        self.words = set()
+
+    def insert(self, word):
+        p = self
+        for ch in word:
+            p.words.add(word)
+            p.children[ch] = p.children.get(ch, Trie())
+            p = p.children[ch]
+        p.words.add(word)
+
+    def search(self, word):
+        p = self
+        for ch in word:
+            if p is None or ch not in p.children:
+                return []
+            p = p.children[ch]
+        return list(p.words)
+
+
+class AutocompleteSpec(unittest.TestCase):
+    def test_example(self):
+        auto = Autocomplete()
+        auto.build(['dog', 'dark', 'cat', 'door', 'dodge'])
+        expected = ['dog', 'door', 'dodge']
+        self.assertCountEqual(expected, auto.run('do'))
+
+    def test_empty_prefix(self):
+        auto = Autocomplete()
+        auto.build(['dog', 'dark', 'cat', 'door', 'dodge'])
+        expected = ['dog', 'dark', 'cat', 'door', 'dodge']
+        self.assertCountEqual(expected, auto.run(''))
+
+    def test_search_exact_word(self):
+        auto = Autocomplete()
+        auto.build(['a', 'aa', 'aaa'])
+        expected = ['aaa']
+        self.assertCountEqual(expected, auto.run('aaa'))
+
+    def test_prefix_not_exist(self):
+        auto = Autocomplete()
+        auto.build(['a', 'aa', 'aaa'])
+        expected = []
+        self.assertCountEqual(expected, auto.run('aaabc'))
+
+    def test_prefix_not_exist2(self):
+        auto = Autocomplete()
+        auto.build(['a', 'aa', 'aaa'])
+        expected = []
+        self.assertCountEqual(expected, auto.run('c'))
+
+    def test_sentence_with_duplicates(self):
+        auto = Autocomplete()
+        auto.build(['a', 'aa', 'aa', 'aaa', 'aab', 'abb', 'aaa'])
+        expected = ['aa', 'aaa', 'aab']
+        self.assertCountEqual(expected, auto.run('aa'))
+
+    def test_word_with_same_prefix(self):
+        auto = Autocomplete()
+        auto.build(['aaa', 'aa', 'a'])
+        expected = ['a', 'aa', 'aaa']
+        self.assertCountEqual(expected, auto.run('a'))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False, verbosity=2)
+```
+
 
 ### Nov 25, 2021 \[Easy\] Count Number of Unival Subtrees
 ---
