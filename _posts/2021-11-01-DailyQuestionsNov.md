@@ -20,6 +20,12 @@ categories: Python/Java
 
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
+
+### Nov 27, 2021 \[Medium\] Merge K Sorted Lists
+---
+> **Question:** Given k sorted singly linked lists, write a function to merge all the lists into one sorted singly linked list.
+
+
 ### Nov 26, 2021 \[Medium\] Autocompletion
 ---
 > **Question:**  Implement auto-completion. Given a large set of words (for instance 1,000,000 words) and then a single word prefix, find all words that it can complete to.
