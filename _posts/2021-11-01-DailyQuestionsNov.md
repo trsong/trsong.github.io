@@ -21,6 +21,14 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
 
+### Nov 28, 2021 LC 678 \[Medium\] Balanced Parentheses with Wildcard
+---
+> **Question:** You're given a string consisting solely of `(`, `)`, and `*`. `*` can represent either a `(`, `)`, or an empty string. Determine whether the parentheses are balanced.
+>
+> For example, `(()*` and `(*)` are balanced. `)*(` is not balanced.
+
+
+
 ### Nov 27, 2021 \[Medium\] Merge K Sorted Lists
 ---
 > **Question:** Given k sorted singly linked lists, write a function to merge all the lists into one sorted singly linked list.
