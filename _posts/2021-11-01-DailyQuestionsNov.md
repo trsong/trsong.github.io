@@ -21,11 +21,30 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
 
+### Nov 29, 2021 LC 938 \[Easy\] Range Sum of BST
+---
+> **Question:** Given a binary search tree and a range `[a, b]` (inclusive), return the sum of the elements of the binary search tree within the range.
+
+**Example:**
+```py
+Given the range [4, 9] and the following tree:
+
+    5
+   / \
+  3   8
+ / \ / \
+2  4 6  10
+
+return 23 (5 + 4 + 6 + 8).
+```
+
 ### Nov 28, 2021 LC 678 \[Medium\] Balanced Parentheses with Wildcard
 ---
 > **Question:** You're given a string consisting solely of `(`, `)`, and `*`. `*` can represent either a `(`, `)`, or an empty string. Determine whether the parentheses are balanced.
 >
 > For example, `(()*` and `(*)` are balanced. `)*(` is not balanced.
+
+**My thoughts:** The wildcard `*` can represents `-1`, `0`, `1`, thus `x` number of `"*"`s can represents range from `-x` to `x`. Just like how we check balance without wildcard, but this time balance is a range: the wildcard just make any balance number within the range become possible. While keep the balance range in mind, we need to make sure each time the range can never go below 0 to become unbalanced, ie. number of open parentheses less than close ones.  
 
 
 **Solution:** [https://replit.com/@trsong/Determine-Balanced-Parentheses-with-Wildcardi-2](https://replit.com/@trsong/Determine-Balanced-Parentheses-with-Wildcard-2)
