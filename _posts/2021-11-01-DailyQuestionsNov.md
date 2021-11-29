@@ -28,6 +28,79 @@ categories: Python/Java
 > For example, `(()*` and `(*)` are balanced. `)*(` is not balanced.
 
 
+**Solution:** [https://replit.com/@trsong/Determine-Balanced-Parentheses-with-Wildcardi-2](https://replit.com/@trsong/Determine-Balanced-Parentheses-with-Wildcard-2)
+```py
+import unittest
+
+def balanced_parentheses(s):
+    lower_balance = higher_balance = 0
+    for ch in s:
+        if ch == '(':
+            lower_balance += 1
+            higher_balance += 1
+        elif ch == ')':
+            lower_balance -= 1
+            higher_balance -= 1
+        else:
+            lower_balance -= 1
+            higher_balance += 1
+
+        if higher_balance < 0:
+            return False
+        lower_balance = max(lower_balance, 0)
+    return lower_balance == 0
+
+    
+class BalancedParentheseSpec(unittest.TestCase):
+    def test_example(self):
+        self.assertTrue(balanced_parentheses("(()*"))
+
+    def test_example2(self):
+        self.assertTrue(balanced_parentheses("(*)"))
+
+    def test_example3(self):
+        self.assertFalse(balanced_parentheses(")*("))
+
+    def test_empty_string(self):
+        self.assertTrue(balanced_parentheses(""))
+
+    def test_contains_only_wildcard(self):
+        self.assertTrue(balanced_parentheses("*"))
+
+    def test_contains_only_wildcard2(self):
+        self.assertTrue(balanced_parentheses("**"))
+
+    def test_contains_only_wildcard3(self):
+        self.assertTrue(balanced_parentheses("***"))
+
+    def test_without_wildcard(self):
+        self.assertTrue(balanced_parentheses("()(()()())"))
+
+    def test_unbalanced_string(self):
+        self.assertFalse(balanced_parentheses("()()())()"))
+
+    def test_unbalanced_string2(self):
+        self.assertFalse(balanced_parentheses("*(***))))))))****"))
+
+    def test_unbalanced_string3(self):
+        self.assertFalse(balanced_parentheses("()((((*"))
+
+    def test_unbalanced_string4(self):
+        self.assertFalse(balanced_parentheses("((**)))))*"))
+    
+    def test_without_open_parentheses(self):
+        self.assertTrue(balanced_parentheses("*)**)*)*))"))
+    
+    def test_without_close_parentheses(self):
+        self.assertTrue(balanced_parentheses("(*((*(*(**"))
+
+    def test_wildcard_can_only_be_empty(self):
+        self.assertFalse(balanced_parentheses("((*)(*))((*"))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False, verbosity=2)
+```
 
 ### Nov 27, 2021 \[Medium\] Merge K Sorted Lists
 ---
