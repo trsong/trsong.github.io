@@ -21,6 +21,16 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
 
+### Dec 2, 2021 \[Hard\] Word Concatenation
+---
+> **Question:** Given a set of words, find all words that are concatenations of other words in the set.
+
+**Example:**
+```py
+Input: ['rat', 'cat', 'cats', 'dog', 'catsdog', 'dogcat', 'dogcatrat']
+Output: ['catsdog', 'dogcat', 'dogcatrat']
+```
+
 ### Dec 1, 2021 \[Medium\] Minimum Number of Jumps to Reach End
 ---
 > **Question:** You are given an array of integers, where each element represents the maximum number of steps that can be jumped going forward from that element. 
