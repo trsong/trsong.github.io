@@ -56,7 +56,7 @@ def word_break(s, word_dict):
 
     n = len(s)
     # Let dp[i] indicates whether s[:i] is breakable
-    # dp[i] = dp[i-k] for s[i-k:i] in dictinary with length k
+    # dp[i] = True if exists j < i st. dp[j] is True and s[i:j] is a word_dict word
     dp = [False] * (n + 1)
     dp[0] = True
     for i in range(1, n + 1):
