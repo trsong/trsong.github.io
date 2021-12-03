@@ -31,6 +31,82 @@ Input: ['rat', 'cat', 'cats', 'dog', 'catsdog', 'dogcat', 'dogcatrat']
 Output: ['catsdog', 'dogcat', 'dogcatrat']
 ```
 
+**My thoughts:** Imagine we have a function `word_break(s, word_dict)` which can tell if `s` can be broken into smaller combination of words from `word_dict`. 
+
+Also note that longer words can only be any combinations of smaller words. So if we sort the words in ascending order based on word length, we can easily tell if a word is breakable by calling `word_break(s, all_smaller_word_dict)`.
+
+**Solution with DP:** [https://replit.com/@trsong/Word-Concatenation](https://replit.com/@trsong/Word-Concatenation)
+```py
+import unittest
+
+def find_all_concatenated_words(words):
+    words.sort(key=len)
+    word_dict = set()
+    res = []
+    for word in words:
+        if word_break(word, word_dict):
+            res.append(word)
+        word_dict.add(word)
+    return res
+
+
+def word_break(s, word_dict):
+    if not word_dict:
+        return False
+
+    n = len(s)
+    # Let dp[i] indicates whether s[:i] is breakable
+    # dp[i] = dp[i-k] for s[i-k:i] in dictinary with length k
+    dp = [False] * (n + 1)
+    dp[0] = True
+    for i in range(1, n + 1):
+        for j in range(i):
+            if dp[j] and s[j: i] in word_dict:
+                dp[i] = True
+                break
+    return dp[n]
+    
+
+class FindAllConcatenatedWordSpec(unittest.TestCase):
+    def assert_result(self, expected, result):
+        self.assertEqual(sorted(expected), sorted(result))
+
+    def test_example(self):
+        words = ['rat', 'cat', 'cats', 'dog', 'catsdog', 'dogcat', 'dogcatrat']
+        expected = ['catsdog', 'dogcat', 'dogcatrat']
+        self.assert_result(expected, find_all_concatenated_words(words))
+
+    def test_example2(self):
+        words = ['cat','cats','catsdogcats','dog','dogcatsdog','hippopotamuses','rat','ratcatdogcat']
+        expected = ['catsdogcats','dogcatsdog','ratcatdogcat']
+        self.assert_result(expected, find_all_concatenated_words(words))
+        self.assert_result(expected, find_all_concatenated_words(words))
+
+    def test_example3(self):
+        words = ["cat","dog","catdog"]
+        expected = ['catdog']
+        self.assert_result(expected, find_all_concatenated_words(words))
+
+    def test_empty_array(self):
+        self.assert_result([], find_all_concatenated_words([]))
+
+    def test_one_word_array(self):
+        self.assert_result([], find_all_concatenated_words(['abc']))
+
+    def test_array_with_substrings(self):
+        self.assert_result([], find_all_concatenated_words(['a', 'ab', 'abc']))
+
+    def test_word_reuse(self):
+        words = ['a', 'aa', 'aaa']
+        expected = ['aa', 'aaa']
+        self.assert_result(expected, find_all_concatenated_words(words))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False, verbosity=2)
+```
+
+
 ### Dec 1, 2021 \[Medium\] Minimum Number of Jumps to Reach End
 ---
 > **Question:** You are given an array of integers, where each element represents the maximum number of steps that can be jumped going forward from that element. 

@@ -10684,6 +10684,27 @@ For example, given the set `[3, 5, 10, 20, 21]`, you should return `[5, 10, 20]`
 </summary>
 <div>
 
+<details>
+<summary class="lc_h">
+
+- [**\[Hard\] Word Concatenation**](https://trsong.github.io/python/java/2021/11/02/DailyQuestionsNov.html#dec-2-2021-hard-word-concatenation) -- *Given a set of words, find all words that are concatenations of other words in the set.* [*\(Try ME\)*](https://replit.com/@trsong/Word-Concatenation-1)
+
+</summary>
+<div>
+
+**Question:** Given a set of words, find all words that are concatenations of other words in the set.
+
+**Example:**
+```py
+Input: ['rat', 'cat', 'cats', 'dog', 'catsdog', 'dogcat', 'dogcatrat']
+Output: ['catsdog', 'dogcat', 'dogcatrat']
+```
+
+
+</div>
+</details>
+
+
 **Question:** Given a non-empty string s and a dictionary wordDict containing a list of non-empty words, determine if s can be segmented into a space-separated sequence of one or more dictionary words.
 
 **Note:**
