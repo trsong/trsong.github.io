@@ -9564,6 +9564,42 @@ We can consider a sentence valid if it conforms to the following rules:
 ## Backtracking
 ---
 
+
+<details>
+<summary class="lc_h">
+
+- [**LC 140. Word Break II**](https://trsong.github.io/python/java/2021/11/02/DailyQuestionsNov.html#dec-3-2021-lc-140-hard-word-break-ii) -- *Given a string s and a dictionary of strings wordDict, add spaces in s to construct a sentence where each word is a valid dictionary word.* [*\(Try ME\)*](https://replit.com/@trsong/Word-Break-II-1)
+
+</summary>
+<div>
+
+**Question:** Given a string s and a dictionary of strings wordDict, add spaces in s to construct a sentence where each word is a valid dictionary word. Return all such possible sentences in any order.
+
+Note that the same word in the dictionary may be reused multiple times in the segmentation.
+
+**Example 1:**
+```py
+Input: s = "catsanddog", wordDict = ["cat","cats","and","sand","dog"]
+Output: ["cats and dog","cat sand dog"]
+```
+
+**Example 2:**
+```py
+Input: s = "pineapplepenapple", wordDict = ["apple","pen","applepen","pine","pineapple"]
+Output: ["pine apple pen apple","pineapple pen apple","pine applepen apple"]
+Explanation: Note that you are allowed to reuse a dictionary word.
+```
+
+**Example 3:**
+```py
+Input: s = "catsandog", wordDict = ["cats","dog","sand","and","cat"]
+Output: []
+```
+
+</div>
+</details>
+
+
 <details>
 <summary class="lc_h">
 

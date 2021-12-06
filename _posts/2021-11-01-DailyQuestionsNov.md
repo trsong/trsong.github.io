@@ -47,6 +47,87 @@ Input: s = "catsandog", wordDict = ["cats","dog","sand","and","cat"]
 Output: []
 ```
 
+
+**Solution with Backtracking:** [https://replit.com/@trsong/Word-Break-II](https://replit.com/@trsong/Word-Break-II)
+```py
+import unittest
+
+def word_break(s, word_dict):
+    cache = {}
+    backtrack(s, word_dict, cache)
+    return cache[s]
+
+
+def backtrack(s, word_dict, cache):
+    if s in cache:
+        return cache[s]
+
+    if not s:
+        return ['']
+    
+    res = []
+    for size in range(len(s) + 1):
+        prefix = s[:size]
+        if prefix in word_dict:
+            sufficies = backtrack(s[size:], word_dict, cache)
+            for suffix in sufficies:
+                if suffix:
+                    res.append(prefix + ' ' + suffix)
+                else:
+                    res.append(prefix)
+    cache[s] = res
+    return res
+
+
+class WordBreakSpec(unittest.TestCase):
+    def assert_result(self, expected, result):
+        self.assertEqual(sorted(expected), sorted(result))
+
+    def test_example(self):
+        s = 'catsanddog'
+        word_dict = ['cat', 'cats', 'and', 'sand', 'dog']
+        expected = ['cats and dog', 'cat sand dog']
+        self.assert_result(expected, word_break(s, word_dict))
+
+    def test_example2(self):
+        s = 'pineapplepenapple'
+        word_dict = ['apple', 'pen', 'applepen', 'pine', 'pineapple']
+        expected = [
+            'pine apple pen apple',
+            'pineapple pen apple',
+            'pine applepen apple'
+        ]
+        self.assert_result(expected, word_break(s, word_dict))
+
+    def test_example3(self):
+        s = 'catsandog'
+        word_dict = ['cats', 'dog', 'sand', 'and', 'cat']
+        expected = []
+        self.assert_result(expected, word_break(s, word_dict))
+
+    def test_dictionary_with_prefix_words(self):
+        s = 'aaa'
+        word_dict = ['a', 'aa']
+        expected = ['a a a', 'a aa', 'aa a']
+        self.assert_result(expected, word_break(s, word_dict))
+
+    def test_dictionary_with_prefix_words2(self):
+        s = 'aaaaa'
+        word_dict = ['aa', 'aaa']
+        expected = ['aa aaa', 'aaa aa']
+        self.assert_result(expected, word_break(s, word_dict))
+
+    def test_dictionary_with_prefix_words3(self):
+        s = 'aaaaaa'
+        word_dict = ['aa', 'aaa']
+        expected = ['aaa aaa', 'aa aa aa']
+        self.assert_result(expected, word_break(s, word_dict))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False, verbosity=2)
+```
+
 ### Dec 2, 2021 \[Hard\] Word Concatenation
 ---
 > **Question:** Given a set of words, find all words that are concatenations of other words in the set.
