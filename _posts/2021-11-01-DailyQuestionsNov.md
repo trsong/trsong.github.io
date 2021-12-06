@@ -21,6 +21,16 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
 
+### Dec 5, 2021 \[Easy\] Intersection of Linked Lists
+---
+> **Question:** You are given two singly linked lists. The lists intersect at some node. Find, and return the node. Note: the lists are non-cyclical.
+
+**Example:**
+```py
+A = 1 -> 2 -> 3 -> 4
+B = 6 -> 3 -> 4
+# This should return 3 (you may assume that any nodes with the same value are the same node)
+```
 
 ### Dec 4, 2021 \[Easy\] Record the Last N Orders
 --- 
