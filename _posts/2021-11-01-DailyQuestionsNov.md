@@ -32,6 +32,81 @@ B = 6 -> 3 -> 4
 # This should return 3 (you may assume that any nodes with the same value are the same node)
 ```
 
+**Solution:** [https://replit.com/@trsong/Intersection-of-Linked-Lists-2](https://replit.com/@trsong/Intersection-of-Linked-Lists-2)
+```py
+import unittest
+
+def intersection(l1, l2):
+    len1, len2 = count_length(l1), count_length(l2)
+    if len1 < len2:
+        l1, l2 = l2, l1
+        len1, len2 = len2, len1
+
+    for _ in range(len1 - len2):
+        l1 = l1.next
+
+    while l1.val != l2.val:
+        l1 = l1.next
+        l2 = l2.next
+    return l1.val
+
+
+def count_length(lst):
+    res = 0
+    while lst:
+        res += 1
+        lst = lst.next
+    return res
+
+
+class ListNode(object):
+    def __init__(self, val, next=None):
+        self.val = val
+        self.next = next
+
+    def __repr__(self):
+        return "%d -> %s" % (self.val, str(self.next))
+
+    @staticmethod
+    def List(*vals):
+        p = dummy = ListNode(-1)
+        for v in vals:
+            p.next = ListNode(v)
+            p = p.next
+        return dummy.next
+
+
+class IntersectionSpec(unittest.TestCase):
+    def test_example(self):
+        l1 = ListNode.List(1, 2, 3, 4)
+        l2 = ListNode.List(6, 3, 4)
+        self.assertEqual(3, intersection(l1, l2))
+
+    def test_intersect_at_last_elem(self):
+        l1 = ListNode.List(1, 2, 3, 4)
+        l2 = ListNode.List(4)
+        self.assertEqual(4, intersection(l1, l2))
+
+    def test_intersect_at_first_elem(self):
+        l1 = ListNode.List(1, 2, 3, 4)
+        l2 = ListNode.List(0, 1, 2, 3, 4)
+        self.assertEqual(1, intersection(l1, l2))
+
+    def test_same_list(self):
+        l1 = ListNode.List(1, 2, 3, 4)
+        l2 = ListNode.List(1, 2, 3, 4)
+        self.assertEqual(1, intersection(l1, l2))
+
+    def test_same_list2(self):
+        l1 = ListNode.List(1)
+        l2 = ListNode.List(1)
+        self.assertEqual(1, intersection(l1, l2))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False, verbosity=2)
+```
+
 ### Dec 4, 2021 \[Easy\] Record the Last N Orders
 --- 
 > **Question:** You run an e-commerce website and want to record the last `N` order ids in a log. Implement a data structure to accomplish this, with the following API:
