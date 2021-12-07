@@ -21,6 +21,11 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
 
+### Dec 7, 2021 LC 287 \[Medium\] Find the Duplicate Number
+---
+> **Question:** You are given an array of length `n + 1` whose elements belong to the set `{1, 2, ..., n}`. By the pigeonhole principle, there must be a duplicate. Find it in linear time and space.
+
+
 ### Dec 6, 2021 \[Easy\] Valid UTF-8 Encoding
 --- 
 > **Question:** UTF-8 is a character encoding that maps each symbol to one, two, three, or four bytes.
