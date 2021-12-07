@@ -48,6 +48,116 @@ categories: Python/Java
 ```  
 
 
+**Solution:** [https://replit.com/@trsong/Valid-UTF-8-Encoding-2](https://replit.com/@trsong/Valid-UTF-8-Encoding-2)
+```py
+import unittest
+
+MAX_BYTE = 0b11111111
+FOLLOWING_BYTE_PREFIX = 0b10
+
+
+def validate_utf8(byte_arr):
+    if not byte_arr:
+        return False
+    
+    first_byte = byte_arr[0]
+    if len(byte_arr) == 1:
+        return first_byte >> 7 == 0
+    
+    if not validate_byte_value(byte_arr):
+        return False
+
+    num_bytes = count_prefix_ones(first_byte)
+    if num_bytes != len(byte_arr):
+        return False
+    
+    return validate_following_bytes(byte_arr[1:])
+
+
+def validate_byte_value(byte_arr):
+    return all(byte <= MAX_BYTE for byte in byte_arr)
+
+
+def count_prefix_ones(byte):
+    count = 0
+    for i in xrange(7, -1, -1):
+        if byte & 1 << i == 0:
+            break
+        count += 1
+    return count
+
+
+def validate_following_bytes(byte_arr):
+    return all(FOLLOWING_BYTE_PREFIX == (byte >> 6) for byte in byte_arr)
+
+
+class ValidateUtf8Spec(unittest.TestCase):
+    def test_example(self):
+        byte_arr = [0b11100010, 0b10000010, 0b10101100]
+        self.assertTrue(validate_utf8(byte_arr))
+
+    def test_empty_arr(self):
+        byte_arr = []
+        self.assertFalse(validate_utf8(byte_arr))
+
+    def test_valid_one_byte(self):
+        byte_arr = [0b0]
+        self.assertTrue(validate_utf8(byte_arr))
+
+    def test_valid_one_byte2(self):
+        byte_arr = [0b01111111]
+        self.assertTrue(validate_utf8(byte_arr))
+
+    def test_invalid_one_byte(self):
+        byte_arr = [0b10101010]
+        self.assertFalse(validate_utf8(byte_arr))
+
+    def test_invalid_one_byte2(self):
+        byte_arr = [0b0, 0b10000010]
+        self.assertFalse(validate_utf8(byte_arr))
+
+    def test_valid_two_bytes(self):
+        byte_arr = [0b11000000, 0b10000000]
+        self.assertTrue(validate_utf8(byte_arr))
+
+    def test_valid_two_bytes2(self):
+        byte_arr = [0b11011111, 0b10111111]
+        self.assertTrue(validate_utf8(byte_arr))
+
+    def test_valid_three_bytes(self):
+        byte_arr = [0b11100000, 0b10000000, 0b10000000]
+        self.assertTrue(validate_utf8(byte_arr))
+
+    def test_valid_three_bytes2(self):
+        byte_arr = [0b11101111, 0b10111111, 0b10111111]
+        self.assertTrue(validate_utf8(byte_arr))
+
+    def test_valid_four_bytes(self):
+        byte_arr = [0b11110000, 0b10000000, 0b10000000, 0b10000000]
+        self.assertTrue(validate_utf8(byte_arr))
+
+    def test_valid_four_bytes2(self):
+        byte_arr = [0b11110111, 0b10111111, 0b10111111, 0b10111111]
+        self.assertTrue(validate_utf8(byte_arr))
+
+    def test_short_on_bytes(self):
+        byte_arr = [0b11110111, 0b10111111, 0b10111111]
+        self.assertFalse(validate_utf8(byte_arr))
+
+    def test_more_than_necessary_bytes(self):
+        byte_arr = [0b11000111, 0b10111111, 0b10111111]
+        self.assertFalse(validate_utf8(byte_arr))
+    
+    def test_following_bytes_with_incorrect_prefix(self):
+        byte_arr = [0b11100000, 0b11000000, 0b11000000]
+        self.assertFalse(validate_utf8(byte_arr))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False, verbosity=2)
+```
+
+
 ### Dec 5, 2021 \[Easy\] Intersection of Linked Lists
 ---
 > **Question:** You are given two singly linked lists. The lists intersect at some node. Find, and return the node. Note: the lists are non-cyclical.
