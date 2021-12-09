@@ -21,6 +21,17 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
 
+### Dec 9, 2021  \[Easy\] Swap Even and Odd Nodes
+---
+> **Question:** Given the head of a singly linked list, swap every two nodes and return its head.
+>
+> **Note:** Make sure it’s acutally nodes that get swapped not value.
+
+**Example:**
+```py
+Given 1 -> 2 -> 3 -> 4, return 2 -> 1 -> 4 -> 3.
+```
+
 
 ### Dec 8, 2021 \[Medium\] Lazy Bartender
 ---
