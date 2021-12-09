@@ -55,7 +55,121 @@ preferences = {
 >
 > For the input above, the answer would be 2, as drinks 1 and 5 will satisfy everyone.
 
+**My thoughts:** This problem is a famous NP-Complete problem: SET-COVER. Therefore no better solution except brutal-force can be applied. Although there exists a log-n approximation algorithm (sort and pick drinks loved by minority), still that is not optimal.
 
+**Solution with Backtracking:** [https://replit.com/@trsong/Lazy-Bartender-Problem-3](https://replit.com/@trsong/Lazy-Bartender-Problem-3)
+```py
+import unittest
+
+def solve_lazy_bartender(preferences):
+    customer_lookup = {}
+    for customer, drinks in preferences.items():
+        if not drinks:
+            continue
+        for drink in drinks:
+            customer_lookup[drink] = customer_lookup.get(drink, set())
+            customer_lookup[drink].add(customer)
+    
+    class Context:
+        min_cover = len(customer_lookup)
+    
+    all_alcoholics = set(customer for customer, drinks in preferences.items() if drinks)
+    
+    def backtrack(selected_drinks, remaining_drinks):
+        customers_by_drink = map(lambda drink: customer_lookup[drink], selected_drinks)
+        covered_alcoholics = set.union(*customers_by_drink) if customers_by_drink else set()
+
+        if covered_alcoholics == all_alcoholics:
+            Context.min_cover = min(Context.min_cover, len(selected_drinks))
+        else:
+            for i, drink in enumerate(remaining_drinks):
+                if customer_lookup[drink] in covered_alcoholics:
+                    continue
+                selected_drinks.append(drink)
+                updated_remaining_drinks = remaining_drinks[:i] + remaining_drinks[i + 1:]
+                backtrack(selected_drinks, updated_remaining_drinks)
+                selected_drinks.pop()
+
+    
+    backtrack([], customer_lookup.keys())
+    return Context.min_cover
+
+
+class SolveLazyBartenderSpec(unittest.TestCase):
+    def test_example(self):
+        preferences = {
+            0: [0, 1, 3, 6],
+            1: [1, 4, 7],
+            2: [2, 4, 7, 5],
+            3: [3, 2, 5],
+            4: [5, 8]
+        }
+        self.assertEqual(2, solve_lazy_bartender(preferences))  # drink 1 and 5 
+
+    def test_empty_preference(self):
+        self.assertEqual(0, solve_lazy_bartender({}))
+    
+    def test_non_alcoholic(self):
+        preferences = {
+            2: [],
+            5: [],
+            7: [10, 100]
+        }
+        self.assertEqual(1, solve_lazy_bartender(preferences))  # 10
+
+    def test_has_duplicated_drinks_in_preference(self):
+        preferences = {
+            0: [3, 7, 5, 2, 9],
+            1: [5],
+            2: [2, 3],
+            3: [4],
+            4: [3, 4, 3, 5, 7, 9]
+        }
+        self.assertEqual(3, solve_lazy_bartender(preferences))  # drink 3, 4 and 5
+
+    def test_should_return_optimal_solution(self):
+        preferences = {
+            1: [1, 3],
+            2: [2, 3],
+            3: [1, 3],
+            4: [1, 3],
+            5: [2]
+        }
+        self.assertEqual(2, solve_lazy_bartender(preferences))  # drink 2, 3
+
+    def test_greedy_solution_not_work(self):
+        preferences = {
+            1: [1, 4],
+            2: [1, 2, 5],
+            3: [2, 4],
+            4: [2, 5],
+            5: [2, 4],
+            6: [3, 5],
+            7: [3, 4],
+            8: [3, 5],
+            9: [3, 4],
+            10: [3, 5],
+            11: [3, 4],
+            12: [3, 5],
+            13: [3, 4, 5]
+        }
+        self.assertEqual(2, solve_lazy_bartender(preferences))  # drink 4, 5
+
+    def test_greedy_solution_not_work2(self):
+        preferences = {
+            0: [0, 3],
+            1: [1, 4],
+            2: [5, 6],
+            3: [4, 5],
+            4: [3, 5],
+            5: [2, 6]
+        }
+        self.assertEqual(3, solve_lazy_bartender(preferences))  # drink 3, 4, 6
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False, verbosity=2)
+```
 
 ### Dec 7, 2021 LC 287 \[Medium\] Find the Duplicate Number
 ---
