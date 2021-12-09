@@ -62,28 +62,28 @@ preferences = {
 import unittest
 
 def solve_lazy_bartender(preferences):
-    customer_lookup = {}
+    drink_map = {}
     for customer, drinks in preferences.items():
         if not drinks:
             continue
         for drink in drinks:
-            customer_lookup[drink] = customer_lookup.get(drink, set())
-            customer_lookup[drink].add(customer)
+            drink_map[drink] = drink_map.get(drink, set())
+            drink_map[drink].add(customer)
     
     class Context:
-        min_cover = len(customer_lookup)
+        min_cover = len(drink_map)
     
     all_alcoholics = set(customer for customer, drinks in preferences.items() if drinks)
     
     def backtrack(selected_drinks, remaining_drinks):
-        customers_by_drink = map(lambda drink: customer_lookup[drink], selected_drinks)
+        customers_by_drink = map(lambda drink: drink_map[drink], selected_drinks)
         covered_alcoholics = set.union(*customers_by_drink) if customers_by_drink else set()
 
         if covered_alcoholics == all_alcoholics:
             Context.min_cover = min(Context.min_cover, len(selected_drinks))
         else:
             for i, drink in enumerate(remaining_drinks):
-                if customer_lookup[drink] in covered_alcoholics:
+                if drink_map[drink] in covered_alcoholics:
                     continue
                 selected_drinks.append(drink)
                 updated_remaining_drinks = remaining_drinks[:i] + remaining_drinks[i + 1:]
@@ -91,7 +91,7 @@ def solve_lazy_bartender(preferences):
                 selected_drinks.pop()
 
     
-    backtrack([], customer_lookup.keys())
+    backtrack([], drink_map.keys())
     return Context.min_cover
 
 
