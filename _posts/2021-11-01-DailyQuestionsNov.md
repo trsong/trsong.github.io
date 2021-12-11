@@ -22,6 +22,16 @@ categories: Python/Java
 
 
 
+
+
+### Dec 11, 2021 \[Medium\] Longest Consecutive Sequence in an Unsorted Array
+---
+> **Question:** Given an array of integers, return the largest range, inclusive, of integers that are all included in the array.
+>
+> For example, given the array `[9, 6, 1, 3, 8, 10, 12, 11]`, return `(8, 12)` since `8, 9, 10, 11, and 12` are all in the array.
+
+
+
 ### Dec 10, 2021 \[Medium\] Count Attacking Bishop Pairs
 ---
 > **Question:** On our special chessboard, two bishops attack each other if they share the same diagonal. This includes bishops that have another bishop located between them, i.e. bishops can attack through pieces.
