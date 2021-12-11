@@ -49,6 +49,117 @@ categories: Python/Java
 > You should return 2, since bishops 1 and 3 attack each other, as well as bishops 3 and 4.
 
 
+**My thoughts:** Cell on same diagonal has the following properties:
+
+- Major diagonal: col - row = constant
+- Minor diagonal: col + row = constant
+  
+
+**Example:**
+```py
+>>> [[r-c for c in xrange(5)] for r in xrange(5)]
+[
+    [0, -1, -2, -3, -4],
+    [1, 0, -1, -2, -3],
+    [2, 1, 0, -1, -2],
+    [3, 2, 1, 0, -1],
+    [4, 3, 2, 1, 0]
+]
+
+>>> [[r+c for c in xrange(5)] for r in xrange(5)]
+[
+    [0, 1, 2, 3, 4],
+    [1, 2, 3, 4, 5],
+    [2, 3, 4, 5, 6],
+    [3, 4, 5, 6, 7],
+    [4, 5, 6, 7, 8]
+]
+```
+Thus, we can store the number of bishop on the same diagonal and use the formula to calculate n-choose-2: `n(n-1)/2`
+
+
+**Solution:** [https://replit.com/@trsong/Count-Number-of-Attacking-Bishop-Pairs-2](https://replit.com/@trsong/Count-Number-of-Attacking-Bishop-Pairs-2)
+```py
+import unittest
+
+def count_attacking_pairs(bishop_positions):
+    if not bishop_positions or not bishop_positions[0]:
+        return 0
+
+    res = 0
+    major_diagonal_count = {}
+    minor_diagonal_count = {}
+    for r, c in bishop_positions:
+        major_diagonal = r - c
+        minor_diagonal = r + c
+
+        major_count = major_diagonal_count.get(major_diagonal, 0) 
+        minor_count = minor_diagonal_count.get(minor_diagonal, 0) 
+        res += major_count + minor_count
+
+        major_diagonal_count[major_diagonal] = major_count + 1
+        minor_diagonal_count[minor_diagonal] = minor_count + 1
+    return res
+
+
+class CountAttackingPairSpec(unittest.TestCase):
+    def test_zero_bishops(self):
+        self.assertEqual(0, count_attacking_pairs([]))
+
+    def test_bishops_everywhere(self):
+        """
+        b b
+        b b
+        """
+        self.assertEqual(2, count_attacking_pairs([(0, 0), (0, 1), (1, 0), (1, 1)]))
+
+    def test_zero_attacking_pairs(self):
+        """
+        0 b 0 0
+        0 b 0 0
+        0 b 0 0
+        0 b 0 0
+        """
+        self.assertEqual(0, count_attacking_pairs([(0, 1), (1, 1), (2, 1), (3, 1)]))
+        """
+        0 0 0 b
+        b 0 0 0
+        b 0 b 0
+        0 0 0 0
+        """
+        self.assertEqual(0, count_attacking_pairs([(0, 3), (1, 0), (2, 0), (2, 2)]))
+
+    def test_no_bishop_between_attacking_pairs(self):
+        """
+        b 0 b
+        b 0 b
+        b 0 b
+        """
+        self.assertEqual(2, count_attacking_pairs([(0, 0), (1, 0), (2, 0), (0, 2), (1, 2), (2, 2)]))
+    
+    def test_no_bishop_between_attacking_pairs2(self):
+        """
+        b 0 0 0 0
+        0 0 b 0 0
+        0 0 b 0 0
+        0 0 0 0 0
+        b 0 0 0 0
+        """
+        self.assertEqual(2, count_attacking_pairs([(0, 0), (1, 2), (2, 2), (4, 0)]))
+
+    def test_has_bishop_between_attacking_pairs(self):
+        """
+        b 0 b
+        0 b 0
+        b 0 b
+        """
+        self.assertEqual(6, count_attacking_pairs([(0, 0), (0, 2), (1, 1), (2, 0), (2, 2)]))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False, verbosity=2)
+```
+
 
 ### Dec 9, 2021  \[Easy\] Swap Even and Odd Nodes
 ---
