@@ -85,7 +85,7 @@ categories: Python/Java
     [4, 5, 6, 7, 8]
 ]
 ```
-Thus, we can store the number of bishop on the same diagonal and use the formula to calculate n-choose-2: `n(n-1)/2`
+Thus, we can store the number of bishop on the same diagonal and use the formula to calculate n-choose-2: `n(n-1)/2`. Or we think about for each bishop added to a specific diagonal, the total number of pairs contributed by such bishop equal to number of bishop on the existing diagonal.
 
 
 **Solution:** [https://replit.com/@trsong/Count-Number-of-Attacking-Bishop-Pairs-2](https://replit.com/@trsong/Count-Number-of-Attacking-Bishop-Pairs-2)
