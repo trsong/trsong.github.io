@@ -48,7 +48,23 @@ Input:
  /
 2
 Output: 1
-````
+```
+
+### Dec 14, 2021  \[Medium\] Power of 4
+---
+> **Questions:** Given a 32-bit positive integer N, determine whether it is a power of four in faster than `O(log N)` time.
+
+**Example1:**
+```py
+Input: 16
+Output: 16 is a power of 4
+```
+
+**Example2:**
+```py
+Input: 20
+Output: 20 is not a power of 4
+```
 
 ### Dec 13, 2021 LC 300 \[Hard\] The Longest Increasing Subsequence
 ---
