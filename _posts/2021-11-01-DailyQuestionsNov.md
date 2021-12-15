@@ -66,6 +66,53 @@ Input: 20
 Output: 20 is not a power of 4
 ```
 
+**Solution:** [https://replit.com/@trsong/Determine-If-Number-Is-Power-of-4-2](https://replit.com/@trsong/Determine-If-Number-Is-Power-of-4-2)
+```py
+import unittest
+
+def is_power_of_four(num):
+    is_positive = num > 0
+    is_power_of_two = num & (num - 1) == 0
+    no_set_odd_bits = num & 0xAAAAAAAA == 0  #  A is 0b1010
+    return is_positive and is_power_of_two and no_set_odd_bits
+
+
+class IsPowerOfFourSpec(unittest.TestCase):
+    def test_example1(self):
+        self.assertTrue(is_power_of_four(16))
+
+    def test_example2(self):
+        self.assertFalse(is_power_of_four(20))
+
+    def test_zero(self):
+        self.assertFalse(is_power_of_four(0))
+    
+    def test_one(self):
+        self.assertTrue(is_power_of_four(1))
+
+    def test_number_smaller_than_four(self):
+        self.assertFalse(is_power_of_four(3))
+
+    def test_negative_number(self):
+        self.assertFalse(is_power_of_four(-4))
+    
+    def test_all_bit_being_one(self):
+        self.assertFalse(is_power_of_four(4**8 - 1))
+
+    def test_power_of_two_not_four(self):
+        self.assertFalse(is_power_of_four(2 ** 5))
+
+    def test_all_power_4_bit_being_one(self):
+        self.assertFalse(is_power_of_four(4**0 + 4**1 + 4**2 + 4**3 + 4**4))
+    
+    def test_larger_number(self):
+        self.assertTrue(is_power_of_four(2 ** 32))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False, verbosity=2)
+```
+
 ### Dec 13, 2021 LC 300 \[Hard\] The Longest Increasing Subsequence
 ---
 > **Question:** Given an array of numbers, find the length of the longest increasing **subsequence** in the array. The subsequence does not necessarily have to be contiguous.
