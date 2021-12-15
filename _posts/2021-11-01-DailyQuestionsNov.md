@@ -73,8 +73,8 @@ import unittest
 def is_power_of_four(num):
     is_positive = num > 0
     is_power_of_two = num & (num - 1) == 0
-    no_set_odd_bits = num & 0xAAAAAAAA == 0  #  A is 0b1010
-    return is_positive and is_power_of_two and no_set_odd_bits
+    none_even_bits = num & 0xAAAAAAAA == 0  #  A is 0b1010
+    return is_positive and is_power_of_two and none_even_bits
 
 
 class IsPowerOfFourSpec(unittest.TestCase):
