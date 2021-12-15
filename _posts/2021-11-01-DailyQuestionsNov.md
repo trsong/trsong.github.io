@@ -29,6 +29,88 @@ categories: Python/Java
 >
 > For example, given the array `[0, 8, 4, 12, 2, 10, 6, 14, 1, 9, 5, 13, 3, 11, 7, 15]`, the longest increasing subsequence has length `6` ie. `[0, 2, 6, 9, 11, 15]`.
 
+**Solution:** [https://replit.com/@trsong/Find-the-Longest-Increasing-Subsequence-2](https://replit.com/@trsong/Find-the-Longest-Increasing-Subsequence-2)
+```py
+import unittest
+
+def longest_increasing_subsequence(sequence):
+    ascending_seq = []
+    for num in sequence:
+        # insert_pos is the min index such that ascending_seq[i] >= num
+        # replace ascending_seq[i] with num won't affect ascending order
+        insert_pos = binary_search(ascending_seq, num)
+        if insert_pos == len(ascending_seq):
+            ascending_seq.append(num)
+        else:
+            ascending_seq[insert_pos] = num
+    return len(ascending_seq)
+
+
+def binary_search(nums, target):
+    lo = 0
+    hi = len(nums)
+    while lo < hi:
+        mid = lo + (hi - lo) // 2
+        if nums[mid] < target:
+            lo = mid + 1
+        else:
+            hi = mid
+    return lo
+
+
+class LongestIncreasingSubsequnceSpec(unittest.TestCase):
+    def test_empty_sequence(self):
+        self.assertEqual(0, longest_increasing_subsequence([]))
+
+    def test_last_elem_is_local_max(self):
+        seq = [1, 2, 3, 0, 2]
+        expected = 3  # [1, 2, 3]
+        self.assertEqual(expected, longest_increasing_subsequence(seq))
+
+    def test_last_elem_is_global_max(self):
+        seq = [1, 2, 3, 0, 6]
+        expected = 4  # [1, 2, 3, 6]
+        self.assertEqual(expected, longest_increasing_subsequence(seq))
+
+    def test_longest_increasing_subsequence_in_first_half_sequence(self):
+        seq = [4, 5, 6, 7, 1, 2, 3]
+        expected = 4  # [4, 5, 6, 7]
+        self.assertEqual(expected, longest_increasing_subsequence(seq))
+
+    def test_longest_increasing_subsequence_in_second_half_sequence(self):
+        seq = [1, 2, 3, -2, -1, 0, 1]
+        expected = 4  # [-2, -1, 0, 1]
+        self.assertEqual(expected, longest_increasing_subsequence(seq))
+
+    def test_sequence_in_up_down_up_pattern(self):
+        seq = [1, 2, 3, 2, 4]
+        expected = 4  # [1, 2, 2, 4]
+        self.assertEqual(expected, longest_increasing_subsequence(seq))
+
+    def test_sequence_in_up_down_up_pattern2(self):
+        seq = [1, 2, 3, -1, 0]
+        expected = 3  # [1, 2, 3]
+        self.assertEqual(expected, longest_increasing_subsequence(seq))
+
+    def test_sequence_in_down_up_down_pattern(self):
+        seq = [4, 3, 5]
+        expected = 2  # [3, 5]
+        self.assertEqual(expected, longest_increasing_subsequence(seq))
+
+    def test_sequence_in_down_up_down_pattern2(self):
+        seq = [4, 0, 1]
+        expected = 2  # [0, 1]
+        self.assertEqual(expected, longest_increasing_subsequence(seq))
+
+    def test_multiple_result(self):
+        seq = [10, 9, 2, 5, 3, 7, 101, 18]
+        expected = 4  # [2, 3, 7, 101]
+        self.assertEqual(expected, longest_increasing_subsequence(seq))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False, verbosity=2)
+```
 
 
 ### Dec 12, 2021 \[Hard\] Decreasing Subsequences
