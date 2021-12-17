@@ -57,6 +57,62 @@ Input: [5, 2, 3, 5, 4, 3]
 Output: [[5, 2, 3], [2, 3, 5, 4], [5, 4, 3]]
 ```
 
+**Solution with Sliding Window:** [https://replit.com/@trsong/Find-All-Max-size-Subarrays-with-Distinct-Elements-2](https://replit.com/@trsong/Find-All-Max-size-Subarrays-with-Distinct-Elements-2)
+```py
+import unittest
+
+def all_max_distinct_subarray(nums):
+    if not nums:
+        return []
+        
+    last_occur = {}
+    start = 0
+    res = []
+
+    for end, num in enumerate(nums):
+        if start <= last_occur.get(num, -1):
+            res.append(nums[start: end])
+            start = last_occur[num] + 1
+        last_occur[num] = end
+    
+    res.append(nums[start:])
+    return res
+
+
+class AllMaxDistinctSubarraySpec(unittest.TestCase):
+    def test_example(self):
+        nums = [5, 2, 3, 5, 4, 3]
+        expected = [[5, 2, 3], [2, 3, 5, 4], [5, 4, 3]]
+        self.assertCountEqual(expected, all_max_distinct_subarray(nums))
+
+    def test_empty_array(self):
+        self.assertCountEqual([], all_max_distinct_subarray([]))
+
+    def test_array_with_no_duplicates(self):
+        nums = [1, 2, 3, 4, 5, 6]
+        expected = [[1, 2, 3, 4, 5, 6]]
+        self.assertCountEqual(expected, all_max_distinct_subarray(nums))
+
+    def test_array_with_unique_numbers(self):
+        nums = [0, 0, 0]
+        expected = [[0], [0], [0]]
+        self.assertCountEqual(expected, all_max_distinct_subarray(nums))
+    
+    def test_should_give_max_size_disctinct_array(self):
+        nums = [0, 1, 0, 0, 1, 2, 0, 0, 1, 2, 3]
+        expected = [[0, 1], [1, 0], [0, 1, 2], [1, 2, 0], [0, 1, 2, 3]]
+        self.assertCountEqual(expected, all_max_distinct_subarray(nums))
+
+    def test_should_give_max_size_disctinct_array2(self):
+        nums = [0, 1, 2, 3, 2, 3, 1, 3, 0]
+        expected = [[0, 1, 2, 3], [3, 2], [2, 3, 1], [1, 3, 0]]
+        self.assertCountEqual(expected, all_max_distinct_subarray(nums))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False, verbosity=2)
+```
+
 
 ### Dec 15, 2021 LC 543 \[Easy\] Diameter of Binary Tree
 ---
