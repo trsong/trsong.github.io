@@ -21,6 +21,43 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
 
+### Dec 17, 2021 \[Hard\] Longest Path in Binary Tree
+---
+> **Question:** Given a binary tree, return any of the longest path.
+
+**Example 1:**
+```py
+Input:      1
+          /   \
+        2      3
+      /  \
+    4     5
+
+Output: [4, 2, 1, 3] or [5, 2, 1, 3]  
+```
+
+**Example 2:**
+```py
+Input:      1
+          /   \
+        2      3
+      /  \      \
+    4     5      6
+
+Output: [4, 2, 1, 3, 6] or [5, 2, 1, 3, 6] 
+```
+
+### Dec 16, 2021 \[Medium\] All Max-size Subarrays with Distinct Elements
+---
+> **Question:** Given an array of integers, print all maximum size sub-arrays having all distinct elements in them.
+
+**Example:**
+```py
+Input: [5, 2, 3, 5, 4, 3]
+Output: [[5, 2, 3], [2, 3, 5, 4], [5, 4, 3]]
+```
+
+
 ### Dec 15, 2021 LC 543 \[Easy\] Diameter of Binary Tree
 ---
 > **Question:** Given the root of a binary tree, return the length of the diameter of the tree.
