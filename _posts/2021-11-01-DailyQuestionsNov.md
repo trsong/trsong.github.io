@@ -50,6 +50,130 @@ Input:
 Output: 1
 ```
 
+**Solution with Recursion:** [https://replit.com/@trsong/Diameter-of-Binary-Tree](https://replit.com/@trsong/Diameter-of-Binary-Tree)
+```py
+import unittest
+
+def binary_tree_diameter(root):
+    if not root:
+        return None
+
+    _, max_path = binary_tree_max_path_recur(root)
+    return max_path - 1
+
+
+def binary_tree_max_path_recur(root):
+    if not root:
+        return 0, 0
+
+    left_max_height, left_res = binary_tree_max_path_recur(root.left)
+    right_max_height, right_res = binary_tree_max_path_recur(root.right)
+    return 1 + max(left_max_height, right_max_height), max(left_res, right_res, 1 + left_max_height + right_max_height)
+
+
+class TreeNode(object):
+    def __init__(self, val, left=None, right=None):
+        self.val = val
+        self.left = left
+        self.right = right
+
+
+class BinaryTreeDiameterSpec(unittest.TestCase):
+    def test_example(self):
+        """
+            1
+           / \
+          2   3
+         / \
+        4   5
+        """
+        n2 = TreeNode(2, TreeNode(4), TreeNode(5))
+        root = TreeNode(1, n2, TreeNode(3))
+        # 4, 2, 1, 3
+        self.assertEqual(3, binary_tree_diameter(root))  
+
+    def test_example2(self):
+        """
+          1
+         /
+        2
+        """
+        root = TreeNode(1, TreeNode(2))
+        self.assertEqual(1, binary_tree_diameter(root))
+
+    def test_example3(self):
+        """
+            1
+           / \
+          2   3
+         / \   \
+        4   5   6
+        """
+        left_tree = TreeNode(2, TreeNode(4), TreeNode(5))
+        right_tree = TreeNode(3, right=TreeNode(6))
+        root = TreeNode(1, left_tree, right_tree)
+        # 4, 2, 1, 3, 6
+        self.assertEqual(4, binary_tree_diameter(root))
+
+    def test_empty_tree(self):
+        self.assertIsNone(binary_tree_diameter(None))
+
+    def test_longest_path_start_from_root(self):
+        """
+        1
+         \
+          2
+         / 
+        3  
+       / \
+      5   4
+         /
+        6
+        """
+        n3 = TreeNode(3, TreeNode(5), TreeNode(4, TreeNode(6)))
+        n2 = TreeNode(2, n3)
+        root = TreeNode(1, right=n2)
+        # 1, 2, 3, 4, 6
+        self.assertEqual(4, binary_tree_diameter(root))
+
+    def test_longest_path_goes_through_root(self):
+        """
+            1
+           / \
+          2   3
+         /     \
+        4       5
+        """
+        left_tree = TreeNode(2, TreeNode(4))
+        right_tree = TreeNode(3, right=TreeNode(5))
+        root = TreeNode(1, left_tree, right_tree)
+        # 4, 2, 1, 3, 5
+        self.assertEqual(4, binary_tree_diameter(root))
+
+    def test_longest_path_not_through_root(self):
+        """
+         1
+        / \
+       2   3
+          / \
+         4   5
+        /   / \
+       6   7   8
+      /    \
+     9     10
+        """
+        right_left_tree = TreeNode(4, TreeNode(6, TreeNode(9)))
+        right_right_tree = TreeNode(5, TreeNode(7, right=TreeNode(10)), TreeNode(8))
+        right_tree = TreeNode(3, right_left_tree, right_right_tree)
+        root = TreeNode(1, TreeNode(2), right_tree)
+        # 10, 7, 5, 3, 4, 6, 9
+        self.assertEqual(6, binary_tree_diameter(root))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False, verbosity=2)
+```
+
 ### Dec 14, 2021  \[Medium\] Power of 4
 ---
 > **Questions:** Given a 32-bit positive integer N, determine whether it is a power of four in faster than `O(log N)` time.
