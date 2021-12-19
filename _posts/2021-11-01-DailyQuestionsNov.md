@@ -21,6 +21,33 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
 
+
+### Dec 18, 2021 LC 91 \[Medium\] Decode Ways
+---
+> **Question:** A message containing letters from `A-Z` is being encoded to numbers using the following mapping:
+>
+> ```py
+> 'A' -> 1
+> 'B' -> 2
+> ...
+> 'Z' -> 26
+> ```
+> Given an encoded message containing digits, determine the total number of ways to decode it.
+
+**Example 1:**
+```py
+Input: "12"
+Output: 2
+Explanation: It could be decoded as AB (1 2) or L (12).
+```
+
+**Example 2:**
+```py
+Input: "10"
+Output: 1
+```
+
+
 ### Dec 17, 2021 \[Hard\] Longest Path in Binary Tree
 ---
 > **Question:** Given a binary tree, return any of the longest path.
