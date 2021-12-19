@@ -47,6 +47,155 @@ Input:      1
 Output: [4, 2, 1, 3, 6] or [5, 2, 1, 3, 6] 
 ```
 
+**My thoughts:** We can BFS from any node `x` to find the farthest node `y`. Such `y` must be an end of the longest path. Then we can perform another BFS from `y` to find farthest node of `y` say `v`. That path `y-v` will be the longest path in a tree.
+
+**Solution with BFS:** [https://replit.com/@trsong/Longest-Path-in-Binary-Tree-1](https://replit.com/@trsong/Longest-Path-in-Binary-Tree-1)
+```py
+import unittest
+
+def find_longest_path(root):
+    if not root:
+        return []
+
+    parents = {}
+    farest_node = bfs_longest_path(root, parents)[0]
+    longest_path = bfs_longest_path(farest_node, parents)
+    return list(map(lambda node: node.val, longest_path))
+
+
+def bfs_longest_path(start, parents):
+    prev_nodes = {}
+    queue = [(start, None)]
+    last_node = start
+    while queue:
+        for _ in range(len(queue)):
+            cur, prev = queue.pop(0)
+            last_node = cur
+            parents[cur] = parents.get(cur, prev)
+                        
+            for next_node in [cur.right, cur.left, parents.get(cur)]:
+                if not next_node or next_node == prev:
+                    continue
+                queue.append((next_node, cur))
+                prev_nodes[next_node] = cur
+
+    res = []
+    while last_node:
+        res.append(last_node)
+        last_node = prev_nodes.get(last_node)
+    return res
+
+
+class TreeNode(object):
+    def __init__(self, val, left=None, right=None):
+        self.val = val
+        self.left = left
+        self.right = right
+
+
+class FindLongetPathSpec(unittest.TestCase):
+    def assert_result(self, possible_solutions, result):
+        reversed_solution = list(map(lambda path: path[::-1], possible_solutions))
+        solutions = possible_solutions + reversed_solution
+        self.assertIn(result, solutions, "\nIncorrect result: {}.\nPossible solutions:\n{}".format(str(result), "\n".join(map(str, solutions))))
+
+    def test_example(self):
+        """ 
+           1
+          / \
+         2   3
+        / \
+       4   5
+        """
+        root = TreeNode(1, TreeNode(2, TreeNode(4), TreeNode(5)), TreeNode(3))
+        possible_solutions = [
+            [4, 2, 1, 3],
+            [5, 2, 1, 3]
+        ]
+        self.assert_result(possible_solutions, find_longest_path(root))
+
+    def test_example2(self):
+        """
+            1
+           / \
+          2   3
+         / \   \
+        4   5   6
+        """
+        left_tree = TreeNode(2, TreeNode(4), TreeNode(5))
+        right_tree = TreeNode(3, right=TreeNode(6))
+        root = TreeNode(1, left_tree, right_tree)
+        possible_solutions = [
+            [4, 2, 1, 3, 6],
+            [5, 2, 1, 3, 6]
+        ]
+        self.assert_result(possible_solutions, find_longest_path(root))
+
+    def test_empty_tree(self):
+        self.assertEqual([], find_longest_path(None))
+
+    def test_longest_path_start_from_root(self):
+        """
+        1
+         \
+          2
+         / 
+        3  
+       / \
+      5   4
+         /
+        6
+        """
+        n3 = TreeNode(3, TreeNode(5), TreeNode(4, TreeNode(6)))
+        n2 = TreeNode(2, n3)
+        root = TreeNode(1, right=n2)
+        possible_solutions = [
+            [1, 2, 3, 4, 6]
+        ]
+        self.assert_result(possible_solutions, find_longest_path(root))
+
+    def test_longest_path_goes_through_root(self):
+        """
+            1
+           / \
+          2   3
+         /     \
+        4       5
+        """
+        left_tree = TreeNode(2, TreeNode(4))
+        right_tree = TreeNode(3, right=TreeNode(5))
+        root = TreeNode(1, left_tree, right_tree)
+        possible_solutions = [
+            [4, 2, 1, 3, 5]
+        ]
+        self.assert_result(possible_solutions, find_longest_path(root))
+
+    def test_longest_path_not_through_root(self):
+        """
+         1
+        / \
+       2   3
+          / \
+         4   5
+        /   / \
+       6   7   8
+      /    \
+     9     10
+        """
+        right_left_tree = TreeNode(4, TreeNode(6, TreeNode(9)))
+        right_right_tree = TreeNode(5, TreeNode(7, right=TreeNode(10)), TreeNode(8))
+        right_tree = TreeNode(3, right_left_tree, right_right_tree)
+        root = TreeNode(1, TreeNode(2), right_tree)
+        possible_solutions = [
+            [10, 7, 5, 3, 4, 6, 9]
+        ]
+        self.assert_result(possible_solutions, find_longest_path(root))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False, verbosity=2)
+```
+
 ### Dec 16, 2021 \[Medium\] All Max-size Subarrays with Distinct Elements
 ---
 > **Question:** Given an array of integers, print all maximum size sub-arrays having all distinct elements in them.
