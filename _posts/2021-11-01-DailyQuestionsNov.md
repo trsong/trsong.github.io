@@ -47,6 +47,82 @@ Input: "10"
 Output: 1
 ```
 
+**Solution with DP:** [https://replit.com/@trsong/Number-of-Decode-Ways-2](https://replit.com/@trsong/Number-of-Decode-Ways-2)
+```py
+import unittest
+
+def decode_ways(encoded_string):
+    if not encoded_string or encoded_string == '0':
+        return 0
+
+    n = len(encoded_string)
+    # Let dp[n] represents number of decode ways ended at length n i.e. s[:n]
+    # dp[n] = dp[n - 1] + dp[n - 2] if both last and last 2 digits are valid
+    # or    = dp[n - 1]             if only 1 digit is valid (1 ~ 9)
+    # or    = dp[n - 2]             if only 2 digits are valid (10 ~ 26)
+    dp = [0] * (n + 1)
+    dp[0] = 1
+    dp[1] = 1
+
+    ord_zero = ord('0')
+    for i in range(2, n + 1):
+        last_digit = ord(encoded_string[i - 1]) - ord_zero
+        second_last_digit = ord(encoded_string[i - 2]) - ord_zero
+        if last_digit > 0:
+            dp[i] += dp[i - 1]
+        
+        if 10 <= 10 * second_last_digit + last_digit <= 26:
+            dp[i] += dp[i - 2]
+    return dp[n]
+
+
+class DecodeWaySpec(unittest.TestCase):
+    def test_empty_string(self):
+        self.assertEqual(0, decode_ways(""))
+
+    def test_invalid_string(self):
+        self.assertEqual(0, decode_ways("0"))
+
+    def test_length_one_string(self):
+        self.assertEqual(1, decode_ways("2"))
+
+    def test_length_one_string2(self):
+        self.assertEqual(1, decode_ways("9"))
+
+    def test_length_two_string(self):
+        self.assertEqual(1, decode_ways("20"))  # 20
+
+    def test_length_two_string2(self):
+        self.assertEqual(2, decode_ways("19"))  # 1,9 and 19
+
+    def test_length_three_string(self):
+        self.assertEqual(3, decode_ways("121"))  # 1, 20 and 12, 0
+
+    def test_length_three_string2(self):
+        self.assertEqual(1, decode_ways("120"))  # 1, 20
+
+    def test_length_three_string3(self):
+        self.assertEqual(1, decode_ways("209"))  # 20, 9
+
+    def test_length_three_string4(self):
+        self.assertEqual(2, decode_ways("912"))  # 9,1,2 and 9,12
+
+    def test_length_three_string5(self):
+        self.assertEqual(2, decode_ways("231"))  # 2,3,1 and 23, 1
+
+    def test_length_three_string6(self):
+        self.assertEqual(3, decode_ways("123"))  # 1,2,3, and 1, 23 and 12, 3
+
+    def test_length_four_string(self):
+        self.assertEqual(3, decode_ways("1234"))
+
+    def test_length_four_string2(self):
+        self.assertEqual(5, decode_ways("1111"))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False, verbosity=2)
+```
 
 ### Dec 17, 2021 \[Hard\] Longest Path in Binary Tree
 ---
