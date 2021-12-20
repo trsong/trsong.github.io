@@ -22,6 +22,13 @@ categories: Python/Java
 
 
 
+### Dec 20, 2021 \[Medium\] Rearrange String with Repeated Characters
+---
+> **Question:** Given a string with repeated characters, rearrange the string so that no two adjacent characters are the same. If this is not possible, return None.
+>
+> For example, given `"aaabbc"`, you could return `"ababac"`. Given `"aaab"`, return `None`.
+
+
 ### Dec 19, 2021  \[Medium\] Satisfactory Playlist
 ---
 > **Question:** You have access to ranked lists of songs for various users. Each song is represented as an integer, and more preferred songs appear earlier in each list. For example, the list `[4, 1, 7]` indicates that a user likes song `4` the best, followed by songs `1` and `7`.
