@@ -678,7 +678,7 @@ Suppose the dictionary contains: `01234`. Then the words can be `023, 024, 12, 1
 
 With relative relation, we can build a graph with each occurring letters being veteces and edge `(u, v)` represents `u < v`. If there exists a loop that means we have something like `a < b < c < a` and total order not exists. Otherwise we preform a topological sort to generate the total order which reveals the alien dictionary. 
 
-As for implementation of topological sort, there are two ways, one is the following by constantly removing edges from visited nodes. The other is to [first DFS to find the reverse topological order then reverse again to find the result](https://trsong.github.io/python/java/2019/11/02/DailyQuestionsNov/#nov-9-2019-hard-order-of-alien-dictionary). 
+As for implementation of topological sort, there are two ways, one is the following by constantly removing edges from visited nodes. The other is to [first DFS to find the reverse topological order then reverse again to find the result](https://trsong.github.io/python/java/2019/11/02/DailyQuestionsNov.html#nov-9-2019-hard-order-of-alien-dictionary). 
 
 
 **Solution with Topological Sort (Remove Edge)::** [https://repl.it/@trsong/Alien-Dictionary-Order](https://repl.it/@trsong/Alien-Dictionary-Order)
@@ -4132,7 +4132,7 @@ is_bipartite(vertices=3, edges=[(0, 1), (1, 2), (2, 0)])  # returns False
 is_bipartite(vertices=2, edges=[(0, 1), (1, 0)])  # returns True. U = {0}. V = {1}. 
 ```
 
-**My thoughts:** A graph is a bipartite if we can just use 2 colors to cover entire graph so that every other node have same color. Like this [solution with DFS](https://trsong.github.io/python/java/2020/02/02/DailyQuestionsFeb/#apr-15-2020-medium-is-bipartite). Or the following way with union-find. For each node `u`, just union all of its neihbors. And at the same time, `u` should not be connectted with any of its neihbor.
+**My thoughts:** A graph is a bipartite if we can just use 2 colors to cover entire graph so that every other node have same color. Like this [solution with DFS](https://trsong.github.io/python/java/2020/02/02/DailyQuestionsFeb.html#apr-15-2020-medium-is-bipartite). Or the following way with union-find. For each node `u`, just union all of its neihbors. And at the same time, `u` should not be connectted with any of its neihbor.
 
 **Solution with Union-Find (DisjointSet):** [https://repl.it/@trsong/Is-a-Graph-Bipartite](https://repl.it/@trsong/Is-a-Graph-Bipartite)
 ```py
@@ -5763,7 +5763,7 @@ Input: s = "catsandog", wordDict = ["cats", "dog", "sand", "and", "cat"]
 Output: False
 ```
 
-**My thoughts:** This question feels almost the same as [LC 279 Minimum Number of Squares Sum to N](https://trsong.github.io/python/java/2019/08/02/DailyQuestionsAug/#sep-22-2019-lc-279-medium-minimum-number-of-squares-sum-to-n). The idea is to think about the problem backwards and you may want to ask yourself: what makes `s[:n]` to be `True`? There must exist some word with length `m` where `m < n` such that `s[:n-m]` is `True` and string `s[n-m:n]` is in the dictionary. Therefore, the problem size shrinks from `n` to  `m` and it will go all the way to empty string which definitely is `True`.
+**My thoughts:** This question feels almost the same as [LC 279 Minimum Number of Squares Sum to N](https://trsong.github.io/python/java/2019/08/02/DailyQuestionsAug.html#sep-22-2019-lc-279-medium-minimum-number-of-squares-sum-to-n). The idea is to think about the problem backwards and you may want to ask yourself: what makes `s[:n]` to be `True`? There must exist some word with length `m` where `m < n` such that `s[:n-m]` is `True` and string `s[n-m:n]` is in the dictionary. Therefore, the problem size shrinks from `n` to  `m` and it will go all the way to empty string which definitely is `True`.
 
 **Solution with DP:** [https://repl.it/@trsong/Word-Break-Problem](https://repl.it/@trsong/Word-Break-Problem)
 ```py
@@ -7268,7 +7268,7 @@ Input: 1 -> 2 -> 3 -> -3 -> -2
 Output: 1
 ```
 
-**My thoughts:** This question is just the list version of [Contiguous Sum to K](https://trsong.github.io/python/java/2019/05/01/DailyQuestions/#jul-24-2019-medium-contiguous-sum-to-k). The idea is exactly the same, in previous question: `sum[i:j]` can be achieved use `prefix[j] - prefix[i-1] where i <= j`, whereas for this question, we can use map to store the "prefix" sum: the sum from the head node all the way to current node. And by checking the prefix so far, we can easily tell if there is a node we should have seen before that has "prefix" sum with same value. i.e. There are consecutive nodes that sum to 0 between these two nodes.
+**My thoughts:** This question is just the list version of [Contiguous Sum to K](https://trsong.github.io/python/java/2019/05/01/DailyQuestions.html#jul-24-2019-medium-contiguous-sum-to-k). The idea is exactly the same, in previous question: `sum[i:j]` can be achieved use `prefix[j] - prefix[i-1] where i <= j`, whereas for this question, we can use map to store the "prefix" sum: the sum from the head node all the way to current node. And by checking the prefix so far, we can easily tell if there is a node we should have seen before that has "prefix" sum with same value. i.e. There are consecutive nodes that sum to 0 between these two nodes.
 
 
 **Solution:** [https://repl.it/@trsong/Remove-Consecutive-Nodes-that-Sum-to-Zero](https://repl.it/@trsong/Remove-Consecutive-Nodes-that-Sum-to-Zero)
@@ -8506,7 +8506,7 @@ if __name__ == '__main__':
 >
 > **Follow-up:** If you can preprocess the array, can you do this in constant time?
 
-**Thoughts:** The logical is exactly the same as [**find next largest number on the right**](https://trsong.github.io/python/java/2020/05/02/DailyQuestionsMay/#jul-17-2020-medium-index-of-larger-next-number) except we have to compare next largest number from both left and right for this question.
+**Thoughts:** The logical is exactly the same as [**find next largest number on the right**](https://trsong.github.io/python/java/2020/05/02/DailyQuestionsMay.html#jul-17-2020-medium-index-of-larger-next-number) except we have to compare next largest number from both left and right for this question.
 
 **Solution with Stack:** [https://repl.it/@trsong/Nearest-Larger-Number](https://repl.it/@trsong/Nearest-Larger-Number)
 ```py

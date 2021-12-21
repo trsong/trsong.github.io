@@ -714,7 +714,7 @@ if __name__ == '__main__':
 >
 > For example, suppose you are given the input `3 -> 4 -> -7 -> 5 -> -6 -> 6`. In this case, you should first remove `3 -> 4 -> -7`, then `-6 -> 6`, leaving only `5`.
 
-**My thoughts:** This question is just the list version of [Contiguous Sum to K](https://trsong.github.io/python/java/2019/05/01/DailyQuestions/#jul-24-2019-medium-contiguous-sum-to-k). The idea is exactly the same, in previous question: `sum[i:j]` can be achieved use `prefix[j] - prefix[i-1] where i <= j`, whereas for this question, we can use map to store the "prefix" sum: the sum from the head node all the way to current node. And by checking the prefix so far, we can easily tell if there is a node we should have seen before that has "prefix" sum with same value. i.e. There are consecutive nodes that sum to 0 between these two nodes.
+**My thoughts:** This question is just the list version of [Contiguous Sum to K](https://trsong.github.io/python/java/2019/05/01/DailyQuestions.html#jul-24-2019-medium-contiguous-sum-to-k). The idea is exactly the same, in previous question: `sum[i:j]` can be achieved use `prefix[j] - prefix[i-1] where i <= j`, whereas for this question, we can use map to store the "prefix" sum: the sum from the head node all the way to current node. And by checking the prefix so far, we can easily tell if there is a node we should have seen before that has "prefix" sum with same value. i.e. There are consecutive nodes that sum to 0 between these two nodes.
 
 **Solution with Prefix Sum:** [https://repl.it/@trsong/Remove-List-Nodes-Sum-to-Zero](https://repl.it/@trsong/Remove-List-Nodes-Sum-to-Zero)
 ```py
@@ -4759,7 +4759,7 @@ Input: vertices = 5, edges = [[0, 1], [0, 2], [1, 2], [0, 3], [3, 4]]
 Output: [0, 3]
 ```
 
-**My thoughts:** In yesterday's question [Dec 16, 2019 Bridges in a Graph](https://trsong.github.io/python/java/2019/11/02/DailyQuestionsNov/#dec-16-2019-hard-bridges-in-a-graph), we have already discussed how to find bridges in an undirected connected graph. 
+**My thoughts:** In yesterday's question [Dec 16, 2019 Bridges in a Graph](https://trsong.github.io/python/java/2019/11/02/DailyQuestionsNov.html#dec-16-2019-hard-bridges-in-a-graph), we have already discussed how to find bridges in an undirected connected graph. 
 
 So basically, a bridge is an edge without which the graph will cease to be connected. Recall that the way to detect if an edge `(u, v)` is a bridge is to find if there is alternative path from v to u without going through `(u, v)`. Record time stamp of discover time as well as earliest discover time among all ancestor will do the trick. 
 
@@ -7941,7 +7941,7 @@ if __name__ == '__main__':
 > 
 > Given an undirected graph with weighted edges, compute the maximum weight spanning tree.
 
-**My thoughts:** Both Kruskal's and Prim's Algorithm works for this question. The idea is to flip all edge weight into negative and then apply either of previous algorithm until find a spanning tree. Check [this question](https://trsong.github.io/python/java/2019/05/01/DailyQuestions/#jul-6-2019-hard-power-supply-to-all-cities) for solution with Kruskal's Algorithm.
+**My thoughts:** Both Kruskal's and Prim's Algorithm works for this question. The idea is to flip all edge weight into negative and then apply either of previous algorithm until find a spanning tree. Check [this question](https://trsong.github.io/python/java/2019/05/01/DailyQuestions.html#jul-6-2019-hard-power-supply-to-all-cities) for solution with Kruskal's Algorithm.
 
 **Solution with Prim's Algorithm:** [https://repl.it/@trsong/Maximum-Spanning-Tree](https://repl.it/@trsong/Maximum-Spanning-Tree)
 ```py
@@ -9067,7 +9067,7 @@ Input: abbccc
 Output: cbcbca
 ```
 
-**My thougths:** This problem is basically ["LC 358 Rearrange String K Distance Apart"](https://trsong.github.io/python/java/2019/08/02/DailyQuestionsAug/#aug-24-2019-lc-358-hard-rearrange-string-k-distance-apart) with `k = 2`. The idea is to apply greedy approach, with a window of 2, choose the safest two remaining charactors until either all characters are picked, or just mulitple copy of one character left.
+**My thougths:** This problem is basically ["LC 358 Rearrange String K Distance Apart"](https://trsong.github.io/python/java/2019/08/02/DailyQuestionsAug.html#aug-24-2019-lc-358-hard-rearrange-string-k-distance-apart) with `k = 2`. The idea is to apply greedy approach, with a window of 2, choose the safest two remaining charactors until either all characters are picked, or just mulitple copy of one character left.
 
 For example, for input string: `"aaaabc"`
 1. Pick `a`, `b`. Remaining `"aaac"`. Result: `"ab"`

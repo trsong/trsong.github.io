@@ -1275,7 +1275,7 @@ if __name__ == '__main__':
 > For example, given `"aaabbc"`, you could return `"ababac"`. Given `"aaab"`, return `None`.
 
 
-**My thoughts:** This prblem is a special case of [Rearrange String K Distance Apart](https://trsong.github.io/python/java/2020/08/02/DailyQuestionsAug/#sep-11-2020-lc-358-hard-rearrange-string-k-distance-apart). Just Greedily choose the character with max remaining number for each window size 2. If no such character satisfy return None instead.
+**My thoughts:** This prblem is a special case of [Rearrange String K Distance Apart](https://trsong.github.io/python/java/2020/08/02/DailyQuestionsAug.html#sep-11-2020-lc-358-hard-rearrange-string-k-distance-apart). Just Greedily choose the character with max remaining number for each window size 2. If no such character satisfy return None instead.
 
 **Solution with Max Heap:** [https://replit.com/@trsong/Rearrange-String-with-Repeated-Characters-2](https://replit.com/@trsong/Rearrange-String-with-Repeated-Characters-2)
 ```py
@@ -9503,7 +9503,7 @@ Output: 3
 Explanation: Because of the strictly descending order you have to split it into 3 subsequences: [1], [1], [1]
 ```
 
-**My thoughts:** This question is equivalent to [Longest Increasing Subsequence](https://trsong.github.io/python/java/2020/05/02/DailyQuestionsMay/#june-19-2020-lc-300-hard-the-longest-increasing-subsequence). Can be solved with greedy approach.
+**My thoughts:** This question is equivalent to [Longest Increasing Subsequence](https://trsong.github.io/python/java/2020/05/02/DailyQuestionsMay.html#june-19-2020-lc-300-hard-the-longest-increasing-subsequence). Can be solved with greedy approach.
 
 Imagine we are to create a list of stacks each in descending order (stack top is smallest). And those stacks are sorted by each stack's top element. 
 

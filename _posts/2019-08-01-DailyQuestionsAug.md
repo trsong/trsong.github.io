@@ -3288,7 +3288,7 @@ Input: 1 -> 2 -> 3 -> -3 -> -2
 Output: 1
 ```
 
-**My thoughts:** This question is just the list version of [Contiguous Sum to K](https://trsong.github.io/python/java/2019/05/01/DailyQuestions/#jul-24-2019-medium-contiguous-sum-to-k). The idea is exactly the same, in previous question: `sum[i:j]` can be achieved use `prefix[j] - prefix[i-1] where i <= j`, whereas for this question, we can use map to store the "prefix" sum: the sum from the head node all the way to current node. And by checking the prefix so far, we can easily tell if there is a node we should have seen before that has "prefix" sum with same value. i.e. There are consecutive nodes that sum to 0 between these two nodes.
+**My thoughts:** This question is just the list version of [Contiguous Sum to K](https://trsong.github.io/python/java/2019/05/01/DailyQuestions.html#jul-24-2019-medium-contiguous-sum-to-k). The idea is exactly the same, in previous question: `sum[i:j]` can be achieved use `prefix[j] - prefix[i-1] where i <= j`, whereas for this question, we can use map to store the "prefix" sum: the sum from the head node all the way to current node. And by checking the prefix so far, we can easily tell if there is a node we should have seen before that has "prefix" sum with same value. i.e. There are consecutive nodes that sum to 0 between these two nodes.
 
 **Solution:** [https://repl.it/@trsong/Remove-Consecutive-Nodes-that-Sum-to-0](https://repl.it/@trsong/Remove-Consecutive-Nodes-that-Sum-to-0)
 ```py
@@ -3407,7 +3407,7 @@ Input: s = "catsandog", wordDict = ["cats", "dog", "sand", "and", "cat"]
 Output: False
 ```
 
-**My thoughts:** This question feels almost the same as [LC 279 Minimum Number of Squares Sum to N](https://trsong.github.io/python/java/2019/08/02/DailyQuestionsAug/#sep-22-2019-lc-279-medium-minimum-number-of-squares-sum-to-n). The idea is to think about the problem backwards and you may want to ask yourself: what makes `s[:n]` to be `True`? There must exist some word with length `m` where `m < n` such that `s[:n-m]` is `True` and string `s[n-m:n]` is in the dictionary. Therefore, the problem size shrinks from `n` to  `m` and it will go all the way to empty string which definitely is `True`.
+**My thoughts:** This question feels almost the same as [LC 279 Minimum Number of Squares Sum to N](https://trsong.github.io/python/java/2019/08/02/DailyQuestionsAug.html#sep-22-2019-lc-279-medium-minimum-number-of-squares-sum-to-n). The idea is to think about the problem backwards and you may want to ask yourself: what makes `s[:n]` to be `True`? There must exist some word with length `m` where `m < n` such that `s[:n-m]` is `True` and string `s[n-m:n]` is in the dictionary. Therefore, the problem size shrinks from `n` to  `m` and it will go all the way to empty string which definitely is `True`.
 
 **Solution with DP:** [https://repl.it/@trsong/Word-Break](https://repl.it/@trsong/Word-Break)
 ```py
@@ -5342,7 +5342,7 @@ Output: 11
 Explanation: i = 0, j = 2, A[i] + A[j] + i - j = 8 + 5 + 0 - 2 = 11
 ```
 
-**My thoughts:** You probably don't even notice, but the problem already presents a hint in the question. So to say, `A[i] + A[j] - (j - i) = A[i] + A[j] + i - j`, if we re-arrange the terms even further, we can get `(A[i] + i) + (A[j] - j)`. Remember we want to maximize `(A[i] + i) + (A[j] - j)`. Notice that when we iterate throught the list along the way, before process `A[j]` we should've seen `A[i]` and `i` already. Thus we can store the max of `(A[i] + i)` so far and plus `(A[j] - j)` to get max along the way. This question is just a variant of selling stock problem. [https://trsong.github.io/python/java/2019/05/01/DailyQuestions/#june-4-2019-easy-sell-stock](https://trsong.github.io/python/java/2019/05/01/DailyQuestions/#june-4-2019-easy-sell-stock)
+**My thoughts:** You probably don't even notice, but the problem already presents a hint in the question. So to say, `A[i] + A[j] - (j - i) = A[i] + A[j] + i - j`, if we re-arrange the terms even further, we can get `(A[i] + i) + (A[j] - j)`. Remember we want to maximize `(A[i] + i) + (A[j] - j)`. Notice that when we iterate throught the list along the way, before process `A[j]` we should've seen `A[i]` and `i` already. Thus we can store the max of `(A[i] + i)` so far and plus `(A[j] - j)` to get max along the way. This question is just a variant of selling stock problem. [https://trsong.github.io/python/java/2019/05/01/DailyQuestions.html#june-4-2019-easy-sell-stock](https://trsong.github.io/python/java/2019/05/01/DailyQuestions.html#june-4-2019-easy-sell-stock)
 
 **Solution:** [https://repl.it/@trsong/Best-Sightseeing-Pair](https://repl.it/@trsong/Best-Sightseeing-Pair)
 ```py

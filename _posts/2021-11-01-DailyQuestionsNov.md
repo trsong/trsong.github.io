@@ -57,6 +57,84 @@ The fifth 2 is not used, while the first four 2's are used.
 >
 > For example, given `"aaabbc"`, you could return `"ababac"`. Given `"aaab"`, return `None`.
 
+**My thoughts:** This prblem is a special case of [Rearrange String K Distance Apart](https://trsong.github.io/python/java/2020/08/02/DailyQuestionsAug.html#sep-11-2020-lc-358-hard-rearrange-string-k-distance-apart). Just Greedily choose the character with max remaining number for each window size 2. If no such character satisfy return None instead.
+
+**Solution with Max-Heap:** [https://replit.com/@trsong/Rearrange-String-with-Repeated-Characters-3](https://replit.com/@trsong/Rearrange-String-with-Repeated-Characters-3)
+```py
+import unittest
+from Queue import PriorityQueue
+
+def rearrange_string(s):
+    char_freq = {}
+    for ch in s:
+        char_freq[ch] = char_freq.get(ch, 0) + 1
+
+    max_heap = PriorityQueue()
+    for ch, freq in char_freq.items():
+        max_heap.put((-freq, ch))
+
+    res = []
+    while not max_heap.empty():
+        remaining = []
+        for _ in range(2):
+            if max_heap.empty() and not remaining:
+                break
+            if max_heap.empty():
+                return None
+            
+            neg_freq, ch = max_heap.get()
+            if abs(neg_freq) > 1:
+                remaining.append((abs(neg_freq) - 1, ch))
+            res.append(ch)
+        
+        for freq, ch in remaining:
+            max_heap.put((-freq, ch))
+    return ''.join(res)
+
+
+class RearrangeStringSpec(unittest.TestCase):
+    def assert_result(self, original):
+        res = rearrange_string(original)
+        self.assertEqual(sorted(original), sorted(res))
+        for i in xrange(1, len(res)):
+            self.assertNotEqual(res[i], res[i-1])
+
+    def test_example1(self):
+        # possible solution: ababac
+        self.assert_result("aaabbc")
+    
+    def test_example2(self):
+        self.assertIsNone(rearrange_string("aaab"))
+    
+    def test_example3(self):
+        # possible solution: ababacdc
+        self.assert_result("aaadbbcc")
+    
+    def test_unable_to_rearrange(self):
+        self.assertIsNone(rearrange_string("aaaaaaaaa"))
+    
+    def test_unable_to_rearrange2(self):
+        self.assertIsNone(rearrange_string("121211"))
+
+    def test_empty_input_string(self):
+        self.assert_result("")
+    
+    def test_possible_to_arrange(self):
+        # possible solution: ababababab
+        self.assert_result("aaaaabbbbb")
+    
+    def test_possible_to_arrange2(self):
+        # possible solution: 1213141
+        self.assert_result("1111234")
+    
+    def test_possible_to_arrange3(self):
+        # possible solution: 1212
+        self.assert_result("1122")
+    
+
+if __name__ == '__main__':
+    unittest.main(verbosity=2, exit=False)
+```
 
 ### Dec 19, 2021  \[Medium\] Satisfactory Playlist
 ---
@@ -838,7 +916,7 @@ Output: 3
 Explanation: Because of the strictly descending order you have to split it into 3 subsequences: [1], [1], [1]
 ```
 
-**My thoughts:** This question is equivalent to [Longest Increasing Subsequence](https://trsong.github.io/python/java/2020/05/02/DailyQuestionsMay/#june-19-2020-lc-300-hard-the-longest-increasing-subsequence). Can be solved with greedy approach.
+**My thoughts:** This question is equivalent to [Longest Increasing Subsequence](https://trsong.github.io/python/java/2020/05/02/DailyQuestionsMay.html#june-19-2020-lc-300-hard-the-longest-increasing-subsequence). Can be solved with greedy approach.
 
 Imagine we are to create a list of stacks each in descending order (stack top is smallest). And those stacks are sorted by each stack's top element. 
 

@@ -3795,7 +3795,7 @@ if __name__ == '__main__':
 >
 > For example, if `s = yyz` then return `yzy`. If `s = yyy` then return `None`.
 
-**My thougths:** This problem is basically ["LC 358 Rearrange String K Distance Apart"](https://trsong.github.io/python/java/2019/08/02/DailyQuestionsAug/#aug-24-2019-lc-358-hard-rearrange-string-k-distance-apart) with `k = 2`. The idea is to apply greedy approach, with a window of 2, choose the safest two remaining charactors until either all characters are picked, or just mulitple copy of one character left.
+**My thougths:** This problem is basically ["LC 358 Rearrange String K Distance Apart"](https://trsong.github.io/python/java/2019/08/02/DailyQuestionsAug.html#aug-24-2019-lc-358-hard-rearrange-string-k-distance-apart) with `k = 2`. The idea is to apply greedy approach, with a window of 2, choose the safest two remaining charactors until either all characters are picked, or just mulitple copy of one character left.
 
 For example, for input string: `"aaaabc"`
 1. Pick `a`, `b`. Remaining `"aaac"`. Result: `"ab"`
@@ -4070,11 +4070,11 @@ Explanation: dog => dog
              z   => zebra 
 ```
 
-**My thoughts:** Most string prefix searching problem can be solved using Trie (Prefix Tree). Trie Solution can be found here: [https://trsong.github.io/python/java/2019/11/02/DailyQuestionsNov/#jan-25-2020-medium-shortest-unique-prefix](https://trsong.github.io/python/java/2019/11/02/DailyQuestionsNov/#jan-25-2020-medium-shortest-unique-prefix). 
+**My thoughts:** Most string prefix searching problem can be solved using Trie (Prefix Tree). Trie Solution can be found here: [https://trsong.github.io/python/java/2019/11/02/DailyQuestionsNov.html#jan-25-2020-medium-shortest-unique-prefix](https://trsong.github.io/python/java/2019/11/02/DailyQuestionsNov.html#jan-25-2020-medium-shortest-unique-prefix). 
 
 However, trie can use a lot of memory. A more memory efficient data structure is Ternary Search Tree. 
 
-For example, the TST for given example looks like the following, note by natural of TST only middle child count as prefix. Check previous day's question for TST: [https://trsong.github.io/python/java/2020/02/02/DailyQuestionsFeb/#mar-26-2020-easy-ternary-search-tree](https://trsong.github.io/python/java/2020/02/02/DailyQuestionsFeb/#mar-26-2020-easy-ternary-search-tree)
+For example, the TST for given example looks like the following, note by natural of TST only middle child count as prefix. Check previous day's question for TST: [https://trsong.github.io/python/java/2020/02/02/DailyQuestionsFeb.html#mar-26-2020-easy-ternary-search-tree](https://trsong.github.io/python/java/2020/02/02/DailyQuestionsFeb.html#mar-26-2020-easy-ternary-search-tree)
 ```py
          z 
  /       | 
@@ -8967,7 +8967,7 @@ shortest_dist('helloworld', 'l')
 # returns [2, 1, 0, 0, 1, 2, 2, 1, 0, 1]
 ```
 
-**My thoughts:** The idea is similar to Problem ["LC 42 Trap Rain Water"](https://trsong.github.io/python/java/2019/05/01/DailyQuestions/#may-11-2019-lc-42-hard-trapping-rain-water): we can simply scan from left to know the shortest distance from nearest character on the left and vice versa when we can from right to left.  
+**My thoughts:** The idea is similar to Problem ["LC 42 Trap Rain Water"](https://trsong.github.io/python/java/2019/05/01/DailyQuestions.html#may-11-2019-lc-42-hard-trapping-rain-water): we can simply scan from left to know the shortest distance from nearest character on the left and vice versa when we can from right to left.  
 
 **Solution:** [https://repl.it/@trsong/Shortest-Distance-to-Character](https://repl.it/@trsong/Shortest-Distance-to-Character)
 ```py
@@ -9723,7 +9723,7 @@ students = {
 }
 ```
 
-**My thoughts:** This question is basically checking if the graph is a bipartite. In previous question I used BFS by color every other nodes. [https://trsong.github.io/python/java/2019/08/02/DailyQuestionsAug/#oct-21-2019-medium-is-bipartite](https://trsong.github.io/python/java/2019/08/02/DailyQuestionsAug/#oct-21-2019-medium-is-bipartite). 
+**My thoughts:** This question is basically checking if the graph is a bipartite. In previous question I used BFS by color every other nodes. [https://trsong.github.io/python/java/2019/08/02/DailyQuestionsAug.html#oct-21-2019-medium-is-bipartite](https://trsong.github.io/python/java/2019/08/02/DailyQuestionsAug.html#oct-21-2019-medium-is-bipartite). 
 
 But in this question, I'd like to use something different like use union-find to check if a graph is a bipartite. The idea is based on "The enemy of my enemy is my friend". So for any student, its enemies should be friends ie. connected by union-find. If for any reason, one become a friend of enemy, then we cannot have a bipartite.
 

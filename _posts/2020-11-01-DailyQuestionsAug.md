@@ -5421,7 +5421,7 @@ if __name__ == '__main__':
 >
 > For example, given `"aaabbc"`, you could return `"ababac"`. Given `"aaab"`, return `None`.
 
-**My thoughts:** This prblem is a special case of [Rearrange String K Distance Apart](https://trsong.github.io/python/java/2020/08/02/DailyQuestionsAug/#sep-11-2020-lc-358-hard-rearrange-string-k-distance-apart). Just Greedily choose the character with max remaining number for each window size 2. If no such character satisfy return None instead.
+**My thoughts:** This prblem is a special case of [Rearrange String K Distance Apart](https://trsong.github.io/python/java/2020/08/02/DailyQuestionsAug.html#sep-11-2020-lc-358-hard-rearrange-string-k-distance-apart). Just Greedily choose the character with max remaining number for each window size 2. If no such character satisfy return None instead.
 
 **Solution with Greedy Algorithm:** [https://repl.it/@trsong/Rearrange-String-with-Repeated-Characters](https://repl.it/@trsong/Rearrange-String-with-Repeated-Characters)
 ```py
