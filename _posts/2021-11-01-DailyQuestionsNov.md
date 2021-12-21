@@ -22,6 +22,35 @@ categories: Python/Java
 
 
 
+### Dec 21, 2021 \[Medium\] Max Number of Equal Sum Pairs
+---
+> **Question:** You are given an array of integers. Your task is to create pairs of them, such that every created pair has the same sum. This sum is NOT specified, but the number of created pairs should be the maximum possible. Each array element may belong to one pair only. 
+> 
+> Write a function: `public int solution(int[] A)` that given an array A of N integers, returns the maximum possible number of pairs with the same sum.
+
+**Example 1:**
+```py
+Input: A = [1, 9, 8, 100, 2]
+Return: 2
+Explanation: the pairs are [1, 9] and [8, 2] for a sum of 10
+```
+
+**Example 2:**
+```py
+Input: A = [2, 2, 2, 3]
+Return: 1
+Explanation: [2, 2] (sum 4) OR [2, 3] (sum 5). 
+Notice we can only form sum 4 once since there is overlap between the elements
+```
+
+**Example 3:**
+```py
+Input: A = [2, 2, 2, 2, 2]
+Return: 2 
+Explanation: [2, 2] and [2, 2] for a sum for 4. 
+The fifth 2 is not used, while the first four 2's are used.
+```
+
 ### Dec 20, 2021 \[Medium\] Rearrange String with Repeated Characters
 ---
 > **Question:** Given a string with repeated characters, rearrange the string so that no two adjacent characters are the same. If this is not possible, return None.
