@@ -7154,6 +7154,48 @@ Explanation: A -> B -> idle -> A -> B -> idle -> A -> B.
 <details>
 <summary class="lc_m">
 
+- [**\[Medium\] Max Number of Equal Sum Pairs**](https://trsong.github.io/python/java/2021/11/02/DailyQuestionsNov.html#dec-21-2021-medium-max-number-of-equal-sum-pairs) -- *Given an array A of N integers, returns the maximum possible number of pairs with the same sum.* [*\(Try ME\)*](https://replit.com/@trsong/Max-Number-of-Equal-Sum-Pairs-1)
+
+</summary>
+<div>
+
+
+**Question:** You are given an array of integers. Your task is to create pairs of them, such that every created pair has the same sum. This sum is NOT specified, but the number of created pairs should be the maximum possible. Each array element may belong to one pair only. 
+
+Write a function: `public int solution(int[] A)` that given an array A of N integers, returns the maximum possible number of pairs with the same sum.
+
+**Example 1:**
+```py
+Input: A = [1, 9, 8, 100, 2]
+Return: 2
+Explanation: the pairs are [1, 9] and [8, 2] for a sum of 10
+```
+
+**Example 2:**
+```py
+Input: A = [2, 2, 2, 3]
+Return: 1
+Explanation: [2, 2] (sum 4) OR [2, 3] (sum 5). 
+Notice we can only form sum 4 once since there is overlap between the elements
+```
+
+**Example 3:**
+```py
+Input: A = [2, 2, 2, 2, 2]
+Return: 2 
+Explanation: [2, 2] and [2, 2] for a sum for 4. 
+The fifth 2 is not used, while the first four 2's are used.
+```
+
+
+</div>
+</details>
+
+
+
+<details>
+<summary class="lc_m">
+
 - [**\[Medium\] LC 525. Largest Subarray with Equal Number of 0s and 1s**](https://trsong.github.io/python/java/2021/11/02/DailyQuestionsNov.html#nov-2-2021-lc-525-medium-largest-subarray-with-equal-number-of-0s-and-1s) -- *Given an array containing only 0s and 1s, find the largest subarray which contain equal number of 0s and 1s.* [*\(Try ME\)*](https://replit.com/@trsong/Find-Largest-Subarray-with-Equal-Number-of-0s-and-1s-1)
 
 </summary>

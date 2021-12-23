@@ -51,6 +51,73 @@ Explanation: [2, 2] and [2, 2] for a sum for 4.
 The fifth 2 is not used, while the first four 2's are used.
 ```
 
+**Solution:** [https://replit.com/@trsong/Max-Number-of-Equal-Sum-Pairs](https://replit.com/@trsong/Max-Number-of-Equal-Sum-Pairs)
+```py
+import unittest
+
+def max_equal_sum_pairs(nums):
+    histogram = {}
+    for num in nums:
+        histogram[num] = histogram.get(num, 0) + 1
+
+    sum_histogram = {}
+    uniq_nums = list(histogram.keys())
+    for i, num1 in enumerate(uniq_nums):
+        for j in range(i + 1):
+            num2 = uniq_nums[j]
+            pair_sum = num1 + num2
+            count = histogram[num1] // 2 if i == j else min(
+                histogram[num1], histogram[num2])
+            sum_histogram[pair_sum] = sum_histogram.get(pair_sum, 0) + count
+    return max(sum_histogram.values())
+
+
+class MaxEqualSumPairSpec(unittest.TestCase):
+    def test_example(self):
+        nums = [1, 9, 8, 100, 2]
+        expected = 2  # [1, 9] and [8, 2]
+        self.assertEqual(expected, max_equal_sum_pairs(nums))
+
+    def test_example2(self):
+        nums = [2, 2, 2, 3]
+        expected = 1  # [2, 2]
+        self.assertEqual(expected, max_equal_sum_pairs(nums))
+
+    def test_example3(self):
+        nums = [2, 2, 2, 2, 2]
+        expected = 2  # [2, 2] and [2, 2]
+        self.assertEqual(expected, max_equal_sum_pairs(nums))
+
+    def test_element_equals_target(self):
+        nums = [1, 2, 4, 3, 3, 5, 6]
+        expected = 3  # [1, 5], [2, 4] and [3, 3]
+        self.assertEqual(expected, max_equal_sum_pairs(nums))
+
+    def test_unique_values(self):
+        nums = [1, 1]
+        expected = 1  # [1, 1]
+        self.assertEqual(expected, max_equal_sum_pairs(nums))
+
+    def test_unique_values2(self):
+        nums = [1, 1, 1, 1, 1, 1, 1, 1]
+        expected = 4  # [1, 1], [1, 1], [1, 1] and [1, 1]
+        self.assertEqual(expected, max_equal_sum_pairs(nums))
+
+    def test_different_values(self):
+        nums = [1, 2]
+        expected = 1  # [1, 2]
+        self.assertEqual(expected, max_equal_sum_pairs(nums))
+
+    def test_element_can_only_be_picked_once(self):
+        nums = [1, 2, 3, 4, 5]
+        expected = 2  # [1, 5] and [2, 4]
+        self.assertEqual(expected, max_equal_sum_pairs(nums))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False, verbosity=2)
+```
+
 ### Dec 20, 2021 \[Medium\] Rearrange String with Repeated Characters
 ---
 > **Question:** Given a string with repeated characters, rearrange the string so that no two adjacent characters are the same. If this is not possible, return None.
