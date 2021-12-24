@@ -41,6 +41,66 @@ Ouput: 6
 Explanation: The maximum sum of pairs is 6 = min(2, 3) + min(4, 5)
 ```
 
+**My thoughts:** To get max sum as possible, we want smaller of each pair as large as possible. 
+
+Well, that's one way of thinking. Another way is think about how not to waste number. We can start from max number which is guarentee to be wasted: We can pair 1st max with 2nd max and earn 2nd max. 
+
+After pick those two numbers, we end up with a sub-problem. To solve that sub-problem, we pick the largest two numbers, ie. 3rd max and 4th max from original lists. 
+
+Such process continues until we exhaust the entire lists. Then you start realize, we can sort the list and just sum all even postions.
+
+
+**Greedy Solution:** [https://replit.com/@trsong/Max-of-Min-Pairs](https://replit.com/@trsong/Max-of-Min-Pairs)
+```py
+import unittest
+
+def sum_of_min_pairs(nums):
+    nums.sort()
+    res = 0
+    for i in range(0, len(nums), 2):
+        res += nums[i]
+    return res
+        
+
+class SumOfMinPairSpec(unittest.TestCase):
+    def test_example(self):
+        nums = [3, 4, 2, 5]
+        expected = 6  # min(5, 4) + min(3, 2)
+        self.assertEqual(expected, sum_of_min_pairs(nums))
+
+    def test_empty_array(self):
+        self.assertEqual(0, sum_of_min_pairs([]))
+
+    def test_array_with_two_elements(self):
+        nums = [1, 2]
+        expected = 1  # min(1, 2) 
+        self.assertEqual(expected, sum_of_min_pairs(nums))
+
+    def test_array_with_unique_value(self):
+        nums = [2, 2, 2, 2, 2, 2]
+        expected = 6  # min(2, 2) + min(2, 2) + min(2, 2)  
+        self.assertEqual(expected, sum_of_min_pairs(nums))
+
+    def test_array_with_duplicated_elements(self):
+        nums = [1, 2, 2, 1, 3, 3]
+        expected = 6  # min(3, 3) + min(2, 2) + min(1, 1) 
+        self.assertEqual(expected, sum_of_min_pairs(nums))
+
+    def test_array_with_negative_numbers(self):
+        nums = [1, -1, -2, -3, 2, 3]
+        expected = -2  # min(3, 2) + min(1, -1) + min(-2, -3)
+        self.assertEqual(expected, sum_of_min_pairs(nums))
+
+    def test_array_with_outliers(self):
+        nums = [1, 2, 3, 101, 102, 103]
+        expected = 106  # min(103, 102) + min(101, 3) + min(2, 1)
+        self.assertEqual(expected, sum_of_min_pairs(nums))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False, verbosity=2)
+```
+
 ### Dec 21, 2021 \[Medium\] Max Number of Equal Sum Pairs
 ---
 > **Question:** You are given an array of integers. Your task is to create pairs of them, such that every created pair has the same sum. This sum is NOT specified, but the number of created pairs should be the maximum possible. Each array element may belong to one pair only. 

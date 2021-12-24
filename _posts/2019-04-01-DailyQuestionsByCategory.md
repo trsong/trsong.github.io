@@ -7557,6 +7557,28 @@ For example, if the list is `[1, 2, 3, 4, 5]` and `K` is `9`, then it should ret
 ---
 
 
+
+<details>
+<summary class="lc_e">
+
+- [**\[Easy\] Max of Min Pairs**](https://trsong.github.io/python/java/2021/11/02/DailyQuestionsNov.html#dec-22-2021-easy-max-of-min-pairs) -- *Given an array of even length, divide the array into pairs such that the sum of smaller integers in each pair is maximized.* [*\(Try ME\)*](https://replit.com/@trsong/Max-of-Min-Pairs-1)
+
+</summary>
+<div>
+
+**Question:** Given an array of length `2 * n (even length)` that consists of random integers, divide the array into pairs such that the sum of smaller integers in each pair is maximized. Return such sum.
+
+**Example:**
+```py
+Input: [3, 4, 2, 5]
+Ouput: 6
+Explanation: The maximum sum of pairs is 6 = min(2, 3) + min(4, 5)
+```
+
+</div>
+</details>
+
+
 <details>
 <summary class="lc_h">
 
