@@ -54,7 +54,8 @@ def apply_ops(num1, num2):
     yield num1 + num2
     yield num1 - num2
     yield num1 * num2
-    yield num1 / num2 if num2 != 0 else float('inf')
+    if num2 != 0:
+        yield num1 / num2 
 
 
 class Play24GameSpec(unittest.TestCase):
