@@ -30,6 +30,79 @@ categories: Python/Java
 >
 > Write a function that plays the 24 game.
 
+**Solution with Backtracking:** [https://replit.com/@trsong/24-Game-2](https://replit.com/@trsong/24-Game-2)
+```py
+import unittest
+
+def play_24_game(cards):
+    if len(cards) == 1:
+        return abs(cards[0] - 24) < 1e-3
+    else:
+        n = len(cards)
+        for i in range(n):
+            for j in range(n):
+                if i == j:
+                    continue
+                for new_card in apply_ops(cards[i], cards[j]):
+                    remaining_cards = [new_card] + [cards[x] for x in range(n) if x != i and x != j]
+                    if play_24_game(remaining_cards):
+                        return True
+        return False
+
+
+def apply_ops(num1, num2):
+    yield num1 + num2
+    yield num1 - num2
+    yield num1 * num2
+    yield num1 / num2 if num2 != 0 else float('inf')
+
+
+class Play24GameSpec(unittest.TestCase):
+    def test_example(self):
+        cards = [5, 2, 7, 8]  # (5 * 2 - 7) * 8 = 24
+        self.assertTrue(play_24_game(cards))
+
+    def test_example2(self):
+        cards = [4, 1, 8, 7]  # (8 - 4) * (7 - 1) = 24
+        self.assertTrue(play_24_game(cards))
+
+    def test_example3(self):
+        cards = [1, 2, 1, 2] 
+        self.assertFalse(play_24_game(cards))
+
+    def test_sum_to_24(self):
+        cards = [6, 6, 6, 6]  # 6 + 6 + 6 + 6 = 24
+        self.assertTrue(play_24_game(cards))
+
+    def test_require_division(self):
+        cards = [4, 7, 8, 8]  # 4 * (7 - 8 / 8) = 24
+        self.assertTrue(play_24_game(cards))
+    
+    def test_has_fraction(self):
+        cards = [1, 3, 4, 6]  # 6 / (1 - 3/ 4) = 24
+        self.assertTrue(play_24_game(cards))
+
+    def test_unable_to_solve(self):
+        cards = [1, 1, 1, 1] 
+        self.assertFalse(play_24_game(cards))
+
+    def test_unable_to_solve2(self):
+        cards = [1, 5, 5, 8] 
+        self.assertFalse(play_24_game(cards))
+
+    def test_unable_to_solve3(self):
+        cards = [2, 9, 9, 9] 
+        self.assertFalse(play_24_game(cards))
+
+    def test_unable_to_solve4(self):
+        cards = [2, 2, 7, 9] 
+        self.assertFalse(play_24_game(cards))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False, verbosity=2)
+```
+
 ### Dec 22, 2021 \[Easy\] Max of Min Pairs
 ---
 > **Question:** Given an array of length `2 * n (even length)` that consists of random integers, divide the array into pairs such that the sum of smaller integers in each pair is maximized. Return such sum.
