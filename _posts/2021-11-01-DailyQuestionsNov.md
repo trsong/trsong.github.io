@@ -22,7 +22,7 @@ categories: Python/Java
 
 
 
-### Dec 23, 2021 LC 65 \[Hard\] Valid Number
+### Dec 24, 2021 LC 65 \[Hard\] Valid Number
 ---
 > **Question:** Given a string, return whether it represents a number. Here are the different kinds of numbers:
 >
