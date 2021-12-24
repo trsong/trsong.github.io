@@ -22,6 +22,25 @@ categories: Python/Java
 
 
 
+### Dec 23, 2021  LC 679 \[Hard\] 24 Game
+---
+> **Question:** The 24 game is played as follows. You are given a list of four integers, each between 1 and 9, in a fixed order. By placing the operators +, -, *, and / between the numbers, and grouping them with parentheses, determine whether it is possible to reach the value 24.
+>
+> For example, given the input `[5, 2, 7, 8]`, you should return `True`, since `(5 * 2 - 7) * 8 = 24`.
+>
+> Write a function that plays the 24 game.
+
+### Dec 22, 2021 \[Easy\] Max of Min Pairs
+---
+> **Question:** Given an array of length `2 * n (even length)` that consists of random integers, divide the array into pairs such that the sum of smaller integers in each pair is maximized. Return such sum.
+
+**Example:**
+```py
+Input: [3, 4, 2, 5]
+Ouput: 6
+Explanation: The maximum sum of pairs is 6 = min(2, 3) + min(4, 5)
+```
+
 ### Dec 21, 2021 \[Medium\] Max Number of Equal Sum Pairs
 ---
 > **Question:** You are given an array of integers. Your task is to create pairs of them, such that every created pair has the same sum. This sum is NOT specified, but the number of created pairs should be the maximum possible. Each array element may belong to one pair only. 
