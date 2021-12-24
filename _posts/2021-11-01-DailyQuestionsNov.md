@@ -22,6 +22,23 @@ categories: Python/Java
 
 
 
+### Dec 23, 2021 LC 65 \[Hard\] Valid Number
+---
+> **Question:** Given a string, return whether it represents a number. Here are the different kinds of numbers:
+>
+> - "10", a positive integer
+> - "-10", a negative integer
+> - "10.1", a positive real number
+> - "-10.1", a negative real number
+> - "1e5", a number in scientific notation
+>
+> And here are examples of non-numbers:
+>
+> - "a"
+> - "x 1"
+> - "a -2"
+> - "-"
+
 ### Dec 23, 2021  LC 679 \[Hard\] 24 Game
 ---
 > **Question:** The 24 game is played as follows. You are given a list of four integers, each between 1 and 9, in a fixed order. By placing the operators +, -, *, and / between the numbers, and grouping them with parentheses, determine whether it is possible to reach the value 24.
