@@ -9780,7 +9780,7 @@ generate_brackets(3)  # returns ['((()))', '(()())', '()(())', '()()()', '(())()
 <details>
 <summary class="lc_h">
 
-- [**\[Hard\] LC 679. 24 Game**](https://trsong.github.io/python/java/2021/02/02/DailyQuestionsFeb.html#mar-20-2021-lc-679-hard-24-game) -- *Given a list of 4 int, each between 1 and 9.  Determine if placing the operators +, -, *, and /, and group by () gives 24.* [*\(Try ME\)*](https://replit.com/@trsong/24-Game-1)
+- [**\[Hard\] LC 679. 24 Game**](https://trsong.github.io/python/java/2021/11/02/DailyQuestionsNov.html#dec-23-2021--lc-679-hard-24-game) -- *Given a list of 4 int, each between 1 and 9.  Determine if placing the operators +, -, *, and /, and group by () gives 24.* [*\(Try ME\)*](https://replit.com/@trsong/24-Game-1)
 
 </summary>
 <div>
