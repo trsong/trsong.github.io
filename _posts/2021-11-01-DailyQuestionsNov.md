@@ -55,6 +55,155 @@ categories: Python/Java
 > - "a -2"
 > - "-"
 
+**Solution:** [https://replit.com/@trsong/Determine-valid-number-2](https://replit.com/@trsong/Determine-valid-number-2)
+```py
+import unittest
+
+def is_valid_number(raw_num):
+    """
+    (WHITE_SPACE) (SIGN) DIGITS (DOT DIGITS) (e (SIGN) DIGITS) (WHITE_SPACE)
+    or
+     (WHITE_SPACE) (SIGN) DOT DIGITS (e (SIGN) DIGITS) (WHITE_SPACE)
+    
+    States:
+    - START
+    - SIGN
+    - DIGITS
+    - DOT
+    - E
+    - END
+    
+    State Transformation:
+    START -> SIGN
+          -> DOT
+          -> DIGITS
+    SIGN -> DIGITS
+         -> DOT
+    DIGITS -> DOT
+           -> E
+           -> END
+    DOT -> DIGITS
+    E -> SIGN
+      -> DIGITS  
+
+    Prev States:
+    START: []
+    SIGN: [START, E]
+    DIGITS: [START, SIGN, DOT]
+    DOT: [START, SIGN, DIGITS]
+    E: [DIGITS]
+    END: [DIGITS]
+    """
+    raw_num = raw_num.strip()
+    dot_seen = False
+    e_seen = False
+    number_seen = False
+    prev_ch = None
+    for ch in raw_num:
+        if '0' <= ch <= '9':
+            number_seen = True
+        elif ch == '.':
+            if e_seen or dot_seen:
+                return False
+            dot_seen = True
+        elif ch == 'e':
+            if e_seen or not number_seen:
+                return False
+            number_seen = False
+            e_seen = True
+        elif ch in ['-', '+']:
+            if prev_ch is not None and prev_ch != 'e':
+                return False
+        else:
+            return False
+        prev_ch = ch
+    return number_seen
+
+
+class IsValidNumberSpec(unittest.TestCase):
+    def test_example1(self):
+        self.assertTrue(is_valid_number("123"))  # Integer
+
+    def test_example2(self):
+        self.assertTrue(is_valid_number("12.3"))  # Floating point
+    
+    def test_example3(self):
+        self.assertTrue(is_valid_number("-123"))  # Negative numbers
+    
+    def test_example4(self):
+        self.assertTrue(is_valid_number("-.3"))  # Negative floating point
+    
+    def test_example5(self):
+        self.assertTrue(is_valid_number("1.5e5")) # Scientific notation
+    
+    def test_example6(self):
+        self.assertFalse(is_valid_number("12a"))  # No letters
+    
+    def test_example7(self):
+        self.assertFalse(is_valid_number("1 2")) # No space between numbers
+    
+    def test_example8(self):
+        self.assertFalse(is_valid_number("1e1.2")) # Exponent can only be an integer (positive or negative or 0)
+
+    def test_empty_string(self):
+        self.assertFalse(is_valid_number(""))
+
+    def test_blank_string(self):
+        self.assertFalse(is_valid_number("   "))
+
+    def test_just_signs(self):
+        self.assertFalse(is_valid_number("+"))
+
+    def test_zero(self):
+        self.assertTrue(is_valid_number("0"))
+
+    def test_contains_no_number(self):
+        self.assertFalse(is_valid_number("e"))
+
+    def test_contains_white_spaces(self):
+        self.assertTrue(is_valid_number(" -123.456  "))
+
+    def test_scientific_notation(self):
+        self.assertTrue(is_valid_number("2e10"))
+
+    def test_scientific_notation2(self):
+        self.assertFalse(is_valid_number("10e5.4"))
+
+    def test_scientific_notation3(self):
+        self.assertTrue(is_valid_number("-24.35e-10"))
+
+    def test_scientific_notation4(self):
+        self.assertFalse(is_valid_number("1e1e1"))
+
+    def test_scientific_notation5(self):
+        self.assertTrue(is_valid_number("+.5e-23"))
+
+    def test_scientific_notation6(self):
+        self.assertFalse(is_valid_number("+e-23"))
+
+    def test_scientific_notation7(self):
+        self.assertFalse(is_valid_number("0e"))
+
+    def test_multiple_signs(self):
+        self.assertFalse(is_valid_number("+-2"))
+
+    def test_multiple_signs2(self):
+        self.assertFalse(is_valid_number("-2-2-2-2"))
+
+    def test_multiple_signs3(self):
+        self.assertFalse(is_valid_number("6+1"))
+
+    def test_multiple_dots(self):
+        self.assertFalse(is_valid_number("10.24.25"))
+
+    def test_sign_and_dot(self):
+        self.assertFalse(is_valid_number(".-4"))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False, verbosity=2)
+```
+
 ### Dec 23, 2021  LC 679 \[Hard\] 24 Game
 ---
 > **Question:** The 24 game is played as follows. You are given a list of four integers, each between 1 and 9, in a fixed order. By placing the operators +, -, *, and / between the numbers, and grouping them with parentheses, determine whether it is possible to reach the value 24.
