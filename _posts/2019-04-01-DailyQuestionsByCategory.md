@@ -149,7 +149,7 @@ For example, for `n = 9`, you should return `3` since the lists are: `[2, 3, 4]`
 <details>
 <summary class="lc_m">
 
-- [**\[Medium\] LC 65. Determine if number**](http://trsong.github.io/python/java/2021/05/02/DailyQuestionsMay.html#june-28-2021--lc-65-medium--determine-if-number) -- *Given a string that may represent a number, determine if it is a number.* [*\(Try ME\)*](https://replit.com/@trsong/Determine-valid-number-1)
+- [**\[Medium\] LC 65. Determine if number**](https://trsong.github.io/python/java/2021/11/02/DailyQuestionsNov.html#dec-24-2021-lc-65-hard-valid-number) -- *Given a string that may represent a number, determine if it is a number.* [*\(Try ME\)*](https://replit.com/@trsong/Determine-valid-number-1)
 
 </summary>
 <div>
