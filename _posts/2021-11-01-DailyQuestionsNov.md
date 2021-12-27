@@ -37,6 +37,103 @@ categories: Python/Java
 1 1 0 0 1
 ```
 
+**Solution with DFS:** [https://replit.com/@trsong/Count-Number-of-Isolated-Islands-2](https://replit.com/@trsong/Count-Number-of-Isolated-Islands-2)
+```py
+import unittest
+
+def calc_islands(area_map):
+    if not area_map or not area_map[0]:
+        return 0
+    n, m = len(area_map), len(area_map[0])
+
+    visited = set()
+    res = 0
+    for r in range(n):
+        for c in range(m):
+            if area_map[r][c] == 1 and (r, c) not in visited:
+                res += 1
+                dfs_mark_island(area_map, (r, c), visited)
+    return res
+
+
+DIRECTIONS = [-1, 0, 1]
+
+def dfs_mark_island(area_map, pos, visited):
+    stack = [pos]
+    n, m = len(area_map), len(area_map[0])
+    while stack:
+        r, c = stack.pop()
+        if (r, c) in visited:
+            continue
+        visited.add((r, c))
+
+        for dr in DIRECTIONS:
+            for dc in DIRECTIONS:
+                if dr == dc == 0:
+                    continue
+                new_r, new_c = r + dr, c + dc
+                if (0 <= new_r < n and 
+                    0 <= new_c < m and
+                    (new_r, new_c) not in visited and
+                    area_map[new_r][new_c] == 1):
+                    stack.append((new_r, new_c))
+
+
+class CalcIslandSpec(unittest.TestCase):
+    def test_sample_area_map(self):
+        self.assertEqual(4, calc_islands([
+            [1, 0, 0, 0, 0],
+            [0, 0, 1, 1, 0],
+            [0, 1, 1, 0, 0],
+            [0, 0, 0, 0, 0],
+            [1, 1, 0, 0, 1],
+            [1, 1, 0, 0, 1]
+        ]))
+    
+    def test_some_random_area_map(self):
+        self.assertEqual(5, calc_islands([
+            [1, 1, 0, 0, 0],
+            [0, 1, 0, 0, 1],
+            [1, 0, 0, 1, 1],
+            [0, 0, 0, 0, 0],
+            [1, 0, 1, 0, 1] 
+        ]))
+
+    def test_island_edge_of_map(self):
+        self.assertEqual(5, calc_islands([
+            [1, 0, 0, 1, 0],
+            [0, 1, 0, 1, 0],
+            [0, 0, 0, 0, 0],
+            [1, 0, 1, 0, 1],
+            [1, 0, 1, 0, 1] 
+        ]))
+
+    def test_huge_water(self):
+        self.assertEqual(0, calc_islands([
+            [0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0]
+        ]))
+
+    def test_huge_island(self):
+        self.assertEqual(1, calc_islands([
+            [1, 0, 1, 0, 1],
+            [1, 0, 0, 1, 0],
+            [1, 1, 1, 0, 1]
+        ]))
+
+    def test_non_square_island(self):
+        self.assertEqual(1, calc_islands([
+            [1],
+            [1],
+            [1]
+        ]))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False, verbosity=2)
+```
+
 
 ### Dec 24, 2021 LC 65 \[Hard\] Valid Number
 ---
