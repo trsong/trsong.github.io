@@ -9266,6 +9266,56 @@ In this case, the shortest valid path would be 0 -> 2 -> 4 -> 0, with a distance
 ### Union Find
 ---
 
+
+<details>
+<summary class="lc_m">
+
+- [**\[Medium\] LT 434. Number of Islands II**](https://trsong.github.io/python/java/2021/11/02/DailyQuestionsNov.html#dec-27-2021-lt-434-medium-number-of-islands-ii) -- *Given a 2D matrix and an array of pair represents position of new island, return how many island are there in the matrix after each operator.* [*\(Try ME\)*](https://replit.com/@trsong/Number-of-Islands-II-1)
+
+</summary>
+<div>
+
+**Question:** Given a `n,m` which means the row and column of the 2D matrix and an array of pair `A( size k)`. Originally, the 2D matrix is all 0 which means there is only sea in the matrix. The list pair has `k` operator and each operator has two integer `A[i].x, A[i].y` means that you can change the grid matrix`[A[i].x][A[i].y]` from sea to island. 
+
+Return how many island are there in the matrix after each operator. You need to return an array of size `K`.
+
+**Example 1:**
+```py
+Input: n = 4, m = 5, A = [[1,1],[0,1],[3,3],[3,4]]
+Output: [1,1,2,2]
+Explanation:
+0.  00000
+    00000
+    00000
+    00000
+1.  00000
+    01000
+    00000
+    00000
+2.  01000
+    01000
+    00000
+    00000
+3.  01000
+    01000
+    00000
+    00010
+4.  01000
+    01000
+    00000
+    00011
+```
+
+**Example 2:**
+```py
+Input: n = 3, m = 3, A = [[0,0],[0,1],[2,2],[2,1]]
+Output: [1,1,2,2]
+```
+
+</div>
+</details>
+
+
 <details>
 <summary class="lc_h">
 

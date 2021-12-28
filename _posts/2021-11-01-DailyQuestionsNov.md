@@ -61,6 +61,153 @@ Input: n = 3, m = 3, A = [[0,0],[0,1],[2,2],[2,1]]
 Output: [1,1,2,2]
 ```
 
+**Solution with DisjointSet(Union-Find):** [https://replit.com/@trsong/Number-of-Islands-II](https://replit.com/@trsong/Number-of-Islands-II)
+```py
+import unittest
+
+DIRECTIONS = [(-1, 0), (1, 0), (0, 1), (0, -1)]
+
+def calculate_islands(n, m, island_positions):
+    if n <= 0 or m <= 0 or not island_positions:
+        return []
+    island_ds = DisjointSet()
+    res = []
+    for r, c in island_positions:
+        island_ds.find((r, c))
+        for dr, dc in DIRECTIONS:
+            new_r, new_c = r + dr, c + dc
+            if (0 <= new_r < n and 
+                0 <= new_c < m and 
+                (new_r, new_c) in island_ds):
+                island_ds.union((r, c), (new_r, new_c))
+        res.append(island_ds.cardinal())
+    return res
+        
+
+class DisjointSet(object):
+    def __init__(self):
+        self.parent = {}
+    
+    def __contains__(self, p):
+        return p in self.parent
+
+    def find(self, p):
+        self.parent[p] = self.parent.get(p, p)
+        while self.parent.get(p, p) != p:
+            self.parent[p] = self.parent[self.parent[p]]
+            p = self.parent[p]
+        return p
+
+    def union(self, p1, p2):
+        r1 = self.find(p1)
+        r2 = self.find(p2)
+        if r1 != r2:
+            self.parent[r1] = r2
+    
+    def cardinal(self):
+        return len(set(map(self.find, self.parent)))
+
+
+class CalculateIslandSpec(unittest.TestCase):
+    def test_example(self):
+        """
+        0.  00000
+            00000
+            00000
+            00000
+        1.  00000
+            01000
+            00000
+            00000
+        2.  01000
+            01000
+            00000
+            00000
+        3.  01000
+            01000
+            00000
+            00010
+        4.  01000
+            01000
+            00000
+            00011
+        """
+        n, m = 4, 5
+        island_positions = [[1, 1], [0, 1], [3, 3], [3, 4]]
+        expected = [1, 1, 2, 2]
+        self.assertEqual(expected, calculate_islands(n, m, island_positions))
+
+    def test_example2(self):
+        n, m = 3, 3
+        island_positions = [[0, 0], [0, 1], [2, 2], [2, 1]]
+        expected = [1, 1, 2, 2]
+        self.assertEqual(expected, calculate_islands(n, m, island_positions))
+    
+    def test_empty_grid(self):
+        self.assertEqual([], calculate_islands(0, 0, None))
+        self.assertEqual([], calculate_islands(0, 0, []))
+        self.assertEqual([], calculate_islands(0, 0, [[]]))
+    
+    def test_duplicated_island_positions(self):
+        n, m = 3, 7
+        islands_positions = [[1, 1], [1, 2], [1, 1], [3, 3], [1, 1]]
+        expected = [1, 1, 1, 2, 2]
+        self.assertEqual(expected, calculate_islands(n, m, islands_positions))
+    
+    def test_one_dimension_grid(self):
+        n, m = 1, 3
+        island_positions = [[0, 2], [0, 1], [0, 0]]
+        expected = [1, 1, 1]
+        self.assertEqual(expected, calculate_islands(n, m, island_positions))
+    
+    def test_one_dimension_grid2(self):
+        n, m = 3, 1
+        island_positions = [[0, 1], [0, 3]]
+        expected = [1, 2]
+        self.assertEqual(expected, calculate_islands(n, m, island_positions))
+    
+    def test_one_dimension_grid3(self):
+        n, m = 1, 1
+        island_positions = [[0, 0]]
+        expected = [1]
+        self.assertEqual(expected, calculate_islands(n, m, island_positions))
+
+    def test_diagonal_positions(self):
+        n, m = 3, 3
+        island_positions = [[0, 0], [1, 1], [2, 2], [0, 2], [2, 0]]
+        expected = [1, 2, 3, 4, 5]
+        self.assertEqual(expected, calculate_islands(n, m, island_positions))
+
+    def test_connect_different_areas(self):
+        n, m = 3, 3
+        island_positions = [[1, 0], [0, 1], [1, 2], [2, 1], [1, 1]]
+        expected = [1, 2, 3, 4, 1]
+        self.assertEqual(expected, calculate_islands(n, m, island_positions))
+
+    def test_expand_entire_grid(self):
+        n, m = 2, 3
+        island_positions = [[1, 2], [0, 2], [0, 1], [1, 1], [1, 0], [0, 0]]
+        expected = [1, 1, 1, 1, 1, 1]
+        self.assertEqual(expected, calculate_islands(n, m, island_positions))
+
+    def test_performance_test(self):
+        n = m = 1 << 64
+        island_positions = [[x, x] for x in range(128)]
+        expected = list(range(1, 129))
+        self.assertEqual(expected, calculate_islands(n, m, island_positions))
+
+    def test_performance_test2(self):
+        n = m = 1 << 64
+        offset = 1 << 32
+        island_positions = [[offset + x, offset + 0] for x in range(128)]
+        expected = [1] * 128
+        self.assertEqual(expected, calculate_islands(n, m, island_positions))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False, verbosity=2)
+```
+
 ### Dec 26, 2021  LC 239 \[Medium\] Sliding Window Maximum
 ---
 > **Question:** Given an array nums, there is a sliding window of size k which is moving from the very left of the array to the very right. You can only see the k numbers in the window. Each time the sliding window moves right by one position. Return the max sliding window.
