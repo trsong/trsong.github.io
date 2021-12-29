@@ -68,6 +68,66 @@ Explanation: The given undirected graph will be like this:
     4 - 3
 ```
 
+**My thoughts:** Process edges one by one, when we encouter an edge that has two ends already connected then adding current edge will form a cycle, then we return such edge. 
+
+In order to efficiently checking connection between any two nodes. The idea is to keep track of all nodes that are already connected. Disjoint-set(Union Find) is what we are looking for. Initially UF makes all nodes disconnected, and whenever we encounter an edge, connect both ends. And we do that for all edges. 
+
+**Solution with DisjointSet(Union-Find):** [https://replit.com/@trsong/Redundant-Connection](https://replit.com/@trsong/Redundant-Connection)
+```py
+import unittest
+
+def find_redundant_connection(edges):
+    uf = DisjointSet()
+    for u, v in edges:
+        if uf.is_connected(u, v):
+            return [u, v]
+        else:
+            uf.union(u, v)
+    return None
+
+
+class DisjointSet(object):
+    def __init__(self):
+        self.parent = {}
+        self.rank = {}
+
+    def find(self, p):
+        self.parent[p] = self.parent.get(p, p)
+        while self.parent[p] != p:
+            self.parent[p] = self.parent[self.parent[p]]
+            p = self.parent[p]
+        return p
+
+    def union(self, p1, p2):
+        r1 = self.find(p1)
+        r2 = self.find(p2)
+        if r1 != r2:
+            if self.rank.get(r1, 0) < self.rank.get(r2, 0):
+                self.parent[r1] = r2
+                self.rank[r2] = self.rank.get(r2, 0) + 1
+            else:
+                self.parent[r2] = r1
+                self.rank[r1] = self.rank.get(r1, 0) + 1
+
+    def is_connected(self, p1, p2):
+        return self.find(p1) == self.find(p2)
+
+
+class FindRedundantConnectionSpec(unittest.TestCase):
+    def test_example1(self):
+        self.assertEqual([2, 3],
+                         find_redundant_connection([[1, 2], [1, 3], [2, 3]]))
+
+    def test_example2(self):
+        self.assertEqual([1, 4],
+                         find_redundant_connection([[1, 2], [2, 3], [3, 4],
+                                                    [1, 4], [1, 5]]))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False, verbosity=2)
+```
+
 ### Dec 27, 2021 LT 434 \[Medium\] Number of Islands II
 ---
 > **Question:** Given a `n,m` which means the row and column of the 2D matrix and an array of pair `A( size k)`. Originally, the 2D matrix is all 0 which means there is only sea in the matrix. The list pair has `k` operator and each operator has two integer `A[i].x, A[i].y` means that you can change the grid matrix`[A[i].x][A[i].y]` from sea to island. 
