@@ -35,6 +35,89 @@ categories: Python/Java
 >
 > Find the total number of valid unlock patterns of length N, where 1 <= N <= 9.
 
+**My thoughts:** By symmetricity, code starts with 1, 3, 7, 9 has same number of total combination and same as 2, 4, 6, 8. Thus we only need to figure out total combinations starts from 1, 2 and 5. We can count that number through DFS with Backtracking and make sure to check if there is no illegal jump between recursive calls.
+
+**Solution with Backtracking:** [https://replit.com/@trsong/Count-Number-of-Android-Lock-Patterns-2](https://replit.com/@trsong/Count-Number-of-Android-Lock-Patterns-2)
+```py
+import unittest
+
+def android_lock_combinations(code_len):
+    """
+    1 2 3
+    4 5 6
+    7 8 9
+    """
+    overlap = {
+        2: [(1, 3)],
+        4: [(1, 7)],
+        8: [(7, 9)],
+        6: [(3, 9)],
+        5: [(1, 9), (2, 8), (3, 7), (4, 6)]
+    }
+    overlap_lookup = {(start, end): k
+                      for k in overlap
+                      for start, end in overlap[k] + map(reversed, overlap[k])}
+
+    visited = [False] * 10
+    start_from_one = backtrack(1, code_len - 1, visited, overlap_lookup)
+    start_from_two = backtrack(2, code_len - 1, visited, overlap_lookup)
+    start_from_five = backtrack(5, code_len - 1, visited, overlap_lookup)
+    return 4 * (start_from_one + start_from_two) + start_from_five
+
+
+def backtrack(start, code_len, visited, overlap_lookup):
+    if code_len == 0:
+        return 1
+    else:
+        visited[start] = True
+        res = 0
+        for next in range(1, 10):
+            overlap = overlap_lookup.get((start, next))
+            overlap_visited = overlap is None or visited[overlap]
+            if not visited[next] and overlap_visited:
+                res += backtrack(next, code_len - 1, visited, overlap_lookup)
+        visited[start] = False
+        return res
+
+
+class AndroidLockCombinationSpec(unittest.TestCase):
+    def test_length_1_code(self):
+        self.assertEqual(9, android_lock_combinations(1))
+
+    def test_length_2_code(self):
+        # 1-2, 1-4, 1-5, 1-6, 1-8
+        # 2-1, 2-3, 2-4, 2-5, 2-6, 2-7, 2-9
+        # 5-1, 5-2, 5-3, 5-4, 5-6, 5-7, 5-8, 5-9
+        # Due to symmetricity, code starts with 3, 7, 9 has same number as 1
+        #                      code starts with 4, 6, 8 has same number as 2
+        # Total = 5*4 + 7*4 + 8 = 56
+        self.assertEqual(56, android_lock_combinations(2))
+
+    def test_length_3_code(self):
+        self.assertEqual(320, android_lock_combinations(3))
+
+    def test_length_4_code(self):
+        self.assertEqual(1624, android_lock_combinations(4))
+
+    def test_length_5_code(self):
+        self.assertEqual(7152, android_lock_combinations(5))
+
+    def test_length_6_code(self):
+        self.assertEqual(26016, android_lock_combinations(6))
+
+    def test_length_7_code(self):
+        self.assertEqual(72912, android_lock_combinations(7))
+
+    def test_length_8_code(self):
+        self.assertEqual(140704, android_lock_combinations(8))
+
+    def test_length_9_code(self):
+        self.assertEqual(140704, android_lock_combinations(9))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False, verbosity=2)
+```
 
 ### Dec 28, 2021 LC 684 \[Medium\] Redundant Connection
 ---
