@@ -21,6 +21,20 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
 
+### Dec 30, 2021 \[Medium\] Generate Brackets
+---
+> **Question:** Given a number n, generate all possible combinations of n well-formed brackets.
+
+**Example 1:**
+```py
+generate_brackets(1)  # returns ['()']
+```
+
+**Example 2:**
+```py
+generate_brackets(3)  # returns ['((()))', '(()())', '()(())', '()()()', '(())()']
+```
+
 
 ### Dec 29, 2021 \[Medium\] Number of Android Lock Patterns
 ---
