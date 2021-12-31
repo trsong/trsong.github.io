@@ -21,6 +21,17 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
 
+### Dec 31, 2021 \[Easy\] Longest Consecutive 1s in Binary Representation
+---
+> **Question:**  Given an integer n, return the length of the longest consecutive run of 1s in its binary representation.
+
+**Example:**
+```py
+Input: 156
+Output: 3
+Exaplanation: 156 in binary is 10011100
+```
+
 ### Dec 30, 2021 \[Medium\] Generate Brackets
 ---
 > **Question:** Given a number n, generate all possible combinations of n well-formed brackets.
@@ -35,6 +46,57 @@ generate_brackets(1)  # returns ['()']
 generate_brackets(3)  # returns ['((()))', '(()())', '()(())', '()()()', '(())()']
 ```
 
+
+**Solution with Backtracking:** [https://replit.com/@trsong/Generate-Well-formed-Brackets-2](https://replit.com/@trsong/Generate-Well-formed-Brackets-2)
+```py
+import unittest
+
+def generate_brackets(n):
+    if n == 0:
+        return []
+        
+    res = []
+    backtrack(res, [], n, n)
+    return res
+
+
+def backtrack(res, accu, num_open, num_close):
+    if num_open == num_close == 0:
+        res.append(''.join(accu))
+    else:
+        if num_open > 0:
+            accu.append('(')
+            backtrack(res, accu, num_open - 1, num_close)
+            accu.pop()
+
+        if num_open < num_close:
+            accu.append(')')
+            backtrack(res, accu, num_open, num_close - 1)
+            accu.pop()
+
+
+class GenerateBracketSpec(unittest.TestCase):
+    def assert_result(self, expected, result):
+        self.assertEqual(sorted(expected), sorted(result))
+
+    def test_example1(self):
+        self.assert_result(['()'], generate_brackets(1))
+
+    def test_example2(self):
+        n, expected = 3, ['((()))', '(()())', '()(())', '()()()', '(())()']
+        self.assert_result(expected, generate_brackets(n))
+
+    def test_input_size_is_two(self):
+        n, expected = 2, ['()()', '(())']
+        self.assert_result(expected, generate_brackets(n))
+
+    def test_input_size_is_zero(self):
+        self.assert_result([], generate_brackets(0))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False, verbosity=2)
+```
 
 ### Dec 29, 2021 \[Medium\] Number of Android Lock Patterns
 ---
