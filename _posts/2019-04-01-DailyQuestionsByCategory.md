@@ -9846,7 +9846,7 @@ sum_combinations([10, 1, 2, 7, 6, 1, 5], 8)
 <details>
 <summary class="lc_m">
 
-- [**\[Medium\] Generate Brackets**](https://trsong.github.io/python/java/2021/02/02/DailyQuestionsFeb.html#apr-8-2021-medium--generate-brackets) -- *Given a number n, generate all possible combinations of n well-formed brackets.* [*\(Try ME\)*](https://replit.com/@trsong/Generate-Well-formed-Brackets-1)
+- [**\[Medium\] Generate Brackets**](https://trsong.github.io/python/java/2021/11/02/DailyQuestionsNov.html#dec-30-2021-medium-generate-brackets) -- *Given a number n, generate all possible combinations of n well-formed brackets.* [*\(Try ME\)*](https://replit.com/@trsong/Generate-Well-formed-Brackets-1)
 
 </summary>
 <div>
