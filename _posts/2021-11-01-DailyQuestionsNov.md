@@ -21,6 +21,37 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
 
+
+### Jan 1, 2022 LC 772 \[Hard\] Basic Calculator III
+---
+> **Questions:** Implement a basic calculator to evaluate a simple expression string.
+>
+> The expression string contains integers, `+`, `-`, `*`, `/` operators , open `(` and closing parentheses `)` and empty spaces. The integer division should truncate toward zero.
+
+**Example 1:**
+```py
+Input: "1 + 1"
+Output: 2
+```
+
+**Example 2:**
+```py
+Input: " 6-4 / 2 " 
+Output: 4
+```
+
+**Example 3:**
+```py
+Input: "2*(5+5*2)/3+(6/2+8)" 
+Output: 21
+```
+
+**Example 4:**
+```py
+Input: "(2+6* 3+5- (3*14/7+2)*5)+3"
+Output: -12
+```
+
 ### Dec 31, 2021 \[Easy\] Longest Consecutive 1s in Binary Representation
 ---
 > **Question:**  Given an integer n, return the length of the longest consecutive run of 1s in its binary representation.
