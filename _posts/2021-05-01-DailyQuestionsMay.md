@@ -6239,6 +6239,29 @@ def pow(x, y):
         return pow(x * x, y / 2)
     else:
         return x * pow(x, y - 1)
+```
+
+**Iterative Solution:** [https://replit.com/@trsong/Implement-Integer-Exponentiation-Iterative](https://replit.com/@trsong/Implement-Integer-Exponentiation-Iterative)
+```py
+import unittest
+
+def pow(x, y):
+    if y == 0:
+        return 1
+
+    if y < 0:
+        x = 1.0 / x
+        y = -y
+    
+    t = 1
+    while y > 1:
+        if y % 2 == 0:
+            y = y // 2
+            x = x * x
+        else:
+            t *= x
+            y -= 1
+    return t * x
 
 
 class PowSpec(unittest.TestCase):
@@ -6277,6 +6300,7 @@ class PowSpec(unittest.TestCase):
 
     def test_positive_power4(self):
         self.assertAlmostEqual(-1.0/512, pow(-2, -9))
+
 
 if __name__ == '__main__':
     unittest.main(exit=False, verbosity=2)
