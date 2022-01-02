@@ -134,10 +134,7 @@ def eval_stream(ch_stream):
             last_sign = ch
             last_num = 0
         elif ch == '(':
-            sub_res = eval_stream(ch_stream)
-            udpate_stack(stack, last_sign, sub_res)
-            last_sign = ch
-            last_num = 0
+            last_num = eval_stream(ch_stream)
         elif ch == ')':
             break
     
