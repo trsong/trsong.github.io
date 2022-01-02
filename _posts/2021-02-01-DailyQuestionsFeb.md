@@ -6893,6 +6893,43 @@ def tokenize(s):
     res.append(s[prev_pos + 1: ])
     res.append('EOF')
     return res
+```
+
+**Alternative Solution adept from [Calculator III](http://trsong.github.io/python/java/2021/11/02/DailyQuestionsNov.html#jan-1-2022-lc-772-hard-basic-calculator-iii)**: [https://replit.com/@trsong/Implement-Basic-Calculator-II-Alternative-Solution](https://replit.com/@trsong/Implement-Basic-Calculator-II-Alternative-Solution)
+```py
+import unittest
+
+def calculate(s):
+    return calculate_stream(iter(s))
+
+
+def calculate_stream(ch_stream):
+    stack = []
+    last_num = 0
+    last_sign = '+'
+
+    for ch in ch_stream:
+        if '0' <= ch <= '9':
+            last_num = 10 * last_num + int(ch)
+        elif ch in '+-*/':
+            update_stack(stack, last_sign, last_num)
+            last_sign = ch
+            last_num = 0
+    
+    # do not forget EOF
+    update_stack(stack, last_sign, last_num)
+    return sum(stack)
+
+
+def update_stack(stack, op, num):
+    if op == '+':
+        stack.append(num)
+    elif op == '-':
+        stack.append(-num)
+    elif op == '*':
+        stack.append(stack.pop() * num)
+    elif op == '/':
+        stack.append(int(stack.pop() / (num * 1.0)))
 
 
 class CalculateSpec(unittest.TestCase):
