@@ -63,6 +63,56 @@ Output: 3
 Exaplanation: 156 in binary is 10011100
 ```
 
+**Solution:** [https://replit.com/@trsong/Longest-Consecutive-1s-in-Binary-Representation-2](https://replit.com/@trsong/Longest-Consecutive-1s-in-Binary-Representation-2)
+```py
+import unittest
+
+def count_longest_consecutive_ones(num):
+    res = 0
+    while num:
+        res += 1
+        # in each consecutive block of 1s, remove trailing zero in parallel
+        #    001100111001
+        # => 001000110000
+        num &= (num << 1)
+    return res
+
+
+class CountLongestConsecutiveOneSpec(unittest.TestCase):
+    def test_example(self):
+        expected, num = 3, 0b10011100
+        self.assertEqual(expected, count_longest_consecutive_ones(num))
+
+    def test_zero(self):
+        expected, num = 0, 0b0
+        self.assertEqual(expected, count_longest_consecutive_ones(num))
+
+    def test_one(self):
+        expected, num = 1, 0b1
+        self.assertEqual(expected, count_longest_consecutive_ones(num))
+
+    def test_every_other_one(self):
+        expected, num = 1, 0b1010101
+        self.assertEqual(expected, count_longest_consecutive_ones(num))
+
+    def test_all_ones(self):
+        expected, num = 5, 0b11111
+        self.assertEqual(expected, count_longest_consecutive_ones(num))
+
+    def test_should_return_longest(self):
+        expected, num = 4, 0b10110111011110111010101
+        self.assertEqual(expected, count_longest_consecutive_ones(num))
+
+    def test_consecutive_zeros(self):
+        expected, num = 2, 0b100010001100010010001001
+        self.assertEqual(expected, count_longest_consecutive_ones(num))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False, verbosity=2)
+```
+
+
 ### Dec 30, 2021 \[Medium\] Generate Brackets
 ---
 > **Question:** Given a number n, generate all possible combinations of n well-formed brackets.
