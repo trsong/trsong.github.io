@@ -1675,6 +1675,47 @@ Output: 5
 
 
 <details>
+<summary class="lc_h">
+
+- [**L\[Hard\] LC 772. Basic Calculator III**](https://trsong.github.io/python/java/2021/11/02/DailyQuestionsNov.html#jan-1-2022-lc-772-hard-basic-calculator-iii) -- *https://trsong.github.io/python/java/2021/11/02/DailyQuestionsNov.html#jan-1-2022-lc-772-hard-basic-calculator-iii* [*\(Try ME\)*](https://replit.com/@trsong/Basic-Calculator-III-1)
+
+</summary>
+<div>
+
+**Questions:** Implement a basic calculator to evaluate a simple expression string.
+
+The expression string contains integers, `+`, `-`, `*`, `/` operators , open `(` and closing parentheses `)` and empty spaces. The integer division should truncate toward zero.
+
+**Example 1:**
+```py
+Input: "1 + 1"
+Output: 2
+```
+
+**Example 2:**
+```py
+Input: " 6-4 / 2 " 
+Output: 4
+```
+
+**Example 3:**
+```py
+Input: "2*(5+5*2)/3+(6/2+8)" 
+Output: 21
+```
+
+**Example 4:**
+```py
+Input: "(2+6* 3+5- (3*14/7+2)*5)+3"
+Output: -12
+```
+
+</div>
+</details>
+
+
+
+<details>
 <summary class="lc_e">
 
 - [**\[Easy\] Compare Version Numbers**](https://trsong.github.io/python/java/2020/11/02/DailyQuestionsAug.html#jan-9-2021-easy-compare-version-numbers) -- *Given two version numbers version1 and version2, conclude which is the latest version number.* [*\(Try ME\)*](https://repl.it/@trsong/Compare-Two-Version-Numbers-1)
