@@ -83,6 +83,147 @@ Input: "(2+6* 3+5- (3*14/7+2)*5)+3"
 Output: -12
 ```
 
+**My thoughts:** First, think about how to deal with parentheses. 
+
+- We can treat parentheses as function call. 
+- `(` starts recursive call. 
+- `)` ends call and returns. 
+- And finally treat the result of parentheses expression as a single number. 
+
+Once parentheses are properly handled, we can think about priority of `+-*/`:
+
+we can use the following definiton as a guidance:
+
+```py
+An Expr is one of
+* Term
+* Term + Expr
+* Term - Expr   # You can think about it as Term + (-Expr), or in another way Term + (-1) * Expr
+
+A Term is one of 
+* Number
+* Number * Term
+* Number / Term 
+```
+
+We can break an Expr into a stack of Term's. `1 + 2 * 3 - 4 * 5 / 6` => `[1, 2 * 3,   (-4) * 5 / 6]`.
+And evaluation of expression is like `eval(Expr) => sum(stack)`
+
+Keep in mind that `+-` creates a new term, yet `*/` updates last term. 
+`Term1 - Term2` is exactly the same as `Term1 + (-Term2)` or `Term1 + (-1) * Term2`
+
+
+**Solution with Stack:** [https://replit.com/@trsong/Basic-Calculator-III](https://replit.com/@trsong/Basic-Calculator-III)
+```py
+import unittest
+
+def evaluate_expression(expr):
+    return eval_stream(iter(expr))
+
+
+def eval_stream(ch_stream):
+    stack = []
+    last_sign = '+'
+    last_num = 0
+        
+    for ch in ch_stream:
+        if '0' <= ch <= '9':
+            last_num = 10 * last_num + int(ch)
+        elif ch in '+-*/':
+            udpate_stack(stack, last_sign, last_num)
+            last_sign = ch
+            last_num = 0
+        elif ch == '(':
+            sub_res = eval_stream(ch_stream)
+            udpate_stack(stack, last_sign, sub_res)
+            last_sign = ch
+            last_num = 0
+        elif ch == ')':
+            break
+    
+    # do not forget EOF
+    udpate_stack(stack, last_sign, last_num)
+    return sum(stack)
+
+
+def udpate_stack(stack, op, num):
+    if op == '+':
+        stack.append(num)
+    elif op == '-':
+        stack.append(-num)
+    elif op == '*':
+        stack.append(stack.pop() * num)
+    elif op == '/':
+        stack.append(int(stack.pop() / num))
+
+
+class EvaluateExpressionSpec(unittest.TestCase):
+    def test_example(self):
+        self.assertEqual(2, evaluate_expression("1 + 1"))
+
+    def test_example2(self):
+        self.assertEqual(4, evaluate_expression(" 6-4 / 2 "))
+
+    def test_example3(self):
+        self.assertEqual(21, evaluate_expression("2*(5+5*2)/3+(6/2+8)"))
+
+    def test_example4(self):
+        self.assertEqual(-12,
+                         evaluate_expression("(2+6* 3+5- (3*14/7+2)*5)+3"))
+
+    def test_simple_expression_with_parentheses(self):
+        self.assertEqual(4, evaluate_expression("-1 + (2 + 3)"))
+
+    def test_empty_string(self):
+        self.assertEqual(0, evaluate_expression(""))
+
+    def test_basic_expression1(self):
+        self.assertEqual(7, evaluate_expression("3+2*2"))
+
+    def test_basic_expression2(self):
+        self.assertEqual(1, evaluate_expression(" 3/2 "))
+
+    def test_basic_expression3(self):
+        self.assertEqual(5, evaluate_expression(" 3+5 / 2 "))
+
+    def test_basic_expression4(self):
+        self.assertEqual(-24, evaluate_expression("1*2-3/4+5*6-7*8+9/10"))
+
+    def test_basic_expression5(self):
+        self.assertEqual(10000, evaluate_expression("10000-1000/10+100*1"))
+
+    def test_basic_expression6(self):
+        self.assertEqual(13, evaluate_expression("14-3/2"))
+
+    def test_negative(self):
+        self.assertEqual(-1, evaluate_expression(" -7 / 4 "))
+
+    def test_minus(self):
+        self.assertEqual(-5, evaluate_expression("-2-3"))
+
+    def test_expression_with_parentheses(self):
+        self.assertEqual(42, evaluate_expression("  -(-42)"))
+
+    def test_expression_with_parentheses2(self):
+        self.assertEqual(3, evaluate_expression("(-1 + 2) * 3"))
+
+    def test_complicated_operations(self):
+        self.assertEqual(
+            2,
+            evaluate_expression("-2 - (-2) * ( ((-2) - 3) * 2 + (-3) * (-4))"))
+
+    def test_complicated_operations2(self):
+        self.assertEqual(-2600,
+                         evaluate_expression("-3*(10000-1000)/10-100*(-1)"))
+
+    def test_complicated_operations3(self):
+        self.assertEqual(100, evaluate_expression("100 * ( 2 + 12 ) / 14"))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False, verbosity=2)
+```
+
 ### Dec 31, 2021 \[Easy\] Longest Consecutive 1s in Binary Representation
 ---
 > **Question:**  Given an integer n, return the length of the longest consecutive run of 1s in its binary representation.
