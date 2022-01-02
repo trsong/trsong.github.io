@@ -1677,7 +1677,7 @@ Output: 5
 <details>
 <summary class="lc_h">
 
-- [**L\[Hard\] LC 772. Basic Calculator III**](https://trsong.github.io/python/java/2021/11/02/DailyQuestionsNov.html#jan-1-2022-lc-772-hard-basic-calculator-iii) -- *https://trsong.github.io/python/java/2021/11/02/DailyQuestionsNov.html#jan-1-2022-lc-772-hard-basic-calculator-iii* [*\(Try ME\)*](https://replit.com/@trsong/Basic-Calculator-III-1)
+- [**\[Hard\] LC 772. Basic Calculator III**](https://trsong.github.io/python/java/2021/11/02/DailyQuestionsNov.html#jan-1-2022-lc-772-hard-basic-calculator-iii) -- *Implement a basic calculator to evaluate a simple expression string contains integers, +, -, *, / operators , open and closing parentheses.* [*\(Try ME\)*](https://replit.com/@trsong/Basic-Calculator-III-1)
 
 </summary>
 <div>
