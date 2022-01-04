@@ -53,6 +53,162 @@ Explanation: The given directed graph will be like this:
      4 <- 3
 ```
 
+**My thoughts:** Based on definition of rooted tree: all node have one parent except root that has no parent. 
+
+The redundant edge must either cause some node to have 2 parents or connect to root and make it no longer a root. 
+
+For the first case, we can assume either edge is redundant and remove it. Yet that creates two separate outcomes: assumption is correct (no cycle after) or assumption is incorrect (cycle still exists), then we choose the other as answer. 
+
+For the second case, we need to figure out which edge that firsts introduces a cycle. 
+
+
+**Solution with UnionFind:** [https://replit.com/@trsong/Redundant-Connection-II](https://replit.com/@trsong/Redundant-Connection-II)
+```py
+import unittest
+
+def find_redundant_connection(edges):
+    candidate1, candidate2 = find_conflict_edges(edges)
+    parent = {}
+
+    for u, v in edges:
+        # assume candidate2 is redundant
+        if [u, v] == candidate2:
+            continue
+        
+        # test if (u, v) create a cycle, if so they assumption of candidate 2 is incorrect
+        parent[v] = find_and_update_root(parent, u)
+        if parent[v] == v:
+            return candidate1 or [u, v]
+        
+    # assumption is correct
+    return candidate2
+
+
+def find_conflict_edges(edges):
+    parent = {}
+    for u, v in edges:
+        if v in parent:
+            return [parent[v], v], [u, v]
+        parent[v] = u
+    return None, None
+
+
+def find_and_update_root(parent, v):
+    parent[v] = parent.get(v, v)
+    if parent[v] != v:
+        parent[v] = find_and_update_root(parent, parent[v])
+        v = parent[v]
+    return v
+
+
+class FindRedundantConnectionSpec(unittest.TestCase):
+    def test_example(self):
+        """
+          1
+         / \
+        v   v
+        2-->3
+        """
+        edges = [[1, 2], [1, 3], [2, 3]]
+        expected = [2, 3]
+        self.assertEqual(expected, find_redundant_connection(edges))
+
+    def test_example2(self):
+        """
+        5 <- 1 -> 2
+             ^    |
+             |    v
+             4 <- 3
+        """
+        edges = [[1, 2], [2, 3], [3, 4], [4, 1], [1, 5]]
+        expected = [4, 1]
+        self.assertEqual(expected, find_redundant_connection(edges))
+
+    def test_graph_with_cycle(self):
+        """
+        1 <-> 2
+        """
+        edges = [[1, 2], [2, 1]]
+        expected = [2, 1]
+        self.assertEqual(expected, find_redundant_connection(edges))
+
+    def test_graph_with_cycle2(self):
+        """
+        1 -> 3 
+        | ^
+        v   \
+        2 -> 4
+        """
+        edges = [[1, 2], [1, 3], [4, 1], [2, 4]]
+        expected = [2, 4]
+        self.assertEqual(expected, find_redundant_connection(edges))
+
+    def test_graph_with_cycle3(self):
+        """
+        1 -> 6
+        |
+        v
+        2 <- 5
+        |    ^
+        v    |
+        3 -> 4
+        """
+        edges = [[1, 2], [1, 6], [5, 2], [2, 3], [3, 4], [4, 5]]
+        expected = [5, 2]
+        self.assertEqual(expected, find_redundant_connection(edges))
+
+    def test_graph_with_cycle4(self):
+        """
+        5 -> 1 -> 2
+             ^    |
+             |    v
+             4 <- 3
+        """
+        edges = [[3, 4], [4, 1], [2, 3], [1, 2], [5, 1]]
+        expected = [4, 1]
+        self.assertEqual(expected, find_redundant_connection(edges))
+
+    def test_graph_with_cycle5(self):
+        """
+        1  -> 5 -> 3
+              |  
+              v   
+        4 <-> 2
+        """
+        edges = [[4, 2], [1, 5], [5, 2], [5, 3], [2, 4]]
+        expected = [4, 2]
+        self.assertEqual(expected, find_redundant_connection(edges))
+
+    def test_graph_without_cycle(self):
+        """
+        1 -> 3 
+        |    ^
+        v    |
+        2 -> 4
+        """
+        edges = [[1, 2], [1, 3], [2, 4], [4, 3]]
+        expected = [4, 3]
+        self.assertEqual(expected, find_redundant_connection(edges))
+
+    def test_large_graph(self):
+        edges = [[37, 30], [21, 34], [10, 40], [8, 36], [18, 10], [50, 11],
+                 [13, 6], [40, 7], [14, 38], [41, 24], [32, 17], [31, 15],
+                 [6, 27], [45, 3], [30, 42], [43, 26], [9, 4], [4, 31],
+                 [1, 29], [5, 23], [44, 19], [15, 44], [49, 20], [26, 5],
+                 [23, 50], [48, 41], [47, 22], [3, 46], [11, 16], [12, 35],
+                 [33, 50], [34, 45], [38, 2], [2, 32], [24, 49], [35, 37],
+                 [29, 13], [46, 48], [28, 12], [7, 21], [27, 18], [17, 39],
+                 [42, 14], [20, 47], [36, 1], [22, 9], [25, 8], [39, 25],
+                 [16, 28], [19, 43]]
+        expected = [23, 50]
+        self.assertEqual(expected, find_redundant_connection(edges))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False, verbosity=2)
+```
+
+
 ### Jan 1, 2022 LC 772 \[Hard\] Basic Calculator III
 ---
 > **Questions:** Implement a basic calculator to evaluate a simple expression string.
