@@ -38,6 +38,61 @@ categories: Python/Java
 majority_element([3, 5, 3, 3, 2, 4, 3])  # gives 3
 ```
 
+**Solution:** [https://replit.com/@trsong/Find-Majority-Element-2](https://replit.com/@trsong/Find-Majority-Element-2)
+```py
+import unittest
+
+def majority_element(nums):
+    count = 0
+    candidate = 0
+
+    for num in nums:
+        if count == 0:
+            candidate = num
+        
+        if candidate == num:
+            count += 1
+        else:
+            count -= 1
+    return candidate if validate(nums, candidate) else None
+    
+    
+def validate(nums, major_elem):
+    count = 0
+    for num in nums:
+        count += 1 if num == major_elem else 0
+    return count + count > len(nums)
+
+
+class MajorityElementSpec(unittest.TestCase):
+    def test_no_majority_element_exists(self):
+        self.assertIsNone(majority_element([1, 2, 3, 4]))
+
+    def test_example(self):
+        self.assertEqual(3, majority_element([3, 5, 3, 3, 2, 4, 3]))
+
+    def test_example2(self):
+        self.assertEqual(3, majority_element([3, 2, 3]))
+
+    def test_example3(self):
+        self.assertEqual(2, majority_element([2, 2, 1, 1, 1, 2, 2]))
+
+    def test_there_is_a_tie(self):
+        self.assertIsNone(majority_element([1, 2, 1, 2, 1, 2]))
+
+    def test_majority_on_second_half_of_list(self):
+        self.assertEqual(1, majority_element([2, 2, 1, 2, 1, 1, 1]))
+    
+    def test_more_than_two_kinds(self):
+        self.assertEqual(1, majority_element([1, 2, 1, 1, 2, 2, 1, 3, 1, 1, 1]))
+
+    def test_zero_is_the_majority_element(self):
+        self.assertEqual(0, majority_element([0, 1, 0, 1, 0, 1, 0]))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False, verbosity=2)
+```
 
 ### Jan 2, 2022 LC 685 \[Hard\] Redundant Connection II
 ---
