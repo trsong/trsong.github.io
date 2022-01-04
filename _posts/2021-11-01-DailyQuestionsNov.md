@@ -21,6 +21,24 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
 
+
+### Jan 4, 2022 \[Medium\] Reverse Coin Change
+---
+> **Question:** You are given an array of length `N`, where each element `i` represents the number of ways we can produce `i` units of change. For example, `[1, 0, 1, 1, 2]` would indicate that there is only one way to make `0, 2, or 3` units, and two ways of making `4` units.
+>
+> Given such an array, determine the denominations that must be in use. In the case above, for example, there must be coins with value `2, 3, and 4`.
+
+
+### Jan 3, 2022  \[Medium\] Majority Element
+---
+> **Question:** A majority element is an element that appears more than half the time. Given a list with a majority element, find the majority element.
+
+**Example:**
+```py
+majority_element([3, 5, 3, 3, 2, 4, 3])  # gives 3
+```
+
+
 ### Jan 2, 2022 LC 685 \[Hard\] Redundant Connection II
 ---
 > **Questions:** In this problem, a rooted tree is a directed graph such that, there is exactly one node (the root) for which all other nodes are descendants of this node, plus every node has exactly one parent, except for the root node which has no parents.
