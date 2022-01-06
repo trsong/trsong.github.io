@@ -28,6 +28,82 @@ categories: Python/Java
 >
 > Given such an array, determine the denominations that must be in use. In the case above, for example, there must be coins with value `2, 3, and 4`.
 
+**Solution with DP:** [https://replit.com/@trsong/Reverse-Coin-Change-2](https://replit.com/@trsong/Reverse-Coin-Change-2)
+```py
+import unittest
+
+def reverse_coin_change(coin_ways):
+    # coin_ways is originally generated like the following
+    # coin_ways[n] += coin_ways[n - b] where b <= n for b in base 
+    base = []
+    n = len(coin_ways)
+    for coin in range(1, n):
+        if coin_ways[coin] == 0:
+            continue
+        base.append(coin)
+
+        for i in range(n - 1, coin - 1, -1):
+            # work backwards to cancel base's effect
+            coin_ways[i] -= coin_ways[i - coin]
+    return base
+
+
+class ReverseCoinChangeSpec(unittest.TestCase):
+    @staticmethod
+    def generate_coin_ways(base, size=None):
+        max_num = size if size is not None else max(base)
+        coin_ways = [0] * (max_num + 1)
+        coin_ways[0] = 1
+        for base_num in base:
+            for num in xrange(base_num, max_num + 1):
+                coin_ways[num] += coin_ways[num - base_num]
+        return coin_ways  
+
+    def test_example(self):
+        coin_ways = [1, 0, 1, 1, 2]
+        # 0: 0
+        # 1: 
+        # 2: one 2
+        # 3: one 3
+        # 4: two 2's or one 4
+        # Therefore: [2, 3, 4] as base produces above coin ways
+        expected = [2, 3, 4]
+        self.assertEqual(expected, reverse_coin_change(coin_ways))
+
+    def test_empty_input(self):
+        self.assertEqual([], reverse_coin_change([]))
+
+    def test_empty_base(self):
+        self.assertEqual([], reverse_coin_change([1, 0, 0, 0, 0, 0]))
+
+    def test_one_number_base(self):
+        coin_ways = [1, 1, 1, 1, 1, 1]
+        expected = [1]
+        self.assertEqual(expected, reverse_coin_change(coin_ways))
+
+    def test_prime_number_base(self):
+        # ReverseCoinChangeSpec.generate_coin_ways([2, 3, 5, 7], 10)
+        coin_ways = [1, 0, 1, 1, 1, 2, 2, 3, 3, 4, 5]
+        expected = [2, 3, 5, 7]
+        self.assertEqual(expected, reverse_coin_change(coin_ways))
+
+    def test_composite_base(self):
+        # ReverseCoinChangeSpec.generate_coin_ways([2, 4, 6], 10)
+        coin_ways = [1, 0, 1, 0, 2, 0, 3, 0, 5, 0, 6]
+        expected = [2, 4, 6, 8]
+        self.assertEqual(expected, reverse_coin_change(coin_ways))
+
+    def test_all_number_bases(self):
+        # ReverseCoinChangeSpec.generate_coin_ways([1, 2, 3, 4, 5, 6, 7, 8, 9, 10])
+        coin_ways = [1, 1, 2, 3, 5, 7, 11, 15, 22, 30, 42]
+        expected = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+        self.assertEqual(expected, reverse_coin_change(coin_ways))
+
+
+if __name__ == '__main__':
+    unittest.main(verbosity=2, exit=False)
+```
+
 
 ### Jan 3, 2022  \[Medium\] Majority Element
 ---
