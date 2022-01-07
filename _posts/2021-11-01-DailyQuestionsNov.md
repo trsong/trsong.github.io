@@ -55,6 +55,56 @@ Case 2: 2nd rightmost
 > 
 > Given `n = 27`, return `3` since `27 = 3^2 + 3^2 + 3^2 = 9 + 9 + 9`.
 
+**Solution with DP:** [https://replit.com/@trsong/Minimum-Squares-Sum-to-N-3](https://replit.com/@trsong/Minimum-Squares-Sum-to-N-3)
+```py
+import unittest
+
+def min_square_sum(n):
+    # Let dp[n] represents min number of square sum to n
+    # dp[n] = 1 + min{ dp[n - x * x] for all x st. n >= x * x }
+    
+    dp = [float('inf')] * (n + 1)
+    dp[0] = 0
+
+    for i in range(1, n + 1):
+        for x in range(i):
+            sqr_x = x * x
+            if sqr_x > i:
+                continue
+            dp[i] = min(dp[i], 1 + dp[i - sqr_x])
+    return dp[n]
+
+
+class MinSquareSumSpec(unittest.TestCase):
+    def test_example(self):
+        # 13 = 3^2 + 2^2
+        self.assertEqual(2, min_square_sum(13))
+
+    def test_example2(self):
+        # 27 = 3^2 + 3^2 + 3^2
+        self.assertEqual(3, min_square_sum(27))
+
+    def test_perfect_square(self):
+        # 100 = 10^2
+        self.assertEqual(min_square_sum(100), 1) 
+
+    def test_random_number(self):
+        # 63 = 7^2+ 3^2 + 2^2 + 1^2
+        self.assertEqual(min_square_sum(63), 4) 
+
+    def test_random_number2(self):
+        # 12 = 4 + 4 + 4
+        self.assertEqual(min_square_sum(12), 3) 
+
+    def test_random_number3(self):
+        # 6 = 2 + 2 + 2
+        self.assertEqual(3, min_square_sum(6)) 
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False, verbosity=2)
+```
+
 
 ### Jan 5, 2022 LC 668 \[Hard\] Kth Smallest Number in Multiplication Table
 ---
