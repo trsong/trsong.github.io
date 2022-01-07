@@ -51,6 +51,83 @@ The 6-th smallest number is 6 (1, 2, 2, 3, 4, 6).
 ```
 
 
+**Solution with Binary Search:** [https://replit.com/@trsong/Kth-Smallest-Number-in-Multiplication-Table-2](https://replit.com/@trsong/Kth-Smallest-Number-in-Multiplication-Table-2)
+```py
+import unittest
+
+def find_kth_num(m, n, k):
+    lo = 1
+    hi = m * n
+    while lo < hi:
+        mid = lo + (hi - lo) // 2
+        num_smaller = count_smaller(m, n, mid)
+        if num_smaller < k:
+            lo = mid + 1
+        else:
+            hi = mid
+    return lo
+
+
+def count_smaller(n, m, target):
+    m, n = min(n, m), max(n, m)
+    res = 0
+    for r in range(1, min(m, target) + 1):
+        # The r-th row cannot have more than n elements
+        res += min(n, target // r)
+    return res
+
+
+class FindKthNumSpec(unittest.TestCase):
+    def test_example(self):
+        """
+        1	2	3
+        2	4	6
+        3	6	9
+        """
+        m, n, k = 3, 3, 5
+        self.assertEqual(3, find_kth_num(m, n, k))
+
+    def test_example2(self):
+        """
+        1	2	3
+        2	4	6
+        """
+        m, n, k = 2, 3, 6
+        self.assertEqual(6, find_kth_num(m, n, k))
+
+    def test_single_row(self):
+        """
+        1	2	3   4   5
+        """
+        m, n, k = 1, 5, 5
+        self.assertEqual(5, find_kth_num(m, n, k))
+
+    def test_single_column(self):
+        """
+        1
+        2
+        3
+        """
+        m, n, k = 3, 1, 2
+        self.assertEqual(2, find_kth_num(m, n, k))
+
+    def test_single_cell(self):
+        """
+        1
+        """
+        m, n, k = 1, 1, 1
+        self.assertEqual(1, find_kth_num(m, n, k))
+
+    def test_large_table(self):
+        m, n, k = 42, 34, 401
+        self.assertEqual(126, find_kth_num(m, n, k))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False, verbosity=2)
+```
+
+
 ### Jan 4, 2022 \[Medium\] Reverse Coin Change
 ---
 > **Question:** You are given an array of length `N`, where each element `i` represents the number of ways we can produce `i` units of change. For example, `[1, 0, 1, 1, 2]` would indicate that there is only one way to make `0, 2, or 3` units, and two ways of making `4` units.
