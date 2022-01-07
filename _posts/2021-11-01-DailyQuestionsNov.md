@@ -25,28 +25,6 @@ categories: Python/Java
 ---
 > **Question:** Given the root to a binary search tree, find the second largest node in the tree.
 
-**My thoughts:**Recall the way we figure out the largest element in BST: we go all the way to the right until not possible. So the second largest element must be on the left of largest element. We have two possibilities here:
-- Either it's the parent of rightmost element, if there is no child underneath
-- Or it's the rightmost element in left subtree of the rightmost element. ie. 2nd rightmost
-
-```py
-Case 1: Parent
-1
- \ 
-  2*
-   \
-    3
-
-Case 2: 2nd rightmost 
-1
- \
-  4
- /
-2
- \ 
-  3* 
-```
-
 ### Jan 6, 2022 LC 279 \[Medium\] Minimum Number of Squares Sum to N
 ---
 > **Question:** Given a positive integer n, find the smallest number of squared integers which sum to n.
