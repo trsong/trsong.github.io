@@ -25,6 +25,159 @@ categories: Python/Java
 ---
 > **Question:** Given the root to a binary search tree, find the second largest node in the tree.
 
+**My thoughts:**Recall the way we figure out the largest element in BST: we go all the way to the right until not possible. So the second largest element must be on the left of largest element. We have two possibilities here:
+- Either it's the parent of rightmost element, if there is no child underneath
+- Or it's the rightmost element in left subtree of the rightmost element. ie. 2nd rightmost
+
+```py
+Case 1: Parent
+1
+ \ 
+  2*
+   \
+    3
+
+Case 2: 2nd rightmost 
+1
+ \
+  4
+ /
+2
+ \ 
+  3* 
+```
+
+
+**Solution:** [https://replit.com/@trsong/Find-Second-Largest-in-BST-2](https://replit.com/@trsong/Find-Second-Largest-in-BST-2)
+```py
+import unittest
+
+def bst_2nd_max(node):
+    max_node, max_node_parent = find_right_most_and_parent(node)
+    if not max_node or not max_node.left:
+        return max_node_parent
+    
+    second_max_node, _ = find_right_most_and_parent(max_node.left)
+    return second_max_node
+
+
+def find_right_most_and_parent(root):
+    prev = None
+    p = root
+    while p and p.right:
+        prev = p
+        p = p.right
+    return p, prev
+
+
+###################
+# Testing Utilities
+###################
+class TreeNode(object):
+    def __init__(self, val, left=None, right=None):
+        self.val = val
+        self.left = left
+        self.right = right
+
+    def __repr__(self):
+        stack = [(self, 0)]
+        res = []
+        while stack:
+            node, depth = stack.pop()
+            res.append("\n" + "\t" * depth)
+            if not node:
+                res.append("* None")
+                continue
+
+            res.append("* " + str(node.val))
+            for child in [node.right, node.left]:
+                stack.append((child, depth+1))
+        return "\n" + "".join(res) + "\n"
+
+
+class Bst2ndMaxSpec(unittest.TestCase):
+    def test_empty_tree(self):
+        self.assertIsNone(bst_2nd_max(None))
+
+    def test_one_element_tree(self):
+        root = TreeNode(1)
+        self.assertIsNone(bst_2nd_max(root))
+
+    def test_left_heavy_tree(self):
+        """
+          2
+         /
+        1*
+        """
+        left_tree = TreeNode(1)
+        root = TreeNode(2, left_tree)
+        self.assertEqual(left_tree, bst_2nd_max(root))
+
+    def test_left_heavy_tree2(self):
+        """
+          3
+         /
+        1
+         \
+          2*
+        """
+        leaf = TreeNode(2)
+        root = TreeNode(3, TreeNode(1, right=leaf))
+        self.assertEqual(leaf, bst_2nd_max(root))
+
+    def test_balanced_tree(self):
+        """
+          2*
+         / \
+        1   3
+        """
+        root = TreeNode(2, TreeNode(1), TreeNode(3))
+        self.assertEqual(root, bst_2nd_max(root))
+
+    def test_balanced_tree2(self):
+        """
+             4
+           /   \
+          2     6*
+         / \   / \ 
+        1   3 5   7 
+        """
+        left_tree = TreeNode(2, TreeNode(1), TreeNode(3))
+        right_tree = TreeNode(6, TreeNode(5), TreeNode(7))
+        root = TreeNode(4, left_tree, right_tree)
+        self.assertEqual(right_tree, bst_2nd_max(root))
+
+    def test_right_heavy_tree(self):
+        """
+        1
+         \
+          2*
+           \
+            3
+        """
+        right_tree = TreeNode(2, right=TreeNode(3))
+        root = TreeNode(1, right=right_tree)
+        self.assertEqual(right_tree, bst_2nd_max(root))
+
+    def test_unbalanced_tree(self):
+        """
+        1
+         \
+          4
+         /
+        2
+         \
+          3*
+        """
+        leaf = TreeNode(3)
+        root = TreeNode(1, right=TreeNode(4, TreeNode(2, right=leaf)))
+        self.assertEqual(leaf, bst_2nd_max(root))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False, verbosity=2)
+```
+
 ### Jan 6, 2022 LC 279 \[Medium\] Minimum Number of Squares Sum to N
 ---
 > **Question:** Given a positive integer n, find the smallest number of squared integers which sum to n.
