@@ -21,6 +21,24 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
 
+
+### Jan 8, 2022 \[Medium\] All Root to Leaf Paths in Binary Tree
+---
+> **Question:** Given a binary tree, return all paths from the root to leaves.
+
+**Example:** 
+```py
+Given the tree:
+   1
+  / \
+ 2   3
+    / \
+   4   5
+
+Return [[1, 2], [1, 3, 4], [1, 3, 5]]
+```
+
+
 ### Jan 7, 2022 \[Medium\] Second Largest in BST
 ---
 > **Question:** Given the root to a binary search tree, find the second largest node in the tree.
