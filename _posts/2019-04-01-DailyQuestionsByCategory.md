@@ -10273,7 +10273,7 @@ Output: []
 <details>
 <summary class="lc_m">
 
-- [**\[Medium\] All Root to Leaf Paths in Binary Tree**](http://trsong.github.io/python/java/2020/11/02/DailyQuestionsAug.html#nov-10-2020-medium-all-root-to-leaf-paths-in-binary-tree) -- *Given a binary tree, return all paths from the root to leaves.* [*\(Try ME\)*](https://repl.it/@trsong/Print-All-Root-to-Leaf-Paths-in-Binary-Tree-1)
+- [**\[Medium\] All Root to Leaf Paths in Binary Tree**](https://trsong.github.io/python/java/2021/11/02/DailyQuestionsNov.html#jan-8-2022-medium-all-root-to-leaf-paths-in-binary-tree) -- *Given a binary tree, return all paths from the root to leaves.* [*\(Try ME\)*](https://repl.it/@trsong/Print-All-Root-to-Leaf-Paths-in-Binary-Tree-1)
 
 </summary>
 <div>

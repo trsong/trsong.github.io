@@ -38,6 +38,87 @@ Given the tree:
 Return [[1, 2], [1, 3, 4], [1, 3, 5]]
 ```
 
+**Solution with Backtracking:** [https://replit.com/@trsong/Print-All-Root-to-Leaf-Paths-in-Binary-Tree-2](https://replit.com/@trsong/Print-All-Root-to-Leaf-Paths-in-Binary-Tree-2)
+```py
+import unittest
+
+def path_to_leaves(tree):
+    if not tree:
+        return []
+
+    res = []
+    backtrack(res, [], tree)
+    return res
+
+
+def backtrack(res, accu_path, node):
+    if not node.left and not node.right:
+        res.append(accu_path + [node.val])
+    else:
+        accu_path.append(node.val)
+        for child in [node.left, node.right]:
+            if not child:
+                continue
+            backtrack(res, accu_path, child)
+        accu_path.pop()
+    
+    
+class TreeNode(object):
+    def __init__(self, val, left=None, right=None):
+        self.val = val
+        self.left = left
+        self.right= right
+
+
+class PathToLeavesSpec(unittest.TestCase):
+    def test_empty_tree(self):
+        self.assertEqual([], path_to_leaves(None))
+
+    def test_one_level_tree(self):
+        self.assertEqual([[1]], path_to_leaves(TreeNode(1)))
+
+    def test_two_level_tree(self):
+        """
+          1
+         / \
+        2   3
+        """
+        tree = TreeNode(1, TreeNode(2), TreeNode(3))
+        expected = [[1, 2], [1, 3]]
+        self.assertEqual(expected, path_to_leaves(tree))
+
+    def test_example(self):
+        """
+          1
+         / \
+        2   3
+           / \
+          4   5
+        """
+        n3 = TreeNode(3, TreeNode(4), TreeNode(5))
+        tree = TreeNode(1, TreeNode(2), n3)
+        expected = [[1, 2], [1, 3, 4], [1, 3, 5]]
+        self.assertEqual(expected, path_to_leaves(tree))
+
+    def test_complete_tree(self):
+        """
+               1
+             /   \
+            2     3
+           / \   /
+          4   5 6
+        """
+        left_tree = TreeNode(2, TreeNode(4), TreeNode(5))
+        right_tree = TreeNode(3, TreeNode(6))
+        tree = TreeNode(1, left_tree, right_tree)
+        expected = [[1, 2, 4], [1, 2, 5], [1, 3, 6]]
+        self.assertEqual(expected, path_to_leaves(tree))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False, verbosity=2)
+```
+
 
 ### Jan 7, 2022 \[Medium\] Second Largest in BST
 ---
