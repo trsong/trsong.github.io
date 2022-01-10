@@ -23,6 +23,30 @@ categories: Python/Java
 
 
 
+### Jan 10, 2022 \[Hard\] Print Ways to Climb Staircase
+---
+> **Question:** There exists a staircase with N steps, and you can climb up either 1 or 2 steps at a time. Given N, write a function that **PRINT** out all possible unique ways you can climb the staircase. The **ORDER** of the steps matters. 
+>
+> For example, if N is 4, then there are 5 unique ways (accoding to May 5's question). This time we print them out as the following:
+
+```py
+1, 1, 1, 1
+2, 1, 1
+1, 2, 1
+1, 1, 2
+2, 2
+```
+
+> What if, instead of being able to climb 1 or 2 steps at a time, you could climb any number from a set of positive integers X? 
+>
+> For example, if N is 6, and X = {2, 5}. You could climb 2 or 5 steps at a time. Then there is only 1 unique way, so we print the following:
+
+```py
+2, 2, 2
+```
+
+
+
 ### Jan 9, 2022 LC 138 \[Medium\] Deepcopy List with Random Pointer
 --- 
 > **Question:** A linked list is given such that each node contains an additional random pointer which could point to any node in the list or null.
