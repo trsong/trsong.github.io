@@ -23,7 +23,7 @@ categories: Python/Java
 
 
 
-### Jan 10, 2022 \[Hard\] Print Ways to Climb Staircase
+### Jan 11, 2022 \[Hard\] Print Ways to Climb Staircase
 ---
 > **Question:** There exists a staircase with N steps, and you can climb up either 1 or 2 steps at a time. Given N, write a function that **PRINT** out all possible unique ways you can climb the staircase. The **ORDER** of the steps matters. 
 >
@@ -46,6 +46,15 @@ categories: Python/Java
 ```
 
 
+### Jan 10, 2022 \[Medium\] Regular Numbers
+--- 
+> **Question:**  A regular number in mathematics is defined as one which evenly divides some power of `60`. Equivalently, we can say that a regular number is one whose only prime divisors are `2`, `3`, and `5`.
+>
+> These numbers have had many applications, from helping ancient Babylonians keep time to tuning instruments according to the diatonic scale.
+>
+> Given an integer N, write a program that returns, in order, the first N regular numbers.
+
+
 
 ### Jan 9, 2022 LC 138 \[Medium\] Deepcopy List with Random Pointer
 --- 
@@ -61,6 +70,181 @@ Input:
 Explanation:
 Node 1's value is 1, both of its next and random pointer points to Node 2.
 Node 2's value is 2, its next pointer points to null and its random pointer points to itself.
+```
+
+**Solution:** [https://replit.com/@trsong/Create-Deepcopy-List-with-Random-3](https://replit.com/@trsong/Create-Deepcopy-List-with-Random-3)
+```py
+import unittest
+import copy
+
+def deep_copy(head):
+    # Step1: Duplicate node to every other position
+    p = head
+    while p:
+        p.next = ListNode(p.val, next=p.next)
+        p = p.next.next
+    
+    # Step2: Copy random attribute
+    p = head
+    while p:
+        copy = p.next
+        copy.random = p.random.next if p.random else None
+        p = p.next.next
+    
+    # Step3: Partition even and odd nodes to restore original list and get result
+    copy_head = head.next if head else None
+    p = head
+    while p:
+        copy = p.next
+        if copy.next:
+            p.next = copy.next
+            copy.next = copy.next.next
+        else:
+            p.next = None
+            copy.next = None
+        p = p.next
+    return copy_head
+    
+
+##################### 
+# Testing Utiltities
+#####################
+class ListNode(object):
+    def __init__(self, val, next=None, random=None):
+        self.val = val
+        self.next = next
+        self.random = random
+
+    def __eq__(self, other):
+        if not other:
+            return False
+        is_random_none = self.random is None and other.random is None
+        is_random_equal = self.random and other.random and self.random.val == other.random.val
+        is_random_valid = is_random_none or is_random_equal
+        return is_random_valid and self.val == other.val and self.next == other.next
+        
+    def __repr__(self):
+        lst = []
+        random = []
+        p = self
+        while p:
+            lst.append(str(p.val))
+            if p.random:
+                random.append(str(p.random.val))
+            else:
+                random.append("N")
+            p = p.next
+        
+        return "\nList: [{}].\nRandom: [{}]".format(','.join(lst), ','.join(random))
+            
+
+class DeepCopySpec(unittest.TestCase):
+    def test_empty_list(self):
+        self.assertIsNone(deep_copy(None))
+    
+    def test_list_with_random_point_to_itself(self):
+        n = ListNode(1)
+        n.random = n
+        expected = copy.deepcopy(n)
+        self.assertEqual(expected, deep_copy(n))
+        self.assertEqual(expected, n)
+
+    def test_random_pointer_is_None(self):
+        # 1 -> 2 -> 3 -> 4
+        n4 = ListNode(4)
+        n3 = ListNode(3, n4)
+        n2 = ListNode(2, n3)
+        n1 = ListNode(1, n2)
+        expected = copy.deepcopy(n1)
+        self.assertEqual(expected, deep_copy(n1))
+        self.assertEqual(expected, n1)
+
+    def test_list_with_forward_random_pointers(self):
+        # 1 -> 2 -> 3 -> 4
+        n4 = ListNode(4)
+        n3 = ListNode(3, n4)
+        n2 = ListNode(2, n3)
+        n1 = ListNode(1, n2)
+
+        # random pointer:
+        # 1 -> 3
+        # 2 -> 3
+        # 3 -> 4
+        n1.random = n3
+        n2.random = n3
+        n3.random = n4
+        expected = copy.deepcopy(n1)
+        self.assertEqual(expected, deep_copy(n1))
+        self.assertEqual(expected, n1)
+
+    def test_list_with_backward_random_pointers(self):
+        # 1 -> 2 -> 3 -> 4
+        n4 = ListNode(4)
+        n3 = ListNode(3, n4)
+        n2 = ListNode(2, n3)
+        n1 = ListNode(1, n2)
+
+        # random pointer:
+        # 1 -> 1
+        # 2 -> 1
+        # 3 -> 2
+        # 4 -> 1
+        n1.random = n1
+        n2.random = n1
+        n3.random = n2
+        n4.random = n1
+        expected = copy.deepcopy(n1)
+        self.assertEqual(expected, deep_copy(n1))
+        self.assertEqual(expected, n1)
+
+    def test_list_with_both_forward_and_backward_pointers(self):
+        # 1 -> 2 -> 3 -> 4
+        n4 = ListNode(4)
+        n3 = ListNode(3, n4)
+        n2 = ListNode(2, n3)
+        n1 = ListNode(1, n2)
+
+        # random pointer:
+        # 1 -> 3
+        # 2 -> 1
+        # 3 -> 4
+        # 4 -> 3
+        n1.random = n3
+        n2.random = n2
+        n3.random = n4
+        n4.random = n3
+        expected = copy.deepcopy(n1)
+        self.assertEqual(expected, deep_copy(n1))
+        self.assertEqual(expected, n1)
+
+    def test_list_with_both_forward_and_backward_pointers2(self):
+        # 1 -> 2 -> 3 -> 4 -> 5 -> 6
+        n6 = ListNode(6)
+        n5 = ListNode(5, n6)
+        n4 = ListNode(4, n5)
+        n3 = ListNode(3, n4)
+        n2 = ListNode(2, n3)
+        n1 = ListNode(1, n2)
+
+        # random pointer:
+        # 1 -> 1
+        # 2 -> 1
+        # 3 -> 4
+        # 4 -> 5
+        # 5 -> 3
+        # 6 -> None
+        n1.random = n1
+        n2.random = n1
+        n3.random = n4
+        n4.random = n5
+        n5.random = n3
+        expected = copy.deepcopy(n1)
+        self.assertEqual(expected, deep_copy(n1))
+        self.assertEqual(expected, n1)
+        
+
+if __name__ == '__main__':
+    unittest.main(exit=False, verbosity=2)
 ```
 
 
