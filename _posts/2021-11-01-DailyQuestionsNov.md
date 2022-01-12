@@ -23,6 +23,26 @@ categories: Python/Java
 
 
 
+### Jan 12, 2022 \[Medium\] Similar Websites
+---
+> **Question:** You are given a list of (website, user) pairs that represent users visiting websites. Come up with a program that identifies the top k pairs of websites with the greatest similarity.
+>
+> **Note:** The similarity metric bewtween two sets equals intersection / union. 
+
+**Example:**
+```py
+Suppose k = 1, and the list of tuples is:
+
+[('a', 1), ('a', 3), ('a', 5),
+ ('b', 2), ('b', 6),
+ ('c', 1), ('c', 2), ('c', 3), ('c', 4), ('c', 5),
+ ('d', 4), ('d', 5), ('d', 6), ('d', 7),
+ ('e', 1), ('e', 3), ('e', 5), ('e', 6)]
+ 
+Then a reasonable similarity metric would most likely conclude that a and e are the most similar, so your program should return [('a', 'e')].
+```
+
+
 ### Jan 11, 2022 \[Hard\] Print Ways to Climb Staircase
 ---
 > **Question:** There exists a staircase with N steps, and you can climb up either 1 or 2 steps at a time. Given N, write a function that **PRINT** out all possible unique ways you can climb the staircase. The **ORDER** of the steps matters. 
