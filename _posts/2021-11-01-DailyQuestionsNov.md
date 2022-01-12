@@ -45,6 +45,87 @@ categories: Python/Java
 2, 2, 2
 ```
 
+**Solution with Backtracking:** [https://replit.com/@trsong/Print-Ways-to-Climb-Staircase-2](https://replit.com/@trsong/Print-Ways-to-Climb-Staircase-2)
+```py
+import unittest
+
+def climb_stairs(num_stairs, steps):
+    steps.sort()
+    res = []
+    backtrack(res, [], num_stairs, steps)
+    return res
+
+
+def backtrack(res, accu_path, num_stairs, steps):
+    if num_stairs == 0:
+        res.append(', '.join(accu_path))
+    else:
+        for step in steps:
+            if step > num_stairs:
+                break
+            accu_path.append(str(step))
+            backtrack(res, accu_path, num_stairs - step, steps)
+            accu_path.pop()
+            
+
+class ClimbStairSpec(unittest.TestCase):
+    def assert_result(self, expected, res):
+        self.assertEqual(sorted(res), sorted(expected))
+
+    def test_example(self):
+        num_stairs, steps = 4, [1, 2]
+        expected = [
+            '1, 1, 1, 1',
+            '2, 1, 1',
+            '1, 2, 1',
+            '1, 1, 2',
+            '2, 2'
+        ]
+        self.assert_result(expected, climb_stairs(num_stairs, steps))
+
+    def test_example2(self):
+        num_stairs, steps = 5, [1, 3, 5]
+        expected = [
+            '1, 1, 1, 1, 1', 
+            '3, 1, 1', 
+            '1, 3, 1', 
+            '1, 1, 3', 
+            '5'
+        ]
+        self.assert_result(expected, climb_stairs(num_stairs, steps))
+
+    def test_example3(self):
+        num_stairs, steps = 4, [1, 2, 3, 4]
+        expected = [
+            '1, 1, 1, 1', 
+            '1, 1, 2', 
+            '1, 2, 1', 
+            '1, 3', 
+            '2, 1, 1', 
+            '2, 2', 
+            '3, 1',
+            '4'
+        ]
+        self.assert_result(expected, climb_stairs(num_stairs, steps))
+    
+    def test_infeasible_steps(self):
+        self.assert_result([], climb_stairs(9, []))
+    
+    def test_infeasible_steps2(self):
+        self.assert_result([], climb_stairs(99, [7]))
+    
+    def test_trivial_case(self):
+        num_stairs, steps = 42, [42]
+        expected = [
+            '42'
+        ]
+        self.assert_result(expected, climb_stairs(num_stairs, steps))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False, verbosity=2)
+```
+
 
 ### Jan 10, 2022 \[Medium\] Regular Numbers
 --- 
