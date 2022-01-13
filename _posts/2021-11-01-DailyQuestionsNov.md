@@ -22,6 +22,26 @@ categories: Python/Java
 
 
 
+### Jan 13, 2022 \[Hard\] Number of Ways to Divide an Array into K Equal Sum Sub-arrays
+---
+> **Question:** Given an integer K and an array arr[] of N integers, the task is to find the number of ways to split the array into K equal sum sub-arrays of non-zero lengths.
+
+**Example 1:**
+
+```py
+Input: arr[] = [0, 0, 0, 0], K = 3
+Output: 3
+All possible ways are:
+[[0], [0], [0, 0]]
+[[0], [0, 0], [0]]
+[[0, 0], [0], [0]]
+```
+
+**Example 2:**
+```py
+Input: arr[] = [1, -1, 1, -1], K = 2
+Output: 1
+```
 
 ### Jan 12, 2022 \[Medium\] Similar Websites
 ---
