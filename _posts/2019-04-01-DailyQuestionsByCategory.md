@@ -11085,6 +11085,36 @@ Given such an array, determine the denominations that must be in use. In the cas
 <details>
 <summary class="lc_h">
 
+- [**\[Hard\] Number of Ways to Divide an Array into K Equal Sum Sub-arrays**](https://trsong.github.io/python/java/2021/11/02/DailyQuestionsNov.html#jan-13-2022-hard-number-of-ways-to-divide-an-array-into-k-equal-sum-sub-arrays) -- *Given an integer K and an integer array, find the number of ways to split the array into K equal sum sub-arrays of non-zero lengths.* [*\(Try ME\)*](https://replit.com/@trsong/Number-of-Ways-to-Divide-an-Array-into-K-Equal-Sum-Subarr-1)
+
+</summary>
+<div>
+
+**Question:** Given an integer K and an array arr[] of N integers, the task is to find the number of ways to split the array into K equal sum sub-arrays of non-zero lengths.
+
+**Example 1:**
+
+```py
+Input: arr[] = [0, 0, 0, 0], K = 3
+Output: 3
+All possible ways are:
+[[0], [0], [0, 0]]
+[[0], [0, 0], [0]]
+[[0, 0], [0], [0]]
+```
+
+**Example 2:**
+```py
+Input: arr[] = [1, -1, 1, -1], K = 2
+Output: 1
+```
+
+</div>
+</details>
+
+<details>
+<summary class="lc_h">
+
 - [**\[Hard\] Ordered Minimum Window Subsequence**](https://trsong.github.io/python/java/2021/08/02/DailyQuestionsAug.html#oct-29-2021-hard-ordered-minimum-window-subsequence) -- *Given an array nums and a subsequence sub, find the shortest subarray of nums that contains sub.* [*\(Try ME\)*](https://replit.com/@trsong/Solve-Ordered-Minimum-Window-Subsequence-Problem-1)
 
 </summary>
