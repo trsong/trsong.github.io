@@ -9803,6 +9803,34 @@ We can consider a sentence valid if it conforms to the following rules:
 
 
 <details>
+<summary class="lc_m">
+
+- [**\[Medium\] LC 698. Partition to K Equal Sum Subsets**](https://trsong.github.io/python/java/2021/11/02/DailyQuestionsNov.html#jan-14-2022-lc-698-medium-partition-to-k-equal-sum-subsets) -- *Given an integer array and an integer, return if it is possible to divide this array into k non-empty subsets whose sums are all equal.* [*\(Try ME\)*](https://replit.com/@trsong/Partition-to-K-Equal-Sum-Subsets-1)
+
+</summary>
+<div>
+
+**Question:** Given an integer array nums and an integer k, return true if it is possible to divide this array into k non-empty subsets whose sums are all equal.
+
+**Example 1:**
+```py
+Input: nums = [4,3,2,3,5,2,1], k = 4
+Output: true
+Explanation: It is possible to divide it into 4 subsets (5), (1, 4), (2,3), (2,3) with equal sums.
+```
+
+**Example 2:**
+```py
+Input: nums = [1,2,3,4], k = 3
+Output: false
+```
+
+</div>
+</details>
+
+
+
+<details>
 <summary class="lc_h">
 
 - [**LC 140. Word Break II**](https://trsong.github.io/python/java/2021/11/02/DailyQuestionsNov.html#dec-3-2021-lc-140-hard-word-break-ii) -- *Given a string s and a dictionary of strings wordDict, add spaces in s to construct a sentence where each word is a valid dictionary word.* [*\(Try ME\)*](https://replit.com/@trsong/Word-Break-II-1)

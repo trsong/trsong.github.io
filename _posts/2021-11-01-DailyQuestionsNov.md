@@ -38,6 +38,108 @@ Input: nums = [1,2,3,4], k = 3
 Output: false
 ```
 
+**Solution with Backtracking:** [https://replit.com/@trsong/Partition-to-K-Equal-Sum-Subsets](https://replit.com/@trsong/Partition-to-K-Equal-Sum-Subsets)
+```py
+import unittest
+
+def can_partition(nums, k):
+    if not nums or k == 0:
+        return False
+
+    total = sum(nums)
+    if total % k != 0:
+        return False
+    target_sum = total / k
+
+    n = len(nums)
+    visited = [False] * n
+    nums.sort()
+    return backtrack(nums, k, visited, 0, 0, target_sum)
+
+
+def backtrack(nums, k, visited, next_index, current_sum, target_sum):
+    if k == 1:
+        return True
+
+    if target_sum == current_sum:
+        return backtrack(nums, k - 1, visited, 0, 0, target_sum)
+
+    for i in range(next_index, len(nums)):
+        if i > 0 and nums[i] == nums[i - 1] and not visited[i - 1]:
+            continue
+
+        if not visited[i] and nums[i] + current_sum <= target_sum:
+            visited[i] = True
+            if backtrack(nums, k, visited, i + 1, nums[i] + current_sum, target_sum):
+                return True
+            visited[i] = False
+    return False
+
+
+class CanPartitionSpec(unittest.TestCase):
+    def test_example(self):
+        k, nums = 4, [4, 3, 2, 3, 5, 2, 1]
+        # [5], [1, 4], [2, 3], [2, 3]
+        self.assertTrue(can_partition(nums, k))
+
+    def test_example2(self):
+        k, nums = 3, [1, 2, 3, 4]
+        self.assertFalse(can_partition(nums, k))
+
+    def test_zero_sum_subset(self):
+        k, nums = 3, [0, 0, 0, 0]
+        # [0], [0], [0, 0]
+        self.assertTrue(can_partition(nums, k))
+
+    def test_array_with_negative_numbers(self):
+        k, nums = 2, [1, -1, 1, -1]
+        # [1, -1], [1, -1]
+        self.assertTrue(can_partition(nums, k))
+
+    def test_array_with_negative_numbers2(self):
+        k, nums = 2, [1, 1, -2, 2, 1, 1]
+        # [1, 1, -2, 2], [1, 1]
+        self.assertTrue(can_partition(nums, k))
+
+    def test_array_with_unique_number(self):
+        k, nums = 6, [1, 1, 1, 1, 1, 1]
+        # [1], [1], [1], [1], [1], [1]
+        self.assertTrue(can_partition(nums, k))
+
+    def test_K_equals_4(self):
+        k, nums = 4, [1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0]
+        # [0, 0, 1], [0, 1], [0, 0, 0, 1], [0, 1, 0]
+        self.assertTrue(can_partition(nums, k))
+
+    def test_K_equals_0(self):
+        self.assertFalse(can_partition([1, 2], 0))
+        self.assertFalse(can_partition([], 0))
+
+    def test_empty_array(self):
+        self.assertFalse(can_partition([], 3))
+
+    def test_K_too_big(self):
+        self.assertFalse(can_partition([1, 1, 1], 4))
+
+    def test_K_equals_one(self):
+        # subarray must be non-zero length
+        self.assertFalse(can_partition([], 1))
+
+    def test_K_equals_one2(self):
+        self.assertTrue(can_partition([1, 2, 3], 1))
+
+    def test_sum_not_multiple_or_K(self):
+        self.assertFalse(can_partition([1, 1, 1], 2))
+
+    def test_performance(self):
+        self.assertFalse(
+            can_partition([3, 3, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2], 8))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False, verbosity=2)
+```
+
 ### Jan 13, 2022 \[Hard\] Number of Ways to Divide an Array into K Equal Sum Sub-arrays
 ---
 > **Question:** Given an integer K and an array arr[] of N integers, the task is to find the number of ways to split the array into K equal sum sub-arrays of non-zero lengths.
