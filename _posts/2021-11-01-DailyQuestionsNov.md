@@ -220,29 +220,35 @@ class CanPartitionSpec(unittest.TestCase):
         # [0, 0, 1], [0, 1], [0, 0, 0, 1], [0, 1, 0]
         self.assertTrue(can_partition(nums, k))
 
-    def test_K_equals_0(self):
-        self.assertFalse(can_partition([1, 2], 0))
+    def test_K_equals_zero(self):
+        k, nums = 0, [1, 2]
+        self.assertFalse(can_partition(nums, k))
+
+    def test_K_equals_zero_2(self):
         self.assertFalse(can_partition([], 0))
 
     def test_empty_array(self):
         self.assertFalse(can_partition([], 3))
 
     def test_K_too_big(self):
-        self.assertFalse(can_partition([1, 1, 1], 4))
+        k, nums = 4, [1, 1, 1]
+        self.assertFalse(can_partition(nums, k))
 
     def test_K_equals_one(self):
         # subarray must be non-zero length
         self.assertFalse(can_partition([], 1))
 
     def test_K_equals_one2(self):
-        self.assertTrue(can_partition([1, 2, 3], 1))
+        k, nums = 1, [1, 2, 3]
+        self.assertTrue(can_partition(nums, k))
 
     def test_sum_not_multiple_or_K(self):
-        self.assertFalse(can_partition([1, 1, 1], 2))
+        k, nums = 2, [1, 1, 1]
+        self.assertFalse(can_partition(nums, k))
 
     def test_performance(self):
-        self.assertFalse(
-            can_partition([3, 3, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2], 8))
+        k, nums = 8, [3, 3, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2]
+        self.assertFalse(can_partition(nums, k))
 
 
 if __name__ == '__main__':
