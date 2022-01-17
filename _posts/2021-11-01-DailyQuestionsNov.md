@@ -21,7 +21,53 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
 
-### Jan 15, 2022 \[Medium\] Multiset Partition
+
+### Jan 17, 2022 LC 446 \[Medium\] Count Arithmetic Subsequences
+---
+> **Question:** Given an array of n positive integers. The task is to count the number of Arithmetic Subsequence in the array. Note: Empty sequence or single element sequence is also Arithmetic Sequence. 
+
+**Example 1:**
+```py
+Input : arr[] = [1, 2, 3]
+Output : 8
+Arithmetic Subsequence from the given array are:
+[], [1], [2], [3], [1, 2], [2, 3], [1, 3], [1, 2, 3].
+```
+
+**Example 2:**
+```py
+Input : arr[] = [10, 20, 30, 45]
+Output : 12
+```
+
+**Example 3:**
+```py
+Input : arr[] = [1, 2, 3, 4, 5]
+Output : 23
+```
+
+
+### Jan 16, 2022 LC 413 \[Medium\] Arithmetic Slices
+---
+> **Question:**  An integer array is called arithmetic if it consists of at least three elements and if the difference between any two consecutive elements is the same. For example, `[1, 3, 5, 7, 9]`, `[7, 7, 7, 7]`, and `[3, -1, -5, -9]` are arithmetic sequences.
+>
+> Given an integer array nums, return the number of arithmetic subarrays of nums.
+
+**Example 1:**
+```py
+Input: nums = [1,2,3,4]
+Output: 3
+Explanation: We have 3 arithmetic slices in nums: [1, 2, 3], [2, 3, 4] and [1,2,3,4] itself.
+```
+
+**Example 2:**
+```py
+Input: nums = [1]
+Output: 0
+```
+
+
+### Jan 15, 2022 LC 416 \[Medium\] Multiset Partition
 ---
 > **Question:** Given a multiset of integers, return whether it can be partitioned into two subsets whose sums are the same.
 >
