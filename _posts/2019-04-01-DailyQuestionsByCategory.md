@@ -10473,6 +10473,35 @@ For example, given `"2542540123"`, you should return `['254.25.40.123', '254.254
 
 
 <details>
+<summary class="lc_m">
+
+- [**\[Medium\] LC 413. Arithmetic Slices**](https://trsong.github.io/python/java/2021/11/02/DailyQuestionsNov.html#jan-16-2022-lc-413-medium-arithmetic-slices) -- *Given an integer array nums, return the number of arithmetic subarrays of nums.* [*\(Try ME\)*](https://replit.com/@trsong/Arithmetic-Slices-1)
+
+</summary>
+<div>
+
+**Question:**  An integer array is called arithmetic if it consists of at least three elements and if the difference between any two consecutive elements is the same. For example, `[1, 3, 5, 7, 9]`, `[7, 7, 7, 7]`, and `[3, -1, -5, -9]` are arithmetic sequences.
+
+Given an integer array nums, return the number of arithmetic subarrays of nums.
+
+**Example 1:**
+```py
+Input: nums = [1,2,3,4]
+Output: 3
+Explanation: We have 3 arithmetic slices in nums: [1, 2, 3], [2, 3, 4] and [1,2,3,4] itself.
+```
+
+**Example 2:**
+```py
+Input: nums = [1]
+Output: 0
+```
+
+</div>
+</details>
+
+
+<details>
 <summary class="lc_h">
 
 - [**\[Medium\] LC 790. Domino and Tromino Tiling**](https://trsong.github.io/python/java/2021/11/02/DailyQuestionsNov.html#nov-14-2021-lc-790-medium-domino-and-tromino-tiling) -- *Given a 2 x N board and instructed to completely cover the board with Dominoes and Trominoes, determine in how many ways this task is possible.* [*\(Try ME\)*](https://replit.com/@trsong/Domino-and-Tromino-Tiling-Problem-1)

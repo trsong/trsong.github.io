@@ -66,6 +66,97 @@ Input: nums = [1]
 Output: 0
 ```
 
+**Solution with DP:** [https://replit.com/@trsong/Arithmetic-Slices](https://replit.com/@trsong/Arithmetic-Slices)
+```py
+import unittest
+
+def count_arithmetic_slice(nums):
+    # Let dp[n] represents number of arithmetic slices end at index n - 1.
+    # dp[n] = dp[n - 1] + 1   if it is arithmetic
+    #       = 0               otherwise
+    n = len(nums)
+    dp = [0] * (n + 1)
+    for i in range(3, n + 1):
+        current = nums[i - 1]
+        prev = nums[i - 2]
+        prev2 = nums[i - 3]
+        if current - prev == prev - prev2:
+            dp[i] = dp[i - 1] + 1
+    return sum(dp)
+
+
+class CountArithmeticSliceSpec(unittest.TestCase):
+    def test_example(self):
+        nums = [1, 2, 3, 4]
+        # [1, 2, 3], [2, 3, 4], [1,2,3,4]
+        expected = 3
+        self.assertEqual(expected, count_arithmetic_slice(nums))
+
+    def test_example2(self):
+        nums = [1]
+        expected = 0
+        self.assertEqual(expected, count_arithmetic_slice(nums))
+
+    def test_arithmetic_array(self):
+        nums = [1, 3, 5, 7, 9]
+        expected = 6
+        self.assertEqual(expected, count_arithmetic_slice(nums))
+
+    def test_arithmetic_array2(self):
+        nums = [7, 7, 7, 7]
+        expected = 3
+        self.assertEqual(expected, count_arithmetic_slice(nums))
+
+    def test_arithmetic_array3(self):
+        nums = [3, -1, -5, -9]
+        expected = 3
+        self.assertEqual(expected, count_arithmetic_slice(nums))
+
+    def test_empty_array(self):
+        nums = []
+        expected = 0
+        self.assertEqual(expected, count_arithmetic_slice(nums))
+
+    def test_two_elem_array(self):
+        nums = [1, 2]
+        expected = 0
+        self.assertEqual(expected, count_arithmetic_slice(nums))
+
+    def test_descending_and_ascending_array(self):
+        nums = [4, 3, 2, 1, 2, 3]
+        expected = 4
+        self.assertEqual(expected, count_arithmetic_slice(nums))
+
+    def test_ascending_and_descending_array(self):
+        nums = [1, 2, 3, 2, 1, 0]
+        expected = 4
+        self.assertEqual(expected, count_arithmetic_slice(nums))
+
+    def test_non_arithmetic_array(self):
+        nums = [1, -1, 1, -1]
+        expected = 0
+        self.assertEqual(expected, count_arithmetic_slice(nums))
+
+    def test_non_arithmetic_array2(self):
+        nums = [1, 2, 4, 8]
+        expected = 0
+        self.assertEqual(expected, count_arithmetic_slice(nums))
+
+    def test_non_arithmetic_array3(self):
+        nums = [2, 1, 3, 4, 2, 3]
+        expected = 0
+        self.assertEqual(expected, count_arithmetic_slice(nums))
+
+    def test_two_arithmetic_array(self):
+        nums = [1, 2, 3, 8, 9, 10]
+        expected = 2
+        self.assertEqual(expected, count_arithmetic_slice(nums))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False, verbosity=2)
+```
+
 
 ### Jan 15, 2022 LC 416 \[Medium\] Multiset Partition
 ---
