@@ -75,6 +75,60 @@ Output: 0
 >
 > Given the multiset {15, 5, 20, 10, 35}, it would return false, since we can't split it up into two subsets that add up to the same sum.
 
+**Solution with DP:** [https://replit.com/@trsong/Multiset-Partition-into-Equal-Sum-2](https://replit.com/@trsong/Multiset-Partition-into-Equal-Sum-2)
+```py
+import unittest
+
+def has_equal_sum_partition(multiset):
+    total = sum(multiset)
+    return total % 2 == 0 and exists_subset_sum(multiset, total / 2)
+
+
+def exists_subset_sum(nums, target):
+    # Let dp[target] represents if there exists a subset sum target
+    n = len(nums)
+    dp = [False] * (target + 1)
+    dp[0] = True
+
+    for i in range(1, n + 1):
+        cur_num = nums[i - 1]
+        for s in range(target, cur_num - 1, -1):
+            dp[s] |= dp[s - cur_num]
+    return dp[target]
+
+
+class HasEqualSumPartitionSpec(unittest.TestCase):
+    def test_example(self):
+        nums = [15, 5, 20, 10, 35, 15, 10]
+        # Partition into [15, 5, 10, 15, 10] and [20, 35]
+        self.assertTrue(has_equal_sum_partition(nums))
+
+    def test_example2(self):
+        nums = [15, 5, 20, 10, 35]
+        self.assertFalse(has_equal_sum_partition(nums))
+
+    def test_empty_sets(self):
+        nums = []
+        self.assertTrue(has_equal_sum_partition(nums))
+
+    def test_partition_set_has_same_elements(self):
+        nums = [5, 1, 5, 1]
+        self.assertTrue(has_equal_sum_partition(nums))
+
+    def test_unable_to_partition(self):
+        nums = [1, 2, 2]
+        self.assertFalse(has_equal_sum_partition(nums))
+
+    def test_has_distinct_elements(self):
+        nums = [1, 2, 4, 3, 8]
+        # Partition into [1, 8] and [2, 4, 3]
+        self.assertTrue(has_equal_sum_partition(nums))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False, verbosity=2)
+```
+
 
 ### Jan 14, 2022 LC 698 \[Medium\] Partition to K Equal Sum Subsets
 ---
