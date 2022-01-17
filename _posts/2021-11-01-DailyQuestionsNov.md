@@ -21,6 +21,15 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
 
+### Jan 15, 2022 \[Medium\] Multiset Partition
+---
+> **Question:** Given a multiset of integers, return whether it can be partitioned into two subsets whose sums are the same.
+>
+> For example, given the multiset {15, 5, 20, 10, 35, 15, 10}, it would return true, since we can split it up into {15, 5, 10, 15, 10} and {20, 35}, which both add up to 55.
+>
+> Given the multiset {15, 5, 20, 10, 35}, it would return false, since we can't split it up into two subsets that add up to the same sum.
+
+
 ### Jan 14, 2022 LC 698 \[Medium\] Partition to K Equal Sum Subsets
 ---
 > **Question:** Given an integer array nums and an integer k, return true if it is possible to divide this array into k non-empty subsets whose sums are all equal.
