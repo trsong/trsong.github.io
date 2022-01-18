@@ -46,6 +46,59 @@ Input : arr[] = [1, 2, 3, 4, 5]
 Output : 23
 ```
 
+**My thoughts:** this problem can be solved with DP: defined as `dp[i][d]` represents number of arithemtic subsequence end at index `i` with common difference `d`. `dp[i][d] = dp[j][d] + 1 where d = nums[i] - nums[j] for all j < i`. Thus the total number of arithemtic subsequence = sum of `dp[i][d]` for all `i`, `d`. 
+
+**Solution with DP:** [https://replit.com/@trsong/Count-Number-of-Arithmetic-Subsequences-2](https://replit.com/@trsong/Count-Number-of-Arithmetic-Subsequences-2)
+```py
+import unittest
+from collections import defaultdict
+
+def count_arithmetic_subsequence(nums):
+    # Let dp[i][d] represents number of arithmetic end at index i with difference d
+    # dp[i][d] = sum { dp[j][d] + 1 where d = nums[i] - nums[j] where j < i }
+    n = len(nums)
+    dp = [defaultdict(int) for _ in range(n)]
+    res = n + 1
+    for i in range(n):
+        for j in range(i):
+            d = nums[i] - nums[j]
+            dp[i][d] += dp[j][d] + 1  # (seq ends at j) append nums[i] and (nums[j], nums[i])
+            res += dp[j][d] + 1
+    return res
+        
+
+class CountArithmeticSubsequenceSpec(unittest.TestCase):
+    def test_example1(self):
+        # All arithemtic subsequence: [], [1], [2], [3], [1, 2], [2, 3], [1, 3], [1, 2, 3].
+        self.assertEqual(8, count_arithmetic_subsequence([1, 2, 3]))
+
+    def test_example2(self):
+        self.assertEqual(12, count_arithmetic_subsequence([10, 20, 30, 45]))
+
+    def test_example3(self):
+        self.assertEqual(23, count_arithmetic_subsequence([1, 2, 3, 4, 5]))
+
+    def test_empty_array(self):
+        self.assertEqual(1, count_arithmetic_subsequence([]))
+
+    def test_array_with_one_element(self):
+        self.assertEqual(2, count_arithmetic_subsequence([1]))
+
+    def test_array_with_two_element(self):
+        # All arithemtic subsequence: [], [1], [2], [1, 2]
+        self.assertEqual(4, count_arithmetic_subsequence([1, 2]))
+
+    def test_array_with_unique_number(self):
+        self.assertEqual(8, count_arithmetic_subsequence([1, 1, 1]))
+
+    def test_contains_duplicate_number(self):
+        self.assertEqual(12, count_arithmetic_subsequence([2, 1, 1, 1]))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False, verbosity=2)
+```
+
 
 ### Jan 16, 2022 LC 413 \[Medium\] Arithmetic Slices
 ---
