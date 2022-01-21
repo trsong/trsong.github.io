@@ -34,6 +34,67 @@ categories: Python/Java
 >
 > For example, consider array `A[] = [8, 9, 6, 4, 5, 7, 3, 2, 4]` The length of longest subsequence is `6` and the subsequence is `[8, 9, 6, 7, 3, 4]` as `(8 < 9 > 6 < 7 > 3 < 4)`.
 
+**Solution:** [https://replit.com/@trsong/Solve-Longest-Alternating-Subsequence-Problem-2](https://replit.com/@trsong/Solve-Longest-Alternating-Subsequence-Problem-2)
+```py
+import unittest
+
+def find_len_of_longest_alt_seq(nums):
+    if not nums:
+        return 0
+        
+    prev_sign = None
+    res = 1
+    for i in range(1, len(nums)):
+        sign = nums[i] - nums[i - 1]
+        if sign == 0:
+            continue
+        
+        if prev_sign is None or prev_sign * sign < 0:
+            res += 1
+        prev_sign = sign
+    return res
+
+
+class FindLenOfLongestAltSeqSpec(unittest.TestCase):
+    def test_example(self):
+        nums = [8, 9, 6, 4, 5, 7, 3, 2, 4]
+        expected = 6  # [8, 9, 6, 7, 3, 4]
+        self.assertEqual(expected, find_len_of_longest_alt_seq(nums))
+
+    def test_empty_array(self):
+        nums = []
+        expected = 0
+        self.assertEqual(expected, find_len_of_longest_alt_seq(nums))
+
+    def test_entire_array_is_alternating(self):
+        nums = [1, 7, 4, 9, 2, 5]
+        expected = 6  # [1, 7, 4, 9, 2, 5]
+        self.assertEqual(expected, find_len_of_longest_alt_seq(nums))
+
+    def test_multiple_results(self):
+        nums = [1, 17, 5, 10, 13, 15, 10, 5, 16, 8]
+        expected = 7  # One solution: [1, 17, 10, 13, 10, 16, 8]
+        self.assertEqual(expected, find_len_of_longest_alt_seq(nums))
+
+    def test_increasing_array(self):
+        nums = [1, 3, 8, 9]
+        expected = 2  # One solution: [1, 3]
+        self.assertEqual(expected, find_len_of_longest_alt_seq(nums))
+
+    def test_local_solution_is_not_optimal(self):
+        nums = [4, 8, 2, 5, 8, 6]
+        expected = 5  # [4, 8, 2, 8, 6]
+        self.assertEqual(expected, find_len_of_longest_alt_seq(nums))
+
+    def test_same_element(self):
+        nums = [0, 0, 0, 1, -1, 1, -1]
+        expected = 5  # [0, 1, -1, 1, -1]
+        self.assertEqual(expected, find_len_of_longest_alt_seq(nums))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False, verbosity=2)
+```
 
 ### Jan 19, 2022 \[Hard\] Graph Coloring
 ---
