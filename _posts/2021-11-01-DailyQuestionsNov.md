@@ -21,6 +21,20 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
 
+### Jan 21, 2022 \[Medium\] Sort Linked List
+--- 
+> **Question:** Given a linked list, sort it in `O(n log n)` time and constant space.
+>
+> For example, the linked list `4 -> 1 -> -3 -> 99` should become `-3 -> 1 -> 4 -> 99`.
+
+
+### Jan 20, 2022 \[Medium\] Longest Alternating Subsequence Problem
+---
+> **Question:** Finding the length of a subsequence of a given sequence in which the elements are in alternating order, and in which the sequence is as long as possible. 
+>
+> For example, consider array `A[] = [8, 9, 6, 4, 5, 7, 3, 2, 4]` The length of longest subsequence is `6` and the subsequence is `[8, 9, 6, 7, 3, 4]` as `(8 < 9 > 6 < 7 > 3 < 4)`.
+
+
 ### Jan 19, 2022 \[Hard\] Graph Coloring
 ---
 > **Question:** Given an undirected graph represented as an adjacency matrix and an integer `k`, determine whether each node in the graph can be colored such that no two adjacent nodes share the same color using at most `k` colors.
