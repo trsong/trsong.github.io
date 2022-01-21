@@ -25,6 +25,77 @@ categories: Python/Java
 ---
 > **Question:** Given an undirected graph represented as an adjacency matrix and an integer `k`, determine whether each node in the graph can be colored such that no two adjacent nodes share the same color using at most `k` colors.
 
+**Solution with Backtracking:** [https://replit.com/@trsong/k-Graph-Coloring-2](https://replit.com/@trsong/k-Graph-Coloring-2)
+```py
+import unittest
+
+def solve_graph_coloring(neighbor_matrix, k):
+    n = len(neighbor_matrix)
+    node_color = [None] * n
+
+    def backtrack(next_node):
+        if next_node >= n:
+            return True
+
+        processed_neighbors = [
+            i for i in range(next_node) if neighbor_matrix[next_node][i]
+        ]
+        for color in range(k):
+            if any(color == node_color[nb] for nb in processed_neighbors):
+                continue
+            node_color[next_node] = color
+            if backtrack(next_node + 1):
+                return True
+            node_color[next_node] = None
+        return False
+
+    return backtrack(0)
+
+
+class SolveGraphColoringSpec(unittest.TestCase):
+    @staticmethod
+    def generateCompleteGraph(n):
+        return [[1 if i != j else 0 for i in range(n)] for j in range(n)]
+
+    def test_k2_graph(self):
+        k2 = SolveGraphColoringSpec.generateCompleteGraph(2)
+        self.assertFalse(solve_graph_coloring(k2, 1))
+        self.assertTrue(solve_graph_coloring(k2, 2))
+        self.assertTrue(solve_graph_coloring(k2, 3))
+
+    def test_k3_graph(self):
+        k3 = SolveGraphColoringSpec.generateCompleteGraph(3)
+        self.assertFalse(solve_graph_coloring(k3, 2))
+        self.assertTrue(solve_graph_coloring(k3, 3))
+        self.assertTrue(solve_graph_coloring(k3, 4))
+
+    def test_k4_graph(self):
+        k4 = SolveGraphColoringSpec.generateCompleteGraph(4)
+        self.assertFalse(solve_graph_coloring(k4, 3))
+        self.assertTrue(solve_graph_coloring(k4, 4))
+        self.assertTrue(solve_graph_coloring(k4, 5))
+
+    def test_square_graph(self):
+        square = [[0, 1, 0, 1], [1, 0, 1, 0], [0, 1, 0, 1], [1, 0, 1, 0]]
+        self.assertFalse(solve_graph_coloring(square, 1))
+        self.assertTrue(solve_graph_coloring(square, 2))
+        self.assertTrue(solve_graph_coloring(square, 3))
+
+    def test_star_graph(self):
+        star = [[0, 0, 1, 1, 0], [0, 0, 0, 1, 1], [1, 0, 0, 0, 1],
+                [1, 1, 0, 0, 0], [0, 1, 1, 0, 0]]
+        self.assertFalse(solve_graph_coloring(star, 2))
+        self.assertTrue(solve_graph_coloring(star, 3))
+        self.assertTrue(solve_graph_coloring(star, 4))
+
+    def test_disconnected_graph(self):
+        disconnected = [[0 for _ in range(10)] for _ in range(10)]
+        self.assertTrue(solve_graph_coloring(disconnected, 1))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False, verbosity=2)
+```
 
 ### Jan 18, 2022 \[Medium\] Cutting a Rod
 ---
