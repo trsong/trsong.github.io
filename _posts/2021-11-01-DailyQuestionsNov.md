@@ -21,6 +21,18 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
 
+### Jan 22, 2022 LC 421 \[Medium\] Maximum XOR of Two Numbers in an Array
+---
+> **Question:** Given an array of integers, find the maximum XOR of any two elements.
+
+**Example:**
+```py
+Input: nums = [3, 10, 5, 25, 2, 8]
+Output: 28
+Explanation: The maximum result is 5 XOR 25 = 28.
+```
+
+
 ### Jan 21, 2022 \[Medium\] Sort Linked List
 --- 
 > **Question:** Given a linked list, sort it in `O(n log n)` time and constant space.
