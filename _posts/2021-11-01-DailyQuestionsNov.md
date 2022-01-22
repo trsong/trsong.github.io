@@ -27,6 +27,117 @@ categories: Python/Java
 >
 > For example, the linked list `4 -> 1 -> -3 -> 99` should become `-3 -> 1 -> 4 -> 99`.
 
+**Solution:** [https://replit.com/@trsong/Sort-Linked-List-2](https://replit.com/@trsong/Sort-Linked-List-2)
+```py
+import unittest
+
+def sort_linked_list(root):
+    if not root or not root.next:
+        return root
+    
+    root1, root2 = partition(root)
+    sorted_root1 = sort_linked_list(root1)
+    sorted_root2 = sort_linked_list(root2)
+    return merge(sorted_root1, sorted_root2)
+
+
+def partition(root):
+    fast = slow = ListNode(-1, root)
+    while fast and fast.next:
+        fast = fast.next.next
+        slow = slow.next
+    
+    root2 = slow.next if slow else None
+    if slow:
+        slow.next = None
+    return root, root2
+
+
+def merge(root1, root2):
+    dummy = p = ListNode(-1)
+    while root1 and root2:
+        if root1.val <= root2.val:
+            p.next = root1
+            root1 = root1.next
+        else:
+            p.next = root2
+            root2 = root2.next
+        p = p.next
+    
+    if root1:
+        p.next = root1
+    elif root2:
+        p.next = root2
+    return dummy.next
+
+
+##################
+# Testing Utility
+##################
+class ListNode(object):
+    def __init__(self, val, next=None):
+        self.val = val
+        self.next = next
+
+    def __eq__(self, other):
+        return other and self.val == other.val and self.next == other.next
+
+    def __repr__(self):
+        return "{} -> {}".format(str(self.val), str(self.next))
+
+    @staticmethod
+    def List(*vals):
+        p = dummy = ListNode(-1)
+        for v in vals:
+            p.next = ListNode(v)
+            p = p.next
+        return dummy.next
+
+
+class SortLinkedListSpec(unittest.TestCase):
+    def test_example(self):
+        lst = ListNode.List(4, 1, -3, 99)
+        expected = ListNode.List(-3, 1, 4, 99)
+        self.assertEqual(expected, sort_linked_list(lst))
+
+    def test_empty_list(self):
+        self.assertIsNone(sort_linked_list(None))
+
+    def test_list_with_one_element(self):
+        lst = ListNode.List(1)
+        expected = ListNode.List(1)
+        self.assertEqual(expected, sort_linked_list(lst))
+
+    def test_already_sorted_list(self):
+        lst = ListNode.List(1, 2, 3, 4, 5)
+        expected = ListNode.List(1, 2, 3, 4, 5)
+        self.assertEqual(expected, sort_linked_list(lst))
+
+    def test_list_in_descending_order(self):
+        lst = ListNode.List(5, 4, 3, 2, 1)
+        expected = ListNode.List(1, 2, 3, 4, 5)
+        self.assertEqual(expected, sort_linked_list(lst))
+
+    def test_list_with_duplicated_elements(self):
+        lst = ListNode.List(1, 1, 3, 2, 1, 2, 1, 1, 3)
+        expected = ListNode.List(1, 1, 1, 1, 1, 2, 2, 3, 3)
+        self.assertEqual(expected, sort_linked_list(lst))
+
+    def test_binary_list(self):
+        lst = ListNode.List(0, 1, 0, 1, 0, 1)
+        expected = ListNode.List(0, 0, 0, 1, 1, 1)
+        self.assertEqual(expected, sort_linked_list(lst))
+
+    def test_odd_length_list(self):
+        lst = ListNode.List(4, 1, 2)
+        expected = ListNode.List(1, 2, 4)
+        self.assertEqual(expected, sort_linked_list(lst))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False, verbosity=2)
+```
+
 
 ### Jan 20, 2022 \[Medium\] Longest Alternating Subsequence Problem
 ---
