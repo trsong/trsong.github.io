@@ -21,6 +21,23 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
 
+
+### Jan 23, 2022 \[Medium\] H-Index II
+---
+> **Question:** The h-index is a metric that attempts to measure the productivity and citation impact of the publication of a scholar. The definition of the h-index is if a scholar has at least h of their papers cited h times.
+>
+> Given a list of publications of the number of citations a scholar has, find their h-index.
+>
+> Follow up for H-Index: What if the citations array is sorted in ascending order? Could you optimize your algorithm?
+
+**Example:**
+```py
+Input: [0, 1, 3, 3, 5]
+Output: 3
+Explanation:
+There are 3 publications with 3 or more citations, hence the h-index is 3.
+```
+
 ### Jan 22, 2022 LC 421 \[Medium\] Maximum XOR of Two Numbers in an Array
 ---
 > **Question:** Given an array of integers, find the maximum XOR of any two elements.
