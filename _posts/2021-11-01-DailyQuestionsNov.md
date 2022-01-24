@@ -38,6 +38,61 @@ Explanation:
 There are 3 publications with 3 or more citations, hence the h-index is 3.
 ```
 
+
+**Solution with Binary Search:** [https://replit.com/@trsong/H-Index-II-2](https://replit.com/@trsong/H-Index-II-2)
+```py
+import unittest
+
+def calculate_h_index(citations):
+    n = len(citations)
+    lo = 0
+    hi = len(citations)
+
+    while lo < hi:
+        mid = lo + (hi - lo) // 2
+        if citations[mid] < n - mid:
+            lo = mid + 1
+        else:
+            hi = mid
+    return n - lo
+
+
+class CalculateHIndexSpec(unittest.TestCase):
+    def test_example(self):
+        self.assertEqual(3, calculate_h_index([0, 1, 3, 3, 5]))
+
+    def test_another_citation_array(self):
+        self.assertEqual(3, calculate_h_index([0, 1, 3, 5, 6]))
+
+    def test_empty_citations(self):
+        self.assertEqual(0, calculate_h_index([]))
+
+    def test_only_one_publications(self):
+        self.assertEqual(1, calculate_h_index([42]))
+    
+    def test_h_index_appear_once(self):
+        self.assertEqual(5, calculate_h_index([5, 10, 10, 10, 10]))
+
+    def test_balanced_citation_counts(self):
+        self.assertEqual(5, calculate_h_index([1, 2, 3, 4, 5, 6, 7, 8, 9]))
+
+    def test_duplicated_citations(self):
+        self.assertEqual(3, calculate_h_index([2, 2, 2, 2, 2, 3, 3, 3]))
+    
+    def test_zero_citations_not_count(self):
+        self.assertEqual(2, calculate_h_index([0, 0, 0, 0, 10, 10]))
+    
+    def test_citations_number_greater_than_publications(self):
+        self.assertEqual(4, calculate_h_index([6, 7, 8, 9]))
+
+    def test_citations_number_greater_than_publications2(self):
+        self.assertEqual(3, calculate_h_index([1, 4, 7, 9]))   
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False, verbosity=2)
+```
+
 ### Jan 22, 2022 LC 421 \[Medium\] Maximum XOR of Two Numbers in an Array
 ---
 > **Question:** Given an array of integers, find the maximum XOR of any two elements.
