@@ -21,7 +21,118 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
 
+### Jan 26, 2022 \[Medium\] Find Minimum Element in a Sorted and Rotated Array
+---
+> **Question:** Suppose an array sorted in ascending order is rotated at some pivot unknown to you beforehand. Find the minimum element in `O(log N)` time. You may assume the array does not contain duplicates.
+>
+> For example, given `[5, 7, 10, 3, 4]`, return `3`.
 
+
+### Jan 25, 2022 \[Easy\] Reconstruct a Jumbled Array
+---
+> **Question:** The sequence `[0, 1, ..., N]` has been jumbled, and the only clue you have for its order is an array representing whether each number is larger or smaller than the last. 
+> 
+> Given this information, reconstruct an array that is consistent with it. For example, given `[None, +, +, -, +]`, you could return `[1, 2, 3, 0, 4]`.
+
+**Solution:** [https://replit.com/@trsong/Reconstruct-a-Jumbled-Array-3](https://replit.com/@trsong/Reconstruct-a-Jumbled-Array-3)
+```py
+import unittest
+
+def build_jumbled_array(clues):
+    lo = hi = 0
+    n = len(clues)
+    res = [0] * n
+
+    for i in range(n):
+        if clues[i] == '+':
+            hi += 1
+            res[i] = hi
+        elif clues[i] == '-':
+            lo -= 1
+            res[i] = lo
+    
+    for i in range(n):
+        res[i] -= lo
+            
+    return res
+
+
+class BuildJumbledArraySpec(unittest.TestCase):
+    @staticmethod
+    def generate_clues(nums):
+        nums_signs = [None] * len(nums)
+        for i in xrange(1, len(nums)):
+            nums_signs[i] = '+' if nums[i] > nums[i-1] else '-'
+        return nums_signs
+
+    def validate_result(self, cludes, res):
+        res_set = set(res)
+        res_signs = BuildJumbledArraySpec.generate_clues(res)
+        msg = "Incorrect result %s. Expect %s but gives %s." % (res, cludes, res_signs)
+        self.assertEqual(len(cludes), len(res_set), msg)
+        self.assertEqual(0, min(res), msg)
+        self.assertEqual(len(cludes) - 1, max(res), msg)
+        self.assertEqual(cludes, res_signs, msg)
+
+    def test_example(self):
+        clues = [None, '+', '+', '-', '+']
+        # possible solution: [1, 2, 3, 0, 4]
+        res = build_jumbled_array(clues)
+        self.validate_result(clues, res)
+
+    def test_empty_array(self):
+        self.assertEqual([], build_jumbled_array([]))
+
+    def test_one_element_array(self):
+        self.assertEqual([0], build_jumbled_array([None]))
+
+    def test_two_elements_array(self):
+        self.assertEqual([1, 0], build_jumbled_array([None, '-']))
+
+    def test_ascending_array(self):
+        clues = [None, '+', '+', '+']
+        expected = [0, 1, 2, 3]
+        self.assertEqual(expected, build_jumbled_array(clues))
+
+    def test_descending_array(self):
+        clues = [None, '-', '-', '-', '-']
+        expected = [4, 3, 2, 1, 0]
+        self.assertEqual(expected, build_jumbled_array(clues))
+
+    def test_random_array(self):
+        clues = [None, '+', '-', '+', '-']
+        # possible solution: [1, 4, 2, 3, 0]
+        res = build_jumbled_array(clues)
+        self.validate_result(clues, res)
+
+    def test_random_array2(self):
+        clues = [None, '-', '+', '-', '-', '+']
+        # possible solution: [3, 1, 4, 2, 0, 5]
+        res = build_jumbled_array(clues)
+        self.validate_result(clues, res)
+
+    def test_random_array3(self):
+        clues = [None, '+', '-', '+', '-', '+', '+', '+']
+        # possible solution: [1, 7, 0, 6, 2, 3, 4, 5]
+        res = build_jumbled_array(clues)
+        self.validate_result(clues, res)
+    
+    def test_random_array4(self):
+        clues = [None, '+', '+', '-', '+']
+        # possible solution: [1, 2, 3, 0, 4]
+        res = build_jumbled_array(clues)
+        self.validate_result(clues, res)
+
+    def test_random_array5(self):
+        clues = [None, '-', '-', '-', '+']
+        # possible solution: [3, 2, 1, 0, 4]
+        res = build_jumbled_array(clues)
+        self.validate_result(clues, res)
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False, verbosity=2)
+```
 
 ### Jan 24, 2022 \[Hard\] Smallest Stab Set
 --- 
