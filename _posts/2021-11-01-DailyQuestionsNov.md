@@ -21,6 +21,25 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
 
+### Jan 28, 2022 LC 163 \[Medium\] Missing Ranges
+---
+> **Question:** Given a sorted list of numbers, and two integers low and high representing the lower and upper bound of a range, return a list of (inclusive) ranges where the numbers are missing. A range should be represented by a tuple in the format of (lower, upper).
+
+**Example:**
+```py
+missing_ranges(nums=[1, 3, 5, 10], lower=1, upper=10)
+# returns [(2, 2), (4, 4), (6, 9)]
+```
+
+### Jan 27, 2022 \[Medium\] K Closest Elements
+---
+> **Question:** Given a list of sorted numbers, and two integers `k` and `x`, find `k` closest numbers to the pivot `x`.
+
+**Example:**
+```py
+closest_nums([1, 3, 7, 8, 9], 3, 5)  # gives [7, 3, 8]
+```
+
 ### Jan 26, 2022 \[Medium\] Find Minimum Element in a Sorted and Rotated Array
 ---
 > **Question:** Suppose an array sorted in ascending order is rotated at some pivot unknown to you beforehand. Find the minimum element in `O(log N)` time. You may assume the array does not contain duplicates.
