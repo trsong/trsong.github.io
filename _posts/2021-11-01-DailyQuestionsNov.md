@@ -40,6 +40,100 @@ missing_ranges(nums=[1, 3, 5, 10], lower=1, upper=10)
 closest_nums([1, 3, 7, 8, 9], 3, 5)  # gives [7, 3, 8]
 ```
 
+**My thoughts:** As the given list is sorted, we can use binary search to find the break even point where we can then further retrieve number from either side until get k numbers.
+
+**Solution with Binary Search:** [https://replit.com/@trsong/Find-K-Closest-Elements-in-a-Sorted-Array-2](https://replit.com/@trsong/Find-K-Closest-Elements-in-a-Sorted-Array-2)
+```py
+import unittest
+
+def closest_nums(nums, k, target):
+    if not nums or len(nums) < k:
+        return nums
+    
+    hi = binary_search(nums, target)
+    lo = hi - 1
+    n = len(nums)
+    res = []
+
+    for _ in range(k):
+        exhaust_end = hi >= n
+        closer_left = lo >= 0 and hi < n and abs(nums[lo] - target) <= abs(nums[hi] - target)
+        if exhaust_end or closer_left:
+            res.append(nums[lo])
+            lo -= 1
+        else:
+            res.append(nums[hi])
+            hi += 1
+    return res
+
+
+def binary_search(nums, target):
+    lo = 0
+    hi = len(nums) - 1
+
+    while lo < hi:
+        mid = lo + (hi - lo) // 2
+        if nums[mid] < target:
+            lo = mid + 1
+        else:
+            hi = mid
+    return lo
+
+
+class ClosestNumSpec(unittest.TestCase):
+    def test_example(self):
+        k, x, nums = 3, 5, [1, 3, 7, 8, 9]
+        expected = [7, 3, 8]
+        self.assertEqual(sorted(expected), sorted(closest_nums(nums, k, x)))
+
+    def test_example2(self):
+        k, x, nums = 5, 35, [12, 16, 22, 30, 35, 39, 42, 45, 48, 50, 53, 55, 56]
+        expected = [30, 39, 35, 42, 45]
+        self.assertEqual(sorted(expected), sorted(closest_nums(nums, k, x)))
+
+    def test_empty_list(self):
+        self.assertEqual([], closest_nums([], 0, 42))
+    
+    def test_entire_list_qualify(self):
+        k, x, nums = 6, -1000, [0, 1, 2, 3, 4, 5]
+        expected = [0, 1, 2, 3, 4, 5]
+        self.assertEqual(sorted(expected), sorted(closest_nums(nums, k, x)))
+    
+    def test_entire_list_qualify2(self):
+        k, x, nums = 2, 1000, [0, 1]
+        expected = [0, 1]
+        self.assertEqual(sorted(expected), sorted(closest_nums(nums, k, x)))
+
+    def test_closest_number_on_both_sides(self):
+        k, x, nums = 3, 5, [1, 5, 6, 10, 20]
+        expected = [1, 5, 6]
+        self.assertEqual(sorted(expected), sorted(closest_nums(nums, k, x)))
+
+    def test_closest_number_from_head_of_list(self):
+        k, x, nums = 2, -1, [0, 1, 2, 3]
+        expected = [0, 1]
+        self.assertEqual(sorted(expected), sorted(closest_nums(nums, k, x)))
+
+    def test_closest_number_from_tail_of_list(self):
+        k, x, nums = 4, 999, [0, 1, 2, 3]
+        expected = [0, 1, 2, 3]
+        self.assertEqual(sorted(expected), sorted(closest_nums(nums, k, x)))
+
+    def test_contains_duplicate_numbers(self):
+        k, x, nums = 5, 3, [1, 1, 1, 1, 3, 3, 3, 4, 4]
+        expected = [3, 3, 3, 4, 4]
+        self.assertEqual(sorted(expected), sorted(closest_nums(nums, k, x)))
+
+    def test_(self):
+        k, x, nums = 2, 99,[1, 2, 100]
+        expected = [2, 100]
+        self.assertEqual(sorted(expected), sorted(closest_nums(nums, k, x)))
+   
+
+if __name__ == '__main__':
+    unittest.main(exit=False, verbosity=2)
+```
+
 ### Jan 26, 2022 \[Medium\] Find Minimum Element in a Sorted and Rotated Array
 ---
 > **Question:** Suppose an array sorted in ascending order is rotated at some pivot unknown to you beforehand. Find the minimum element in `O(log N)` time. You may assume the array does not contain duplicates.
