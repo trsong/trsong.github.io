@@ -31,6 +31,115 @@ missing_ranges(nums=[1, 3, 5, 10], lower=1, upper=10)
 # returns [(2, 2), (4, 4), (6, 9)]
 ```
 
+**Solution with Binary Search:** [https://replit.com/@trsong/Find-Missing-Ranges-2](https://replit.com/@trsong/Find-Missing-Ranges-2)
+```py
+import unittest
+
+def missing_ranges(nums, lower, upper):
+    if lower > upper:
+        return []
+
+    start = binary_search(nums, lower)
+    res = []
+    for i in range(start, len(nums)):
+        if i > 0 and nums[i-1] == nums[i]:
+            continue
+
+        if nums[i] > upper:
+            break
+
+        if lower < nums[i]:
+            res.append((lower, min(nums[i] - 1, upper)))
+        lower = nums[i] + 1
+
+    if lower <= upper:
+        res.append((lower, upper))
+    
+    return res
+
+
+def binary_search(nums, target):
+    lo = 0
+    hi = len(nums)
+    while lo < hi:
+        mid = lo + (hi - lo) // 2
+        if nums[mid] < target:
+            lo = mid + 1
+        else:
+            hi = mid
+    return lo
+
+
+class MissingRangeSpec(unittest.TestCase):
+    def test_example(self):
+        lower, upper, nums = 1, 10, [1, 3, 5, 10] 
+        expected = [(2, 2), (4, 4), (6, 9)]
+        self.assertEqual(expected, missing_ranges(nums, lower, upper))
+
+    def test_example2(self):
+        lower, upper, nums = 0, 99, [0, 1, 3, 50, 75] 
+        expected = [(2, 2), (4, 49), (51, 74), (76, 99)]
+        self.assertEqual(expected, missing_ranges(nums, lower, upper))
+
+    def test_empty_array(self):
+        lower, upper, nums = 1, 42, []
+        expected = [(1, 42)]
+        self.assertEqual(expected, missing_ranges(nums, lower, upper))
+
+    def test_target_range_greater_than_array_range(self):
+        lower, upper, nums = 1, 5, [2, 3]
+        expected = [(1, 1), (4, 5)]
+        self.assertEqual(expected, missing_ranges(nums, lower, upper))
+
+    def test_lower_bound_equals_upper_bound(self):
+        lower, upper, nums = 1, 1, [0, 1, 4]
+        expected = []
+        self.assertEqual(expected, missing_ranges(nums, lower, upper))
+
+    def test_lower_bound_equals_upper_bound2(self):
+        lower, upper, nums = 1, 1, [0, 2, 3, 4]
+        expected = [(1, 1)]
+        self.assertEqual(expected, missing_ranges(nums, lower, upper))
+
+    def test_lower_larger_than_high(self):
+        self.assertEqual([], missing_ranges([1, 2], 10, 1))
+
+    def test_missing_range_of_different_length(self):
+        lower, upper, nums = 1, 11, [0, 1, 3,  6, 10, 11]
+        expected = [(2, 2), (4, 5), (7, 9)]
+        self.assertEqual(expected, missing_ranges(nums, lower, upper))
+
+    def test_range_not_overflow(self):
+        import sys
+        lower, upper, nums = -sys.maxint - 1, sys.maxint, [0]
+        expected = [(-sys.maxint - 1, -1), (1, sys.maxint)]
+        self.assertEqual(expected, missing_ranges(nums, lower, upper))
+
+    def test_right_bound(self):
+        lower, upper, nums = 0, 1, [1]
+        expected = [(0, 0)]
+        self.assertEqual(expected, missing_ranges(nums, lower, upper))
+
+    def test_left_bound(self):
+        lower, upper, nums = 0, 1, [0]
+        expected = [(1, 1)]
+        self.assertEqual(expected, missing_ranges(nums, lower, upper))
+
+    def test_no_missing_range(self):
+        lower, upper, nums = 4, 6, [0, 1, 2, 3, 4, 5, 6, 7, 8]
+        expected = []
+        self.assertEqual(expected, missing_ranges(nums, lower, upper))
+    
+    def test_duplicate_numbers(self):
+        lower, upper, nums = 3, 14, [4, 4, 4, 5, 5, 7, 7, 7, 9, 9, 9, 11, 11, 16]
+        expected = [(3, 3), (6, 6), (8, 8), (10, 10), (12, 14)]
+        self.assertEqual(expected, missing_ranges(nums, lower, upper))
+        
+
+if __name__ == '__main__':
+    unittest.main(exit=False, verbosity=2)
+```
+
 ### Jan 27, 2022 \[Medium\] K Closest Elements
 ---
 > **Question:** Given a list of sorted numbers, and two integers `k` and `x`, find `k` closest numbers to the pivot `x`.
