@@ -21,6 +21,20 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
 
+
+### Jan 29, 2022 LC 986 \[Medium\] Interval List Intersections
+---
+> **Question:** Given two lists of closed intervals, each list of intervals is pairwise disjoint and in sorted order.
+>
+> Return the intersection of these two interval lists.
+
+**Example:**
+```py
+Input: A = [[0,2],[5,10],[13,23],[24,25]], B = [[1,5],[8,12],[15,24],[25,26]]
+Output: [[1,2],[5,5],[8,10],[15,23],[24,24],[25,25]]
+```
+
+
 ### Jan 28, 2022 LC 163 \[Medium\] Missing Ranges
 ---
 > **Question:** Given a sorted list of numbers, and two integers low and high representing the lower and upper bound of a range, return a list of (inclusive) ranges where the numbers are missing. A range should be represented by a tuple in the format of (lower, upper).
