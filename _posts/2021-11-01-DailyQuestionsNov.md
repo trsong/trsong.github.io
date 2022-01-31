@@ -42,6 +42,105 @@ categories: Python/Java
 >
 > Given `start = "dog"`, `end = "cat"`, and `dictionary = {"dot", "tod", "dat", "dar"}`, return `null` as there is no possible transformation from `dog` to `cat`.
 
+**Solution with BFS:** [https://replit.com/@trsong/Word-Ladder-2](https://replit.com/@trsong/Word-Ladder-2)
+```py
+import unittest
+
+def word_ladder(start, end, word_set):
+    queue = [(start, None)]
+    parent_lookup = {}
+
+    while queue:
+        for _ in range(len(queue)):
+            cur, prev = queue.pop(0)
+            if cur in parent_lookup:
+                continue
+            parent_lookup[cur] = prev
+
+            if cur == end:
+                return generate_path(cur, parent_lookup)
+
+            for word in word_set:
+                if word not in parent_lookup and is_neighbor(word, cur):
+                    queue.append((word, cur))
+    return None 
+
+
+def is_neighbor(word1, word2):
+    balance = 0
+    for w1, w2 in zip(word1, word2):
+        if w1 != w2:
+            balance += 1
+        elif balance > 1:
+            return False
+    return balance == 1
+
+
+def generate_path(end, parent_lookup):
+    res = []
+    while end:
+        res.append(end)
+        end = parent_lookup.get(end, None)
+    res.reverse()
+    return res
+
+
+class WordLadderSpec(unittest.TestCase):
+    def test_example(self):
+        start = 'dog'
+        end = 'cat'
+        word_set = {'dot', 'dop', 'dat', 'cat'}
+        expected = ['dog', 'dot', 'dat', 'cat']
+        self.assertEqual(expected, word_ladder(start, end, word_set))
+
+    def test_example2(self):
+        start = 'dog'
+        end = 'cat'
+        word_set = {'dot', 'tod', 'dat', 'dar'}
+        self.assertIsNone(word_ladder(start, end, word_set))
+
+    def test_empty_dict(self):
+        self.assertIsNone(word_ladder('start', 'end', {}))
+
+    def test_example3(self):
+        start = 'hit'
+        end = 'cog'
+        word_set = {'hot', 'dot', 'dog', 'lit', 'log', 'cog'}
+        expected = ['hit', 'hot', 'dot', 'dog', 'cog']
+        self.assertEqual(expected, word_ladder(start, end, word_set))
+
+    def test_end_word_not_in_dictionary(self):
+        start = 'hit'
+        end = 'cog'
+        word_set = ['hot', 'dot', 'dog', 'lot', 'log']
+        self.assertIsNone(word_ladder(start, end, word_set))
+
+    def test_long_example(self):
+        start = 'coder'
+        end = 'goner'
+        word_set = {
+            'lover', 'coder', 'comer', 'toner', 'cover', 'tower', 'coyer',
+            'bower', 'honer', 'poles', 'hover', 'lower', 'homer', 'boyer',
+            'goner', 'loner', 'boner', 'cower', 'never', 'sower', 'asian'
+        }
+        expected = ['coder', 'cower', 'lower', 'loner', 'goner']
+        self.assertEqual(expected, word_ladder(start, end, word_set))
+
+    def test_long_example2(self):
+        start = 'coder'
+        end = 'goner'
+        word_set = {
+            'lover', 'coder', 'comer', 'toner', 'cover', 'tower', 'coyer',
+            'bower', 'honer', 'poles', 'hover', 'lower', 'homer', 'boyer',
+            'goner', 'loner', 'boner', 'cower', 'never', 'sower', 'asian'
+        }
+        expected = ['coder', 'cower', 'lower', 'loner', 'goner']
+        self.assertEqual(expected, word_ladder(start, end, word_set))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False, verbosity=2)
+```
 
 ### Jan 29, 2022 LC 986 \[Medium\] Interval List Intersections
 ---
