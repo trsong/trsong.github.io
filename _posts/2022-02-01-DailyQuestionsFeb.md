@@ -21,6 +21,26 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
 
+### Feb 2, 2022 \[Medium\] Generate Binary Search Trees
+--- 
+> **Question:** Given a number n, generate all binary search trees that can be constructed with nodes 1 to n.
+ 
+**Example:**
+```py
+Pre-order traversals of binary trees from 1 to n:
+- 123
+- 132
+- 213
+- 312
+- 321
+
+   1      1      2      3      3
+    \      \    / \    /      /
+     2      3  1   3  1      2
+      \    /           \    /
+       3  2             2  1
+``` 
+
 ### Feb 1, 2022 \[Medium\] Maximum Path Sum in Binary Tree
 --- 
 > **Question:** You are given the root of a binary tree. Find the path between 2 nodes that maximizes the sum of all the nodes in the path, and return the sum. The path does not necessarily need to go through the root.
