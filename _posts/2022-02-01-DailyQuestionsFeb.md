@@ -70,6 +70,102 @@ The distance between 1 and 8 is 6: [1 -> 2 -> 3 -> 5 -> 6 -> 7 -> 8]
     2 
 ```
 
+**Solution with DFS:** [https://replit.com/@trsong/Leaf-Similar-Trees-3](https://replit.com/@trsong/Leaf-Similar-Trees-3)
+```py
+import unittest
+
+def is_leaf_similar(t1, t2):
+    return dfs_path(t1) == dfs_path(t2)
+
+
+def dfs_path(root):
+    if not root:
+        return []
+
+    res = []
+    stack = [root]
+    while stack:
+        cur = stack.pop()
+        if cur.left is None and cur.right is None:
+            res.append(cur.val)
+            continue
+
+        for child in [cur.right, cur.left]:
+            if child is None:
+                continue
+            stack.append(child)
+    return res
+            
+
+class TreeNode(object):
+    def __init__(self, val, left=None, right=None):
+        self.val = val
+        self.left = left
+        self.right = right
+
+
+class IsLeafSimilarSpec(unittest.TestCase):
+    def test_example(self):
+        """
+            3
+           / \ 
+          5   1
+           \
+            2 
+
+            7
+           / \ 
+          2   1
+           \
+            2 
+        """
+        t1 = TreeNode(3, TreeNode(5, right=TreeNode(2)), TreeNode(1))
+        t2 = TreeNode(7, TreeNode(2, right=TreeNode(2)), TreeNode(1))
+        self.assertTrue(is_leaf_similar(t1, t2))
+
+    def test_both_empty(self):
+        self.assertTrue(is_leaf_similar(None, None))
+
+    def test_one_tree_empty(self):
+        self.assertFalse(is_leaf_similar(TreeNode(0), None))
+
+    def test_tree_of_different_depths(self):
+        """
+          1
+         / \
+        2   3
+
+           1
+         /   \
+        5     4
+         \   /
+          2 3
+        """
+        t1 = TreeNode(1, TreeNode(2), TreeNode(3))
+        t2l = TreeNode(5, right=TreeNode(2))
+        t2r = TreeNode(4, TreeNode(3))
+        t2 = TreeNode(1, t2l, t2r)
+        self.assertTrue(is_leaf_similar(t1, t2))
+
+    def test_tree_with_different_number_of_leaves(self):
+        """
+          1
+         / \
+        2   3
+
+           1
+         /   
+        2     
+        """
+        t1 = TreeNode(1, TreeNode(2), TreeNode(3))
+        t2 = TreeNode(1, TreeNode(2))
+        self.assertFalse(is_leaf_similar(t1, t2))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False, verbosity=2)
+```
+
 
 ### Feb 2, 2022 \[Medium\] Generate Binary Search Trees
 --- 
