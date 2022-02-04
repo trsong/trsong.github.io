@@ -21,6 +21,56 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
 
+
+### Feb 5, 2022 \[Easy\] Step Word Anagram
+---
+> **Question:** A step word is formed by taking a given word, adding a letter, and anagramming the result. For example, starting with the word `"APPLE"`, you can add an `"A"` and anagram to get `"APPEAL"`.
+>
+> Given a dictionary of words and an input word, create a function that returns all valid step words.
+
+
+### Feb 4, 2022 \[Medium\] Distance Between 2 Nodes in BST
+---
+> **Question:**  Write a function that given a BST, it will return the distance (number of edges) between 2 nodes.
+
+**Example:**
+```py
+Given the following tree:
+
+         5
+        / \
+       3   6
+      / \   \
+     2   4   7
+    /         \
+   1           8
+The distance between 1 and 4 is 3: [1 -> 2 -> 3 -> 4]
+The distance between 1 and 8 is 6: [1 -> 2 -> 3 -> 5 -> 6 -> 7 -> 8]
+```
+
+### Feb 3, 2022 LC 872 \[Easy\] Leaf-Similar Trees
+---
+> **Question:** Given two trees, whether they are `"leaf similar"`. Two trees are considered `"leaf-similar"` if their leaf orderings are the same. 
+>
+> For instance, the following two trees are considered leaf-similar because their leaves are `[2, 1]`:
+
+```py
+# Tree1
+    3
+   / \ 
+  5   1
+   \
+    2 
+
+# Tree2
+    7
+   / \ 
+  2   1
+   \
+    2 
+```
+
+
 ### Feb 2, 2022 \[Medium\] Generate Binary Search Trees
 --- 
 > **Question:** Given a number n, generate all binary search trees that can be constructed with nodes 1 to n.
