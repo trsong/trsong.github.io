@@ -41,6 +41,91 @@ Pre-order traversals of binary trees from 1 to n:
        3  2             2  1
 ``` 
 
+**Solution:** [https://replit.com/@trsong/Generate-Binary-Search-Trees-with-N-Nodes-2](https://replit.com/@trsong/Generate-Binary-Search-Trees-with-N-Nodes-2)
+```py
+import unittest
+
+def generate_bst(n):
+    if n < 1:
+        return []
+
+    return list(generate_bst_between(1, n))
+
+def generate_bst_between(lo, hi):
+    if lo > hi:
+        yield None
+    
+    for val in range(lo, hi + 1):
+        for left_child in generate_bst_between(lo, val - 1):
+            for right_child in generate_bst_between(val + 1, hi):
+                yield TreeNode(val, left_child, right_child)
+
+
+###################
+# Testing Utilities
+###################
+class TreeNode(object):
+    def __init__(self, val, left=None, right=None):
+        self.val = val
+        self.left = left
+        self.right = right
+
+    def preorder_traversal(self):
+        res = [self.val]
+        if self.left:
+            res += self.left.preorder_traversal()
+        if self.right:
+            res += self.right.preorder_traversal()
+        return res
+
+
+class GenerateBSTSpec(unittest.TestCase):
+    def assert_result(self, expected_preorder_traversal, bst_seq):
+        self.assertEqual(len(expected_preorder_traversal), len(bst_seq))
+        result_traversal = map(lambda t: t.preorder_traversal(), bst_seq)
+        self.assertEqual(sorted(expected_preorder_traversal), sorted(result_traversal))
+
+    def test_example(self):
+        expected_preorder_traversal = [
+            [1, 2, 3],
+            [1, 3, 2],
+            [2, 1, 3],
+            [3, 1, 2],
+            [3, 2, 1]
+        ]
+        self.assert_result(expected_preorder_traversal, generate_bst(3))
+    
+    def test_empty_tree(self):
+        self.assertEqual([], generate_bst(0))
+
+    def test_base_case(self):
+        expected_preorder_traversal = [[1]]
+        self.assert_result(expected_preorder_traversal, generate_bst(1))
+
+    def test_generate_4_nodes(self):
+        expected_preorder_traversal = [
+            [1, 2, 3, 4],
+            [1, 2, 4, 3],
+            [1, 3, 2, 4],
+            [1, 4, 2, 3],
+            [1, 4, 3, 2],
+            [2, 1, 3, 4],
+            [2, 1, 4, 3],
+            [3, 1, 2, 4],
+            [3, 2, 1, 4],
+            [4, 1, 2, 3],
+            [4, 1, 3, 2],
+            [4, 2, 1, 3],
+            [4, 3, 1, 2],
+            [4, 3, 2, 1]
+        ]
+        self.assert_result(expected_preorder_traversal, generate_bst(4))
+    
+
+if __name__ == '__main__':
+    unittest.main(exit=False, verbosity=2)
+```
+
 ### Feb 1, 2022 \[Medium\] Maximum Path Sum in Binary Tree
 --- 
 > **Question:** You are given the root of a binary tree. Find the path between 2 nodes that maximizes the sum of all the nodes in the path, and return the sum. The path does not necessarily need to go through the root.
