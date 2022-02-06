@@ -21,6 +21,12 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
 
+### Feb 6, 2022  \[Medium\] Maximum Distance among Binary Strings
+---
+> **Question:** The distance between 2 binary strings is the sum of their lengths after removing the common prefix. For example: the common prefix of `1011000` and `1011110` is `1011` so the distance is `len("000") + len("110") = 3 + 3 = 6`.
+>
+> Given a list of binary strings, pick a pair that gives you maximum distance among all possible pair and return that distance.
+
 
 ### Feb 5, 2022 \[Easy\] Step Word Anagram
 ---
