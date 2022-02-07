@@ -27,6 +27,161 @@ categories: Python/Java
 >
 > Given a list of binary strings, pick a pair that gives you maximum distance among all possible pair and return that distance.
 
+**My thoughts:** The idea is to build a trie to keep track of common characters as well as remaining characters to allow quickly calculate max path length on the left child or right child. 
+
+There are three situations:
+
+- A node has two children: max distance = max distannce of left node + max distance of right node
+- A node has one child and is terminal node: max distance = max distance of that child
+- A node has one child and is not terminal node: do nothing
+
+
+**Solution with Trie:** [https://replit.com/@trsong/Maximum-Distance-among-Binary-Strings-2](https://replit.com/@trsong/Maximum-Distance-among-Binary-Strings-2)
+```py
+import unittest
+
+def max_distance(bins):
+    if len(bins) < 2:
+        return -1
+
+    t = Trie()
+    for num_str in bins:
+        t.insert(num_str)
+    return t.max_distance()
+
+
+class Trie(object):
+    def __init__(self):
+        self.children = {}
+        self.is_end = False
+        self.max_path = 0
+
+    def insert(self, num_str):
+        p = self
+        n = len(num_str)
+        for index, digit in enumerate(num_str):
+            remaining_char = n - index
+            p.max_path = max(p.max_path, remaining_char)
+            p.children[digit] = p.children.get(digit, Trie())
+            p = p.children[digit]
+        p.is_end = True
+
+    def max_distance(self):
+        stack = [self]
+        res = 0
+
+        while stack:
+            cur = stack.pop()
+            if cur.is_end:
+                res = max(res, cur.max_path)
+
+            if len(cur.children) == 2:
+                left_max_path = cur.children['0'].max_path
+                right_max_path = cur.children['1'].max_path
+                res = max(res, 2 + left_max_path + right_max_path)
+
+            stack.extend(cur.children.values())
+        return res
+
+
+class MaxDistanceSpec(unittest.TestCase):
+    def test_example(self):
+        bins = ['1011000', '1011110']
+        expected = len('000') + len('110')
+        self.assertEqual(expected, max_distance(bins))
+
+    def test_less_than_two_strings(self):
+        self.assertEqual(-1, max_distance([]))
+        self.assertEqual(-1, max_distance(['']))
+        self.assertEqual(-1, max_distance(['0010']))
+
+    def test_empty_string(self):
+        self.assertEqual(0, max_distance(['', '']))
+        self.assertEqual(6, max_distance(['', '010101']))
+
+    def test_string_with_same_prefix(self):
+        bins = ['000', '0001', '0001001']
+        expected = len('1001')
+        self.assertEqual(expected, max_distance(bins))
+
+    def test_string_with_same_prefix2(self):
+        bins = ['000', '0001', '0001001']
+        expected = len('1001')
+        self.assertEqual(expected, max_distance(bins))
+
+    def test_return_max_distance_through_root(self):
+        """
+          0
+         / \
+        0   1
+           / \
+          0   1
+           \
+            1  
+        """
+        bins = ['00', '0101', '011']
+        expected = len('0') + len('101')
+        self.assertEqual(expected, max_distance(bins))
+
+    def test_return_max_distance_not_through_root(self):
+        """
+        0
+         \
+          1
+         / \
+        0   1
+       /   / \ 
+      0   0   1
+               \
+                1
+        """
+        bins = ['0100', '0110', '01111']
+        expected = len('00') + len('111')
+        self.assertEqual(expected, max_distance(bins))
+
+    def test_return_max_distance_when_there_is_prefix(self):
+        """
+        0
+         \
+          1 *
+           \
+            1
+             \
+              1
+             / \
+            0   1
+        """
+        bins = ['01', '01110', '01111']
+        expected = len('111')
+        self.assertEqual(expected, max_distance(bins))
+
+    def test_return_max_distance_when_there_is_prefix2(self):
+        """
+        0
+       / \
+      0   1 *
+           \
+            1
+             \
+              1
+             / \
+            0   1
+               /
+              0 
+        """
+        bins = ['01', '01110', '011110', '00']
+        expected = len('0') + len('11110')
+        self.assertEqual(expected, max_distance(bins))
+
+    def test_return_max_distance_when_there_is_prefix_and_empty_string(self):
+        bins = ['', '0', '00', '000', '1']
+        expected = len('1') + len('000')
+        self.assertEqual(expected, max_distance(bins))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False, verbosity=2)
+```
 
 ### Feb 5, 2022 \[Easy\] Step Word Anagram
 ---
