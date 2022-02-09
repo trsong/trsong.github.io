@@ -1537,7 +1537,7 @@ output: arr[] = {-5, 5, -2, 2, -8, 4, 7, 1, 8, 0}
 <details>
 <summary class="lc_e">
 
-- [**\[Easy\] Permutation with Given Order**](https://trsong.github.io/python/java/2021/08/02/DailyQuestionsAug.html#aug-11-2021-easy-permutation-with-given-order) -- *Given an array and a permutation, apply the permutation to the array.* [*\(Try ME\)*](https://replit.com/@trsong/Find-Permutation-with-Given-Order-1)
+- [**\[Easy\] Permutation with Given Order**](https://trsong.github.io/python/java/2022/02/01/DailyQuestionsFeb.html#feb-7-2022-easy-permutation-with-given-order) -- *Given an array and a permutation, apply the permutation to the array.* [*\(Try ME\)*](https://replit.com/@trsong/Find-Permutation-with-Given-Order-1)
 
 </summary>
 <div>
