@@ -21,6 +21,16 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
 
+### Feb 9, 2022 LC 1344 \[Easy\] Angle between Clock Hands
+---
+> **Question:** Given a clock time in `hh:mm` format, determine, to the nearest degree, the angle between the hour and the minute hands.
+
+**Example:**
+```py
+Input: "9:00"
+Output: 90
+```
+
 ### Feb 8, 2022 \[Easy\] Exists Overlap Rectangle
 --- 
 > **Question:** You are given a list of rectangles represented by min and max x- and y-coordinates. Compute whether or not a pair of rectangles overlap each other. If one rectangle completely covers another, it is considered overlapping.
