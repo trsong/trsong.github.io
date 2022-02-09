@@ -52,6 +52,156 @@ Output: 90
 ```
 > return true as the first and third rectangle overlap each other.
 
+**Solution:** [https://replit.com/@trsong/Exists-Overlap-Rectangles-2](https://replit.com/@trsong/Exists-Overlap-Rectangles-2)
+```py
+import unittest
+
+def exists_overlap_rectangle(rectangles):
+    rects = list(map(Rectangle.from_json, rectangles))
+    rects.sort(key=lambda rect: (rect.xmin, rect.ymin))
+
+    n = len(rects)
+    for i in range(n):
+        rect1 = rects[i]
+        for j in range(i + 1, n):
+            rect2 = rects[j]
+            if rect2.xmin > rect1.xmax or rect2.ymin > rect1.ymax:
+                continue
+            if rect1.has_overlap(rect2):
+                return True
+    return False
+
+
+class Rectangle(object):
+    def __init__(self, xmin, xmax, ymin, ymax):
+        self.xmin = xmin
+        self.xmax = xmax
+        self.ymin = ymin
+        self.ymax = ymax
+
+    @staticmethod
+    def from_json(json):
+        top_left = json.get("top_left")
+        dimensions = json.get("dimensions")
+        xmin = top_left[0]
+        xmax = xmin + dimensions[0]
+        ymax = top_left[1]
+        ymin = ymax - dimensions[1]
+        return Rectangle(xmin, xmax, ymin, ymax)
+
+    def has_overlap(self, other):
+        has_x_overlap = min(self.xmax, other.xmax) > max(self.xmin, other.xmin)
+        has_y_overlap = min(self.ymax, other.ymax) > max(self.ymin, other.ymin)
+        return has_x_overlap and has_y_overlap
+    
+
+class ExistsOverlapRectangleSpec(unittest.TestCase):
+    def test_example(self):
+        rectangles = [
+            {
+                "top_left": (1, 4),
+                "dimensions": (3, 3)  # width, height
+            },
+            {
+                "top_left": (-1, 3),
+                "dimensions": (2, 1)
+            },
+            {
+                "top_left": (0, 5),
+                "dimensions": (4, 3)
+            }
+        ]
+        self.assertTrue(exists_overlap_rectangle(rectangles))
+
+    def test_empty_rectangle_list(self):
+        self.assertFalse(exists_overlap_rectangle([]))
+
+    def test_two_overlap_rectangle(self):
+        rectangles = [
+            {
+                "top_left": (0, 1),
+                "dimensions": (1, 3)  # width, height
+            },
+            {
+                "top_left": (-1, 0),
+                "dimensions": (3, 1)
+            }
+        ]
+        self.assertTrue(exists_overlap_rectangle(rectangles))
+
+    def test_two_overlap_rectangle_form_a_cross(self):
+        rectangles = [
+            {
+                "top_left": (-1, 1),
+                "dimensions": (3, 2)  # width, height
+            },
+            {
+                "top_left": (0, 0),
+                "dimensions": (1, 1)
+            }
+        ]
+        self.assertTrue(exists_overlap_rectangle(rectangles))
+
+    def test_same_y_coord_not_overlap(self):
+        rectangles = [
+            {
+                "top_left": (0, 0),
+                "dimensions": (1, 1)  # width, height
+            },
+            {
+                "top_left": (1, 0),
+                "dimensions": (2, 2)
+            },
+            {
+                "top_left": (3, 0),
+                "dimensions": (5, 2)
+            }
+        ]
+        self.assertFalse(exists_overlap_rectangle(rectangles))
+
+    def test_same_y_coord_overlap(self):
+        rectangles = [
+            {
+                "top_left": (0, 0),
+                "dimensions": (1, 1)  # width, height
+            },
+            {
+                "top_left": (1, 0),
+                "dimensions": (2, 2)
+            },
+            {
+                "top_left": (3, 0),
+                "dimensions": (5, 2)
+            }
+        ]
+        self.assertFalse(exists_overlap_rectangle(rectangles))
+
+    def test_rectangles_in_different_quadrant(self):
+        rectangles = [
+            {
+                "top_left": (1, 1),
+                "dimensions": (2, 2)  # width, height
+            },
+            {
+                "top_left": (-1, 1),
+                "dimensions": (2, 2)
+            },
+            {
+                "top_left": (1, -1),
+                "dimensions": (2, 2)
+            },
+            {
+                "top_left": (-1, -1),
+                "dimensions": (2, 2)
+            }
+        ]
+        self.assertFalse(exists_overlap_rectangle(rectangles))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False, verbosity=2)
+```
+
 ### Feb 7, 2022 \[Easy\] Permutation with Given Order
 ---
 > **Question:** A permutation can be specified by an array `P`, where `P[i]` represents the location of the element at `i` in the permutation. For example, `[2, 1, 0]` represents the permutation where elements at the index `0` and `2` are swapped.

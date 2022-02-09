@@ -610,7 +610,7 @@ Output: "0.(6)"
 <details>
 <summary class="lc_e">
 
-- [**\[Easy\] Exists Overlap Rectangle**](https://trsong.github.io/python/java/2020/11/02/DailyQuestionsAug.html#jan-16-2021-easy-exists-overlap-rectangle) -- *Given a list of rectangles represented by min and max x- and y-coordinates. Compute whether or not a pair of rectangles overlap each other.* [*\(Try ME\)*](https://repl.it/@trsong/Exists-Overlap-Rectangles-1)
+- [**\[Easy\] Exists Overlap Rectangle**](https://trsong.github.io/python/java/2022/02/01/DailyQuestionsFeb.html#feb-8-2022-easy-exists-overlap-rectangle) -- *Given a list of rectangles represented by min and max x- and y-coordinates. Compute whether or not a pair of rectangles overlap each other.* [*\(Try ME\)*](https://repl.it/@trsong/Exists-Overlap-Rectangles-1)
 
 </summary>
 <div>
