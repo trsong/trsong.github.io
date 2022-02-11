@@ -21,6 +21,22 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
 
+### Feb 10, 2022 \[Easy\] BST Nodes Sum up to K
+---
+> **Question:** Given the root of a binary search tree, and a target K, return two nodes in the tree whose sum equals K.
+
+**Example:** 
+```py
+Given the following tree and K of 20
+
+    10
+   /   \
+ 5      15
+       /  \
+     11    15
+Return the nodes 5 and 15.
+```
+
 ### Feb 9, 2022 LC 1344 \[Easy\] Angle between Clock Hands
 ---
 > **Question:** Given a clock time in `hh:mm` format, determine, to the nearest degree, the angle between the hour and the minute hands.
