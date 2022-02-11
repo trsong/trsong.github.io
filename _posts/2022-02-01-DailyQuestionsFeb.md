@@ -31,6 +31,70 @@ Input: "9:00"
 Output: 90
 ```
 
+**Solution:** [https://replit.com/@trsong/Calculate-Angle-between-Clock-Hands-2](https://replit.com/@trsong/Calculate-Angle-between-Clock-Hands-2)
+```py
+import unittest
+
+def clock_angle(hhmm):
+    hh, mm = hhmm.split(':')
+    h = int(hh) % 12
+    m = int(mm)
+
+    m_unit = 360 / 60.0
+    h_unit = 360 / 12.0
+
+    m_angle = m_unit * m
+    h_angle = h_unit * h + h_unit * m / 60.0
+    delta = abs(m_angle - h_angle)
+    
+    return min(360 - delta, delta)
+
+
+class ClockAngleSpec(unittest.TestCase):
+    def test_minute_point_zero(self):
+        hhmm = "12:00"
+        angle = 0
+        self.assertEqual(angle, clock_angle(hhmm))
+        
+    def test_minute_point_zero2(self):
+        hhmm = "1:00"
+        angle = 30
+        self.assertEqual(angle, clock_angle(hhmm))
+        
+    def test_minute_point_zero3(self):
+        hhmm = "9:00"
+        angle = 90
+        self.assertEqual(angle, clock_angle(hhmm))
+        
+    def test_minute_point_zero4(self):
+        hhmm = "6:00"
+        angle = 180
+        self.assertEqual(angle, clock_angle(hhmm))
+        
+    def test_half_pass_hour(self):
+        hhmm = "12:30"
+        angle = 165
+        self.assertEqual(angle, clock_angle(hhmm))
+        
+    def test_half_pass_hour2(self):
+        hhmm = "3:30"
+        angle = 75
+        self.assertEqual(angle, clock_angle(hhmm))
+
+    def test_irregular_time(self):
+        hhmm = "16:20"
+        angle = 10
+        self.assertEqual(angle, clock_angle(hhmm))
+
+    def test_irregular_time3(self):
+        hhmm = "3:15"
+        angle = 7.5
+        self.assertEqual(angle, clock_angle(hhmm))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False, verbosity=2)
+```
 ### Feb 8, 2022 \[Easy\] Exists Overlap Rectangle
 --- 
 > **Question:** You are given a list of rectangles represented by min and max x- and y-coordinates. Compute whether or not a pair of rectangles overlap each other. If one rectangle completely covers another, it is considered overlapping.
