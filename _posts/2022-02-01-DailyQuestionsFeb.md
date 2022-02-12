@@ -21,6 +21,18 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
 
+### Feb 11, 2022 \[Medium\] Swap Even and Odd Bits
+---
+> **Question:** Given an unsigned 8-bit integer, swap its even and odd bits. The 1st and 2nd bit should be swapped, the 3rd and 4th bit should be swapped, and so on.
+
+**Example:**
+
+```py
+10101010 should be 01010101. 11100010 should be 11010001.
+```
+> Bonus: Can you do this in one line?
+
+
 ### Feb 10, 2022 \[Easy\] BST Nodes Sum up to K
 ---
 > **Question:** Given the root of a binary search tree, and a target K, return two nodes in the tree whose sum equals K.
