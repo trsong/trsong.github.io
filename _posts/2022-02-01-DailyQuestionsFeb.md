@@ -32,6 +32,48 @@ categories: Python/Java
 ```
 > Bonus: Can you do this in one line?
 
+**Solution:** [https://replit.com/@trsong/Swap-Even-and-Odd-Bits-of-Binary-Number](https://replit.com/@trsong/Swap-Even-and-Odd-Bits-of-Binary-Number)
+```py
+import unittest
+
+def swap_bits(num):
+    # 1010 is 0xa, 0101 is 0x5
+    # 32 bit has 8 bits (4 * 8 = 32)
+    return (num & 0xaaaaaaaa) >> 1 | (num & 0x55555555 ) << 1
+
+
+class SwapBitSpec(unittest.TestCase):
+    def assert_result(self, expected, res):
+        self.assertEqual(bin(expected), bin(res))
+
+    def test_example1(self):
+        self.assert_result(0b01010101, swap_bits(0b10101010))
+
+    def test_example2(self):
+        self.assert_result(0b11010001, swap_bits(0b11100010))
+
+    def test_zero(self):
+        self.assert_result(0, swap_bits(0))
+    
+    def test_one(self):
+        self.assert_result(0b10, swap_bits(0b1))
+
+    def test_odd_digits(self):
+        self.assert_result(0b1011, swap_bits(0b111))
+
+    def test_large_number(self):
+        self.assert_result(0xffffffff, swap_bits(0xffffffff))
+    
+    def test_large_number2(self):
+        self.assert_result(0xaaaaaaaa, swap_bits(0x55555555))
+
+    def test_large_number3(self):
+        self.assert_result(0x55555555, swap_bits(0xaaaaaaaa))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False, verbosity=2)
+```
 
 ### Feb 10, 2022 \[Easy\] BST Nodes Sum up to K
 ---

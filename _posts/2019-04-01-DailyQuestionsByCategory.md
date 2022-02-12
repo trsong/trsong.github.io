@@ -1049,6 +1049,26 @@ Can you perform the operation without allocating extra memory (disregarding the 
 ---
 
 <details>
+<summary class="lc_m">
+
+- [**\[Medium\] Swap Even and Odd Bits**](https://trsong.github.io/python/java/2022/02/01/DailyQuestionsFeb.html#feb-11-2022-medium-swap-even-and-odd-bits) -- *Given an unsigned 8-bit integer, swap its even and odd bits. The 1st and 2nd bit should be swapped, the 3rd and 4th bit should be swapped, and so on.* [*\(Try ME\)*](https://replit.com/@trsong/Swap-Even-and-Odd-Bits-of-Binary-Number-1)
+
+</summary>
+<div>
+
+**Question:** Given an unsigned 8-bit integer, swap its even and odd bits. The 1st and 2nd bit should be swapped, the 3rd and 4th bit should be swapped, and so on.
+
+**Example:**
+```py
+10101010 should be 01010101. 11100010 should be 11010001.
+```
+
+Bonus: Can you do this in one line?
+
+</div>
+</details>
+
+<details>
 <summary class="lc_e">
 
 - [**\[Easy\] Reverse Bits**](https://trsong.github.io/python/java/2021/08/02/DailyQuestionsAug.html#oct-15-2021-easy-reverse-bits) -- *Given a 32 bit integer, reverse the bits and return that number.* [*\(Try ME\)*](https://replit.com/@trsong/Reverse-Binary-Number-1)
