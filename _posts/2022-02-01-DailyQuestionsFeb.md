@@ -37,6 +37,119 @@ Given the following tree and K of 20
 Return the nodes 5 and 15.
 ```
 
+**Solution:** [https://replit.com/@trsong/Find-BST-Nodes-Sum-up-to-K-2](https://replit.com/@trsong/Find-BST-Nodes-Sum-up-to-K-2)
+```py
+import unittest
+
+def find_pair(tree, k):
+    left_stream = in_order_iteration(tree)
+    right_stream = reverse_in_order_iteration(tree)
+    left = next(left_stream, None)
+    right = next(right_stream, None)
+
+    while left != right:
+        pair_sum = left.val + right.val
+        if pair_sum == k:
+            return [left.val, right.val]
+        elif pair_sum < k:
+            left = next(left_stream, None)
+        else:
+            right = next(right_stream, None)
+    return None
+
+
+def in_order_iteration(root):
+    if root is not None:
+        for node in in_order_iteration(root.left):
+            yield node
+        yield root
+        for node in in_order_iteration(root.right):
+            yield node
+
+
+def reverse_in_order_iteration(root):
+    if root is not None:
+        for node in reverse_in_order_iteration(root.right):
+            yield node
+        yield root
+        for node in reverse_in_order_iteration(root.left):
+            yield node
+
+
+class Node(object):
+    def __init__(self, val, left=None, right=None):
+        self.val = val
+        self.left = left
+        self.right = right
+
+
+class FindPairSpec(unittest.TestCase):
+    def test_example(self):
+        """
+            10
+           /   \
+         5      15
+               /  \
+             11    15
+        """
+        n15 = Node(15, Node(11), Node(15))
+        n10 = Node(10, Node(5), n15)
+        self.assertEqual([5, 15], find_pair(n10, 20))
+
+    def test_empty_tree(self):
+        self.assertIsNone(find_pair(None, 0))
+
+    def test_full_tree(self):
+        """
+             7
+           /   \
+          3     13
+         / \   /  \
+        2   5 11   17
+        """
+        n3 = Node(3, Node(2), Node(5))
+        n13 = Node(13, Node(11), Node(17))
+        n7 = Node(7, n3, n13)
+        self.assertEqual([2, 5], find_pair(n7, 7))
+        self.assertEqual([5, 13], find_pair(n7, 18))
+        self.assertEqual([7, 17], find_pair(n7, 24))
+        self.assertEqual([11, 17], find_pair(n7, 28))
+        self.assertIsNone(find_pair(n7, 4))
+
+    def test_tree_with_same_value(self):
+        """
+        42
+          \
+           42
+        """
+        tree = Node(42, right=Node(42))
+        self.assertEqual([42, 42], find_pair(tree, 84))
+        self.assertIsNone(find_pair(tree, 42))
+
+    def test_sparse_tree(self):
+        """
+           7
+         /   \
+        2     17
+         \   /
+          5 11
+         /   \
+        3     13
+        """
+        n2 = Node(2, right=Node(5, Node(3)))
+        n17 = Node(17, Node(11, right=Node(13)))
+        n7 = Node(7, n2, n17)
+        self.assertEqual([2, 5], find_pair(n7, 7))
+        self.assertEqual([5, 13], find_pair(n7, 18))
+        self.assertEqual([7, 17], find_pair(n7, 24))
+        self.assertEqual([11, 17], find_pair(n7, 28))
+        self.assertIsNone(find_pair(n7, 4))
+
+
+if __name__ == '__main__':
+   unittest.main(exit=False, verbosity=2)
+```
+
 ### Feb 9, 2022 LC 1344 \[Easy\] Angle between Clock Hands
 ---
 > **Question:** Given a clock time in `hh:mm` format, determine, to the nearest degree, the angle between the hour and the minute hands.
