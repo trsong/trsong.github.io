@@ -27,6 +27,120 @@ categories: Python/Java
 >
 > Create a data structure that can efficiently convert a certain quantity of one unit to the correct amount of any other unit. You should also allow for additional units to be added to the system.
 
+**Solution with DFS:** [https://replit.com/@trsong/Unit-converter](https://replit.com/@trsong/Unit-converter)
+```py
+import unittest
+
+class UnitConverter(object):
+    def __init__(self):
+        self.neighbor = {}
+
+    def add_rule(self, src, dst, unit):
+        """
+        Assumptions: 
+        1) a rule set up bi-directional link
+        2) new rule override old rule
+        3) all rules are compatiable with one another
+        """
+        self.neighbor[src] = self.neighbor.get(src, {})
+        self.neighbor[src][dst] = unit
+        self.neighbor[dst] = self.neighbor.get(dst, {})
+        self.neighbor[dst][src] = 1.0 / unit
+
+    def convert(self, src, dst, amount):
+        stack = [(src, amount)]
+        visited = set()
+
+        while stack:
+            cur, accu = stack.pop()
+            if cur == dst:
+                return accu
+            
+            if cur in visited:
+                continue
+            visited.add(cur)
+            
+            for child, unit in self.neighbor.get(cur, {}).items():
+                if child in visited:
+                    continue
+                stack.append((child, unit * accu))
+        return None
+
+
+class Units:
+    INCH = 'inch'
+    FOOT = 'foot'
+    YARD = 'yard'
+    CHAIN = 'chain'
+    FURLONG = 'furlong'
+    MILE = 'mile'
+    CAD = 'CAD'
+    USD = 'USD'
+
+
+class UnitConverterSpec(unittest.TestCase):
+    def test_base_unit(self):
+        unitConverter = UnitConverter()
+        unitConverter.add_rule(Units.FOOT, Units.INCH, 12)
+        self.assertEqual(12, unitConverter.convert(Units.FOOT, Units.INCH, 1))
+        self.assertEqual(24, unitConverter.convert(Units.FOOT, Units.INCH, 2))
+
+    def test_base_unit_chaining(self):
+        unitConverter = UnitConverter()
+        unitConverter.add_rule(Units.FOOT, Units.INCH, 12)
+        unitConverter.add_rule(Units.YARD, Units.FOOT, 3)
+        unitConverter.add_rule(Units.CHAIN, Units.YARD, 22)
+        self.assertEqual(36, unitConverter.convert(Units.YARD, Units.INCH, 1))
+        self.assertEqual(66, unitConverter.convert(Units.CHAIN, Units.FOOT, 1))
+    
+    def test_alternative_path(self):
+        unitConverter = UnitConverter()
+        unitConverter.add_rule(Units.MILE, Units.FOOT, 5280)
+        unitConverter.add_rule(Units.FOOT, Units.INCH, 12)
+        unitConverter.add_rule(Units.YARD, Units.FOOT, 3)
+        unitConverter.add_rule(Units.CHAIN, Units.YARD, 22)
+        unitConverter.add_rule(Units.FURLONG, Units.CHAIN, 10)
+        unitConverter.add_rule(Units.MILE, Units.FURLONG, 8)
+        self.assertEqual(5280, unitConverter.convert(Units.MILE, Units.FOOT, 1))
+        self.assertEqual(220, unitConverter.convert(Units.FURLONG, Units.YARD, 1))
+
+    def test_no_rule_exist(self):
+        unitConverter = UnitConverter()
+        self.assertIsNone(unitConverter.convert(Units.FOOT, Units.INCH, 1))
+
+    def test_no_rule_exist2(self):
+        unitConverter = UnitConverter()
+        unitConverter.add_rule(Units.FOOT, Units.INCH, 12)
+        unitConverter.add_rule(Units.CHAIN, Units.YARD, 22)
+        unitConverter.add_rule(Units.FURLONG, Units.CHAIN, 10)
+        self.assertIsNone(unitConverter.convert(Units.FURLONG, Units.FOOT, 1))
+
+    def test_assumption_one(self):
+        unitConverter = UnitConverter()
+        unitConverter.add_rule(Units.FOOT, Units.INCH, 12)
+        self.assertAlmostEqual(1/12, unitConverter.convert(Units.INCH, Units.FOOT, 1))
+        unitConverter.add_rule(Units.YARD, Units.FOOT, 3)
+        self.assertAlmostEqual(1/36, unitConverter.convert(Units.INCH, Units.YARD, 1))
+
+    def test_assumption_two(self):
+        unitConverter = UnitConverter()
+        unitConverter.add_rule(Units.USD, Units.CAD, 1)
+        self.assertEqual(2, unitConverter.convert(Units.USD, Units.CAD, 2))
+        unitConverter.add_rule(Units.USD, Units.CAD, 1.2)
+        self.assertEqual(2.4, unitConverter.convert(Units.USD, Units.CAD, 2))
+
+    def test_assumption_one_and_two(self):
+        unitConverter = UnitConverter()
+        unitConverter.add_rule(Units.USD, Units.CAD, 1)
+        self.assertEqual(2, unitConverter.convert(Units.USD, Units.CAD, 2))
+        unitConverter.add_rule(Units.CAD, Units.USD, 0.8)
+        self.assertEqual(2.5, unitConverter.convert(Units.USD, Units.CAD, 2))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False, verbosity=2)
+```
+
 ### Feb 11, 2022 \[Medium\] Swap Even and Odd Bits
 ---
 > **Question:** Given an unsigned 8-bit integer, swap its even and odd bits. The 1st and 2nd bit should be swapped, the 3rd and 4th bit should be swapped, and so on.

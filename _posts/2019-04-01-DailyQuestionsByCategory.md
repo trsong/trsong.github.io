@@ -8448,6 +8448,23 @@ Output: 1
 ### DFS
 ---
 
+
+<details>
+<summary class="lc_m">
+
+- [**\[Medium\] Unit Converter**](https://trsong.github.io/python/java/2022/02/01/DailyQuestionsFeb.html#feb-12-2022-medium-unit-converter) -- *Create a data structure that can efficiently convert a certain quantity of one unit to the correct amount of any other unit.* [*\(Try ME\)*](https://replit.com/@trsong/Unit-converter-1)
+
+</summary>
+<div>
+
+**Question:** The United States uses the imperial system of weights and measures, which means that there are many different, seemingly arbitrary units to measure distance. There are 12 inches in a foot, 3 feet in a yard, 22 yards in a chain, and so on.
+
+Create a data structure that can efficiently convert a certain quantity of one unit to the correct amount of any other unit. You should also allow for additional units to be added to the system.
+
+</div>
+</details>
+
+
 <details>
 <summary class="lc_m">
 
