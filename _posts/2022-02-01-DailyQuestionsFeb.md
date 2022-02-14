@@ -21,6 +21,16 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
 
+### Feb 14, 2022 \[Easy\] URL Shortener
+---
+> **Question:** Implement a URL shortener with the following methods:
+>
+> - `shorten(url)`, which shortens the url into a six-character alphanumeric string, such as `zLg6wl`.
+> - `restore(short)`, which expands the shortened string into the original url. If no such shortened string exists, return `null`.
+>
+> **Follow-up:** What if we enter the same URL twice?
+
+
 ### Feb 13, 2022 \[Hard\] Order of Alien Dictionary
 --- 
 > **Question:** You come across a dictionary of sorted words in a language you've never seen before. Write a program that returns the correct order of letters in this language.
