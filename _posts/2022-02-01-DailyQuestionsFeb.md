@@ -30,7 +30,77 @@ categories: Python/Java
 >
 > **Follow-up:** What if we enter the same URL twice?
 
+**Solution:** [https://replit.com/@trsong/URL-Shortener-2](https://replit.com/@trsong/URL-Shortener-2)
+```py
+import unittest
+import random
 
+class URLShortener(object):
+    CHAR_SET = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
+    CODE_LEN = 6
+
+    @staticmethod
+    def encode(s):
+        return "".join(
+            random.choice(URLShortener.CHAR_SET)
+            for _ in range(URLShortener.CODE_LEN))
+
+    def __init__(self):
+        self.long_to_short = {}
+        self.short_to_long = {}
+
+    def shorten(self, url):
+        if url not in self.long_to_short:
+            code = URLShortener.encode(url)
+            while code in self.short_to_long:
+                # avoid duplicated short url
+                code = URLShortener.encode(url)
+            self.long_to_short[url] = code
+            self.short_to_long[code] = url
+        return self.long_to_short[url]
+
+    def restore(self, short):
+        return self.short_to_long.get(short, None)
+
+
+class URLShortenerSpec(unittest.TestCase):
+    def test_should_be_able_to_init(self):
+        URLShortener()
+
+    def test_restore_should_not_fail_when_url_not_exists(self):
+        url_shortener = URLShortener()
+        self.assertIsNone(url_shortener.restore("oKImts"))
+
+    def test_shorten_result_into_six_letters(self):
+        url_shortener = URLShortener()
+        res = url_shortener.shorten("http://magic_url")
+        self.assertEqual(6, len(res))
+
+    def test_restore_short_url_gives_original(self):
+        url_shortener = URLShortener()
+        original_url = "http://magic_url"
+        short_url = url_shortener.shorten(original_url)
+        self.assertEqual(original_url, url_shortener.restore(short_url))
+
+    def test_shorten_different_url_gives_different_results(self):
+        url_shortener = URLShortener()
+        url1 = "http://magic_url_1"
+        res1 = url_shortener.shorten(url1)
+        url2 = "http://magic_url_2"
+        res2 = url_shortener.shorten(url2)
+        self.assertNotEqual(res1, res2)
+
+    def test_shorten_same_url_gives_same_result(self):
+        url_shortener = URLShortener()
+        url = "http://magic_url_1"
+        res1 = url_shortener.shorten(url)
+        res2 = url_shortener.shorten(url)
+        self.assertEqual(res1, res2)
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False, verbosity=2)
+```
 ### Feb 13, 2022 \[Hard\] Order of Alien Dictionary
 --- 
 > **Question:** You come across a dictionary of sorted words in a language you've never seen before. Write a program that returns the correct order of letters in this language.
