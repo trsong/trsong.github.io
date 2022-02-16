@@ -21,6 +21,24 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
 
+### Feb 16, 2022 \[Medium\] LRU Cache
+---
+> **Question:** LRU cache is a cache data structure that has limited space, and once there are more items in the cache than available space, it will preempt the least recently used item. What counts as recently used is any item a key has `'get'` or `'put'` called on it.
+>
+> Implement an LRU cache class with the 2 functions `'put'` and `'get'`. `'put'` should place a value mapped to a certain key, and preempt items if needed. `'get'` should return the value for a given key if it exists in the cache, and return None if it doesn't exist.
+
+**Example:**
+```py
+cache = LRUCache(2)
+cache.put(3, 3)
+cache.put(4, 4)
+cache.get(3)  # returns 3
+cache.get(2)  # returns None
+
+cache.put(2, 2)
+cache.get(4)  # returns None (pre-empted by 2)
+cache.get(3)  # returns 3
+```
 
 ### Feb 15, 2022 LC 1171 \[Medium\] Remove Consecutive Nodes that Sum to 0
 ---
