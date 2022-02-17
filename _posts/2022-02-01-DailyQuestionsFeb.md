@@ -76,15 +76,22 @@ class LRUCache(object):
 
     def populate(self, node):
         key = node.item.key
+        self.node_lookup[key] = node
+
+        # detech node
         if node.prev:
             node.prev.next = node.next
         if node.next:
             node.next.prev = node.prev
-        self.tail.item = node.item
-        self.tail.next = ListNode(prev=self.tail)
-        self.node_lookup[key] = self.tail
-        self.tail = self.tail.next
         
+        # reset node
+        node.prev = self.tail.prev
+        node.next = self.tail
+        
+        # reset neighbors of node 
+        node.prev.next = node
+        self.tail.prev = node
+
 
 class CacheEntry(object):
     def __init__(self, key, val):
