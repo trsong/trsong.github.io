@@ -21,6 +21,11 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
 
+### Feb 18, 2022 \[Medium\] Insert into Sorted Circular Linked List
+---
+> **Question:** Insert a new value into a sorted circular linked list (last element points to head). Return the node with smallest value.  
+
+
 ### Feb 17, 2022 \[Easy\] Maximum Subarray Sum 
 ---
 > **Question:** You are given a one dimensional array that may contain both positive and negative integers, find the sum of contiguous subarray of numbers which has the largest sum.
