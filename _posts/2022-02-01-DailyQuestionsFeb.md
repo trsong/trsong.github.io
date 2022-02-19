@@ -34,6 +34,91 @@ categories: Python/Java
 >
 > Solve this problem with Divide and Conquer as well as DP separately.
 
+**DP Solution:** [https://replit.com/@trsong/Maximum-Subarray-Sum-1-1](https://replit.com/@trsong/Maximum-Subarray-Sum-1-1)
+```py
+def max_sub_array_sum(nums):
+    n = len(nums)
+    # Let dp[i] represents max sub array sum with window ended at index i - 1
+    # dp[i] = 0                          if dp[i - 1] < 0
+    #       = nums[i - 1] + dp[i - 1]    otherwise
+    dp = [0] * (n + 1)
+    for i in range(1, n + 1):
+        dp[i] = nums[i - 1] + max(dp[i - 1], 0)
+    return max(dp)
+```
+
+**Divide and Conquer Solution:** [https://replit.com/@trsong/Maximum-Subarray-Sum-1-2](https://replit.com/@trsong/Maximum-Subarray-Sum-1-2)
+```py
+import unittest
+
+def max_sub_array_sum(nums):
+    if not nums:
+        return 0
+    return max_sub_array_sum_recur(nums, 0, len(nums) - 1).result
+
+
+def max_sub_array_sum_recur(nums, start, end):
+    if start == end:
+        num = nums[start]
+        return Result(num, num, num, num)
+    
+    mid = start + (end - start) // 2
+    left_res = max_sub_array_sum_recur(nums, start, mid)
+    right_res = max_sub_array_sum_recur(nums, mid + 1, end)
+    prefix = max(0, left_res.total + right_res.prefix, left_res.prefix)
+    suffix = max(0, right_res.suffix, right_res.total + left_res.suffix)
+    total = left_res.total + right_res.total
+    result = max(prefix, suffix, left_res.result, right_res.result,  left_res.suffix + right_res.prefix)
+    return Result(prefix, suffix, total, result)
+
+
+class Result(object):
+    def __init__(self, prefix=0, suffix=0, total=0, result=0):
+        self.prefix = prefix
+        self.suffix = suffix
+        self.total = total
+        self.result = result
+    
+
+class MaxSubArraySum(unittest.TestCase):
+    def test_empty_array(self):
+        self.assertEqual(0, max_sub_array_sum([]))
+
+    def test_ascending_array(self):
+        self.assertEqual(6, max_sub_array_sum([-3, -2, -1, 0, 1, 2, 3]))
+        
+    def test_descending_array(self):
+        self.assertEqual(6, max_sub_array_sum([3, 2, 1, 0, -1]))
+
+    def test_example_array(self):
+        self.assertEqual(7, max_sub_array_sum([-2, -5, 6, -2, -3, 1, 5, -6]))
+
+    def test_negative_array(self):
+        self.assertEqual(0, max_sub_array_sum([-2, -1]))
+
+    def test_positive_array(self):
+        self.assertEqual(3, max_sub_array_sum([1, 2]))
+
+    def test_swing_array(self):
+        self.assertEqual(5, max_sub_array_sum([-3, 3, -2, 2, -5, 5]))
+        self.assertEqual(1, max_sub_array_sum([-1, 1, -1, 1, -1]))
+        self.assertEqual(2, max_sub_array_sum([-100, 1, -100, 2, -100]))
+
+    def test_converging_array(self):
+        self.assertEqual(4, max_sub_array_sum([-3, 3, -2, 2, 1, 0]))
+
+    def test_positive_negative_positive_array(self):
+        self.assertEqual(8, max_sub_array_sum([7, -1, -2, 3, 1]))
+        self.assertEqual(7, max_sub_array_sum([7, -1, -2, 0, 1, 1]))
+
+    def test_negative_positive_array(self):
+        self.assertEqual(3, max_sub_array_sum([-100, 1, 0, 2, -100]))
+  
+
+if __name__ == '__main__':
+    unittest.main(exit=False, verbosity=2)
+```
+
 
 ### Feb 16, 2022 \[Medium\] LRU Cache
 ---
