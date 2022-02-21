@@ -21,6 +21,16 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
 
+### Feb 20, 2022  \[Medium\] Index of Larger Next Number
+---
+> **Question:** Given a list of numbers, for each element find the next element that is larger than the current element. Return the answer as a list of indices. If there are no elements larger than the current element, then use `-1` instead.
+
+**Example:** 
+```py
+larger_number([3, 2, 5, 6, 9, 8])
+# return [2, 2, 3, 4, -1, -1]
+```
+
 ### Feb 19, 2022  \[Easy\] Determine If Singly Linked List is Palindrome
 ---
 > **Question:** Determine whether a singly linked list is a palindrome. 
