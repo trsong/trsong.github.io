@@ -25,6 +25,98 @@ categories: Python/Java
 ---
 > **Question:** Insert a new value into a sorted circular linked list (last element points to head). Return the node with smallest value.  
 
+**Solution:** [https://replit.com/@trsong/Insert-into-Already-Sorted-Circular-Linked-List-2](https://replit.com/@trsong/Insert-into-Already-Sorted-Circular-Linked-List-2)
+```py
+import unittest
+
+def insert(root, val):
+    node = Node(val)
+
+    if not root:
+        node.next = node
+        return node
+    
+    # it does not matter whether the to-be-insert value is min or max
+    search_val = val if val >= root.val else float('inf')
+    p = root
+    while p.next != root:
+        if p.next.val >= search_val:
+            node.next = p.next
+            p.next = node
+            return root
+        p = p.next
+    
+    p.next = node
+    node.next = root
+    return root if val >= root.val else node
+    
+
+##############################
+# Testing utilities
+##############################
+class Node(object):
+    def __init__(self, val, next=None):
+        self.val = val
+        self.next = next
+
+    def __str__(self):
+        return str(Node.flatten(self))
+
+    @staticmethod
+    def flatten(root):
+        if not root:
+            return []
+        p = root
+        res = []
+        while True:
+            res.append(p.val)
+            p = p.next
+            if p == root:
+                break
+        return res
+
+    @staticmethod
+    def list(*vals):
+        dummy = Node(-1)
+        t = dummy
+        for v in vals:
+            t.next = Node(v)
+            t = t.next
+        t.next = dummy.next
+        return dummy.next
+
+
+class InsertSpec(unittest.TestCase):
+    def assert_result(self, expected, res):
+        self.assertEqual(str(expected), str(res))
+
+    def test_empty_list(self):
+        self.assert_result(Node.list(1), insert(None, 1))
+
+    def test_prepend_list(self):
+        self.assert_result(Node.list(0, 1), insert(Node.list(1), 0))
+
+    def test_append_list(self):
+        self.assert_result(Node.list(1, 2, 3), insert(Node.list(1, 2), 3))
+
+    def test_insert_into_correct_position(self):
+        self.assert_result(Node.list(1, 2, 3, 4, 5),
+                           insert(Node.list(1, 2, 4, 5), 3))
+
+    def test_duplicated_elements(self):
+        self.assert_result(Node.list(0, 0, 1, 2),
+                           insert(Node.list(0, 0, 2), 1))
+
+    def test_duplicated_elements2(self):
+        self.assert_result(Node.list(0, 0, 1), insert(Node.list(0, 0), 1))
+
+    def test_duplicated_elements3(self):
+        self.assert_result(Node.list(0, 0, 0, 0),
+                           insert(Node.list(0, 0, 0), 0))
+
+if __name__ == '__main__':
+    unittest.main(exit=False, verbosity=2)
+```
 
 ### Feb 17, 2022 \[Easy\] Maximum Subarray Sum 
 ---
