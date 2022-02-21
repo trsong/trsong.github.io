@@ -3578,6 +3578,21 @@ Output: False
 <details>
 <summary class="lc_e">
 
+- [**\[Easy\] Determine If Singly Linked List is Palindrome**](http://trsong.github.io/python/java/2022/02/01/DailyQuestionsFeb.html#feb-19-2022--easy-determine-if-singly-linked-list-is-palindrome) -- *Determine whether a singly linked list is a palindrome.* [*\(Try ME\)*](https://replit.com/@trsong/Determine-If-Singly-Linked-List-is-Palindrome-1)
+
+</summary>
+<div>
+
+**Question:** Determine whether a singly linked list is a palindrome. 
+
+For example, `1 -> 4 -> 3 -> 4 -> 1` returns `True` while `1 -> 4` returns `False`.
+
+</div>
+</details>
+
+<details>
+<summary class="lc_e">
+
 - [**\[Easy\] Swap Even and Odd Nodes**](https://trsong.github.io/python/java/2021/02/02/DailyQuestionsFeb.html#mar-19-2021-easy-swap-even-and-odd-nodes) -- *Given the head of a singly linked list, swap every two nodes and return its head.* [*\(Try ME\)*](https://replit.com/@trsong/Swap-Every-Even-and-Odd-Nodes-in-Linked-List-1)
 
 </summary>
@@ -3906,22 +3921,6 @@ Output: [1,3,12,0,0]
 <div>
 
 **Question:** You are given a singly linked list and an integer k. Return the linked list, removing the k-th last element from the list. 
-
-</div>
-</details>
-
-
-<details>
-<summary class="lc_e">
-
-- [**\[Easy\] Determine If Singly Linked List is Palindrome**](https://trsong.github.io/python/java/2021/02/02/DailyQuestionsFeb.html#mar-21-2021-easy-determine-if-singly-linked-list-is-palindrome) -- *Determine whether a singly linked list is a palindrome.* [*\(Try ME\)*](https://replit.com/@trsong/Determine-If-Singly-Linked-List-is-Palindrome-1)
-
-</summary>
-<div>
-
-**Question:** Determine whether a singly linked list is a palindrome. 
-
-For example, `1 -> 4 -> 3 -> 4 -> 1` returns `True` while `1 -> 4` returns `False`.
 
 </div>
 </details>

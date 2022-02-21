@@ -27,6 +27,96 @@ categories: Python/Java
 >
 > For example, `1 -> 4 -> 3 -> 4 -> 1` returns `True` while `1 -> 4` returns `False`. 
 
+**Solution:** [https://replit.com/@trsong/Determine-If-Singly-Linked-List-is-Palindrome-2](https://replit.com/@trsong/Determine-If-Singly-Linked-List-is-Palindrome-2)
+```py
+import unittest
+
+def is_palindrome(lst):
+    reverse_lst = list_reverse(lst)
+    return is_list_equal(lst, reverse_lst)
+
+
+def list_reverse(lst):
+    res = None
+    p = lst
+    while p:
+        res = ListNode(p.val, res)
+        p = p.next
+    return res
+
+
+def is_list_equal(l1, l2):
+    p, q = l1, l2
+    while p or q:
+        if p.val != q.val:
+            return False
+        p = p.next
+        q = q.next
+    return p is None and q is None
+
+
+class ListNode(object):
+    def __init__(self, val, next=None):
+        self.val = val
+        self.next = next
+    
+    @staticmethod
+    def List(*vals):
+        dummy = cur = ListNode(-1)
+        for val in vals:
+            cur.next = ListNode(val)
+            cur = cur.next
+        return dummy.next
+
+    def __repr__(self):
+        return "%s -> %s" % (self.val, self.next)
+
+
+class IsPalindromeSpec(unittest.TestCase):
+    def test_empty_list(self):
+        self.assertTrue(is_palindrome(None))
+
+    def test_one_element_list(self):
+        self.assertTrue(is_palindrome(ListNode.List(42)))
+
+    def test_two_element_list(self):
+        self.assertFalse(is_palindrome(ListNode.List(1, 2)))
+
+    def test_two_element_palindrome(self):
+        self.assertTrue(is_palindrome(ListNode.List(6, 6)))
+
+    def test_three_element_list(self):
+        self.assertFalse(is_palindrome(ListNode.List(1, 2, 3)))
+
+    def test_three_element_list2(self):
+        self.assertFalse(is_palindrome(ListNode.List(1, 1, 2)))
+
+    def test_three_element_list3(self):
+        self.assertFalse(is_palindrome(ListNode.List(1, 2, 2)))
+
+    def test_three_element_palindrome(self):
+        self.assertTrue(is_palindrome(ListNode.List(1, 2, 1)))
+
+    def test_three_element_palindrome2(self):
+        self.assertTrue(is_palindrome(ListNode.List(1, 1, 1)))
+
+    def test_even_element_list(self):
+        self.assertFalse(is_palindrome(ListNode.List(1, 2, 3, 4, 2, 1)))
+
+    def test_even_element_list2(self):
+        self.assertTrue(is_palindrome(ListNode.List(1, 2, 3, 3, 2, 1)))
+
+    def test_odd_element_list(self):
+        self.assertTrue(is_palindrome(ListNode.List(1, 2, 3, 2, 1)))
+
+    def test_odd_element_list2(self):
+        self.assertFalse(is_palindrome(ListNode.List(1, 2, 3, 3, 1)))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False, verbosity=2)
+```
+
 
 ### Feb 18, 2022 \[Medium\] Insert into Sorted Circular Linked List
 ---
