@@ -21,6 +21,13 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
 
+### Feb 19, 2022  \[Easy\] Determine If Singly Linked List is Palindrome
+---
+> **Question:** Determine whether a singly linked list is a palindrome. 
+>
+> For example, `1 -> 4 -> 3 -> 4 -> 1` returns `True` while `1 -> 4` returns `False`. 
+
+
 ### Feb 18, 2022 \[Medium\] Insert into Sorted Circular Linked List
 ---
 > **Question:** Insert a new value into a sorted circular linked list (last element points to head). Return the node with smallest value.  
