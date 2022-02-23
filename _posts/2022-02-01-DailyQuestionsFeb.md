@@ -31,6 +31,97 @@ categories: Python/Java
 > For example, given `{'CSC300': ['CSC100', 'CSC200'], 'CSC200': ['CSC100'], 'CSC100': []}`, should return `['CSC100', 'CSC200', 'CSC300']`.
 
 
+**Solution with Topological Sort:** [https://replit.com/@trsong/Find-Order-of-Course-Prerequisites-3](https://replit.com/@trsong/Find-Order-of-Course-Prerequisites-3)
+```py
+import unittest
+
+def sort_courses(prereq_map):
+    neighbors = {}
+    inward_node = {}
+    queue = []
+    for course, dependencies in prereq_map.items():
+        if not dependencies:
+            queue.append(course)
+            
+        for pre_course in dependencies:
+            neighbors[pre_course] = neighbors.get(pre_course, [])
+            neighbors[pre_course].append(course)
+            inward_node[course] = inward_node.get(course, 0) + 1
+
+    top_order = []
+    while queue:
+        cur = queue.pop(0)
+        top_order.append(cur)
+
+        for nb in neighbors.get(cur, []):
+            inward_node[nb] -= 1
+            if inward_node[nb] == 0:
+                queue.append(nb)
+                
+    return top_order if len(top_order) == len(prereq_map) else None
+    
+
+class SortCourseSpec(unittest.TestCase):
+    def assert_course_order_with_prereq_map(self, prereq_map):
+        # Test utility for validation of the following properties for each course:
+        # 1. no courses can be taken before its prerequisites
+        # 2. order covers all courses
+        orders = sort_courses(prereq_map)
+        self.assertEqual(len(prereq_map), len(orders))
+
+        # build a quick courseId to index lookup 
+        course_priority_map = dict(zip(orders, xrange(len(orders))))
+        for course, prereq_list in prereq_map.iteritems():
+            for prereq in prereq_list:
+                # Any prereq course must be taken before the one that depends on it
+                self.assertTrue(course_priority_map[prereq] < course_priority_map[course])
+
+    def test_courses_with_mutual_dependencies(self):
+        prereq_map = {
+            'CS115': ['CS135'],
+            'CS135': ['CS115']
+        }
+        self.assertIsNone(sort_courses(prereq_map))
+
+    def test_courses_within_same_department(self):
+        prereq_map = {
+            'CS240': [],
+            'CS241': [],
+            'MATH239': [],
+            'CS350': ['CS240', 'CS241', 'MATH239'],
+            'CS341': ['CS240'],
+            'CS445': ['CS350', 'CS341']
+        }
+        self.assert_course_order_with_prereq_map(prereq_map)
+
+    def test_courses_in_different_departments(self):
+        prereq_map = {
+            'MATH137': [],
+            'CS116': ['MATH137', 'CS115'],
+            'JAPAN102': ['JAPAN101'],
+            'JAPAN101': [],
+            'MATH138': ['MATH137'],
+            'ENGL119': [],
+            'MATH237': ['MATH138'],
+            'CS246': ['MATH138', 'CS116'],
+            'CS115': []
+        }
+        self.assert_course_order_with_prereq_map(prereq_map)
+
+    def test_courses_without_dependencies(self):
+        prereq_map = {
+            'ENGL119': [],
+            'ECON101': [],
+            'JAPAN101': [],
+            'PHYS111': []
+        }
+        self.assert_course_order_with_prereq_map(prereq_map)
+   
+
+if __name__ == '__main__':
+    unittest.main(exit=False, verbosity=2)
+```
+
 ### Feb 20, 2022  \[Medium\] Index of Larger Next Number
 ---
 > **Question:** Given a list of numbers, for each element find the next element that is larger than the current element. Return the answer as a list of indices. If there are no elements larger than the current element, then use `-1` instead.
