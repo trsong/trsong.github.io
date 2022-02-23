@@ -32,6 +32,67 @@ categories: Python/Java
 > Do this in `O(N)` time and `O(1)` space.
 
 
+**My thoughts:** An interger repeats 3 time, then each of its digit will repeat 3 times. If a digit repeat 1 more time on top of that, then that digit must be contributed by the unique number. 
+
+**Trivial Solution:** [https://repl.it/@trsong/Find-the-Element-That-Appears-Once-While-Others-Occur-3-Time](https://repl.it/@trsong/Find-the-Element-That-Appears-Once-While-Others-Occur-3-Time)
+```py
+import unittest
+
+INT_SIZE = 32
+
+def find_uniq_elem(nums):
+    res = 0
+    count = 0
+    for i in xrange(INT_SIZE):
+        count = 0
+        for num in nums:
+            if num & 1 << i:
+                count += 1
+
+        if count % 3 == 1:
+            res |= 1 << i 
+    return res
+```
+
+**Solution:** [https://replit.com/@trsong/Find-the-Element-That-Appears-Once-While-Others-Occur-3-Ti-2](https://replit.com/@trsong/Find-the-Element-That-Appears-Once-While-Others-Occur-3-Ti-2)
+```py
+import unittest
+
+def find_uniq_elem(nums):
+    once = twice = 0
+    for num in nums:
+        twice |= once & num
+        once ^= num
+        not_thrice = ~(once & twice)
+        once &= not_thrice
+        twice &= not_thrice
+    return once
+
+
+class FindUniqElemSpec(unittest.TestCase):
+    def test_example(self):
+        self.assertEqual(1, find_uniq_elem([6, 1, 3, 3, 3, 6, 6]))
+
+    def test_example2(self):
+        self.assertEqual(19, find_uniq_elem([13, 19, 13, 13]))
+
+    def test_example3(self):
+        self.assertEqual(2, find_uniq_elem([12, 1, 12, 3, 12, 1, 1, 2, 3, 3]))
+
+    def test_example4(self):
+        self.assertEqual(20, find_uniq_elem([10, 20, 10, 30, 10, 30, 30]))
+
+    def test_ascending_array(self):
+        self.assertEqual(4, find_uniq_elem([1, 1, 1, 2, 2, 2, 3, 3, 3, 4]))
+
+    def test_descending_array(self):
+        self.assertEqual(2, find_uniq_elem([2, 1, 1, 1, 0, 0, 0]))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False, verbosity=2)
+```
+
 ### Feb 21, 2022 \[Hard\] Order of Course Prerequisites
 ---
 > **Question:** We're given a hashmap associating each courseId key with a list of courseIds values, which represents that the prerequisites of courseId are courseIds. Return a sorted ordering of courses such that we can finish all courses.
