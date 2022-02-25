@@ -40,6 +40,122 @@ Output: [-1, -1]
 ```
 
 
+**Solution with Binary Search:** [https://repl.it/@trsong/Get-First-and-Last-Indices-of-an-Element-in-a-Sorted-Array](https://repl.it/@trsong/Get-First-and-Last-Indices-of-an-Element-in-a-Sorted-Array)
+```py
+import unittest
+
+def search_range(nums, target):
+    if not nums or target < nums[0] or nums[-1] < target:
+        return -1, -1
+
+    left_index = binary_search(nums, target)
+    if nums[left_index] != target:
+        return -1, -1
+
+    right_index = binary_search(nums, target, exclusive=True) - 1
+    return left_index, right_index
+
+
+def binary_search(nums, target, exclusive=False):
+    lo = 0
+    hi = len(nums)
+    while lo < hi:
+        mid = lo + (hi - lo) // 2
+        if exclusive and nums[mid] == target:
+            lo = mid + 1
+        elif nums[mid] < target:
+            lo = mid + 1
+        else:
+            hi = mid
+    return lo
+```
+
+**Solution with Divide And Conquer:** [https://replit.com/@trsong/Find-First-and-Last-Indices-of-an-Element-in-a-Sorted-Arr-2](https://replit.com/@trsong/Find-First-and-Last-Indices-of-an-Element-in-a-Sorted-Arr-2)
+```py
+import unittest
+
+def search_range(nums, target):
+    return search_range_recur(nums, target, 0, len(nums) - 1) or (-1, -1)
+
+
+def search_range_recur(nums, target, lo, hi):
+    if lo > hi or nums[hi] < target or nums[lo] > target:
+        return None
+    
+    if nums[lo] == nums[hi] == target:
+        return (lo, hi)
+
+    mid = lo + (hi - lo) // 2
+    left_res = search_range_recur(nums, target, lo, mid)
+    right_res = search_range_recur(nums, target, mid + 1, hi)
+    if left_res and right_res:
+        return (left_res[0], right_res[1])
+    else:
+        return left_res or right_res
+    
+
+class SearchRangeSpec(unittest.TestCase):
+    def test_example1(self):
+        target, nums = 1, [1, 1, 3, 5, 7]
+        expected = (0, 1)
+        self.assertEqual(expected, search_range(nums, target))
+
+    def test_example2(self):
+        target, nums = 5, [1, 2, 3, 4]
+        expected = (-1, -1)
+        self.assertEqual(expected, search_range(nums, target))
+
+    def test_empty_list(self):
+        target, nums = 0, []
+        expected = (-1, -1)
+        self.assertEqual(expected, search_range(nums, target))
+
+    def test_list_with_unique_value(self):
+        target, nums = 1, [1, 1, 1, 1]
+        expected = (0, 3)
+        self.assertEqual(expected, search_range(nums, target))
+
+    def test_list_with_duplicate_elements(self):
+        target, nums = 0, [0, 0, 0, 1, 1, 1, 1]
+        expected = (0, 2)
+        self.assertEqual(expected, search_range(nums, target))
+
+    def test_list_with_duplicate_elements2(self):
+        target, nums = 1, [0, 1, 1, 1, 1, 2, 2, 2, 2]
+        expected = (1, 4)
+        self.assertEqual(expected, search_range(nums, target))
+
+    def test_target_element_fall_into_a_specific_range(self):
+        target, nums = 10, [1, 3, 5, 7, 9, 11, 11, 12]
+        expected = (-1, -1)
+        self.assertEqual(expected, search_range(nums, target))
+
+    def test_smaller_than_min_element(self):
+        target, nums = -10, [0]
+        expected = (-1, -1)
+        self.assertEqual(expected, search_range(nums, target))
+
+    def test_larger_than_max_element(self):
+        target, nums = 10, [0]
+        expected = (-1, -1)
+        self.assertEqual(expected, search_range(nums, target))
+
+    def test_target_is_the_max_element(self):
+        target, nums = 1, [0, 1]
+        expected = (1, 1)
+        self.assertEqual(expected, search_range(nums, target))
+
+    def test_target_is_the_min_element(self):
+        target, nums = 0, [0, 1]
+        expected = (0, 0)
+        self.assertEqual(expected, search_range(nums, target))
+    
+
+if __name__ == '__main__':
+    unittest.main(exit=False, verbosity=2)
+```
+
+
 ### Feb 22, 2022 \[Hard\] Find the Element That Appears Once While Others Occur 3 Times
 ---
 > **Question:** Given an array of integers where every integer occurs three times except for one integer, which only occurs once, find and return the non-duplicated integer.
