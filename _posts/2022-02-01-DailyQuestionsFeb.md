@@ -32,6 +32,22 @@ categories: Python/Java
 Each operation should run in O(1) time.
 
 
+### Feb 24, 2022 \[Medium\] Find Missing Positive
+---
+> **Question:** Given an unsorted integer array, find the first missing positive integer.
+
+**Example 1:**
+```py
+Input: [1, 2, 0]
+Output: 3
+```
+
+**Example 2:**
+```py
+Input: [3, 4, -1, 1]
+Output: 2
+```
+
 ### Feb 23, 2022 \[Easy\] First and Last Indices of an Element in a Sorted Array
 ---
 > **Question:** Given a sorted array, A, with possibly duplicated elements, find the indices of the first and last occurrences of a target element, x. Return -1 if the target is not found.
