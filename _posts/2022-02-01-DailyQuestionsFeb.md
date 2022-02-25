@@ -23,6 +23,15 @@ categories: Python/Java
 
 
 
+### Feb 25, 2022  \[Hard\] LFU Cache
+---
+> **Question:** Implement an LFU (Least Frequently Used) cache. It should be able to be initialized with a cache size n, and contain the following methods:
+>
+> - `put(key, value)`: sets key to value. If there are already n items in the cache and we are adding a new item, then it should also remove the least frequently used item. If there is a tie, then the least recently used key should be removed.
+> - `get(key)`: gets the value at key. If no such key exists, return null.
+Each operation should run in O(1) time.
+
+
 ### Feb 23, 2022 \[Easy\] First and Last Indices of an Element in a Sorted Array
 ---
 > **Question:** Given a sorted array, A, with possibly duplicated elements, find the indices of the first and last occurrences of a target element, x. Return -1 if the target is not found.
