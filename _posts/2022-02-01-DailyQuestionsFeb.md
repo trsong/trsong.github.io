@@ -38,6 +38,148 @@ categories: Python/Java
 9   4  1  1  4  9
 ```
 
+**Solution with DFS:** [https://replit.com/@trsong/Is-Symmetric-K-ary-Tree-3](https://replit.com/@trsong/Is-Symmetric-K-ary-Tree-3)
+```py
+import unittest
+
+def is_symmetric(root):
+    if not root:
+        return True
+
+    dfs_order = dfs_traversal(root)
+    reverse_dfs_order = dfs_traversal(root, reverse=True)
+    for n1, n2 in zip(dfs_order, reverse_dfs_order):
+        num_child1 = len(n1.children) if n1.children else 0
+        num_child2 = len(n2.children) if n2.children else 0
+        if n1.val != n2.val or num_child1 != num_child2:
+            return False
+    return True
+
+
+def dfs_traversal(root, reverse=False):
+    stack = [root]
+    while stack:
+        cur = stack.pop()
+        yield cur
+        if cur.children:
+            children = reversed(cur.children) if reverse else cur.children
+            stack.extend(children)
+
+
+class TreeNode(object):
+    def __init__(self, val, children=None):
+        self.val = val
+        self.children = children
+
+
+class IsSymmetricSpec(unittest.TestCase):
+    def test_example(self):
+        """
+                4
+             /     \
+            3        3
+          / | \    / | \
+        9   4  1  1  4  9
+        """
+        left_tree = TreeNode(3, [TreeNode(9), TreeNode(4), TreeNode(1)])
+        right_tree = TreeNode(3, [TreeNode(1), TreeNode(4), TreeNode(9)])
+        root = TreeNode(4, [left_tree, right_tree])
+        self.assertTrue(is_symmetric(root))
+
+    def test_empty_tree(self):
+        self.assertTrue(is_symmetric(None))
+
+    def test_node_with_odd_number_of_children(self):
+        """
+                8
+            /   |   \
+          4     5     4
+         / \   / \   / \
+        1   2 3   3 2   1
+        """
+        left_tree = TreeNode(4, [TreeNode(1), TreeNode(2)])
+        mid_tree = TreeNode(5, [TreeNode(3), TreeNode(3)])
+        right_tree= TreeNode(4, [TreeNode(2), TreeNode(1)])
+        root = TreeNode(8, [left_tree, mid_tree, right_tree])
+        self.assertTrue(is_symmetric(root))
+
+    def test_binary_tree(self):
+        """
+             6
+           /   \
+          4     4 
+         / \   / \
+        1   2 2   1
+         \       / 
+          3     3 
+        """
+        left_tree = TreeNode(4, [TreeNode(1, [TreeNode(3)]), TreeNode(2)])
+        right_tree = TreeNode(4, [TreeNode(2), TreeNode(1, [TreeNode(3)])])
+        root = TreeNode(6, [left_tree, right_tree])
+        self.assertTrue(is_symmetric(root))
+
+    def test_unsymmetric_tree(self):
+        """
+             6
+           / | \
+          4  5  4 
+         /  /  / \
+        1  2  2   1
+        """
+        left_tree = TreeNode(4, [TreeNode(1)])
+        mid_tree = TreeNode(5, [TreeNode(2)])
+        right_tree = TreeNode(4, [TreeNode(2), TreeNode(1)])
+        root = TreeNode(6, [left_tree, mid_tree, right_tree])
+        self.assertFalse(is_symmetric(root))
+
+    def test_unsymmetric_tree2(self):
+        """
+             6
+           / | \
+          4  5  4 
+           / | \
+          2  2  1
+        """
+        left_tree = TreeNode(4)
+        mid_tree = TreeNode(5, [TreeNode(2), TreeNode(2), TreeNode(1)])
+        right_tree = TreeNode(4)
+        root = TreeNode(6, [left_tree, mid_tree, right_tree])
+        self.assertFalse(is_symmetric(root))
+
+    def test_unsymmetric_tree3(self):
+        """
+              6
+           / | | \
+          4  5 5  4 
+          |  | |  |
+          2  2 2  3
+        """
+        left_tree = TreeNode(4, [TreeNode(2)])
+        mid_left_tree = TreeNode(5, [TreeNode(2)])
+        mid_right_tree = TreeNode(5, [TreeNode(2)])
+        right_tree = TreeNode(4, [TreeNode(3)])
+        root = TreeNode(6, [left_tree, mid_left_tree, mid_right_tree, right_tree])
+        self.assertFalse(is_symmetric(root))
+
+    def test_unsymmetric_tree4(self):
+        """
+              1
+            /    \
+           2      2
+          / \   / | \
+         4   5 6  5  4
+             |
+             6
+        """
+        left_tree = TreeNode(2, [TreeNode(4), TreeNode(5, [TreeNode(6)])])
+        right_tree = TreeNode(2, [TreeNode(6), TreeNode(5), TreeNode(4)])
+        root = TreeNode(1, [left_tree, right_tree])
+        self.assertFalse(is_symmetric(root))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False, verbosity=2)
+```
 
 ### Feb 25, 2022  \[Hard\] LFU Cache
 ---
