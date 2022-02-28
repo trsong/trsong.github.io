@@ -22,6 +22,28 @@ categories: Python/Java
 
 
 
+### Feb 27, 2022 \[Medium\] Matrix Rotation
+---
+> **Question:** Given an N by N matrix, rotate it by 90 degrees clockwise.
+>
+> For example, given the following matrix:
+
+```py
+[[1, 2, 3],
+ [4, 5, 6],
+ [7, 8, 9]]
+ ```
+
+> you should return:
+
+```py
+[[7, 4, 1],
+ [8, 5, 2],
+ [9, 6, 3]]
+ ```
+
+> Follow-up: What if you couldn't use any extra space?
+
 ### Feb 26, 2022 \[Easy\] Symmetric K-ary Tree
 ---
 > **Question:** Given a k-ary tree, figure out if the tree is symmetrical.
