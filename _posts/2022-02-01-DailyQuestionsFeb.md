@@ -44,6 +44,78 @@ categories: Python/Java
 
 > Follow-up: What if you couldn't use any extra space?
 
+**Solution:** [https://replit.com/@trsong/Matrix-Rotation-In-place-with-flip-2](https://replit.com/@trsong/Matrix-Rotation-In-place-with-flip-2)
+```py
+import unittest
+
+def matrix_rotation(matrix):
+    if not matrix or not matrix[0]:
+        return matrix
+
+    n = len(matrix)
+    # flip diagonaly
+    for r in range(n):
+        for c in range(r + 1, n):
+            matrix[r][c], matrix[c][r] = matrix[c][r], matrix[r][c]
+            
+    # flip vertically
+    for r in range(n):
+        for c in range(n // 2):
+            matrix[r][c], matrix[r][n - 1 - c] = matrix[r][n - 1 - c], matrix[r][c]
+    return matrix
+
+
+class MatrixRotationSpec(unittest.TestCase):
+    def test_empty_matrix(self):
+        self.assertEqual(matrix_rotation([]), [])
+
+    def test_size_one_matrix(self):
+        self.assertEqual(matrix_rotation([[1]]), [[1]])
+
+    def test_size_two_matrix(self):
+        input_matrix = [
+            [1, 2],
+            [3, 4]
+        ]
+        expected_matrix = [
+            [3, 1],
+            [4, 2]
+        ]
+        self.assertEqual(matrix_rotation(input_matrix), expected_matrix)
+
+    def test_size_three_matrix(self):
+        input_matrix = [
+            [1, 2, 3],
+            [4, 5, 6],
+            [7, 8, 9]
+        ]
+        expected_matrix = [
+            [7, 4, 1],
+            [8, 5, 2],
+            [9, 6, 3]
+        ]
+        self.assertEqual(matrix_rotation(input_matrix), expected_matrix)
+
+    def test_size_four_matrix(self):
+        input_matrix = [
+            [1, 2, 3, 4],
+            [5, 6, 7, 8],
+            [9, 10, 11, 12],
+            [13, 14, 15, 16]
+        ]
+        expected_matrix = [
+            [13, 9, 5, 1],
+            [14, 10, 6, 2],
+            [15, 11, 7, 3],
+            [16, 12, 8, 4]
+        ]
+        self.assertEqual(matrix_rotation(input_matrix), expected_matrix)
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False, verbosity=2)
+```
+
 ### Feb 26, 2022 \[Easy\] Symmetric K-ary Tree
 ---
 > **Question:** Given a k-ary tree, figure out if the tree is symmetrical.
