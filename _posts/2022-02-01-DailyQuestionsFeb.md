@@ -21,6 +21,13 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
 
+### Mar 1, 2022 \[Medium\] Longest Consecutive Sequence in an Unsorted Array
+---
+> **Question:** Given an array of integers, return the largest range, inclusive, of integers that are all included in the array.
+>
+> For example, given the array `[9, 6, 1, 3, 8, 10, 12, 11]`, return `(8, 12)` since `8, 9, 10, 11, and 12` are all in the array.
+
+
 ### Feb 28, 2022 \[Medium\] Tree Serialization
 ---
 > **Question:** You are given the root of a binary tree. You need to implement 2 functions:
