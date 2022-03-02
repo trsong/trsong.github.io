@@ -36,6 +36,72 @@ categories: Python/Java
 >
 > For example, given the array `[9, 6, 1, 3, 8, 10, 12, 11]`, return `(8, 12)` since `8, 9, 10, 11, and 12` are all in the array.
 
+**Solution:** [https://replit.com/@trsong/Longest-Consecutive-Sequence-4](https://replit.com/@trsong/Longest-Consecutive-Sequence-4)
+```py
+import unittest
+
+def longest_consecutive_seq(nums):        
+    num_set = set(nums)
+    res = None
+    max_window = 0
+
+    for num in nums:
+        if num - 1 in num_set:
+            continue
+
+        window_size = 0
+        while num + window_size in num_set:
+            window_size += 1
+
+        if window_size > max_window:
+            res = (num, num + window_size - 1)
+            max_window = window_size
+    return res
+
+
+class LongestConsecutiveSeqSpec(unittest.TestCase):
+    def test_example(self):
+        nums = [9, 6, 1, 3, 8, 10, 12, 11]
+        expected = (8, 12)
+        self.assertEqual(expected, longest_consecutive_seq(nums))
+
+    def test_example2(self):
+        nums = [2, 10, 3, 12, 5, 4, 11, 8, 7, 6, 15]
+        expected = (2, 8)
+        self.assertEqual(expected, longest_consecutive_seq(nums))
+
+    def test_empty_array(self):
+        self.assertIsNone(longest_consecutive_seq([]))
+
+    def test_no_consecutive_sequence(self):
+        nums = [1, 3, 5, 7]
+        possible_solutions = [(1, 1), (3, 3), (5, 5), (7, 7)]
+        self.assertIn(longest_consecutive_seq(nums), possible_solutions)
+
+    def test_more_than_one_solution(self):
+        nums = [0, 3, 4, 5, 9, 10, 13, 14, 15, 19, 20, 1]
+        possible_solutions = [(3, 5), (13, 15)]
+        self.assertIn(longest_consecutive_seq(nums), possible_solutions)
+
+    def test_longer_array(self):
+        nums = [10, 21, 45, 22, 7, 2, 67, 19, 13, 45, 12, 11, 18, 16, 17, 100, 201, 20, 101]
+        expected = (16, 22)
+        self.assertEqual(expected, longest_consecutive_seq(nums))
+
+    def test_entire_array_is_continous(self):
+        nums = [0, 1, 2, 3, 4, 5]
+        expected = (0, 5)
+        self.assertEqual(expected, longest_consecutive_seq(nums))
+
+    def test_array_with_duplicated_numbers(self):
+        nums = [0, 0, 3, 3, 2, 2, 1, 4, 7, 8, 10]
+        expected = (0, 4)
+        self.assertEqual(expected, longest_consecutive_seq(nums))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False, verbosity=2)
+```
 
 ### Feb 28, 2022 \[Medium\] Tree Serialization
 ---

@@ -1441,6 +1441,20 @@ For example, if A is `'abcde'` and B is `'cdeab'`, return `True`. If A is `'abc'
 ## Array
 ---
 
+<details>
+<summary class="lc_m">
+
+- [**\[Medium\] Longest Consecutive Sequence in an Unsorted Array**](https://trsong.github.io/python/java/2022/02/01/DailyQuestionsFeb.html#mar-1-2022-medium-longest-consecutive-sequence-in-an-unsorted-array) -- *Given an array of integers, return the largest range, inclusive, of integers that are all included in the array.* [*\(Try ME\)*](https://repl.it/@trsong/Longest-Consecutive-Sequence-1)
+
+</summary>
+<div>
+
+**Question:** Given an array of integers, return the largest range, inclusive, of integers that are all included in the array.
+
+For example, given the array `[9, 6, 1, 3, 8, 10, 12, 11]`, return `(8, 12)` since `8, 9, 10, 11, and 12` are all in the array.
+
+</div>
+</details>
 
 <details>
 <summary class="lc_m">
@@ -8795,22 +8809,6 @@ Output: ["JFK","ATL","JFK","SFO","ATL","SFO"]
 Explanation: Another possible reconstruction is ["JFK","SFO","ATL","JFK","ATL","SFO"].
              But it is larger in lexical order.
 ```
-
-</div>
-</details>
-
-
-<details>
-<summary class="lc_m">
-
-- [**\[Medium\] Longest Consecutive Sequence in an Unsorted Array**](https://trsong.github.io/python/java/2020/11/02/DailyQuestionsAug.html#dec-25-2020-medium-longest-consecutive-sequence-in-an-unsorted-array) -- *Given an array of integers, return the largest range, inclusive, of integers that are all included in the array.* [*\(Try ME\)*](https://repl.it/@trsong/Longest-Consecutive-Sequence-1)
-
-</summary>
-<div>
-
-**Question:** Given an array of integers, return the largest range, inclusive, of integers that are all included in the array.
-
-For example, given the array `[9, 6, 1, 3, 8, 10, 12, 11]`, return `(8, 12)` since `8, 9, 10, 11, and 12` are all in the array.
 
 </div>
 </details>
