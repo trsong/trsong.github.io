@@ -21,6 +21,15 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
 
+### Mar 2, 2022 \[Hard\] Largest Sum of Non-adjacent Numbers
+---
+> **Question:** Given a list of integers, write a function that returns the largest sum of non-adjacent numbers. Numbers can be 0 or negative.
+>
+> For example, `[2, 4, 6, 2, 5]` should return 13, since we pick 2, 6, and 5. `[5, 1, 1, 5]` should return 10, since we pick 5 and 5.
+>
+> Follow-up: Can you do this in O(N) time and constant space?
+
+
 ### Mar 1, 2022 \[Medium\] Longest Consecutive Sequence in an Unsorted Array
 ---
 > **Question:** Given an array of integers, return the largest range, inclusive, of integers that are all included in the array.
