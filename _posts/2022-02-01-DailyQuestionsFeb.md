@@ -21,6 +21,25 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
 
+
+### Mar 3, 2022 \[Easy\] Generate All Possible Subsequences
+---
+> **Question:** Given a string, generate all possible subsequences of the string.
+>
+> For example, given the string `xyz`, return an array or set with the following strings:
+
+```py
+x
+y
+z
+xy
+xz
+yz
+xyz
+```
+
+> Note that `zx` is not a valid subsequence since it is not in the order of the given string.
+
 ### Mar 2, 2022 \[Hard\] Largest Sum of Non-adjacent Numbers
 ---
 > **Question:** Given a list of integers, write a function that returns the largest sum of non-adjacent numbers. Numbers can be 0 or negative.
