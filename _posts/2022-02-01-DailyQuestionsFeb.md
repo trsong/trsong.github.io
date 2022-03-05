@@ -21,6 +21,21 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
 
+### Mar 4, 2022 \[Easy\] Remove Duplicates From Sorted Linked List
+---
+> **Question:** Given a sorted linked list, remove all duplicate values from the linked list.
+
+**Example 1:**
+```py
+Input: 1 -> 1 -> 2 -> 3 -> 4 -> 4 -> 4 -> 4 -> 4 -> 5 -> 5 -> 6 -> 7 -> 9
+Output: 1 -> 2 -> 3 -> 4 -> 5 -> 6 -> 7 -> 9
+```
+
+**Example 2:**
+```py
+Input: 1 -> 1 -> 1 -> 1
+Output: 1
+```
 
 ### Mar 3, 2022 \[Easy\] Generate All Possible Subsequences
 ---
