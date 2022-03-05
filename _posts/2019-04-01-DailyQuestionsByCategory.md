@@ -5260,35 +5260,6 @@ For example, given the array `[3, 4, 9, 6, 1]`, return `[1, 1, 2, 1, 0]`, since:
 <details>
 <summary class="lc_e">
 
-- [**\[Easy\] Generate All Possible Subsequences**](https://trsong.github.io/python/java/2022/02/01/DailyQuestionsFeb.html#mar-3-2022-easy-generate-all-possible-subsequences) -- *Given a string, generate all possible subsequences of the string.* [*\(Try ME\)*](https://repl.it/@trsong/Generate-All-Possible-Subsequences-1)
-
-</summary>
-<div>
-
-**Question:** Given a string, generate all possible subsequences of the string.
-
-For example, given the string `xyz`, return an array or set with the following strings:
-
-```py
-x
-y
-z
-xy
-xz
-yz
-xyz
-```
-
-Note that `zx` is not a valid subsequence since it is not in the order of the given string.
-
-
-</div>
-</details>
-
-
-<details>
-<summary class="lc_e">
-
 - [**\[Easy\] Valid Binary Search Tree**](https://trsong.github.io/python/java/2021/08/02/DailyQuestionsAug.html#oct-21-2021-easy-valid-binary-search-tree) -- *You are given the root of a binary tree. Find and return the largest subtree of that tree, which is a valid binary search tree.* [*\(Try ME\)*](https://replit.com/@trsong/Determine-If-Valid-Binary-Search-Tree-1)
 
 </summary>
@@ -9890,6 +9861,34 @@ We can consider a sentence valid if it conforms to the following rules:
 ## Backtracking
 ---
 
+
+<details>
+<summary class="lc_e">
+
+- [**\[Easy\] Generate All Possible Subsequences**](https://trsong.github.io/python/java/2022/02/01/DailyQuestionsFeb.html#mar-3-2022-easy-generate-all-possible-subsequences) -- *Given a string, generate all possible subsequences of the string.* [*\(Try ME\)*](https://repl.it/@trsong/Generate-All-Possible-Subsequences-1)
+
+</summary>
+<div>
+
+**Question:** Given a string, generate all possible subsequences of the string.
+
+For example, given the string `xyz`, return an array or set with the following strings:
+
+```py
+x
+y
+z
+xy
+xz
+yz
+xyz
+```
+
+Note that `zx` is not a valid subsequence since it is not in the order of the given string.
+
+
+</div>
+</details>
 
 <details>
 <summary class="lc_m">
