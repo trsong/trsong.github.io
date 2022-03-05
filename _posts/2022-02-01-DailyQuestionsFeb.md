@@ -38,6 +38,63 @@ yz
 xyz
 ```
 
+**Solution:** [https://replit.com/@trsong/Generate-All-Possible-Subsequences-2](https://replit.com/@trsong/Generate-All-Possible-Subsequences-2)
+```py
+import unittest
+
+def generate_subsequences(s):
+    if not s:
+        return ['']
+    res = []
+    generate_subsequences_recur(res, '', s, 0)
+    return res
+
+
+def generate_subsequences_recur(res, accu, s, current_index):
+    if accu:
+        res.append(accu)
+
+    for i in range(current_index, len(s)):
+        generate_subsequences_recur(res, accu + s[i], s, i + 1)
+
+
+class GenerateSubsequenceSpec(unittest.TestCase):
+    def assert_result(self, expected, result):
+        self.assertEqual(set(expected), set(result))
+
+    def test_example(self):
+        s = 'xyz'
+        expected = ['x', 'y', 'z', 'xy', 'xz', 'yz', 'xyz']
+        self.assert_result(expected, generate_subsequences(s))
+
+    def test_empty_string(self):
+        s = ''
+        expected = ['']
+        self.assert_result(expected, generate_subsequences(s))
+
+    def test_binary_string(self):
+        s = '01'
+        expected = ['0', '1', '01']
+        self.assert_result(expected, generate_subsequences(s))
+
+    def test_length_four_string(self):
+        s = '0123'
+        expected = [
+            '0', '1', '2', '3', '01', '02', '03', '12', '13', '23', '123',
+            '023', '013', '012', '0123'
+        ]
+        self.assert_result(expected, generate_subsequences(s))
+
+    def test_duplicated_characters(self):
+        s = 'aaa'
+        expected = ['a', 'aa', 'aaa']
+        self.assert_result(expected, generate_subsequences(s))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False, verbosity=2)
+```
+
 > Note that `zx` is not a valid subsequence since it is not in the order of the given string.
 
 ### Mar 2, 2022 \[Hard\] Largest Sum of Non-adjacent Numbers
