@@ -4554,7 +4554,7 @@ Using this scheme, Jackson and Jaxen both map to J250.
 <details>
 <summary class="lc_e">
 
-- [**\[Easy\] Run-length String Encode and Decode**](https://trsong.github.io/python/java/2020/08/02/DailyQuestionsAug.html#sep-21-2020-easy-run-length-string-encode-and-decode) -- *Implement run-length encoding and decoding.* [*\(Try ME\)*](https://repl.it/@trsong/Run-length-String-Encode-and-Decode-1)
+- [**\[Easy\] Run-length String Encode and Decode**](https://trsong.github.io/python/java/2022/02/01/DailyQuestionsFeb.html#mar-5-2022-easy-run-length-string-encode-and-decode) -- *Implement run-length encoding and decoding.* [*\(Try ME\)*](https://repl.it/@trsong/Run-length-String-Encode-and-Decode-1)
 
 </summary>
 <div>

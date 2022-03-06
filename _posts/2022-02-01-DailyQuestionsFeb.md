@@ -47,6 +47,85 @@ categories: Python/Java
 > Implement run-length encoding and decoding. You can assume the string to be encoded have no digits and consists solely of alphabetic characters. You can assume the string to be decoded is valid.
 
 
+**Solution:** [https://replit.com/@trsong/Run-length-String-Encode-and-Decode-2](https://replit.com/@trsong/Run-length-String-Encode-and-Decode-2)
+```py
+import unittest
+from collections import Counter
+
+class RunLengthProcessor(object):
+    @staticmethod
+    def encode(s):
+        if not s:
+            return ""
+
+        prev = s[0]
+        count = 0
+        res = []
+
+        for ch in s:
+            if prev == ch:
+                count += 1
+            else:
+                res.append(str(count))
+                res.append(prev)
+                prev = ch
+                count = 1
+                
+        res.append(str(count))
+        res.append(prev)
+        return ''.join(res)
+                
+    @staticmethod
+    def decode(s):
+        if not s:
+            return ""
+            
+        res = []
+        count = 0
+
+        for ch in s:
+            if '0' <= ch <= '9':
+                count = 10 * count + int(ch)
+            else:
+                res.append(ch * count)
+                count = 0
+        return ''.join(res)
+        
+            
+class RunLengthProcessorSpec(unittest.TestCase):
+    def assert_encode_decode(self, original, encoded):
+        self.assertEqual(encoded, RunLengthProcessor.encode(original))
+        self.assertEqual(Counter(original), Counter(RunLengthProcessor.decode(encoded)))
+        self.assertEqual(original, RunLengthProcessor.decode(encoded))
+
+    def test_encode_example(self):
+        original = "AAAABBBCCDAA"
+        encoded = "4A3B2C1D2A"
+        self.assert_encode_decode(original, encoded)
+
+    def test_empty_string(self):
+        self.assert_encode_decode("", "")
+
+    def test_single_digit_chars(self):
+        original = "ABCD"
+        encoded = "1A1B1C1D"
+        self.assert_encode_decode(original, encoded)
+
+    def test_two_digit_chars(self):
+        original = 'a' * 10 + 'b' * 11 + 'c' * 21
+        encoded = "10a11b21c"
+        self.assert_encode_decode(original, encoded)
+
+    def test_multiple_digit_chars(self):
+        original = 'a' + 'b' * 100 + 'c' + 'd' * 2 + 'e' * 32
+        encoded = "1a100b1c2d32e"
+        self.assert_encode_decode(original, encoded)
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False, verbosity=2)
+```
+
 ### Mar 4, 2022 \[Easy\] Remove Duplicates From Sorted Linked List
 ---
 > **Question:** Given a sorted linked list, remove all duplicate values from the linked list.
