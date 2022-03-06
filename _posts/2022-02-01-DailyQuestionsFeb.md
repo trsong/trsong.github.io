@@ -63,6 +63,90 @@ Input: 1 -> 1 -> 1 -> 1
 Output: 1
 ```
 
+**Solution:** [https://replit.com/@trsong/Remove-Duplicates-From-Sorted-Linked-List-2](https://replit.com/@trsong/Remove-Duplicates-From-Sorted-Linked-List-2)
+```py
+import unittest
+
+def remove_duplicates(lst):
+    prev = dummy = ListNode(None, lst)
+    p = lst
+    while p:
+        if p.val == prev.val:
+            prev.next = p.next
+        else:
+            prev = p
+        p = p.next
+    return dummy.next
+    
+
+###################
+# Testing Utilities
+###################
+class ListNode(object):
+    def __init__(self, val, next=None):
+        self.val = val
+        self.next = next
+
+    def __repr__(self):
+        return "%s -> %s" % (self.val, self.next)
+
+    def __eq__(self, other):
+        return other and self.val == other.val and self.next == other.next
+
+    @staticmethod  
+    def List(*vals):
+        dummy = ListNode(-1)
+        p = dummy
+        for elem in vals:
+            p.next = ListNode(elem)
+            p = p.next
+        return dummy.next 
+
+
+class RemoveDuplicateSpec(unittest.TestCase):
+    def test_example(self):
+        source_list = ListNode.List(1, 1, 2, 3, 4, 4, 4, 4, 4, 5, 5, 6, 7, 9)
+        expected = ListNode.List(1, 2, 3, 4, 5, 6, 7, 9)
+        self.assertEqual(expected, remove_duplicates(source_list))
+        
+    def test_example2(self):
+        source_list = ListNode.List(1, 1, 1, 1)
+        expected = ListNode.List(1)
+        self.assertEqual(expected, remove_duplicates(source_list))
+
+    def test_empty_list(self):
+        self.assertIsNone(remove_duplicates(None))
+    
+    def test_one_element_list(self):
+        source_list = ListNode.List(-1)
+        expected = ListNode.List(-1)
+        self.assertEqual(expected, remove_duplicates(source_list))
+
+    def test_list_with_unique_value(self):
+        source_list = ListNode.List(1, 1, 1, 1)
+        expected = ListNode.List(1)
+        self.assertEqual(expected, remove_duplicates(source_list))
+    
+    def test_list_with_duplicate_elements(self):
+        source_list = ListNode.List(11, 11, 11, 21, 43, 43, 60)
+        expected = ListNode.List(11, 21, 43, 60)
+        self.assertEqual(expected, remove_duplicates(source_list))
+    
+    def test_list_with_duplicate_elements2(self):
+        source_list = ListNode.List(1, 1, 1, 2, 2, 3, 3, 3, 4, 4, 4, 4, 5, 5)
+        expected = ListNode.List(1, 2, 3, 4, 5)
+        self.assertEqual(expected, remove_duplicates(source_list))
+
+    def test_list_without_duplicate_elements(self):
+        source_list = ListNode.List(1, 2)
+        expected = ListNode.List(1, 2)
+        self.assertEqual(expected, remove_duplicates(source_list))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False, verbosity=2)
+```
+
 ### Mar 3, 2022 \[Easy\] Generate All Possible Subsequences
 ---
 > **Question:** Given a string, generate all possible subsequences of the string.
