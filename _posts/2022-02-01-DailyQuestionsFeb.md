@@ -40,6 +40,63 @@ categories: Python/Java
 2
 ```
 
+**Solution with PriorityQueue:** [https://replit.com/@trsong/Running-Median-of-a-Number-Stream-2](https://replit.com/@trsong/Running-Median-of-a-Number-Stream-2)
+```py
+import unittest
+from queue import PriorityQueue
+
+def generate_running_median(num_stream):
+    # max_heap for lower half, min_heap for upper half
+    max_heap = PriorityQueue()
+    min_heap = PriorityQueue()
+    res = []
+
+    for num in num_stream:
+        min_heap.put(num)
+        if min_heap.qsize() - max_heap.qsize() > 1:
+            max_heap.put(-min_heap.get())
+
+        if min_heap.qsize() == max_heap.qsize():
+            res.append((-max_heap.queue[0] + min_heap.queue[0]) / 2)
+        else:
+            res.append(min_heap.queue[0])
+    return res
+
+
+class GenerateRunningMedian(unittest.TestCase):
+    def test_example(self):
+        num_stream = iter([2, 1, 5, 7, 2, 0, 5])
+        expected = [2, 1.5, 2, 3.5, 2, 2, 2]
+        self.assertEqual(expected, list(generate_running_median(num_stream)))
+
+    def test_empty_stream(self):
+        self.assertEqual([], list(generate_running_median(iter([]))))
+
+    def test_unique_value(self):
+        num_stream = iter([1, 1, 1, 1, 1])
+        expected = [1, 1, 1, 1, 1]
+        self.assertEqual(expected, list(generate_running_median(num_stream)))
+
+    def test_contains_zero(self):
+        num_stream = iter([0, 1, 1, 0, 0])
+        expected = [0, 0.5, 1, 0.5, 0]
+        self.assertEqual(expected, list(generate_running_median(num_stream)))
+
+    def test_contains_zero2(self):
+        num_stream = iter([2, 0, 1])
+        expected = [2, 1, 1]
+        self.assertEqual(expected, list(generate_running_median(num_stream)))
+
+    def test_even_iteration_gives_average(self):
+        num_stream = iter([3, 0, 1, 2])
+        expected = [3, 1.5, 1, 1.5]
+        self.assertEqual(expected, list(generate_running_median(num_stream)))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False, verbosity=2)
+```
+
 ### Mar 5, 2022 \[Easy\] Run-length String Encode and Decode
 ---
 > **Question:** Run-length encoding is a fast and simple method of encoding strings. The basic idea is to represent repeated successive characters as a single count and character. For example, the string `"AAAABBBCCDAA"` would be encoded as `"4A3B2C1D2A"`.
