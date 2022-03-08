@@ -67,6 +67,96 @@ At the end of the 2nd hour, the status of the grid:
  [1, 1, 1, 1, 1]]
  ```
 
+**Solution with BFS:** [https://replit.com/@trsong/Zombie-Infection-in-Matrix-2](https://replit.com/@trsong/Zombie-Infection-in-Matrix-2)
+ ```py
+ import unittest
+
+DIRECTIONS = [(-1, 0), (1, 0), (0, -1), (0, 1)]
+
+def zombie_infection_time(grid):
+    if not grid or not grid[0]:
+        return -1
+
+    n, m = len(grid), len(grid[0])
+    queue = [(r, c) for r in range(n) 
+                    for c in range(m) 
+                    if grid[r][c]]
+    round = -1
+    while queue:
+        for _ in range(len(queue)):
+            cur_r, cur_c = queue.pop(0)
+            if round > 0 and grid[cur_r][cur_c]:
+                continue
+            grid[cur_r][cur_c] = 1
+
+            for dr, dc in DIRECTIONS:
+                new_r, new_c = cur_r + dr, cur_c + dc
+                if (0 <= new_r < n and 
+                    0 <= new_c < m and 
+                    grid[new_r][new_c] == 0):
+                    queue.append((new_r, new_c))
+        round += 1
+    return round
+    
+
+class ZombieInfectionTimeSpec(unittest.TestCase):
+    def test_example(self):
+        self.assertEqual(2, zombie_infection_time([
+            [0, 1, 1, 0, 1],
+            [0, 1, 0, 1, 0],
+            [0, 0, 0, 0, 1],
+            [0, 1, 0, 0, 0]]))
+
+    def test_empty_grid(self):
+        # Assume grid with no zombine returns -1
+        self.assertEqual(-1, zombie_infection_time([]))
+    
+    def test_grid_without_zombie(self):
+        # Assume grid with no zombine returns -1
+        self.assertEqual(-1, zombie_infection_time([
+            [0, 0, 0],
+            [0, 0, 0]
+        ]))
+
+    def test_1x1_grid(self):
+        self.assertEqual(0, zombie_infection_time([[1]]))
+
+    def test_when_all_human_are_infected(self):
+        self.assertEqual(0, zombie_infection_time([
+            [1, 1],
+            [1, 1]]))
+    
+    def test_grid_with_one_zombie(self):
+        self.assertEqual(4, zombie_infection_time([
+            [1, 0, 0],
+            [0, 0, 0],
+            [0, 0, 0]]))
+    
+    def test_grid_with_one_zombie2(self):
+        self.assertEqual(2, zombie_infection_time([
+            [0, 0, 0],
+            [0, 1, 0],
+            [0, 0, 0]]))
+    
+    def test_grid_with_multiple_zombies(self):
+        self.assertEqual(4, zombie_infection_time([
+            [0, 0, 0, 0, 1],
+            [0, 0, 0, 1, 0],
+            [0, 0, 1, 0, 0],
+            [0, 1, 0, 0, 0]]))
+    
+    def test_grid_with_multiple_zombies2(self):
+        self.assertEqual(4, zombie_infection_time([
+            [0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 1],
+            [1, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0]]))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False, verbosity=2)
+ ```
+
 ### Mar 6, 2022 \[Medium\] Running Median of a Number Stream
 ---
 > **Question:** Compute the running median of a sequence of numbers. That is, given a stream of numbers, print out the median of the list so far on each new element.
