@@ -21,6 +21,20 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
 
+### Mar 9, 2022 \[Medium\] Shortest Unique Prefix
+---
+> **Question:** Given an array of words, find all shortest unique prefixes to represent each word in the given array. Assume that no word is prefix of another.
+
+**Example:**
+```py
+Input: ['zebra', 'dog', 'duck', 'dove']
+Output: ['z', 'dog', 'du', 'dov']
+Explanation: dog => dog
+             dove = dov 
+             duck = du
+             z   => zebra 
+```
+
 ### Mar 8, 2022 \[Medium\] Friend Cycle Problem
 --- 
 > **Question:** A classroom consists of `N` students, whose friendships can be represented in an adjacency list. For example, the following descibes a situation where `0` is friends with `1` and `2`, `3` is friends with `6`, and so on.
