@@ -38,6 +38,79 @@ categories: Python/Java
 >
 > Given a friendship list such as the one above, determine the number of friend groups in the class.
 
+**Solution with DFS:** [https://replit.com/@trsong/Friend-Cycle-Problem-2](https://replit.com/@trsong/Friend-Cycle-Problem-2)
+```py
+import unittest
+
+def find_cycles(friendships):
+    visited = set()
+    res = 0
+
+    for cur in friendships:
+        if cur in visited:
+            continue
+        res += 1
+
+        stack = [cur]
+        while stack:
+            p = stack.pop()
+            if p in visited:
+                continue
+            visited.add(p)
+
+            for nb in friendships[p]:
+                if nb not in visited:
+                    stack.append(nb)
+    return res
+                
+                
+class FindCycleSpec(unittest.TestCase):
+    def test_example(self):
+        friendships = {
+            0: [1, 2],
+            1: [0, 5],
+            2: [0],
+            3: [6],
+            4: [],
+            5: [1],
+            6: [3]
+        }
+        expected = 3  # [0, 1, 2, 5], [3, 6], [4]
+        self.assertEqual(expected, find_cycles(friendships))
+
+    def test_no_friends(self):
+        friendships = {
+            0: [],
+            1: [],
+            2: []
+        }
+        expected = 3  # [0], [1], [2]
+        self.assertEqual(expected, find_cycles(friendships))
+
+    def test_all_friends(self):
+        friendships = {
+            0: [1, 2],
+            1: [0, 2],
+            2: [0, 1]
+        }
+        expected = 1  # [0, 1, 2]
+        self.assertEqual(expected, find_cycles(friendships))
+    
+    def test_common_friend(self):
+        friendships = {
+            0: [1],
+            1: [0, 2, 3],
+            2: [1],
+            3: [1],
+            4: []
+        }
+        expected = 2  # [0, 1, 2, 3], [4]
+        self.assertEqual(expected, find_cycles(friendships))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False, verbosity=2)
+```
 
 ### Mar 7, 2022 \[Easy\] Zombie in Matrix
 ---
