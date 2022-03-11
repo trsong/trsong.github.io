@@ -35,6 +35,101 @@ Explanation: dog => dog
              z   => zebra 
 ```
 
+**My thoughts:** Most string prefix searching problem can be solved using Trie (Prefix Tree). A trie is a N-nary tree with each edge represent a char. Each node will have two attribues: is_end and count, representing if a word is end at this node and how many words share same prefix so far separately. 
+
+The given example will generate the following trie:
+```py
+The number inside each parenthsis represents how many words share the same prefix underneath.
+
+             ""(4)
+         /  |    |   \  
+      d(1) c(1) a(2) f(1)
+     /      |    |      \
+   o(1)    a(1) p(2)   i(1)
+  /         |    |  \     \
+g(1)       t(1) p(1) r(1) s(1)
+                 |    |    |
+                l(1) i(1) h(1)
+                 |    |
+                e(1) c(1)
+                      |
+                     o(1)
+                      |
+                     t(1)
+```
+Our goal is to find a path for each word from root to the first node that has count equals 1, above example gives: `d, c, app, apr, f`
+
+
+**Solution with Trie:** [https://replit.com/@trsong/Find-All-Shortest-Unique-Prefix-2](https://replit.com/@trsong/Find-All-Shortest-Unique-Prefix-2)
+```py
+import unittest
+
+class Trie(object):
+    def __init__(self):
+        self.count = 0
+        self.children = {}
+
+    def insert(self, word):
+        p = self
+        for ch in word:
+            p.children[ch] = p.children.get(ch, Trie())
+            p = p.children[ch]
+            p.count += 1
+        
+    def find_prefix(self, word):
+        p = self
+        depth = 0
+        for ch in word:
+            if p.count == 1:
+                break
+            p = p.children[ch]
+            depth += 1
+        return word[:depth]
+
+
+def shortest_unique_prefix(words):
+    trie = Trie()
+    for ch in words:
+        trie.insert(ch)
+    return map(lambda word: trie.find_prefix(word), words)
+
+
+class UniquePrefixSpec(unittest.TestCase):
+    def test_example(self):
+        words = ['zebra', 'dog', 'duck', 'dove']
+        expected = ['z', 'dog', 'du', 'dov']
+        self.assertEqual(expected, shortest_unique_prefix(words))
+    
+    def test_example2(self):
+        words = ['dog', 'cat', 'apple', 'apricot', 'fish']
+        expected = ['d', 'c', 'app', 'apr', 'f']
+        self.assertEqual(expected, shortest_unique_prefix(words))
+    
+    def test_empty_word(self):
+        words = ['', 'alpha', 'aztec']
+        expected = ['', 'al', 'az']
+        self.assertEqual(expected, shortest_unique_prefix(words))
+
+    def test_prefix_overlapp_with_each_other(self):
+        words = ['abc', 'abd', 'abe', 'abf', 'abg']
+        expected = ['abc', 'abd', 'abe', 'abf', 'abg']
+        self.assertEqual(expected, shortest_unique_prefix(words))
+    
+    def test_only_entire_word_is_shortest_unique_prefix(self):
+        words = ['greek', 'greedisbad', 'greedisgood', 'greeting']
+        expected = ['greek', 'greedisb', 'greedisg', 'greet']
+        self.assertEqual(expected, shortest_unique_prefix(words))
+
+    def test_unique_prefix_is_not_empty_string(self):
+        words = ['naturalwonders']
+        expected = ['n']
+        self.assertEqual(expected, shortest_unique_prefix(words))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False, verbosity=2)
+```
+
 ### Mar 8, 2022 \[Medium\] Friend Cycle Problem
 --- 
 > **Question:** A classroom consists of `N` students, whose friendships can be represented in an adjacency list. For example, the following descibes a situation where `0` is friends with `1` and `2`, `3` is friends with `6`, and so on.
