@@ -57,6 +57,85 @@ shortest_dist('helloworld', 'l')
 # returns [2, 1, 0, 0, 1, 2, 2, 1, 0, 1]
 ```
 
+**My thoughts:** The idea is similar to Problem ["LC 42 Trap Rain Water"](https://trsong.github.io/python/java/2019/05/01/DailyQuestions.html#may-11-2019-lc-42-hard-trapping-rain-water): we can simply scan from left to know the shortest distance from nearest character on the left and vice versa when we can from right to left. 
+
+**Solution:** [https://replit.com/@trsong/Find-Shortest-Distance-to-Characters-2](https://replit.com/@trsong/Find-Shortest-Distance-to-Characters-2)
+```py
+import unittest
+
+def shortest_dist_to_char(s, ch):
+    n = len(s)
+    res = [n] * n
+    left_dist = n
+    right_dist = n
+
+    for i in range(n):
+        if s[i] == ch:
+            left_dist = 0
+        res[i] = min(res[i], left_dist)
+        left_dist += 1
+
+        if s[n - 1 - i] == ch:
+            right_dist = 0
+        res[n - 1 - i] = min(res[n - 1 - i], right_dist)
+        right_dist += 1
+    return res
+
+
+class ShortestDistToCharSpec(unittest.TestCase):
+    def test_example(self):
+        ch, s = 'l', 'helloworld'
+        expected = [2, 1, 0, 0, 1, 2, 2, 1, 0, 1]
+        self.assertEqual(expected, shortest_dist_to_char(s, ch))
+
+    def test_example2(self):
+        ch, s = 'o', 'helloworld'
+        expected = [4, 3, 2, 1, 0, 1, 0, 1, 2, 3]
+        self.assertEqual(expected, shortest_dist_to_char(s, ch))
+
+    def test_one_letter_string(self):
+        self.assertEqual([0], shortest_dist_to_char('a', 'a'))
+
+    def test_target_char_as_head(self):
+        ch, s = 'a', 'abcde'
+        expected = [0, 1, 2, 3, 4]
+        self.assertEqual(expected, shortest_dist_to_char(s, ch))
+
+    def test_target_char_as_last(self):
+        ch, s = 'a', 'eeeeeeea'
+        expected = [7, 6, 5, 4, 3, 2, 1, 0]
+        self.assertEqual(expected, shortest_dist_to_char(s, ch))
+
+    def test_unique_letter_string(self):
+        ch, s = 'a', 'aaaaa'
+        expected = [0, 0, 0, 0, 0]
+        self.assertEqual(expected, shortest_dist_to_char(s, ch))
+
+    def test_multiple_occurance_of_target(self):
+        ch, s = 'a', 'babbabbbaabbbbb'
+        expected = [1, 0, 1, 1, 0, 1, 2, 1, 0, 0, 1, 2, 3, 4, 5]
+        self.assertEqual(expected, shortest_dist_to_char(s, ch))
+
+    def test_no_duplicate_letters(self):
+        ch, s = 'a', 'bcadefgh'
+        expected = [2, 1, 0, 1, 2, 3, 4, 5]
+        self.assertEqual(expected, shortest_dist_to_char(s, ch))
+    
+    def test_long_string(self):
+        ch, s = 'a', 'a' + 'b' * 9999
+        expected = range(10000)
+        self.assertEqual(expected, shortest_dist_to_char(s, ch))
+    
+    def test_long_string2(self):
+        ch, s = 'a', 'b' * 999999 + 'a'
+        expected = range(1000000)[::-1]
+        self.assertEqual(expected, shortest_dist_to_char(s, ch))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False, verbosity=2)
+```
+
 ### Mar 9, 2022 \[Medium\] Shortest Unique Prefix
 ---
 > **Question:** Given an array of words, find all shortest unique prefixes to represent each word in the given array. Assume that no word is prefix of another.

@@ -4373,7 +4373,7 @@ Output: ["ab"]
 <details>
 <summary class="lc_m">
 
-- [**\[Medium\] LC 821. Shortest Distance to Character**](http://trsong.github.io/python/java/2021/02/02/DailyQuestionsFeb.html#mar-10-2021-lc-821-medium-shortest-distance-to-character) -- *Given a string s and a character c, find the distance for all characters in the string to the character c in the string s.* [*\(Try ME\)*](https://repl.it/@trsong/Find-Shortest-Distance-to-Characters-1)
+- [**\[Medium\] LC 821. Shortest Distance to Character**](https://trsong.github.io/python/java/2022/02/01/DailyQuestionsFeb.html#mar-10-2022--lc-821-medium-shortest-distance-to-character) -- *Given a string s and a character c, find the distance for all characters in the string to the character c in the string s.* [*\(Try ME\)*](https://repl.it/@trsong/Find-Shortest-Distance-to-Characters-1)
 
 </summary>
 <div>
