@@ -45,6 +45,113 @@ Window position                Max
  1  3  -1  -3  5 [3  6  7]      7
  ```
 
+**My thoughts:** The idea is to efficiently keep track of **INDEX** of 1st max, 2nd max, 3rd max and potentially k-th max elem. The reason for storing index is for the sake of avoiding index out of window. We can achieve that by using ***Double-Ended Queue*** which allow us to efficiently push and pop from both ends of the queue. 
+
+The queue looks like `[index of 1st max, index of 2nd max, ...., index of k-th max]`
+
+We might run into the following case as we progress:
+- index of 1st max is out of bound of window: we pop left and index of 2nd max because 1st max within window
+- the next elem become j-th max: evict old j-th max all the way to index of k-th max on the right of dequeue, i.e. pop right: `[index of 1st max, index of 2nd max, ..., index of j-1-th max, index of new elem]`
+
+**Solution with Sliding Window:** [https://replit.com/@trsong/Find-Sliding-Window-Maximum-4](https://replit.com/@trsong/Find-Sliding-Window-Maximum-4)
+```py
+ import unittest
+from queue import deque
+
+def max_sliding_window(nums, k):
+    dq = deque()
+    res = []
+
+    for i, num in enumerate(nums):
+        if i >= k and dq[0] <= i - k:
+            dq.popleft()
+
+        while dq and nums[dq[-1]] <= num:
+            dq.pop()
+
+        dq.append(i)
+        if i >= k - 1:
+            res.append(nums[dq[0]])
+
+    return res
+    
+    
+class MaxSlidingWindowSpec(unittest.TestCase):
+    def test_example_array(self):
+        k, nums = 3, [1, 3, -1, -3, 5, 3, 6, 7]
+        expected = [3, 3, 5, 5, 6, 7]
+        self.assertEqual(expected, max_sliding_window(nums, k))
+
+    def test_empty_array(self):
+        self.assertEqual([], max_sliding_window([], 1))
+
+    def test_window_has_same_size_as_array(self):
+        self.assertEqual([3], max_sliding_window([3, 2, 1], 3))
+
+    def test_window_has_same_size_as_array2(self):
+        self.assertEqual([2], max_sliding_window([1, 2], 2))
+
+    def test_window_has_same_size_as_array3(self):
+        self.assertEqual([-1], max_sliding_window([-1], 1))
+
+    def test_non_ascending_array(self):
+        k, nums = 2, [4, 3, 3, 2, 2, 1]
+        expected = [4, 3, 3, 2, 2]
+        self.assertEqual(expected, max_sliding_window(nums, k))
+
+    def test_non_ascending_array2(self):
+        k, nums = 2, [1, 1, 1]
+        expected = [1, 1]
+        self.assertEqual(expected, max_sliding_window(nums, k))
+
+    def test_non_descending_array(self):
+        k, nums = 3, [1, 1, 2, 2, 2, 3]
+        expected = [2, 2, 2, 3]
+        self.assertEqual(expected, max_sliding_window(nums, k))
+    
+    def test_non_descending_array2(self):
+        self.assertEqual(max_sliding_window([1, 1, 2, 3], 1), [1, 1, 2 ,3])
+
+    def test_first_decreasing_then_increasing_array(self):
+        k, nums = 3, [5, 4, 1, 1, 1, 2, 2, 2]
+        expected = [5, 4, 1, 2, 2, 2]
+        self.assertEqual(expected, max_sliding_window(nums, k))
+    
+    def test_first_decreasing_then_increasing_array2(self):
+        k, nums = 2, [3, 2, 1, 2, 3]
+        expected = [3, 2, 2, 3]
+        self.assertEqual(expected, max_sliding_window(nums, k))
+
+    def test_first_decreasing_then_increasing_array3(self):
+        k, nums = 3, [3, 2, 1, 2, 3]
+        expected = [3, 2, 3]
+        self.assertEqual(expected, max_sliding_window(nums, k))
+    
+    def test_first_increasing_then_decreasing_array(self):
+        k, nums = 2, [1, 2, 3, 2, 1]
+        expected = [2, 3, 3, 2]
+        self.assertEqual(expected, max_sliding_window(nums, k))
+    
+    def test_first_increasing_then_decreasing_array2(self):
+        k, nums = 3, [1, 2, 3, 2, 1]
+        expected = [3, 3, 3]
+        self.assertEqual(expected, max_sliding_window(nums, k))
+
+    def test_oscillation_array(self):
+        k, nums = 2, [1, -1, 1, -1, -1, 1, 1]
+        expected = [1, 1, 1, -1, 1, 1]
+        self.assertEqual(expected, max_sliding_window(nums, k))
+    
+    def test_oscillation_array2(self):
+        k, nums = 3, [1, 3, 1, 2, 0, 5]
+        expected = [3, 3, 2, 5]
+        self.assertEqual(expected, max_sliding_window(nums, k))
+ 
+
+if __name__ == '__main__':
+    unittest.main(exit=False, verbosity=2)
+ ```
+
 ### Mar 10, 2022  LC 821 \[Medium\] Shortest Distance to Character
 ---
 > **Question:**  Given a string s and a character c, find the distance for all characters in the string to the character c in the string s. 
