@@ -61,6 +61,61 @@ Return false.
 >
 > For example, given `[(30, 75), (0, 50), (60, 150)]`, you should return `2`.
 
+**My thoughts:** whenever we enter an interval at time t, the total number of room at time t increment by 1 and whenever we leave an interval the total number of required room decrement by 1. For `(1, 10)`, `(5, 15)` and `(6, 15)`, `+1` at `t = 1, 5, 6` and `-1` at `t=10, 15, 15`. And at peak hour, the total room equals 3. 
+
+**Solution:** [https://replit.com/@trsong/Minimum-Required-Lecture-Rooms-2](https://replit.com/@trsong/Minimum-Required-Lecture-Rooms-2)
+```py
+import unittest
+
+def min_lecture_rooms(intervals):
+    starts = map(lambda x: (x[0], 1), intervals)
+    ends = map(lambda x: (x[1], -1), intervals)
+    all_times = sorted(starts + ends)
+
+    max_rooms = 0
+    cur_rooms = 0
+    for _, diff in all_times:
+        cur_rooms += diff
+        max_rooms = max(max_rooms, cur_rooms)
+    return max_rooms
+
+
+class MinLectureRoomSpec(unittest.TestCase):
+    def setUp(self):
+        self.t1 = (-10, 0)
+        self.t2 = (-5, 5)
+        self.t3 = (0, 10)
+        self.t4 = (5, 15)
+    
+    def test_overlapping_end_points(self):
+        intervals = [self.t1] * 3
+        expected = 3
+        self.assertEqual(expected, min_lecture_rooms(intervals))
+    
+    def test_overlapping_end_points2(self):
+        intervals = [self.t3, self.t1]
+        expected = 1
+        self.assertEqual(expected, min_lecture_rooms(intervals))
+
+    def test_not_all_overlapping_intervals(self):
+        intervals = [(30, 75), (0, 50), (60, 150)]
+        expected = 2
+        self.assertEqual(expected, min_lecture_rooms(intervals))
+
+    def test_not_all_overlapping_intervals2(self):
+        intervals = [self.t1, self.t3, self.t2, self.t4]
+        expected = 2
+        self.assertEqual(expected, min_lecture_rooms(intervals))
+
+    def test_not_all_overlapping_intervals3(self):
+        intervals = [self.t1, self.t3, self.t2, self.t4] * 2
+        expected = 4
+        self.assertEqual(expected, min_lecture_rooms(intervals))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False, verbosity=2)
+```
 
 ### Mar 12, 2022 \[Hard\] Reverse Words Keep Delimiters
 ---
