@@ -21,6 +21,47 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
 
+### Mar 15, 2022 \[Medium\] Tokenization
+---
+> **Questions:** Given a dictionary of words and a string made up of those words (no spaces), return the original sentence in a list. If there is more than one possible reconstruction, return any of them. If there is no possible reconstruction, then return null.
+
+**Example 1:**
+```py
+Input: ['quick', 'brown', 'the', 'fox'], 'thequickbrownfox'
+Output: ['the', 'quick', 'brown', 'fox']
+```
+
+**Example 2:**
+```py
+Input: ['bed', 'bath', 'bedbath', 'and', 'beyond'], 'bedbathandbeyond'
+Output:  Either ['bed', 'bath', 'and', 'beyond'] or ['bedbath', 'and', 'beyond']
+```
+
+### Mar 14, 2022 LC 392 \[Medium\] Is Subsequence
+---
+> **Question:** Given a string s and a string t, check if s is subsequence of t.
+>
+> A subsequence of a string is a new string which is formed from the original string by deleting some (can be none) of the characters without disturbing the relative positions of the remaining characters. (ie, "ace" is a subsequence of "abcde" while "aec" is not).
+
+**Example 1:**
+```
+s = "abc", t = "ahbgdc"
+Return true.
+```
+
+**Example 2:**
+```
+s = "axc", t = "ahbgdc"
+Return false.
+```
+
+### Mar 13, 2022 LC 253 \[Easy\] Minimum Lecture Rooms
+---
+> **Questions:** Given an array of time intervals `(start, end)` for classroom lectures (possibly overlapping), find the minimum number of rooms required.
+>
+> For example, given `[(30, 75), (0, 50), (60, 150)]`, you should return `2`.
+
+
 ### Mar 12, 2022 \[Hard\] Reverse Words Keep Delimiters
 ---
 > **Question:** Given a string and a set of delimiters, reverse the words in the string while maintaining the relative order of the delimiters. For example, given "hello/world:here", return "here/world:hello"
