@@ -27,6 +27,71 @@ categories: Python/Java
 >
 > Follow-up: Does your solution work for the following cases: "hello/world:here/", "hello//world:here"
 
+**Solution:** [https://replit.com/@trsong/Reverse-Words-and-Keep-Delimiters-3](https://replit.com/@trsong/Reverse-Words-and-Keep-Delimiters-3)
+```py
+import unittest
+
+def reverse_words_and_keep_delimiters(s, delimiters):
+    d_set = set(delimiters)
+    tokens = tokenize(s, d_set)
+
+    lo = 0
+    hi = len(tokens) - 1
+    while lo < hi:
+        if tokens[lo] in d_set:
+            lo += 1
+        elif tokens[hi] in d_set:
+            hi -= 1
+        else:
+            tokens[lo], tokens[hi] = tokens[hi], tokens[lo]
+            lo += 1
+            hi -= 1
+    return ''.join(tokens)
+
+
+def tokenize(s, delimiters):
+    prev_dpos = -1
+    res = []
+
+    for i, ch in enumerate(s):
+        if ch not in delimiters:
+            continue
+        res.append(s[prev_dpos + 1: i])
+        res.append(ch)
+        prev_dpos = i
+    res.append(s[prev_dpos + 1:])
+    return filter(len, res)
+            
+
+class ReverseWordsKeepDelimiterSpec(unittest.TestCase):
+    def test_example1(self):
+        self.assertEqual(reverse_words_and_keep_delimiters("hello/world:here", ['/', ':']), "here/world:hello")
+    
+    def test_example2(self):
+        self.assertEqual(reverse_words_and_keep_delimiters("hello/world:here/", ['/', ':']), "here/world:hello/")
+
+    def test_example3(self):
+        self.assertEqual(reverse_words_and_keep_delimiters("hello//world:here", ['/', ':']), "here//world:hello")
+
+    def test_only_has_delimiters(self):
+        self.assertEqual(reverse_words_and_keep_delimiters("--++--+++", ['-', '+']), "--++--+++")
+
+    def test_without_delimiters(self):
+        self.assertEqual(reverse_words_and_keep_delimiters("--++--+++", []), "--++--+++")
+
+    def test_without_delimiters2(self):
+        self.assertEqual(reverse_words_and_keep_delimiters("--++--+++", ['a', 'b']), "--++--+++")
+
+    def test_first_delimiter_then_word(self):
+        self.assertEqual(reverse_words_and_keep_delimiters("///a/b", ['/']), "///b/a")
+    
+    def test_first_word_then_delimiter(self):
+        self.assertEqual(reverse_words_and_keep_delimiters("a///b///", ['/']), "b///a///")
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False, verbosity=2)
+```
 
 ### Mar 11, 2022  LC 239 \[Medium\] Sliding Window Maximum
 ---
