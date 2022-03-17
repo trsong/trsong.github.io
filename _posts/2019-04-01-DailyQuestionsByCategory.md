@@ -11326,7 +11326,7 @@ Explanation: nums = [3,1,5,8] --> [3,5,8] -->   [3,8]   -->  [8]  --> []
 <details>
 <summary class="lc_m">
 
-- [**\[Medium\] Paint House**](https://trsong.github.io/python/java/2021/02/02/DailyQuestionsFeb.html#mar-22-2021-medium-paint-house) -- *Given an N by K matrix where the nth row and kth column represents the cost to build the nth house with kth color, return the minimum cost.* [*\(Try ME\)*](https://replit.com/@trsong/Min-Cost-to-Paint-House-1)
+- [**\[Medium\] Paint House**](https://trsong.github.io/python/java/2022/02/01/DailyQuestionsFeb.html#mar-16-2022-medium-paint-house) -- *Given an N by K matrix where the nth row and kth column represents the cost to build the nth house with kth color, return the minimum cost.* [*\(Try ME\)*](https://replit.com/@trsong/Min-Cost-to-Paint-House-1)
 
 </summary>
 <div>

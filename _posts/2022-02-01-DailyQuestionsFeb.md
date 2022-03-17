@@ -39,6 +39,94 @@ categories: Python/Java
 >
 > Given an N by K matrix where the n-th row and k-th column represents the cost to build the n-th house with k-th color, return the minimum cost which achieves this goal.
 
+
+**Solution with DP:** [https://replit.com/@trsong/Min-Cost-to-Paint-House-2](https://replit.com/@trsong/Min-Cost-to-Paint-House-2)
+```py
+import unittest
+
+def min_paint_houses_cost(paint_cost):
+    if not paint_cost or not paint_cost[0]:
+        return 0
+
+    num_house, num_color = len(paint_cost), len(paint_cost[0])
+    # Let dp[n][c] represents min cost for n houses and k colors
+    # dp[n][c] = paint_cost[n-1][c] + min{ dp[n-1][k] } for all k != c
+    dp = [[float('inf') for _ in range(num_color)] for _ in range(num_house + 1)]
+    for c in range(num_color):
+        dp[0][c] = 0
+
+    for i in range(1, num_house + 1):
+        min1 = min2 = float('inf')
+
+        for prev_accu in dp[i-1]:
+            if prev_accu < min2:
+                min2 = prev_accu
+
+            if min2 < min1:
+                min1, min2 = min2, min1
+
+        for c in range(num_color):
+            prev_min = min2 if dp[i-1][c] == min1 else min1
+            dp[i][c] = paint_cost[i-1][c] + prev_min
+
+    return min(dp[num_house])
+
+
+class MinPaintHousesCostSpec(unittest.TestCase):
+    def test_three_houses(self):
+        paint_cost = [
+            [7, 3, 8, 6, 1, 2],
+            [5, 6, 7, 2, 4, 3],
+            [10, 1, 4, 9, 7, 6]
+        ]
+        # min_cost: 1, 2, 1
+        self.assertEqual(4, min_paint_houses_cost(paint_cost))
+
+    def test_four_houses(self):
+        paint_cost = [
+            [7, 3, 8, 6, 1, 2],
+            [5, 6, 7, 2, 4, 3],
+            [10, 1, 4, 9, 7, 6],
+            [10, 1, 4, 9, 7, 6]
+        ] 
+        # min_cost: 1, 2, 4, 1
+        self.assertEqual(8, min_paint_houses_cost(paint_cost))
+
+    def test_long_term_or_short_term_cost_tradeoff(self):
+        paint_cost = [
+            [0, 1],
+            [1, 0],
+            [0, 1],
+            [0, 5]
+        ]
+        # min_cost: 1, 1, 1, 0
+        self.assertEqual(3, min_paint_houses_cost(paint_cost))
+
+    def test_long_term_or_short_term_cost_tradeoff2(self):
+        paint_cost = [
+            [1, 2, 3],
+            [3, 2, 1],
+            [1, 3, 2],
+            [1, 1, 1],
+            [5, 2, 1]
+        ]
+        # min_cost: 1, 1, 1, 1, 1
+        self.assertEqual(5, min_paint_houses_cost(paint_cost))
+
+    def test_no_houses(self):
+        self.assertEqual(0, min_paint_houses_cost([]))
+
+    def test_one_house(self):
+        paint_cost = [
+            [3, 2, 1, 2, 3, 4, 5]
+        ]
+        self.assertEqual(1, min_paint_houses_cost(paint_cost))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False, verbosity=2)
+```
+
 ### Mar 15, 2022 \[Medium\] Tokenization
 ---
 > **Questions:** Given a dictionary of words and a string made up of those words (no spaces), return the original sentence in a list. If there is more than one possible reconstruction, return any of them. If there is no possible reconstruction, then return null.
