@@ -21,6 +21,18 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
 
+### Mar 17, 2022 LC 981 \[Medium\] Time Based Key-Value Store
+---
+> **Question:** Write a map implementation with a get function that lets you retrieve the value of a key at a particular time.
+>
+> It should contain the following methods:
+>
+> - `set(key, value, time)`: sets key to value for t = time.
+> - `get(key, time)`: gets the key at t = time.
+>
+> The map should work like this. If we set a key at a particular time, it will maintain that value forever or until it gets set at a later time. In other words, when we get a key at a time, it should return the value that was set for that key set at the most recent time.
+
+
 ### Mar 16, 2022 \[Medium\] Paint House
 ---
 > **Question:** A builder is looking to build a row of N houses that can be of K different colors. He has a goal of minimizing cost while ensuring that no two neighboring houses are of the same color.
