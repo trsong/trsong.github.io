@@ -4593,7 +4593,7 @@ t     a     g
 <details>
 <summary class="lc_m">
 
-- [**\[Medium\] Tokenization**](https://trsong.github.io/python/java/2020/05/02/DailyQuestionsMay.html#jul-20-2020-medium-tokenization) -- *Given a dictionary of words and a string made up of those words (no spaces), return the original sentence in a list.* [*\(Try ME\)*](https://repl.it/@trsong/String-Tokenization-1)
+- [**\[Medium\] Tokenization**](https://trsong.github.io/python/java/2022/02/01/DailyQuestionsFeb.html#mar-15-2022-medium-tokenization) -- *Given a dictionary of words and a string made up of those words (no spaces), return the original sentence in a list.* [*\(Try ME\)*](https://repl.it/@trsong/String-Tokenization-1)
 
 </summary>
 <div>

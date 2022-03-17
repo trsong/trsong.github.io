@@ -43,6 +43,83 @@ Input: ['bed', 'bath', 'bedbath', 'and', 'beyond'], 'bedbathandbeyond'
 Output:  Either ['bed', 'bath', 'and', 'beyond'] or ['bedbath', 'and', 'beyond']
 ```
 
+**Solution with Backtracking:** [https://replit.com/@trsong/String-Tokenization-3](https://replit.com/@trsong/String-Tokenization-3)
+```py
+import unittest
+
+def tokenize(dictionary, sentence):
+    word_set = set(dictionary)
+    return tokenize_recur(sentence, word_set)
+
+
+def tokenize_recur(sentence, word_set):
+    if not sentence:
+        return []
+
+    n = len(sentence)
+    for token_size in map(len, word_set):
+        if token_size > n or sentence[:token_size] not in word_set:
+            continue
+
+        sub_res = tokenize_recur(sentence[token_size:], word_set)
+        if sub_res is not None:
+            return [sentence[:token_size]] + sub_res
+    return None
+    
+
+class TokenizeSpec(unittest.TestCase):
+    def test_example(self):
+        dictionary = ['quick', 'brown', 'the', 'fox']
+        sentence = 'thequickbrownfox'
+        expected = ['the', 'quick', 'brown', 'fox']
+        self.assertEqual(expected, tokenize(dictionary, sentence))
+
+    def test_example2(self):
+        dictionary = ['bed', 'bath', 'bedbath', 'and', 'beyond']
+        sentence = 'bedbathandbeyond'
+        expected1 = ['bed', 'bath', 'and', 'beyond']
+        expected2 = ['bedbath', 'and', 'beyond']
+        res = tokenize(dictionary, sentence)
+        self.assertIn(res, [expected1, expected2])
+
+    def test_match_entire_sentence(self):
+        dictionary = ['thequickbrownfox']
+        sentence = 'thequickbrownfox'
+        expected = ['thequickbrownfox']
+        self.assertEqual(expected, tokenize(dictionary, sentence))
+
+    def test_cannot_tokenize(self):
+        dictionary = ['thequickbrownfox']
+        sentence = 'thefox'
+        self.assertIsNone(tokenize(dictionary, sentence))
+
+    def test_longer_sentence(self):
+        dictionary = ['i', 'and', 'like', 'sam', 'sung', 'samsung', 'mobile', 'ice', 'cream', 'icecream', 'man', 'go', 'mango']
+        sentence = 'ilikesamsungmobile'
+        expected1 = ['i', 'like', 'samsung', 'mobile']
+        expected2 = ['i', 'like', 'sam', 'sung', 'mobile']
+        res = tokenize(dictionary, sentence)
+        self.assertIn(res, [expected1, expected2])
+
+    def test_longer_sentence2(self):
+        dictionary = ['i', 'and', 'like', 'sam', 'sung', 'samsung', 'mobile', 'ice', 'cream', 'icecream', 'go', 'mango']
+        sentence = 'ilikeicecreamandmango'
+        expected1 = ['i', 'like', 'icecream', 'and', 'mango']
+        expected2 = ['i', 'like', 'ice', 'cream', 'and', 'mango']
+        res = tokenize(dictionary, sentence)
+        self.assertIn(res, [expected1, expected2])
+
+    def test_greedy_approach_will_fail(self):
+        dictionary = ['ice', 'icecream', 'coffee']
+        sentence = 'icecream'
+        expected = ['icecream']
+        self.assertEqual(expected, tokenize(dictionary, sentence))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False)
+```
+
 ### Mar 14, 2022 LC 392 \[Medium\] Is Subsequence
 ---
 > **Question:** Given a string s and a string t, check if s is subsequence of t.
