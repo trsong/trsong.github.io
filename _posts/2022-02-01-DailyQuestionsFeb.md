@@ -47,6 +47,112 @@ Given the sequence 2, 4, 3, 8, 7, 5, you should construct the following tree:
 >
 > The map should work like this. If we set a key at a particular time, it will maintain that value forever or until it gets set at a later time. In other words, when we get a key at a time, it should return the value that was set for that key set at the most recent time.
 
+**Solution with BST:** [https://replit.com/@trsong/Time-Based-Key-Value-Store-2](https://replit.com/@trsong/Time-Based-Key-Value-Store-2)
+```py
+import unittest
+from collections import defaultdict
+
+class TimeMap(object):
+    def __init__(self):
+        self.lookup = defaultdict(BST)
+    
+    def set(self, key, value, time):
+        self.lookup[key].set(time, value)
+        
+    def get(self, key, time):
+        return self.lookup[key].get(time)
+
+
+class BSTNode(object):
+    def __init__(self, key, val, left=None, right=None):
+        self.key = key
+        self.val = val
+        self.left = left
+        self.right = right
+
+    
+class BST(object):
+    def __init__(self):
+        self.root = None
+
+    def get(self, key):
+        p = self.root
+        res = None
+        while p:
+            if p.key == key:
+                return p.val
+            elif p.key < key:
+                res = p.val
+                p = p.right
+            else:
+                p = p.left
+        return res
+
+    def set(self, key, val):
+        # Omit tree re-balancing
+        node = BSTNode(key, val)
+        if self.root is None:
+            self.root = node
+
+        p = self.root
+        while True:
+            if p.key == key:
+                p.val = val
+                break
+            elif p.key < key:
+                if p.right is None:
+                    p.right = node
+                    break
+                p = p.right
+            else:
+                if p.left is None:
+                    p.left = node
+                    break
+                p = p.left
+
+
+class TimeMapSpec(unittest.TestCase):
+    def test_example(self):
+        d = TimeMap()
+        d.set(1, 1, time=0)
+        d.set(1, 2, time=2)
+        self.assertEqual(1, d.get(1, time=1)) 
+        self.assertEqual(2, d.get(1, time=3))
+    
+    def test_example2(self):
+        d = TimeMap()
+        d.set(1, 1, time=5)
+        self.assertIsNone(d.get(1, time=0))
+        self.assertEqual(1, d.get(1, time=10))
+    
+    def test_example3(self):
+        d = TimeMap()
+        d.set(1, 1, time=0)
+        d.set(1, 2, time=0)
+        self.assertEqual(2, d.get(1, time=0))
+
+    def test_set_then_get(self):
+        d = TimeMap()
+        d.set(1, 100, time=10)
+        d.set(1, 99, time=20)
+        self.assertIsNone(d.get(1, time=5))
+        self.assertEqual(100, d.get(1, time=10))
+        self.assertEqual(100, d.get(1, time=15))
+        self.assertEqual(99, d.get(1, time=20))
+        self.assertEqual(99, d.get(1, time=25))
+
+    def test_get_no_exist_key(self):
+        d = TimeMap()
+        self.assertIsNone(d.get(1, time=0))
+        d.set(1, 100, time=0)
+        self.assertIsNone(d.get(42, time=0))
+        self.assertEqual(100, d.get(1, time=0))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False, verbosity=2)
+```
+
 
 ### Mar 16, 2022 \[Medium\] Paint House
 ---
