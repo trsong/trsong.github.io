@@ -21,6 +21,21 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
 
+### Mar 18, 2022 \[Medium\] Construct BST from Post-order Traversal
+---
+> **Question:** Given the sequence of keys visited by a postorder traversal of a binary search tree, reconstruct the tree.
+
+**Example:**
+```py
+Given the sequence 2, 4, 3, 8, 7, 5, you should construct the following tree:
+
+    5
+   / \
+  3   7
+ / \   \
+2   4   8
+```
+
 ### Mar 17, 2022 LC 981 \[Medium\] Time Based Key-Value Store
 ---
 > **Question:** Write a map implementation with a get function that lets you retrieve the value of a key at a particular time.
