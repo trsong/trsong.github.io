@@ -36,6 +36,141 @@ Given the sequence 2, 4, 3, 8, 7, 5, you should construct the following tree:
 2   4   8
 ```
 
+**Solution:** [https://replit.com/@trsong/Construct-Binary-Search-Tree-from-Post-order-Traversal-2](https://replit.com/@trsong/Construct-Binary-Search-Tree-from-Post-order-Traversal-2)
+```py
+import unittest
+
+def construct_bst(post_order_traversal):
+    return construct_bst_recur(post_order_traversal)
+
+
+def construct_bst_recur(stack, lo=float('-inf'), hi=float('inf')):
+    if not (stack and lo <= stack[-1] <= hi):
+        return None
+
+    cur_val = stack.pop()
+    right_child = construct_bst_recur(stack, cur_val, hi)
+    left_child = construct_bst_recur(stack, lo, cur_val)
+    return Node(cur_val, left_child, right_child)
+    
+
+class Node(object):
+    def __init__(self, val, left=None, right=None):
+        self.val = val
+        self.left = left
+        self.right = right
+
+    def __eq__(self, other):
+        return other and other.val == self.val and other.left == self.left and other.right == self.right
+
+    def __repr__(self):
+        stack = [(self, 0)]
+        res = []
+        while stack:
+            node, depth = stack.pop()
+            res.append("\n" + "\t" * depth)
+            if not node:
+                res.append("* None")
+                continue
+
+            res.append("* " + str(node.val))
+            for child in [node.right, node.left]:
+                stack.append((child, depth+1))
+        return "\n" + "".join(res) + "\n"
+
+
+class ConstructBSTSpec(unittest.TestCase):
+    def test_example(self):
+        """
+            5
+           / \
+          3   7
+         / \   \
+        2   4   8
+        """
+        post_order_traversal = [2, 4, 3, 8, 7, 5]
+        n3 = Node(3, Node(2), Node(4))
+        n7 = Node(7, right=Node(8))
+        n5 = Node(5, n3, n7)
+        self.assertEqual(n5, construct_bst(post_order_traversal))
+
+    def test_empty_bst(self):
+        self.assertIsNone(construct_bst([]))
+
+    def test_left_heavy_bst(self):
+        """
+            3
+           /
+          2
+         /
+        1
+        """
+        self.assertEqual(Node(3, Node(2, Node(1))), construct_bst([1, 2, 3]))
+
+    def test_right_heavy_bst(self):
+        """
+          1
+         / \
+        0   3
+           / \
+          2   4
+               \
+                5
+        """
+        post_order_traversal = [0, 2, 5, 4, 3, 1]
+        n3 = Node(3, Node(2), Node(4, right=Node(5)))
+        n1 = Node(1, Node(0), n3)
+        self.assertEqual(n1, construct_bst(post_order_traversal))
+
+    def test_complete_binary_tree(self):
+        """
+             3
+           /   \
+          1     5
+         / \   / 
+        0   2 4
+        """
+        post_order_traversal = [0, 2, 1, 4, 5, 3]
+        n1 = Node(1, Node(0), Node(2))
+        n5 = Node(5, Node(4))
+        n3 = Node(3, n1, n5)
+        self.assertEqual(n3, construct_bst(post_order_traversal))
+
+    def test_right_left_left(self):
+        """
+          1
+         / \
+        0   4
+           /
+          3
+         /
+        2
+        """
+        post_order_traversal = [0, 2, 3, 4, 1]
+        n4 = Node(4, Node(3, Node(2)))
+        n1 = Node(1, Node(0), n4)
+        self.assertEqual(n1, construct_bst(post_order_traversal))
+
+    def test_left_right_right(self):
+        """
+          4
+         / \
+        1   5
+         \
+          2
+           \
+            3
+        """
+        post_order_traversal = [3, 2, 1, 5, 4]
+        n1 = Node(1, right=Node(2, right=Node(3)))
+        n4 = Node(4, n1, Node(5))
+        self.assertEqual(n4, construct_bst(post_order_traversal))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False, verbosity=2)
+```
+
 ### Mar 17, 2022 LC 981 \[Medium\] Time Based Key-Value Store
 ---
 > **Question:** Write a map implementation with a get function that lets you retrieve the value of a key at a particular time.
