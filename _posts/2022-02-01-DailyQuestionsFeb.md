@@ -21,6 +21,40 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
 
+### Mar 21, 2022 \[Hard\] Teams without Enemies
+---
+> **Question:** A teacher must divide a class of students into two teams to play dodgeball. Unfortunately, not all the kids get along, and several refuse to be put on the same team as that of their enemies.
+>
+> Given an adjacency list of students and their enemies, write an algorithm that finds a satisfactory pair of teams, or returns False if none exists.
+
+**Example 1:**
+```py
+Given the following enemy graph you should return the teams {0, 1, 4, 5} and {2, 3}.
+
+students = {
+    0: [3],
+    1: [2],
+    2: [1, 4],
+    3: [0, 4, 5],
+    4: [2, 3],
+    5: [3]
+}
+```
+
+**Example 2:**
+```py
+On the other hand, given the input below, you should return False.
+
+students = {
+    0: [3],
+    1: [2],
+    2: [1, 3, 4],
+    3: [0, 2, 4, 5],
+    4: [2, 3],
+    5: [3]
+}
+```
+
 ### Mar 20, 2022 \[Medium\] Pre-order & In-order Binary Tree Traversal
 ---
 > **Question:** Given pre-order and in-order traversals of a binary tree, write a function to reconstruct the tree.
