@@ -21,6 +21,38 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
 
+### Mar 19, 2022 \[Medium\] In-order & Post-order Binary Tree Traversal
+---
+> **Question:** Given Postorder and Inorder traversals, construct the tree.
+
+**Examples 1:**
+```py
+Input: 
+in_order = [2, 1, 3]
+post_order = [2, 3, 1]
+
+Output: 
+      1
+    /   \
+   2     3 
+```
+
+**Example 2:**
+```py
+Input: 
+in_order = [4, 8, 2, 5, 1, 6, 3, 7]
+post_order = [8, 4, 5, 2, 6, 7, 3, 1]
+
+Output:
+          1
+       /     \
+     2        3
+   /    \   /   \
+  4     5   6    7
+    \
+      8
+```
+
 ### Mar 18, 2022 \[Medium\] Construct BST from Post-order Traversal
 ---
 > **Question:** Given the sequence of keys visited by a postorder traversal of a binary search tree, reconstruct the tree.
