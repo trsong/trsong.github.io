@@ -6009,7 +6009,7 @@ if __name__ == '__main__':
     unittest.main(exit=False)
 ```
 
-### 🎂 May 29, 2019 \[Medium\] Pre-order & In-order Binary Tree Traversal
+### May 29, 2019 \[Medium\] Pre-order & In-order Binary Tree Traversal
 ---
 > **Question:** Given pre-order and in-order traversals of a binary tree, write a function to reconstruct the tree.
 >

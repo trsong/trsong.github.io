@@ -21,6 +21,32 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
 
+### Mar 20, 2022 \[Medium\] Pre-order & In-order Binary Tree Traversal
+---
+> **Question:** Given pre-order and in-order traversals of a binary tree, write a function to reconstruct the tree.
+>
+> For example, given the following preorder traversal:
+
+```py
+[a, b, d, e, c, f, g]
+```
+
+> And the following inorder traversal:
+
+```py
+[d, b, e, a, f, c, g]
+```
+
+> You should return the following tree:
+
+```py
+    a
+   / \
+  b   c
+ / \ / \
+d  e f  g
+```
+
 ### Mar 19, 2022 \[Medium\] In-order & Post-order Binary Tree Traversal
 ---
 > **Question:** Given Postorder and Inorder traversals, construct the tree.
