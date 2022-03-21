@@ -47,6 +47,135 @@ categories: Python/Java
 d  e f  g
 ```
 
+**Solution:** [https://replit.com/@trsong/Test-Pre-order-and-In-order-Binary-Tree-Traversal-1](https://replit.com/@trsong/Test-Pre-order-and-In-order-Binary-Tree-Traversal-1)
+```py
+import unittest
+
+def build_tree(inorder, preorder):
+    preorder_stream = iter(preorder)
+    pos_lookup = {val:index for index, val in enumerate(inorder)}
+    return build_tree_recur(preorder_stream, pos_lookup, 0, len(inorder) - 1)
+
+
+def build_tree_recur(preorder_stream, pos_lookup, lo, hi):
+    if lo > hi:
+        return None
+
+    cur_val = next(preorder_stream)
+    cur_index = pos_lookup[cur_val]
+    left_child = build_tree_recur(preorder_stream, pos_lookup, lo, cur_index - 1)
+    right_child = build_tree_recur(preorder_stream, pos_lookup, cur_index + 1, hi)
+    return TreeNode(cur_val, left_child, right_child)
+
+
+###################
+# Testing Utilities
+###################
+class TreeNode(object):
+    def __init__(self, val, left=None, right=None):
+        self.val = val
+        self.left = left
+        self.right = right
+    
+    def __eq__(self, other):
+        return other and self.val == other.val and self.left == other.left and self.right == other.right
+
+    def __repr__(self):
+        stack = [(self, 0)]
+        res = []
+        while stack:
+            node, depth = stack.pop()
+            res.append("\n" + "\t" * depth)
+            if not node:
+                res.append("* None")
+                continue
+
+            res.append("* " + str(node.val))
+            for child in [node.right, node.left]:
+                stack.append((child, depth+1))
+        return "\n" + "".join(res) + "\n"
+
+
+class BuildTreeSpec(unittest.TestCase):
+    def test_empty_tree(self):
+        self.assertIsNone(build_tree([], []))
+
+    def test_sample_tree(self):
+        """
+            a
+           / \
+          b   c
+         / \ / \
+        d  e f  g
+        """
+        preorder = ['a', 'b', 'd', 'e', 'c', 'f', 'g']
+        inorder = ['d', 'b', 'e', 'a', 'f', 'c', 'g']
+        b = TreeNode('b', TreeNode('d'), TreeNode('e'))
+        c = TreeNode('c', TreeNode('f'), TreeNode('g'))
+        a = TreeNode('a', b, c)
+        self.assertEqual(a, build_tree(inorder, preorder))
+
+    def test_left_heavy_tree(self):
+        """
+            a
+           / \
+          b   c
+         /   
+        d     
+        """
+        preorder = ['a', 'b', 'd', 'c']
+        inorder = ['d', 'b', 'a', 'c']
+        b = TreeNode('b', TreeNode('d'))
+        c = TreeNode('c')
+        a = TreeNode('a', b, c)
+        self.assertEqual(a, build_tree(inorder, preorder))
+
+    def test_right_heavy_tree(self):
+        """
+            a
+           / \
+          b   c
+             / \
+            f   g
+        """
+        preorder = ['a', 'b', 'c', 'f', 'g']
+        inorder = ['b', 'a', 'f', 'c', 'g']
+        b = TreeNode('b')
+        c = TreeNode('c', TreeNode('f'), TreeNode('g'))
+        a = TreeNode('a', b, c)
+        self.assertEqual(a, build_tree(inorder, preorder))
+
+    def test_left_only_tree(self):
+        """
+            a
+           /
+          b   
+         /   
+        c     
+        """
+        preorder = ['a', 'b', 'c']
+        inorder = ['c', 'b', 'a']
+        a = TreeNode('a', TreeNode('b', TreeNode('c')))
+        self.assertEqual(a, build_tree(inorder, preorder))
+
+    def test_right_only_tree(self):
+        """
+            a
+             \
+              b
+               \
+                c
+        """
+        preorder = ['a', 'b', 'c']
+        inorder = ['a', 'b', 'c']
+        a = TreeNode('a', right=TreeNode('b', right=TreeNode('c')))
+        self.assertEqual(a, build_tree(inorder, preorder))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False, verbosity=2)
+```
+
 ### Mar 19, 2022 \[Medium\] In-order & Post-order Binary Tree Traversal
 ---
 > **Question:** Given Postorder and Inorder traversals, construct the tree.
