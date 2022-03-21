@@ -79,6 +79,163 @@ Output:
       8
 ```
 
+**Solution:** [https://replit.com/@trsong/Test-Build-Binary-Tree-with-In-order-and-Post-order-Traversal-1](https://replit.com/@trsong/Test-Build-Binary-Tree-with-In-order-and-Post-order-Traversal-1)
+```py
+import unittest
+
+def build_tree(inorder, postorder):
+    postorder_stream = iter(reversed(postorder))
+    pos_lookup = {val: index for index, val in enumerate(inorder)}
+    return build_tree_recur(postorder_stream, pos_lookup, 0, len(inorder) - 1)
+
+
+def build_tree_recur(postorder_stream, pos_lookup, lo, hi):
+    if lo > hi:
+        return None
+
+    cur_val = next(postorder_stream)
+    cur_index = pos_lookup[cur_val]
+    right_child = build_tree_recur(postorder_stream, pos_lookup, cur_index + 1, hi)
+    left_child = build_tree_recur(postorder_stream, pos_lookup, lo, cur_index - 1)
+    return TreeNode(cur_val, left_child, right_child)
+
+
+###################
+# Testing Utilities
+###################
+class TreeNode(object):
+    def __init__(self, val, left=None, right=None):
+        self.val = val
+        self.left = left
+        self.right = right
+
+    def __eq__(self, other):
+        return other and self.val == other.val and self.left == other.left and self.right == other.right
+
+    def __repr__(self):
+        stack = [(self, 0)]
+        res = []
+        while stack:
+            node, depth = stack.pop()
+            res.append("\n" + "\t" * depth)
+            if not node:
+                res.append("* None")
+                continue
+
+            res.append("* " + str(node.val))
+            for child in [node.right, node.left]:
+                stack.append((child, depth + 1))
+        return "\n" + "".join(res) + "\n"
+
+
+class BuildTreeSpec(unittest.TestCase):
+    def test_example(self):
+        """
+          1
+         / \
+        2   3
+        """
+        postorder = [2, 3, 1]
+        inorder = [2, 1, 3]
+        root = TreeNode(1, TreeNode(2), TreeNode(3))
+        self.assertEqual(root, build_tree(inorder, postorder))
+
+    def test_example2(self):
+        """
+                  1
+               /     \
+             2        3
+           /    \   /   \
+          4     5   6    7
+            \
+              8
+        """
+        postorder = [8, 4, 5, 2, 6, 7, 3, 1]
+        inorder = [4, 8, 2, 5, 1, 6, 3, 7]
+        left_tree = TreeNode(2, TreeNode(4, right=TreeNode(8)), TreeNode(5))
+        right_tree = TreeNode(3, TreeNode(6), TreeNode(7))
+        root = TreeNode(1, left_tree, right_tree)
+        self.assertEqual(root, build_tree(inorder, postorder))
+
+    def test_empty_tree(self):
+        self.assertIsNone(build_tree([], []))
+
+    def test_balanced_tree(self):
+        """
+            a
+           / \
+          b   c
+         / \ / \
+        d  e f  g
+        """
+        postorder = ['d', 'e', 'b', 'f', 'g', 'c', 'a']
+        inorder = ['d', 'b', 'e', 'a', 'f', 'c', 'g']
+        b = TreeNode('b', TreeNode('d'), TreeNode('e'))
+        c = TreeNode('c', TreeNode('f'), TreeNode('g'))
+        a = TreeNode('a', b, c)
+        self.assertEqual(a, build_tree(inorder, postorder))
+
+    def test_left_heavy_tree(self):
+        """
+            a
+           / \
+          b   c
+         /   
+        d     
+        """
+        postorder = ['d', 'b', 'c', 'a']
+        inorder = ['d', 'b', 'a', 'c']
+        b = TreeNode('b', TreeNode('d'))
+        c = TreeNode('c')
+        a = TreeNode('a', b, c)
+        self.assertEqual(a, build_tree(inorder, postorder))
+
+    def test_right_heavy_tree(self):
+        """
+            a
+           / \
+          b   c
+             / \
+            f   g
+        """
+        postorder = ['b', 'f', 'g', 'c', 'a']
+        inorder = ['b', 'a', 'f', 'c', 'g']
+        b = TreeNode('b')
+        c = TreeNode('c', TreeNode('f'), TreeNode('g'))
+        a = TreeNode('a', b, c)
+        self.assertEqual(a, build_tree(inorder, postorder))
+
+    def test_left_only_tree(self):
+        """
+            a
+           /
+          b   
+         /   
+        c     
+        """
+        postorder = ['c', 'b', 'a']
+        inorder = ['c', 'b', 'a']
+        a = TreeNode('a', TreeNode('b', TreeNode('c')))
+        self.assertEqual(a, build_tree(inorder, postorder))
+
+    def test_right_only_tree(self):
+        """
+            a
+             \
+              b
+               \
+                c
+        """
+        postorder = ['c', 'b', 'a']
+        inorder = ['a', 'b', 'c']
+        a = TreeNode('a', right=TreeNode('b', right=TreeNode('c')))
+        self.assertEqual(a, build_tree(inorder, postorder))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False, verbosity=2)
+```
+
 ### Mar 18, 2022 \[Medium\] Construct BST from Post-order Traversal
 ---
 > **Question:** Given the sequence of keys visited by a postorder traversal of a binary search tree, reconstruct the tree.
