@@ -2762,7 +2762,7 @@ For example, given `[5, 7, 10, 3, 4]`, return `3`.
 <details>
 <summary class="lc_m">
 
-- [**\[Medium\] Searching in Rotated Array**](https://trsong.github.io/python/java/2020/08/02/DailyQuestionsAug.html#oct-12-2020-medium-searching-in-rotated-array) -- *A sorted array of integers was rotated an unknown number of times. Find the index of the element in the array.* [*\(Try ME\)*](https://repl.it/@trsong/Searching-Elem-in-Rotated-Array-1)
+- [**\[Medium\] Searching in Rotated Array**](https://trsong.github.io/python/java/2022/02/01/DailyQuestionsFeb.html#mar-22-2022-medium-searching-in-rotated-array) -- *A sorted array of integers was rotated an unknown number of times. Find the index of the element in the array.* [*\(Try ME\)*](https://repl.it/@trsong/Searching-Elem-in-Rotated-Array-1)
 
 </summary>
 <div>

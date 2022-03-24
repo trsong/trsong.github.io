@@ -30,6 +30,73 @@ categories: Python/Java
 > 
 > You can assume all the integers in the array are unique.
 
+**Solution with Binary Search:** [https://replit.com/@trsong/Searching-Elem-in-Rotated-Array-2](https://replit.com/@trsong/Searching-Elem-in-Rotated-Array-2)
+```py
+import unittest
+
+def rotated_array_search(nums, target):
+    if not nums:
+        return None
+
+    lo = 0
+    hi = len(nums) - 1
+    while lo <= hi:
+        mid = lo + (hi - lo) // 2
+        if nums[mid] == target:
+            return mid
+
+        # Case 1 & 2: mid < target while on same side
+        # Case 3: mid > target while on different side
+        elif (nums[lo] <= nums[mid] < target or
+              nums[mid] < target < nums[lo] or
+              target <= nums[hi] < nums[mid]):
+            lo = mid + 1
+        else:
+            hi = mid - 1
+    return None
+
+
+class RotatedArraySearchSpec(unittest.TestCase):
+    def test_array_without_rotation(self):
+        self.assertIsNone(rotated_array_search([], 0))
+
+    def test_array_without_rotation2(self):
+        self.assertEqual(2, rotated_array_search([1, 2, 3], 3))
+
+    def test_array_without_rotation3(self):
+        self.assertIsNone(rotated_array_search([1, 3], 2))
+
+    def test_array_with_one_rotation(self):
+        self.assertIsNone(rotated_array_search([4, 5, 6, 1, 2, 3], 0))
+
+    def test_array_with_one_rotation2(self):
+        self.assertEqual(1, rotated_array_search([5, 1, 2, 3, 4], 1))
+
+    def test_array_with_one_rotation3(self):
+        self.assertEqual(2, rotated_array_search([4, 5, 6, 1, 2, 3], 6))
+
+    def test_array_with_one_rotation4(self):
+        self.assertEqual(4, rotated_array_search([13, 18, 25, 2, 8, 10], 8))
+
+    def test_array_with_one_rotation5(self):
+        self.assertEqual(0, rotated_array_search([3, 5, 1], 3))
+
+    def test_array_with_two_rotations(self):
+        self.assertEqual(0, rotated_array_search([6, 1, 2, 3, 4, 5], 6))
+
+    def test_array_with_two_rotations2(self):
+        self.assertEqual(4, rotated_array_search([5, 6, 1, 2, 3, 4], 3))
+
+    def test_array_with_no_rotations(self):
+        self.assertEqual(1, rotated_array_search([1, 3], 3))
+
+    def test_array_with_no_rotations2(self):
+        self.assertEqual(0, rotated_array_search([1, 3], 1))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False, verbosity=2)
+```
 
 ### Mar 21, 2022 \[Hard\] Teams without Enemies
 ---
