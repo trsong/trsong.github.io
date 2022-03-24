@@ -47,6 +47,54 @@ inorder successor of 14 is 20.
 >
 > For example, given `[5, 7, 10, 3, 4]`, return `3`.
 
+**Solution with Binary Search:** [https://replit.com/@trsong/Find-Minimum-Element-in-a-Sorted-and-Rotated-Array-3](https://replit.com/@trsong/Find-Minimum-Element-in-a-Sorted-and-Rotated-Array-3)
+```py
+import unittest
+
+def find_min_index(nums):
+    if not nums:
+        return None
+
+    lo, hi = 0, len(nums) - 1
+    while lo < hi:
+        mid = lo + (hi - lo) // 2
+        if nums[mid] > nums[hi]:
+            lo = mid + 1
+        else:
+            hi = mid
+    return lo
+            
+
+class FindMinIndexSpec(unittest.TestCase):
+    def test_example(self):
+        self.assertEqual(3, find_min_index([5, 7, 10, 3, 4]))
+
+    def test_array_without_rotation(self):
+        self.assertIsNone(find_min_index([]))
+    
+    def test_array_without_rotation2(self):
+        self.assertEqual(0, find_min_index([1, 2, 3]))
+    
+    def test_array_without_rotation3(self):
+        self.assertEqual(0, find_min_index([1, 3]))
+
+    def test_array_with_one_rotation(self):
+        self.assertEqual(3, find_min_index([4, 5, 6, 1, 2, 3]))
+    
+    def test_array_with_one_rotation2(self):
+        self.assertEqual(3, find_min_index([13, 18, 25, 2, 8, 10]))
+
+    def test_array_with_one_rotation3(self):
+        self.assertEqual(1, find_min_index([6, 1, 2, 3, 4, 5]))
+
+    def test_array_with_one_rotation4(self):
+        self.assertEqual(2, find_min_index([5, 6, 1, 2, 3, 4]))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False, verbosity=2)
+```
+
 ### Mar 22, 2022 \[Medium\] Searching in Rotated Array
 ---
 > **Question:** A sorted array of integers was rotated an unknown number of times. Given such an array, find the index of the element in the array in faster than linear time. If the element doesn't exist in the array, return null.
