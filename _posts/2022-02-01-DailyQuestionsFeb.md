@@ -21,6 +21,11 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
 
+### Mar 23, 2022 \[Medium\] Find Minimum Element in a Sorted and Rotated Array
+---
+> **Question:** Suppose an array sorted in ascending order is rotated at some pivot unknown to you beforehand. Find the minimum element in `O(log N)` time. You may assume the array does not contain duplicates.
+>
+> For example, given `[5, 7, 10, 3, 4]`, return `3`.
 
 ### Mar 22, 2022 \[Medium\] Searching in Rotated Array
 ---
