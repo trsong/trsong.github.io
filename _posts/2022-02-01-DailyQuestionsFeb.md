@@ -21,6 +21,26 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
 
+### Mar 24, 2022 \[Easy\] Inorder Successor in BST
+---
+> **Question:** Given a node in a binary search tree (may not be the root), find the next largest node in the binary search tree (also known as an inorder successor). The nodes in this binary search tree will also have a parent field to traverse up the tree.
+
+**Example:**
+```py
+Given the following BST:
+    20
+   / \
+  8   22
+ / \
+4  12
+   / \
+ 10  14
+
+inorder successor of 8 is 10, 
+inorder successor of 10 is 12 and
+inorder successor of 14 is 20.
+```
+
 ### Mar 23, 2022 \[Medium\] Find Minimum Element in a Sorted and Rotated Array
 ---
 > **Question:** Suppose an array sorted in ascending order is rotated at some pivot unknown to you beforehand. Find the minimum element in `O(log N)` time. You may assume the array does not contain duplicates.
