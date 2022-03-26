@@ -58,6 +58,110 @@ inorder successor of 10 is 12 and
 inorder successor of 14 is 20.
 ```
 
+**Solution:** [https://replit.com/@trsong/Find-the-Inorder-Successor-in-BST-2](https://replit.com/@trsong/Find-the-Inorder-Successor-in-BST-2)
+```py
+import unittest
+
+def find_successor(node):
+    if node is None:
+        return None
+    elif node.right:
+        return find_successor_below(node)
+    else:
+        return find_successor_above(node)
+
+
+def find_successor_below(node):
+    p = node.right
+    while p.left:
+        p = p.left
+    return p
+
+
+def find_successor_above(node):
+    p = node
+    while p.parent and p.parent.left != p:
+        p = p.parent
+    return p.parent
+    
+
+class TreeNode(object):
+    def __init__(self, val, left=None, right=None):
+        self.val = val
+        self.left = left
+        self.right = right
+        self.parent = None
+        if left:
+            left.parent = self
+        if right:
+            right.parent = self
+    
+    
+class FindSuccessorSpec(unittest.TestCase):
+    def test_example(self):
+        """
+            20
+           / \
+          8   22
+         / \
+        4  12
+           / \
+         10  14
+        """
+        n4 = TreeNode(4)
+        n10 = TreeNode(10)
+        n14 = TreeNode(14)
+        n22 = TreeNode(22)
+        n12 = TreeNode(12, n10, n14)
+        n8 = TreeNode(8, n4, n12)
+        n20 = TreeNode(20, n8, n22)
+        self.assertEqual(10, find_successor(n8).val)
+        self.assertEqual(12, find_successor(n10).val)
+        self.assertEqual(20, find_successor(n14).val)
+        self.assertEqual(22, find_successor(n20).val)
+        self.assertIsNone(find_successor(n22))
+
+    def test_empty_node(self):
+        self.assertIsNone(find_successor(None))
+
+    def test_zigzag_tree(self):
+        """
+        1
+         \
+          5
+         /
+        2 
+         \
+          3
+        """
+        n3 = TreeNode(3)
+        n2 = TreeNode(2, right=n3)
+        n5 = TreeNode(5, n2)
+        n1 = TreeNode(1, right=n5)
+        self.assertEqual(3, find_successor(n2).val)
+        self.assertEqual(2, find_successor(n1).val)
+        self.assertEqual(5, find_successor(n3).val)
+        self.assertIsNone(find_successor(n5))
+
+    def test_full_BST(self):
+        """
+             4
+           /   \
+          2     6
+         / \   / \
+        1   3 5   7
+        """
+        n2 = TreeNode(2, TreeNode(1), TreeNode(3))
+        n6 = TreeNode(6, TreeNode(5), TreeNode(7))
+        n4 = TreeNode(4, n2, n6)
+        self.assertEqual(3, find_successor(n2).val)
+        self.assertEqual(5, find_successor(n4).val)
+        self.assertEqual(7, find_successor(n6).val)
+
+if __name__ == '__main__':
+    unittest.main(exit=False, verbosity=2)
+```
+
 ### Mar 23, 2022 \[Medium\] Find Minimum Element in a Sorted and Rotated Array
 ---
 > **Question:** Suppose an array sorted in ascending order is rotated at some pivot unknown to you beforehand. Find the minimum element in `O(log N)` time. You may assume the array does not contain duplicates.
