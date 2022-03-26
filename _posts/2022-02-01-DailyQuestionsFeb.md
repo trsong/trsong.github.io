@@ -21,6 +21,23 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
 
+
+### Mar 25, 2022 \[Medium\] Look-and-Say Sequence
+--- 
+> **Question:** The "look and say" sequence is defined as follows: beginning with the term 1, each subsequent term visually describes the digits appearing in the previous term. The first few terms are as follows:
+
+```py
+1
+11
+21
+1211
+111221
+```
+
+> As an example, the fourth term is 1211, since the third term consists of one 2 and one 1.
+>
+> Given an integer N, print the Nth term of this sequence
+
 ### Mar 24, 2022 \[Easy\] Inorder Successor in BST
 ---
 > **Question:** Given a node in a binary search tree (may not be the root), find the next largest node in the binary search tree (also known as an inorder successor). The nodes in this binary search tree will also have a parent field to traverse up the tree.
