@@ -22,6 +22,15 @@ categories: Python/Java
 
 
 
+### Mar 26, 2022 \[Hard\] Exclusive Product
+---
+> **Question:**  Given an array of integers, return a new array such that each element at index i of the new array is the product of all the numbers in the original array except the one at i.
+>
+> For example, if our input was [1, 2, 3, 4, 5], the expected output would be [120, 60, 40, 30, 24]. If our input was [3, 2, 1], the expected output would be [2, 3, 6].
+>
+> Follow-up: what if you can't use division?
+
+
 ### Mar 25, 2022 \[Medium\] Look-and-Say Sequence
 --- 
 > **Question:** The "look and say" sequence is defined as follows: beginning with the term 1, each subsequent term visually describes the digits appearing in the previous term. The first few terms are as follows:
