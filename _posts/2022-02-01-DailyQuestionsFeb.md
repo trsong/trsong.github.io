@@ -30,6 +30,72 @@ categories: Python/Java
 >
 > Follow-up: what if you can't use division?
 
+**Solution:** [https://replit.com/@trsong/Calculate-Exclusive-Product-3](https://replit.com/@trsong/Calculate-Exclusive-Product-3)
+```py
+import unittest
+
+def exclusive_product(nums):
+    n = len(nums)
+    left_prod = right_prod = 1
+    res = [1] * n
+
+    for i in range(n):
+        res[i] *= left_prod
+        res[n - 1 - i] *= right_prod
+
+        left_prod *= nums[i]
+        right_prod *= nums[n - i - 1]
+    return res
+
+
+class ExclusiveProductSpec(unittest.TestCase):
+    def test_example(self):
+        nums = [1, 2, 3, 4, 5]
+        expected = [120, 60, 40, 30, 24]
+        self.assertEqual(expected, exclusive_product(nums))
+
+    def test_example2(self):
+        nums = [3, 2, 1]
+        expected = [2, 3, 6]
+        self.assertEqual(expected, exclusive_product(nums))
+
+    def test_empty_array(self):
+        self.assertEqual([], exclusive_product([]))
+    
+    def test_one_element_array(self):
+        nums = [2]
+        expected = [1]
+        self.assertEqual(expected, exclusive_product(nums))
+    
+    def test_two_elements_array(self):
+        nums = [42, 98]
+        expected = [98, 42]
+        self.assertEqual(expected, exclusive_product(nums))
+    
+    def test_array_with_negative_elements(self):
+        nums = [-2, 3, -5]
+        expected = [-15, 10, -6]
+        self.assertEqual(expected, exclusive_product(nums))
+    
+    def test_array_with_negative_elements2(self):
+        nums = [-1, -3, -4, -5]
+        expected = [-60, -20, -15, -12]
+        self.assertEqual(expected, exclusive_product(nums))
+    
+    def test_array_with_zero(self):
+        nums = [1, -1, 0, 3]
+        expected = [0, 0, -3, 0]
+        self.assertEqual(expected, exclusive_product(nums))
+    
+    def test_array_with_zero2(self):
+        nums = [1, -1, 0, 3, 0, 1]
+        expected = [0, 0, 0, 0, 0, 0]
+        self.assertEqual(expected, exclusive_product(nums))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False, verbosity=2)
+```
 
 ### Mar 25, 2022 \[Medium\] Look-and-Say Sequence
 --- 
