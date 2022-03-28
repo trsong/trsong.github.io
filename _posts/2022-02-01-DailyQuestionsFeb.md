@@ -22,6 +22,16 @@ categories: Python/Java
 
 
 
+### Mar 27, 2022  LC 228 \[Easy\] Extract Range
+---
+> **Question:** Given a sorted list of numbers, return a list of strings that represent all of the consecutive numbers.
+
+**Example:**
+```py
+Input: [0, 1, 2, 5, 7, 8, 9, 9, 10, 11, 15]
+Output: ['0->2', '5', '7->11', '15']
+```
+
 ### Mar 26, 2022 \[Hard\] Exclusive Product
 ---
 > **Question:**  Given an array of integers, return a new array such that each element at index i of the new array is the product of all the numbers in the original array except the one at i.
