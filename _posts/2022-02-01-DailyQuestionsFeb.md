@@ -32,6 +32,101 @@ Input: [0, 1, 2, 5, 7, 8, 9, 9, 10, 11, 15]
 Output: ['0->2', '5', '7->11', '15']
 ```
 
+**Solution:** [https://replit.com/@trsong/Extract-Range-3](https://replit.com/@trsong/Extract-Range-3)
+```py
+import unittest
+
+def extract_range(nums):
+    if not nums:
+        return []
+
+    prev = nums[0]
+    start = nums[0]
+    res = []
+
+    for num in nums:
+        if (num - prev) > 1:
+            res.append(build_range(start, prev))
+            start = num
+        prev = num
+    res.append(build_range(start, prev))
+    return res
+
+
+def build_range(start, end):
+    if start == end:
+        return str(start)
+    else:
+        return "%s->%s" % (str(start), str(end))
+
+
+class ExtractRangeSpec(unittest.TestCase):
+    def test_example(self):
+        nums = [0, 1, 2, 5, 7, 8, 9, 9, 10, 11, 15]
+        expected = ['0->2', '5', '7->11', '15']
+        self.assertEqual(expected, extract_range(nums))
+
+    def test_empty_array(self):
+        self.assertEqual([], extract_range([]))
+
+    def test_one_elem_array(self):
+        self.assertEqual(['42'], extract_range([42]))
+
+    def test_duplicates(self):
+        nums = [1, 1, 1, 1]
+        expected = ['1']
+        self.assertEqual(expected, extract_range(nums))
+
+    def test_duplicates2(self):
+        nums = [1, 1, 2, 2]
+        expected = ['1->2']
+        self.assertEqual(expected, extract_range(nums))
+
+    def test_duplicates3(self):
+        nums = [1, 1, 3, 3, 5, 5, 5]
+        expected = ['1', '3', '5']
+        self.assertEqual(expected, extract_range(nums))
+
+    def test_first_elem_in_range(self):
+        nums = [1, 2, 3, 10, 11]
+        expected = ['1->3', '10->11']
+        self.assertEqual(expected, extract_range(nums))
+
+    def test_first_elem_not_in_range(self):
+        nums = [-5, -3, -2]
+        expected = ['-5', '-3->-2']
+        self.assertEqual(expected, extract_range(nums))
+
+    def test_last_elem_in_range(self):
+        nums = [0, 15, 16, 17]
+        expected = ['0', '15->17']
+        self.assertEqual(expected, extract_range(nums))
+
+    def test_last_elem_not_in_range(self):
+        nums = [-42, -1, 0, 1, 2, 15]
+        expected = ['-42', '-1->2', '15']
+        self.assertEqual(expected, extract_range(nums))
+
+    def test_entire_array_in_range(self):
+        nums = list(range(-10, 10))
+        expected = ['-10->9']
+        self.assertEqual(expected, extract_range(nums))
+
+    def test_no_range_at_all(self):
+        nums = [1, 3, 5]
+        expected = ['1', '3', '5']
+        self.assertEqual(expected, extract_range(nums))
+
+    def test_range_and_not_range(self):
+        nums = [0, 1, 3, 5, 7, 8, 9, 11, 13, 14, 15]
+        expected = ['0->1', '3', '5', '7->9', '11', '13->15']
+        self.assertEqual(expected, extract_range(nums))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False, verbosity=2)
+```
+
 ### Mar 26, 2022 \[Hard\] Exclusive Product
 ---
 > **Question:**  Given an array of integers, return a new array such that each element at index i of the new array is the product of all the numbers in the original array except the one at i.
