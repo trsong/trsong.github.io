@@ -38,6 +38,59 @@ categories: Python/Java
 >
 > Given an integer N, print the Nth term of this sequence
 
+**Solution:** [https://replit.com/@trsong/Print-Look-and-Say-Sequence-2](https://replit.com/@trsong/Print-Look-and-Say-Sequence-2)
+```py
+import unittest
+
+def look_and_say(n):
+    res = '1'
+    for _ in range(n - 1):
+        prev = res[0]
+        count = 0
+        buff = []
+        
+        for ch in res:
+            if ch == prev:
+                count += 1
+                continue
+            buff.extend([str(count), prev])
+            prev = ch
+            count = 1
+        buff.extend([str(count), prev])
+        res = ''.join(buff)
+    return res
+            
+
+class LookAndSaySpec(unittest.TestCase):
+    def test_1st_term(self):
+        self.assertEqual("1", look_and_say(1))
+        
+    def test_2nd_term(self):
+        self.assertEqual("11", look_and_say(2))
+        
+    def test_3rd_term(self):
+        self.assertEqual("21", look_and_say(3))
+        
+    def test_4th_term(self):
+        self.assertEqual("1211", look_and_say(4))
+        
+    def test_5th_term(self):
+        self.assertEqual("111221", look_and_say(5))
+        
+    def test_6th_term(self):
+        self.assertEqual("312211", look_and_say(6))
+        
+    def test_7th_term(self):
+        self.assertEqual("13112221", look_and_say(7))
+
+    def test_10th_term(self):
+        self.assertEqual("13211311123113112211", look_and_say(10))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False, verbosity=2)
+```
+
 ### Mar 24, 2022 \[Easy\] Inorder Successor in BST
 ---
 > **Question:** Given a node in a binary search tree (may not be the root), find the next largest node in the binary search tree (also known as an inorder successor). The nodes in this binary search tree will also have a parent field to traverse up the tree.
