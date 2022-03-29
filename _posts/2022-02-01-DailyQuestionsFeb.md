@@ -30,6 +30,86 @@ categories: Python/Java
 >
 > For example, given the array `['G', 'B', 'R', 'R', 'B', 'R', 'G']`, it should become `['R', 'R', 'R', 'G', 'G', 'B', 'B']`.
 
+**My thoughts:** Treat 'R','G' and 'B' as numbers. The problem can be solved by sorting this array based on certain order. We can use Quick Sort to achieve that. And the idea is that we keep three pointers `lo <= mid <= hi` such that 'G' grows from lo, 'B' grows from hi and 'B' grows from mid and swap w/ lo to make some room. Such technique to partition the array into 3 parts is called ***3-Way Quick Select***. It feels like normal Quick Select except segregate array into 3 parts.
+
+**Solution with 3-Way Quick Select:** [https://replit.com/@trsong/RGB-Element-Array-Swap-Problem-2](https://replit.com/@trsong/RGB-Element-Array-Swap-Problem-2)
+```py
+import unittest
+
+R, G, B = 'R', 'G', 'B'
+
+def rgb_sort(colors):
+    lo = mid = 0
+    hi = len(colors) - 1
+    while mid <= hi:
+        if colors[mid] == B:
+            # case 1: colors[mid] > G
+            colors[mid], colors[hi] = colors[hi], colors[mid]
+            hi -= 1
+        elif colors[mid] == G:
+            # case 2: colors[mid] == G
+            mid += 1
+        else:
+            # case 3: colors[mid] < G
+            colors[mid], colors[lo] = colors[lo], colors[mid]
+            lo += 1
+            mid += 1
+    return colors
+            
+        
+class RGBSortSpec(unittest.TestCase):
+    def test_example(self):
+        colors = [G, B, R, R, B, R, G]
+        expected = [R, R, R, G, G, B, B]
+        self.assertEqual(expected, rgb_sort(colors))
+
+    def test_empty_arr(self):
+        self.assertEqual([], rgb_sort([]))
+
+    def test_array_with_two_colors(self):
+        colors = [R, G, R, G]
+        expected = [R, R, G, G]
+        self.assertEqual(expected, rgb_sort(colors))
+
+    def test_array_with_two_colors2(self):
+        colors = [B, B, G, G]
+        expected = [G, G, B, B]
+        self.assertEqual(expected, rgb_sort(colors))
+
+    def test_array_with_two_colors3(self):
+        colors = [R, B, R]
+        expected = [R, R, B]
+        self.assertEqual(expected, rgb_sort(colors))
+
+    def test_array_in_reverse_order(self):
+        colors = [B, B, G, R, R, R]
+        expected = [R, R, R, G, B, B]
+        self.assertEqual(expected, rgb_sort(colors))
+
+    def test_array_in_reverse_order2(self):
+        colors = [B, G, R, R, R, R]
+        expected = [R, R, R, R, G, B]
+        self.assertEqual(expected, rgb_sort(colors))
+
+    def test_array_in_reverse_order3(self):
+        colors = [B, G, G, G, R]
+        expected = [R, G, G, G, B]
+        self.assertEqual(expected, rgb_sort(colors))
+
+    def test_array_in_sorted_order(self):
+        colors = [R, R, G, B, B, B, B]
+        expected = [R, R, G, B, B, B, B]
+        self.assertEqual(expected, rgb_sort(colors))
+
+    def test_array_in_random_order(self):
+        colors = [B, R, G, G, R, B]
+        expected = [R, R, G, G, B, B]
+        self.assertEqual(expected, rgb_sort(colors))
+
+    
+if __name__ == '__main__':
+    unittest.main(exit=False, verbosity=2)
+```
 
 ### Mar 27, 2022  LC 228 \[Easy\] Extract Range
 ---

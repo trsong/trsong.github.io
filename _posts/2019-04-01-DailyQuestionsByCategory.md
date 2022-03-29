@@ -4163,6 +4163,24 @@ Output: [1, 1, 2, 2, 3, 3, 3]
 </div>
 </details>
 
+<details>
+<summary class="lc_h">
+
+- [**\[Hard\] RGB Element Array Swap**](https://trsong.github.io/python/java/2022/02/01/DailyQuestionsFeb.html#mar-28-2022-hard-rgb-element-array-swap) -- *Given an array of strictly the characters ‘R’, ‘G’, and ‘B’, sort array in RGB order.* [*\(Try ME\)*](https://replit.com/@trsong/RGB-Element-Array-Swap-Problem-1)
+
+</summary>
+<div>
+
+**Question:** Given an array of strictly the characters 'R', 'G', and 'B', segregate the values of the array so that all the Rs come first, the Gs come second, and the Bs come last. You can only swap elements of the array.
+
+Do this in linear time and in-place.
+
+For example, given the array `['G', 'B', 'R', 'R', 'B', 'R', 'G']`, it should become `['R', 'R', 'R', 'G', 'G', 'B', 'B']`.
+
+</div>
+</details>
+
+
 ### Counting Sort
 ---
 
