@@ -22,6 +22,12 @@ categories: Python/Java
 
 
 
+
+### Mar 29, 2022 \[Hard\] Longest Common Subsequence of Three Strings
+--- 
+> **Question:** Write a program that computes the length of the longest common subsequence of three given strings. For example, given `"epidemiologist"`, `"refrigeration"`, and `"supercalifragilisticexpialodocious"`, it should return `5`, since the longest common subsequence is `"eieio"`.
+
+
 ### Mar 28, 2022 \[Hard\] RGB Element Array Swap
 ---
 > **Question:** Given an array of strictly the characters 'R', 'G', and 'B', segregate the values of the array so that all the Rs come first, the Gs come second, and the Bs come last. You can only swap elements of the array.
