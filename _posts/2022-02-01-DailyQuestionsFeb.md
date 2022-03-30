@@ -38,6 +38,74 @@ is_bipartite(vertices=2, edges=[(0, 1), (1, 0)])  # returns True. U = {0}. V = {
 --- 
 > **Question:** Write a program that computes the length of the longest common subsequence of three given strings. For example, given `"epidemiologist"`, `"refrigeration"`, and `"supercalifragilisticexpialodocious"`, it should return `5`, since the longest common subsequence is `"eieio"`.
 
+**Solution with DP:** [https://replit.com/@trsong/Longest-Common-Subsequence-of-3-Strings-3](https://replit.com/@trsong/Longest-Common-Subsequence-of-3-Strings-3)
+```py
+import unittest
+
+def lcs(seq1, seq2, seq3):
+    # Let dp[i][j][k] represents lcs for sub-problem seq1[:i], seq2[j], seq3[k]
+    # dp[i][j][k] = 1 + dp[i - 1][j - 1][k - 1]                             if i, j, k positions match
+    #             = max(dp[i -1 ][j][k], dp[i][j - 1][k], dp[i][j][k - 1])  otherwise
+    n1, n2, n3 = len(seq1), len(seq2), len(seq3)
+    dp = [[[0 for _ in range(n3 + 1)] for _ in range(n2 + 1)] for _ in range(n1 + 1)]
+    for i in range(1, n1 + 1):
+        for j in range(1, n2 + 1):
+            for k in range(1, n3 + 1):
+                if seq1[i - 1] == seq2[j - 1] == seq3[k - 1]:
+                    dp[i][j][k] = 1 + dp[i - 1][j - 1][k - 1]
+                else:
+                    dp[i][j][k] = max(dp[i -1 ][j][k], dp[i][j - 1][k], dp[i][j][k - 1])
+    return dp[n1][n2][n3]
+    
+
+class LCSSpec(unittest.TestCase):
+    def test_empty_sequences(self):
+        self.assertEqual(0, lcs("", "", ""))
+    
+    def test_example(self):
+        self.assertEqual(5, lcs(
+            "epidemiologist",
+            "refrigeration",
+            "supercalifragilisticexpialodocious"))  # "eieio"
+
+    def test_match_last_position(self):
+        self.assertEqual(1, lcs("abcdz", "efghijz", "123411111z"))  # z
+
+    def test_match_first_position(self):
+        self.assertEqual(1, lcs("aefgh", "aijklmnop", "a12314213"))  # a
+
+    def test_off_by_one_position(self):
+        self.assertEqual(4, lcs("10101", "01010", "0010101"))  # 0101
+
+    def test_off_by_one_position2(self):
+        self.assertEqual(3, lcs("12345", "1235", "2535"))  # 235
+
+    def test_off_by_one_position3(self):
+        self.assertEqual(2, lcs("1234", "1243", "2431"))  # 24
+
+    def test_off_by_one_position4(self):
+        self.assertEqual(4, lcs("12345", "12340", "102030400"))  # 1234
+
+    def test_multiple_matching(self):
+        self.assertEqual(5, lcs("afbgchdie",
+                                "__a__b_c__de___f_g__h_i___", "/a/b/c/d/e"))  # abcde
+
+    def test_ascending_vs_descending(self):
+        self.assertEqual(1, lcs("01234", "_4__3___2_1_0__", "4_3_2_1_0"))  # 0
+
+    def test_multiple_ascending(self):
+        self.assertEqual(5, lcs("012312342345", "012345", "0123401234"))  # 01234
+
+    def test_multiple_descending(self):
+        self.assertEqual(5, lcs("54354354421", "5432432321", "54321"))  # 54321
+
+    def test_same_length_strings(self):
+        self.assertEqual(2, lcs("ABCD", "EACB", "AFBC"))  # AC
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False, verbosity=2)
+```
 
 ### Mar 28, 2022 \[Hard\] RGB Element Array Swap
 ---
