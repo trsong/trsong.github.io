@@ -22,6 +22,17 @@ categories: Python/Java
 
 
 
+### Mar 30, 2022 \[Medium\] Is Bipartite
+---
+> **Question:** Given an undirected graph G, check whether it is bipartite. Recall that a graph is bipartite if its vertices can be divided into two independent sets, U and V, such that no edge connects vertices of the same set.
+
+**Example:**
+```py
+is_bipartite(vertices=3, edges=[(0, 1), (1, 2), (2, 0)])  # returns False 
+is_bipartite(vertices=2, edges=[(0, 1), (1, 0)])  # returns True. U = {0}. V = {1}. 
+```
+
+
 
 ### Mar 29, 2022 \[Hard\] Longest Common Subsequence of Three Strings
 --- 
