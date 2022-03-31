@@ -32,6 +32,86 @@ is_bipartite(vertices=3, edges=[(0, 1), (1, 2), (2, 0)])  # returns False
 is_bipartite(vertices=2, edges=[(0, 1), (1, 0)])  # returns True. U = {0}. V = {1}. 
 ```
 
+**My thoughts:** A graph is a bipartite if we can just use 2 colors to cover entire graph so that every other node have same color. This can be implemented use BFS and we change color between layers while searching. Meanwhile, DFS can also be used to solve this problem: just assign a color different than parent DFS search tree node
+
+**Solution with DFS:** [https://replit.com/@trsong/Is-a-Graph-Bipartite-2](https://replit.com/@trsong/Is-a-Graph-Bipartite-2)
+```py
+import unittest
+
+class NodeState:
+    WHITE = 0
+    BLACK = 1
+
+def is_bipartite(vertices, edges):
+    node_states = [None] * vertices
+    neighbors = [None] * vertices
+
+    for u, v in edges:
+        neighbors[u] = neighbors[u] or []
+        neighbors[v] = neighbors[v] or []
+        neighbors[u].append(v)
+        neighbors[v].append(u)
+
+    for u in range(vertices):
+        if node_states[u] is not None:
+            continue
+        stack = [(u, NodeState.WHITE)]
+        while stack:
+            cur, assigned_color = stack.pop()
+            if node_states[cur] is None:
+                node_states[cur] = assigned_color
+            elif node_states[cur] == assigned_color:
+                continue
+            else:
+                return False
+
+            next_color = NodeState.BLACK if assigned_color == NodeState.WHITE else NodeState.WHITE
+            for nb in neighbors[cur] or []:
+                if node_states[nb] is not None:
+                    continue
+                stack.append((nb, next_color))
+    return True
+                
+
+class IsBipartiteSpec(unittest.TestCase):
+    def test_example1(self):
+        self.assertFalse(is_bipartite(vertices=3, edges=[(0, 1), (1, 2), (2, 0)]))
+
+    def test_example2(self):
+        self.assertTrue(is_bipartite(vertices=2, edges=[(0, 1), (1, 0)]))
+
+    def test_empty_graph(self):
+        self.assertTrue(is_bipartite(vertices=0, edges=[]))
+
+    def test_one_node_graph(self):
+        self.assertTrue(is_bipartite(vertices=1, edges=[]))
+    
+    def test_disconnect_graph1(self):
+        self.assertTrue(is_bipartite(vertices=10, edges=[(0, 1), (1, 0)]))
+
+    def test_disconnect_graph2(self):
+        self.assertTrue(is_bipartite(vertices=10, edges=[(0, 1), (1, 0), (2, 3), (3, 4), (4, 5), (5, 2)]))
+
+    def test_disconnect_graph3(self):
+        self.assertFalse(is_bipartite(vertices=10, edges=[(0, 1), (1, 0), (2, 3), (3, 4), (4, 2)])) 
+
+    def test_square(self):
+        self.assertTrue(is_bipartite(vertices=4, edges=[(0, 1), (1, 2), (2, 3), (3, 0)]))
+
+    def test_k5(self):
+        vertices = 5
+        edges = [
+            (0, 1), (0, 2), (0, 3), (0, 4),
+            (1, 2), (1, 3), (1, 4),
+            (2, 3), (2, 4), 
+            (3, 4)
+        ]
+        self.assertFalse(is_bipartite(vertices, edges))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False, verbosity=2)
+```
 
 
 ### Mar 29, 2022 \[Hard\] Longest Common Subsequence of Three Strings
