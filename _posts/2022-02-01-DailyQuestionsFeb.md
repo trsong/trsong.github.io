@@ -28,18 +28,6 @@ categories: Python/Java
 >
 > For example, given a set represented by a list `[1, 2, 3]`, it should return `[[], [1], [2], [3], [1, 2], [1, 3], [2, 3], [1, 2, 3]]` representing the power set.
 
-**My thoughts:** There are multiple ways to solve this problem. My solution recursively subsets incrementally. 
-
-Let's calculate the first few terms and try to figure out the pattern
-```py
-power_set([]) => [[]]
-power_set([1]) => [[], [1]]
-power_set([1, 2]) => [[], [1], [2], [1, 2]]
-power_set([1, 2, 3]) => [[], [1], [2], [1, 2], [3], [1, 3], [2, 3], [1, 2, 3]] which is power_set([1, 2]) + append powerSet([1, 2]) with new elem 3
-...
-power_set([1, 2, ..., n]) =>  power_set([1, 2, ..., n - 1]) + append powerSet([1, 2, ..., n - 1]) with new elem n
-```
-
 ### Mar 30, 2022 \[Medium\] Is Bipartite
 ---
 > **Question:** Given an undirected graph G, check whether it is bipartite. Recall that a graph is bipartite if its vertices can be divided into two independent sets, U and V, such that no edge connects vertices of the same set.
