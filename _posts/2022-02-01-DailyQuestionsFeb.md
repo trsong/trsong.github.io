@@ -56,6 +56,58 @@ Case 2: 2nd rightmost
 >
 > For example, given a set represented by a list `[1, 2, 3]`, it should return `[[], [1], [2], [3], [1, 2], [1, 3], [2, 3], [1, 2, 3]]` representing the power set.
 
+**My thoughts:** There are multiple ways to solve this problem. My solution recursively subsets incrementally. 
+
+Let's calculate the first few terms and try to figure out the pattern
+```py
+power_set([]) => [[]]
+power_set([1]) => [[], [1]]
+power_set([1, 2]) => [[], [1], [2], [1, 2]]
+power_set([1, 2, 3]) => [[], [1], [2], [1, 2], [3], [1, 3], [2, 3], [1, 2, 3]] which is power_set([1, 2]) + append powerSet([1, 2]) with new elem 3
+...
+power_set([1, 2, ..., n]) =>  power_set([1, 2, ..., n - 1]) + append powerSet([1, 2, ..., n - 1]) with new elem n
+```
+
+**Solution:** [https://replit.com/@trsong/Power-Set-2](https://replit.com/@trsong/Power-Set-2)
+```py
+import unittest
+
+def generate_power_set(nums):
+    res = [[]]
+    for num in nums:
+        included_set = []
+        for existing_set in res:
+            included_set.append(existing_set + [num])
+        res.extend(included_set)
+    return res
+            
+
+class GeneratePowerSetSpec(unittest.TestCase):
+    def test_example(self):
+        nums = [1, 2, 3]
+        expected = [[], [1], [2], [3], [1, 2], [2, 3], [1, 3], [1, 2, 3]]
+        self.assertItemsEqual(expected, generate_power_set(nums))
+
+    def test_empty_set(self):
+        nums = []
+        expected = [[]]
+        self.assertItemsEqual(expected, generate_power_set(nums))
+
+    def test_one_elem_set(self):
+        nums = [1]
+        expected = [[], [1]]
+        self.assertItemsEqual(expected, generate_power_set(nums))
+
+    def test_two_elem_set(self):
+        nums = [1, 2]
+        expected = [[], [1], [2], [1, 2]]
+        self.assertItemsEqual(expected, generate_power_set(nums))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False, verbosity=2)
+```
+
 ### Mar 30, 2022 \[Medium\] Is Bipartite
 ---
 > **Question:** Given an undirected graph G, check whether it is bipartite. Recall that a graph is bipartite if its vertices can be divided into two independent sets, U and V, such that no edge connects vertices of the same set.
