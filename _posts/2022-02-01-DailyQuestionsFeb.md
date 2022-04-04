@@ -21,8 +21,7 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
 
-
-### Apr 3, 2022 \[Medium\] Maximum Number of Connected Colors
+### Apr 4, 2022 \[Medium\] Maximum Number of Connected Colors
 ---
 > **Question:** Given a grid with cells in different colors, find the maximum number of same color  cells that are connected.
 >
@@ -37,6 +36,31 @@ categories: Python/Java
     [2, 3, 3, 1, 2]
  ]
 ```
+
+### Apr 3, 2022 \[Easy\] Filter Binary Tree Leaves
+---
+> **Questions:** Given a binary tree and an integer k, filter the binary tree such that its leaves don't contain the value k. Here are the rules:
+>
+> - If a leaf node has a value of k, remove it.
+> - If a parent node has a value of k, and all of its children are removed, remove it.
+
+**Example:**
+```py
+Given the tree to be the following and k = 1:
+     1
+    / \
+   1   1
+  /   /
+ 2   1
+
+After filtering the result should be:
+     1
+    /
+   1
+  /
+ 2
+```
+
 
 ### Apr 2, 2022 LC 332 \[Medium\] Reconstruct Itinerary
 ---
