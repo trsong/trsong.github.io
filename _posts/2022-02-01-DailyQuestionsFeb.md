@@ -21,6 +21,23 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
 
+
+### Apr 3, 2022 \[Medium\] Maximum Number of Connected Colors
+---
+> **Question:** Given a grid with cells in different colors, find the maximum number of same color  cells that are connected.
+>
+> Note: two cells are connected if they are of the same color and adjacent to each other: left, right, top or bottom. To stay simple, we use integers to represent colors:
+>
+> The following grid have max 4 connected colors. [color 3: (1, 2), (1, 3), (2, 1), (2, 2)]
+
+```py
+ [
+    [1, 1, 2, 2, 3], 
+    [1, 2, 3, 3, 1],
+    [2, 3, 3, 1, 2]
+ ]
+```
+
 ### Apr 2, 2022 LC 332 \[Medium\] Reconstruct Itinerary
 ---
 > **Questions:** Given a list of airline tickets represented by pairs of departure and arrival airports [from, to], reconstruct the itinerary in order. All of the tickets belong to a man who departs from JFK. Thus, the itinerary must begin with JFK.
