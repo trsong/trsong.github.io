@@ -37,6 +37,81 @@ categories: Python/Java
  ]
 ```
 
+**Solution with DFS:** [https://replit.com/@trsong/Find-Maximum-Number-of-Connected-Colors-3](https://replit.com/@trsong/Find-Maximum-Number-of-Connected-Colors-3)
+```py
+import unittest
+
+DIRECTIONS = [(-1, 0), (1, 0), (0, 1), (0, -1)]
+
+def max_connected_colors(grid):
+    if not grid or not grid[0]:
+        return 0
+
+    n, m = len(grid), len(grid[0])
+    visited = [[False for _ in range(m)] for _ in range(n)]
+
+    max_num_colors = 0
+    for r in range(n):
+        for c in range(m):
+            if visited[r][c]:
+                continue
+            color = grid[r][c]
+            num_colors = 0
+            stack = [(r, c)]
+            while stack:
+                cur_r, cur_c = stack.pop()
+                if visited[cur_r][cur_c]:
+                    continue
+                visited[cur_r][cur_c] = True
+                num_colors += 1
+                for dr, dc in DIRECTIONS:
+                    new_r, new_c = cur_r + dr, cur_c + dc
+                    if (0 <= new_r < n and 
+                        0 <= new_c < m and 
+                        grid[new_r][new_c] == color and 
+                        not visited[new_r][new_c]):
+                        stack.append((new_r, new_c))
+            max_num_colors = max(max_num_colors, num_colors)
+    return max_num_colors
+                
+
+class MaxConnectedColorSpec(unittest.TestCase):
+    def test_empty_graph(self):
+        self.assertEqual(max_connected_colors([[]]), 0)   
+
+    def test_example(self):
+        self.assertEqual(max_connected_colors([
+            [1, 1, 2, 2, 3],
+            [1, 2, 3, 3, 1],
+            [2, 3, 3, 1, 2]
+        ]), 4)
+
+    def test_disconnected_colors(self):
+        self.assertEqual(max_connected_colors([
+            [1, 0, 1],
+            [0, 1, 0],
+            [1, 0, 1]
+        ]), 1)
+
+    def test_cross_shap(self):
+        self.assertEqual(max_connected_colors([
+            [1, 0, 1],
+            [0, 0, 0],
+            [1, 0, 1]
+        ]), 5)
+
+    def test_boundary(self):
+        self.assertEqual(max_connected_colors([
+            [1, 1, 1],
+            [1, 0, 1],
+            [1, 1, 1]
+        ]), 8)
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False, verbosity=2)
+```
+
 ### Apr 3, 2022 \[Easy\] Filter Binary Tree Leaves
 ---
 > **Questions:** Given a binary tree and an integer k, filter the binary tree such that its leaves don't contain the value k. Here are the rules:
