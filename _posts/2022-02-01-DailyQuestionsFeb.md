@@ -57,6 +57,75 @@ Input: [1, 1, 1, 1]
 Output: False
 ```
 
+**Solution with Two Pointers:** [https://replit.com/@trsong/Array-of-Equal-Parts-3](https://replit.com/@trsong/Array-of-Equal-Parts-3)
+```py
+import unittest
+
+def contains_3_equal_parts(nums):
+    total = sum(nums)
+    left_sum = right_sum = 0
+    i = 0
+    j = len(nums) - 1
+
+    while i < j:
+        if left_sum < right_sum:
+            left_sum += nums[i]
+            i += 1
+        elif left_sum > right_sum:
+            right_sum += nums[j]
+            j -= 1
+        else:
+            mid_sum = total - left_sum - right_sum - nums[i] - nums[j]
+            if mid_sum == left_sum:
+                return True
+            left_sum += nums[i]
+            right_sum += nums[j]
+            i += 1
+            j -= 1
+    return False
+    
+
+class Contains3EqualPartSpec(unittest.TestCase):
+    def test_example(self):
+        nums = [2, 4, 5, 3, 3, 9, 2, 2, 2]
+        # Remove 5, 9 to break array into [2, 4], [3, 3] and [2, 2, 2]
+        self.assertTrue(contains_3_equal_parts(nums))
+
+    def test_example2(self):
+        nums = [1, 1, 1, 1]
+        self.assertFalse(contains_3_equal_parts(nums))
+
+    def test_empty_array(self):
+        self.assertFalse(contains_3_equal_parts([]))
+
+    def test_two_element_array(self):
+        nums = [1, 2]
+        # [], [], []
+        self.assertTrue(contains_3_equal_parts(nums))
+
+    def test_three_element_array(self):
+        nums = [1, 2, 3]
+        self.assertFalse(contains_3_equal_parts(nums))
+
+    def test_symmetic_array(self):
+        nums = [1, 2, 4, 3, 5, 2, 1]
+        # remove 4, 5 gives [1, 2], [3], [2, 1]
+        self.assertTrue(contains_3_equal_parts(nums))
+
+    def test_sum_not_divisiable_by_3(self):
+        nums = [2, 2, 2, 2, 2, 2]
+        self.assertFalse(contains_3_equal_parts(nums))
+
+    def test_ascending_array(self):
+        nums = [1, 2, 3, 3, 3, 3, 4, 6]
+        # remove 3, 4 gives [1, 2, 3], [3, 3], [6]
+        self.assertTrue(contains_3_equal_parts(nums))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False, verbosity=2)
+```
+
 ### Apr 4, 2022 \[Medium\] Maximum Number of Connected Colors
 ---
 > **Question:** Given a grid with cells in different colors, find the maximum number of same color  cells that are connected.
