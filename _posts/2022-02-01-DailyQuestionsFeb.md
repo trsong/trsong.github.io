@@ -21,6 +21,42 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
 
+### Apr 6, 2022  \[Hard\] Count Elements in Sorted Matrix
+--- 
+> **Question:** Let A be an `N` by `M` matrix in which every row and every column is sorted.
+>
+> Given `i1`, `j1`, `i2`, and `j2`, compute the number of elements smaller than `A[i1, j1]` and larger than `A[i2, j2]`.
+
+**Example:**
+```py
+Given the following matrix:
+[[ 1,  3,  6, 10, 15, 20],
+ [ 2,  7,  9, 14, 22, 25],
+ [ 3,  8, 10, 15, 25, 30],
+ [10, 11, 12, 23, 30, 35],
+ [20, 25, 30, 35, 40, 45]]
+And i1 = 1, j1 = 1, i2 = 3, j2 = 3
+ 
+return 15 as there are 15 numbers in the matrix smaller than 7 or greater than 23.
+```
+
+### Apr 5, 2022 \[Easy\] Array of Equal Parts
+---
+> **Question:** Given an array containing only positive integers, return if you can pick two integers from the array which cuts the array into three pieces such that the sum of elements in all pieces is equal.
+
+**Example 1:**
+```py
+Input: [2, 4, 5, 3, 3, 9, 2, 2, 2]
+Output: True
+Explanation: choosing the number 5 and 9 results in three pieces [2, 4], [3, 3] and [2, 2, 2]. Sum = 6.
+```
+
+**Example 2:**
+```py
+Input: [1, 1, 1, 1]
+Output: False
+```
+
 ### Apr 4, 2022 \[Medium\] Maximum Number of Connected Colors
 ---
 > **Question:** Given a grid with cells in different colors, find the maximum number of same color  cells that are connected.
