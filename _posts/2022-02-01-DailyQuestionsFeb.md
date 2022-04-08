@@ -48,6 +48,90 @@ Input:
 Output: 2
 ```
 
+**Solution with BFS:** [https://replit.com/@trsong/Minimum-Depth-of-Binary-Tree-3](https://replit.com/@trsong/Minimum-Depth-of-Binary-Tree-3)
+```py
+import unittest
+
+def find_min_depth(root):
+    if root is None:
+        return 0
+
+    queue = [root]
+    depth = 0
+    while queue:
+        depth += 1
+        for _ in range(len(queue)):
+            cur = queue.pop(0)
+            if cur.left is None and cur.right is None:
+                return depth
+            if cur.left:
+                queue.append(cur.left)
+            if cur.right:
+                queue.append(cur.right)
+    return 0
+
+
+class TreeNode(object):
+    def __init__(self, val, left=None, right=None):
+        self.val = val
+        self.left = left
+        self.right = right
+
+
+class FindMinDepthSpec(unittest.TestCase):
+    def test_example(self):
+        """
+            1
+           / \
+          2   3
+         /
+        4
+        """
+        root = TreeNode(1, TreeNode(2, TreeNode(4)), TreeNode(3))
+        self.assertEqual(2, find_min_depth(root))
+
+    def test_empty_tree(self):
+        self.assertEqual(0, find_min_depth(None))
+
+    def test_root_only(self):
+        root = TreeNode(1)
+        self.assertEqual(1, find_min_depth(root))
+
+    def test_complete_tree(self):
+        """
+               1
+             /   \
+            2     3
+           / \   / \
+          4   5 6   7
+         /
+        8
+        """
+        left_tree = TreeNode(2, TreeNode(4, TreeNode(8)), TreeNode(5))
+        right_tree = TreeNode(3, TreeNode(6), TreeNode(7))
+        root = TreeNode(1, left_tree, right_tree)
+        self.assertEqual(3, find_min_depth(root))
+
+    def test_should_return_min_depth(self):
+        """
+           1
+          / \
+         2   3
+        / \   \
+       4   5   6
+           /    \
+          7      8 
+        """
+        left_tree = TreeNode(2, TreeNode(4), TreeNode(5, TreeNode(7)))
+        right_tree = TreeNode(3, right=TreeNode(6, right=TreeNode(8)))
+        root = TreeNode(1, left_tree, right_tree)
+        self.assertEqual(3, find_min_depth(root))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False, verbosity=2)
+```
+
 ### Apr 6, 2022  \[Hard\] Count Elements in Sorted Matrix
 --- 
 > **Question:** Let A be an `N` by `M` matrix in which every row and every column is sorted.
