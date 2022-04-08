@@ -40,6 +40,93 @@ And i1 = 1, j1 = 1, i2 = 3, j2 = 3
 return 15 as there are 15 numbers in the matrix smaller than 7 or greater than 23.
 ```
 
+**My thoughts:** The trick is to start from top-right cell. Either go left or go down, we can quickly figure out smaller elements within linear time `O(N + M)`. Once know how to find smaller, finding greater is just using total elements minus smaller.
+
+**Solution with Two Pointers:** [https://replit.com/@trsong/Count-Elements-in-Sorted-Matrix-2](https://replit.com/@trsong/Count-Elements-in-Sorted-Matrix-2)
+```py
+import unittest
+
+def count_elements(matrix, pos1, pos2):
+    n, m = len(matrix), len(matrix[0])
+    v1 = matrix[pos1[0]][pos1[1]]
+    v2 = matrix[pos2[0]][pos2[1]]
+    if v1 > v2:
+        return n * m
+
+    less_than_v1 = count_smaller(matrix, v1)
+    less_than_equal_v2 = count_smaller(matrix, v2, exclusive=False)
+    greater_than_v2 = n * m - less_than_equal_v2
+    return less_than_v1 + greater_than_v2
+    
+
+def count_smaller(matrix, target, exclusive=True):
+    n, m = len(matrix), len(matrix[0])
+    r = 0
+    res = 0
+    for c in range(m - 1, -1, -1):
+        while r < n:
+            if matrix[r][c] > target or exclusive and matrix[r][c] == target:
+                break
+            r += 1
+        res += r
+    return res
+
+
+class CountElementSpec(unittest.TestCase):
+    def test_example(self):
+        matrix = [
+            [1, 3, 6, 10, 15, 20], 
+            [2, 7, 9, 14, 22, 25],
+            [3, 8, 10, 15, 25, 30], 
+            [10, 11, 12, 23, 30, 35],
+            [20, 25, 30, 35, 40, 45]]
+        pos1, pos2 = (1, 1), (3, 3)
+        expected = 15
+        self.assertEqual(expected, count_elements(matrix, pos1, pos2))
+
+    def test_no_elem_found(self):
+        matrix = [
+            [1, 2],
+            [3, 6]
+        ]
+        pos1, pos2 = (0, 0), (1, 1)
+        expected = 0
+        self.assertEqual(expected, count_elements(matrix, pos1, pos2))
+
+    def test_top_right_bottom_left(self):
+        matrix = [
+            [1, 2, 3],
+            [4, 5, 6],
+            [7, 8, 9]]
+        pos1, pos2 = (0, 2), (2, 0)
+        expected = 4
+        self.assertEqual(expected, count_elements(matrix, pos1, pos2))
+
+    def test_covers_entire_matrix(self):
+        matrix = [
+            [1, 2, 3],
+            [2, 3, 4],
+            [9, 10, 11]
+        ]
+        pos1, pos2 = (2, 2), (0, 0)
+        expected = 9
+        self.assertEqual(expected, count_elements(matrix, pos1, pos2))
+
+    def test_identical_pos(self):
+        matrix = [
+            [1, 2, 3],
+            [2, 3, 4],
+            [9, 10, 11]
+        ]
+        pos1, pos2 = (1, 1), (1, 1)
+        expected = 7
+        self.assertEqual(expected, count_elements(matrix, pos1, pos2))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False, verbosity=2)
+```
+
 ### Apr 5, 2022 \[Easy\] Array of Equal Parts
 ---
 > **Question:** Given an array containing only positive integers, return if you can pick two integers from the array which cuts the array into three pieces such that the sum of elements in all pieces is equal.
