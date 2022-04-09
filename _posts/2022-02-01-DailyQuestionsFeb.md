@@ -71,11 +71,18 @@ def interval_intersection(seq1, seq2):
     while j1 < n1 and j2 < n2:
         start1, end1 = seq1[j1]
         start2, end2 = seq2[j2]
+
+        if end1 < start2:
+            j1 += 1
+            continue
+
+        if end2 < start1:
+            j2 += 1
+            continue
+        
         intersection_start = max(start1, start2)
         intersection_end = min(end1, end2)
-
-        if intersection_start <= intersection_end:
-            res.append([intersection_start, intersection_end])
+        res.append([intersection_start, intersection_end])
 
         if intersection_end == end1:
             j1 += 1
