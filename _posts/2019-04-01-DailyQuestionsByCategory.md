@@ -2414,7 +2414,7 @@ This means that 2 people exited the building. timestamp is in Unix time.
 <details>
 <summary class="lc_m">
 
-- [**\[Medium\] LC 986. Interval List Intersections**](https://trsong.github.io/python/java/2020/08/02/DailyQuestionsAug.html#sep-15-2020-lc-986-medium-interval-list-intersections) -- *Given two lists of closed intervals, each list of intervals is pairwise disjoint and in sorted order.* [*\(Try ME\)*](https://repl.it/@trsong/Interval-List-Intersections-1)
+- [**\[Medium\] LC 986. Interval List Intersections**](https://trsong.github.io/python/java/2022/02/01/DailyQuestionsFeb.html#apr-8-2022-lc-986-medium-interval-list-intersections) -- *Given two lists of closed intervals, each list of intervals is pairwise disjoint and in sorted order.* [*\(Try ME\)*](https://repl.it/@trsong/Interval-List-Intersections-1)
 
 </summary>
 <div>

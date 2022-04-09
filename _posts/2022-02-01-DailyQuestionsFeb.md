@@ -59,6 +59,86 @@ Input: A = [[0,2],[5,10],[13,23],[24,25]], B = [[1,5],[8,12],[15,24],[25,26]]
 Output: [[1,2],[5,5],[8,10],[15,23],[24,24],[25,25]]
 ```
 
+**Solution:** [https://replit.com/@trsong/Interval-List-Intersections-3](https://replit.com/@trsong/Interval-List-Intersections-3)
+```py
+import unittest
+
+def interval_intersection(seq1, seq2):
+    n1, n2 = len(seq1), len(seq2)
+    j1 = j2 = 0
+    res = []
+
+    while j1 < n1 and j2 < n2:
+        start1, end1 = seq1[j1]
+        start2, end2 = seq2[j2]
+        intersection_start = max(start1, start2)
+        intersection_end = min(end1, end2)
+
+        if intersection_start <= intersection_end:
+            res.append([intersection_start, intersection_end])
+
+        if intersection_end == end1:
+            j1 += 1
+
+        if intersection_end == end2:
+            j2 += 1
+    return res
+
+
+class IntervalIntersectionSpec(unittest.TestCase):
+    def test_example(self):
+        seq1 = [[0, 2], [5, 10], [13, 23], [24, 25]]
+        seq2 = [[1, 5], [8, 12], [15, 24], [25, 26]]
+        expected = [[1, 2], [5, 5], [8, 10], [15, 23], [24, 24], [25, 25]]
+        self.assertEqual(expected, interval_intersection(seq1, seq2))
+
+    def test_empty_interval(self):
+        seq1 = []
+        seq2 = [[1, 2]]
+        expected = []
+        self.assertEqual(expected, interval_intersection(seq1, seq2))
+
+    def test_overlap_entire_interval(self):
+        seq1 = [[1, 1], [2, 2], [3, 3], [8, 8]]
+        seq2 = [[0, 5]]
+        expected = [[1, 1], [2, 2], [3, 3]]
+        self.assertEqual(expected, interval_intersection(seq1, seq2))
+
+    def test_overlap_entire_interval2(self):
+        seq1 = [[0, 5]]
+        seq2 = [[1, 2], [4, 7]]
+        expected = [[1, 2], [4, 5]]
+        self.assertEqual(expected, interval_intersection(seq1, seq2))
+
+    def test_overlap_one_interval(self):
+        seq1 = [[0, 2], [5, 7]]
+        seq2 = [[1, 3], [4, 6]]
+        expected = [[1, 2], [5, 6]]
+        self.assertEqual(expected, interval_intersection(seq1, seq2))
+
+    def test_same_start_time(self):
+        seq1 = [[0, 2], [3, 7]]
+        seq2 = [[0, 5]]
+        expected = [[0, 2], [3, 5]]
+        self.assertEqual(expected, interval_intersection(seq1, seq2))
+
+    def test_same_start_time2(self):
+        seq1 = [[0, 2], [5, 7]]
+        seq2 = [[5, 7], [8, 9]]
+        expected = [[5, 7]]
+        self.assertEqual(expected, interval_intersection(seq1, seq2))
+    
+    def test_no_overlapping(self):
+        seq1 = [[1, 2], [5, 7]]
+        seq2 = [[0, 0], [3, 4], [8, 9]]
+        expected = []
+        self.assertEqual(expected, interval_intersection(seq1, seq2))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False, verbosity=2)
+```
+
 ### Apr 7, 2022 \[Easy\] Minimum Depth of Binary Tree
 ---
 > **Question:** Given a binary tree, find the minimum depth of the binary tree. The minimum depth is the shortest distance from the root to a leaf.
