@@ -21,6 +21,14 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
 
+### Apr 10, 2022  \[Hard\] Subset Sum
+---
+> **Question:** Given a list of integers S and a target number k, write a function that returns a subset of S that adds up to k. If such a subset cannot be made, then return null.
+>
+> Integers can appear more than once in the list. You may assume all numbers in the list are positive.
+> 
+> For example, given S = [12, 1, 61, 5, 9, 2] and k = 24, return [12, 9, 2, 1] since it sums up to 24.
+
 ### Apr 9, 2022 \[Medium\] Count Attacking Bishop Pairs
 ---
 > **Question:** On our special chessboard, two bishops attack each other if they share the same diagonal. This includes bishops that have another bishop located between them, i.e. bishops can attack through pieces.
