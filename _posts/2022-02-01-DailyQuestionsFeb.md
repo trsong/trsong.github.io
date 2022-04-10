@@ -47,6 +47,118 @@ categories: Python/Java
 
 > You should return 2, since bishops 1 and 3 attack each other, as well as bishops 3 and 4.
 
+
+
+**My thoughts:** Cell on same diagonal has the following properties:
+
+- Major diagonal: col - row = constant
+- Minor diagonal: col + row = constant
+  
+
+**Example:**
+```py
+>>> [[r-c for c in xrange(5)] for r in xrange(5)]
+[
+    [0, -1, -2, -3, -4],
+    [1, 0, -1, -2, -3],
+    [2, 1, 0, -1, -2],
+    [3, 2, 1, 0, -1],
+    [4, 3, 2, 1, 0]
+]
+
+>>> [[r+c for c in xrange(5)] for r in xrange(5)]
+[
+    [0, 1, 2, 3, 4],
+    [1, 2, 3, 4, 5],
+    [2, 3, 4, 5, 6],
+    [3, 4, 5, 6, 7],
+    [4, 5, 6, 7, 8]
+]
+```
+Thus, we can store the number of bishop on the same diagonal and use the formula to calculate n-choose-2: `n(n-1)/2`. Or we think about for each bishop added to a specific diagonal, the total number of pairs contributed by such bishop equal to number of bishop on the existing diagonal.
+
+
+**Solution:** [https://replit.com/@trsong/Count-Number-of-Attacking-Bishop-Pairs-3](https://replit.com/@trsong/Count-Number-of-Attacking-Bishop-Pairs-3)
+```py
+import unittest
+
+def count_attacking_pairs(bishop_positions):
+    diagonal1_count = {}
+    diagonal2_count = {}
+    res = 0
+
+    for r, c in bishop_positions:
+        d1 = r + c
+        d2 = r - c
+
+        count1 = diagonal1_count.get(d1, 0)
+        diagonal1_count[d1] = count1 + 1
+        
+        count2 = diagonal2_count.get(d2, 0)
+        diagonal2_count[d2] = count2 + 1
+
+        res += count1 + count2
+    return res
+
+
+class CountAttackingPairSpec(unittest.TestCase):
+    def test_zero_bishops(self):
+        self.assertEqual(0, count_attacking_pairs([]))
+
+    def test_bishops_everywhere(self):
+        """
+        b b
+        b b
+        """
+        self.assertEqual(2, count_attacking_pairs([(0, 0), (0, 1), (1, 0), (1, 1)]))
+
+    def test_zero_attacking_pairs(self):
+        """
+        0 b 0 0
+        0 b 0 0
+        0 b 0 0
+        0 b 0 0
+        """
+        self.assertEqual(0, count_attacking_pairs([(0, 1), (1, 1), (2, 1), (3, 1)]))
+        """
+        0 0 0 b
+        b 0 0 0
+        b 0 b 0
+        0 0 0 0
+        """
+        self.assertEqual(0, count_attacking_pairs([(0, 3), (1, 0), (2, 0), (2, 2)]))
+
+    def test_no_bishop_between_attacking_pairs(self):
+        """
+        b 0 b
+        b 0 b
+        b 0 b
+        """
+        self.assertEqual(2, count_attacking_pairs([(0, 0), (1, 0), (2, 0), (0, 2), (1, 2), (2, 2)]))
+    
+    def test_no_bishop_between_attacking_pairs2(self):
+        """
+        b 0 0 0 0
+        0 0 b 0 0
+        0 0 b 0 0
+        0 0 0 0 0
+        b 0 0 0 0
+        """
+        self.assertEqual(2, count_attacking_pairs([(0, 0), (1, 2), (2, 2), (4, 0)]))
+
+    def test_has_bishop_between_attacking_pairs(self):
+        """
+        b 0 b
+        0 b 0
+        b 0 b
+        """
+        self.assertEqual(6, count_attacking_pairs([(0, 0), (0, 2), (1, 1), (2, 0), (2, 2)]))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False, verbosity=2)
+```
+
 ### Apr 8, 2022 LC 986 \[Medium\] Interval List Intersections
 ---
 > **Question:** Given two lists of closed intervals, each list of intervals is pairwise disjoint and in sorted order.
