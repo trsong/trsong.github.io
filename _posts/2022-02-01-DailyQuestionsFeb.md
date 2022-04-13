@@ -21,6 +21,25 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
 
+
+### Apr 11, 2022 LC 236 \[Medium\] Lowest Common Ancestor of a Binary Tree
+---
+> **Question:** Given a binary tree, find the lowest common ancestor (LCA) of two given nodes in the tree.
+
+**Example:**
+```py
+     1
+   /   \
+  2     3
+ / \   / \
+4   5 6   7
+
+LCA(4, 5) = 2
+LCA(4, 6) = 1
+LCA(3, 4) = 1
+LCA(2, 4) = 2
+```
+
 ### Apr 10, 2022  \[Hard\] Subset Sum
 ---
 > **Question:** Given a list of integers S and a target number k, write a function that returns a subset of S that adds up to k. If such a subset cannot be made, then return null.
