@@ -29,6 +29,19 @@ categories: Python/Java
 > 
 > For example, given S = [12, 1, 61, 5, 9, 2] and k = 24, return [12, 9, 2, 1] since it sums up to 24.
 
+**My thoughts:** It's too expensive to check every subsets one by one. What we can do is to divide and conquer this problem.
+
+For each element, we either include it to pursuing for target or not include it:
+```py
+subset_sum(numbers, target) = subset_sum(numbers[1:], target) or subset_sum(numbers[1:], target - numbers[0])
+```
+
+or derive dp formula from above recursive relation:
+
+```py
+dp[target][n] = dp[target][n-1] or dp[target-numbers[n-1]][n-1]
+```
+
 **Solution with DP:** [https://replit.com/@trsong/Find-Subset-Sum](https://replit.com/@trsong/Find-Subset-Sum)
 ```py
 import unittest
