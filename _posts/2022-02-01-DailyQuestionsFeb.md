@@ -53,6 +53,128 @@ The following tree should return level 1:
 3  2 4 -1      Level 2 - Sum: 8
 ```
 
+**Solution with BFS:** [https://replit.com/@trsong/Find-Level-of-tree-with-Maximum-Sum-2](https://replit.com/@trsong/Find-Level-of-tree-with-Maximum-Sum-2)
+```py
+import unittest
+
+def max_sum_tree_level(tree):
+    if tree is None:
+        return -1
+        
+    max_sum = float('-inf')
+    max_sum_level = level = -1
+    queue = [tree]
+
+    while queue:
+        level_sum = 0
+        level += 1
+        for _ in range(len(queue)):
+            cur = queue.pop(0)
+            level_sum += cur.val
+
+            for child in [cur.left, cur.right]:
+                if child is None:
+                    continue
+                queue.append(child)
+
+        if level_sum > max_sum:
+            max_sum = level_sum
+            max_sum_level = level
+    return max_sum_level
+            
+
+class TreeNode(object):
+    def __init__(self, val, left=None, right=None):
+        self.val = val
+        self.left = left
+        self.right = right
+
+
+class MaxSumTreeLevelSpec(unittest.TestCase):
+    def test_example(self):
+        """
+            1          Level 0 - Sum: 1
+           / \
+          4   5        Level 1 - Sum: 9 
+         / \ / \
+        3  2 4 -1      Level 2 - Sum: 8
+        """
+        n4 = TreeNode(4, TreeNode(3), TreeNode(2))
+        n5 = TreeNode(5, TreeNode(4), TreeNode(-1))
+        root = TreeNode(1, n4, n5)
+        self.assertEqual(1, max_sum_tree_level(root))
+
+    def test_empty_tree(self):
+        self.assertEqual(-1, max_sum_tree_level(None))
+
+    def test_tree_with_one_node(self):
+        root = TreeNode(42)
+        self.assertEqual(0, max_sum_tree_level(root))
+    
+    def test_unbalanced_tree(self):
+        """
+            20
+           / \
+          8   22
+         / \
+        4  12
+           / \
+         10  14
+        """
+        n4 = TreeNode(4)
+        n10 = TreeNode(10)
+        n14 = TreeNode(14)
+        n22 = TreeNode(22)
+        n12 = TreeNode(12, n10, n14)
+        n8 = TreeNode(8, n4, n12)
+        n20 = TreeNode(20, n8, n22)
+        self.assertEqual(1, max_sum_tree_level(n20))
+    
+    def test_zigzag_tree(self):
+        """
+        1
+         \
+          5
+         /
+        2 
+         \
+          3
+        """
+        n3 = TreeNode(3)
+        n2 = TreeNode(2, right=n3)
+        n5 = TreeNode(5, n2)
+        n1 = TreeNode(1, right=n5)
+        self.assertEqual(1, max_sum_tree_level(n1))
+
+    def test_tree_with_negative_values(self):
+        """
+             -1
+            /  \
+          -2   -3
+          /    /
+        -1   -6
+        """
+        left_tree = TreeNode(-2, TreeNode(-1))
+        right_tree = TreeNode(-3, TreeNode(-6))
+        root = TreeNode(-1, left_tree, right_tree)
+        self.assertEqual(0, max_sum_tree_level(root))
+
+    def test_tree_with_negative_values_and_zeros(self):
+        """
+        -1
+          \
+           0
+            \
+            -2
+        """
+        tree = TreeNode(-1, right=TreeNode(0, right=TreeNode(-2)))
+        self.assertEqual(1, max_sum_tree_level(tree))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False, verbosity=2)
+```
+
 ### Apr 11, 2022 LC 236 \[Medium\] Lowest Common Ancestor of a Binary Tree
 ---
 > **Question:** Given a binary tree, find the lowest common ancestor (LCA) of two given nodes in the tree.
