@@ -11243,7 +11243,24 @@ Given such an array, determine the denominations that must be in use. In the cas
 
 ### 2D DP
 ---
-	
+
+<details>
+<summary class="lc_h">
+
+- [**\[Hard\] Subset Sum**](https://trsong.github.io/python/java/2022/02/01/DailyQuestionsFeb.html#apr-10-2022--hard-subset-sum) -- *Given a list of integers S and a target number k, write a function that returns a subset of S that adds up to k.* [*\(Try ME\)*](https://replit.com/@trsong/Find-Subset-Sum-1)
+
+</summary>
+<div>
+
+**Question:** Given a list of integers S and a target number k, write a function that returns a subset of S that adds up to k. If such a subset cannot be made, then return null.
+
+Integers can appear more than once in the list. You may assume all numbers in the list are positive.
+
+For example, given `S = [12, 1, 61, 5, 9, 2]` and `k = 24`, return `[12, 9, 2, 1]` since it sums up to 24.
+
+</div>
+</details>
+
 
 <details>
 <summary class="lc_h">

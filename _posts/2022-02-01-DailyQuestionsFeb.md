@@ -29,6 +29,73 @@ categories: Python/Java
 > 
 > For example, given S = [12, 1, 61, 5, 9, 2] and k = 24, return [12, 9, 2, 1] since it sums up to 24.
 
+**Solution with DP:** [https://replit.com/@trsong/Find-Subset-Sum](https://replit.com/@trsong/Find-Subset-Sum)
+```py
+import unittest
+
+def subset_sum(numbers, target):
+    if target == 0: 
+        return []
+
+    n = len(numbers)
+    dp = subset_sum_dp(numbers, target)
+    if not dp[target][n]: 
+        return None
+
+    res = []
+    balance = target
+    for i in range(n, 0, -1):
+        delta = numbers[i-1]
+        if balance - delta >= 0 and dp[balance - delta][i-1]:
+            res.append(delta)
+            balance -= delta
+    return res
+
+
+def subset_sum_dp(numbers, target):
+    n = len(numbers)
+    # Let dp[sum][n] be the exiting subset of numbers[:n] with sum as sum:
+    # dp[sum][n] = dp[sum][n-1] or dp[sum-a[n-1]][n-1]
+    dp = [[False for _ in range(n+1)] for _ in range(target+1)]
+
+    for i in range(n+1):
+        dp[0][i] = True
+    for s in range(1, target+1):
+        for i in range(1, n+1):
+            subsum = s - numbers[i-1]
+            if subsum >= 0:
+                dp[s][i] = dp[s][i-1] or dp[subsum][i-1]
+            else:
+                dp[s][i] = dp[s][i-1] 
+    return dp
+
+
+class SubsetSumSpec(unittest.TestCase):
+    def test_target_is_zero(self):
+        self.assertEqual(subset_sum([], 0), [])
+
+    def test_target_is_zero2(self):
+        self.assertEqual(subset_sum([1, 2], 0), [])
+
+    def test_subset_not_exist(self):
+        self.assertIsNone(subset_sum([], 1))
+
+    def test_subset_not_exist2(self):
+        self.assertIsNone(subset_sum([2, 3], 1))
+
+    def test_more_than_one_subset(self):
+        res = sorted(subset_sum([3, 4, 2, 5], 7))
+        self.assertTrue(res == [3, 4] or res == [2, 5])
+
+    def test_more_than_one_subset2(self):
+        res = sorted(subset_sum([12, 1, 61, 5, 9, 2, 24], 24))
+        self.assertTrue(res == [1, 2, 9, 12] or res == [24])
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False, verbosity=2)
+```
+
 ### Apr 9, 2022 \[Medium\] Count Attacking Bishop Pairs
 ---
 > **Question:** On our special chessboard, two bishops attack each other if they share the same diagonal. This includes bishops that have another bishop located between them, i.e. bishops can attack through pieces.
