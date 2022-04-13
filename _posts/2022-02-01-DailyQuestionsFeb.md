@@ -21,6 +21,24 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
 
+### Apr 13, 2022 \[Medium\] Find All Cousins in Binary Tree
+---
+> **Question:** Two nodes in a binary tree can be called cousins if they are on the same level of the tree but have different parents. 
+>
+> Given a binary tree and a particular node, find all cousins of that node.
+
+
+**Example:**
+```py
+In the following diagram 4 and 6 are cousins:
+
+    1
+   / \
+  2   3
+ / \   \
+4   5   6
+```
+
 ### Apr 12, 2022 \[Easy\] Level of tree with Maximum Sum
 ---
 > **Question:** Given a binary tree, find the level in the tree where the sum of all nodes on that level is the greatest.
