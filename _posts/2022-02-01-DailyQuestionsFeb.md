@@ -39,6 +39,171 @@ In the following diagram 4 and 6 are cousins:
 4   5   6
 ```
 
+**My thoughts:** Scan all nodes in layer-by-layer order with BFS. Once find the target node, simply return all nodes on that layer except for the sibling.
+
+**Solution with BFS:** [https://replit.com/@trsong/All-Cousins-in-Binary-Tree-2](https://replit.com/@trsong/All-Cousins-in-Binary-Tree-2)
+```py
+import unittest
+
+def find_cousions(root, target):
+    if root is None or target is None:
+        return []
+
+    queue = [root]
+    reach_target_level = False
+    
+    while queue and not reach_target_level:
+        for _ in range(len(queue)):
+            cur = queue.pop(0)
+            if cur.left == target or cur.right == target:
+                reach_target_level = True
+                continue
+
+            for child in [cur.left, cur.right]:
+                if child is None:
+                    continue
+                queue.append(child)
+    return queue
+                    
+
+class TreeNode(object):
+    def __init__(self, val, left=None, right=None):
+        self.val = val
+        self.left = left
+        self.right = right
+
+        
+class FindCousionSpec(unittest.TestCase):
+    def test_example(self):
+        """
+            1
+           / \
+          2   3
+         / \   \
+        4   5   6
+        """
+        n4 = TreeNode(4)
+        n6 = TreeNode(6)
+        left_tree = TreeNode(2, n4, TreeNode(5))
+        right_tree = TreeNode(3, right=n6)
+        root = TreeNode(1, left_tree, right_tree)
+        self.assertItemsEqual([n6], find_cousions(root, n4))
+        
+
+    def test_empty_tree(self):
+        self.assertItemsEqual([], find_cousions(None, None))
+
+    def test_target_node_not_in_tree(self):
+        """
+            1
+           / \
+          2   3
+         /     \
+        4       5
+        """
+        not_exist_target = TreeNode(-1)
+        left_tree = TreeNode(2, TreeNode(4))
+        right_tree = TreeNode(3, right=TreeNode(5))
+        root = TreeNode(1, left_tree, right_tree)
+        self.assertItemsEqual([], find_cousions(root, not_exist_target))
+        self.assertItemsEqual([], find_cousions(root, None))
+
+    def test_root_has_no_cousions(self):
+        """
+            1
+           / \
+          2   3
+         /   / 
+        4   5    
+        """
+        left_tree = TreeNode(2, TreeNode(4))
+        right_tree = TreeNode(3, TreeNode(5))
+        root = TreeNode(1, left_tree, right_tree)
+        self.assertItemsEqual([], find_cousions(root, root))
+
+    def test_first_level_node_has_no_cousions(self):
+        """
+          1
+         / \
+        2   3
+        """
+        n2 = TreeNode(2)
+        root = TreeNode(1, n2, TreeNode(3))
+        self.assertItemsEqual([], find_cousions(root, n2))
+
+    def test_get_all_cousions_of_internal_node(self):
+        """
+              1
+             / \
+            2   3
+           / \   \
+          4   5   6
+         /   /   / \ 
+        7   8   9  10
+        """
+        n4 = TreeNode(4, TreeNode(7))
+        n5 = TreeNode(5, TreeNode(8))
+        n2 = TreeNode(2, n4, n5)
+        n6 = TreeNode(6, TreeNode(9), TreeNode(10))
+        n3 = TreeNode(3, right=n6)
+        root = TreeNode(1, n2, n3)
+        self.assertItemsEqual([n4, n5], find_cousions(root, n6))
+
+    def test_tree_has_unique_value(self):
+        """
+             1
+           /   \
+          1     1
+         / \   / \
+        1   1 1   1
+        """
+        ll, lr, rl, rr = TreeNode(1), TreeNode(1), TreeNode(1), TreeNode(1)
+        l = TreeNode(1, ll, lr)
+        r = TreeNode(1, rl, rr)
+        root = TreeNode(1, l, r)
+        self.assertItemsEqual([ll, lr], find_cousions(root, rr))
+
+    def test_internal_node_without_cousion(self):
+        """
+          1
+         / \
+        2   3
+           /
+          4
+           \ 
+            5
+        """
+        n4 = TreeNode(4, right=TreeNode(5))
+        n3 = TreeNode(3, n4)
+        root = TreeNode(1, TreeNode(2), n3)
+        self.assertItemsEqual([], find_cousions(root, n4))
+
+    def test_get_all_cousions_of_leaf_node(self):
+        """
+              ____ 1 ___
+             /          \
+            2            3
+           /   \       /    \
+          4     5     6      7
+         / \   / \   / \    /  \
+        8   9 10 11 12 13  14  15
+        """
+        nodes = [TreeNode(i) for i in xrange(16)]
+        nodes[4].left, nodes[4].right = nodes[8], nodes[9]
+        nodes[5].left, nodes[5].right = nodes[10], nodes[11]
+        nodes[6].left, nodes[6].right = nodes[12], nodes[13]
+        nodes[7].left, nodes[7].right = nodes[14], nodes[15]
+        nodes[2].left, nodes[2].right = nodes[4], nodes[5]
+        nodes[3].left, nodes[3].right = nodes[6], nodes[7]
+        nodes[1].left, nodes[1].right = nodes[2], nodes[3]
+        target, expected = nodes[14], nodes[8:14]
+        self.assertItemsEqual(expected, find_cousions(nodes[1], target))
+        
+
+if __name__ == '__main__':
+    unittest.main(exit=False, verbosity=2)
+```
+
 ### Apr 12, 2022 \[Easy\] Level of tree with Maximum Sum
 ---
 > **Question:** Given a binary tree, find the level in the tree where the sum of all nodes on that level is the greatest.
