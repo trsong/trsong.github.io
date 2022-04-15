@@ -21,6 +21,81 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
 
+### Apr 15, 2022 \[Medium\] Vertical Order Traversal of a Binary Tree
+---
+> **Question:** Given a binary tree, return the vertical order traversal of its nodes' values. (ie, from top to bottom, column by column).
+>
+> If two nodes are in the same row and column, the order should be from left to right.
+
+**Example 1:**
+```py
+Given binary tree:
+
+    3
+   / \
+  9  20
+    /  \
+   15   7
+
+return its vertical order traversal as:
+
+[
+  [9],
+  [3,15],
+  [20],
+  [7]
+]
+```
+
+**Example 2:**
+```py
+Given binary tree:
+
+    _3_
+   /   \
+  9    20
+ / \   / \
+4   5 2   7
+
+return its vertical order traversal as:
+
+[
+  [4],
+  [9],
+  [3,5,2],
+  [20],
+  [7]
+]
+```
+
+### Apr 14, 2022 \[Easy\] Tree Isomorphism Problem
+---
+> **Question:** Write a function to detect if two trees are isomorphic. Two trees are called isomorphic if one of them can be obtained from other by a series of flips, i.e. by swapping left and right children of a number of nodes. Any number of nodes at any level can have their children swapped. Two empty trees are isomorphic.
+
+
+**Example:** 
+```py
+The following two trees are isomorphic with following sub-trees flipped: 2 and 3, NULL and 6, 7 and 8.
+
+Tree1:
+     1
+   /   \
+  2     3
+ / \   /
+4   5 6
+   / \
+  7   8
+
+Tree2:
+   1
+ /   \
+3     2
+ \   / \
+  6 4   5
+       / \
+      8   7
+```
+
 ### Apr 13, 2022 \[Medium\] Find All Cousins in Binary Tree
 ---
 > **Question:** Two nodes in a binary tree can be called cousins if they are on the same level of the tree but have different parents. 
