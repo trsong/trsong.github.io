@@ -96,6 +96,115 @@ Tree2:
       8   7
 ```
 
+**Solution:** [https://replit.com/@trsong/Is-Binary-Tree-Isomorphic-2](https://replit.com/@trsong/Is-Binary-Tree-Isomorphic-2)
+```py
+import unittest
+
+def is_isomorphic(t1, t2):
+    if t1 is None and t2 is None:
+        return True
+
+    if t1 is None or t2 is None or t1.val != t2.val:
+        return False
+
+    return (is_isomorphic(t1.left, t2.left)
+            and is_isomorphic(t1.right, t2.right)
+            or is_isomorphic(t1.right, t2.left)
+            and is_isomorphic(t1.left, t2.right))
+
+
+class TreeNode(object):
+    def __init__(self, val, left=None, right=None):
+        self.val = val
+        self.left = left
+        self.right = right
+
+
+class IsIsomorphicSpec(unittest.TestCase):
+    def test_example(self):
+        """
+        Tree1:
+             1
+           /   \
+          2     3
+         / \   /
+        4   5 6
+           / \
+          7   8
+
+        Tree2:
+           1
+         /   \
+        3     2
+         \   / \
+          6 4   5
+               / \
+              8   7
+        """
+        p5 = TreeNode(5, TreeNode(7), TreeNode(8))
+        p2 = TreeNode(2, TreeNode(4), p5)
+        p3 = TreeNode(3, TreeNode(6))
+        p1 = TreeNode(1, p2, p3)
+
+        q5 = TreeNode(5, TreeNode(8), TreeNode(7))
+        q2 = TreeNode(2, TreeNode(4), q5)
+        q3 = TreeNode(3, right=TreeNode(6))
+        q1 = TreeNode(1, q3, q2)
+
+        self.assertTrue(is_isomorphic(p1, q1))
+
+    def test_empty_trees(self):
+        self.assertTrue(is_isomorphic(None, None))
+
+    def test_empty_vs_nonempty_trees(self):
+        self.assertFalse(is_isomorphic(None, TreeNode(1)))
+
+    def test_same_tree_val(self):
+        """
+        Tree1:
+        1
+         \
+          1
+         /
+        1 
+
+        Tree2:
+            1
+           /
+          1
+           \
+            1
+        """
+        t1 = TreeNode(1, right=TreeNode(1, TreeNode(1)))
+        t2 = TreeNode(1, TreeNode(1, right=TreeNode(1)))
+        self.assertTrue(is_isomorphic(t1, t2))
+
+    def test_same_val_yet_not_isomorphic(self):
+        """
+        Tree1:
+          1
+         / \
+        1   1
+           / \
+          1   1
+
+        Tree2:
+            1
+           / \
+          1   1
+         /     \
+        1       1
+        """
+        t1 = TreeNode(1, TreeNode(1, TreeNode(1), TreeNode(1)))
+        t2 = TreeNode(1, TreeNode(1, TreeNode(1)),
+                      TreeNode(1, right=TreeNode(1)))
+        self.assertFalse(is_isomorphic(t1, t2))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False, verbosity=2)
+```
+
 ### Apr 13, 2022 \[Medium\] Find All Cousins in Binary Tree
 ---
 > **Question:** Two nodes in a binary tree can be called cousins if they are on the same level of the tree but have different parents. 
