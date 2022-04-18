@@ -22,6 +22,13 @@ categories: Python/Java
 
 
 
+### Apr 18, 2022 \[Hard\] Partition Array to Reach Mininum Difference
+---
+> **Question:** Given an array of positive integers, divide the array into two subsets such that the difference between the sum of the subsets is as small as possible.
+>
+> For example, given `[5, 10, 15, 20, 25]`, return the sets `[10, 25]` and `[5, 15, 20]`, which has a difference of `5`, which is the smallest possible difference.
+
+
 ### Apr 17, 2022 LC 766 \[Easy\] Toeplitz Matrix
 ---
 > **Question:** In linear algebra, a Toeplitz matrix is one in which the elements on any given diagonal from top left to bottom right are identical.
