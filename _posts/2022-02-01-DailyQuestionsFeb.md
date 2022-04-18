@@ -21,6 +21,17 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
 
+### Apr 16, 2022 \[Medium\] Find Two Elements Appear Once
+---
+> **Question:** Given an array of integers in which two elements appear exactly once and all other elements appear exactly twice, find the two elements that appear only once. Can you do this in linear time and constant space?
+
+**Example:**
+```py
+Input: [2, 4, 6, 8, 10, 2, 6, 10]
+Output: [4, 8] order does not matter
+ ```
+
+
 ### Apr 15, 2022 \[Medium\] Vertical Order Traversal of a Binary Tree
 ---
 > **Question:** Given a binary tree, return the vertical order traversal of its nodes' values. (ie, from top to bottom, column by column).
