@@ -21,6 +21,21 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
 
+
+### Apr 17, 2022 LC 766 \[Easy\] Toeplitz Matrix
+---
+> **Question:** In linear algebra, a Toeplitz matrix is one in which the elements on any given diagonal from top left to bottom right are identical.
+>
+> Write a program to determine whether a given input is a Toeplitz matrix.
+
+**Example of Toeplitz Matrix:**
+```py
+1 2 3 4 8
+5 1 2 3 4
+4 5 1 2 3
+7 4 5 1 2
+```
+
 ### Apr 16, 2022 \[Medium\] Find Two Elements Appear Once
 ---
 > **Question:** Given an array of integers in which two elements appear exactly once and all other elements appear exactly twice, find the two elements that appear only once. Can you do this in linear time and constant space?
