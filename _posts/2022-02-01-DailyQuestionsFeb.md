@@ -68,6 +68,108 @@ return its vertical order traversal as:
 ]
 ```
 
+**Solution with DFS:** [https://replit.com/@trsong/Find-Vertical-Order-Traversal-of-a-Binary-Tree-2](https://replit.com/@trsong/Find-Vertical-Order-Traversal-of-a-Binary-Tree-2)
+```py
+import unittest
+
+def vertical_traversal(root):
+    if root is None:
+        return []
+        
+    lo = hi = 0
+    col_map = {}
+    stack = [(root, 0)]
+
+    while stack:
+        cur, col = stack.pop()
+        col_map[col] = col_map.get(col, [])
+        col_map[col].append(cur.val)
+        lo = min(lo, col)
+        hi = max(hi, col)
+
+        if cur.right:
+            stack.append((cur.right, col + 1))
+
+        if cur.left:
+            stack.append((cur.left, col - 1))
+
+    res = [[] for _ in range(hi - lo + 1)]
+    for col in range(lo, hi + 1):
+        res[col - lo] = col_map[col]
+    return res
+        
+
+class Node(object):
+    def __init__(self, val, left=None, right=None):
+        self.val = val
+        self.left = left
+        self.right = right
+
+
+class VerticalTraversalSpec(unittest.TestCase):
+    def test_example1(self):
+        """
+         3
+        / \
+       9  20
+         /  \
+        15   7
+        """
+        t = Node(3, Node(9), Node(20, Node(15), Node(7)))
+        self.assertEqual(vertical_traversal(t), [
+            [9],
+            [3,15],
+            [20],
+            [7]
+        ])
+    
+    def test_example2(self):
+        """
+            _3_
+           /   \
+          9    20
+         / \   / \
+        4   5 2   7
+        """
+        t9 = Node(9, Node(4), Node(5))
+        t20 = Node(20, Node(2), Node(7))
+        t = Node(3, t9, t20)
+
+        self.assertEqual(vertical_traversal(t), [
+            [4],
+            [9],
+            [3,5,2],
+            [20],
+            [7]
+        ])
+
+    def test_empty_tree(self):
+        self.assertEqual(vertical_traversal(None), [])
+
+    def test_left_heavy_tree(self):
+        """
+            1
+           / \
+          2   3
+         / \   \
+        4   5   6
+        """
+        t2 = Node(2, Node(4), Node(5))
+        t3 = Node(3, right=Node(6))
+        t = Node(1, t2, t3)
+        self.assertEqual(vertical_traversal(t), [
+            [4],
+            [2],
+            [1,5],
+            [3],
+            [6]
+        ])
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False, verbosity=2)
+```
+
 ### Apr 14, 2022 \[Easy\] Tree Isomorphism Problem
 ---
 > **Question:** Write a function to detect if two trees are isomorphic. Two trees are called isomorphic if one of them can be obtained from other by a series of flips, i.e. by swapping left and right children of a number of nodes. Any number of nodes at any level can have their children swapped. Two empty trees are isomorphic.
