@@ -93,9 +93,9 @@ def vertical_traversal(root):
         if cur.left:
             stack.append((cur.left, col - 1))
 
-    res = [[] for _ in range(hi - lo + 1)]
+    res = []
     for col in range(lo, hi + 1):
-        res[col - lo] = col_map[col]
+        res.append(col_map[col])
     return res
         
 
