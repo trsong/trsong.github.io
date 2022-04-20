@@ -28,6 +28,71 @@ categories: Python/Java
 >
 > For example, given `[5, 10, 15, 20, 25]`, return the sets `[10, 25]` and `[5, 15, 20]`, which has a difference of `5`, which is the smallest possible difference.
 
+**Solution with DP:** [https://replit.com/@trsong/Partition-Array-to-Reach-Min-Difference-2](https://replit.com/@trsong/Partition-Array-to-Reach-Min-Difference-2)
+```py
+import unittest
+
+def min_partition_difference(nums):
+    n = len(nums)
+    total = sum(nums)
+    # Let dp[n][sum] represents whether exists subset sum for nums[:n]
+    # dp[n][sum] = dp[n-1][sum]             if exclude nums[n-1]
+    #            = dp[n-1][sum - nums[n-1]] if include nums[n-1]
+    dp = [[False for _ in range(total // 2 + 1)] for _ in range(n + 1)]
+    for i in range(n + 1):
+        dp[i][0] = True
+
+    for i in range(1, n + 1):
+        for s in range(1, total // 2 + 1):
+            dp[i][s] = dp[i - 1][s]
+            if s - nums[i - 1] >= 0:
+                dp[i][s] = dp[i - 1][s - nums[i - 1]]
+
+
+    # Let s1, s2 be the subset sum separately where s1 >= s2 and s1 + s2 = total
+    # then min{s1 - s2} is the result. Substitue s1 with total - s2 gives min{total - s2 - s2}
+    # which is equivalent to total - 2 * max(s2) and s2 >= total / 2
+    for s in range(total // 2, -1, -1):
+        if dp[n][s]:
+            return total - 2 * s
+
+    return None
+                
+
+class MinPartitionDifferenceSpec(unittest.TestCase):
+    def test_example(self):
+        # Partition: [10, 25] and [5, 15, 20]
+        self.assertEqual(5, min_partition_difference([5, 10, 15, 20, 25]))
+
+    def test_empty_array(self):
+        self.assertEqual(0, min_partition_difference([]))
+
+    def test_array_with_one_element(self):
+        self.assertEqual(42, min_partition_difference([42]))
+
+    def test_array_with_two_elements(self):
+        self.assertEqual(0, min_partition_difference([42, 42]))
+
+    def test_unsorted_array_with_duplicated_numbers(self):
+        # Partition: [3, 4] and [1, 2, 2, 1]
+        self.assertEqual(1, min_partition_difference([3, 1, 4, 2, 2, 1]))
+
+    def test_unsorted_array_with_unique_numbers(self):
+        # Partition: [11] and [1, 5, 6]
+        self.assertEqual(1, min_partition_difference([1, 6, 11, 5]))
+
+    def test_sorted_array_with_duplicated_numbers(self):
+        # Partition: [1, 2, 2] and [4]
+        self.assertEqual(1, min_partition_difference([1, 2, 2, 4]))
+
+    def test_min_partition_difference_is_zero(self):
+        # Partition: [1, 8, 2, 7] and [3, 6, 4, 5]
+        self.assertEqual(0, min_partition_difference([1, 2, 3, 4, 5, 6, 7, 8]))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False, verbosity=2)
+```
 
 ### Apr 17, 2022 LC 766 \[Easy\] Toeplitz Matrix
 ---
