@@ -53,10 +53,40 @@ categories: Python/Java
 > is considered valid.
 
 
-### Apr 19, 2022 \[Hard\] Morris Traversal
+### Apr 19, 2022 LC 230 \[Medium\] Kth Smallest Element in a BST
 ---
-> **Question:** Typically, an implementation of in-order traversal of a binary tree has `O(h)` space complexity, where `h` is the height of the tree. Write a program to compute the in-order traversal of a binary tree using `O(1)` space.
+> **Question:** Given a binary search tree, write a function kthSmallest to find the kth smallest element in it.
 
+**Example 1:**
+
+```py
+Input: 
+   3
+  / \
+ 1   4
+  \
+   2
+
+k = 1
+Output: 1
+```
+
+
+**Example 2:**
+
+```py
+Input: 
+       5
+      / \
+     3   6
+    / \
+   2   4
+  /
+ 1
+
+k = 3
+Output: 3
+```
 
 ### Apr 18, 2022 \[Hard\] Partition Array to Reach Mininum Difference
 ---
