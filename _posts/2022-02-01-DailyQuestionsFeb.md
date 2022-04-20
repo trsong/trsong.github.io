@@ -21,6 +21,42 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
 
+### Apr 20, 2022 \[Medium\] Direction and Position Rule Verification
+---
+> **Question:** A rule looks like this:
+>
+> ```py
+> A NE B
+> ``` 
+> This means this means point A is located northeast of point B.
+> 
+> ```
+> A SW C
+> ```
+> means that point A is southwest of C.
+>
+>Given a list of rules, check if the sum of the rules validate. For example:
+> 
+> ```
+> A N B
+> B NE C
+> C N A
+> ```
+> 
+> does not validate, since A cannot be both north and south of C.
+> 
+> ```
+> A NW B
+> A N B
+> ```
+> 
+> is considered valid.
+
+
+### Apr 19, 2022 \[Hard\] Morris Traversal
+---
+> **Question:** Typically, an implementation of in-order traversal of a binary tree has `O(h)` space complexity, where `h` is the height of the tree. Write a program to compute the in-order traversal of a binary tree using `O(1)` space.
+
 
 ### Apr 18, 2022 \[Hard\] Partition Array to Reach Mininum Difference
 ---
