@@ -89,6 +89,120 @@ M     1000
 > is considered valid.
 
 
+**My thoughts:** A rule is considered invalid if there exists an opposite rule either implicitly or explicitly. eg. `'A N B'`, `'B N C'` and `'C N A'`. But that doesn't mean we need to scan through the rules over and over again to check if any pair of two rules are conflicting with each other. We can simply scan through the list of rules to build a directional graph for each direction. i.e. E, S, W, N
+
+Then what about diagonal directions. i.e. NE, NW, SE, SW.? As the nature of those rules are 'AND' relation, we can break one diagonal rules into two normal rules. eg, `'A NE B' => 'A N B' and 'A E B'`.
+
+For each direction we build a directional graph, with nodes being the points and edge represents a rule. And each rule will be added to two graphs with opposite directions. e.g. `'A N B'` added to both 'N' graph and 'S' graph. If doing this rule forms a cycle, we simply return False. And if otherwise for all rules, then we return True in the end. 
+
+**Solution with DFS:** [https://replit.com/@trsong/Verify-List-of-Direction-and-Position-Rules-2](https://replit.com/@trsong/Verify-List-of-Direction-and-Position-Rules-2)
+```py
+import unittest
+
+
+def direction_rule_validate(rules):
+    north_neighbors = {}
+    east_neighbors = {}
+    node_set = set()
+    
+    for rule in rules:
+        start, directions, end = rule.split()
+        node_set.add(start)
+        node_set.add(end)
+        
+        for direction in directions:
+            if direction == 'E':
+                east_neighbors[start] = east_neighbors.get(start, [])
+                east_neighbors[start].append(end)
+            elif direction == 'W':
+                east_neighbors[end] = east_neighbors.get(end, [])
+                east_neighbors[end].append(start)
+            elif direction == 'N':
+                north_neighbors[start] = north_neighbors.get(start, [])
+                north_neighbors[start].append(end)
+            elif direction == 'S':
+                north_neighbors[end] = north_neighbors.get(end, [])
+                north_neighbors[end].append(start)
+
+    return not dfs_detect_cycle(node_set, north_neighbors) and not dfs_detect_cycle(node_set, east_neighbors)
+
+
+def dfs_detect_cycle(node_set, neighbors):
+    class NodeState:
+        UNVISITED = 0
+        VISITING = 1
+        VISITED = 2
+    
+    node_states = { node: NodeState.UNVISITED for node in node_set }
+
+    for node in node_states:
+        if node_states[node] is not NodeState.UNVISITED:
+            continue
+        stack = [node]
+
+        while stack:
+            cur = stack[-1]
+            if node_states[cur] is NodeState.VISITED:
+                stack.pop()
+            elif node_states[cur] is NodeState.VISITING:
+                node_states[cur] = NodeState.VISITED
+            else:
+                node_states[cur] = NodeState.VISITING
+                for nb in neighbors.get(cur, []):
+                    if node_states[nb] is NodeState.UNVISITED:
+                        stack.append(nb)
+                    elif node_states[nb] is NodeState.VISITING:
+                        # back-edge exists which forms a cycle in a directed graph
+                        return True
+    return False
+
+
+class DirectionRuleValidationSpec(unittest.TestCase):
+    def test_example1(self):
+        self.assertFalse(direction_rule_validate([
+            "A N B",
+            "B NE C",
+            "C N A"
+        ]))
+
+    def test_example2(self):
+        self.assertTrue(direction_rule_validate([
+            "A NW B",
+            "A N B"
+        ]))
+
+    def test_ambigious_rules(self):
+        self.assertTrue(direction_rule_validate([
+            "A SE B",
+            "C SE B",
+            "C SE A",
+            "A N C"
+        ]))
+
+    def test_conflict_diagonal_directions(self):
+        self.assertFalse(direction_rule_validate([
+            "B NW A",
+            "C SE A",
+            "C NE B"
+        ]))
+
+    def test_paralllel_rules(self):
+        self.assertTrue(direction_rule_validate([
+            "A N B",
+            "C N D",
+            "C E B",
+            "B W D",
+            "B S D",
+            "A N C",
+            "D N B",
+            "C E A"
+        ]))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False, verbosity=2)
+```
+
 ### Apr 19, 2022 LC 230 \[Medium\] Kth Smallest Element in a BST
 ---
 > **Question:** Given a binary search tree, write a function kthSmallest to find the kth smallest element in it.

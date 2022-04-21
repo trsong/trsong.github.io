@@ -8863,7 +8863,7 @@ Explanation: Another possible reconstruction is ["JFK","SFO","ATL","JFK","ATL","
 <details>
 <summary class="lc_m">
 
-- [**\[Medium\] Direction and Position Rule Verification**](http://trsong.github.io/python/java/2020/11/02/DailyQuestionsAug.html#nov-27-2020-medium-direction-and-position-rule-verification) -- *Given a list of rules, check if the sum of the rules validate.* [*\(Try ME\)*](https://repl.it/@trsong/Verify-List-of-Direction-and-Position-Rules-1)
+- [**\[Medium\] Direction and Position Rule Verification**](https://trsong.github.io/python/java/2022/02/01/DailyQuestionsFeb.html#apr-20-2022-medium-direction-and-position-rule-verification) -- *Given a list of rules, check if the sum of the rules validate.* [*\(Try ME\)*](https://repl.it/@trsong/Verify-List-of-Direction-and-Position-Rules-1)
 
 </summary>
 <div>
