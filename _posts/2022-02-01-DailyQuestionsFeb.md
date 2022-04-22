@@ -21,6 +21,14 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
 
+### Apr 22, 2022 \[Easy\] Rotate Linked List
+---
+> **Question:** Given a linked list and a positive integer `k`, rotate the list to the right by k places.
+>
+> For example, given the linked list `7 -> 7 -> 3 -> 5` and `k = 2`, it should become `3 -> 5 -> 7 -> 7`.
+>
+> Given the linked list `1 -> 2 -> 3 -> 4 -> 5` and `k = 3`, it should become `3 -> 4 -> 5 -> 1 -> 2`.
+
 ### Apr 21, 2022 LC 13 \[Easy\] Convert Roman Numerals to Decimal
 --- 
 > **Question:** Given a Roman numeral, find the corresponding decimal value. Inputs will be between 1 and 3999.
