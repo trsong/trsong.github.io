@@ -21,6 +21,30 @@ categories: Python/Java
 **Java Playground:** [https://repl.it/languages/java](https://repl.it/languages/java)
 
 
+### Apr 26, 2022 \[Medium\] Normalize Pathname
+---
+> **Question:** Given an absolute pathname that may have `"."` or `".."` as part of it, return the shortest standardized path.
+>
+> For example, given `"/usr/bin/../bin/./scripts/../"`, return `"/usr/bin"`.
+
+
+### Apr 25, 2022 LC 796 \[Easy\] Shift-Equivalent Strings
+---
+> **Question:** Given two strings A and B, return whether or not A can be shifted some number of times to get B.
+>
+> For example, if A is `'abcde'` and B is `'cdeab'`, return `True`. If A is `'abc'` and B is `'acb'`, return `False`.
+
+
+### Apr 24, 2022 \[Easy\] Height-balanced Binary Tree
+---
+> **Question:** Given a binary tree, determine whether or not it is height-balanced. A height-balanced binary tree can be defined as one in which the heights of the two subtrees of any node never differ by more than one.
+
+
+### Apr 23, 2022 \[Medium\] Toss Biased Coin
+---
+> **Question:** Assume you have access to a function toss_biased() which returns 0 or 1 with a probability that's not 50-50 (but also not 0-100 or 100-0). You do not know the bias of the coin. Write a function to simulate an unbiased coin toss.
+
+
 ### Apr 22, 2022 \[Easy\] Rotate Linked List
 ---
 > **Question:** Given a linked list and a positive integer `k`, rotate the list to the right by k places.
