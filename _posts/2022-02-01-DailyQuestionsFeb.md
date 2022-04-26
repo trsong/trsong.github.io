@@ -53,6 +53,100 @@ categories: Python/Java
 >
 > Given the linked list `1 -> 2 -> 3 -> 4 -> 5` and `k = 3`, it should become `3 -> 4 -> 5 -> 1 -> 2`.
 
+**Solution with Fast-Slow Pointers:** [https://replit.com/@trsong/Rotate-Singly-Linked-List-3](https://replit.com/@trsong/Rotate-Singly-Linked-List-3)
+```py
+import unittest
+
+def rotate_list(head, k):
+    if head is None:
+        return None
+
+    k %= calculate_length(head)
+    if k == 0:
+        return head
+    
+    fast = slow = head
+    for _ in range(k):
+        fast = fast.next
+
+    while fast and fast.next:
+        fast = fast.next
+        slow = slow.next
+
+    res = slow.next
+    fast.next = head
+    slow.next = None
+    return res
+
+
+def calculate_length(head):
+    p = head
+    res = 0
+    while p:
+        res += 1
+        p = p.next
+    return res
+
+
+class Node(object):
+    def __init__(self, val, next=None):
+        self.val = val
+        self.next = next
+
+    def __eq__(self, other):
+        return other and self.val == other.val and self.next == other.next
+
+    def __repr__(self):
+        return "%d -> %s" % (self.val, self.next)
+
+    @staticmethod
+    def List(*vals):
+        p = dummy = Node(-1)
+        for val in vals:
+            p.next = Node(val)
+            p = p.next
+        return dummy.next
+
+
+class RotateListSpec(unittest.TestCase):
+    def test_example(self):
+        k, lst = 2, Node.List(1, 2, 3, 4)
+        expected = Node.List(3, 4, 1, 2)
+        self.assertEqual(expected, rotate_list(lst, k))
+
+    def test_empty_list(self):
+        self.assertIsNone(rotate_list(None, 42))
+
+    def test_single_elem_list(self):
+        k, lst = 42, Node.List(1)
+        expected = Node.List(1)
+        self.assertEqual(expected, rotate_list(lst, k))
+
+    def test_k_greater_than_length_of_list(self):
+        k, lst = 5, Node.List(1, 2)
+        expected = Node.List(2, 1)
+        self.assertEqual(expected, rotate_list(lst, k))
+
+    def test_k_equal_length_of_list(self):
+        k, lst = 3, Node.List(1, 2, 3)
+        expected = Node.List(1, 2, 3)
+        self.assertEqual(expected, rotate_list(lst, k))
+
+    def test_k_less_than_length_of_list(self):
+        k, lst = 5, Node.List(0, 1, 2, 3, 4, 5)
+        expected = Node.List(1, 2, 3, 4, 5, 0)
+        self.assertEqual(expected, rotate_list(lst, k))
+
+    def test_array_contains_duplicates(self):
+        k, lst = 1, Node.List(1, 2, 2, 3, 3, 3, 4)
+        expected = Node.List(4, 1, 2, 2, 3, 3, 3)
+        self.assertEqual(expected, rotate_list(lst, k))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False, verbosity=2)
+```
+
 ### Apr 21, 2022 LC 13 \[Easy\] Convert Roman Numerals to Decimal
 --- 
 > **Question:** Given a Roman numeral, find the corresponding decimal value. Inputs will be between 1 and 3999.
