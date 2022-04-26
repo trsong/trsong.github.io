@@ -44,6 +44,46 @@ categories: Python/Java
 ---
 > **Question:** Assume you have access to a function toss_biased() which returns 0 or 1 with a probability that's not 50-50 (but also not 0-100 or 100-0). You do not know the bias of the coin. Write a function to simulate an unbiased coin toss.
 
+**Solution:** [https://replit.com/@trsong/Toss-Biased-Coins-2](https://replit.com/@trsong/Toss-Biased-Coins-2)
+```py
+from random import randint
+
+def toss_unbiased():
+    # Let P(T1=t1, T2=t2) represents probability when flip same coin twice and get t1 and t2 
+    # where t1, t2 can be H or T and let p represents probability to get H for each coin
+    # Notice that:
+    # p(H, T) = p * p
+    # p(H, T) = p * (1 - p)
+    # p(T, H) = (1 - p) * p
+    # p(T, T) = (1 - p) * (1 - p)
+    # which implies p(H, T) == p(T, H). The probability to get H, T is the same as T, H
+    # when this happens, we can just return t1
+    while True:
+        t1 = toss_biased()
+        t2 = toss_biased()
+        if t1 != t2:
+            return t1
+
+
+def toss_biased():
+    # suppose the toss has 1/4 chance to get 0 and 3/4 to get 1
+    return 0 if randint(0, 3) == 0 else 1
+
+
+def print_distribution(repeat):
+    histogram = {}
+    for _ in range(repeat):
+        res = toss_unbiased()
+        if res not in histogram:
+            histogram[res] = 0
+        histogram[res] += 1
+    print(histogram)
+
+
+if __name__ == '__main__':
+     # Distribution looks like {0: 99931, 1: 100069}
+    print_distribution(repeat=200000)
+```
 
 ### Apr 22, 2022 \[Easy\] Rotate Linked List
 ---
