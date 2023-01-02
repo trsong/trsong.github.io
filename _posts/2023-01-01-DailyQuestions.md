@@ -129,6 +129,7 @@ if __name__ == '__main__':
 **Failed Attempts:**
 
 > Rev 1: not pruning invalid case
+
 ```py
 def longest_uniq_substr(s):
     last_occur_record = {}
@@ -143,6 +144,7 @@ def longest_uniq_substr(s):
 ```
 
 > Rev 2: not consider 1 letter edge case
+
 ```py
 def longest_uniq_substr(s):
     last_occur_record = {}
