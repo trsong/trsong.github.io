@@ -48,18 +48,6 @@ Explanation: The answer is "wke", with the length of 3.
 Notice that the answer must be a substring, "pwke" is a subsequence and not a substring.
 ```
 
-<details>
-<summary>Show Hint</summary>
-
-**Hint 1:** when tracking last occurrance, have you consider invalid cases, like "a" in "abcba". "bcba" is not a valid result?
-
-**Hint 2:** while updating map entry, is removing element from map necessary?
-
-**Hint 3:** edge case 1 char
-
-</details>
-
-
 **Solution:** [https://replit.com/@trsong/LC3-Longest-Substring-Without-Repeating-Characters#main.py](https://replit.com/@trsong/LC3-Longest-Substring-Without-Repeating-Characters#main.py)
 
 ```py
@@ -128,7 +116,7 @@ if __name__ == '__main__':
 
 **Failed Attempts:**
 
-> Rev 1: not pruning invalid case
+> Rev 1: not pruning invalid case. When tracking last occurrance, fail to consider an invalid case: "a" in "abcba" where "bcba" is not a valid result.
 
 ```py
 def longest_uniq_substr(s):
@@ -143,7 +131,28 @@ def longest_uniq_substr(s):
     return res
 ```
 
-> Rev 2: not consider 1 letter edge case
+> Rev 2: while updating map entry, removing an element is not necessary. 
+
+```py
+def longest_uniq_substr(s):
+    last_occur_record = {}
+    res = 0
+    start = 0
+
+    for end, ch in enumerate(s):
+        last_occur = last_occur_record.get(ch, -1)
+        while start < last_occur:
+            if s[start] in last_occur_record:
+                del last_occur_record[s[start]]
+            start += 1
+
+        res = max(res, end - start)
+        last_occur_record[ch] = end
+        
+    return res
+```
+
+> Rev 3: window start position is incorrect. Not consider 1 letter edge case
 
 ```py
 def longest_uniq_substr(s):
