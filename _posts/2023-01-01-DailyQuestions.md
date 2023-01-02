@@ -52,13 +52,15 @@ Notice that the answer must be a substring, "pwke" is a subsequence and not a su
 <summary>Show Hint</summary>
 
 **Hint 1:** when tracking last occurrance, have you consider invalid cases, like "a" in "abcba". "bcba" is not a valid result?
+
 **Hint 2:** while updating map entry, is removing element from map necessary?
+
 **Hint 3:** edge case 1 char
 
 </details>
 
 
-**Solution:** https://replit.com/@trsong/LC3-Longest-Substring-Without-Repeating-Characters#main.py
+**Solution:** [https://replit.com/@trsong/LC3-Longest-Substring-Without-Repeating-Characters#main.py](https://replit.com/@trsong/LC3-Longest-Substring-Without-Repeating-Characters#main.py)
 
 ```py
 import unittest
@@ -125,9 +127,8 @@ if __name__ == '__main__':
 
 
 **Failed Attempts:**
-<details>
-<summary>Rev 1: not pruning invalid case</summary>
 
+> Rev 1: not pruning invalid case
 ```py
 def longest_uniq_substr(s):
     last_occur_record = {}
@@ -141,11 +142,7 @@ def longest_uniq_substr(s):
     return res
 ```
 
-</details>
-
-<details>
-<summary>Rev 2: not consider 1 letter edge case</summary>
-
+> Rev 2: not consider 1 letter edge case
 ```py
 def longest_uniq_substr(s):
     last_occur_record = {}
@@ -160,5 +157,3 @@ def longest_uniq_substr(s):
         
     return res
 ```
-
-</details>
