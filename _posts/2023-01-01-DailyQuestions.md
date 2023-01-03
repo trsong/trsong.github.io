@@ -168,3 +168,107 @@ def longest_uniq_substr(s):
         
     return res
 ```
+
+
+### Jan 2, 2023 LC 23 \[Hard\] Merge k Sorted Lists
+---
+> **Question:** You are given an array of k linked-lists lists, each linked-list is sorted in ascending order.
+>
+> Merge all the linked-lists into one sorted linked-list and return it.
+
+**Example 1:**
+
+```py
+Input: lists = [[1,4,5],[1,3,4],[2,6]]
+Output: [1,1,2,3,4,4,5,6]
+Explanation: The linked-lists are:
+[
+  1->4->5,
+  1->3->4,
+  2->6
+]
+merging them into one sorted list:
+1->1->2->3->4->4->5->6
+```
+
+**Example 2:**
+```py
+Input: lists = []
+Output: []
+```
+
+**Example 3:**
+
+```py
+Input: lists = [[]]
+Output: []
+```
+
+**Solution:** [https://replit.com/@trsong/LC-23-Merge-k-Sorted-Lists#main.py](https://replit.com/@trsong/LC-23-Merge-k-Sorted-Lists#main.py)
+```py
+import unittest
+from queue import PriorityQueue
+
+class ListNode:
+    def __init__(self, val=0, next=None):
+        self.val = val
+        self.next = next
+
+    def __eq__(self, other):
+        return str(self) == str(other)
+
+    def __str__(self):
+        return f"{self.val} -> {str(self.next)}"
+
+    def __repr__(self):
+        return str(self)
+
+    @classmethod
+    def fromList(cls, lst):
+        p = dummy = cls(-1)
+        for num in lst:
+            p.next = cls(num)
+            p = p.next
+        return dummy.next
+
+
+def merge_k_sorted(num_lists):
+    pq = PriorityQueue()
+    for i, p in enumerate(num_lists):
+        if p is None:
+            continue
+        pq.put((p.val, i, p))
+
+    q = dummy = ListNode(-1)
+    while not pq.empty():
+        _, i, p = pq.get()
+        q.next = ListNode(p.val)
+        q = q.next
+
+        if p.next is not None:
+            pq.put((p.next.val, i, p.next))
+
+    return dummy.next
+        
+
+class MergeKSortedSpec(unittest.TestCase):
+    def testExample1(self):
+        num_lists = list(map(ListNode.fromList,
+                             [[1, 4, 5], [1, 3, 4], [2, 6]]))
+        expected = ListNode.fromList([1, 1, 2, 3, 4, 4, 5, 6])
+        self.assertEqual(expected, merge_k_sorted(num_lists))
+        
+    def testExample2(self):
+        num_lists = list(map(ListNode.fromList,[[]]))
+        expected = ListNode.fromList([])
+        self.assertEqual(expected, merge_k_sorted(num_lists))
+        
+    def testExample3(self):
+        num_lists = list(map(ListNode.fromList,[]))
+        expected = ListNode.fromList([])
+        self.assertEqual(expected, merge_k_sorted(num_lists))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False, verbosity=2)
+```
