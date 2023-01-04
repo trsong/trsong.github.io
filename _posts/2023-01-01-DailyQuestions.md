@@ -272,3 +272,68 @@ class MergeKSortedSpec(unittest.TestCase):
 if __name__ == '__main__':
     unittest.main(exit=False, verbosity=2)
 ```
+
+### Jan 3, 2023 LC 11 \[Medium\] Container With Most Water
+---
+> **Question:** You are given an integer array height of length `n`. There are `n` vertical lines drawn such that the two endpoints of the `i`th line are `(i, 0)` and `(i, height[i])`.
+>
+> Find two lines that together with the x-axis form a container, such that the container contains the most water.
+>
+> Return the maximum amount of water a container can store.
+>
+> Notice that you may not slant the container.
+
+**Example 1:**
+
+```py
+Input: height = [1,8,6,2,5,4,8,3,7]
+Output: 49
+Explanation: The above vertical lines are represented by array [1,8,6,2,5,4,8,3,7]. In this case, the max area of water (blue section) the container can contain is 49.
+```
+
+**Example 2:**
+
+```py
+Input: height = [1,1]
+Output: 1
+```
+
+**Solution:** [https://replit.com/@trsong/LC-11-Container-With-Most-Water#main.py](https://replit.com/@trsong/LC-11-Container-With-Most-Water#main.py)
+
+```py
+import unittest
+
+def max_area(height):
+    lo = 0
+    hi = len(height) - 1
+    res = 0
+
+    while lo < hi:
+        area = min(height[lo], height[hi]) * (hi - lo)
+        res = max(res, area)
+        if height[lo] < height[hi]:
+            lo += 1
+        elif height[lo] > height[hi]:
+            hi -= 1
+        else:
+            lo += 1
+            hi -= 1
+    return res
+
+
+class MaxAreaSpec(unittest.TestCase):
+
+    def testExample1(self):
+        self.assertEqual(49, max_area([1, 8, 6, 2, 5, 4, 8, 3, 7]))
+
+    def testExample2(self):
+        self.assertEqual(1, max_area([1, 1]))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False, verbosity=2)
+```
+
+**Failed Attempts:**
+
+> Rev 1: Do not be confused with LC 42 Trapping Rain Water. This question is about pruning impossible choices 
