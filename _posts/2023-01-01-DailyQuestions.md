@@ -337,3 +337,74 @@ if __name__ == '__main__':
 **Failed Attempts:**
 
 > Rev 1: Do not be confused with LC 42 Trapping Rain Water. This question is about pruning impossible choices 
+
+
+### Jan 4, 2023 LC 22 \[Medium\] Generate Parentheses
+---
+> **Question:** Given `n` pairs of parentheses, write a function to generate all combinations of well-formed parentheses.
+
+**Example 1:**
+
+```py
+Input: n = 3
+Output: ["((()))","(()())","(())()","()(())","()()()"]
+```
+
+**Example 2:**
+
+```py
+Input: n = 1
+Output: ["()"]
+```
+
+**Solution:** [https://replit.com/@trsong/LC-22-Generate-Parentheses#main.py](https://replit.com/@trsong/LC-22-Generate-Parentheses#main.py)
+```py
+import unittest
+
+def backtrack(res, accu, open_bal, close_bal):
+    if 0 == open_bal == close_bal:
+        res.append("".join(accu))
+    else: 
+        if open_bal > 0:
+            accu.append("(")
+            backtrack(res, accu, open_bal - 1, close_bal)
+            accu.pop()
+
+        if close_bal > open_bal:
+            accu.append(")")
+            backtrack(res, accu, open_bal, close_bal - 1)
+            accu.pop()
+
+
+def generate_parentheses(n):
+    if n <= 0:
+        return []
+    res = []
+    backtrack(res, [], n, n)
+    return res
+
+
+class GenerateParentheseSpec(unittest.TestCase):
+    def testExample1(self):
+        expected = ["((()))","(()())","(())()","()(())","()()()"]
+        self.assertCountEqual(expected, generate_parentheses(3))
+        
+    def testExample2(self):
+        expected = ["()"]
+        self.assertCountEqual(expected, generate_parentheses(1))
+
+    def testEmpty(self):
+        self.assertCountEqual([], generate_parentheses(0))
+
+    def testSize2(self):
+        expected = ["()()", "(())"]
+        self.assertCountEqual(expected, generate_parentheses(2))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False, verbosity=2)
+```
+
+**Failed Attempts:**
+
+> Rev 1: Did not handle edge case when `n` is `0` which gives `['']` instead of empty array.
