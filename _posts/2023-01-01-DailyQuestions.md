@@ -408,3 +408,95 @@ if __name__ == '__main__':
 **Failed Attempts:**
 
 > Rev 1: Did not handle edge case when `n` is `0` which gives `['']` instead of empty array.
+
+
+### Jan 5, 2023 LC 19 \[Medium\] Remove Nth Node From End of List
+---
+> **Question:** Given the head of a linked list, remove the nth node from the end of the list and return its head.
+
+ 
+**Example 1:**
+
+```py
+Input: head = [1,2,3,4,5], n = 2
+Output: [1,2,3,5]
+```
+
+**Example 2:**
+
+```py
+Input: head = [1], n = 1
+Output: []
+```
+
+
+**Example 3:**
+
+```py
+Input: head = [1,2], n = 1
+Output: [1]
+```
+
+
+**Solution:** [https://replit.com/@trsong/LC-19-Remove-Nth-Node-From-End-of-List#main.py](https://replit.com/@trsong/LC-19-Remove-Nth-Node-From-End-of-List#main.py)
+
+```py
+import unittest
+
+class ListNode:
+    def __init__(self, val=0, next=None):
+        self.val = val
+        self.next = next
+
+    def __str__(self):
+        return f"{self.val} -> {str(self.next)}"
+
+    def __repr__(self):
+        return str(self)
+
+    def __eq__(self, other):
+        return str(self) == str(other)
+
+    @classmethod
+    def fromList(cls, lst):
+        p = dummy = cls(-1)
+        for num in lst:
+            p.next = cls(num)
+            p = p.next
+        return dummy.next
+
+
+def remove_nth_from_end(head, n):
+    dummy = slow = fast = ListNode(-1, head)
+    for _ in range(n):
+        fast = fast.next
+
+    while fast and fast.next:
+        slow = slow.next
+        fast = fast.next
+
+    if slow.next:
+        slow.next = slow.next.next
+    return dummy.next
+    
+
+class RemoveNthFromEndSpec(unittest.TestCase):
+    def testExample1(self):
+        n, head = 2, ListNode.fromList([1, 2, 3, 4, 5])
+        expected = ListNode.fromList([1, 2, 3, 5])
+        self.assertEqual(expected, remove_nth_from_end(head, n))
+
+    def testExample2(self):
+        n, head = 1, ListNode.fromList([1])
+        expected = ListNode.fromList([])
+        self.assertEqual(expected, remove_nth_from_end(head, n))
+
+    def testExample3(self):
+        n, head = 1, ListNode.fromList([1, 2])
+        expected = ListNode.fromList([1])
+        self.assertEqual(expected, remove_nth_from_end(head, n))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False, verbosity=2)
+```
