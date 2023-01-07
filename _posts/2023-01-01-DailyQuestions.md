@@ -500,3 +500,90 @@ class RemoveNthFromEndSpec(unittest.TestCase):
 if __name__ == '__main__':
     unittest.main(exit=False, verbosity=2)
 ```
+
+### Jan 6, 2023 LC 24 \[Medium\] Swap Nodes in Pairs
+---
+> **Question:** Given a linked list, swap every two adjacent nodes and return its head. You must solve the problem without modifying the values in the list's nodes (i.e., only nodes themselves may be changed.)
+
+**Example 1:**
+
+```py
+Input: head = [1,2,3,4]
+Output: [2,1,4,3]
+```
+
+**Example 2:**
+
+```py
+Input: head = []
+Output: []
+```
+
+**Example 3:**
+
+```py
+Input: head = [1]
+Output: [1]
+```
+
+**Solution:** [https://replit.com/@trsong/LC-24-Swap-Nodes-in-Pairs#main.py](https://replit.com/@trsong/LC-24-Swap-Nodes-in-Pairs#main.py)
+```py
+import unittest
+
+class ListNode:
+    def __init__(self, val=0, next=None):
+        self.val = val
+        self.next = next
+
+    def __str__(self):
+        return f"{self.val} -> {str(self.next)}"
+
+    def __repr__(self):
+        return str(self)
+
+    def __eq__(self, other):
+        return str(self) == str(other)
+
+    @classmethod
+    def fromList(cls, lst):
+        p = dummy = cls(-1)
+        for num in lst:
+            p.next = cls(num)
+            p = p.next
+        return dummy.next
+
+
+def swap_pairs(head):
+    p = dummy = ListNode(-1, head)
+    while p.next and p.next.next:
+        first = p.next
+        second = p.next.next
+        
+        first.next = second.next
+        second.next = first
+        p.next = second
+        
+        p = first
+    return dummy.next
+    
+
+class SwapPairsSpec(unittest.TestCase):
+    def testExample1(self):
+        head = ListNode.fromList([1, 2, 3, 4])
+        expected = ListNode.fromList([2, 1, 4, 3])
+        self.assertEqual(expected, swap_pairs(head))
+
+    def testExample2(self):
+        head = ListNode.fromList([1])
+        expected = ListNode.fromList([1])
+        self.assertEqual(expected, swap_pairs(head))
+
+    def testExample3(self):
+        head = ListNode.fromList([])
+        expected = ListNode.fromList([])
+        self.assertEqual(expected, swap_pairs(head))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False, verbosity=2)
+```
