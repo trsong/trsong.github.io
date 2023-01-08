@@ -587,3 +587,102 @@ class SwapPairsSpec(unittest.TestCase):
 if __name__ == '__main__':
     unittest.main(exit=False, verbosity=2)
 ```
+
+
+### Jan 7, 2023 LC 31 \[Medium\] Next Permutation
+---
+> **Question:** A permutation of an array of integers is an arrangement of its members into a sequence or linear order.
+>
+> For example, for `arr = [1,2,3]`, the following are all the permutations of arr: `[1,2,3]`, `[1,3,2]`, `[2, 1, 3]`, `[2, 3, 1]`, `[3,1,2]`, `[3,2,1]`.
+>
+> The next permutation of an array of integers is the next lexicographically greater permutation of its integer. More formally, if all the permutations of the array are sorted in one container according to their lexicographical order, then the next permutation of that array is the permutation that follows it in the sorted container. If such arrangement is not possible, the array must be rearranged as the lowest possible order (i.e., sorted in ascending order).
+>
+> For example, the next permutation of `arr = [1,2,3]` is `[1,3,2]`.
+>
+> Similarly, the next permutation of `arr = [2,3,1]` is `[3,1,2]`.
+While the next permutation of `arr = [3,2,1]` is `[1,2,3]` because `[3,2,1]` does not have a lexicographical larger rearrangement.
+>
+> Given an array of integers nums, find the next permutation of nums.
+>
+> The replacement must be in place and use only constant extra memory.
+
+**Example 1:**
+
+```py
+Input: nums = [1,2,3]
+Output: [1,3,2]
+```
+
+**Example 2:**
+
+```py
+Input: nums = [3,2,1]
+Output: [1,2,3]
+```
+
+**Example 3:**
+
+```py
+Input: nums = [1,1,5]
+Output: [1,5,1]
+```
+
+**Solution:** [https://replit.com/@trsong/LC-31-Next-Permutation#main.py](https://replit.com/@trsong/LC-31-Next-Permutation#main.py)
+```py
+import unittest
+
+def next_permutation(nums):
+    prev_peak_pos = find_prev_peak_from_right(nums)
+    if prev_peak_pos < 0:
+        nums.reverse()
+        return
+
+    swap_pos = find_target_plus_from_right(nums, nums[prev_peak_pos])
+    nums[prev_peak_pos], nums[swap_pos] = nums[swap_pos], nums[prev_peak_pos]
+    reverse(nums, prev_peak_pos + 1, len(nums) - 1)
+
+
+def find_prev_peak_from_right(nums):
+    for i in range(len(nums) - 2, -1, -1):
+        if nums[i] < nums[i + 1]:
+            return i
+    return -1
+
+
+def find_target_plus_from_right(nums, target):
+    for i in range(len(nums) - 1, -1, -1):
+        if nums[i] > target:
+            return i
+    return -1
+
+
+def reverse(nums, lo, hi):
+    while lo < hi:
+        nums[lo], nums[hi] = nums[hi], nums[lo]
+        lo += 1
+        hi -= 1
+
+
+class NextPermutationSpec(unittest.TestCase):
+    def testExample1(self):
+        nums = [1, 2, 3]
+        expected = [1, 3, 2]
+        next_permutation(nums)
+        self.assertEqual(expected, nums)
+        
+    def testExample2(self):
+        nums = [3, 2, 1]
+        expected = [1, 2, 3]
+        next_permutation(nums)
+        self.assertEqual(expected, nums)
+        
+    def testExample3(self):
+        nums = [1, 1, 5]
+        expected = [1, 5, 1]
+        next_permutation(nums)
+        self.assertEqual(expected, nums)
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False, verbosity=2)
+```
