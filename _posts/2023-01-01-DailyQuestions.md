@@ -686,3 +686,130 @@ class NextPermutationSpec(unittest.TestCase):
 if __name__ == '__main__':
     unittest.main(exit=False, verbosity=2)
 ```
+
+### Jan 8, 2023 LC 33 \[Medium\] Search in Rotated Sorted Array
+---
+> **Question:** There is an integer array nums sorted in ascending order (with distinct values).
+>
+> Prior to being passed to your function, nums is possibly rotated at an unknown pivot index k (1 <= k < nums.length) such that the resulting array is `[nums[k], nums[k+1], ..., nums[n-1], nums[0]`, `nums[1], ..., nums[k-1]]` (0-indexed). For example, `[0,1,2,4,5,6,7]` might be rotated at pivot index 3 and become `[4,5,6,7,0,1,2]`.
+>
+> Given the array nums after the possible rotation and an integer target, return the index of target if it is in nums, or `-1` if it is not in nums.
+>
+> You must write an algorithm with `O(log n)` runtime complexity.
+
+**Example 1:**
+
+```py
+Input: nums = [4,5,6,7,0,1,2], target = 0
+Output: 4
+```
+
+
+**Example 2:**
+
+```py
+Input: nums = [4,5,6,7,0,1,2], target = 3
+Output: -1
+```
+
+**Example 3:**
+
+```py
+Input: nums = [1], target = 0
+Output: -1
+```
+
+**Solution:** [https://replit.com/@trsong/LC-33-Search-in-Rotated-Sorted-Array#main.py](https://replit.com/@trsong/LC-33-Search-in-Rotated-Sorted-Array#main.py)
+```py
+import unittest
+
+def search(nums, target):
+    lo = 0
+    hi = len(nums) - 1
+    while lo < hi:
+        mid = lo + (hi - lo) // 2
+        
+        # case 1 & 2: value of mid < target while on same side
+        # case 3: value of mid > target while on differnt sides
+        if (nums[lo] <= nums[mid] < target or
+            nums[mid] < target <= nums[hi] or
+            target <= nums[hi] < nums[mid]):
+            lo = mid + 1
+        else:
+            hi = mid
+
+    return lo if nums[lo] == target else -1
+
+
+class SearchSpec(unittest.TestCase):
+    def testExample1(self):
+        nums = [4, 5, 6, 7, 0, 1, 2]
+        target = 0
+        expected = 4
+        self.assertEqual(expected, search(nums, target))
+
+    def testExample2(self):
+        nums = [4, 5, 6, 7, 0, 1, 2]
+        target = 3
+        expected = -1
+        self.assertEqual(expected, search(nums, target))
+
+    def testExample3(self):
+        nums = [1]
+        target = 0
+        expected = -1
+        self.assertEqual(expected, search(nums, target))
+
+    def testFailed1(self):
+        nums = [1, 3]
+        target = 3
+        expected = 1
+        self.assertEqual(expected, search(nums, target))
+
+    def testFailed2(self):
+        nums = [5, 1, 3]
+        target = 3
+        expected = 2
+        self.assertEqual(expected, search(nums, target))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False, verbosity=2)
+```
+
+
+**Failed Attempts:**
+
+> Rev 1: Did not handle edge case when value of lo is equal to mid
+
+```py
+def search(nums, target):
+    lo = 0
+    hi = len(nums) - 1
+    while lo < hi:
+        mid = lo + (hi - lo) // 2
+        if (nums[lo] < nums[mid] < target or 
+            nums[lo] < nums[mid] and nums[lo] > target):
+            lo = mid + 1
+        else:
+            hi = mid
+
+    return lo if nums[lo] == target else -1
+```
+
+> Rev 2: did not handle case when mid and value on different sides
+
+```py
+def search(nums, target):
+    lo = 0
+    hi = len(nums) - 1
+    while lo < hi:
+        mid = lo + (hi - lo) // 2
+        if (nums[lo] <= nums[mid] < target or 
+            nums[lo] <= nums[mid] and nums[lo] > target):
+            lo = mid + 1
+        else:
+            hi = mid
+
+    return lo if nums[lo] == target else -1
+```
