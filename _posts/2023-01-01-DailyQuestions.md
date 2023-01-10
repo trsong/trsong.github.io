@@ -813,3 +813,79 @@ def search(nums, target):
 
     return lo if nums[lo] == target else -1
 ```
+
+### Jan 9, 2023 LC 45 \[Medium\] Jump Game II
+---
+> **Question:**  You are given a 0-indexed array of integers nums of length `n`. You are initially positioned at `nums[0]`.
+>
+> Each element `nums[i]` represents the maximum length of a forward jump from index `i`. In other words, if you are at `nums[i]`, you can jump to any `nums[i + j]` where:
+
+* `0 <= j <= nums[i]` and
+* `i + j < n`
+
+> Return the minimum number of jumps to reach `nums[n - 1]`. The test cases are generated such that you can reach `nums[n - 1]`. 
+
+**Example 1:**
+
+```py
+Input: nums = [2,3,1,1,4]
+Output: 2
+Explanation: The minimum number of jumps to reach the last index is 2. Jump 1 step from index 0 to 1, then 3 steps to the last index.
+```
+
+**Example 2:**
+
+```py
+Input: nums = [2,3,0,1,4]
+Output: 2
+```
+
+**Solution:** [https://replit.com/@trsong/LC-45-Jump-Game-II#main.py](https://replit.com/@trsong/LC-45-Jump-Game-II#main.py)
+
+```py
+import unittest
+
+def jump(nums):
+    res = -1
+    max_pos = -1
+    potential_max_pos = -1
+
+    for pos, step in enumerate(nums):
+        if pos > max_pos:
+            res += 1
+            max_pos = potential_max_pos
+            
+        local_max_pos = pos + step
+        potential_max_pos = max(potential_max_pos, local_max_pos)
+    return res
+    
+
+class JumpSpec(unittest.TestCase):
+    def testExample1(self):
+        self.assertEqual(2, jump([2, 3, 1, 1, 4]))
+
+    def testExample2(self):
+        self.assertEqual(2, jump([2, 3, 0, 1, 4]))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False, verbosity=2)
+```
+
+**Failed Attempts:**
+
+> Rev 1: violate the question setup: only increment when switch to new max position.
+
+```py
+def jump(nums):
+    res = -1
+    max_pos = -1
+
+    for pos, step in enumerate(nums):
+        if pos > max_pos:
+            res += 1
+            
+        local_max_pos = pos + step
+        max_pos = max(max_pos, local_max_pos)
+    return res
+```
