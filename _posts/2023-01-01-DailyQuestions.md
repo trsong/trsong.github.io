@@ -889,3 +889,125 @@ def jump(nums):
         max_pos = max(max_pos, local_max_pos)
     return res
 ```
+
+### Jan 10, 2023 LC 36 \[Medium\] Valid Sudoku
+---
+> **Question:**  Determine if a `9 x 9` Sudoku board is valid. Only the filled cells need to be validated according to the following rules:
+>
+> * Each row must contain the digits `1-9` without repetition.
+> * Each column must contain the digits `1-9` without repetition.
+> * Each of the nine `3 x 3` sub-boxes of the grid must contain the digits `1-9` without repetition.
+>
+> Note:
+> * A Sudoku board (partially filled) could be valid but is not necessarily solvable.
+> * Only the filled cells need to be validated according to the mentioned rules.
+ 
+
+**Example 1:**
+
+```py
+Input: board = 
+[["5","3",".",".","7",".",".",".","."]
+,["6",".",".","1","9","5",".",".","."]
+,[".","9","8",".",".",".",".","6","."]
+,["8",".",".",".","6",".",".",".","3"]
+,["4",".",".","8",".","3",".",".","1"]
+,["7",".",".",".","2",".",".",".","6"]
+,[".","6",".",".",".",".","2","8","."]
+,[".",".",".","4","1","9",".",".","5"]
+,[".",".",".",".","8",".",".","7","9"]]
+Output: true
+```
+
+**Example 2:**
+
+```py
+Input: board = 
+[["8","3",".",".","7",".",".",".","."]
+,["6",".",".","1","9","5",".",".","."]
+,[".","9","8",".",".",".",".","6","."]
+,["8",".",".",".","6",".",".",".","3"]
+,["4",".",".","8",".","3",".",".","1"]
+,["7",".",".",".","2",".",".",".","6"]
+,[".","6",".",".",".",".","2","8","."]
+,[".",".",".","4","1","9",".",".","5"]
+,[".",".",".",".","8",".",".","7","9"]]
+Output: false
+Explanation: Same as Example 1, except with the 5 in the top left corner being modified to 8. Since there are two 8's in the top left 3x3 sub-box, it is invalid.
+```
+
+**Solution:** [https://replit.com/@trsong/LC-36-Valid-Sudoku#main.py](https://replit.com/@trsong/LC-36-Valid-Sudoku#main.py)
+
+```py
+import unittest
+
+N = 9
+M = 3
+
+def isValidSudoku(board):
+    for r in range(N):
+        row_it = (board[r][c] for c in range(N))
+        if not isValidSequence(row_it):
+            return False
+
+    for c in range(N):
+        col_it = (board[r][c] for r in range(N))
+        if not isValidSequence(col_it):
+            return False
+
+    for sub_r in range(M):
+        for sub_c in range(M):
+            sub_it = (board[r + sub_r * M][c + sub_c * M] 
+                      for r in range(M)
+                      for c in range(M))
+            if not isValidSequence(sub_it):
+                return False
+
+    return True
+
+
+def isValidSequence(it):
+    vec = 0
+    for ch in it:
+        if ch == '.':
+            continue
+
+        if not '0' <= ch <= '9':
+            return False
+
+        num = int(ch)
+        if vec & 1 << num:
+            return False
+        vec |= 1 << num
+    return True
+
+
+class IsValidSudokuSpec(unittest.TestCase):
+    def testExample1(self):
+        board = [["5", "3", ".", ".", "7", ".", ".", ".", "."],
+                 ["6", ".", ".", "1", "9", "5", ".", ".", "."],
+                 [".", "9", "8", ".", ".", ".", ".", "6", "."],
+                 ["8", ".", ".", ".", "6", ".", ".", ".", "3"],
+                 ["4", ".", ".", "8", ".", "3", ".", ".", "1"],
+                 ["7", ".", ".", ".", "2", ".", ".", ".", "6"],
+                 [".", "6", ".", ".", ".", ".", "2", "8", "."],
+                 [".", ".", ".", "4", "1", "9", ".", ".", "5"],
+                 [".", ".", ".", ".", "8", ".", ".", "7", "9"]]
+        self.assertTrue(isValidSudoku(board))
+
+    def testExample2(self):
+        board = [["8", "3", ".", ".", "7", ".", ".", ".", "."],
+                 ["6", ".", ".", "1", "9", "5", ".", ".", "."],
+                 [".", "9", "8", ".", ".", ".", ".", "6", "."],
+                 ["8", ".", ".", ".", "6", ".", ".", ".", "3"],
+                 ["4", ".", ".", "8", ".", "3", ".", ".", "1"],
+                 ["7", ".", ".", ".", "2", ".", ".", ".", "6"],
+                 [".", "6", ".", ".", ".", ".", "2", "8", "."],
+                 [".", ".", ".", "4", "1", "9", ".", ".", "5"],
+                 [".", ".", ".", ".", "8", ".", ".", "7", "9"]]
+        self.assertFalse(isValidSudoku(board))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False, verbosity=2)
+```
