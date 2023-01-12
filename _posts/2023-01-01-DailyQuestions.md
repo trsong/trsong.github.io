@@ -1073,7 +1073,7 @@ def formate_reverse_arr(nums):
             continue
         skipped = False
         res.append(str(nums[i]))
-    return ''.join(res) if res else "0"
+    return ''.join(res) or "0"
 
 
 class MultiplySpec(unittest.TestCase):
