@@ -1011,3 +1011,107 @@ class IsValidSudokuSpec(unittest.TestCase):
 if __name__ == '__main__':
     unittest.main(exit=False, verbosity=2)
 ```
+
+### Jan 11, 2023 LC 43 \[Medium\] Multiply Strings
+---
+> **Question:** Given two non-negative integers num1 and num2 represented as strings, return the product of num1 and num2, also represented as a string.
+>
+> Note: You must not use any built-in BigInteger library or convert the inputs to integer directly.
+
+**Example 1:**
+
+```py
+Input: num1 = "2", num2 = "3"
+Output: "6"
+```
+
+**Example 2:**
+
+```py
+Input: num1 = "123", num2 = "456"
+Output: "56088"
+```
+
+**Solution:** [https://replit.com/@trsong/LC-43-Multiply-Strings#main.py](https://replit.com/@trsong/LC-43-Multiply-Strings#main.py)
+
+```py
+import unittest
+
+def multiply(num1, num2):
+    if len(num1) < len(num2):
+        num1, num2 = num2, num1
+
+    rev_num1 = list(map(int, num1))
+    rev_num1.reverse()
+    rev_num2 = list(map(int, num2))
+    rev_num2.reverse()
+    reverse_res = multiply_reverse_arr(rev_num1, rev_num2)
+    return formate_reverse_arr(reverse_res)
+
+
+def multiply_reverse_arr(nums1, nums2):
+    n, m = len(nums1), len(nums2)
+    res = [0] * (n + m)
+
+    for i in range(n):
+        for j in range(m):
+            res[j + i] += nums1[i] * nums2[j]
+
+    carry = 0
+    for i in range(n + m):
+        res[i] += carry
+        carry = res[i] // 10
+        res[i] %= 10
+    return res
+
+
+def formate_reverse_arr(nums):
+    res = []
+    skipped = True
+    for i in range(len(nums) - 1, -1, -1):
+        if skipped and nums[i] == 0:
+            continue
+        skipped = False
+        res.append(str(nums[i]))
+    return ''.join(res) if res else "0"
+
+
+class MultiplySpec(unittest.TestCase):
+    def testExample1(self):
+        num1 = "2"
+        num2 = "3"
+        expected = "6"
+        self.assertEqual(expected, multiply(num1, num2))
+
+    def testExample2(self):
+        num1 = "123"
+        num2 = "456"
+        expected = "56088"
+        self.assertEqual(expected, multiply(num1, num2))
+
+    def testFailedRev1(self):
+        num1 = num2 = expected = "0"
+        self.assertEqual(expected, multiply(num1, num2))
+
+if __name__ == '__main__':
+    unittest.main(exit=False, verbosity=2)
+```
+
+**Failed Attempts:**
+
+> Rev 1: Did not consider when result is "0"
+
+```py
+"""
+Omit the other parts
+"""
+def formate_reverse_arr(nums):
+    res = []
+    skipped = True
+    for i in range(len(nums) - 1, -1, -1):
+        if skipped and nums[i] == 0:
+            continue
+        skipped = False
+        res.append(str(nums[i]))
+    return ''.join(res)  # <----- what if res is empty 
+```
