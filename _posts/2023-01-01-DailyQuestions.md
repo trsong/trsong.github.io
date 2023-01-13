@@ -1115,3 +1115,85 @@ def formate_reverse_arr(nums):
         res.append(str(nums[i]))
     return ''.join(res)  # <----- what if res is empty 
 ```
+
+### Jan 12, 2023 LC 46 \[Medium\] Permutations
+---
+> **Question:** Given an array nums of distinct integers, return all the possible permutations. You can return the answer in any order.
+
+**Example 1:**
+
+```py
+Input: nums = [1,2,3]
+Output: [[1,2,3],[1,3,2],[2,1,3],[2,3,1],[3,1,2],[3,2,1]]
+```
+
+**Example 2:**
+
+```py
+Input: nums = [0,1]
+Output: [[0,1],[1,0]]
+```
+
+**Example 3:**
+
+```py
+Input: nums = [1]
+Output: [[1]]
+```
+
+
+**Solution:** [https://replit.com/@trsong/LC-46-Permutations#main.py](https://replit.com/@trsong/LC-46-Permutations#main.py)
+
+```py
+import unittest
+
+def permute(nums):
+    res = []
+    backtrack(nums, res, 0)
+    return res
+
+
+def backtrack(nums, res, cur_pos):
+    n = len(nums)
+    if cur_pos >= n:
+        res.append(nums[:])
+    else:
+        for swap_pos in range(cur_pos, n):
+            nums[swap_pos], nums[cur_pos] = nums[cur_pos], nums[swap_pos]
+            backtrack(nums, res, cur_pos + 1)
+            nums[swap_pos], nums[cur_pos] = nums[cur_pos], nums[swap_pos]
+    
+
+
+class PermuteSpec(unittest.TestCase):
+    def testExample1(self):
+        nums = [1, 2, 3]
+        expected = [
+            [1, 2, 3], 
+            [1, 3, 2], 
+            [2, 1, 3], 
+            [2, 3, 1], 
+            [3, 1, 2],
+            [3, 2, 1]
+        ]
+        self.assertCountEqual(expected, permute(nums))
+
+    def testExample2(self):
+        nums = [0, 1]
+        expected = [
+            [0, 1], 
+            [1, 0]
+        ]
+        self.assertCountEqual(expected, permute(nums))
+        
+    def testExample3(self):
+        nums = [1]
+        expected = [
+            [1]
+        ]
+        self.assertCountEqual(expected, permute(nums))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False, verbosity=2)
+```
