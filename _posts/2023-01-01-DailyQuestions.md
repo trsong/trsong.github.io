@@ -1197,3 +1197,164 @@ class PermuteSpec(unittest.TestCase):
 if __name__ == '__main__':
     unittest.main(exit=False, verbosity=2)
 ```
+
+### Jan 13, 2023 LC 47 \[Medium\] Permutations II
+---
+> **Question:** Given a collection of numbers, nums, that might contain duplicates, return all possible unique permutations in any order.
+
+**Example 1:**
+
+```py
+Input: nums = [1,1,2]
+Output:
+[[1,1,2],
+ [1,2,1],
+ [2,1,1]]
+```
+
+**Example 2:**
+
+```py
+Input: nums = [1,2,3]
+Output: [[1,2,3],[1,3,2],[2,1,3],[2,3,1],[3,1,2],[3,2,1]]
+```
+
+**Less Optimal Yet Acceptable Solution:** [https://replit.com/@trsong/LC-47-Permutations-II#main.py](https://replit.com/@trsong/LC-47-Permutations-II#main.py)
+
+```py
+def permute_unique(nums):
+    res = []
+    backtrack(nums, res, 0)
+    return res
+
+
+def backtrack(nums, res, cur_pos):
+    n = len(nums)
+    if cur_pos >= n:
+        res.append(nums[:])
+    else:
+        seen = set()
+        for swap_pos in range(cur_pos, n):
+            if nums[swap_pos] in seen:
+                continue
+            seen.add(nums[swap_pos])
+            
+            nums[swap_pos], nums[cur_pos] = nums[cur_pos], nums[swap_pos]
+            backtrack(nums, res, cur_pos + 1)
+            nums[swap_pos], nums[cur_pos] = nums[cur_pos], nums[swap_pos]
+```
+
+**Optimal Solution:** [https://replit.com/@trsong/LC-47-Permutations-II-optimal-solution#main.py](https://replit.com/@trsong/LC-47-Permutations-II-optimal-solution#main.py)
+
+```py
+import unittest
+
+def permute_unique(nums):
+    histogram = generate_histogram(nums)
+    res = []
+    backtrack(len(nums), [], res, histogram)
+    return res
+
+
+def backtrack(remain_step, accu, res, histogram):
+    if remain_step == 0:
+        res.append(accu[:])
+    else:
+        for num, count in histogram.items():
+            if count <= 0:
+                continue
+                
+            accu.append(num)
+            histogram[num] -= 1
+            backtrack(remain_step - 1, accu, res, histogram)
+            accu.pop()
+            histogram[num] += 1
+
+
+def generate_histogram(nums):
+    histogram = {}
+    for num in nums:
+        histogram[num] = histogram.get(num, 0) + 1
+    return histogram
+
+
+class PermuteUniqueSpec(unittest.TestCase):
+    def testExample1(self):
+        nums = [1, 1, 2]
+        expected = [[1, 1, 2], [1, 2, 1], [2, 1, 1]]
+        self.assertCountEqual(expected, permute_unique(nums))
+
+    def testExample2(self):
+        nums = [1, 2, 3]
+        expected = [[1, 2, 3], [1, 3, 2], [2, 1, 3], [2, 3, 1], [3, 1, 2],
+                    [3, 2, 1]]
+        self.assertCountEqual(expected, permute_unique(nums))
+
+    def testFailRev2(self):
+        nums = [0, 1, 0, 0, 9]
+        expected = [[0, 0, 0, 1, 9], [0, 0, 0, 9, 1], [0, 0, 1, 0, 9],
+                    [0, 0, 1, 9, 0], [0, 0, 9, 0, 1], [0, 0, 9, 1, 0],
+                    [0, 1, 0, 0, 9], [0, 1, 0, 9, 0], [0, 1, 9, 0, 0],
+                    [0, 9, 0, 0, 1], [0, 9, 0, 1, 0], [0, 9, 1, 0, 0],
+                    [1, 0, 0, 0, 9], [1, 0, 0, 9, 0], [1, 0, 9, 0, 0],
+                    [1, 9, 0, 0, 0], [9, 0, 0, 0, 1], [9, 0, 0, 1, 0],
+                    [9, 0, 1, 0, 0], [9, 1, 0, 0, 0]]
+        self.assertCountEqual(expected, permute_unique(nums))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False, verbosity=2)
+```
+
+
+**Failed Attempts:**
+
+> Rev 1: Neither space nor time complexity is ideal due to set add and lookup
+
+```py
+def permute_unique(nums):
+    res = []
+    backtrack(nums, res, 0)
+    return res
+
+
+def backtrack(nums, res, cur_pos):
+    n = len(nums)
+    if cur_pos >= n:
+        res.append(nums[:])
+    else:
+        seen = set()
+        for swap_pos in range(cur_pos, n):
+            if nums[swap_pos] in seen:
+                continue
+            seen.add(nums[swap_pos])
+            
+            nums[swap_pos], nums[cur_pos] = nums[cur_pos], nums[swap_pos]
+            backtrack(nums, res, cur_pos + 1)
+            nums[swap_pos], nums[cur_pos] = nums[cur_pos], nums[swap_pos]
+```
+
+> Rev 2: Sort and skip duplicate number won't work either. Because swap position will change relative order. Below failed the test case: `[0, 1, 0, 0, 9]`
+
+
+```py
+def permute_unique(nums):
+    res = []
+    nums.sort()
+    backtrack(nums, res, 0)
+    return res
+
+
+def backtrack(nums, res, cur_pos):
+    n = len(nums)
+    if cur_pos >= n:
+        res.append(nums[:])
+    else:
+        for swap_pos in range(cur_pos, n):
+            if swap_pos > cur_pos and nums[swap_pos] == nums[swap_pos - 1]:
+                continue
+            
+            nums[swap_pos], nums[cur_pos] = nums[cur_pos], nums[swap_pos]
+            backtrack(nums, res, cur_pos + 1)
+            nums[swap_pos], nums[cur_pos] = nums[cur_pos], nums[swap_pos]
+```
