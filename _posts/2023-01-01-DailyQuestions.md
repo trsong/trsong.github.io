@@ -1358,3 +1358,92 @@ def backtrack(nums, res, cur_pos):
             backtrack(nums, res, cur_pos + 1)
             nums[swap_pos], nums[cur_pos] = nums[cur_pos], nums[swap_pos]
 ```
+
+
+### Jan 14, 2023 LC 49 \[Medium\] Group Anagrams
+---
+> **Question:** Given an array of strings strs, group the anagrams together. You can return the answer in any order.
+>
+> An Anagram is a word or phrase formed by rearranging the letters of a different word or phrase, typically using all the original letters exactly once.
+
+**Example 1:**
+
+```py
+Input: strs = ["eat","tea","tan","ate","nat","bat"]
+Output: [["bat"],["nat","tan"],["ate","eat","tea"]]
+```
+
+**Example 2:**
+
+```py
+Input: strs = [""]
+Output: [[""]]
+```
+
+**Example 3:**
+
+```py
+Input: strs = ["a"]
+Output: [["a"]]
+```
+
+**Solution:** [https://replit.com/@trsong/LC-49-Group-Anagrams#main.py](https://replit.com/@trsong/LC-49-Group-Anagrams#main.py)
+
+```py
+import unittest
+
+P = 101
+CHAR_WEIGHT = {}
+
+def group_anagram(strs):
+    grouby_hash = {}
+    for s in strs:
+        hash_code = hash_anagram(s)
+        grouby_hash[hash_code] = grouby_hash.get(hash_code, [])
+        grouby_hash[hash_code].append(s)
+    return list(grouby_hash.values())
+
+
+def hash_anagram(s):
+    global CHAR_WEIGHT
+    histogram = generate_histogram(s)
+    res = 0
+
+    for ch, count in histogram.items():
+        if ch not in CHAR_WEIGHT:
+            CHAR_WEIGHT[ch] = P ** (ord(ch) - ord('a'))
+        res += CHAR_WEIGHT[ch] * count
+    return res
+
+
+def generate_histogram(s):
+    histogram = {}
+    for ch in s:
+        histogram[ch] = histogram.get(ch, 0) + 1
+    return histogram
+
+
+class GroupAnagram(unittest.TestCase):
+    def assertResult(self, expected, res):
+        format = lambda strs: list(map(lambda words: repr(sorted(words)), strs))
+        self.assertCountEqual(format(expected), format(res))
+    
+    def testExample1(self):
+        strs = ["eat", "tea", "tan", "ate", "nat", "bat"]
+        expected = [["bat"], ["nat", "tan"], ["ate", "eat", "tea"]]
+        self.assertResult(expected, group_anagram(strs))
+
+    def testExample2(self):
+        strs = [""]
+        expected = [[""]]
+        self.assertResult(expected, group_anagram(strs))
+
+    def testExample3(self):
+        strs = ["a"]
+        expected = [["a"]]
+        self.assertResult(expected, group_anagram(strs))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False, verbosity=2)
+```
