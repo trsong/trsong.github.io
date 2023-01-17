@@ -1563,3 +1563,125 @@ def backtrack(balance, res, accu, sorted_desc_candidates):
             backtrack(balance - num, res, accu, sorted_desc_candidates[i:])
             accu.pop()
 ```
+
+### Jan 16, 2023 LC 40 \[Medium\] Combination Sum II
+---
+> **Question:** Given a collection of candidate numbers (candidates) and a target number (target), find all unique combinations in candidates where the candidate numbers sum to target.
+>
+> Each number in candidates may only be used once in the combination.
+>
+> Note: The solution set must not contain duplicate combinations.
+
+**Example 1:**
+
+```py
+Input: candidates = [10,1,2,7,6,1,5], target = 8
+Output: 
+[
+[1,1,6],
+[1,2,5],
+[1,7],
+[2,6]
+]
+```
+
+
+**Example 2:**
+
+```py
+Input: candidates = [2,5,2,1,2], target = 5
+Output: 
+[
+[1,2,2],
+[5]
+]
+```
+
+**Solution:** [https://replit.com/@trsong/LC-40-Combination-Sum-II#main.py](https://replit.com/@trsong/LC-40-Combination-Sum-II#main.py)
+
+```py
+import unittest
+
+def combination_sum(candidates, target):
+    candidate_value_rank = list(sorted(set(candidates), reverse=True))
+    candidate_histogram = generate_histogram(candidates)
+    res = []
+    backtrack(target, res, [], candidate_value_rank, 0, candidate_histogram)
+    return res
+
+
+def backtrack(balance, res, accu, candidate_value_rank, candidate_value_index, candidate_histogram):
+    if balance == 0:
+        res.append(accu[:])
+    else:
+        for i in range(candidate_value_index, len(candidate_value_rank)):
+            num = candidate_value_rank[i]
+            if num > balance or candidate_histogram[num] <= 0:
+                continue
+
+            accu.append(num)
+            candidate_histogram[num] -= 1
+            backtrack(balance - num, res, accu, candidate_value_rank, i, candidate_histogram)
+            candidate_histogram[num] += 1    
+            accu.pop()
+
+        
+def generate_histogram(nums):
+    histogram = {}
+    for num in nums:
+        histogram[num] = histogram.get(num, 0) + 1
+    return histogram
+
+
+class CombinationSumSpec(unittest.TestCase):
+    def assertResult(self, expected, res):
+        format = lambda lon: list(
+            map(lambda nums: repr(list(sorted(nums))), lon))
+        self.assertCountEqual(format(expected), format(res))
+
+    def testExample1(self):
+        candidates = [10, 1, 2, 7, 6, 1, 5]
+        target = 8
+        expected = [[1, 1, 6], [1, 2, 5], [1, 7], [2, 6]]
+        self.assertResult(expected, combination_sum(candidates, target))
+
+    def testExample2(self):
+        candidates = [2, 5, 2, 1, 2]
+        target = 5
+        expected = [[1, 2, 2], [5]]
+        self.assertResult(expected, combination_sum(candidates, target))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False, verbosity=2)
+```
+
+**Failed Attempts:**
+
+> Rev 1: Failed the following case due to unable to differentiate which `1` to choose
+>
+> `target, candidate = 3, [2, 1, 1]`
+> 
+> `res = [[2, 1], [2, 1]]` 
+
+```py
+def combination_sum(candidates, target):
+    sorted_desc_candidates = list(sorted(candidates, reverse=True))
+    res = []
+    backtrack(target, res, [], sorted_desc_candidates, 0)
+    return res
+
+
+def backtrack(balance, res, accu, sorted_desc_candidates, cur_candidate_index):
+    if balance == 0:
+        res.append(accu[:])
+    else:
+        for i in range(cur_candidate_index, len(sorted_desc_candidates)):
+            num = sorted_desc_candidates[i]
+            if num > balance:
+                continue
+
+            accu.append(num)
+            backtrack(balance - num, res, accu, sorted_desc_candidates, i + 1)
+            accu.pop()
+```
