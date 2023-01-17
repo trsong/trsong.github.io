@@ -1447,3 +1447,119 @@ class GroupAnagram(unittest.TestCase):
 if __name__ == '__main__':
     unittest.main(exit=False, verbosity=2)
 ```
+
+### Jan 15, 2023 LC 39 \[Medium\] Combination Sum
+---
+> **Question:** Given an array of distinct integers candidates and a target integer target, return a list of all unique combinations of candidates where the chosen numbers sum to target. You may return the combinations in any order.
+>
+> The same number may be chosen from candidates an unlimited number of times. Two combinations are unique if the frequency of at least one of the chosen numbers is different.
+>
+> The test cases are generated such that the number of unique combinations that sum up to target is less than 150 combinations for the given input.
+
+
+**Example 1:**
+
+```py
+Input: candidates = [2,3,6,7], target = 7
+Output: [[2,2,3],[7]]
+Explanation:
+2 and 3 are candidates, and 2 + 2 + 3 = 7. Note that 2 can be used multiple times.
+7 is a candidate, and 7 = 7.
+These are the only two combinations.
+```
+
+
+**Example 2:**
+
+```py
+Input: candidates = [2,3,5], target = 8
+Output: [[2,2,2,2],[2,3,3],[3,5]]
+```
+
+**Example 3:**
+
+```py
+Input: candidates = [2], target = 1
+Output: []
+```
+
+**Solution:** [https://replit.com/@trsong/LC-39-Combination-Sum#main.py](https://replit.com/@trsong/LC-39-Combination-Sum#main.py)
+
+```py
+import unittest
+
+
+def combination_sum(candidates, target):
+    sorted_desc_candidates = list(sorted(set(candidates), reverse=True))
+    res = []
+    backtrack(target, res, [], sorted_desc_candidates, 0)
+    return res
+
+
+def backtrack(balance, res, accu, sorted_desc_candidates, cur_candidate_index):
+    if balance == 0:
+        res.append(accu[:])
+    else:
+        for i in range(cur_candidate_index, len(sorted_desc_candidates)):
+            num = sorted_desc_candidates[i]
+            if num > balance:
+                continue
+
+            accu.append(num)
+            backtrack(balance - num, res, accu, sorted_desc_candidates, i)
+            accu.pop()
+
+
+class CombinationSumSpec(unittest.TestCase):
+    def assertResult(self, expected, res):
+        format = lambda lon: list(
+            map(lambda nums: repr(list(sorted(nums))), lon))
+        self.assertCountEqual(format(expected), format(res))
+
+    def testExample1(self):
+        candidates = [2, 3, 6, 7]
+        target = 7
+        expected = [[2, 2, 3], [7]]
+        self.assertResult(expected, combination_sum(candidates, target))
+
+    def testExample2(self):
+        candidates = [2, 3, 5]
+        target = 8
+        expected = [[2, 2, 2, 2], [2, 3, 3], [3, 5]]
+        self.assertResult(expected, combination_sum(candidates, target))
+
+    def testExample3(self):
+        candidates = [2]
+        target = 1
+        expected = []
+        self.assertResult(expected, combination_sum(candidates, target))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False, verbosity=2)
+```
+
+**Failed Attempts:**
+
+> Rev 1: space complexity is not optimal as recursive step involving slicing the candiate into sub arrays
+
+```py
+def combination_sum(candidates, target):
+    sorted_desc_candidates = list(sorted(set(candidates), reverse=True))
+    res = []
+    backtrack(target, res, [], sorted_desc_candidates)
+    return res
+
+
+def backtrack(balance, res, accu, sorted_desc_candidates):
+    if balance == 0:
+        res.append(accu[:])
+    else:
+        for i, num in enumerate(sorted_desc_candidates):
+            if num > balance:
+                continue
+
+            accu.append(num)
+            backtrack(balance - num, res, accu, sorted_desc_candidates[i:])
+            accu.pop()
+```
