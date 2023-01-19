@@ -1783,3 +1783,127 @@ def cal_max_sub_arr_sum(nums):
 
     return max_sum
 ```
+
+### Jan 18, 2023 LC 51 \[Hard\] N-Queens
+---
+> **Question:** The n-queens puzzle is the problem of placing `n` queens on an `n x n` chessboard such that no two queens attack each other.
+>
+> Given an integer `n`, return all distinct solutions to the n-queens puzzle. You may return the answer in any order.
+> 
+> Each solution contains a distinct board configuration of the n-queens' placement, where `'Q'` and `'.'` both indicate a queen and an empty space, respectively.
+
+**Example 1:**
+
+```py
+Input: n = 4
+Output: [
+    [
+        ".Q..",
+        "...Q",
+        "Q...",
+        "..Q."
+    ], [
+        "..Q.",
+        "Q...",
+        "...Q",
+        ".Q.."
+    ]
+]
+Explanation: There exist two distinct solutions to the 4-queens puzzle as shown above
+```
+
+**Example 2:**
+
+```py
+Input: n = 1
+Output: [["Q"]]
+```
+
+**Solution:** [https://replit.com/@trsong/LC-51-N-Queens#main.py](https://replit.com/@trsong/LC-51-N-Queens#main.py)
+
+```py
+import unittest
+
+def solve_n_queen(n):
+    visited_column = [False] * n
+    visited_diagonal1 = [False] * (2 * n)
+    visited_diagonal2 = [False] * (2 * n)
+    res = []
+    rows = [None] * n
+
+    def backtrack(r):
+        if r >= n:
+            res.append(format_grid(rows))
+        else:
+            for c in range(n):
+                d1 = r + c
+                d2 = n + r - c
+                
+                if visited_column[c] or visited_diagonal1[d1] or visited_diagonal2[d2]:
+                    continue
+
+                visited_column[c] = True
+                visited_diagonal1[d1] = True
+                visited_diagonal2[d2] = True
+                rows[r] = c
+                
+                backtrack(r + 1)
+                
+                rows[r] = None
+                visited_column[c] = False
+                visited_diagonal1[d1] = False
+                visited_diagonal2[d2] = False
+
+    backtrack(0)
+    return res
+
+
+def format_grid(columns):
+    n = len(columns)
+    rows = []
+    for r, c in enumerate(columns):
+        rows.append('.' * c + 'Q' + '.' * (n - 1 - c))
+    return rows
+
+
+class SolveNQueenSpec(unittest.TestCase):
+    def assertResult(self, expected, res):
+        display_grid = lambda g: '\n' + '\n'.join(g) + '\n'
+        formated_expected = set(map(display_grid, expected))
+        formated_res = set(map(display_grid, res))
+
+        if formated_expected != formated_res: 
+            print("The following is missing")
+            for g in formated_expected - formated_res:
+                print(g)
+                
+            print("The following is unexpected:")
+            for g in formated_res - formated_expected:
+                print(g)
+        
+        self.assertEqual(formated_expected, formated_res)
+        
+    def testExample1(self):
+        n = 4
+        expected = [[
+            ".Q..",
+            "...Q",
+            "Q...",
+            "..Q."
+        ], [
+            "..Q.",
+            "Q...",
+            "...Q",
+            ".Q.."
+        ]]
+        self.assertResult(expected, solve_n_queen(n))
+
+    def testExample2(self):
+        n = 1
+        expected = [["Q"]]
+        self.assertResult(expected, solve_n_queen(n))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False, verbosity=2)
+```
