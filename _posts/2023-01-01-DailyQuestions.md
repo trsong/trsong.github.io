@@ -1907,3 +1907,126 @@ class SolveNQueenSpec(unittest.TestCase):
 if __name__ == '__main__':
     unittest.main(exit=False, verbosity=2)
 ```
+
+### Jan 19, 2023 LC 54 \[Medium\] Spiral Matrix
+---
+> **Question:** Given an `m x n` matrix, return all elements of the matrix in spiral order.
+
+**Example 1:**
+
+```py
+Input: matrix = [
+    [1,2,3],
+    [4,5,6],
+    [7,8,9]
+]
+Output: [1,2,3,6,9,8,7,4,5]
+```
+
+**Example 2:**
+
+```py
+Input: matrix = [
+    [1,2,3,4],
+    [5,6,7,8],
+    [9,10,11,12]
+]
+Output: [1,2,3,4,8,12,11,10,9,5,6,7]
+```
+
+**Solution:** [https://replit.com/@trsong/LC-54-Spiral-Matrix#main.py](https://replit.com/@trsong/LC-54-Spiral-Matrix#main.py)
+
+```py
+import unittest
+
+def spiral_order(matrix):
+    if not matrix or not matrix[0]:
+        return []
+        
+    r_lo = 0
+    c_lo = 0
+    r_hi = len(matrix) - 1
+    c_hi = len(matrix[0]) - 1
+    res = []
+
+    while r_lo <= r_hi and c_lo <= c_hi:
+        r = r_lo
+        c = c_lo
+        # left -> right
+        while c < c_hi:
+            res.append(matrix[r][c])
+            c += 1
+        c_hi -= 1
+        
+        # top -> bottom
+        while r < r_hi:
+            res.append(matrix[r][c])
+            r += 1
+        r_hi -= 1
+
+        if r_lo > r_hi or c_lo > c_hi:
+            res.append(matrix[r][c])
+            break
+        
+        # right -> left
+        while c > c_lo:
+            res.append(matrix[r][c])
+            c -= 1
+        c_lo += 1
+        
+        # bottom -> top
+        while r > r_lo:
+            res.append(matrix[r][c])
+            r -= 1
+        r_lo += 1
+
+    return res
+        
+
+class SpiralOrderSpec(unittest.TestCase):
+    def testExample1(self):
+        matrix = [[1, 2, 3], [4, 5, 6], [7, 8, 9]]
+        expected = [1, 2, 3, 6, 9, 8, 7, 4, 5]
+        self.assertEqual(expected, spiral_order(matrix))
+
+    def testExample2(self):
+        matrix = [[1, 2, 3, 4], [5, 6, 7, 8], [9, 10, 11, 12]]
+        expected = [1, 2, 3, 4, 8, 12, 11, 10, 9, 5, 6, 7]
+        self.assertEqual(expected, spiral_order(matrix))
+
+    def testFailed1(self):
+        matrix = [
+            [2, 5],
+            [8, 4],
+            [0, -1]
+        ]
+        expected = [2, 5, 4, -1, 0, 8]
+        self.assertEqual(expected, spiral_order(matrix))
+
+
+if __name__ == '__main__':
+    unittest.main(exit=False, verbosity=2)
+```
+
+**Failed Attempts:**
+
+> Rev 1: Be cautious about while loop condition, `and` or `or`
+
+
+```py
+
+def spiral_order(matrix):
+    if not matrix or not matrix[0]:
+        return []
+        
+    r_lo = 0
+    c_lo = 0
+    r_hi = len(matrix) - 1
+    c_hi = len(matrix[0]) - 1
+    res = []
+
+    while r_lo <= r_hi or c_lo <= c_hi:
+        ...
+
+    return res
+```
